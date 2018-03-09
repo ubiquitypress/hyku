@@ -46,3 +46,5 @@ config/environments/*.local.yml
 
 # Avatars and such
 public/uploads
+
+.idea

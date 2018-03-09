@@ -1,7 +1,6 @@
 <% content_for :page_header do %>
   <h1><span class="fa fa-gears"></span> Create a new repository</h1>
 <% end %>
-
 <div class="row">
   <div class="col-md-8">
     <%= form_for(@account, url: account_sign_up_path(@account), html: { class: 'form form-horizontal' }) do |f| %>

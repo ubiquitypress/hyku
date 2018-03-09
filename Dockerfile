@@ -11,6 +11,4 @@ WORKDIR /data
 ADD Gemfile /data/Gemfile
 ADD Gemfile.lock /data/Gemfile.lock
 RUN bundle install
-ADD . /data
-RUN bundle exec rake assets:precompile
 EXPOSE 3000

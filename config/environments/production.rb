@@ -60,6 +60,24 @@ Rails.application.configure do
   config.active_job.queue_adapter     = Settings.active_job.queue_adapter
   # config.active_job.queue_name_prefix = "hyku_#{Rails.env}"
 
+  config.action_mailer.default_url_options = {
+    protocol: Settings.ssl_configured ? 'https' : 'http',
+    :host => 'ubiquity.press'
+}
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.default :charset => "utf-8"
+  config.action_mailer.smtp_settings = {
+    address: "smtp.gmail.com",
+    port: 587,
+    domain: ENV["GMAIL_DOMAIN"],
+    authentication: "plain",
+    enable_starttls_auto: true,
+    user_name: ENV["GMAIL_USERNAME"],
+    password: ENV["GMAIL_PASSWORD"]
+  }
+
   config.action_mailer.perform_caching = false
 
   # Ignore bad email addresses and do not raise email delivery errors.

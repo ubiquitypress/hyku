@@ -105,6 +105,7 @@ services:
     build: .
     volumes:
       - app:/data/tmp/uploads
+      - .:/data
     env_file:
       - credentials-dev.env #there is a credentials-prod.env file for production variables
     networks:

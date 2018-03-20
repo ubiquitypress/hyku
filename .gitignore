@@ -50,3 +50,4 @@ public/uploads
 .idea
 public/assets/
 *.env
+docker-compose.yml

@@ -1,6 +1,0 @@
-# This file needs to be renamed as application.yml
-# to be ignored by Git as specified in .gitignore
-# Type sensitive data below:
-
-# Sentry Error Tracking service:
-SENTRY_DSN: #'TYPE DSN HERE'

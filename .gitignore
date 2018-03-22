@@ -51,3 +51,4 @@ public/uploads
 public/assets/
 *.env
 docker-compose.yml
+config/initializers/application.yml

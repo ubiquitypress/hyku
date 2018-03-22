@@ -47,5 +47,9 @@ module Hyku
         end
       end
     end
+    ENV.update YAML.load(File.read(File.expand_path('../initializers/application.yml', __FILE__)))
+    Raven.configure do |config|
+      config.dsn = ENV['SENTRY_DSN']
+    end
   end
 end

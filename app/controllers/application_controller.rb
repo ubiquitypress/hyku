@@ -23,6 +23,8 @@ class ApplicationController < ActionController::Base
 
   before_action :add_honeybadger_context
 
+  before_action :set_raven_context
+
   rescue_from Apartment::TenantNotFound do
     raise ActionController::RoutingError, 'Not Found'
   end
@@ -77,5 +79,10 @@ class ApplicationController < ActionController::Base
 
     def peek_controller?
       is_a? Peek::ResultsController
+    end
+
+    def set_raven_context
+      Raven.user_context(id: session[:current_user_id]) # or anything else in session
+      Raven.extra_context(params: params.to_unsafe_h, url: request.url)
     end
 end

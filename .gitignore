@@ -50,5 +50,4 @@ public/uploads
 .idea
 public/assets/
 *.env
-docker-compose.yml
-config/initializers/application.yml
+docker-compose-dev.yml

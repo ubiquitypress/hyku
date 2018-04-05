@@ -50,5 +50,4 @@ public/uploads
 .idea
 public/assets/
 *.env
-docker-compose-dev.yml
 *.pyc

@@ -3,7 +3,6 @@ version: '2'
 volumes:
   fcrepo:
   solr:
-  db:
   redis:
   zk1:
   zk2:
@@ -94,31 +93,14 @@ services:
     networks:
       internal:
 
-  db:
-    image: postgres
-    volumes:
-      - db:/var/lib/postgresql/data
-    networks:
-      internal:
-
   app:
-    build: .
-    environment:
-      - REDIS_HOST=redis
-      - DATABASE_URL=postgresql://postgres@db/postgres
-      - FEDORA_URL=http://fcrepo:8080/fcrepo/rest
-      - SOLR_URL=http://solr:8983/solr/
-      - SETTINGS__ACTIVE_JOB__QUEUE_ADAPTER=sidekiq
-      - SETTINGS__MULTITENANCY__ADMIN_ONLY_TENANT_CREATION=false
-      - SETTINGS__SOLR__URL=http://solr:8983/solr/
-      - SETTINGS__ZOOKEEPER__CONNECTION_STR=zookeeper_cluster:2181/configs
-      - RAILS_ENV=production
-      - RAILS_SERVE_STATIC_FILES=true
-      - RAILS_LOG_TO_STDOUT=true
-      - SECRET_KEY_BASE=asdf
-      - RAILS_CACHE_STORE_URL=memcache
+    build:
+      context: ../.
+      dockerfile: docker/Dockerfile-prod
     volumes:
       - app:/data/tmp/uploads
+    env_file:
+      - credentials-prod.env
     networks:
       internal:
 
@@ -126,7 +108,6 @@ services:
     extends: app
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -p 3000 -b '0.0.0.0'"
     depends_on:
-      - db
       - solr
       - fcrepo
       - redis
@@ -144,7 +125,6 @@ services:
     environment:
       - SETTINGS__FITS_PATH=/opt/fits-1.0.5/fits.sh
     depends_on:
-      - db
       - solr
       - fcrepo
       - redis
@@ -167,8 +147,6 @@ services:
     extends: app
     restart: on-failure
     command: bundle exec rails db:migrate
-    depends_on:
-      - db
 
   lb:
     image: dockercloud/haproxy:1.5.3
@@ -179,8 +157,8 @@ services:
       - DOCKER_HOST
       - DOCKER_CERT_PATH
     ports:
-      - 8080:80
-      - 8443:443
+      - 80:80
+      - 443:443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       # You must uncomment this line if and only if you are running docker-machine

@@ -12,8 +12,9 @@ module Hyku
     end
 
     private
-    def configure_permitted_parameters
-      devise_parameter_sanitizer.permit(:sign_up, keys: [:display_name])
-    end
+
+      def configure_permitted_parameters
+        devise_parameter_sanitizer.permit(:sign_up, keys: [:display_name])
+      end
   end
 end

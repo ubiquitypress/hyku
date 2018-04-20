@@ -5,7 +5,7 @@ module Hyrax
     include Hyrax::FormTerms
     self.model_class = ::GenericWork
     include HydraEditor::Form::Permissions
-    self.terms += [:resource_type, :rendering_ids]
+    self.terms += %i[resource_type rendering_ids]
 
     def secondary_terms
       super - [:rendering_ids]

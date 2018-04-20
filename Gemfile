@@ -47,16 +47,17 @@ group :development, :test do
   gem 'fcrepo_wrapper', '~> 0.4'
   gem 'solr_wrapper', '~> 1.0'
 
-  gem 'rubocop', '~> 0.47.0'
-  gem 'rubocop-rspec', '~> 1.10.0'
+  gem 'rubocop', '~> 0.50', '<= 0.52.1'
+  gem 'rubocop-rspec', '~> 1.22', '<= 1.22.2'
 end
 
 group :test do
   gem 'capybara'
+  gem 'chromedriver-helper'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
-  gem 'poltergeist'
   gem 'rails-controller-testing'
+  gem 'selenium-webdriver'
   gem 'webmock'
 end
 
@@ -74,7 +75,7 @@ end
 
 gem 'blacklight', '~> 6.7'
 
-gem 'hyrax', '2.0.0'
+gem 'hyrax', '2.0.2'
 gem 'rsolr', '~> 2.0'
 
 gem 'devise'

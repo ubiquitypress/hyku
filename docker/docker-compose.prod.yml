@@ -1,0 +1,62 @@
+version: '2'
+
+services:
+  app:
+    build:
+      context: ../.
+      dockerfile: docker/Dockerfile-prod
+    volumes:
+      - app:/data/tmp/uploads
+    env_file:
+      - credentials-prod.env
+    networks:
+      internal:
+
+  web:
+    extends: app
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -p 3000 -b '0.0.0.0'"
+    depends_on:
+      - solr
+      - fcrepo
+      - redis
+      - zoo1
+      - zoo2
+      - zoo3
+      - memcache
+      - db_migrate
+    expose:
+      - 3000
+
+  workers:
+    extends: app
+    command: bundle exec sidekiq
+    environment:
+      - SETTINGS__FITS_PATH=/opt/fits-1.0.5/fits.sh
+    depends_on:
+      - solr
+      - fcrepo
+      - redis
+      - zoo1
+      - zoo2
+      - zoo3
+      - initialize_app
+      - db_migrate
+
+  lb:
+    image: dockercloud/haproxy:1.5.3
+    links:
+      - web
+    environment:
+      - DOCKER_TLS_VERIFY
+      - DOCKER_HOST
+      - DOCKER_CERT_PATH
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      # You must uncomment this line if and only if you are running docker-machine
+      # - $DOCKER_CERT_PATH:$DOCKER_CERT_PATH
+    networks:
+      internal:
+      external:

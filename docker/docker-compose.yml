@@ -94,13 +94,6 @@ services:
     networks:
       internal:
 
-  db:
-    image: postgres
-    volumes:
-      - db:/var/lib/postgresql/data
-    networks:
-      internal:
-
   app:
     build:
       context: ../.
@@ -109,25 +102,9 @@ services:
       - app:/data/tmp/uploads
       - ..:/data
     env_file:
-      - credentials-dev.env
+      - credentials-test.env
     networks:
       internal:
-
-  web:
-    extends: app
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -p 3000 -b '0.0.0.0'"
-    depends_on:
-      - db
-      - solr
-      - fcrepo
-      - redis
-      - zoo1
-      - zoo2
-      - zoo3
-      - memcache
-      - db_migrate
-    expose:
-      - 3000
 
   workers:
     extends: app
@@ -154,36 +131,12 @@ services:
       - zoo2
       - zoo3
 
-  initialize_app_assets:
-    extends: app
-    restart: on-failure
-    command: bundle exec rake assets:precompile
-
   db_migrate:
     extends: app
     restart: on-failure
     command: bundle exec rails db:migrate
     depends_on:
       - db
-
-  lb:
-    image: dockercloud/haproxy:1.5.3
-    links:
-      - web
-    environment:
-      - DOCKER_TLS_VERIFY
-      - DOCKER_HOST
-      - DOCKER_CERT_PATH
-    ports:
-      - 8080:80
-      - 4443:443
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      # You must uncomment this line if and only if you are running docker-machine
-      # - $DOCKER_CERT_PATH:$DOCKER_CERT_PATH
-    networks:
-      internal:
-      external:
 
   redis:
     image: redis:3

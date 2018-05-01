@@ -1,0 +1,59 @@
+version: '2'
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      internal:
+
+  app:
+    build:
+      context: ../.
+      dockerfile: docker/Dockerfile-dev
+    volumes:
+      - app:/data/tmp/uploads
+      - ..:/data
+    env_file:
+      - credentials-test.env
+    networks:
+      internal:
+
+  web:
+    extends: app
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -p 3000 -b '0.0.0.0'"
+    depends_on:
+      - db
+      - solr
+      - fcrepo
+      - redis
+      - zoo1
+      - zoo2
+      - zoo3
+      - memcache
+      - db_migrate
+    expose:
+      - 3000
+
+  initialize_app_assets:
+    extends: app
+    restart: on-failure
+    command: bundle exec rake assets:precompile
+
+  lb:
+    image: dockercloud/haproxy:1.5.3
+    links:
+      - web
+    environment:
+      - DOCKER_TLS_VERIFY
+      - DOCKER_HOST
+      - DOCKER_CERT_PATH
+    ports:
+      - 8080:80
+      - 4443:443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      internal:
+      external:

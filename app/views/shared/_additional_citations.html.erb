@@ -8,14 +8,8 @@
   <% unless @presenter.publisher.blank? %>
     <meta name="citation_publisher" content="<%= @presenter.publisher.join %>" />
   <% end %>
-  <% identifiers_string = @presenter.identifier.join(' ').gsub(/-/, '') %>
-  <% doi_regex = /10.\d{4,9}\/[-._;()\/:A-Z0-9]+/i %>
-  <% isbn_regex = /(ISBN[ ]?)*(97[\d]{11})|(\d{9}[\d|X]{1})/i %>
-  <% doi = identifiers_string.scan(doi_regex).join %>
-  <meta name="citation_doi" content="<%= doi %>" />
-  <% isbn_str = identifiers_string.gsub(doi_regex, '') %>
-  <% isbn = isbn_str.scan(isbn_regex).map {|e| e.compact } %>
-  <% isbn.each do |ref| %>
-     <meta name="citation_isbn" content="<%= ref.join %>" />
-  <% end %>
+  <meta name="citation_doi" content="<%= @doi %>" />
+  <%# @isbn.each do |ref| %>
+<!--     <meta name="citation_isbn" content="<%#= ref.join %>" />-->
+  <%# end %>
 <% end %>

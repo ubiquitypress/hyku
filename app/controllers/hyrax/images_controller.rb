@@ -2,7 +2,7 @@
 #  `rails generate hyrax:work Image`
 
 module Hyrax
-  class ImagesController < AdditionalCitationsController
+  class ImagesController < SharedController
     self.curation_concern_type = ::Image
 
     # Use this line if you want to use a custom presenter

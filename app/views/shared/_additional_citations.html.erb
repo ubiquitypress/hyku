@@ -8,10 +8,10 @@
   <% unless @presenter.publisher.blank? %>
     <meta name="citation_publisher" content="<%= @presenter.publisher.join %>" />
   <% end %>
-  <% unless @doi.blank? %>
-    <meta name="citation_doi" content="<%= @doi %>" />
+  <% unless @presenter.doi.blank? %>
+    <meta name="citation_doi" content="<%= @presenter.doi %>"/>
   <% end %>
-  <% @isbn.each do |isbn| %>
-     <meta name="citation_isbn" content="<%= isbn %>" />
+  <% @presenter.isbns.each do |isbn| %>
+    <meta name="citation_isbn" content="<%= isbn %>"/>
   <% end %>
 <% end %>

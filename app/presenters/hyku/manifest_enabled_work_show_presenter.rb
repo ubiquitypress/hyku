@@ -35,6 +35,30 @@ module Hyku
       metadata
     end
 
+    # @doi and @isbns to be extracted from the identifier metadata
+    def extract_from_identifier(rgx)
+      ref = []
+      solr_document['identifier_tesim'].each do |str|
+        ref << str.scan(rgx)
+      end
+      ref
+    end
+
+    # assumes there can only be one doi
+    def doi
+      doi_regex = %r{10.\d{4,9}\/[-._;()\/:A-Z0-9]+}i
+      doi = extract_from_identifier(doi_regex)
+      doi.join
+    end
+
+    # unlike doi, there can be multiple isbns
+    def isbns
+      isbn_regex = /(?:ISBN[- ]*13|ISBN[- ]*10|)\s*
+                    ((?:(?:9[\s-]*7[\s-]*[89])?[ -]?(?:[0-9][ -]*){9})[ -]*(?:[0-9xX]))/x
+      isbns = extract_from_identifier(isbn_regex)
+      isbns.flatten
+    end
+
     private
 
       def manifest_helper

@@ -1,0 +1,17 @@
+.coveralls.yml
+.fcrepo_wrapper
+.idea
+.python-version
+.rubocop.yml
+.rubocop_todo.yml
+.git
+.gitignore
+.idea
+.travis.yml
+LICENSE
+.solr_wrapper
+CONTRIBUTING.md
+.ebextensions
+.github
+README.md
+solr

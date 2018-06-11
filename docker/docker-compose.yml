@@ -102,7 +102,7 @@ services:
       - app:/data/tmp/uploads
       - ..:/data
     env_file:
-      - credentials-test.env
+      - credentials-dev.env
     networks:
       internal:
 

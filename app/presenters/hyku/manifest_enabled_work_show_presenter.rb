@@ -39,7 +39,7 @@ module Hyku
     def doi
       doi_regex = %r{10.\d{4,9}\/[-._;()\/:A-Z0-9]+}i
       doi = extract_from_identifier(doi_regex)
-      doi.join
+      doi.join if doi
     end
 
     # unlike doi, there can be multiple isbns
@@ -47,15 +47,16 @@ module Hyku
       isbn_regex = /(?:ISBN[- ]*13|ISBN[- ]*10|)\s*
                     ((?:(?:9[\s-]*7[\s-]*[89])?[ -]?(?:[0-9][ -]*){9})[ -]*(?:[0-9xX]))/x
       isbns = extract_from_identifier(isbn_regex)
-      isbns.flatten
+      isbns.flatten if isbns
     end
 
     private
 
       def extract_from_identifier(rgx)
-        ref = []
-        solr_document['identifier_tesim'].each do |str|
-          ref << str.scan(rgx)
+        if solr_document['identifier_tesim'].present?
+          ref = solr_document['identifier_tesim'].map do |str|
+            str.scan(rgx)
+          end
         end
         ref
       end

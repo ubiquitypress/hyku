@@ -12,6 +12,9 @@
   }
 }
 
+.navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-nav > li > a:hover {
+  color: #bababa;
+}
 
 .jumbotron {
   background: image_url('white-cloud-background.jpg') repeat-x;

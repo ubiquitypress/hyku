@@ -1,0 +1,8 @@
+it:
+  hyrax:
+    icons:
+      report:     'fa fa-file-text-o'
+    select_type:
+      report:
+        name:               "Report"
+        description:        "Report opere"

@@ -1,0 +1,8 @@
+en:
+  hyrax:
+    icons:
+      report:     'fa fa-file-text-o'
+    select_type:
+      report:
+        name:               "Report"
+        description:        "Reports disseminating the outcomes and deliverables of a research contract. May entail a contribution to public policy."

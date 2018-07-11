@@ -4,6 +4,8 @@ Hyrax.config do |config|
   config.register_curation_concern :image
   # Injected via `rails g hyrax:work Dataset`
   config.register_curation_concern :dataset
+  # Injected via `rails g hyrax:work Report`
+  config.register_curation_concern :report
 
   # Email recipient of messages sent via the contact form
   config.contact_email = Settings.contact_email

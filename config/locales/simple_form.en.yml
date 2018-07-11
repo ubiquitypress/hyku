@@ -35,7 +35,7 @@ en:
         per: 'Show'
       user:
         email: 'Email address'
-        display_name: 'Your Name'  #add this to other languages
+        display_name: 'Your Name'  # TO DO add this to other languages
     #   defaults:
     #     password: 'Password'
     #   user:

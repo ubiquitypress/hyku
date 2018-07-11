@@ -1,0 +1,8 @@
+pt-BR:
+  hyrax:
+    icons:
+      journal_article:     'fa fa-file-text-o'
+    select_type:
+      journal_article:
+        name:               "Journal Article"
+        description:        "Journal article trabalhos"

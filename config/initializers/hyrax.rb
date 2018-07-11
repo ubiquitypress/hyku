@@ -8,6 +8,8 @@ Hyrax.config do |config|
   config.register_curation_concern :report
   # Injected via `rails g hyrax:work JournalArticle`
   config.register_curation_concern :journal_article
+  # Injected via `rails g hyrax:work ConferencePaper`
+  config.register_curation_concern :conference_paper
 
   # Email recipient of messages sent via the contact form
   config.contact_email = Settings.contact_email

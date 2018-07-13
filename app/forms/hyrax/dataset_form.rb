@@ -4,6 +4,9 @@ module Hyrax
   class DatasetForm < Hyrax::Forms::WorkForm
     include Hyrax::FormTerms
     self.model_class = ::Dataset
-    self.terms += [:resource_type]
+    self.terms += %i[resource_type isni]
+    def primary_terms
+      super + [:isni]
+    end
   end
 end

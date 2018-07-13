@@ -67,6 +67,11 @@ Style/MixinUsage:
   Exclude:
     - 'spec/support/devise.rb'
     - 'spec/features/create_image_spec.rb'
+    - 'spec/features/create_journal_article_spec.rb'
+    - 'spec/features/create_book_chapter_spec.rb'
+    - 'spec/features/create_report_spec.rb'
+    - 'spec/features/create_dataset_spec.rb'
+    - 'spec/features/create_conference_paper_spec.rb'
 
 RSpec/ScatteredLet:
   Enabled: false

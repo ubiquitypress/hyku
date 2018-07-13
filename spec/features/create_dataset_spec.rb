@@ -4,7 +4,7 @@ require 'rails_helper'
 include Warden::Test::Helpers
 
 # NOTE: If you generated more than one work, you have to set "js: true"
-RSpec.feature 'Create a Dataset', js: false do
+RSpec.describe 'Create a Dataset', js: true do
   context 'a logged in user' do
     let(:user_attributes) do
       { email: 'test@example.com' }
@@ -18,14 +18,14 @@ RSpec.feature 'Create a Dataset', js: false do
       login_as user
     end
 
-    scenario do
+    it do
       visit '/dashboard'
       click_link "Works"
       click_link "Add new work"
 
       # If you generate more than one work uncomment these lines
-      # choose "payload_concern", option: "Dataset"
-      # click_button "Create work"
+      choose "payload_concern", option: "Dataset"
+      click_button "Create work"
 
       expect(page).to have_content "Add New Dataset"
     end

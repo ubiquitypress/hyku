@@ -5,8 +5,6 @@ module Hyrax
     include Hyrax::FormTerms
     self.model_class = ::Dataset
     self.terms += %i[resource_type isni]
-    def primary_terms
-      super + [:isni]
-    end
+    self.required_fields += [:isni]
   end
 end

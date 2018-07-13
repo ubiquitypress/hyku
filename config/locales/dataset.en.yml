@@ -6,3 +6,10 @@ en:
       dataset:
         name:               "Dataset"
         description:        "A collection of related facts and data encoded in a defined structure."
+  simple_form:
+    hints:
+      defaults:
+        isni: An identifier for uniquely identifying the public identities of contributors to media content.
+    labels:
+      defaults:
+        isni: International Standard Name Identifier (ISNI)

@@ -76,6 +76,7 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name("subject", :stored_searchable), itemprop: 'about', link_to_search: solr_name("subject", :facetable)
     config.add_index_field solr_name("creator", :stored_searchable), itemprop: 'creator', link_to_search: solr_name("creator", :facetable)
     config.add_index_field solr_name("contributor", :stored_searchable), itemprop: 'contributor', link_to_search: solr_name("contributor", :facetable)
+    config.add_index_field solr_name("isni", :stored_searchable), label: "ISNI"
     config.add_index_field solr_name("proxy_depositor", :symbol), label: "Depositor", helper_method: :link_to_profile
     config.add_index_field solr_name("depositor"), label: "Owner", helper_method: :link_to_profile
     config.add_index_field solr_name("publisher", :stored_searchable), itemprop: 'publisher', link_to_search: solr_name("publisher", :facetable)
@@ -84,8 +85,8 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name("date_uploaded", :stored_sortable, type: :date), itemprop: 'datePublished', helper_method: :human_readable_date
     config.add_index_field solr_name("date_modified", :stored_sortable, type: :date), itemprop: 'dateModified', helper_method: :human_readable_date
     config.add_index_field solr_name("date_created", :stored_searchable), itemprop: 'dateCreated'
-    config.add_index_field solr_name("rights_statement", :stored_searchable), helper_method: :rights_statement_links
-    config.add_index_field solr_name("license", :stored_searchable), helper_method: :license_links
+    config.add_index_field solr_name("rights_statement", :stored_searchable), helper_method: :rights_statement_links, label: "Rights Statement"
+    config.add_index_field solr_name("license", :stored_searchable), helper_method: :license_links, label: "License"
     config.add_index_field solr_name("resource_type", :stored_searchable), label: "Resource Type", link_to_search: solr_name("resource_type", :facetable)
     config.add_index_field solr_name("file_format", :stored_searchable), link_to_search: solr_name("file_format", :facetable)
     config.add_index_field solr_name("identifier", :stored_searchable), helper_method: :index_field_link, field_name: 'identifier'

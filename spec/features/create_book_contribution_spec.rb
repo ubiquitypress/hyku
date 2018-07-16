@@ -4,7 +4,7 @@ require 'rails_helper'
 include Warden::Test::Helpers
 
 # NOTE: If you generated more than one work, you have to set "js: true"
-RSpec.describe 'Create a BookContribution', js: true do
+RSpec.describe 'Create a BookContribution', :clean, js: true do
   context 'a logged in user' do
     let(:user_attributes) do
       { email: 'test@example.com' }
@@ -27,7 +27,7 @@ RSpec.describe 'Create a BookContribution', js: true do
       choose "payload_concern", option: "BookContribution"
       click_button "Create work"
 
-      expect(page).to have_content "Add New Book contribution"
+      expect(page).to have_content "Add New Book Contribution"
     end
   end
 end

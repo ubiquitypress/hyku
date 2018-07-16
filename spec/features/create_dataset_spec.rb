@@ -4,7 +4,7 @@ require 'rails_helper'
 include Warden::Test::Helpers
 
 # NOTE: If you generated more than one work, you have to set "js: true"
-RSpec.describe 'Create a Dataset', js: true do
+RSpec.describe 'Create a Dataset', :clean, js: true do
   context 'a logged in user' do
     let(:user_attributes) do
       { email: 'test@example.com' }

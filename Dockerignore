@@ -1,0 +1,9 @@
+log
+CONTRIBUTING.md
+docker
+fits.log
+LICENSE
+README.md
+.hound.yml
+.rspec
+.scss-lint.yml

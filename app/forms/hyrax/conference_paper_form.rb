@@ -4,6 +4,6 @@ module Hyrax
   class ConferencePaperForm < Hyrax::Forms::WorkForm
     include Hyrax::FormTerms
     self.model_class = ::ConferencePaper
-    self.terms += [:resource_type]
+    self.terms += %i[resource_type rendering_ids]
   end
 end

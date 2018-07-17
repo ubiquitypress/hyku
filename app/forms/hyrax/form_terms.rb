@@ -7,5 +7,9 @@ module Hyrax
     def primary_terms
       super + [:license]
     end
+
+    def secondary_terms
+      super - [:rendering_ids]
+    end
   end
 end

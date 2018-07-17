@@ -2,7 +2,7 @@ module Hyku
   class ManifestEnabledWorkShowPresenter < Hyrax::WorkShowPresenter
     Hyrax::MemberPresenterFactory.file_presenter_class = Hyku::FileSetPresenter
 
-    delegate :extent, :rendering_ids, to: :solr_document
+    delegate :extent, :rendering_ids, :isni, to: :solr_document
 
     def manifest_url
       manifest_helper.polymorphic_url([:manifest, self])

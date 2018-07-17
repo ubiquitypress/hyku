@@ -1,0 +1,10 @@
+zh:
+  hyrax:
+    icons:
+      report:     'fa fa-file-text-o'
+    select_type:
+      report:
+        # TODO: translate `human_name` into Chinese
+        name:               "Report"
+        # TODO: translate `human_name` into Chinese
+        description:        "Report 作品"

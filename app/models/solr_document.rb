@@ -27,4 +27,5 @@ class SolrDocument
 
   attribute :extent, Solr::Array, solr_name('extent')
   attribute :rendering_ids, Solr::Array, solr_name('hasFormat', :symbol)
+  attribute :isni, Solr::Array, solr_name('isni')
 end

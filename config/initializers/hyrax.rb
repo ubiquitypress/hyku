@@ -2,6 +2,18 @@ Hyrax.config do |config|
   config.register_curation_concern :generic_work
   # Injected via `rails g hyrax:work Image`
   config.register_curation_concern :image
+  # Injected via `rails g hyrax:work Dataset`
+  config.register_curation_concern :dataset
+  # Injected via `rails g hyrax:work Report`
+  config.register_curation_concern :report
+  # Injected via `rails g hyrax:work JournalArticle`
+  config.register_curation_concern :journal_article
+  # Injected via `rails g hyrax:work ConferencePaper`
+  config.register_curation_concern :conference_paper
+  # Injected via `rails g hyrax:work Book`
+  config.register_curation_concern :book
+  # Injected via `rails g hyrax:work BookContribution`
+  config.register_curation_concern :book_contribution
 
   # Email recipient of messages sent via the contact form
   config.contact_email = Settings.contact_email

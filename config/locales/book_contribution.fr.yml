@@ -1,0 +1,8 @@
+fr:
+  hyrax:
+    icons:
+      book_contribution:     'fa fa-file-text-o'
+    select_type:
+      book_contribution:
+        name:               "Book Contribution"
+        description:        "Book contribution œuvres"

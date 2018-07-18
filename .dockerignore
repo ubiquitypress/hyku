@@ -14,4 +14,9 @@ CONTRIBUTING.md
 .ebextensions
 .github
 README.md
-solr
+log
+docker
+fits.log
+.hound.yml
+.rspec
+.scss-lint.yml

@@ -1,7 +1,7 @@
 FROM ruby:2.3.1
 
 RUN apt-get update -qq && \
-    apt-get upgrade -qq && \
+    apt-get upgrade -qq && \  # Fixes ImageMagick version for PDF preview.
     apt-get install -y \
         build-essential \
         libpq-dev \
@@ -21,12 +21,6 @@ RUN mkdir -p /opt/fits && \
 
 RUN mkdir /data
 WORKDIR /data
-
-# Install Python libs required to run the metadata importer with Nameko
-ADD requirements.txt /data
-RUN apt-get update -qq && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y python-pip python-dev && \
-    pip install --no-input -r requirements.txt
 
 # Install ffmpeg required to get videos to work.
 RUN echo 'deb http://ftp.uk.debian.org/debian jessie-backports main' >> /etc/apt/sources.list

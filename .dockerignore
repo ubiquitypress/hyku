@@ -1,7 +1,5 @@
 .coveralls.yml
 .fcrepo_wrapper
-.idea
-.python-version
 .rubocop.yml
 .rubocop_todo.yml
 .git

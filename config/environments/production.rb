@@ -62,20 +62,20 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = {
     protocol: Settings.ssl_configured ? 'https' : 'http',
-    :host => 'ubiquity.press'
+    host: ENV["MAIL_HOST"]
 }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default :charset => "utf-8"
   config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
+    address: ENV["SMTP_ADDRESS"],
     port: 587,
-    domain: ENV["GMAIL_DOMAIN"],
+    domain: ENV["SMTP_DOMAIN"],
     authentication: "plain",
     enable_starttls_auto: true,
-    user_name: ENV["GMAIL_USERNAME"],
-    password: ENV["GMAIL_PASSWORD"]
+    user_name: ENV["SMTP_USERNAME"],
+    password: ENV["SMTP_PASSWORD"]
   }
 
   config.action_mailer.perform_caching = false

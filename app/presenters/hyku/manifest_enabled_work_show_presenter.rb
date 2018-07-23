@@ -50,6 +50,19 @@ module Hyku
       isbns.flatten.compact if isbns
     end
 
+    def model
+      solr_document['has_model_ssim'].first
+    end
+
+    def no_associated_file?
+      return true if solr_document['file_set_ids_ssim'].blank?
+      false
+    end
+
+    def edit_access
+      solr_document['edit_access_person_ssim']
+    end
+
     private
 
       def extract_from_identifier(rgx)
@@ -95,8 +108,6 @@ module Hyku
       # @return [Array] required fields
       def metadata_fields
         ns = "Hyrax"
-        model = solr_document['has_model_ssim'].first
-
         "#{ns}::#{model}Form".constantize.required_fields
       rescue StandardError
         []

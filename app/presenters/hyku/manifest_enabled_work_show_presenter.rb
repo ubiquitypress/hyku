@@ -54,6 +54,10 @@ module Hyku
       solr_document['has_model_ssim'].first
     end
 
+    def readable_model
+      model.split(/(?=[A-Z])/).join(' ')
+    end
+
     def no_associated_file?
       return true if solr_document['file_set_ids_ssim'].blank?
       false

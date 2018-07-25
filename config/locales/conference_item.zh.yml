@@ -1,0 +1,10 @@
+zh:
+  hyrax:
+    icons:
+      conference_item:     'fa fa-file-text-o'
+    select_type:
+      conference_item:
+        # TODO: translate `human_name` into Chinese
+        name:               "Conference Item"
+        # TODO: translate `human_name` into Chinese
+        description:        "Conference item 作品"

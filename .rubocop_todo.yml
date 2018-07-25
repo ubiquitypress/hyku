@@ -71,7 +71,7 @@ Style/MixinUsage:
     - 'spec/features/create_book_contribution_spec.rb'
     - 'spec/features/create_report_spec.rb'
     - 'spec/features/create_dataset_spec.rb'
-    - 'spec/features/create_conference_paper_spec.rb'
+    - 'spec/features/create_conference_item_spec.rb'
     - 'spec/features/create_book_spec.rb'
 
 RSpec/ScatteredLet:

@@ -1,7 +1,5 @@
 .coveralls.yml
 .fcrepo_wrapper
-.idea
-.python-version
 .rubocop.yml
 .rubocop_todo.yml
 .git
@@ -14,4 +12,9 @@ CONTRIBUTING.md
 .ebextensions
 .github
 README.md
-solr
+log
+docker
+fits.log
+.hound.yml
+.rspec
+.scss-lint.yml

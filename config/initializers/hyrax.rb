@@ -3,8 +3,7 @@ Hyrax.config do |config|
   config.register_curation_concern :book
   # Injected via `rails g hyrax:work BookContribution`
   config.register_curation_concern :book_contribution
-  # Injected via `rails g hyrax:work ConferencePaper`
-  config.register_curation_concern :conference_paper
+  config.register_curation_concern :conference_item
   # Injected via `rails g hyrax:work Dataset`
   config.register_curation_concern :dataset
   # Injected via `rails g hyrax:work Image`

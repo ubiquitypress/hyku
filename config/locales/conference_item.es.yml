@@ -1,0 +1,10 @@
+es:
+  hyrax:
+    icons:
+      conference_item:     'fa fa-file-text-o'
+    select_type:
+      conference_item:
+        # TODO: translate `human_name` into Spanish
+        name:               "Conference Item"
+        # TODO: translate `human_name` into Spanish
+        description:        "Conference item trabajos"

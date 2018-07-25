@@ -1,8 +1,0 @@
-fr:
-  hyrax:
-    icons:
-      conference_paper:     'fa fa-file-text-o'
-    select_type:
-      conference_paper:
-        name:               "Conference Paper"
-        description:        "Conference paper œuvres"

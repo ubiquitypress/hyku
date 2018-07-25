@@ -135,4 +135,33 @@ RSpec.describe Hyku::ManifestEnabledWorkShowPresenter do
       end
     end
   end
+
+  describe "#model" do
+    let(:dataset) { FactoryGirl.build(:dataset) }
+    let(:solr_document) { SolrDocument.new(dataset.to_solr) }
+
+    it "returns the model name" do
+      expect(presenter.model).to eq("Dataset")
+    end
+  end
+
+  describe "#no_associated_file?" do
+    it "returns false if a work has a file set" do
+      expect(presenter.no_associated_file?).to be false
+    end
+
+    it "returns true if a work does not have a file set" do
+      work_with_no_file = FactoryGirl.create(:work)
+      solr_document2 = SolrDocument.new(work_with_no_file.to_solr)
+      presenter2 = described_class.new(solr_document2, nil)
+      expect(presenter2.no_associated_file?).to be true
+    end
+  end
+
+  describe "#edit_access" do
+    it "returns the user who can edit the work" do
+      editor = solr_document['edit_access_person_ssim']
+      expect(presenter.edit_access).to eq(editor)
+    end
+  end
 end

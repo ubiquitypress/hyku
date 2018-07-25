@@ -1,0 +1,5 @@
+<% if presenter.no_associated_file? %>
+  <% if !current_user || (current_user && presenter.edit_access.exclude?(current_user.email)) %>
+    <p>This <%= presenter.readable_model %> has no files associated with it.</p>
+  <% end %>
+<% end %>

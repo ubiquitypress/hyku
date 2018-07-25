@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Configure files requirement when creating a work
+if ! grep -F "config.work_requires_files = false" config/initializers/hyrax.rb
+then
+  sed -i -e "105a\ config.work_requires_files = $WORK_REQUIRES_FILES" config/initializers/hyrax.rb
+fi
+
+# Start server
+rm -f tmp/pids/server.pid && bundle exec rails server -p 3000 -b '0.0.0.0'
+
+# Start sidekiq
+bundle exec sidekiq
+
+# zookeeper
+bundle exec rails zookeeper:upload

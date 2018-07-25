@@ -1,0 +1,8 @@
+it:
+  hyrax:
+    icons:
+      conference_item:     'fa fa-file-text-o'
+    select_type:
+      conference_item:
+        name:               "Conference Item"
+        description:        "Conference item opere"

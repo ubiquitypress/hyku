@@ -6,3 +6,11 @@ en:
       journal_article:
         name:               "Journal Article"
         description:        "Articles in peer-reviewed publications that disseminate the results of original research and scholarship."
+  simple_form:
+    hints:
+      defaults:
+        institution: The institution to which the item is affiliated.
+        org_unit: The department, or unit, that the works sits within as per the organisational structure.
+    labels:
+      defaults:
+        org_unit: Organisational Unit

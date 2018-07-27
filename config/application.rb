@@ -40,6 +40,7 @@ module Hyku
         require_dependency(c)
       end
       Hyrax::DownloadsController.include ::Hyrax::DownloadsControllerDecorator
+      Hyrax::BasicMetadata.include ::Hyrax::BasicMetadataDecorator
     end
 
     config.before_initialize do

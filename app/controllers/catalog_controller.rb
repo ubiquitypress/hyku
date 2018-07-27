@@ -77,6 +77,7 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name("creator", :stored_searchable), itemprop: 'creator', link_to_search: solr_name("creator", :facetable)
     config.add_index_field solr_name("contributor", :stored_searchable), itemprop: 'contributor', link_to_search: solr_name("contributor", :facetable)
     config.add_index_field solr_name("isni", :stored_searchable), label: "ISNI"
+    config.add_index_field solr_name("institution", :stored_searchable), label: "Institution"
     config.add_index_field solr_name("proxy_depositor", :symbol), label: "Depositor", helper_method: :link_to_profile
     config.add_index_field solr_name("depositor"), label: "Owner", helper_method: :link_to_profile
     config.add_index_field solr_name("publisher", :stored_searchable), itemprop: 'publisher', link_to_search: solr_name("publisher", :facetable)
@@ -92,6 +93,7 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name("identifier", :stored_searchable), helper_method: :index_field_link, field_name: 'identifier'
     config.add_index_field solr_name("embargo_release_date", :stored_sortable, type: :date), label: "Embargo release date", helper_method: :human_readable_date
     config.add_index_field solr_name("lease_expiration_date", :stored_sortable, type: :date), label: "Lease expiration date", helper_method: :human_readable_date
+    config.add_index_field solr_name("org_unit", :stored_searchable), label: "Organisational Unit"
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
@@ -113,6 +115,8 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("format", :stored_searchable)
     config.add_show_field solr_name("identifier", :stored_searchable)
     config.add_show_field solr_name('extent', :stored_searchable)
+    config.add_show_field solr_name("institution", :stored_searchable)
+    config.add_show_field solr_name("org_unit", :stored_searchable)
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields

@@ -4,6 +4,6 @@ module Hyrax
   class JournalArticleForm < Hyrax::Forms::WorkForm
     include Hyrax::FormTerms
     self.model_class = ::JournalArticle
-    self.terms += %i[resource_type rendering_ids institution org_unit]
+    self.terms += %i[resource_type rendering_ids institution org_unit refereed]
   end
 end

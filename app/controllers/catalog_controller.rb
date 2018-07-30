@@ -117,6 +117,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name('extent', :stored_searchable)
     config.add_show_field solr_name("institution", :stored_searchable)
     config.add_show_field solr_name("org_unit", :stored_searchable)
+    config.add_show_field solr_name("refereed", :stored_searchable)
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields

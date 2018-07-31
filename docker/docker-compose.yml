@@ -97,7 +97,7 @@ services:
   app:
     build:
       context: ../.
-      dockerfile: docker/Dockerfile-dev
+      dockerfile: Dockerfile
     volumes:
       - app:/data/tmp/uploads
       - ..:/data

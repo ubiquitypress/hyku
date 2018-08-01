@@ -8,21 +8,13 @@ services:
     networks:
       internal:
 
-  app:
+  web:
     build:
       context: ../.
       dockerfile: Dockerfile
     volumes:
-      - app:/data/tmp/uploads
+      - web:/data/tmp/uploads
       - ..:/data
-    env_file:
-      - credentials-dev.env
-    networks:
-      internal:
-
-  web:
-    extends: app
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -p 3000 -b '0.0.0.0'"
     depends_on:
       - db
       - solr
@@ -32,14 +24,12 @@ services:
       - zoo2
       - zoo3
       - memcache
-      - db_migrate
     expose:
       - 3000
-
-  initialize_app_assets:
-    extends: app
-    restart: on-failure
-    command: bundle exec rake assets:precompile
+    env_file:
+      - credentials-dev.env
+    networks:
+      internal:
 
   lb:
     image: dockercloud/haproxy:1.5.3

@@ -9,7 +9,7 @@ volumes:
   zk2:
   zk3:
   zkconf:
-  app:
+  web:
 
 networks:
   external:
@@ -78,7 +78,7 @@ services:
     expose:
       - 8983
     volumes:
-      - .:/app
+      - .:/web
       - solr:/opt/solr/server/solr
     networks:
       internal:
@@ -93,50 +93,6 @@ services:
       - JAVA_OPTS=${JAVA_OPTS} -Dfcrepo.modeshape.configuration="classpath:/config/file-simple/repository.json" -Dfcrepo.object.directory="/data/objects" -Dfcrepo.binary.directory="/data/binaries"
     networks:
       internal:
-
-  app:
-    build:
-      context: ../.
-      dockerfile: Dockerfile
-    volumes:
-      - app:/data/tmp/uploads
-      - ..:/data
-    env_file:
-      - credentials-dev.env
-    networks:
-      internal:
-
-  workers:
-    extends: app
-    command: bundle exec sidekiq
-    environment:
-      - SETTINGS__FITS_PATH=/opt/fits-1.0.5/fits.sh
-    depends_on:
-      - db
-      - solr
-      - fcrepo
-      - redis
-      - zoo1
-      - zoo2
-      - zoo3
-      - initialize_app
-      - db_migrate
-
-  initialize_app:
-    extends: app
-    restart: on-failure
-    command: bundle exec rails zookeeper:upload
-    depends_on:
-      - zoo1
-      - zoo2
-      - zoo3
-
-  db_migrate:
-    extends: app
-    restart: on-failure
-    command: bundle exec rails db:migrate
-    depends_on:
-      - db
 
   redis:
     image: redis:3

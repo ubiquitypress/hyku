@@ -103,6 +103,7 @@ Hyrax.config do |config|
   # The default is true.
   # config.work_requires_files = true
 
+ config.work_requires_files = false
   # Should a button with "Share my work" show on the front page to all users (even those not logged in)?
   # config.display_share_button_when_not_logged_in = true
 

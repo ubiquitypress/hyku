@@ -6,11 +6,13 @@ then
   sed -i -e "105a\ config.work_requires_files = $WORK_REQUIRES_FILES" config/initializers/hyrax.rb
 fi
 
+# zookeeper
+bundle exec rails zookeeper:upload
+
+
 # Start server
-rm -f tmp/pids/server.pid && bundle exec rails server -p 3000 -b '0.0.0.0'
+rm -f tmp/pids/server.pid && bundle exec rails db:migrate && bundle exec rails server -p 3000 -b '0.0.0.0'
 
 # Start sidekiq
 bundle exec sidekiq
 
-# zookeeper
-bundle exec rails zookeeper:upload

@@ -69,7 +69,7 @@ services:
          - zookeeper_cluster
 
   solr:
-    image: solr
+    image: upress/solr-hyku:latest
     command: solr -c -f -z zookeeper_cluster:2181
     depends_on:
       - zoo1

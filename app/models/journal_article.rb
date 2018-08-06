@@ -2,6 +2,7 @@
 #  `rails generate hyrax:work JournalArticle`
 class JournalArticle < ActiveFedora::Base
   include ::Hyrax::WorkBehavior
+  include Hyrax::BasicMetadataDecorator
 
   self.indexer = JournalArticleIndexer
   # Change this to restrict which works can be added as a child.

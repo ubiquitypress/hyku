@@ -13,6 +13,8 @@ module Hyku
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
+    require_relative "../app/decorators/models/basic_metadata_decorator"
+
     # Gzip all responses.  We probably could do this in an upstream proxy, but
     # configuring Nginx on Elastic Beanstalk is a pain.
     config.middleware.use Rack::Deflater
@@ -36,11 +38,10 @@ module Hyku
       # authenticity token errors.
       Hyrax::Admin::AppearancesController.form_class = AppearanceForm
       Hyrax::FileSetsController.show_presenter = Hyku::FileSetPresenter
-      Dir.glob(Rails.root + "app/decorators/**/*_decorator*.rb").each do |c|
+      Dir.glob(Rails.root + "app/decorators/**/*_decorator.rb").each do |c|
         require_dependency(c)
       end
       Hyrax::DownloadsController.include ::Hyrax::DownloadsControllerDecorator
-      Hyrax::BasicMetadata.include ::Hyrax::BasicMetadataDecorator
     end
 
     config.before_initialize do

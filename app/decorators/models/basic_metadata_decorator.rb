@@ -6,11 +6,9 @@ module Hyrax
       property :institution, predicate: ::RDF::Vocab::ORG.organization do |index|
         index.as :stored_searchable
       end
-
       property :org_unit, predicate: ::RDF::Vocab::ORG.OrganizationalUnit do |index|
         index.as :stored_searchable
       end
-
       property :refereed, predicate: ::RDF::Vocab::BIBO.term("status/peerReviewed") do |index|
         index.as :stored_searchable
       end

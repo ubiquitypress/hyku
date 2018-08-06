@@ -9,7 +9,7 @@ module Hyrax
     end
 
     def secondary_terms
-      super - [:rendering_ids]
+      super - [:rendering_ids, :date_created]
     end
   end
 end

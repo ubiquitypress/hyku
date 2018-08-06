@@ -12,6 +12,24 @@ module Hyrax
       property :refereed, predicate: ::RDF::Vocab::BIBO.term("status/peerReviewed") do |index|
         index.as :stored_searchable
       end
+      property :funder, predicate: ::RDF::Vocab::MARCRelators.fnd do |index|
+        index.as :stored_searchable
+      end
+      property :fndr_project_ref, predicate: ::RDF::Vocab::BF2.awards do |index|
+        index.as :stored_searchable
+      end
+      property :add_info, predicate: ::RDF::Vocab::BIBO.term(:Note), multiple: false do |index|
+        index.as :stored_searchable
+      end
+      property :date_published, predicate: ::RDF::Vocab::DC.available, multiple: false do |index|
+        index.as :stored_searchable
+      end
+      property :date_accepted, predicate: ::RDF::Vocab::DC.dateAccepted, multiple: false do |index|
+        index.as :stored_searchable
+      end
+      property :date_submitted, predicate: ::RDF::Vocab::DC.dateSubmitted, multiple: false do |index|
+        index.as :stored_searchable
+      end
     end
   end
 end

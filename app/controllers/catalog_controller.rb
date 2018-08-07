@@ -73,6 +73,7 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name("title", :stored_searchable), label: "Title", itemprop: 'name', if: false
     config.add_index_field solr_name("description", :stored_searchable), itemprop: 'description', helper_method: :iconify_auto_link
     config.add_index_field solr_name("keyword", :stored_searchable), itemprop: 'keywords', link_to_search: solr_name("keyword", :facetable)
+    config.add_index_field solr_name("journal_title", :stored_searchable), label: "Journal Title", link_to_search: solr_name("journal_title", :facetable)
     config.add_index_field solr_name("subject", :stored_searchable), itemprop: 'about', link_to_search: solr_name("subject", :facetable)
     config.add_index_field solr_name("creator", :stored_searchable), itemprop: 'creator', link_to_search: solr_name("creator", :facetable)
     config.add_index_field solr_name("contributor", :stored_searchable), itemprop: 'contributor', link_to_search: solr_name("contributor", :facetable)
@@ -99,12 +100,19 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name("fndr_project_ref", :stored_searchable), label: "Funder project reference"
     config.add_index_field solr_name("add_info", :stored_searchable), label: "Additional information"
     config.add_index_field solr_name("date_accepted", :stored_searchable), label: "Date Accepted"
+    config.add_index_field solr_name("issue", :stored_searchable), label: "Issue"
+    config.add_index_field solr_name("volume", :stored_searchable), label: "Volume"
+    config.add_index_field solr_name("pagination", :stored_searchable), label: "Pagination"
+    config.add_index_field solr_name("article_num", :stored_searchable), label: "Article number"
+    config.add_index_field solr_name("project_name", :stored_searchable), label: "Project Name"
+    config.add_index_field solr_name("rights_holder", :stored_searchable), label: "Rights holder"
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
     config.add_show_field solr_name("title", :stored_searchable)
     config.add_show_field solr_name("description", :stored_searchable)
     config.add_show_field solr_name("keyword", :stored_searchable)
+    config.add_show_field solr_name("journal_title", :stored_searchable)
     config.add_show_field solr_name("subject", :stored_searchable)
     config.add_show_field solr_name("creator", :stored_searchable)
     config.add_show_field solr_name("contributor", :stored_searchable)
@@ -128,6 +136,12 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("fndr_project_ref", :stored_searchable)
     config.add_show_field solr_name("add_info", :stored_searchable)
     config.add_show_field solr_name("date_accepted", :stored_searchable)
+    config.add_show_field solr_name("issue", :stored_searchable)
+    config.add_show_field solr_name("volume", :stored_searchable)
+    config.add_show_field solr_name("pagination", :stored_searchable)
+    config.add_show_field solr_name("article_num", :stored_searchable)
+    config.add_show_field solr_name("project_name", :stored_searchable)
+    config.add_show_field solr_name("rights_holder", :stored_searchable)
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields

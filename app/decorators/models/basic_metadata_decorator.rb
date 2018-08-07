@@ -30,6 +30,12 @@ module Hyrax
       property :date_submitted, predicate: ::RDF::Vocab::DC.dateSubmitted, multiple: false do |index|
         index.as :stored_searchable
       end
+      property :project_name, predicate: ::RDF::Vocab::BF2.term(:CollectiveTitle), multiple: false do |index|
+        index.as :stored_searchable
+      end
+      property :rights_holder, predicate: ::RDF::Vocab::DC.rightsHolder, multiple: false do |index|
+        index.as :stored_searchable
+      end
     end
   end
 end

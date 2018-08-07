@@ -37,4 +37,11 @@ class SolrDocument
   attribute :date_published, Solr::Array, solr_name('date_published')
   attribute :date_accepted, Solr::Array, solr_name('date_accepted')
   attribute :date_submitted, Solr::Array, solr_name('date_submitted')
+  attribute :journal_title, Solr::Array, solr_name('journal_title')
+  attribute :issue, Solr::Array, solr_name('issue')
+  attribute :volume, Solr::Array, solr_name('volume')
+  attribute :pagination, Solr::Array, solr_name('pagination')
+  attribute :article_num, Solr::Array, solr_name('article_num')
+  attribute :project_name, Solr::Array, solr_name('project_name')
+  attribute :rights_holder, Solr::Array, solr_name('rights_holder')
 end

@@ -1,6 +1,7 @@
 <%= presenter.attribute_to_html(:creator, render_as: :faceted) %>
 <%= presenter.attribute_to_html(:contributor, render_as: :faceted) %>
 <%= presenter.attribute_to_html(:subject, render_as: :faceted) %>
+<%= presenter.attribute_to_html(:journal_title, render_as: :faceted) %>
 <%= presenter.attribute_to_html(:publisher, render_as: :faceted) %>
 <%= presenter.attribute_to_html(:date_published) %>
 <%= presenter.attribute_to_html(:language, render_as: :faceted) %>
@@ -21,3 +22,9 @@
 <%= presenter.attribute_to_html(:fndr_project_ref) %> <!-- need to change this rendering-->
 <%= presenter.attribute_to_html(:add_info) %> <!-- need to change this rendering-->
 <%= presenter.attribute_to_html(:date_accepted) %>
+<%= presenter.attribute_to_html(:volume) %>
+<%= presenter.attribute_to_html(:issue) %>
+<%= presenter.attribute_to_html(:pagination) %>
+<%= presenter.attribute_to_html(:article_num) %> <!-- need to change this rendering-->
+<%= presenter.attribute_to_html(:project_name) %>
+<%= presenter.attribute_to_html(:rights_holder) %>

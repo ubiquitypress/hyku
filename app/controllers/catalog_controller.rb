@@ -79,6 +79,9 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name("contributor", :stored_searchable), itemprop: 'contributor', link_to_search: solr_name("contributor", :facetable)
     config.add_index_field solr_name("isni", :stored_searchable), label: "ISNI"
     config.add_index_field solr_name("institution", :stored_searchable), label: "Institution"
+    config.add_index_field solr_name("doi", :stored_searchable), label: "DOI"
+    config.add_index_field solr_name("issn", :stored_searchable), label: "ISSN"
+    config.add_index_field solr_name("eissn", :stored_searchable), label: "eISSN"
     config.add_index_field solr_name("proxy_depositor", :symbol), label: "Depositor", helper_method: :link_to_profile
     config.add_index_field solr_name("depositor"), label: "Owner", helper_method: :link_to_profile
     config.add_index_field solr_name("publisher", :stored_searchable), itemprop: 'publisher', link_to_search: solr_name("publisher", :facetable)
@@ -105,6 +108,7 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name("pagination", :stored_searchable), label: "Pagination"
     config.add_index_field solr_name("article_num", :stored_searchable), label: "Article number"
     config.add_index_field solr_name("project_name", :stored_searchable), label: "Project Name"
+    config.add_index_field solr_name("official_link", :stored_searchable), label: "Official link"
     config.add_index_field solr_name("rights_holder", :stored_searchable), label: "Rights holder"
 
     # solr fields to be displayed in the show (single result) view
@@ -128,6 +132,9 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("resource_type", :stored_searchable), label: "Resource Type"
     config.add_show_field solr_name("format", :stored_searchable)
     config.add_show_field solr_name("identifier", :stored_searchable)
+    config.add_show_field solr_name("doi", :stored_searchable)
+    config.add_show_field solr_name("issn", :stored_searchable)
+    config.add_show_field solr_name("eissn", :stored_searchable)
     config.add_show_field solr_name('extent', :stored_searchable)
     config.add_show_field solr_name("institution", :stored_searchable)
     config.add_show_field solr_name("org_unit", :stored_searchable)
@@ -141,6 +148,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("pagination", :stored_searchable)
     config.add_show_field solr_name("article_num", :stored_searchable)
     config.add_show_field solr_name("project_name", :stored_searchable)
+    config.add_show_field solr_name("official_link", :stored_searchable)
     config.add_show_field solr_name("rights_holder", :stored_searchable)
 
     # "fielded" search configuration. Used by pulldown among other places.

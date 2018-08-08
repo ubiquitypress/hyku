@@ -37,6 +37,9 @@ module Hyrax
       property :rights_holder, predicate: ::RDF::Vocab::DC.rightsHolder, multiple: false do |index|
         index.as :stored_searchable
       end
+      property :doi, predicate: ::RDF::Vocab::BIBO.doi, multiple: false do |index|
+        index.as :stored_searchable
+      end
     end
   end
 end

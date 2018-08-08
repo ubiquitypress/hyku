@@ -14,6 +14,7 @@ module Hyku
     # -- all .rb files in that directory are automatically loaded.
 
     require_relative "../app/decorators/models/basic_metadata_decorator"
+    require_relative "../app/models/concerns/ubiquity/shared_metadata"
 
     # Gzip all responses.  We probably could do this in an upstream proxy, but
     # configuring Nginx on Elastic Beanstalk is a pain.

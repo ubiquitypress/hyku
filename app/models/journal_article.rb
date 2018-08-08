@@ -3,6 +3,7 @@
 class JournalArticle < ActiveFedora::Base
   include ::Hyrax::WorkBehavior
   include Hyrax::BasicMetadataDecorator
+  include SharedMetadata
 
   self.indexer = JournalArticleIndexer
   # Change this to restrict which works can be added as a child.
@@ -16,12 +17,6 @@ class JournalArticle < ActiveFedora::Base
   end
   property :journal_title, predicate: ::RDF::Vocab::BIBO.Journal do |index|
     index.as :stored_searchable, :facetable
-  end
-  property :volume, predicate: ::RDF::Vocab::BIBO.volume do |index|
-    index.as :stored_searchable
-  end
-  property :pagination, predicate: ::RDF::Vocab::BIBO.numPages, multiple: false do |index|
-    index.as :stored_searchable
   end
   property :article_num, predicate: ::RDF::Vocab::BIBO.number, multiple: false do |index|
     index.as :stored_searchable

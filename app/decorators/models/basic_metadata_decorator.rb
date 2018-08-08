@@ -1,7 +1,8 @@
 module Hyrax
   module BasicMetadataDecorator
     extend ActiveSupport::Concern
-
+    # include here properties (fields) shared across all templates
+    # also see SharedMetadata
     included do
       property :institution, predicate: ::RDF::Vocab::ORG.organization do |index|
         index.as :stored_searchable

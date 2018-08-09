@@ -1,5 +1,7 @@
 class ConferenceItem < ActiveFedora::Base
   include ::Hyrax::WorkBehavior
+  include Hyrax::BasicMetadataDecorator
+  include SharedMetadata
 
   self.indexer = ConferenceItemIndexer
   # Change this to restrict which works can be added as a child.

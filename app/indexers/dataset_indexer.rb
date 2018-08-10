@@ -1,6 +1,6 @@
 # Generated via
 #  `rails generate hyrax:work Dataset`
-class DatasetIndexer < Hyrax::WorkIndexer
+class DatasetIndexer < SharedIndexer
   # This indexes the default metadata. You can remove it if you want to
   # provide your own metadata and indexing.
   include Hyrax::IndexesBasicMetadata

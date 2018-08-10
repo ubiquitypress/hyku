@@ -1,6 +1,6 @@
 # Generated via
 #  `rails generate hyrax:work JournalArticle`
-class JournalArticleIndexer < Hyrax::WorkIndexer
+class JournalArticleIndexer < SharedIndexer
   # This indexes the default metadata. You can remove it if you want to
   # provide your own metadata and indexing.
   include Hyrax::IndexesBasicMetadata

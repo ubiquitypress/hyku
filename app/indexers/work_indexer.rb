@@ -1,4 +1,4 @@
-class WorkIndexer < Hyrax::WorkIndexer
+class WorkIndexer < SharedIndexer
   # This indexes the default metadata. You can remove it if you want to
   # provide your own metadata and indexing.
   include Hyrax::IndexesBasicMetadata
@@ -6,9 +6,6 @@ class WorkIndexer < Hyrax::WorkIndexer
   # Fetch remote labels for based_near. You can remove this if you don't want
   # this behavior
   include Hyrax::IndexesLinkedMetadata
-
-  # Use thumbnails served by RIIIF
-  self.thumbnail_path_service = IIIFWorkThumbnailPathService
 
   # Uncomment this block if you want to add custom indexing behavior:
   # def generate_solr_document

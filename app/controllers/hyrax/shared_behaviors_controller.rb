@@ -4,6 +4,8 @@ module Hyrax
     include Hyrax::WorksControllerBehavior
     include Hyrax::BreadcrumbsForWorks
 
+    include Hyku::IIIFManifest
+
     private
 
       def after_update_response

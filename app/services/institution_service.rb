@@ -1,14 +1,10 @@
-module InstitutionService
-  mattr_accessor :authority
-  self.authority = Qa::Authorities::Local.subauthority_for('institution')
 
-  def self.select_options
-    authority.all.map do |element|
-      [element[:label], element[:id]]
-    end
-  end
-
-  def self.label(id)
-    authority.find(id).fetch('term')
+  # Provide select options for the copyright status (edm:rights) field
+  #class RightsStatementService < QaSelectService
+  #
+class InstitutionService < Hyrax::QaSelectService
+  def initialize(_authority_name = nil)
+     super('institution')
   end
 end
+

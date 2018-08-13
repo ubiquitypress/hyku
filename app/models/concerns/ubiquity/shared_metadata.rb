@@ -1,3 +1,4 @@
+module Ubiquity
 module SharedMetadata
   extend ActiveSupport::Concern
   # include here properties (fields) shared across a number of templates but not all
@@ -6,17 +7,18 @@ module SharedMetadata
     property :volume, predicate: ::RDF::Vocab::BIBO.volume do |index|
       index.as :stored_searchable
     end
-    property :pagination, predicate: ::RDF::Vocab::BIBO.numPages, multiple: false do |index|
+    property :pagination, predicate: ::RDF::Vocab::BIBO.numPages do |index|
       index.as :stored_searchable
     end
-    property :issn, predicate: ::RDF::Vocab::BIBO.issn, multiple: false do |index|
+    property :issn, predicate: ::RDF::Vocab::BIBO.issn do |index|
       index.as :stored_searchable
     end
-    property :eissn, predicate: ::RDF::Vocab::BIBO.eissn, multiple: false do |index|
+    property :eissn, predicate: ::RDF::Vocab::BIBO.eissn do |index|
       index.as :stored_searchable
     end
-    property :official_link, predicate: ::RDF::Vocab::SCHEMA.url, multiple: false do |index|
+    property :official_link, predicate: ::RDF::Vocab::SCHEMA.url  do |index|
       index.as :stored_searchable
     end
   end
+end
 end

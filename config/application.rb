@@ -36,7 +36,7 @@ module Hyku
       # authenticity token errors.
       Hyrax::Admin::AppearancesController.form_class = AppearanceForm
       Hyrax::FileSetsController.show_presenter = Hyku::FileSetPresenter
-      Dir.glob(Rails.root + "app/decorators/**/*_decorator*.rb").each do |c|
+      Dir.glob(Rails.root + "app/decorators/**/*_decorator.rb").each do |c|
         require_dependency(c)
       end
       Hyrax::DownloadsController.include ::Hyrax::DownloadsControllerDecorator

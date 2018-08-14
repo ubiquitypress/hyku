@@ -1,0 +1,8 @@
+<% creator_name_type_service = CreatorNameTypeService.new %>
+
+
+
+<%= f.input :creator_name_type,
+            collection: creator_name_type_service.select_active_options,
+            include_blank: true,
+            input_html: { class: 'form-control', multiple: true } %>

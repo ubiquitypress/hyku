@@ -1,0 +1,16 @@
+terms:
+  - id: British Library
+    term: British Library
+    active: true
+  - id: British Museum
+    term: British Museum
+    active: true
+  - id: MOLA
+    term: MOLA
+    active: true
+  - id: National Museums of Scotland
+    term: National Museums of Scotland
+    active: true
+  - id: TATE
+    term: TATE
+    active: true

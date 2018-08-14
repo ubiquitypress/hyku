@@ -4,7 +4,7 @@ module Hyrax
   class DatasetForm < Hyrax::Forms::WorkForm
     include Hyrax::FormTerms
     self.model_class = ::Dataset
-    self.terms += %i[resource_type rendering_ids isni]
+    self.terms += %i[resource_type rendering_ids isni institution org_unit refereed]
     self.required_fields += [:isni]
   end
 end

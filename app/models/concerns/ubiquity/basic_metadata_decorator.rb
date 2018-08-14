@@ -61,7 +61,32 @@ module Ubiquity
         index.as :stored_searchable
       end
 
-      property :creator_organization, predicate: :: RDF::Vocab::FOAF.Organization, multiple: false do |index|
+      property :creator_organization, predicate: ::RDF::Vocab::FOAF.Organization, multiple: false do |index|
+        index.as :stored_searchable
+      end
+
+      property :contributor_type, predicate: ::RDF::Vocab::DC.type do |index|
+        index.as :stored_searchable
+      end
+
+      property :contributor_given_name, predicate: ::RDF::Vocab::SCHEMA.givenName, multiple: false do |index|
+        index.as :stored_searchable
+      end
+
+      property :contributor_family_name, predicate: ::RDF::Vocab::MADS.FamilyName  do |index|
+        index.as :stored_searchable
+      end
+
+
+      property :contributor_orcid, predicate: ::RDF::Vocab::DataCite.orcid do |index|
+        index.as :stored_searchable
+      end
+
+      property :contributor_isni, predicate: ::RDF::Vocab::DataCite.isni do |index|
+        index.as :stored_searchable
+      end
+
+      property :contributor_organization, predicate: ::RDF::Vocab::SCHEMA.Organization, multiple: false do |index|
         index.as :stored_searchable
       end
 

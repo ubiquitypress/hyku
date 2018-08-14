@@ -1,0 +1,23 @@
+terms:
+ - id: ContactPerson
+   term: ContactPerson
+   active: true
+ - id: DataCollector
+   term: DataCollector
+   active: true
+ - id: DataCurator
+   term: DataCurator
+   active: true
+ - id: DataManager
+   term: DataManager
+   active: true
+ - id: Distributor
+   term: Distributor
+   active: true
+ - id: Editor
+   term: Editor
+   active: true
+ - id: HostingInstitution
+   term: HostingInstitution
+   active: true
+

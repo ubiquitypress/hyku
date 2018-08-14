@@ -56,4 +56,12 @@ class SolrDocument
   #attribute :isni, Solr::Array, solr_name('isni')
   attribute :creator_organization, Solr::Array, solr_name('creator_organization')
 
+  attribute :contributor_type, Solr::Array, solr_name('contributor_type')
+  attribute :contributor_given_name, Solr::Array, solr_name('contributor_given_name')
+  attribute :contributor_family_name, Solr::Array, solr_name('contributor_family_name')
+  attribute :contributor_orcid, Solr::Array, solr_name('contributor_orcid')
+  attribute :contributor_isni, Solr::Array, solr_name('contributor_isni')
+  attribute :contributor_organization, Solr::Array, solr_name('contributor_organization')
+
+
 end

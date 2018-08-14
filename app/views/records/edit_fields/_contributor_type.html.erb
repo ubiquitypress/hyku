@@ -1,0 +1,8 @@
+<% contributor_type_service = ContributorTypeService.new %>
+
+
+
+<%= f.input :contributor_type,
+            collection: contributor_type_service.select_active_options,
+            include_blank: true,
+            input_html: { class: 'form-control', multiple: true } %>

@@ -7,6 +7,14 @@
 <%# presenter.attribute_to_html(:isni, render_as: :faceted) %>
 <%= presenter.attribute_to_html(:creator_organization, render_as: :faceted) %>
 
+<%= presenter.attribute_to_html(:contributor_type, render_as: :faceted) %>
+<%= presenter.attribute_to_html(:contributor_given_name, render_as: :faceted) %>
+<%= presenter.attribute_to_html(:contributor_family_name, render_as: :faceted) %>
+<%= presenter.attribute_to_html(:contributor_orcid, render_as: :faceted) %>
+<%= presenter.attribute_to_html(:contributor_isni, render_as: :faceted) %>
+<%= presenter.attribute_to_html(:contributor_organization, render_as: :faceted) %>
+
+
 <%= presenter.attribute_to_html(:contributor, render_as: :faceted) %>
 <%= presenter.attribute_to_html(:subject, render_as: :faceted) %>
 <%= presenter.attribute_to_html(:journal_title, render_as: :faceted) %>

@@ -5,7 +5,7 @@ module Hyku
     delegate :extent, :rendering_ids, :isni, :institution, :org_unit, :refereed, :doi, :issn, :eissn,
              :funder, :fndr_project_ref, :add_info, :date_published, :date_accepted, :date_submitted,
              :journal_title, :issue, :volume, :pagination, :article_num, :project_name, :rights_holder,
-             :official_link,
+             :official_link, :creator_name_type, :given_name, :family_name, :ORCiD, :isni, :creator_organization,
              to: :solr_document
 
     def manifest_url

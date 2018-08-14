@@ -48,4 +48,12 @@ class SolrDocument
   attribute :issn, Solr::Array, solr_name('issn')
   attribute :eissn, Solr::Array, solr_name('eissn')
   attribute :official_link, Solr::Array, solr_name('official_link')
+
+  attribute :creator_name_type, Solr::Array, solr_name('creator_name_type')
+  attribute :given_name, Solr::Array, solr_name('given_name')
+  attribute :family_name, Solr::Array, solr_name('family_name')
+  attribute :orcid, Solr::Array, solr_name('orcid')
+  #attribute :isni, Solr::Array, solr_name('isni')
+  attribute :creator_organization, Solr::Array, solr_name('creator_organization')
+
 end

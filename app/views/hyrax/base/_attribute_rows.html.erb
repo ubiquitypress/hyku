@@ -1,4 +1,12 @@
 <%= presenter.attribute_to_html(:creator, render_as: :faceted) %>
+
+<%= presenter.attribute_to_html(:creator_name_type) %>
+<%= presenter.attribute_to_html(:given_name, render_as: :faceted) %>
+<%= presenter.attribute_to_html(:family_name, render_as: :faceted) %>
+<%= presenter.attribute_to_html(:orcid, render_as: :faceted) %>
+<%# presenter.attribute_to_html(:isni, render_as: :faceted) %>
+<%= presenter.attribute_to_html(:creator_organization, render_as: :faceted) %>
+
 <%= presenter.attribute_to_html(:contributor, render_as: :faceted) %>
 <%= presenter.attribute_to_html(:subject, render_as: :faceted) %>
 <%= presenter.attribute_to_html(:journal_title, render_as: :faceted) %>

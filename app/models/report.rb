@@ -2,8 +2,8 @@
 #  `rails generate hyrax:work Report`
 class Report < ActiveFedora::Base
   include ::Hyrax::WorkBehavior
-  include Hyrax::BasicMetadataDecorator
-  include SharedMetadata
+  include Ubiquity::BasicMetadataDecorator
+  include Ubiquity::SharedMetadata
 
   self.indexer = ReportIndexer
   # Change this to restrict which works can be added as a child.

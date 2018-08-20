@@ -2,6 +2,8 @@
 #  `rails generate hyrax:work BookContribution`
 class BookContribution < ActiveFedora::Base
   include ::Hyrax::WorkBehavior
+  include Ubiquity::BasicMetadataDecorator
+  include Ubiquity::SharedMetadata
 
   self.indexer = BookContributionIndexer
   # Change this to restrict which works can be added as a child.

@@ -63,5 +63,5 @@ class SolrDocument
   attribute :contributor_isni, Solr::Array, solr_name('contributor_isni')
   attribute :contributor_organization, Solr::Array, solr_name('contributor_organization')
 
-
+  attribute :place_of_publication, Solr::Array, solr_name('place_of_publication')
 end

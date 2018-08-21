@@ -22,6 +22,9 @@ module SharedMetadata
     property :series_name, predicate: ::RDF::Vocab::BF2.subseriesOf do |index|
       index.as :stored_searchable, :facetable
     end
+    property :edition, predicate: ::RDF::Vocab::BF2.edition do |index|
+      index.as :stored_searchable
+    end
   end
 end
 end

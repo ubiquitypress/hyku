@@ -64,4 +64,5 @@ class SolrDocument
   attribute :contributor_organization, Solr::Array, solr_name('contributor_organization')
 
   attribute :place_of_publication, Solr::Array, solr_name('place_of_publication')
+  attribute :series_name, Solr::Array, solr_name('series_name')
 end

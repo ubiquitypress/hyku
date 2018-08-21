@@ -6,3 +6,7 @@ en:
       book:
         name:               "Book"
         description:        "Books written by a single author or collaboratively based on research or scholarly findings."
+  simple_form:
+    hints:
+      defaults:
+        series_name: Please enter the series title, e.g. British Library Research Publications

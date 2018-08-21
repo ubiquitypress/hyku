@@ -93,7 +93,6 @@ module Ubiquity
       property :place_of_publication, predicate: ::RDF::Vocab::BF2.term(:Place) do |index|
         index.as :stored_searchable, :facetable
       end
-
     end
   end
 end

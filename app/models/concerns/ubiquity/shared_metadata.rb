@@ -19,6 +19,9 @@ module SharedMetadata
     property :official_link, predicate: ::RDF::Vocab::SCHEMA.url  do |index|
       index.as :stored_searchable
     end
+    property :series_name, predicate: ::RDF::Vocab::BF2.subseriesOf do |index|
+      index.as :stored_searchable, :facetable
+    end
   end
 end
 end

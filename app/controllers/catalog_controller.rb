@@ -95,6 +95,7 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name("contributor", :stored_searchable), itemprop: 'contributor', link_to_search: solr_name("contributor", :facetable)
     #config.add_index_field solr_name("isni", :stored_searchable), label: "ISNI"
     config.add_index_field solr_name("institution", :stored_searchable), label: "Institution"
+    config.add_index_field solr_name("abstract", :stored_searchable), label: "Abstract"
     config.add_index_field solr_name("series_name", :stored_searchable), label: "Series name", link_to_search: solr_name("series_name", :facetable)
     config.add_index_field solr_name("edition", :stored_searchable), label: "Edition"
     config.add_index_field solr_name("doi", :stored_searchable), label: "DOI"
@@ -153,6 +154,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("contributor_isni", :stored_searchable), label: "contributor_isni"
     config.add_show_field solr_name("contributor_organization", :stored_searchable), label: "contributor_organization"
 
+    config.add_show_field solr_name("abstract", :stored_searchable)
     config.add_show_field solr_name("series_name", :stored_searchable)
     config.add_show_field solr_name("edition", :stored_searchable)
     config.add_show_field solr_name("contributor", :stored_searchable)

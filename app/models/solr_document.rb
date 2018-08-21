@@ -66,4 +66,5 @@ class SolrDocument
   attribute :place_of_publication, Solr::Array, solr_name('place_of_publication')
   attribute :series_name, Solr::Array, solr_name('series_name')
   attribute :edition, Solr::Array, solr_name('edition')
+  attribute :abstract, Solr::Array, solr_name('abstract')
 end

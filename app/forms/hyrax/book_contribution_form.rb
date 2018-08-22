@@ -4,9 +4,10 @@ module Hyrax
   class BookContributionForm < Hyrax::Forms::WorkForm
     include Hyrax::FormTerms
     self.model_class = ::BookContribution
-    self.terms += %i[resource_type rendering_ids doi volume pagination issn eissn
-                     date_published date_accepted date_submitted institution org_unit refereed
+    self.terms += %i[resource_type rendering_ids doi series_name volume edition place_of_publication pagination
+                     issn eissn date_published date_accepted date_submitted abstract institution org_unit refereed
                      project_name funder fndr_project_ref add_info rights_holder]
+    self.terms -= %i[based_near description]
     self.required_fields += %i[institution publisher date_published]
     self.required_fields -= %i[keyword rights_statement]
   end

@@ -30,6 +30,7 @@ en:
         eissn: eISSN, Electronic International Standard Serial Number. You can enter either the ISSN or the eISSN or both, if available.
         official_link: Please enter the official URL, e.g. the publisher's link to the item.
         place_of_publication: Enter the town/city and country, or country only, e.g. London, UK or UK
+        abstract: Please provide a short abstract or description of the item.
     labels:
       defaults:
         org_unit: Organisational Unit

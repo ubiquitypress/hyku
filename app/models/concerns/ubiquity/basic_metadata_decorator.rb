@@ -65,10 +65,6 @@ module Ubiquity
         index.as :stored_searchable
       end
 
-      property :contributor_type, predicate: ::RDF::Vocab::DC.type do |index|
-        index.as :stored_searchable
-      end
-
       property :contributor_given_name, predicate: ::RDF::Vocab::SCHEMA.givenName, multiple: false do |index|
         index.as :stored_searchable
       end

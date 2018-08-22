@@ -13,8 +13,6 @@ terms:
     term: Dataset
   - id: Dissertation
     term: Dissertation
-  - id: Image
-    term: Image
   - id: Journal
     term: Journal
   - id: Map or Cartographic Material
@@ -29,8 +27,6 @@ terms:
     term: Presentation
   - id: Project
     term: Project
-  - id: Report
-    term: Report
   - id: Research Paper
     term: Research Paper
   - id: Software or Program Code
@@ -39,3 +35,89 @@ terms:
     term: Video
   - id: Other
     term: Other
+  - id: JournalArticle Journal article
+    term: Journal article
+  - id: JournalArticle Book review
+    term: Book review
+  - id: JournalArticle Data paper
+    term: Data paper
+  - id: JournalArticle Editorial
+    term: Editorial
+  - id: JournalArticle Letter to the editor
+    term: Letter to the editor
+  - id: JournalArticle Magazine article
+    term: Magazine article
+  - id: JournalArticle Newspaper article
+    term: Newspaper article
+  - id: Book Grey literature
+    term: Grey literature
+  - id: Book Technical documentation
+    term: Technical documentation
+  - id: Book Working paper
+    term: Working paper
+  - id: BookContribution Book chapter
+    term: Book chapter
+  - id: BookContribution Book editorial
+    term: Book editorial
+  - id: ConferenceItem Abstract
+    term: Abstract
+  - id: ConferenceItem Conference paper (published)
+    term: Conference paper (published)
+  - id: ConferenceItem Conference paper (unpublished)
+    term: Conference paper (unpublished)
+  - id: ConferenceItem Conference poster (published)
+    term: Conference poster (published)
+  - id: ConferenceItem Conference poster (unpublished)
+    term: Conference poster (unpublished)
+  - id: ConferenceItem Lecture
+    term: Lecture
+  - id: ConferenceItem Presentation
+    term: Presentation
+  - id: Report Policy report
+    term: Policy report
+  - id: Report Research report
+    term: Research report
+  - id: Report Technical report
+    term: Technical report
+  - id: Dataset Numerical dataset
+    term: Numerical dataset
+  - id: Dataset Geographical dataset
+    term: Geographical dataset
+  - id: Dataset Software
+    term: Software
+  - id: Dataset Database
+    term: Database
+  - id: GenericWork Blog post
+    term: Blog post
+  - id: GenericWork Cartographic material
+    term: Cartographic material
+  - id: GenericWork Exhibition
+    term: Exhibition
+  - id: GenericWork Interactive resource
+    term: Interactive resource
+  - id: GenericWork Learning object
+    term: Learning object
+  - id: GenericWork Patent
+    term: Patent
+  - id: GenericWork Software
+    term: Software
+  - id: GenericWork Sound
+    term: Sound
+  - id: GenericWork Technical documentation
+    term: Technical documentation
+  - id: GenericWork Thesis (doctoral)
+    term: Thesis (doctoral)
+  - id: GenericWork Musical notation
+    term: Musical notation
+  - id: GenericWork Website
+    term: Website
+  - id: GenericWork Workflow
+    term: Workflow
+  - id: GenericWork Other
+    term: Other
+  - id: Image Moving image
+    term: Moving image
+  - id: Image Still image
+    term: Still image
+  - id: Image 3D image
+    term: 3D image

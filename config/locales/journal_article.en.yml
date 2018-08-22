@@ -31,6 +31,7 @@ en:
         official_link: Please enter the official URL, e.g. the publisher's link to the item.
         place_of_publication: Enter the town/city and country, or country only, e.g. London, UK or UK
         abstract: Please provide a short abstract or description of the item.
+        resource_type: If required, select the specific type of resource that best describes the work; otherwise the default resource type is displayed.
     labels:
       defaults:
         org_unit: Organisational Unit

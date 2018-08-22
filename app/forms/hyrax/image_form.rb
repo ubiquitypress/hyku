@@ -5,5 +5,6 @@ module Hyrax
     include Hyrax::FormTerms
     self.model_class = ::Image
     self.terms += %i[resource_type extent rendering_ids]
+    self.required_fields += [:resource_type]
   end
 end

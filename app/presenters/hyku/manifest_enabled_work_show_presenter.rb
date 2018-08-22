@@ -8,6 +8,7 @@ module Hyku
              :official_link, :creator_name_type, :given_name, :family_name, :ORCiD, :isni, :creator_organization,
              :contributor_type, :contributor_given_name, :contributor_family_name, :contributor_orcid,
              :contributor_isni, :contributor_organization, :place_of_publication, :series_name, :edition, :abstract,
+             :event_title, :event_date, :book_title,
              to: :solr_document
 
     def manifest_url

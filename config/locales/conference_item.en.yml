@@ -6,3 +6,10 @@ en:
       conference_item:
         name:               "Conference Item"
         description:        "Papers written alone or collaboratively, presented at an academic conference."
+  simple_form:
+    hints:
+      defaults:
+        event_title: The title of the conference, symposium or other event type.
+        event_date: Please provide the event date or date range in YYYY-MM-DD format, e.g. 2017-11-01 - 2017-11-03, 2017-11, or 2017.
+        book_title: "If published in a separate volume, the title of the Proceedings of which this item is part.\n
+                     If this was published in a journal then use the template 'journal article' instead."

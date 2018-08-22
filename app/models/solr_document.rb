@@ -67,4 +67,7 @@ class SolrDocument
   attribute :series_name, Solr::Array, solr_name('series_name')
   attribute :edition, Solr::Array, solr_name('edition')
   attribute :abstract, Solr::Array, solr_name('abstract')
+  attribute :event_title, Solr::Array, solr_name('event_title')
+  attribute :event_date, Solr::Array, solr_name('event_date')
+  attribute :book_title, Solr::Array, solr_name('book_title')
 end

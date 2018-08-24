@@ -1,20 +1,20 @@
 module JournalArticlesHelper
 
-  def get_model(model_class, model_id, field, multipart_sort_field_name)
+  def get_model(model_class, model_id, field, multipart_sort_field_name = nil)
     model = fetch_model(model_class, model_id)
     value = model.send(field.to_sym).first
 
-    #if passed in field = contributor and it is nil, return getch model using creator
-    #return empty string if passed in field has value in database ie (value == nil)
+    # if passed in field = contributor and it is nil, return getch model using creator
+    # return empty string if passed in field has value in database ie (value == nil)
     return ""  if (value == nil)
 
     if valid_json?(value)
-      #when an creator is an array witha json string
-      #same as  JSON.parse(model.creator.first)
+      # when an creator is an array witha json string
+      # same as  JSON.parse(model.creator.first)
       array_of_hash = JSON.parse(model.send(field.to_sym).first)
-      sort_hash(array_of_hash, multipart_sort_field_name)
+      sort_hash(array_of_hash, multipart_sort_field_name) if multipart_sort_field_name
     else
-      #returned when field is not a json. Return array to avoiding returning ActiveTriples::Relation
+      # returned when field is not a json. Return array to avoiding returning ActiveTriples::Relation
       model.send(field.to_sym).to_a
     end
   end
@@ -22,14 +22,14 @@ module JournalArticlesHelper
   private
 
   def valid_json?(json)
-    #return if json == nil
+    # return if json == nil
     !!JSON.parse(json)
     rescue JSON::ParserError
       false
   end
 
   def fetch_model(model_class, model_id)
-    #from edit page the model class is a constant but from show page it is a string
+    # from edit page the model class is a constant but from show page it is a string
     if model_class.class == String
       (model_class.constantize).find(model_id)
     else

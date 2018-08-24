@@ -1,0 +1,39 @@
+<div class="ubiquity-meta-alternate-identifier" >
+
+  <label class="control-label multi_value optional" for="journal_article_alternate_identifier">
+    Alternate identifier</label>
+
+  <%= select_tag "journal_article[alternate_identifier_group][][alternate_identifier]", hash.dig("alternate_identifier") %>
+
+  <br>
+
+  <label class="control-label multi_value optional" for="journal_article_alternate_identifier">Alternate identifier</label>
+
+  <%= text_field_tag "journal_article[alternate_identifier_group][][alternate_identifier]", nil,
+                     class: "journal_article_alternate_identifier_group form-control multi-text-field multi_value",
+                     placeholder: 'Add alternate identifier',
+                     name: "journal_article[alternate_identifier_group][][alternate_identifier]"
+  %>
+
+  <br>
+  <label class="control-label multi_value optional" for="journal_article_alternate_identifier_type">
+    Alternate identifier type</label>
+
+  <%= text_field_tag "journal_article[alternate_identifier_group][][alternate_identifier_type]", nil,
+                     class: "journal_article_alternate_identifier_type_group form-control multi-text-field multi_value",
+                     placeholder: 'Add alternate identifier type',
+                     name: "journal_article[alternate_identifier_group][][alternate_identifier_type]"
+  %>
+  <br>
+
+  <a href="#" style="color:red;" class="remove_alternate_identifier form-group" data-removeUbiquityAlternateIdentifier=".ubiquity-meta-alternate-identifier">
+    <span class="glyphicon glyphicon-remove"></span>
+    <span class="controls-remove-text">Remove</span>
+  </a>
+  |
+
+  <a href="#" class=" add_alternate_identifier" data-addUbiquityAlternateIdentifier=".ubiquity-meta-alternate-identifier">Add
+    another </a>
+  <br> <br>
+
+</div>

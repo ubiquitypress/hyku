@@ -1,0 +1,12 @@
+<% array_of_hash = get_model(presenter.model, presenter.id, 'alternate_identifier') %>
+
+<% if (array_of_hash.class == Array && array_of_hash.first.class == Hash )  %>
+  <%= render "journal_articles/ubiquity/alternate_identifier/show_array_hash", array_of_hash: array_of_hash  %>
+<!--if adding a new multi-part field that didn't exist before, you only need to handle array of hashes -->
+<%# elsif array_of_hash.class == Array %>
+  <%#= render "journal_articles/ubiquity/alternate_identifier/show_array", array_of_hash: array_of_hash  %>
+<%# elsif array_of_hash.class == Hash %>
+  <%#  presenter.attribute_to_html(:contributor, render_as: :faceted) %>
+  <%#= render "journal_articles/ubiquity/alternate_identifier/show_hash", array_of_hash: array_of_hash  %>
+<% else %> <!-- handle no record case -->
+<% end %> <%# closes if /else array_of_hash.class %>

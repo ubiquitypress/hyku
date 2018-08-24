@@ -10,6 +10,9 @@ module Ubiquity
       attr_accessor :creator_group, :creator_name_type, :creator_organization_name, :creator_given_name,
                     :creator_family_name, :creator_orcid, :creator_isni,
                     :creator_position
+
+      attr_accessor :alternate_identifier_group, :alternate_identifier, :alternate_identifier_type
+      self.terms += %i[alternate_identifier]
     end
 
     class_methods do
@@ -38,11 +41,14 @@ module Ubiquity
             :creator_family_name, :creator_name_type, :creator_orcid, :creator_isni,
             :creator_position
           ]}
+
+          permitted_params << { alternate_identifier_group: %i[alternate_identifier alternate_identifier_type] }
+
         end
       end
-    end  #closes class class_methods
+    end # closes class class_methods
 
-    #instance methods
+    # instance methods
     def title
       super.first || ""
     end

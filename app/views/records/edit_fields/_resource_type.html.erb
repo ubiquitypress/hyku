@@ -1,5 +1,7 @@
 <!-- overrides hyrax/app/views/records/edit_fields/_resource_type.html.erb -->
-
-<%= f.input :resource_type, as: :multi_value_select,
-            collection: ResourceTypesService.select_template_options(f.object.model_class),
+<% model_name = f.object.model_class %>
+<% set_default = ResourceTypesService.select_default(model_name) %>
+<%= f.input :resource_type, as: :select,
+            collection: ResourceTypesService.select_template_options(model_name),
+            selected: set_default,
             input_html: { class: 'form-control', multiple: true } %>

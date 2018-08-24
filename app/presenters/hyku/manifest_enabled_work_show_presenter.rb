@@ -5,9 +5,7 @@ module Hyku
     delegate :extent, :rendering_ids, :isni, :institution, :org_unit, :refereed, :doi, :issn, :eissn,
              :funder, :fndr_project_ref, :add_info, :date_published, :date_accepted, :date_submitted,
              :journal_title, :issue, :volume, :pagination, :article_num, :project_name, :rights_holder,
-             :official_link, :creator_name_type, :given_name, :family_name, :ORCiD, :isni, :creator_organization,
-             :contributor_type, :contributor_given_name, :contributor_family_name, :contributor_orcid,
-             :contributor_isni, :contributor_organization, :place_of_publication, :series_name, :edition, :abstract,
+             :official_link, :place_of_publication, :series_name, :edition, :abstract,
              :event_title, :event_date, :book_title,
              to: :solr_document
 
@@ -73,6 +71,7 @@ module Hyku
     def edit_access
       solr_document['edit_access_person_ssim']
     end
+
 
     private
 

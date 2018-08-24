@@ -143,6 +143,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("subject", :stored_searchable)
     config.add_show_field solr_name("creator", :stored_searchable)
 
+<<<<<<< HEAD
     config.add_show_field solr_name("creator_name_type", :stored_searchable)
     config.add_show_field solr_name("given_name", :stored_searchable), label: "given_name"
     config.add_show_field solr_name("family_name", :stored_searchable), label: "family_name"
@@ -163,6 +164,9 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("book_title", :stored_searchable)
     config.add_show_field solr_name("series_name", :stored_searchable)
     config.add_show_field solr_name("edition", :stored_searchable)
+=======
+
+>>>>>>> multi-part json field for the creator field is able to display on show page as well as saving when we create a new or edit existing work.
     config.add_show_field solr_name("contributor", :stored_searchable)
     config.add_show_field solr_name("publisher", :stored_searchable)
     config.add_show_field solr_name("place_of_publication", :stored_searchable)

@@ -1,0 +1,9 @@
+<% array.each do |value| %>
+<label class="control-label multi_value optional" for="journal_article_creator_orcid">
+  creator given name</label>
+
+<%= text_field_tag "journal_article[creator][][creator_given_name]", value,
+                   class: "journal_article_creator_group form-control multi-text-field multi_value",
+                   name: "journal_article[creator][][creator_given_name]"
+%>
+<% end %>

@@ -2,15 +2,11 @@
 #  `rails generate hyrax:work JournalArticle`
 class JournalArticle < ActiveFedora::Base
   include ::Hyrax::WorkBehavior
-
-
-  #include Hyrax::BasicMetadataDecorator
-
   include Ubiquity::BasicMetadataDecorator
-
   include Ubiquity::SharedMetadata
+  include Ubiquity::AllModelsVirtualFields
 
-  self.indexer = JournalArticleIndexer
+  self.indexer = ::JournalArticleIndexer
   # Change this to restrict which works can be added as a child.
   # self.valid_child_concerns = []
   validates :title, presence: { message: 'Your work must have a title.' }

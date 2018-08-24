@@ -3,6 +3,7 @@
 module Hyrax
   module Actors
     class JournalArticleActor < Hyrax::Actors::BaseActor
+
     end
   end
 end

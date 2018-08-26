@@ -4,7 +4,8 @@ class GenericWork < ActiveFedora::Base
   include HasRendering
 
   include Ubiquity::BasicMetadataDecorator
-
+  include Ubiquity::AllModelsVirtualFields
+  
   validates :title, presence: { message: 'Your work must have a title.' }
 
   # This indexer uses IIIF thumbnails:

@@ -1,5 +1,8 @@
 
 <%= render "shared/ubiquity/creator/show", presenter: presenter %>
+
+<%# display contributor using the show partial  -->
+<%# presenter.attribute_to_html(:contributor, render_as: :faceted) %>
 <%= render "shared/ubiquity/contributor/show", presenter: presenter %>
 
 <%= presenter.attribute_to_html(:subject, render_as: :faceted) %>

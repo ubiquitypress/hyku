@@ -1,0 +1,22 @@
+
+
+
+
+ <% array_of_hash = get_model(presenter.model, presenter.id, 'contributor', 'contributor_position') %>
+
+<%= array_of_hash.first.class == Hash  %>
+
+ <% if (array_of_hash.class == Array && array_of_hash.first.class == Hash )  %>
+
+ <%= render "book_contributions/ubiquity/contributor/show_array_hash", array_of_hash: array_of_hash  %>
+
+  <% elsif array_of_hash.class == Array %>
+    <%= render "book_contributions/ubiquity/contributor/show_array", array_of_hash: array_of_hash  %>
+
+  <% elsif array_of_hash.class == Hash %>
+
+    <%#  presenter.attribute_to_html(:contributor, render_as: :faceted) %>
+    <%= render "book_contributions/ubiquity/contributor/show_hash", array_of_hash: array_of_hash  %>
+   <% else %>
+
+  <% end %> <%# closes if /else array_of_hash.class %>

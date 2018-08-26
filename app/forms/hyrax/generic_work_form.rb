@@ -3,6 +3,8 @@
 module Hyrax
   class GenericWorkForm < Hyrax::Forms::WorkForm
     include Hyrax::FormTerms
+    include ::Ubiquity::AllFormsSharedBehaviour
+    
     self.model_class = ::GenericWork
     include HydraEditor::Form::Permissions
     self.terms += %i[resource_type rendering_ids]

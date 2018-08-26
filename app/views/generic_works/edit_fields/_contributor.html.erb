@@ -1,0 +1,13 @@
+
+
+
+<% if  curation_concern.new_record? %>
+  <%= render "generic_works/contributor/new_form" %>
+
+<% else %>
+
+  <%= render "generic_works/contributor/edit_form", curation_concern: curation_concern %>
+
+<% end %>
+
+<%= render "shared/contributor/contributor_js" %>

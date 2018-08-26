@@ -1,0 +1,65 @@
+<div class="ubiquity-meta-creator" >
+
+  <% array.each_with_index do |value, index| %>
+    <label class="control-label multi_value optional" for="generic_work_creator_given_name">
+      creator given name</label>
+
+   <%= text_field_tag "generic_work[creator_group][][creator_given_name]", value,
+                   class: "generic_work_creator_group form-control multi-text-field multi_value",
+                   name: "generic_work[creator_group][][creator_given_name]"
+    %>
+<% end %>
+  <%= select_tag "generic_work[creator_group][][creator_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s) %>
+
+
+  <label class="control-label multi_value optional" for="generic_work_creator_name_type">
+    creator name type</label>
+
+
+  <%= select_tag "generic_work[creator_group][][creator_name_type]",
+                 options_for_select(NameTypeService.new.select_active_options),
+                  required: true %>
+
+  <br>
+      <label class="control-label multi_value optional" for="generic_work_creator_family_name">
+        creator family name</label>
+
+
+      <%= text_field_tag "generic_work[creator_group][][creator_family_name]", nil,
+                         class: "generic_work_creator_group form-control multi-text-field multi_value",
+                         name: "generic_work[creator_group][][creator_family_name]"
+      %>
+
+      <br>
+
+      <label class="control-label multi_value optional" for="generic_work_creator_orcid">
+        creator orcid</label>
+
+      <%= text_field_tag "generic_work[creator_group][][creator_orcid]", nil,
+                         class: "generic_work_creator_group form-control multi-text-field multi_value",
+                         name: "generic_work[creator_group][][creator_orcid]"
+      %>
+
+      <br>
+      <label class="control-label multi_value optional" for="generic_work_creator_isni">
+        creator isni</label>
+
+      <%= text_field_tag "generic_work[creator_group][][creator_isni]", nil,
+                         class: "generic_work_creator_group form-control multi-text-field multi_value",
+                         name: "generic_work[creator_group][][creator_isni]"
+      %>
+      <br>
+      <%= hidden_field_tag "generic_work[creator_group][][creator_position]", index, class: 'ubiquity-creator-score'  %>
+
+
+      <a href="#" style="color:red;"  class=" remove_creator form-group " data-removeUbiquitycreator=".ubiquity-meta-creator">
+        <span class="glyphicon glyphicon-remove"></span>
+        <span class="controls-remove-text">Remove</span>
+      </a>
+      |
+
+      <a href="#" class=" add_creator" data-addUbiquitycreator=".ubiquity-meta-creator">Add another </a>
+
+      <br> <br>
+
+</div>

@@ -3,6 +3,8 @@
 module Hyrax
   class ReportForm < Hyrax::Forms::WorkForm
     include Hyrax::FormTerms
+    include ::Ubiquity::AllFormsSharedBehaviour
+    
     self.model_class = ::Report
     self.terms += %i[resource_type rendering_ids doi series_name volume edition pagination place_of_publication
                      issn eissn date_published date_accepted date_submitted abstract institution org_unit refereed

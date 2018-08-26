@@ -7,6 +7,7 @@ class JournalArticle < ActiveFedora::Base
   include Ubiquity::AllModelsVirtualFields
 
   self.indexer = ::JournalArticleIndexer
+
   # Change this to restrict which works can be added as a child.
   # self.valid_child_concerns = []
   validates :title, presence: { message: 'Your work must have a title.' }
@@ -19,7 +20,7 @@ class JournalArticle < ActiveFedora::Base
   property :journal_title, predicate: ::RDF::Vocab::BIBO.Journal do |index|
     index.as :stored_searchable, :facetable
   end
-  property :article_num, predicate: ::RDF::Vocab::BIBO.number, multiple: false do |index|
+  property :article_num, predicate: ::RDF::Vocab::BIBO.number  do |index|
     index.as :stored_searchable
   end
 

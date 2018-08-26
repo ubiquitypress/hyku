@@ -2,17 +2,12 @@
 
 
 <% if  curation_concern.new_record? %>
-  <%# render "shared/ubiquity/contributor/new_form" %>
+  <%= render "journal_articles/ubiquity/contributor/new_form" %>
 
 <% else %>
 
-
-  <%# render "shared/ubiquity/contributor/edit_form", curation_concern: curation_concern %>
-
+  <%= render "journal_articles/ubiquity/contributor/edit_form", curation_concern: curation_concern %>
 
 <% end %>
-
-
-<%# render "journal_articles/contributor/contributor_js" %>
 
 <%= render "shared/ubiquity/contributor/contributor_js" %>

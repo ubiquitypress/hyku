@@ -2,6 +2,8 @@
 #  `rails generate hyrax:work Image`
 class Image < ActiveFedora::Base
   include ::Hyrax::WorkBehavior
+  include Ubiquity::AllModelsVirtualFields
+  
   include HasRendering
 
   property :extent, predicate: ::RDF::Vocab::DC.extent, multiple: true do |index|

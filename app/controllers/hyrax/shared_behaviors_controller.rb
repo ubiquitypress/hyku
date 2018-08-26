@@ -6,14 +6,6 @@ module Hyrax
 
     include Hyku::IIIFManifest
 
-    def update
-      super
-    end
-
-    def create
-      super
-    end
-
     private
 
       def after_update_response

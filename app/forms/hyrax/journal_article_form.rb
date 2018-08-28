@@ -12,7 +12,7 @@ module Hyrax
                      contributor_type contributor_given_name contributor_family_name contributor_orcid contributor_isni contributor_organization
                      ]
     self.terms -= %i[based_near description]
-    self.required_fields += %i[journal_title institution publisher date_published]
+    self.required_fields += %i[resource_type journal_title institution publisher date_published]
     self.required_fields -= %i[keyword rights_statement]
   end
 end

@@ -23,12 +23,9 @@ class JournalArticle < ActiveFedora::Base
   property :journal_title, predicate: ::RDF::Vocab::BIBO.Journal do |index|
     index.as :stored_searchable, :facetable
   end
-
-
-  property :article_num, predicate: ::RDF::Vocab::BIBO.number  do |index|
+  property :article_num, predicate: ::RDF::Vocab::BIBO.number, multiple: false do |index|
     index.as :stored_searchable
   end
-
 
   # This must be included at the end, because it finalizes the metadata
   # schema (by adding accepts_nested_attributes)

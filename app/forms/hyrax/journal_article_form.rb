@@ -6,7 +6,8 @@ module Hyrax
     include ::Ubiquity::AllFormsSharedBehaviour
     self.model_class = ::JournalArticle
 
-    self.terms += %i[resource_type rendering_ids journal_title alternate_identifier doi volume issue pagination
+    # alternate_identifier alternate_identifier_type
+    self.terms += %i[resource_type rendering_ids journal_title doi volume issue pagination
                      place_of_publication issn eissn article_num date_published date_accepted date_submitted abstract
                      institution org_unit refereed official_link project_name funder fndr_project_ref add_info
                      rights_holder]

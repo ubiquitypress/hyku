@@ -5,7 +5,7 @@ module Ubiquity
     included do
       attr_accessor :contributor_group, :contributor_name_type, :contributor_type, :contributor_given_name,
                     :contributor_family_name, :contributor_orcid, :contributor_isni,
-                   :contributor_position, :contributor_organization_name
+                    :contributor_position, :contributor_organization_name
 
       attr_accessor :creator_group, :creator_name_type, :creator_organization_name, :creator_given_name,
                     :creator_family_name, :creator_orcid, :creator_isni,
@@ -13,6 +13,7 @@ module Ubiquity
 
       attr_accessor :alternate_identifier_group, :alternate_identifier, :alternate_identifier_type
       self.terms += %i[alternate_identifier]
+
     end
 
     class_methods do

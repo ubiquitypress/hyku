@@ -2,7 +2,10 @@ module JournalArticlesHelper
 
   def get_model(model_class, model_id, field, multipart_sort_field_name = nil)
     model = fetch_model(model_class, model_id)
-    value = model.send(field.to_sym).first
+    puts "pineapple #{model.inspect}"
+    value = model.send(field.to_sym)
+    puts "mango #{value.inspect}"
+    value = value.first if value
 
     # if passed in field = contributor and it is nil, return getch model using creator
     # return empty string if passed in field has value in database ie (value == nil)

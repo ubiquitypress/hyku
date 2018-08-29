@@ -7,22 +7,22 @@ module Ubiquity
       property :volume, predicate: ::RDF::Vocab::BIBO.volume do |index|
         index.as :stored_searchable
       end
-      property :pagination, predicate: ::RDF::Vocab::BIBO.numPages do |index|
+      property :pagination, predicate: ::RDF::Vocab::BIBO.numPages, multiple: false do |index|
         index.as :stored_searchable
       end
-      property :issn, predicate: ::RDF::Vocab::BIBO.issn do |index|
+      property :issn, predicate: ::RDF::Vocab::BIBO.issn, multiple: false do |index|
         index.as :stored_searchable
       end
-      property :eissn, predicate: ::RDF::Vocab::BIBO.eissn do |index|
+      property :eissn, predicate: ::RDF::Vocab::BIBO.eissn, multiple: false do |index|
         index.as :stored_searchable
       end
-      property :official_link, predicate: ::RDF::Vocab::SCHEMA.url  do |index|
+      property :official_link, predicate: ::RDF::Vocab::SCHEMA.url, multiple: false do |index|
         index.as :stored_searchable
       end
       property :series_name, predicate: ::RDF::Vocab::BF2.subseriesOf do |index|
         index.as :stored_searchable, :facetable
       end
-      property :edition, predicate: ::RDF::Vocab::BF2.edition do |index|
+      property :edition, predicate: ::RDF::Vocab::BF2.edition, multiple: false do |index|
         index.as :stored_searchable
       end
       property :event_title, predicate: ::RDF::Vocab::BF2.term(:Event) do |index|

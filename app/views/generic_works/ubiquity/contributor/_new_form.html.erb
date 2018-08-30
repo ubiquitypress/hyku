@@ -4,11 +4,31 @@
     contributor name type</label>
 
   <%= select_tag "generic_work[contributor_group][][contributor_name_type]",
-        content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s) %>
+        content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select(NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s), class:  'ubiquity_creator_name_type' %>
 
 
   <br/>
-  <label class="control-label multi_value optional" for="generic_work_contributor_type">
+  <label class="control-label multi_value optional" for="generic_work_contributor_isni">
+    contributor isni</label>
+
+  <%= text_field_tag "generic_work[contributor_group][][contributor_isni]", nil,
+                     class: "generic_work_contributor_group form-control multi-text-field multi_value",
+                     placeholder: 'Add contributor isni',
+                     name: "generic_work[contributor_group][][contributor_isni]"
+  %>
+  <br/>
+  <label class="ubiquity_creator_organization_name control-label multi_value optional" for="generic_work_creator_organization_name">
+    creator organization name</label>
+
+  <%= text_field_tag  "generic_work[creator_group][][creator_organization_name]", nil,
+                      class: "ubiquity_creator_organization_name generic_work_creator_organization_name form-control multi-text-field multi_value",
+                      placeholder: 'Add creator organization name',
+                      name: "generic_work[creator_group][][creator_organization_name]"
+  %>
+  <br/>
+
+ <span class="ubiquity_personal_fields">
+   <label class="control-label multi_value optional" for="generic_work_contributor_type">
    Contributor type</label>
 
  <%= select_tag "generic_work[contributor_group][][contributor_type]",
@@ -45,18 +65,10 @@
                      placeholder: 'Add contributor orcid',
                      name: "generic_work[contributor_group][][contributor_orcid]"
   %>
+</span>
 
-  <br>
-  <label class="control-label multi_value optional" for="generic_work_contributor_isni">
-    contributor isni</label>
+  <br/>
 
-  <%= text_field_tag "generic_work[contributor_group][][contributor_isni", nil,
-                     class: "generic_work_contributor_group form-control multi-text-field multi_value",
-                     placeholder: 'Add contributor isni',
-                     name: "generic_work[contributor_group][][contributor_isni]"
-  %>
-
-  <br>
     <%= hidden_field_tag "generic_work[contributor_group][][contributor_position]", 1, class: 'ubiquity-contributor-score'  %>
    <br>
 

@@ -59,12 +59,12 @@
       });
    });
 
-
    $(document).on("turbolinks:load", function(){
      if($(".ubiquity_creator_name_type").is(':visible')){
       $(".ubiquity_creator_name_type").each(function() {
         _this = this;
          if (this.value == 'Personal') {
+
            $(this).siblings(".ubiquity_creator_organization_name").hide();
            $(this).siblings(".ubiquity_personal_fields").show();
          } else {
@@ -76,6 +76,5 @@
 
      };
    });
-
 
 </script>

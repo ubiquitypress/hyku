@@ -1,0 +1,74 @@
+
+<div class="ubiquity-meta-editor" >
+
+  <% hash.each do |key, value| %>
+   <% if key == 'editor_name_type' %>
+
+        <label class="control-label multi_value optional" for="conference_item_editor_name_type">
+     editor name type</label>
+
+      <%= select_tag "conference_item[editor_group][][editor_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("editor_name_type")) %>
+
+   <% end %>
+
+     <% if key == 'editor_given_name' %>
+        <label class="control-label multi_value optional" for="conference_item_editor_given_name">
+          editor given name</label>
+
+        <%= text_field_tag "conference_item[editor_group][][editor_given_name]", hash.dig("editor_given_name"),
+                           class: "conference_item_editor_group form-control multi-text-field multi_value",
+                           name: "conference_item[editor_group][][editor_given_name]"
+        %>
+       <% end %>
+
+      <% if key == 'editor_family_name' %>
+        <label class="control-label multi_value optional" for="conference_item_editor_family_name">
+          editor family name</label>
+
+        <%= text_field_tag "conference_item[editor_group][][editor_family_name]",  hash.dig("editor_family_name"),
+                           class: "conference_item_editor_group form-control multi-text-field multi_value",
+                           name: "conference_item[editor_group][][editor_family_name]"
+        %>
+
+      <% end %>
+
+      <% if key == 'editor_orcid' %>
+        <p>
+        <label class="control-label multi_value optional" for="conference_item_editor_orcid">
+          editor orcid</label>
+
+        <%= text_field_tag "conference_item[editor_group][][editor_orcid]", hash.dig("editor_orcid"),
+                           class: "conference_item_editor_group form-control multi-text-field multi_value",
+                           name: "conference_item[editor_group][][editor_orcid]"
+        %>
+      </p>
+     <% end %>
+
+     <% if key == 'editor_isni' %>
+        <label class="control-label multi_value optional" for="conference_item_editor_isni">
+          editor isni</label>
+
+        <%= text_field_tag "conference_item[editor_group][][editor_isni]", hash.dig("editor_orcid"),
+                           class: "conference_item_editor_group form-control multi-text-field multi_value",
+                           name: "conference_item[editor_group][][editor_isni]"
+        %>
+
+      <% end %>
+
+      <% if key == 'editor_position' %>
+        <%= hidden_field_tag "conference_item[editor_group][][editor_position]", hash.dig("editor_position"), class: 'ubiquity-editor-score'  %>
+      <% end %>
+
+    <% end %>
+
+    <a href="#" style="color:red;"  class=" remove_editor form-group " data-removeUbiquityEditor=".ubiquity-meta-editor">
+      <span class="glyphicon glyphicon-remove"></span>
+      <span class="controls-remove-text">Remove</span>
+    </a>
+    |
+
+    <a href="#" class=" add_editor" data-addUbiquityEditor=".ubiquity-meta-editor">Add another </a>
+
+    <br/>
+
+</div>

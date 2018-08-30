@@ -3,11 +3,11 @@
 
 
 <% if (array_of_hash.class == Array && array_of_hash.first.class == Hash)  %>
-  <%= render "shared/ubiquity/creator/edit_array_hash_form", array_of_hash: array_of_hash %>
+  <%= render "reports/ubiquity/creator/edit_array_hash_form", array_of_hash: array_of_hash %>
 <% elsif array_of_hash.class == Array %>
-  <%= render "shared/ubiquity/creator/new_form", array: array_of_hash %>
+  <%= render "reports/ubiquity/creator/new_form", array: array_of_hash %>
 <% elsif array_of_hash.class == Hash %>
-  <%= render "shared/ubiquity/creator/edit_hash_form", hash: array_of_hash %>
+  <%= render "reports/ubiquity/creator/edit_hash_form", hash: array_of_hash %>
 <% else %>
-  <%= render "shared/ubiquity/creator/new_form", hash: array_of_hash %>
+  <%= render "reports/ubiquity/creator/new_form", hash: array_of_hash %>
 <% end %> <%# closes if array_of_hash.class %>

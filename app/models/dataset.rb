@@ -13,10 +13,6 @@ class Dataset < ActiveFedora::Base
 
   self.human_readable_type = 'Dataset'
 
-  property :isni, predicate: ::RDF::URI.new('http://id.loc.gov/vocabulary/identifiers/isni.html') do |index|
-    index.as :stored_searchable
-  end
-
   # This must be included at the end, because it finalizes the metadata
   # schema (by adding accepts_nested_attributes)
   include ::Hyrax::BasicMetadata

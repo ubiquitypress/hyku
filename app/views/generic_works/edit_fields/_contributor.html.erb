@@ -2,12 +2,12 @@
 
 
 <% if  curation_concern.new_record? %>
-  <%= render "generic_works/contributor/new_form" %>
+  <%= render "generic_works/ubiquity/contributor/new_form" %>
 
 <% else %>
 
-  <%= render "generic_works/contributor/edit_form", curation_concern: curation_concern %>
+  <%= render "generic_works/ubiquity/contributor/edit_form", curation_concern: curation_concern %>
 
 <% end %>
 
-<%= render "shared/contributor/contributor_js" %>
+<%= render "shared/ubiquity/contributor/contributor_js" %>

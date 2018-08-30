@@ -1,22 +1,15 @@
 
-
-
-
- <% array_of_hash = get_model(presenter.model, presenter.id, 'contributor', 'contributor_position') %>
-
-<%= array_of_hash.first.class == Hash  %>
+<% array_of_hash = get_model(presenter.model, presenter.id, 'contributor', 'contributor_position') %>
 
  <% if (array_of_hash.class == Array && array_of_hash.first.class == Hash )  %>
 
- <%= render "shared/ubiquity/contributor/show_array_hash", array_of_hash: array_of_hash  %>
+   <%= render "shared/ubiquity/contributor/show_array_hash", array_of_hash: array_of_hash  %>
 
-  <% elsif array_of_hash.class == Array %>
+<% elsif array_of_hash.class == Array %>
     <%= render "shared/ubiquity/contributor/show_array", array_of_hash: array_of_hash  %>
 
-  <% elsif array_of_hash.class == Hash %>
-
-    <%#  presenter.attribute_to_html(:contributor, render_as: :faceted) %>
+<% elsif array_of_hash.class == Hash %>
     <%= render "shared/ubiquity/contributor/show_hash", array_of_hash: array_of_hash  %>
-   <% else %>
+<% else %>
 
-  <% end %> <%# closes if /else array_of_hash.class %>
+<% end %> <%# closes if /else array_of_hash.class %>

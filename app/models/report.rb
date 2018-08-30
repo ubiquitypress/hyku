@@ -5,6 +5,7 @@ class Report < ActiveFedora::Base
   include Ubiquity::BasicMetadataDecorator
   include Ubiquity::SharedMetadata
   include Ubiquity::AllModelsVirtualFields
+  include Ubiquity::EditorMetadataModelConcern
 
   self.indexer = ReportIndexer
   # Change this to restrict which works can be added as a child.

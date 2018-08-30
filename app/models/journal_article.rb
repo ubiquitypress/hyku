@@ -17,7 +17,7 @@ class JournalArticle < ActiveFedora::Base
   property :issue, predicate: ::RDF::Vocab::Bibframe.term(:Serial), multiple: false do |index|
     index.as :stored_searchable
   end
-  property :journal_title, predicate: ::RDF::Vocab::BIBO.Journal do |index|
+  property :journal_title, predicate: ::RDF::Vocab::BIBO.Journal, multiple: false do |index|
     index.as :stored_searchable, :facetable
   end
   property :article_num, predicate: ::RDF::Vocab::BIBO.number  do |index|

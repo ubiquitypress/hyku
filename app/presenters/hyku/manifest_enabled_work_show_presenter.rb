@@ -6,7 +6,7 @@ module Hyku
              :funder, :fndr_project_ref, :add_info, :date_published, :date_accepted, :date_submitted,
              :journal_title, :issue, :volume, :pagination, :article_num, :project_name, :rights_holder,
              :official_link, :place_of_publication, :series_name, :edition, :abstract,
-             :event_title, :event_date, :book_title,
+             :event_title, :event_date, :book_title,  :editor,
              to: :solr_document
 
     def manifest_url

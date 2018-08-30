@@ -1,0 +1,12 @@
+
+<% if  curation_concern.new_record? %>
+
+  <%= render "books/ubiquity/editor/new_form" %>
+
+<% else %>
+
+  <%= render "books/ubiquity/editor/edit_form", curation_concern: curation_concern, f: f %>
+
+<% end %>
+
+<%= render "shared/ubiquity/editor_js" %>

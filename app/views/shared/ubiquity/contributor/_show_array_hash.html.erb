@@ -7,19 +7,55 @@
         <ul class="tabular">
           <li class="attribute contributor">
 
-            <span style="float:left"> <%= hash['contributor_given_name'] %> - </span>
+            <span style="float:left">
+              <% unless hash['contributor_family_name'].present? %>
+                 
+                <%= hash['creator_family_name'] %> ,&nbsp;
+                <% end %>
+                <% if hash['contributor_given_name'].present? %>
+                  <%= hash['contributor_given_name'] %>
+                <% end %>
+             </span>
 
             <span itemprop="name">
+              <span style="float:left" > &nbsp;(</span>
+
+             <span style="float:left">
+               <% if hash['contributor_type'].present? %>
+                 <%= hash['contributor_type'] %>,  &nbsp;
+                <% end %>
+             </span>
+
+             <% if hash['contributor_orcid'].present? %>
+              <a  href="<%= hash['contributor_orcid'] %>" target="_blank" >
 
 
-              <a  href="<%= hash['contributor_orcid'] %>"  >
-
-              (
               <img src="https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/orcid_16x16.png" alt="orcid"  height="16" width="16" class="img-responsive" style="float:left"  >
-               )
+
                </a>
 
+               <% end %>
+
+               <% if hash['contributor_isni'].present? %>
+                 <a  href="<%= hash['contributor_isni'] %>" target="_blank" >
+
+
+                 <img src="
+                 https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/logo_xml_isni-16.gif" alt="orcid"  height="16" width="16" class="img-responsive" style="float:left"  >
+
+                  </a>
+
+                  <% end %>
+                  <span style="float:left">)<span>
               </span>
+
+               <span itemprop="name">
+
+
+
+                 </span>
+
+
             </li>
         </ul>
         </td>

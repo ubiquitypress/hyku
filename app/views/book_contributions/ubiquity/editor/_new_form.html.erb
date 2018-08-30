@@ -1,0 +1,63 @@
+<div class="ubiquity-meta-editor" >
+
+  <label class="control-label multi_value optional" for="book_contributions_editor_name_type">
+    editor name type</label>
+
+  <%= select_tag "book_contributions[editor_group][][editor_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s), required: true %>
+
+  <br>
+
+  <label class="control-label multi_value optional" for="book_contributions_editor_given_name">
+    editor given name</label>
+
+  <%= text_field_tag  "book_contributions[editor_group][][editor_given_name]", nil,
+                      class: "book_contributions_editor_given_name form-control multi-text-field multi_value",
+                      placeholder: 'Add editor given name',
+                      name: "book_contributions[editor_group][][editor_given_name]"
+  %>
+
+  <br>
+  <label class="control-label multi_value optional" for="book_contributions_editor_family_name">
+    editor family name</label>
+
+  <%= text_field_tag  "book_contributions[editor_group][][editor_family_name]", nil,
+                      class: "book_contributions_editor_family_name form-control multi-text-field multi_value",
+                      placeholder: 'Add editor family name',
+                      name: "book_contributions[editor_group][][editor_family_name]"
+  %>
+
+  <br>
+  <label class="control-label multi_value optional" for="book_contributions_editor_orcid">
+    editor orcid</label>
+
+  <%= text_field_tag "book_contributions[editor_group][][editor_orcid", nil,
+                     class: "book_contributions_editor_group form-control multi-text-field multi_value",
+                     placeholder: 'Add editor orcid',
+                     name: "book_contributions[editor_group][][editor_orcid]"
+  %>
+
+  <br>
+  <label class="control-label multi_value optional" for="book_contributions_editor_isni">
+    editor isni</label>
+
+  <%= text_field_tag "book_contributions[editor_group][][editor_isni", nil,
+                     class: "book_contributions_editor_group form-control multi-text-field multi_value",
+                     placeholder: 'Add editor isni',
+                     name: "book_contributions[editor_group][][editor_isni]"
+  %>
+
+  <br>
+    <%= hidden_field_tag "book_contributions[editor_group][][editor_position]", 1, class: 'ubiquity-editor-score'  %>
+   <br>
+
+  <a href="#" style="color:red;"  class=" remove_editor form-group " data-removeUbiquityEditor=".ubiquity-meta-editor">
+    <span class="glyphicon glyphicon-remove"></span>
+    <span class="controls-remove-text">Remove</span>
+  </a>
+  |
+
+  <a href="#" class=" add_editor" data-addUbiquityEditor=".ubiquity-meta-editor">Add another </a>
+
+  <br> <br>
+
+</div>

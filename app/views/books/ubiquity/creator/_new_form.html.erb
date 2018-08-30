@@ -1,7 +1,7 @@
 <div class="ubiquity-meta-creator" >
 
   <label class="control-label multi_value optional" for="book_creator_name_type">
-    creator name type</label>
+    creator name type<span style="color:blue;">required<span></label>
 
   <%= select_tag "book[creator_group][][creator_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s), required: true %>
 

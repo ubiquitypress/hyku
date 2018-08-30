@@ -5,19 +5,19 @@
 <div class="ubiquity-meta-editor" >
 
    <label class="control-label multi_value optional" for="book_editor_name_type">
-    editor name type<span style="color:blue;">required<span></label>
+    editor name type</label>
 
-    <%= select_tag "book[editor_group][][editor_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("editor_name_type")), required: true %>
+    <%= select_tag "book[editor_group][][editor_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("editor_name_type")) %>
 
   <br>
 
       <label class="control-label multi_value optional" for="book_editor_given_name">
-        editor given name <span style="color:blue;">required<span> </label>
+        editor given name</label>
 
       <%= text_field_tag "book[editor_group][][editor_given_name]", hash.dig("editor_given_name"),
                          class: "book_editor_group form-control multi-text-field multi_value",
-                         name: "book[editor_group][][editor_given_name]",
-                         required: true
+                         name: "book[editor_group][][editor_given_name]"
+
       %>
 
       <br>
@@ -27,7 +27,7 @@
 
       <%= text_field_tag "book[editor_group][][editor_family_name]", hash.dig("editor_family_name"),
                          class: "book_editor_group form-control multi-text-field multi_value",
-                         name: "book[editor_group][][editor_family_name]", required: true
+                         name: "book[editor_group][][editor_family_name]"
 
       %>
 

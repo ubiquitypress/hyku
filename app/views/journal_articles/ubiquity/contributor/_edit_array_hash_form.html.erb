@@ -5,7 +5,7 @@
 <div class="ubiquity-meta-contributor" >
 
    <label class="control-label multi_value optional" for="journal_article_contributor_name_type">
-    contributor name type<span style="color:blue;">required<span></label>
+    contributor name type</label>
 
     <%= select_tag "journal_article[contributor_group][][contributor_name_type]",
        content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("contributor_name_type")) %>
@@ -21,12 +21,11 @@
   <br/>
 
       <label class="control-label multi_value optional" for="journal_article_contributor_given_name">
-        contributor given name <span style="color:blue;">required<span> </label>
+        contributor given name</label>
 
       <%= text_field_tag "journal_article[contributor_group][][contributor_given_name]", hash.dig("contributor_given_name"),
                          class: "journal_article_contributor_group form-control multi-text-field multi_value",
-                         name: "journal_article[contributor_group][][contributor_given_name]",
-                         required: true
+                         name: "journal_article[contributor_group][][contributor_given_name]"
       %>
 
       <br>
@@ -36,7 +35,7 @@
 
       <%= text_field_tag "journal_article[contributor_group][][contributor_family_name]", hash.dig("contributor_family_name"),
                          class: "journal_article_contributor_group form-control multi-text-field multi_value",
-                         name: "journal_article[contributor_group][][contributor_family_name]", required: true
+                         name: "journal_article[contributor_group][][contributor_family_name]"
 
       %>
 

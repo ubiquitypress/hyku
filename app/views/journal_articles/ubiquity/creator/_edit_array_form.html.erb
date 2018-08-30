@@ -9,7 +9,8 @@
                    name: "journal_article[creator_group][][creator_given_name]"
     %>
 <% end %>
-  <%= select_tag "journal_article[creator_group][][creator_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s) %>
+  <br/><span style="color:blue;">required<span>
+  <%= select_tag "journal_article[creator_group][][creator_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s), required: true %>
 
 
   <label class="control-label multi_value optional" for="journal_article_creator_name_type">
@@ -17,8 +18,8 @@
 
 
   <%= select_tag "journal_article[creator_group][][creator_name_type]",
-                 options_for_select(NameTypeService.new.select_active_options),
-                  required: true %>
+                 options_for_select(NameTypeService.new.select_active_options)
+                   %>
 
   <br>
       <label class="control-label multi_value optional" for="journal_article_creator_family_name">

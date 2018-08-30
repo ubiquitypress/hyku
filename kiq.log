@@ -949,3 +949,37 @@ I, [2018-08-13T14:46:30.360298 #32]  INFO -- : Performing ContentUpdateEventJob 
 I, [2018-08-13T14:46:31.055242 #32]  INFO -- : Performed ContentUpdateEventJob (Job ID: ab6edb94-abdf-4e0c-8a5a-f678e03eade2) from Sidekiq(default) in 685.86ms
 D, [2018-08-13T14:46:31.057123 #32] DEBUG -- :   [1m[36mAccount Load (0.2ms)[0m  [1m[34mSELECT  "public"."accounts".* FROM "public"."accounts" WHERE "public"."accounts"."tenant" = $1 LIMIT $2[0m  [["tenant", "public"], ["LIMIT", 1]]
 2018-08-13T14:46:31.060Z 32 TID-gqzt0lmho ContentUpdateEventJob JID-e70abc9bb83d20f449f9106c INFO: done: 2.842 sec
+I, [2018-08-30T10:49:34.631146 #32]  INFO -- sentry: ** [Raven] Raven 2.7.2 configured not to capture errors: DSN not set
+D, [2018-08-30T10:49:37.163756 #32] DEBUG -- : Registering Local QA authority: institution - Qa::Authorities::Local::FileBasedAuthority
+D, [2018-08-30T10:49:37.165435 #32] DEBUG -- : Registering Local QA authority: resource_types - Qa::Authorities::Local::FileBasedAuthority
+D, [2018-08-30T10:49:37.166931 #32] DEBUG -- : Registering Local QA authority: refereed - Qa::Authorities::Local::FileBasedAuthority
+D, [2018-08-30T10:49:37.166982 #32] DEBUG -- : Registering Local QA authority: name_type - Qa::Authorities::Local::FileBasedAuthority
+D, [2018-08-30T10:49:37.167003 #32] DEBUG -- : Registering Local QA authority: datasets - Qa::Authorities::Local::FileBasedAuthority
+D, [2018-08-30T10:49:37.167020 #32] DEBUG -- : Registering Local QA authority: rights_statements - Qa::Authorities::Local::FileBasedAuthority
+D, [2018-08-30T10:49:37.167037 #32] DEBUG -- : Registering Local QA authority: licenses - Qa::Authorities::Local::FileBasedAuthority
+D, [2018-08-30T10:49:37.167053 #32] DEBUG -- : Registering Local QA authority: contributor_group - Qa::Authorities::Local::FileBasedAuthority
+D, [2018-08-30T10:49:37.167070 #32] DEBUG -- : Registering Local QA authority: subjects - Qa::Authorities::Local::TableBasedAuthority
+D, [2018-08-30T10:49:37.167089 #32] DEBUG -- : Registering Local QA authority: languages - Qa::Authorities::Local::TableBasedAuthority
+D, [2018-08-30T10:49:37.167175 #32] DEBUG -- : Registering Local QA authority: genres - Qa::Authorities::Local::TableBasedAuthority
+2018-08-30T10:49:37.384Z 32 TID-gprh1hd04 INFO: Booting Sidekiq 5.0.3 with redis options {"host"=>"redis", "port"=>6379, "thread_safe"=>true, "id"=>"Sidekiq-server-PID-32", "url"=>nil}
+W, [2018-08-30T10:49:42.511502 #32]  WARN -- : Same predicate (http://purl.org/dc/terms/dateSubmitted) used for properties date_uploaded and date_submitted
+W, [2018-08-30T10:49:43.488570 #32]  WARN -- : Same predicate (http://purl.org/dc/terms/dateSubmitted) used for properties date_uploaded and date_submitted
+W, [2018-08-30T10:49:44.129679 #32]  WARN -- : Same predicate (http://purl.org/dc/terms/dateSubmitted) used for properties date_uploaded and date_submitted
+W, [2018-08-30T10:49:45.190539 #32]  WARN -- : Same predicate (http://purl.org/dc/terms/dateSubmitted) used for properties date_uploaded and date_submitted
+W, [2018-08-30T10:49:46.069083 #32]  WARN -- : Same predicate (http://purl.org/dc/terms/dateSubmitted) used for properties date_uploaded and date_submitted
+W, [2018-08-30T10:49:46.972581 #32]  WARN -- : Same predicate (http://purl.org/dc/terms/dateSubmitted) used for properties date_uploaded and date_submitted
+W, [2018-08-30T10:49:47.646737 #32]  WARN -- : Same predicate (http://purl.org/dc/terms/dateSubmitted) used for properties date_uploaded and date_submitted
+D, [2018-08-30T10:49:54.199746 #32] DEBUG -- :   [1m[36mSipity::Role Load (0.6ms)[0m  [1m[34mSELECT  "sipity_roles".* FROM "sipity_roles" WHERE "sipity_roles"."name" = $1 LIMIT $2[0m  [["name", "managing"], ["LIMIT", 1]]
+D, [2018-08-30T10:49:54.213575 #32] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-08-30T10:49:54.220585 #32] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-08-30T10:49:54.224354 #32] DEBUG -- :   [1m[36mSipity::Role Load (0.3ms)[0m  [1m[34mSELECT  "sipity_roles".* FROM "sipity_roles" WHERE "sipity_roles"."name" = $1 LIMIT $2[0m  [["name", "approving"], ["LIMIT", 1]]
+D, [2018-08-30T10:49:54.226472 #32] DEBUG -- :   [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+D, [2018-08-30T10:49:54.228961 #32] DEBUG -- :   [1m[35m (1.8ms)[0m  [1m[35mCOMMIT[0m
+D, [2018-08-30T10:49:54.229793 #32] DEBUG -- :   [1m[36mSipity::Role Load (0.3ms)[0m  [1m[34mSELECT  "sipity_roles".* FROM "sipity_roles" WHERE "sipity_roles"."name" = $1 LIMIT $2[0m  [["name", "depositing"], ["LIMIT", 1]]
+D, [2018-08-30T10:49:54.236056 #32] DEBUG -- :   [1m[35m (5.9ms)[0m  [1m[35mBEGIN[0m
+D, [2018-08-30T10:49:54.239525 #32] DEBUG -- :   [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+I, [2018-08-30T10:49:54.241134 #32]  INFO -- : Hyrax::Engine.after_initialize - persisting registered roles!
+I, [2018-08-30T10:49:54.294778 #32]  INFO -- : ** [Honeybadger] Initializing Honeybadger Error Tracker for Ruby. Ship it! version=3.1.2 framework=rails level=1 pid=32
+2018-08-30T10:49:55.181Z 32 TID-gprh1hd04 INFO: Running in ruby 2.3.1p112 (2016-04-26 revision 54768) [x86_64-linux]
+2018-08-30T10:49:55.185Z 32 TID-gprh1hd04 INFO: See LICENSE and the LGPL-3.0 for licensing details.
+2018-08-30T10:49:55.186Z 32 TID-gprh1hd04 INFO: Upgrade to Sidekiq Pro for more features and support: http://sidekiq.org

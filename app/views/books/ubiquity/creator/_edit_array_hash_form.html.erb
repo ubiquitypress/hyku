@@ -12,12 +12,12 @@
   <br>
 
       <label class="control-label multi_value optional" for="book_creator_given_name">
-        creator given name <span style="color:blue;">required<span> </label>
+        creator given name  </label>
 
       <%= text_field_tag "book[creator_group][][creator_given_name]", hash.dig("creator_given_name"),
                          class: "book_creator_group form-control multi-text-field multi_value",
-                         name: "book[creator_group][][creator_given_name]",
-                         required: true
+                         name: "book[creator_group][][creator_given_name]"
+
       %>
 
       <br>
@@ -27,8 +27,7 @@
 
       <%= text_field_tag "book[creator_group][][creator_family_name]", hash.dig("creator_family_name"),
                          class: "book_creator_group form-control multi-text-field multi_value",
-                         name: "book[creator_group][][creator_family_name]", required: true
-
+                         name: "book[creator_group][][creator_family_name]"
       %>
 
       <br>

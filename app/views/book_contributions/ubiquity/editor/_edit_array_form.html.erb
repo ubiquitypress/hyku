@@ -17,8 +17,8 @@
 
 
   <%= select_tag "book_contributions[editor_group][][editor_name_type]",
-                 options_for_select(NameTypeService.new.select_active_options),
-                  required: true %>
+                 options_for_select(NameTypeService.new.select_active_options)
+                 %>
 
   <br>
       <label class="control-label multi_value optional" for="book_contributions_editor_family_name">

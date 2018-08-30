@@ -17,8 +17,8 @@
 
 
   <%= select_tag "generic_work[editor_group][][editor_name_type]",
-                 options_for_select(NameTypeService.new.select_active_options),
-                  required: true %>
+                 options_for_select(NameTypeService.new.select_active_options)
+                   %>
 
   <br>
       <label class="control-label multi_value optional" for="generic_work_editor_family_name">

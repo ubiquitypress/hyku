@@ -1,5 +1,3 @@
-
-
 <script type="text/javascript">
 
     // add linked fields
@@ -18,13 +16,11 @@
 
             cloneUbiDiv.find('input').val('');
             cloneUbiDiv.find('option').attr('selected', false);
-            //$(this).parent('div' + `${ubiquityCreatorClass}`).remove();
 
             //increment hidden_field counter after cloning
             hiddenFieldIncrementer(lastInputCount, cloneUbiDiv);
             $(`${ubiquityCreatorClass}` +  ':last').after(cloneUbiDiv)
             $('.ubiquity_creator_name_type:last').val('Personal').change()
-            //$(".ubiquity_creator_name_type option[value='Personal']").prop('selected', true)
         });
     });
 
@@ -33,16 +29,12 @@
         return $("body").on("click", ".remove_creator", function(event){
             event.preventDefault();
             var ubiquityCreatorClass = $(this).attr('data-removeUbiquityCreator');
-
             _this = this;
-            //$(this).parent('div' + `${ubiquityCreatorClass}`).remove();
             removeubiquityCreator(_this, ubiquityCreatorClass);
-
         });
     });
 
     function removeubiquityCreator(self, creatorDiv) {
-
         if ($(".ubiquity-meta-creator").length > 1 ) {
             $(self).parent('div' + `${creatorDiv}`).remove();
         }
@@ -50,66 +42,34 @@
 
    function hiddenFieldIncrementer(lastInputCount, clonedDiv){
      var clonedInput = $(clonedDiv).find('.ubiquity-creator-score')
-      //clonedInput.val( parseInt(lastInputCount.val()) + 1 )
       clonedInput.val( parseInt(lastInputCount) + 1 )
    }
 
    //for hiding and showing values on the edit form for creator sub fields
    $(document).on("turbolinks:load", function(){
      return $("body").on("change",".ubiquity_creator_name_type", function(event){
-       //_this = this;
-       //displayConditionalInputs(_this);
-
        if (event.target.value == 'Personal') {
-         console.log('Personal');
-         //showPersonInputs();
-
          $(this).siblings(".ubiquity_creator_organization_name").hide();
-
-         $(this).siblings(".ubiquity_creator_given_name").show();
-         $(this).siblings(".ubiquity_creator_family_name").show();
-         $(this).siblings(".ubiquity_creator_orcid").show()
-
+         $(this).siblings(".ubiquity_personal_fields").show();
        } else {
-           console.log('Organisational');
-         //showOrganizationIputs()
 
-         $(this).siblings(".ubiquity_creator_given_name").hide();
-         $(this).siblings(".ubiquity_creator_family_name").hide();
-         $(this).siblings(".ubiquity_creator_orcid").hide()
+        $(this).siblings(".ubiquity_personal_fields").hide();
         $(this).siblings(".ubiquity_creator_organization_name").show();
-
        }
-
       });
    });
 
 
    $(document).on("turbolinks:load", function(){
      if($(".ubiquity_creator_name_type").is(':visible')){
-
       $(".ubiquity_creator_name_type").each(function() {
         _this = this;
-         //displayConditionalInputs(_this);
          if (this.value == 'Personal') {
-           console.log('Personal');
-           //showPersonInputs();
-
            $(this).siblings(".ubiquity_creator_organization_name").hide();
-
-           $(this).siblings(".ubiquity_creator_given_name").show();
-           $(this).siblings(".ubiquity_creator_family_name").show();
-           $(this).siblings(".ubiquity_creator_orcid").show()
-
+           $(this).siblings(".ubiquity_personal_fields").show();
          } else {
-             console.log('Organisational');
-           //showOrganizationIputs()
-
-           $(this).siblings(".ubiquity_creator_given_name").hide();
-           $(this).siblings(".ubiquity_creator_family_name").hide();
-           $(this).siblings(".ubiquity_creator_orcid").hide()
+          $(this).siblings(".ubiquity_personal_fields").hide();
           $(this).siblings(".ubiquity_creator_organization_name").show();
-
          }
 
       })
@@ -117,28 +77,5 @@
      };
    });
 
-
-
-   function displayConditionalInputs(self){
-     if (self.value == 'Personal') {
-       showPersonInputs(self);
-    } else if (self.value == 'Organisational'){
-      showOrganizationIputs(self)
-    }
-   }
-
-   function showPersonInputs(self){
-     $(self).siblings(".ubiquity_creator_organization_name").hide();
-     $(self).siblings(".ubiquity_creator_given_name").show();
-     $(self).siblings(".ubiquity_creator_family_name").show();
-     $(self).siblings(".ubiquity_creator_orcid").show()
-   }
-
-   function showOrganizationIputs(){
-     $(self).siblings(".ubiquity_creator_given_name").hide();
-     $(self).siblings(".ubiquity_creator_family_name").hide();
-     $(self).siblings(".ubiquity_creator_orcid").hide()
-     $(self).siblings(".ubiquity_creator_organization_name").show();
-   }
 
 </script>

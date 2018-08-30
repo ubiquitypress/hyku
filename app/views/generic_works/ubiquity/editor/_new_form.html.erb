@@ -3,7 +3,7 @@
   <label class="control-label multi_value optional" for="generic_work_editor_name_type">
     editor name type</label>
 
-  <%= select_tag "generic_work[editor_group][][editor_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s), required: true %>
+  <%= select_tag "generic_work[editor_group][][editor_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s) %>
 
   <br>
 

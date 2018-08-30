@@ -47,7 +47,6 @@ module Ubiquity
         index.type :text
         index.as :stored_searchable
       end
-
       property :alternate_identifier, predicate: ::RDF::Vocab::BF2.term(:Local) do |index|
         index.as :stored_searchable
       end

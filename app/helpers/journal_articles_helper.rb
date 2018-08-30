@@ -2,9 +2,7 @@ module JournalArticlesHelper
 
   def get_model(model_class, model_id, field, multipart_sort_field_name = nil)
     model = fetch_model(model_class, model_id)
-    puts "pineapple #{model.inspect}"
     value = model.send(field.to_sym)
-    puts "mango #{value.inspect}"
     value = value.first if value
 
     # if passed in field = contributor and it is nil, return getch model using creator
@@ -15,7 +13,8 @@ module JournalArticlesHelper
       # when an creator is an array witha json string
       # same as  JSON.parse(model.creator.first)
       array_of_hash = JSON.parse(model.send(field.to_sym).first)
-      sort_hash(array_of_hash, multipart_sort_field_name) if multipart_sort_field_name
+      return sort_hash(array_of_hash, multipart_sort_field_name) if multipart_sort_field_name
+      array_of_hash
     else
       # returned when field is not a json. Return array to avoiding returning ActiveTriples::Relation
       model.send(field.to_sym).to_a

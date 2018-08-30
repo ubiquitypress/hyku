@@ -11,7 +11,7 @@ module Ubiquity
                     :creator_family_name, :creator_orcid, :creator_isni,
                     :creator_position
 
-      attr_accessor :alternate_identifier_group, :alternate_identifier, :alternate_identifier_type
+      attr_accessor :alternate_identifier_group
       self.terms += %i[alternate_identifier]
 
     end

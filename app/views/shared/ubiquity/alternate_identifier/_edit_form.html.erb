@@ -1,6 +1,5 @@
 <% array_of_hash = get_model(curation_concern.class, curation_concern.id, 'alternate_identifier') %>
-"WE'RE HERE"
-<%= array_of_hash.inspect %>
+
 <% if (array_of_hash.class == Array && array_of_hash.first.class == Hash)  %>
   <%= render "shared/ubiquity/alternate_identifier/edit_array_hash_form", array_of_hash: array_of_hash %>
 <!--if adding a new multi-part field that didn't exist before, you only need to handle array of hashes -->

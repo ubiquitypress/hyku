@@ -77,23 +77,7 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name("subject", :stored_searchable), itemprop: 'about', link_to_search: solr_name("subject", :facetable)
     config.add_index_field solr_name("creator", :stored_searchable), itemprop: 'creator', link_to_search: solr_name("creator", :facetable)
 
-    config.add_index_field solr_name("creator_name_type", :stored_searchable), itemprop: "creator_name_type", link_to_search: solr_name("creator_name_type", :facetable)
-    config.add_index_field solr_name("given_name", :stored_searchable), itemprop: "given_name", link_to_search: solr_name("given_name", :facetable)
-    config.add_index_field solr_name("family_name", :stored_searchable), itemprop: "family_name", link_to_search: solr_name("family_name", :facetable)
-    config.add_index_field solr_name("orcid", :stored_searchable), itemprop: "orcid", link_to_search: solr_name("orcid", :facetable)
-    config.add_index_field solr_name("isni", :stored_searchable), itemprop: "isni", link_to_search: solr_name("isni", :facetable)
-    config.add_index_field solr_name("creator_organization", :stored_searchable), itemprop: "creator_organization", link_to_search: solr_name("creator_organization", :facetable)
-
-    config.add_index_field solr_name("contributor_type", :stored_searchable), itemprop: "contributor_type", link_to_search: solr_name("contributor_type", :facetable)
-    config.add_index_field solr_name("contributor_given_name", :stored_searchable), itemprop: "contributor_given_name", link_to_search: solr_name("contributor_given_name", :facetable)
-    config.add_index_field solr_name("contributor_family_name", :stored_searchable), itemprop: "contributor_family_name", link_to_search: solr_name("contributor_family_name", :facetable)
-    config.add_index_field solr_name("contributor_orcid", :stored_searchable), itemprop: "contributor_orcid", link_to_search: solr_name("contributor_orcid", :facetable)
-    config.add_index_field solr_name("contributor_isni", :stored_searchable), itemprop: "contributor_isni", link_to_search: solr_name("contributor_isni", :facetable)
-    config.add_index_field solr_name("contributor_organization", :stored_searchable), itemprop: "contributor_organization", link_to_search: solr_name("contributor_organization", :facetable)
-
-
     config.add_index_field solr_name("contributor", :stored_searchable), itemprop: 'contributor', link_to_search: solr_name("contributor", :facetable)
-    #config.add_index_field solr_name("isni", :stored_searchable), label: "ISNI"
     config.add_index_field solr_name("institution", :stored_searchable), label: "Institution"
     config.add_index_field solr_name("event_title", :stored_searchable), label: "Event title", link_to_search: solr_name("event_title", :facetable)
     config.add_index_field solr_name("event_date", :stored_searchable), label: "Event date"
@@ -142,21 +126,6 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("journal_title", :stored_searchable)
     config.add_show_field solr_name("subject", :stored_searchable)
     config.add_show_field solr_name("creator", :stored_searchable)
-
-    config.add_show_field solr_name("creator_name_type", :stored_searchable)
-    config.add_show_field solr_name("given_name", :stored_searchable), label: "given_name"
-    config.add_show_field solr_name("family_name", :stored_searchable), label: "family_name"
-    config.add_show_field solr_name("orcid", :stored_searchable), label: "orcid"
-    config.add_show_field solr_name("isni", :stored_searchable), label: "isni"
-    config.add_show_field solr_name("creator_organization", :stored_searchable), label: "creator_organization"
-
-    config.add_show_field solr_name("contributor_type", :stored_searchable), label: "contributor_type"
-    config.add_show_field solr_name("contributor_given_name", :stored_searchable), label: "contributor_given_name"
-    config.add_show_field solr_name("contributor_family_name", :stored_searchable), label: "contributor_family_name"
-    config.add_show_field solr_name("contributor_orcid", :stored_searchable), label: "contributor_orcid"
-    config.add_show_field solr_name("contributor_isni", :stored_searchable), label: "contributor_isni"
-    config.add_show_field solr_name("contributor_organization", :stored_searchable), label: "contributor_organization"
-
     config.add_show_field solr_name("event_title", :stored_searchable)
     config.add_show_field solr_name("event_date", :stored_searchable)
     config.add_show_field solr_name("abstract", :stored_searchable)

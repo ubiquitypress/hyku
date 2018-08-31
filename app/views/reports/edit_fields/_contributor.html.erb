@@ -1,0 +1,14 @@
+
+
+
+<% if  curation_concern.new_record? %>
+  <%= render "reports/ubiquity/contributor/new_form" %>
+
+<% else %>
+
+
+  <%= render "reports/ubiquity/contributor/edit_form", curation_concern: curation_concern %>
+
+<% end %>
+
+<%= render "shared/ubiquity/contributor/contributor_js" %>

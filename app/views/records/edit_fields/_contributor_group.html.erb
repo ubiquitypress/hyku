@@ -1,0 +1,39 @@
+<%# f.input :contributor_group, as: :hidden %>
+
+<%# curation_concern.inspect %>
+
+<%# curation_concern.new_record? %>
+
+<%# presenter = Hyku::JournalArticleWorkShowPresenter.new(curation_concern, nil) %>
+<%# presenter.id %>
+
+<%#
+  f.input :contributor_group, as: :contributor_group_type,
+          wrapper_html: { class: 'multi_value' },
+          input_html: { class: 'form-control' },
+          include_blank: true
+%>
+
+<%# text_field_tag :contributor_name,
+                   curation_concern.contributor_given_name  %>
+
+<br>
+
+
+<%# text_field_tag :contributor_name,
+                   presenter.attribute_to_html(curation_concern.contributor_given_name.first, render_as: :faceted)
+                     %>
+
+
+
+
+<% if  curation_concern.new_record? %>
+
+  <%= render "journal_articles/contributor/new_form" %>
+
+<% else %>
+    <%= render "journal_articles/contributor/edit_form", curation_concern: curation_concern %>
+<% end %>
+
+
+<%= render "journal_articles/contributor/contributor_js" %>

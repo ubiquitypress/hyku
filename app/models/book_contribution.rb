@@ -4,6 +4,8 @@ class BookContribution < ActiveFedora::Base
   include ::Hyrax::WorkBehavior
   include Ubiquity::BasicMetadataDecorator
   include Ubiquity::SharedMetadata
+  include Ubiquity::AllModelsVirtualFields
+  include Ubiquity::EditorMetadataModelConcern
 
   self.indexer = BookContributionIndexer
   # Change this to restrict which works can be added as a child.

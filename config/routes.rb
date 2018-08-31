@@ -17,6 +17,12 @@ Rails.application.routes.draw do
 
   get 'status', to: 'status#index'
 
+  resources :available_ubiquity_titles, only: [:check] do
+      collection do
+        post :check
+      end
+  end
+
   mount BrowseEverything::Engine => '/browse'
   resource :site, only: [:update] do
     resources :roles, only: [:index, :update]
@@ -75,4 +81,7 @@ Rails.application.routes.draw do
 
   mount Peek::Railtie => '/peek'
   mount Riiif::Engine => '/images', as: 'riiif'
+
+
+
 end

@@ -1,0 +1,30 @@
+
+<tr>
+ <th>Creator</th>
+   <% array_of_hash.each do |key, value| %>
+
+      <td style="display:inline">
+        <% if key == 'creator_given_name' %>
+        <ul class="tabular">
+          <li class="attribute creator">
+
+            <span style="float:left"> <%= array_of_hash['creator_given_name'].first %> - </span>
+
+            <span itemprop="name">
+
+
+              <a  href="<%= array_of_hash['creator_orcid'] %>"  >
+
+              (
+              <img src="https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/orcid_16x16.png" alt="orcid"  height="16" width="16" class="img-responsive" style="float:left"  >
+               )
+               </a>
+
+              </span>
+            </li>
+          </ul>
+          <% end %>
+        </td>
+
+      <% end %>
+</tr>

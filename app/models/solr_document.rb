@@ -48,21 +48,6 @@ class SolrDocument
   attribute :issn, Solr::Array, solr_name('issn')
   attribute :eissn, Solr::Array, solr_name('eissn')
   attribute :official_link, Solr::Array, solr_name('official_link')
-
-  attribute :creator_name_type, Solr::Array, solr_name('creator_name_type')
-  attribute :given_name, Solr::Array, solr_name('given_name')
-  attribute :family_name, Solr::Array, solr_name('family_name')
-  attribute :orcid, Solr::Array, solr_name('orcid')
-  #attribute :isni, Solr::Array, solr_name('isni')
-  attribute :creator_organization, Solr::Array, solr_name('creator_organization')
-
-  attribute :contributor_type, Solr::Array, solr_name('contributor_type')
-  attribute :contributor_given_name, Solr::Array, solr_name('contributor_given_name')
-  attribute :contributor_family_name, Solr::Array, solr_name('contributor_family_name')
-  attribute :contributor_orcid, Solr::Array, solr_name('contributor_orcid')
-  attribute :contributor_isni, Solr::Array, solr_name('contributor_isni')
-  attribute :contributor_organization, Solr::Array, solr_name('contributor_organization')
-
   attribute :place_of_publication, Solr::Array, solr_name('place_of_publication')
   attribute :series_name, Solr::Array, solr_name('series_name')
   attribute :edition, Solr::Array, solr_name('edition')
@@ -70,4 +55,5 @@ class SolrDocument
   attribute :event_title, Solr::Array, solr_name('event_title')
   attribute :event_date, Solr::Array, solr_name('event_date')
   attribute :book_title, Solr::Array, solr_name('book_title')
+
 end

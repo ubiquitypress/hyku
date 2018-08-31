@@ -4,9 +4,8 @@
 module Hyrax
 
   class JournalArticlesController < SharedBehaviorsController
-    #self.curation_concern_type = ::JournalArticle
-    self.curation_concern_type = JournalArticle
+
+    self.curation_concern_type = ::JournalArticle
+
   end
-
-
 end

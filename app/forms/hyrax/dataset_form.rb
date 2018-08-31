@@ -3,6 +3,8 @@
 module Hyrax
   class DatasetForm < Hyrax::Forms::WorkForm
     include Hyrax::FormTerms
+    include ::Ubiquity::AllFormsSharedBehaviour
+    
     self.model_class = ::Dataset
     self.terms += %i[resource_type rendering_ids doi issn eissn date_published place_of_publication
                      date_accepted date_submitted abstract institution org_unit refereed

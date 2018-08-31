@@ -1,0 +1,86 @@
+
+<div class="ubiquity-meta-contributor" >
+
+  <% hash.each do |key, value| %>
+   <% if key == 'contributor_name_type' %>
+
+        <label class="control-label multi_value optional" for="image_contributor_name_type">
+     contributor name type</label>
+
+      <%= select_tag "image[contributor_group][][contributor_name_type]",
+       content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("contributor_name_type")) %>
+
+   <% end %>
+
+   <%if key == "contributor_type" %>
+   <label class="control-label multi_value optional" for="image_contributor_type">
+    Contributor type</label>
+
+  <%= select_tag "image[contributor_group][][contributor_type]",
+          content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( ContributorGroupService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("contributor_type"))
+   %>
+
+   <br/>
+   <% end %>
+
+     <% if key == 'contributor_given_name' %>
+        <label class="control-label multi_value optional" for="image_contributor_given_name">
+          contributor given name</label>
+
+        <%= text_field_tag "image[contributor_group][][contributor_given_name]", hash.dig("contributor_given_name"),
+                           class: "image_contributor_group form-control multi-text-field multi_value",
+                           name: "image[contributor_group][][contributor_given_name]"
+        %>
+       <% end %>
+
+      <% if key == 'contributor_family_name' %>
+        <label class="control-label multi_value optional" for="image_contributor_family_name">
+          contributor family name</label>
+
+        <%= text_field_tag "image[contributor_group][][contributor_family_name]",  hash.dig("contributor_family_name"),
+                           class: "image_contributor_group form-control multi-text-field multi_value",
+                           name: "image[contributor_group][][contributor_family_name]"
+        %>
+
+      <% end %>
+
+      <% if key == 'contributor_orcid' %>
+        <p>
+        <label class="control-label multi_value optional" for="image_contributor_orcid">
+          contributor orcid</label>
+
+        <%= text_field_tag "image[contributor_group][][contributor_orcid]", hash.dig("contributor_orcid"),
+                           class: "image_contributor_group form-control multi-text-field multi_value",
+                           name: "image[contributor_group][][contributor_orcid]"
+        %>
+      </p>
+     <% end %>
+
+     <% if key == 'contributor_isni' %>
+        <label class="control-label multi_value optional" for="image_contributor_isni">
+          contributor isni</label>
+
+        <%= text_field_tag "image[contributor_group][][contributor_isni]", hash.dig("contributor_orcid"),
+                           class: "image_contributor_group form-control multi-text-field multi_value",
+                           name: "image[contributor_group][][contributor_isni]"
+        %>
+
+      <% end %>
+
+      <% if key == 'contributor_position' %>
+        <%= hidden_field_tag "image[contributor_group][][contributor_position]", hash.dig("contributor_position"), class: 'ubiquity-contributor-score'  %>
+      <% end %>
+
+    <% end %>
+
+    <a href="#" style="color:red;"  class=" remove_contributor form-group " data-removeUbiquitycontributor=".ubiquity-meta-contributor">
+      <span class="glyphicon glyphicon-remove"></span>
+      <span class="controls-remove-text">Remove</span>
+    </a>
+    |
+
+    <a href="#" class=" add_contributor" data-addUbiquitycontributor=".ubiquity-meta-contributor">Add another </a>
+
+    <br/>
+
+</div>

@@ -1,0 +1,93 @@
+
+
+<script type="text/javascript">
+
+    // add linked fields
+
+    $(document).on("turbolinks:load", function(){
+
+        return $("body").on("click", ".add_contributor", function(event){
+
+            event.preventDefault();
+            var ubiquityContributorClass = $(this).attr('data-addUbiquityContributor');
+
+            cloneUbiDiv = $(this).parent('div' + `${ubiquityContributorClass}`).clone();
+
+            _this = this;
+
+            var lastInputCount = $('.ubiquity-contributor-score:last').val();
+
+             cloneUbiDiv.find('input').val('');
+             cloneUbiDiv.find('option').attr('selected', false);
+
+             //increment hidden_field counter after cloning
+             hiddenFieldIncrementer(lastInputCount, cloneUbiDiv);
+            $(`${ubiquityContributorClass}` +  ':last').after(cloneUbiDiv)
+            $('.ubiquity_creator_name_type:last').val('Personal').change()
+
+        });
+    });
+
+
+    //remove linked fields
+    $(document).on("turbolinks:load", function(){
+        //$(document).ready(function() {
+        return $("body").on("click", ".remove_contributor", function(event){
+            console.log('remove contribuor');
+            event.preventDefault();
+            var ubiquityContributorClass = $(this).attr('data-removeUbiquityContributor');
+
+            _this = this;
+            //$(this).parent('div' + `${ubiquityContributorClass}`).remove();
+            removeubiquityContributor(_this, ubiquityContributorClass);
+        });
+    });
+
+    function removeubiquityContributor(self, contributorDiv) {
+        if ($(".ubiquity-meta-contributor").length > 1 ) {
+            //$(this).parent('div' + `${ubiquityContributorClass}`).remove();
+            $(self).parent('div' + `${contributorDiv}`).remove();
+        }
+    }
+
+    function hiddenFieldIncrementer(lastInputCount, clonedDiv){
+      var clonedInput = $(clonedDiv).find('.ubiquity-contributor-score')
+       //clonedInput.val( parseInt(lastInputCount.val()) + 1 )
+       clonedInput.val( parseInt(lastInputCount) + 1 )
+    }
+
+    //for hiding and showing values on the edit form for creator sub fields
+    $(document).on("turbolinks:load", function(){
+      return $("body").on("change",".ubiquity_creator_name_type", function(event){
+        if (event.target.value == 'Personal') {
+          $(this).siblings(".ubiquity_creator_organization_name").hide();
+          $(this).siblings(".ubiquity_personal_fields").show();
+        } else {
+
+         $(this).siblings(".ubiquity_personal_fields").hide();
+         $(this).siblings(".ubiquity_creator_organization_name").show();
+        }
+       });
+    });
+
+    $(document).on("turbolinks:load", function(){
+      if($(".ubiquity_creator_name_type").is(':visible')){
+       $(".ubiquity_creator_name_type").each(function() {
+         _this = this;
+          if (this.value == 'Personal') {
+
+            $(this).siblings(".ubiquity_creator_organization_name").hide();
+            $(this).siblings(".ubiquity_personal_fields").show();
+          } else if(this.value == "Organisational") {
+           $(this).siblings(".ubiquity_personal_fields").hide();
+           $(this).siblings(".ubiquity_creator_organization_name").show();
+         } else {
+           $('.ubiquity_creator_name_type:last').val('Personal').change()
+         }
+
+       })
+
+      };
+    });
+
+</script>

@@ -1,0 +1,78 @@
+<div class="ubiquity-meta-creator" >
+
+  <label class="ubiquity_creator_name_type control-label multi_value optional" for="generic_work_creator_name_type">
+    creator name type<span style="color:blue;">required<span></label>
+
+  <%= select_tag "generic_work[creator_group][][creator_name_type]",
+     content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, 'Personal'),
+    :class => 'ubiquity_creator_name_type',
+     required: true
+  %>
+
+  <br/>
+  <label class="ubiquity_creator_isni control-label multi_value optional" for="generic_work_creator_isni">
+    creator isni</label>
+
+  <%= text_field_tag "generic_work[creator_group][][creator_isni]", nil,
+                     class: "ubiquity_creator_isni generic_work_creator_group form-control multi-text-field multi_value",
+                     placeholder: 'Add creator isni',
+                     name: "generic_work[creator_group][][creator_isni]"
+  %>
+
+  <br/>
+  <label class="ubiquity_creator_organization_name control-label multi_value optional" for="generic_work_creator_organization_name">
+    creator organization name</label>
+
+  <%= text_field_tag  "generic_work[creator_group][][creator_organization_name]", nil,
+                      class: "ubiquity_creator_organization_name generic_work_creator_organization_name form-control multi-text-field multi_value",
+                      placeholder: 'Add creator organization name',
+                      name: "generic_work[creator_group][][creator_organization_name]"
+  %>
+  <br>
+  <span class="ubiquity_personal_fields">
+  <label class="ubiquity_creator_given_name control-label multi_value optional" for="generic_work_creator_given_name">
+    creator given name</label>
+
+  <%= text_field_tag  "generic_work[creator_group][][creator_given_name]", nil,
+                      class: "ubiquity_creator_given_name generic_work_creator_given_name form-control multi-text-field multi_value",
+                      placeholder: 'Add creator given name',
+                      name: "generic_work[creator_group][][creator_given_name]"
+  %>
+
+  <br/>
+  <label class="ubiquity_creator_family_name control-label multi_value optional" for="generic_work_creator_family_name">
+    creator family name</label>
+
+  <%= text_field_tag  "generic_work[creator_group][][creator_family_name]", nil,
+                      class: "ubiquity_creator_family_name generic_work_creator_family_name form-control multi-text-field multi_value",
+                      placeholder: 'Add creator family name',
+                      name: "generic_work[creator_group][][creator_family_name]"
+  %>
+
+  <br/>
+  <label class="ubiquity_creator_orcid control-label multi_value optional" for="generic_work_creator_orcid">
+    creator orcid</label>
+
+  <%= text_field_tag "generic_work[creator_group][][creator_orcid]", nil,
+                     class: "ubiquity_creator_orcid generic_work_creator_group form-control multi-text-field multi_value",
+                     placeholder: 'Add creator orcid',
+                     name: "generic_work[creator_group][][creator_orcid]"
+  %>
+
+</span>
+
+  <br/>
+    <%= hidden_field_tag "generic_work[creator_group][][creator_position]", 1, class: 'ubiquity-creator-score'  %>
+   <br/>
+
+  <a href="#" style="color:red;"  class=" remove_creator form-group " data-removeUbiquityCreator=".ubiquity-meta-creator">
+    <span class="glyphicon glyphicon-remove"></span>
+    <span class="controls-remove-text">Remove</span>
+  </a>
+  |
+
+  <a href="#" class=" add_creator" data-addUbiquityCreator=".ubiquity-meta-creator">Add another </a>
+
+  <br> <br>
+
+</div>

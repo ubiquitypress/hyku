@@ -1,0 +1,67 @@
+
+
+<script type="text/javascript">
+
+    // add linked fields
+
+    $(document).on("turbolinks:load", function(){
+
+        return $("body").on("click", ".add_creator", function(event){
+
+            console.log('add creator');
+
+            event.preventDefault();
+            var ubiquityCreatorClass = $(this).attr('data-addUbiquityCreator');
+            var time = new Date().getTime();
+
+
+            var cloneUbiDiv = $(this).parent('div' + `${ubiquityCreatorClass}`).clone();
+
+           _this = this;
+
+           hiddenFieldIncrementer(cloneUbiDiv);
+
+            console.log('clone count', cloneUbiDiv.length );
+            $(`${ubiquityCreatorClass}` +  ':last').after(cloneUbiDiv)
+
+        });
+    });
+
+
+    //remove linked fields
+    $(document).on("turbolinks:load", function(){
+        //$(document).ready(function() {
+        return $("body").on("click", ".remove_creator", function(event){
+            console.log('remove creator');
+            event.preventDefault();
+            var ubiquityCreatorClass = $(this).attr('data-removeUbiquityCreator');
+
+            _this = this;
+            //$(this).parent('div' + `${ubiquityCreatorClass}`).remove();
+            removeubiquityCreator(_this, ubiquityCreatorClass);
+
+        });
+    });
+
+
+    function removeubiquityCreator(self, creatorDiv) {
+
+        if ($(".ubiquity-meta-creator").length > 1 ) {
+            //$(this).parent('div' + `${ubiquityCreatorClass}`).remove();
+            $(self).parent('div' + `${creatorDiv}`).remove();
+        }
+    }
+
+
+   function hiddenFieldIncrementer(clonedDiv){
+      //increment hidden_field counter after cloning
+      var lastInputCount = $('.ubiquity-creator-score:last');
+      var clonedInput = $(clonedDiv).find('.ubiquity-creator-score')
+     //clonedInput.val( parseInt(clonedInput.val()) + 1 )
+      clonedInput.val( parseInt(lastInputCount.val()) + 1 )
+
+   }
+
+
+
+</script>

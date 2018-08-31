@@ -3,6 +3,9 @@
 module Hyrax
   class BookContributionForm < Hyrax::Forms::WorkForm
     include Hyrax::FormTerms
+    include ::Ubiquity::AllFormsSharedBehaviour
+    include Ubiquity::EditorMetadataFormBehaviour
+
     self.model_class = ::BookContribution
     self.terms += %i[resource_type rendering_ids doi series_name volume edition place_of_publication pagination
                      issn eissn date_published date_accepted date_submitted abstract institution org_unit refereed

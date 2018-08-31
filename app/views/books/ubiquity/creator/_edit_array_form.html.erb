@@ -1,0 +1,67 @@
+<div class="ubiquity-meta-creator" >
+
+  <% array.each_with_index do |value, index| %>
+    <span style="color:blue;"> required<span>
+      <%= select_tag "book[creator_group][][creator_name_type]",
+          content_tag(:option, 'select one...', :value => "") + options_from_collection_for_select(NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s),
+          required: true, class: 'ubiquity_creator_name_type' %>
+
+      <label class="ubiquity_creator_name_type control-label multi_value optional" for="book_creator_name_type">
+          Creator name type<span style="color:blue;"> required<span></label>
+      <label class="control-label multi_value optional" for="book_creator_isni">
+              Creator isni</label>
+
+      <%= text_field_tag "book[creator_group][][creator_isni]", nil,
+                         class: "book_creator_group form-control multi-text-field multi_value",
+                         name: "book[creator_group][][creator_isni]"
+      %>
+      <br>
+      <label class="ubiquity_creator_organization_name control-label multi_value optional" for="book_creator_organization_name">
+          creator organization name</label>
+
+      <%= text_field_tag "book[creator_group][][creator_organization_name]",
+                         class: "ubiquity_creator_organization_name book_creator_organization_name form-control multi-text-field multi_value",
+                         placeholder: 'Add creator organization name',
+                         name: "book[creator_group][][creator_organization_name]"
+      %>
+
+    <span class="ubiquity_personal_fields">
+      <label class="control-label multi_value optional" for="book_creator_given_name">
+        Creator given name</label>
+
+      <%= text_field_tag "book[creator_group][][creator_given_name]", value,
+          class: "book_creator_group form-control multi-text-field multi_value",
+          name: "book[creator_group][][creator_given_name]"
+      %>
+      <br>
+      <label class="control-label multi_value optional" for="book_creator_family_name">
+        Creator family name</label>
+
+      <%= text_field_tag "book[creator_group][][creator_family_name]", nil,
+                         class: "book_creator_group form-control multi-text-field multi_value",
+                         name: "book[creator_group][][creator_family_name]"
+      %>
+      <br>
+      <label class="control-label multi_value optional" for="book_creator_orcid">
+        Creator orcid</label>
+
+      <%= text_field_tag "book[creator_group][][creator_orcid]", nil,
+                         class: "book_creator_group form-control multi-text-field multi_value",
+                         name: "book[creator_group][][creator_orcid]"
+      %>
+      <br>
+    </span>
+      <%= hidden_field_tag "book[creator_group][][creator_position]", index, class: 'ubiquity-creator-score'  %>
+  <% end %>
+
+      <a href="#" style="color:red;"  class=" remove_creator form-group " data-removeUbiquityCreator=".ubiquity-meta-creator">
+        <span class="glyphicon glyphicon-remove"></span>
+        <span class="controls-remove-text">Remove</span>
+      </a>
+      |
+
+      <a href="#" class=" add_creator" data-addUbiquityCreator=".ubiquity-meta-creator">Add another </a>
+
+      <br> <br>
+
+</div>

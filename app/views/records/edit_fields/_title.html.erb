@@ -1,0 +1,61 @@
+<% model_in_use = f.object.model_name %>
+
+
+<h3 class="ubiquity-title-message" style="color:red; font-weight: 900;"> <a href="" class="ubiquity-title-message"></a></h3>
+
+<%= f.input key,
+            as: :multi_value,
+            input_html: {
+              class: 'form-control ubiquity-title'
+            },
+            required: f.object.required?(key) %>
+
+
+<%# button_to 'Check title availability', main_app.check_available_ubiquity_titles_path,
+   class: "ubiquity-title-checker", data: { 'ubiquity-model' => "GenericWork" } %>
+
+
+<script>
+  $(document).on("turbolinks:load", function(){
+    console.log('wetin');
+
+    return $("body").on("click", ".ubiquity-title-checker", function(event) {
+      console.log('kura')
+      event.preventDefault();
+      console.log('yes');
+      var ubiquityModel = $(this).attr('data-ubiquity-model');
+      console.log('model', ubiquityModel);
+      var  ubiquityTitle = $(".ubiquity-title").val()
+      console.log('title', ubiquityTitle);
+      //clicked = $(this).parent('div' + `${ubiquityTitle}`)
+      checkTitle(ubiquityTitle, ubiquityModel);
+      //alert(ubiquityModel);
+    });
+  });
+
+
+  function checkTitle(ubiquityTitle, ubiquityModel){
+    var host = window.location.host
+    var fullHost = 'http://' + host + '/available_ubiquity_titles/check'
+    //alert( $(`${ubiquityTitle}`).val() );
+    alert(ubiquityTitle);
+    alert(ubiquityModel);
+
+    $.ajax({
+      url: `${fullHost}`,
+      type: "POST",
+      //contentType: "application/json",
+      //dataType: 'json',
+      data: {"title": ubiquityTitle, "model_class": ubiquityModel},
+      success: function(result){
+        console.log('data', result.data);
+        $(".ubiquity-title-message").html(result.message)
+      },
+      error: function(){
+
+      }
+    })
+
+   }
+
+</script>

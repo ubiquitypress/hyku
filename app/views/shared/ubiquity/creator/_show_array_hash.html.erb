@@ -8,9 +8,15 @@
           <li class="attribute creator">
 
             <span style="float:left">
-              <%= hash['creator_family_name'] %>,&nbsp;
-               <%= hash['creator_given_name'] %>
-
+              <% if hash['creator_organization_name'] %>
+                <%= hash['creator_organization_name'] %>,&nbsp;
+              <% end %>
+              <% if hash['creator_family_name']  %>
+                <%= hash['creator_family_name'] %>,&nbsp;
+              <% end %>
+              <% if hash['creator_given_name'] %>
+                <%= hash['creator_given_name'] %>
+              <% end %>
             </span>
 
             <span itemprop="name">

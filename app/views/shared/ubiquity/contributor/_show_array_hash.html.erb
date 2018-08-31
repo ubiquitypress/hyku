@@ -8,9 +8,12 @@
           <li class="attribute contributor">
 
             <span style="float:left">
+              <% if hash['contributor_organization_name'] %>
+                <%= hash['contributor_organization_name'] %>,&nbsp;
+              <% end %>
               <% unless hash['contributor_family_name'].present? %>
                  
-                <%= hash['creator_family_name'] %> ,&nbsp;
+                <%= hash['contributor_family_name'] %> ,&nbsp;
                 <% end %>
                 <% if hash['contributor_given_name'].present? %>
                   <%= hash['contributor_given_name'] %>

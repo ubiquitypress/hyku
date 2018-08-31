@@ -7,7 +7,17 @@
         <ul class="tabular">
           <li class="attribute editor">
 
-            <span style="float:left"> <%= hash['editor_given_name'] %> - </span>
+            <span style="float:left">
+              <% if hash['editor_organization_name'] %>
+                <%= hash['editor_organization_name'] %>,&nbsp;
+              <% end %>
+              <% if hash['editor_family_name'] %>
+                <%= hash['editor_family_name'] %>,&nbsp;
+              <% end %>
+              <% if hash['editor_given_name'] %>
+                <%= hash['editor_given_name'] %>
+              <% end %>
+            </span>
 
             <span itemprop="name">
 

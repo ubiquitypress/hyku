@@ -3,7 +3,7 @@
 
 
 <% if (array_of_hash.class == Array && array_of_hash.first.class == Hash)  %>
-     caaaalled <br>
+    <br/>
   <%= render "journal_articles/ubiquity/creator/edit_array_hash_form", array_of_hash: array_of_hash %>
 <% elsif array_of_hash.class == Array %>
   <%= render "journal_articles/ubiquity/creator/new_form", array: array_of_hash %>

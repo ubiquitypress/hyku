@@ -8,8 +8,7 @@
     contributor name type</label>
 
     <%= select_tag "journal_article[contributor_group][][contributor_name_type]",
-       content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("contributor_name_type")) %>
-
+       content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("contributor_name_type")), class: "ubiquity_creator_name_type" %>
   <br/>
   <label class="control-label multi_value optional" for="journal_article_contributor_type">
    Contributor type</label>
@@ -19,7 +18,25 @@
   %>
 
   <br/>
+  <label class="control-label multi_value optional" for="journal_article_contributor_isni">
+    contributor ISNI</label>
 
+  <%= text_field_tag "journal_article[contributor_group][][contributor_isni]", hash.dig("contributor_isni"),
+                     class: "journal_article_contributor_group form-control multi-text-field multi_value",
+                     name: "journal_article[contributor_group][][contributor_isni]"
+  %>
+  <br/>
+  <label class="ubiquity_creator_organization_name control-label multi_value optional" for="generic_work_creator_organization_name">
+    contributor organization name</label>
+
+  <%= text_field_tag  "journal_article[contributor_group][][contributor_organization_name]", hash.dig("contributor_organization_name"),,
+                      class: "ubiquity_creator_organization_name generic_work_creator_organization_name form-control multi-text-field multi_value",
+                      placeholder: 'Add contributor organization name',
+                      name: "journal_article[contributor_group][][contributor_organization_name]"
+  %>
+  </br>
+
+<span class="ubiquity_personal_fields">
       <label class="control-label multi_value optional" for="journal_article_contributor_given_name">
         contributor given name</label>
 
@@ -39,29 +56,22 @@
 
       %>
 
-      <br>
+      <br/>
 
       <label class="control-label multi_value optional" for="journal_article_contributor_orcid">
-        contributor orcid</label>
+        contributor ORCiD</label>
 
       <%= text_field_tag "journal_article[contributor_group][][contributor_orcid]", hash.dig("contributor_orcid"),
                          class: "journal_article_contributor_group form-control multi-text-field multi_value",
                          name: "journal_article[contributor_group][][contributor_orcid]"
       %>
+</div>
+      <br/>
 
-      <br>
-      <label class="control-label multi_value optional" for="journal_article_contributor_isni">
-        contributor isni</label>
-
-      <%= text_field_tag "journal_article[contributor_group][][contributor_isni]", hash.dig("contributor_isni"),
-                         class: "journal_article_contributor_group form-control multi-text-field multi_value",
-                         name: "journal_article[contributor_group][][contributor_isni]"
-      %>
-      <br>
 
       <%= hidden_field_tag "journal_article[contributor_group][][contributor_position]", index, class: 'ubiquity-contributor-score'  %>
 
-      <br>
+      <br/>
       <a href="#" style="color:red;"  class=" remove_contributor form-group " data-removeUbiquitycontributor=".ubiquity-meta-contributor">
         <span class="glyphicon glyphicon-remove"></span>
         <span class="controls-remove-text">Remove</span>
@@ -70,7 +80,7 @@
 
       <a href="#" class=" add_contributor" data-addUbiquitycontributor=".ubiquity-meta-contributor">Add another </a>
 
-      <br> <br>
+      <br/>
 
 </div>
 

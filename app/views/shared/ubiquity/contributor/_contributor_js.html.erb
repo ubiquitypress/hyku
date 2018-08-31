@@ -78,10 +78,12 @@
 
             $(this).siblings(".ubiquity_creator_organization_name").hide();
             $(this).siblings(".ubiquity_personal_fields").show();
-          } else {
+          } else if(this.value == "Organisational") {
            $(this).siblings(".ubiquity_personal_fields").hide();
            $(this).siblings(".ubiquity_creator_organization_name").show();
-          }
+         } else {
+           $('.ubiquity_creator_name_type:last').val('Personal').change()
+         }
 
        })
 

@@ -5,6 +5,7 @@
 <%# presenter.attribute_to_html(:contributor, render_as: :faceted) %>
 <%= render "shared/ubiquity/contributor/show", presenter: presenter %>
 
+
 <% if check_has_editor_fields?(presenter.model_name.to_s) %>
 <%= render "shared/ubiquity/editor/show", presenter: presenter %>
 <% end %>

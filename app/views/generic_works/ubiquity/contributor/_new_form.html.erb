@@ -1,4 +1,4 @@
-<div class="ubiquity-meta-contributor" >
+<span class="ubiquity_personal_fields"><div class="ubiquity-meta-contributor" >
 
   <label class="control-label multi_value optional" for="generic_work_contributor_name_type">
     contributor name type</label>
@@ -18,12 +18,12 @@
   %>
   <br/>
   <label class="ubiquity_creator_organization_name control-label multi_value optional" for="generic_work_creator_organization_name">
-    creator organization name</label>
+  contributor organization name</label>
 
-  <%= text_field_tag  "generic_work[creator_group][][creator_organization_name]", nil,
+  <%= text_field_tag  "generic_work[contributor_group][][contributor_organization_name]", nil,
                       class: "ubiquity_creator_organization_name generic_work_creator_organization_name form-control multi-text-field multi_value",
-                      placeholder: 'Add creator organization name',
-                      name: "generic_work[creator_group][][creator_organization_name]"
+                      placeholder: 'Add contributor organization name',
+                      name: "generic_work[contributor_group][][contributor_organization_name]"
   %>
   <br/>
 
@@ -60,7 +60,7 @@
   <label class="control-label multi_value optional" for="generic_work_contributor_orcid">
     contributor orcid</label>
 
-  <%= text_field_tag "generic_work[contributor_group][][contributor_orcid", nil,
+  <%= text_field_tag "generic_work[contributor_group][][contributor_orcid]", nil,
                      class: "generic_work_contributor_group form-control multi-text-field multi_value",
                      placeholder: 'Add contributor orcid',
                      name: "generic_work[contributor_group][][contributor_orcid]"

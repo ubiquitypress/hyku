@@ -39,7 +39,8 @@ module JournalArticlesHelper
 
   def sort_hash(array_of_hash, key)
     return array_of_hash if array_of_hash.class != Array
-    array_of_hash.sort_by!{|hash| hash[key] if hash[key].present? }
+    if key.present?
+      array_of_hash.sort_by!{ |hash| hash[key].to_i }
+    end
   end
-
 end

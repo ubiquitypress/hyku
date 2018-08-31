@@ -29,7 +29,7 @@
   <label class="ubiquity_creator_organization_name control-label multi_value optional" for="generic_work_creator_organization_name">
     contributor organization name</label>
 
-  <%= text_field_tag  "journal_article[contributor_group][][contributor_organization_name]", hash.dig("contributor_organization_name"),,
+  <%= text_field_tag  "journal_article[contributor_group][][contributor_organization_name]", hash.dig("contributor_organization_name"),
                       class: "ubiquity_creator_organization_name generic_work_creator_organization_name form-control multi-text-field multi_value",
                       placeholder: 'Add contributor organization name',
                       name: "journal_article[contributor_group][][contributor_organization_name]"
@@ -65,7 +65,7 @@
                          class: "journal_article_contributor_group form-control multi-text-field multi_value",
                          name: "journal_article[contributor_group][][contributor_orcid]"
       %>
-</div>
+  </span>
       <br/>
 
 

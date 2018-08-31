@@ -56,9 +56,9 @@
        clonedInput.val( parseInt(lastInputCount) + 1 )
     }
 
-    //for hiding and showing values on the edit form for creator sub fields
+    //for hiding and showing values on the edit form for contributor sub fields
     $(document).on("turbolinks:load", function(){
-      return $("body").on("change",".ubiquity_creator_name_type", function(event){
+      return $("body").on("change",".ubiquity_contributor_name_type", function(event){
         if (event.target.value == 'Personal') {
           $(this).siblings(".ubiquity_creator_organization_name").hide();
           $(this).siblings(".ubiquity_personal_fields").show();
@@ -71,8 +71,8 @@
     });
 
     $(document).on("turbolinks:load", function(){
-      if($(".ubiquity_creator_name_type").is(':visible')){
-       $(".ubiquity_creator_name_type").each(function() {
+      if($(".ubiquity_contributor_name_type").is(':visible')){
+       $(".ubiquity_contributor_name_type").each(function() {
          _this = this;
           if (this.value == 'Personal') {
 
@@ -82,7 +82,7 @@
            $(this).siblings(".ubiquity_personal_fields").hide();
            $(this).siblings(".ubiquity_creator_organization_name").show();
          } else {
-           $('.ubiquity_creator_name_type:last').val('Personal').change()
+           $('.ubiquity_contributor_name_type:last').val('Personal').change()
          }
 
        })

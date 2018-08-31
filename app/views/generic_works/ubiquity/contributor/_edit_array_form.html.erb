@@ -15,7 +15,7 @@
     contributor name type</label>
 
     <%= select_tag "generic_work[contributor_group][][contributor_name_type]",
-      content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select(NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s), class:  'ubiquity_creator_name_type' %>
+      content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select(NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s), class:  'ubiquity_contributor_name_type' %>
 
   <br/>
 
@@ -28,12 +28,12 @@
   %>
   <br>
   <label class="ubiquity_creator_organization_name control-label multi_value optional" for="generic_work_creator_organization_name">
-    creator organization name</label>
+    contributor organization name</label>
 
   <%= text_field_tag  "generic_work[contributor_group][][contributor_organization_name]", nil,
                       class: "ubiquity_creator_organization_name generic_work_creator_organization_name form-control multi-text-field multi_value",
                       placeholder: 'Add contributor organization name',
-                      name: "generic_work[creator_group][][contributor_organization_name]"
+                      name: "generic_work[contributo_group][][contributor_organization_name]"
   %>
   <br/>
 

@@ -7,7 +7,7 @@
     contributor name type</label>
 
     <%= select_tag "generic_work[contributor_group][][contributor_name_type]",
-       content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("contributor_name_type")), class:  'ubiquity_creator_name_type'
+       content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("contributor_name_type")), class:  'ubiquity_contributor_name_type'
         %>
 
   <br/>

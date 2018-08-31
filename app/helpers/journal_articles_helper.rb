@@ -39,7 +39,7 @@ module JournalArticlesHelper
 
   def sort_hash(array_of_hash, key)
     return array_of_hash if array_of_hash.class != Array
-    array_of_hash.sort_by!{|hash| hash[key]}
+    array_of_hash.sort_by!{|hash| hash[key] if hash[key]}
   end
 
 end

@@ -14,16 +14,6 @@ class JournalArticle < ActiveFedora::Base
 
   self.human_readable_type = 'Journal Article'
 
-  property :issue, predicate: ::RDF::Vocab::Bibframe.term(:Serial), multiple: false do |index|
-    index.as :stored_searchable
-  end
-  property :journal_title, predicate: ::RDF::Vocab::BIBO.Journal, multiple: false do |index|
-    index.as :stored_searchable, :facetable
-  end
-  property :article_num, predicate: ::RDF::Vocab::BIBO.number  do |index|
-    index.as :stored_searchable
-  end
-
   # This must be included at the end, because it finalizes the metadata
   # schema (by adding accepts_nested_attributes)
   include ::Hyrax::BasicMetadata

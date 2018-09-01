@@ -14,7 +14,7 @@ https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPConfiguration
 
     <RequestMapper type="XML">
         <RequestMap>
-            <Host name="$SUBDOMAIN1"
+            <Host name="$SUBDOMAIN"
                 authType="shibboleth"
                 requireSession="true"
                 redirectToSSL="443">
@@ -27,7 +27,7 @@ https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPConfiguration
     </RequestMapper>
 
     <!-- The entityID is the name TestShib made for your SP. -->
-    <ApplicationDefaults entityID="https://$SUBDOMAIN1/shibboleth"
+    <ApplicationDefaults entityID="https://$SUBDOMAIN/shibboleth"
         REMOTE_USER="eppn">
 
         <!-- You should use secure cookies if at all possible.  See cookieProps in this Wiki article. -->
@@ -47,7 +47,7 @@ https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPConfiguration
             <!--
                 Handlers allow you to interact with the SP and gather more information.  Try them out!
                 Attribute values received by the SP through SAML will be visible at:
-                http://$SUBDOMAIN1/Shibboleth.sso/Session
+                http://$SUBDOMAIN/Shibboleth.sso/Session
             -->
 
             <!-- Extension service that generates "approximate" metadata based on SP configuration. -->

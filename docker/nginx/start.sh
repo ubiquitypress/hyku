@@ -1,26 +1,30 @@
 #!/bin/bash
-
-# Start cron
-/usr/sbin/cron
-
-# Generate shibboleth private key
-/usr/sbin/shib-keygen
+source /data/web_server_env.sh
+export SUBDOMAIN="$SHIBBOLETH_TENANT"."$DOMAIN";
+if [ "$USE_SHIBBOLETH" = true ] ; then
+  export NGINX_SS_CONF="/data/nginx_self_signed_shib.conf"
+  export NGINX_CA_CONF="/data/nginx_ca_shib.conf"
+else
+  export NGINX_SS_CONF="/data/nginx_self_signed.conf"
+  export NGINX_CA_CONF="/data/nginx_ca.conf"
+fi
 
 # Create self-signed certificates
-sh -c "/data/self_signed.sh"
+/data/self_signed.sh
 
 # Start NGinx in daemon mode
 echo "starting NGinx in daemon mode"
 /usr/sbin/nginx
 
-# Create CA certificates
-sh -c "/data/create_cert.sh"
+if [ "$USE_LETS_ENCRYPT" = true ]; then
+  # Create CA certificates
+  /data/create_cert.sh
+fi
 
-# Manage CA certificates
-sh -c "/data/install_and_manage_cert.sh"
-
-# Stop NGinx. Let supervisor manage NGinx
-/usr/sbin/nginx -s stop
-
-# Start supervisor
-/usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
+# Setup shibboleth
+if [ "$USE_SHIBBOLETH" = true ] ; then
+  /data/setup_shibboleth.sh
+  # Stop NGinx. Let supervisor manage NGinx
+  /usr/sbin/nginx -s stop
+  /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
+fi

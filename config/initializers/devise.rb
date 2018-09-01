@@ -290,7 +290,17 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-
+  config.omniauth :shibboleth, {
+    :uid_field => 'eppn',
+    # :debug => true,
+    :request_type => :header,
+    :uid_field => 'HTTP_EPPN',
+    :shib_session_id_field => 'HTTP_SHIB_SESSION_ID',
+    :shib_application_id_field => 'HTTP_SHIB_APPLICATION_ID',
+    :name_field => 'HTTP_EPPN',
+    :info_fields => {
+    },
+  }
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.

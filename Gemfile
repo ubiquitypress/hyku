@@ -121,3 +121,5 @@ gem 'secure_headers'
 gem 'honeybadger', '~> 3.0'
 
 gem 'sentry-raven'
+
+gem 'omniauth-shibboleth'

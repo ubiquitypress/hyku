@@ -52,3 +52,7 @@ public/assets/
 *.env
 *.pyc
 kiq.log
+
+# Ignore pem files
+docker/shibboleth/*.pem
+docker/shibboleth/*_metadata

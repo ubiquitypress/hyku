@@ -107,6 +107,7 @@ services:
   app:
     build:
       context: ../.
+      dockerfile: ./docker/Dockerfile-hyku
     environment:
       - REDIS_HOST=redis
       - DATABASE_URL=postgresql://postgres@db/postgres

@@ -1,7 +1,0 @@
-DOMAIN=your_hyku_domain.com
-TENANTS=repo1 repo2
-EMAIL=test@your_hyku_domain.com
-USE_TEST_CERT=true
-USE_SHIBBOLETH=true
-SHIBBOLETH_TENANT=repo1
-SUBDOMAIN1=repo1.your_hyku_domain.com

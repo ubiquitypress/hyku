@@ -208,8 +208,8 @@ services:
       - certs:/etc/letsencrypt
       - certs-data:/data/letsencrypt
       - self-signed:/etc/selfsigned
-      - ./docker/shibboleth:/data/shibboleth
-      - ./docker/web_server_env.sh:/data/web_server_env.sh
+      - ./shibboleth:/data/shibboleth
+      - ./web_server_env.sh:/data/web_server_env.sh
 
   redis:
     image: redis:3

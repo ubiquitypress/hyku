@@ -7,7 +7,7 @@
    <label class="control-label multi_value optional" for="generic_work_editor_name_type">
     editor name type</label>
 
-    <%= select_tag "generic_work[editor_group][][editor_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("editor_name_type")), class:  'ubiquity_creator_name_type' %>
+    <%= select_tag "generic_work[editor_group][][editor_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("editor_name_type")), class:  'ubiquity_editor_name_type' %>
 
   <br/>
   <label class="control-label multi_value optional" for="generic_work_editor_isni">
@@ -19,11 +19,11 @@
   %>
   <br>
   <br/>
-  <label class="ubiquity_creator_organization_name control-label multi_value optional" for="generic_work_creator_organization_name">
+  <label class="ubiquity_editor_organization_name control-label multi_value optional" for="generic_work_editor_organization_name">
     editor organization name</label>
 
   <%= text_field_tag  "generic_work[editor_group][][editor_organization_name]", hash.dig("editor_organization_name"),
-                      class: "ubiquity_creator_organization_name generic_work_editor_organization_name form-control multi-text-field multi_value",
+                      class: "ubiquity_editor_organization_name generic_work_editor_organization_name form-control multi-text-field multi_value",
                       placeholder: 'Add editor organization name',
                       name: "generic_work[editor_group][][editor_organization_name]"
   %>

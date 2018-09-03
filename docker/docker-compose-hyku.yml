@@ -108,6 +108,9 @@ services:
     build:
       context: ../.
       dockerfile: ./docker/Dockerfile-hyku
+      args:
+        # Default host for multi tenancy
+        - DOMAIN=up2.digitalnest.co.uk
     environment:
       - REDIS_HOST=redis
       - DATABASE_URL=postgresql://postgres@db/postgres
@@ -124,8 +127,6 @@ services:
       - RAILS_CACHE_STORE_URL=memcache
       # version and location of fits are set in Dockerfile:
       - LD_LIBRARY_PATH=/opt/fits-1.0.5/tools/mediainfo/linux
-      # Default host for multi tenancy
-      - DOMAIN=hyku_host.example.com
     volumes:
       - app:/data/tmp/uploads
     networks:
@@ -152,8 +153,6 @@ services:
     networks:
       external:
       internal:
-    volumes:
-      - ./:/data
 
   workers:
     extends:

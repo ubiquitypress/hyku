@@ -16,6 +16,7 @@ RUN bundle install
 ADD . /data
 
 # Replace domain in config/settings.yml
+ARG DOMAIN=$DOMAIN
 RUN envsubst '$DOMAIN' < /data/config/settings.yml > /data/config/settings2.yml
 RUN mv /data/config/settings2.yml /data/config/settings.yml
 

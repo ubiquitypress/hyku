@@ -1,4 +1,4 @@
-export DOMAIN=up2.digitalnest.co.uk
+export DOMAIN=hyku_host.example.com
 
 # Let's encrypt settings
 # Enable or disable obtaining ssl certificates from let's encrypt.

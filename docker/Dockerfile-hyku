@@ -1,6 +1,6 @@
 FROM ruby:2.3.1
 RUN apt-get update -qq && \
-    apt-get install -y build-essential libpq-dev nodejs libreoffice imagemagick unzip ghostscript && \
+    apt-get install -y build-essential libpq-dev nodejs libreoffice imagemagick unzip ghostscript gettext-base && \
     rm -rf /var/lib/apt/lists/*
 # If changes are made to fits version or location,
 # amend `LD_LIBRARY_PATH` in docker-compose.yml accordingly.
@@ -14,5 +14,10 @@ ADD Gemfile /data/Gemfile
 ADD Gemfile.lock /data/Gemfile.lock
 RUN bundle install
 ADD . /data
+
+# Replace domain in config/settings.yml
+RUN envsubst '$DOMAIN' < /data/config/settings.yml > /data/config/settings2.yml
+RUN mv /data/config/settings2.yml /data/config/settings.yml
+
 RUN bundle exec rake assets:precompile
 EXPOSE 3000

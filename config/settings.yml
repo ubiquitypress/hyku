@@ -4,9 +4,9 @@
 # The mapping is described in `./config/initializers/config.rb`.
 #
 multitenancy:
-  enabled: false
-  default_host: # "%{tenant}.dev"
-  admin_host:
+  enabled: true
+  default_host: "%{tenant}.$DOMAIN"
+  admin_host: "$DOMAIN"
   admin_only_tenant_creation: true
 
 ssl_configured: false

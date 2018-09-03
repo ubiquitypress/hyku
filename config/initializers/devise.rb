@@ -294,10 +294,6 @@ Devise.setup do |config|
     :uid_field => 'eppn',
     # :debug => true,
     :request_type => :header,
-    :uid_field => 'HTTP_EPPN',
-    :shib_session_id_field => 'HTTP_SHIB_SESSION_ID',
-    :shib_application_id_field => 'HTTP_SHIB_APPLICATION_ID',
-    :name_field => 'HTTP_EPPN',
     :info_fields => {
     },
   }

@@ -2,40 +2,64 @@
 <div class="ubiquity-meta-contributor" >
 
   <% hash.each do |key, value| %>
-   <% if key == 'contributor_name_type' %>
+    <% if key == 'contributor_name_type' %>
 
-        <label class="control-label multi_value optional" for="book_contributor_name_type">
-     contributor name type</label>
+      <label class="ubiquity_contributor_name_type control-label multi_value optional" for="book_contributor_name_type">
+        Contributor name type</label>
 
       <%= select_tag "book[contributor_group][][contributor_name_type]",
-       content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("contributor_name_type")) %>
+       content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("contributor_name_type")),
+       class: 'ubiquity_contributor_name_type' %>
 
-   <% end %>
+    <% end %>
 
-   <%if key == "contributor_type" %>
-   <label class="control-label multi_value optional" for="book_contributor_type">
-    Contributor type</label>
+    <%if key == "contributor_type" %>
+    <label class="control-label multi_value optional" for="book_contributor_type">
+      Contributor type</label>
 
-  <%= select_tag "book[contributor_group][][contributor_type]",
+    <%= select_tag "book[contributor_group][][contributor_type]",
           content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( ContributorGroupService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("contributor_type"))
-   %>
+    %>
 
-   <br/>
-   <% end %>
+    <br/>
+    <% end %>
 
-     <% if key == 'contributor_given_name' %>
+    <% if key == 'contributor_isni' %>
+      <label class="control-label multi_value optional" for="book_contributor_isni">
+        contributor isni</label>
+
+      <%= text_field_tag "book[contributor_group][][contributor_isni]", hash.dig("contributor_isni"),
+                         class: "book_contributor_group form-control multi-text-field multi_value",
+                         name: "book[contributor_group][][contributor_isni]"
+      %>
+
+    <% end %>
+    <br/>
+    <label class="ubiquity_contributor_organization_name control-label multi_value optional" for="book_contributor_organization_name">
+      Contributor organization name</label>
+
+    <%= text_field_tag "book[contributor_group][][contributor_organization_name]", hash.dig("contributor_organization_name"),
+                       class: "ubiquity_contributor_organization_name book_contributor_organization_name form-control multi-text-field multi_value",
+                       placeholder: 'Add contributor organization name',
+                       name: "book[contributor_group][][contributor_organization_name]"
+    %>
+    <br/>
+
+    <span class="ubiquity_personal_fields">
+
+      <% if key == 'contributor_given_name' %>
         <label class="control-label multi_value optional" for="book_contributor_given_name">
-          contributor given name</label>
+          Contributor given name</label>
 
         <%= text_field_tag "book[contributor_group][][contributor_given_name]", hash.dig("contributor_given_name"),
                            class: "book_contributor_group form-control multi-text-field multi_value",
                            name: "book[contributor_group][][contributor_given_name]"
         %>
-       <% end %>
+      <% end %>
 
       <% if key == 'contributor_family_name' %>
         <label class="control-label multi_value optional" for="book_contributor_family_name">
-          contributor family name</label>
+          Contributor family name</label>
 
         <%= text_field_tag "book[contributor_group][][contributor_family_name]",  hash.dig("contributor_family_name"),
                            class: "book_contributor_group form-control multi-text-field multi_value",
@@ -47,7 +71,7 @@
       <% if key == 'contributor_orcid' %>
         <p>
         <label class="control-label multi_value optional" for="book_contributor_orcid">
-          contributor orcid</label>
+          Contributor orcid</label>
 
         <%= text_field_tag "book[contributor_group][][contributor_orcid]", hash.dig("contributor_orcid"),
                            class: "book_contributor_group form-control multi-text-field multi_value",
@@ -55,17 +79,7 @@
         %>
       </p>
      <% end %>
-
-     <% if key == 'contributor_isni' %>
-        <label class="control-label multi_value optional" for="book_contributor_isni">
-          contributor isni</label>
-
-        <%= text_field_tag "book[contributor_group][][contributor_isni]", hash.dig("contributor_orcid"),
-                           class: "book_contributor_group form-control multi-text-field multi_value",
-                           name: "book[contributor_group][][contributor_isni]"
-        %>
-
-      <% end %>
+    </span>
 
       <% if key == 'contributor_position' %>
         <%= hidden_field_tag "book[contributor_group][][contributor_position]", hash.dig("contributor_position"), class: 'ubiquity-contributor-score'  %>

@@ -18,18 +18,18 @@
       <label class="control-label multi_value optional" for="generic_work_contributor_isni">
         contributor isni</label>
 
-      <%= text_field_tag "generic_work[contributor_group][][contributor_isni]", hash.dig("contributor_orcid"),
+      <%= text_field_tag "generic_work[contributor_group][][contributor_isni]", hash.dig("contributor_isni"),
                          class: "generic_work_contributor_group form-control multi-text-field multi_value",
                          name: "generic_work[contributor_group][][contributor_isni]"
       %>
 
     <% end %>
    <br/>
-   <label class="ubiquity_creator_organization_name control-label multi_value optional" for="generic_work_creator_organization_name">
+   <label class="ubiquity_contributor_organization_name control-label multi_value optional" for="generic_work_contributor_organization_name">
      contributor organization name</label>
 
    <%= text_field_tag  "generic_work[contributor_group][][contributor_organization_name]", hash.dig("contributor_organization_name"),
-                       class: "ubiquity_creator_organization_name generic_work_creator_organization_name form-control multi-text-field multi_value",
+                       class: "ubiquity_contributor_organization_name generic_work_contributor_organization_name form-control multi-text-field multi_value",
                        placeholder: 'Add contributor organization name',
                        name: "generic_work[contributor_group][][contributor_organization_name]"
    %>

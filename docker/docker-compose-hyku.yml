@@ -110,7 +110,7 @@ services:
       dockerfile: ./docker/Dockerfile-hyku
       args:
         # Default host for multi tenancy
-        - DOMAIN=up2.digitalnest.co.uk
+        - DOMAIN=hyku_host.example.com
     environment:
       - REDIS_HOST=redis
       - DATABASE_URL=postgresql://postgres@db/postgres

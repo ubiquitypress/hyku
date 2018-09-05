@@ -31,7 +31,6 @@
     $(document).on("turbolinks:load", function(){
         //$(document).ready(function() {
         return $("body").on("click", ".remove_contributor", function(event){
-            console.log('remove contribuor');
             event.preventDefault();
             var ubiquityContributorClass = $(this).attr('data-removeUbiquityContributor');
 

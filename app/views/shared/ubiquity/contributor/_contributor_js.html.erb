@@ -14,14 +14,12 @@
             cloneUbiDiv = $(this).parent('div' + `${ubiquityContributorClass}`).clone();
 
             _this = this;
-
-            var lastInputCount = $('.ubiquity-contributor-score:last').val();
-
              cloneUbiDiv.find('input').val('');
              cloneUbiDiv.find('option').attr('selected', false);
-
              //increment hidden_field counter after cloning
-             hiddenFieldIncrementer(lastInputCount, cloneUbiDiv);
+             var lastInputCount = $('.ubiquity-contributor-score:last').val();
+             var hiddenInput = $(cloneUbiDiv).find('.ubiquity-contributor-score');
+             hiddenInput.val(parseInt(lastInputCount) + 1)
             $(`${ubiquityContributorClass}` +  ':last').after(cloneUbiDiv)
             $('.ubiquity_contributor_name_type:last').val('Personal').change()
 
@@ -48,12 +46,6 @@
             //$(this).parent('div' + `${ubiquityContributorClass}`).remove();
             $(self).parent('div' + `${contributorDiv}`).remove();
         }
-    }
-
-    function hiddenFieldIncrementer(lastInputCount, clonedDiv){
-      var clonedInput = $(clonedDiv).find('.ubiquity-contributor-score')
-       //clonedInput.val( parseInt(lastInputCount.val()) + 1 )
-       clonedInput.val( parseInt(lastInputCount) + 1 )
     }
 
     //for hiding and showing values on the edit form for contributor sub fields

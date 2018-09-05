@@ -14,14 +14,12 @@
             var cloneUbiDiv = $(this).parent('div' + `${ubiquityEditorClass}`).clone();
 
            _this = this;
-
-           var lastInputCount = $('.ubiquity-editor-score:last').val();
-
             cloneUbiDiv.find('input').val('');
             cloneUbiDiv.find('option').attr('selected', false);
             //increment hidden_field counter after cloning
-            hiddenFieldIncrementer(lastInputCount, cloneUbiDiv);
-
+            var lastInputCount = $('.ubiquity-editor-score:last').val();
+            var hiddenInput = $(cloneUbiDiv).find('.ubiquity-editor-score');
+            hiddenInput.val(parseInt(lastInputCount) + 1);
             $(`${ubiquityEditorClass}` +  ':last').after(cloneUbiDiv)
             $('.ubiquity_editor_name_type:last').val('Personal').change()
         });
@@ -43,20 +41,12 @@
         });
     });
 
-
     function removeUbiquityEditor(self, editorDiv) {
-
         if ($(".ubiquity-meta-editor").length > 1 ) {
             //$(this).parent('div' + `${ubiquityeditorClass}`).remove();
             $(self).parent('div' + `${editorDiv}`).remove();
         }
     }
-
-   function hiddenFieldIncrementer(lastInputCount, clonedDiv){
-      var clonedInput = $(clonedDiv).find('.ubiquity-editor-score')
-     //clonedInput.val( parseInt(clonedInput.val()) + 1 )
-      clonedInput.val( parseInt(lastInputCount) + 1 )
-   }
 
    //for hiding and showing values on the edit form for editor sub fields
    $(document).on("turbolinks:load", function(){

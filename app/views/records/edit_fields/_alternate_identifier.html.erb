@@ -1,0 +1,6 @@
+<% if curation_concern.new_record? %>
+  <%= render "shared/ubiquity/alternate_identifier/new_form" %>
+<% else %>
+  <%= render "shared/ubiquity/alternate_identifier/edit_form", curation_concern: curation_concern %>
+<% end %>
+<%= render "shared/ubiquity/alternate_identifier/alternate_identifier_js" %>

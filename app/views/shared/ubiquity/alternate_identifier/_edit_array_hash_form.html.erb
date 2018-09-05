@@ -1,0 +1,42 @@
+<% template = @curation_concern.class.to_s.underscore %>
+
+<% array_of_hash.each_with_index do |hash, index| %>
+
+  <div class="ubiquity-meta-alternate-identifier" >
+
+    <label class="control-label multi_value optional" for="<% template %>_alternate_identifier">Alternate identifier</label>
+    <p class="help-block">May be used for local identifiers such as project codes, e.g. XTE12.</p>
+    <p class="help-block">Please include a prefix e.g. 'Project ID = XTE12' so a reader can distinguish between multiple identifiers</p>
+
+    <%= text_field_tag "#{template}[alternate_identifier_group][][alternate_identifier]", hash.dig("alternate_identifier"),
+                       class: "#{template}_alternate_identifier_group form-control multi-text-field multi_value",
+                       name: "#{template}[alternate_identifier_group][][alternate_identifier]"
+    %>
+
+    <br>
+    <label class="control-label multi_value optional" for="<% template %>_alternate_identifier_type">
+      Type of alternate identifier</label>
+    <p class="help-block">State the type of alternate identifier.</p>
+
+
+    <%= text_field_tag "#{template}[alternate_identifier_group][][alternate_identifier_type]", hash.dig("alternate_identifier_type"),
+                       class: "#{template}_alternate_identifier_group form-control multi-text-field multi_value",
+                       name: "#{template}[alternate_identifier_group][][alternate_identifier_type]"
+    %>
+
+    <br>
+
+    <br>
+    <a href="#" style="color:red;"  class=" remove_alternate_identifier form-group " data-removeUbiquityAlternateIdentifier=".ubiquity-meta-alternate-identifier">
+      <span class="glyphicon glyphicon-remove"></span>
+      <span class="controls-remove-text">Remove</span>
+    </a>
+    |
+
+    <a href="#" class=" add_alternate_identifier" data-addUbiquityAlternateIdentifier=".ubiquity-meta-alternate-identifier">Add another </a>
+
+    <br> <br>
+
+  </div>
+
+<% end %>

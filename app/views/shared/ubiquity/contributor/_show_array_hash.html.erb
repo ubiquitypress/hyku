@@ -8,11 +8,11 @@
           <li class="attribute contributor">
 
             <span style="float:left">
-              <% if hash['contributor_organization_name'] %>
+              <% if hash['contributor_organization_name'].present? %>
                 <%= hash['contributor_organization_name'] %>,&nbsp;
               <% end %>
-              <% unless hash['contributor_family_name'].present? %>
-                 
+              <% if hash['contributor_family_name'].present? %>
+
                 <%= hash['contributor_family_name'] %> ,&nbsp;
                 <% end %>
                 <% if hash['contributor_given_name'].present? %>
@@ -44,7 +44,7 @@
 
 
                  <img src="
-                 https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/logo_xml_isni-16.gif" alt="orcid"  height="16" width="16" class="img-responsive" style="float:left"  >
+                 https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/logo_xml_isni-16.gif" alt="orcid"  height="16" width="44" class="img-responsive" style="float:left"  >
 
                   </a>
 

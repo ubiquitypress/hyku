@@ -1,6 +1,6 @@
 <tr>
   <th>editor</th>
-    
+
    <% array_of_hash.each do |hash| %>
 
       <td style="display:inline">
@@ -8,7 +8,7 @@
           <li class="attribute editor">
 
             <span style="float:left">
-              <% if hash['editor_organization_name'] %>
+              <% if hash['editor_organization_name'].present? %>
                 <%= hash['editor_organization_name'] %>,&nbsp;
               <% end %>
               <% if hash['editor_family_name'] %>
@@ -20,6 +20,7 @@
             </span>
 
             <span itemprop="name">
+            <span style="float:left" > &nbsp;(</span>
 
             <% if hash['editor_orcid'].present? %>
               <a  href="<%= hash['editor_orcid'] %>" target="_blank" >
@@ -38,12 +39,12 @@
 
 
                  <img src="
-                 https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/logo_xml_isni-16.gif" alt="orcid"  height="16" width="16" class="img-responsive" style="float:left"  >
+                 https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/logo_xml_isni-16.gif" alt="orcid"  height="16" width="44" class="img-responsive" style="float:left"  >
 
                   </a>
 
                   <% end %>
-
+                 <span style="float:left">)<span>
                  </span>
             </li>
         </ul>

@@ -1,4 +1,4 @@
-module JournalArticlesHelper
+module MultipleMetadataFieldsHelper
 
   def get_model(model_class, model_id, field, multipart_sort_field_name = nil)
     model = fetch_model(model_class, model_id)

@@ -1,20 +1,19 @@
 <tr>
   <th>Alternate identifier</th>
-
-  <% array_of_hash.each do |hash| %>
-    <td>
+  <td>
+    <% array_of_hash.each do |hash| %>
       <ul class="tabular">
         <li class="attribute alternate_identifier">
           <% if hash['alternate_identifier'] %>
-            <%= hash['alternate_identifier'] %>,&nbsp;
+            <%= "identifier: #{hash['alternate_identifier']}" %>,&nbsp;
           <% end %>
+        </li>
+        <li class="attribute alternate_identifier_type">
           <% if hash['alternate_identifier_type'] %>
-            <%= hash['alternate_identifier_type'] %>
+            <%= "type: #{hash['alternate_identifier_type']}" %>
           <% end %>
         </li>
       </ul>
-    </td>
-
-  <% end %>
-
+    <% end %>
+  </td>
 </tr>

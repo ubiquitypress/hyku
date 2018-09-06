@@ -1,8 +1,0 @@
-
-<% array_of_hash = get_model(curation_concern.class, curation_concern.id, 'editor', 'editor_position') %>
-
-<% if (array_of_hash.class == Array && array_of_hash.first.class == Hash)  %>
-  <%= render "generic_works/ubiquity/editor/edit_array_hash_form", array_of_hash: array_of_hash %>
-<% else %>
-  <%= render "generic_works/ubiquity/editor/new_form" %>
-<% end %>

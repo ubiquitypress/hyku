@@ -1,5 +1,7 @@
 <tr>
-  <th>contributor</th>
+    <% if source != 'search' %>
+     <th>Contributors</th>
+    <% end %> 
 
    <% array_of_hash.each do |hash| %>
 
@@ -11,53 +13,40 @@
               <% if hash['contributor_organization_name'] %>
                 <%= hash['contributor_organization_name'] %>,&nbsp;
               <% end %>
-              <% unless hash['contributor_family_name'].present? %>
-                 
+              <% if hash['contributor_family_name'].present? %>
+
                 <%= hash['contributor_family_name'] %> ,&nbsp;
                 <% end %>
                 <% if hash['contributor_given_name'].present? %>
                   <%= hash['contributor_given_name'] %>
                 <% end %>
-             </span>
+              </span>
 
-            <span itemprop="name">
-              <span style="float:left" > &nbsp;(</span>
-
-             <span style="float:left">
-               <% if hash['contributor_type'].present? %>
-                 <%= hash['contributor_type'] %>,  &nbsp;
+              <span itemprop="name">
+               <span style="float:left" > &nbsp;(</span>
+                <span style="float:left">
+                <% if hash['contributor_type'].present? %>
+                  <%= hash['contributor_type'] %>,  &nbsp;
                 <% end %>
-             </span>
+                </span>
 
-             <% if hash['contributor_orcid'].present? %>
-              <a  href="<%= hash['contributor_orcid'] %>" target="_blank" >
-
-
-              <img src="https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/orcid_16x16.png" alt="orcid"  height="16" width="16" class="img-responsive" style="float:left"  >
-
-               </a>
-
-               <% end %>
-
-               <% if hash['contributor_isni'].present? %>
-                 <a  href="<%= hash['contributor_isni'] %>" target="_blank" >
-
-
-                 <img src="
-                 https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/logo_xml_isni-16.gif" alt="orcid"  height="16" width="16" class="img-responsive" style="float:left"  >
-
+                <% if hash['contributor_orcid'].present? %>
+                  <a  href="<%= hash['contributor_orcid'] %>" target="_blank" >
+                    <img src="https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/orcid_16x16.png" alt="orcid"  height="16" width="16" class="img-responsive" style="float:left"  >
                   </a>
+                 <% end %>
 
-                  <% end %>
-                  <span style="float:left">)<span>
+                 <% if hash['contributor_isni'].present? %>
+                   <a  href="<%= hash['contributor_isni'] %>" target="_blank" >
+                   <img src="
+                     https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/logo_xml_isni-16.gif" alt="orcid"  height="16" width="44" class="img-responsive" style="float:left"  >
+                   </a>
+                   <% end %>
+                <span style="float:left">)<span>
               </span>
 
                <span itemprop="name">
-
-
-
-                 </span>
-
+              </span>
 
             </li>
         </ul>

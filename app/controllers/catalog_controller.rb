@@ -75,9 +75,11 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name("keyword", :stored_searchable), itemprop: 'keywords', link_to_search: solr_name("keyword", :facetable)
     config.add_index_field solr_name("journal_title", :stored_searchable), label: "Journal Title", link_to_search: solr_name("journal_title", :facetable)
     config.add_index_field solr_name("subject", :stored_searchable), itemprop: 'about', link_to_search: solr_name("subject", :facetable)
-    config.add_index_field solr_name("creator", :stored_searchable), itemprop: 'creator', link_to_search: solr_name("creator", :facetable)
 
-    config.add_index_field solr_name("contributor", :stored_searchable), itemprop: 'contributor', link_to_search: solr_name("contributor", :facetable)
+    config.add_index_field solr_name("creator"), helper_method: :display_creator_fields_in_search #, label: "Creator"
+    config.add_index_field solr_name("contributor"), helper_method: :display_contributor_fields_in_search, label: "Contributor"
+    config.add_index_field solr_name("editor"), helper_method: :display_editor_fields_in_search, label: "Editor"
+
     config.add_index_field solr_name("institution", :stored_searchable), label: "Institution"
     config.add_index_field solr_name("event_title", :stored_searchable), label: "Event title", link_to_search: solr_name("event_title", :facetable)
     config.add_index_field solr_name("event_date", :stored_searchable), label: "Event date"

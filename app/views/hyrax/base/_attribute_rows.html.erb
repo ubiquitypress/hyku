@@ -3,11 +3,11 @@
 
 <%# display contributor using the show partial  -->
 <%# presenter.attribute_to_html(:contributor, render_as: :faceted) %>
-<%= render "shared/ubiquity/contributor/show", presenter: presenter %>
+<%= render "shared/ubiquity/contributor/show", presenter: presenter, source: 'show' %>
 
 
 <% if check_has_editor_fields?(presenter.model_name.to_s) %>
-<%= render "shared/ubiquity/editor/show", presenter: presenter %>
+<%= render "shared/ubiquity/editor/show", presenter: presenter, source: 'show' %>
 <% end %>
 
 <%= presenter.attribute_to_html(:subject, render_as: :faceted) %>

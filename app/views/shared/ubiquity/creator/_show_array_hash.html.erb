@@ -1,5 +1,8 @@
 <tr>
-  <th>creator</th>
+
+  <% if source != 'search' %>
+    <th>Creators</th>
+  <% end %>
 
    <% array_of_hash.each do |hash| %>
 
@@ -21,14 +24,13 @@
 
             <span itemprop="name">
              <span style="float:left" > &nbsp;(</span>
-            <% if hash['creator_orcid'].present? %>
+              <% if hash['creator_orcid'].present? %>
 
                 <a  href="<%= hash['creator_orcid'] %>" target="_blank" >
 
-              <img src="https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/orcid_16x16.png" alt="ORCID"  height="16" width="16" class="img-responsive"  style="float:left"  >
+                 <img src="https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/orcid_16x16.png" alt="ORCID"  height="16" width="16" class="img-responsive"  style="float:left"  >
 
-            </a>
-
+                 </a>
                <% end %>
 
                <% if hash['creator_isni'].present? %>

@@ -1,0 +1,9 @@
+
+<% if  curation_concern.new_record? %>
+  <%= render "shared/ubiquity/creator/new_form" %>
+<% else %>
+<% array_of_hash = get_model(curation_concern.class, curation_concern.id, 'creator', 'creator_position') %>
+  <%= render "shared/ubiquity/creator/edit_array_hash_form", array_of_hash: array_of_hash %>
+<% end %>
+
+<%= render "shared/ubiquity/creator/creator_js" %>

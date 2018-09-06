@@ -1,0 +1,87 @@
+<% template = curation_concern.class.to_s.underscore %>
+
+
+<div class="ubiquity-meta-contributor" >
+
+  <label class="control-label multi_value optional" for="#{template}_contributor_name_type">
+    contributor name type</label>
+
+  <%= select_tag "#{template}[contributor_group][][contributor_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s), class: "ubiquity_contributor_name_type" %>
+
+  <br/>
+  <label class="control-label multi_value optional" for="#{template}_contributor_isni">
+    Contributor ISNI</label>
+
+  <%= text_field_tag "#{template}[contributor_group][][contributor_isni]", nil,
+                     class: "#{template}_contributor_group form-control multi-text-field multi_value",
+                     placeholder: 'Add contributor isni',
+                     name: "#{template}[contributor_group][][contributor_isni]"
+  %>
+
+  <br/>
+
+    <label class="ubiquity_contributor_organization_name control-label multi_value optional" for="#{template}_contributor_organization_name">
+      Contributor organization name</label>
+
+    <%= text_field_tag  "#{template}[contributor_group][][contributor_organization_name]", nil,
+                        class: "ubiquity_contributor_organization_name #{template}_contributor_organization_name form-control multi-text-field multi_value",
+                        placeholder: 'Add contributor organization name',
+                        name: "#{template}[contributor_group][][contributor_organization_name]"
+    %>
+    </br>
+ <span class="ubiquity_personal_fields">
+  <label class="control-label multi_value optional" for="#{template}_contributor_type">
+   Contributor type</label>
+
+ <%= select_tag "#{template}[contributor_group][][contributor_type]",
+         content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( ContributorGroupService.new.select_active_options.flatten.uniq!, :to_s, :to_s)
+  %>
+
+  <br/>
+
+  <label class="control-label multi_value optional" for="#{template}_contributor_given_name">
+    Contributor given name</label>
+
+  <%= text_field_tag  "#{template}[contributor_group][][contributor_given_name]", nil,
+                      class: "#{template}_contributor_given_name form-control multi-text-field multi_value",
+                      placeholder: 'Add contributor given name',
+                      name: "#{template}[contributor_group][][contributor_given_name]"
+  %>
+
+  <br>
+  <label class="control-label multi_value optional" for="#{template}_contributor_family_name">
+    Contributor family name</label>
+
+  <%= text_field_tag  "#{template}[contributor_group][][contributor_family_name]", nil,
+                      class: "#{template}_contributor_family_name form-control multi-text-field multi_value",
+                      placeholder: 'Add contributor family name',
+                      name: "#{template}[contributor_group][][contributor_family_name]"
+  %>
+
+  <br>
+  <label class="control-label multi_value optional" for="#{template}_contributor_orcid">
+    Contributor ORCiD</label>
+
+  <%= text_field_tag "#{template}[contributor_group][][contributor_orcid]", nil,
+                     class: "#{template}_contributor_group form-control multi-text-field multi_value",
+                     placeholder: 'Add contributor orcid',
+                     name: "#{template}[contributor_group][][contributor_orcid]"
+  %>
+
+</span>
+  <br/>
+
+    <%= hidden_field_tag "#{template}[contributor_group][][contributor_position]", 1, class: 'ubiquity-contributor-score'  %>
+   <br/>
+
+  <a href="#" style="color:red;"  class=" remove_contributor form-group " data-removeUbiquitycontributor=".ubiquity-meta-contributor">
+    <span class="glyphicon glyphicon-remove"></span>
+    <span class="controls-remove-text">Remove</span>
+  </a>
+  |
+
+  <a href="#" class=" add_contributor" data-addUbiquitycontributor=".ubiquity-meta-contributor">Add another </a>
+
+  <br> <br>
+
+</div>

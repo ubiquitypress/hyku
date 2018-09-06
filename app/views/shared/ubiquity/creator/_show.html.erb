@@ -2,11 +2,11 @@
 <% array_of_hash = get_model(presenter.model, presenter.id, 'creator', 'creator_position') %>
 
 <% if (array_of_hash.class == Array && array_of_hash.first.class == Hash)  %>
-  <%= render "shared/ubiquity/creator/show_array_hash",  array_of_hash: array_of_hash %>
+  <%= render "shared/ubiquity/creator/show_array_hash",  array_of_hash: array_of_hash, source: source %>
 <% elsif  array_of_hash.class == Array  %>
-  <%= render "shared/ubiquity/creator/show_array",  array_of_hash: array_of_hash %>
+  <%= render "shared/ubiquity/creator/show_array",  array_of_hash: array_of_hash, source: source %>
 <% elsif array_of_hash.class == Hash %>
-      <%= render "shared/ubiquity/creator/show_hash",  array_of_hash: array_of_hash %>
+      <%= render "shared/ubiquity/creator/show_hash",  array_of_hash: array_of_hash, source: source %>
 <% else %>
 
 <% end %> <%# closes if array_of_hash.class %>

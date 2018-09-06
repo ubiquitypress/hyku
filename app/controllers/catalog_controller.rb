@@ -119,7 +119,8 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name("project_name", :stored_searchable), label: "Project Name"
     config.add_index_field solr_name("official_link", :stored_searchable), label: "Official link"
     config.add_index_field solr_name("rights_holder", :stored_searchable), label: "Rights holder"
-    config.add_index_field solr_name("alternate_identifier"), helper_method: :display_alt_id_fields_in_search, label: "Alternate Identifier"
+    config.add_index_field solr_name("alternate_identifier"), helper_method: :display_multi_part_fields_in_search, label: "Alternate Identifier"
+    config.add_index_field solr_name("related_identifier"), helper_method: :display_multi_part_fields_in_search, label: "Related Identifier"
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display

@@ -1,0 +1,38 @@
+<% template = @curation_concern.class.to_s.underscore %>
+
+<% array_of_hash.each_with_index do |hash, index| %>
+
+  <div class="ubiquity-meta-related-identifier" >
+    <label class="control-label multi_value optional" for="<% template %>_related_identifier">Related identifier</label>
+    <p class="help-block">Globally unique identifiers, such as ISNI, ARK, ISBN, ISSN, EISSN, arXiv, etc.</p>
+    <%= text_field_tag "#{template}[related_identifier_group][][related_identifier]", hash.dig("related_identifier"),
+                       class: "#{template}_related_identifier_group form-control multi-text-field multi_value",
+                       name: "#{template}[related_identifier_group][][related_identifier]"
+    %>
+    <br>
+    <label class="control-label multi_value optional" for="<% template %>_related_identifier_type">
+      Type of related identifier</label>
+    <p class="help-block">If you have listed a related identifier, then please select what type.</p>
+    <%= select_tag "#{template}[related_identifier_group][][related_identifier_type]",
+        content_tag(:option, 'select one...', :value => "") + options_from_collection_for_select(RelatedIdentifierTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("related_identifier_type")),
+        {:class => 'form-control multi-text-field multi_value'} %>
+
+    <br>
+    <label class="control-label multi_value optional" for="<% template %>_relation_type">
+      Relationship of related identifier</label>
+    <p class="help-block">If you have listed a related identifier, then state its relationship to the work, e.g. cites
+      or continues the work.</p>
+    <%= select_tag "#{template}[related_identifier_group][][relation_type]",
+        content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select(RelationTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("relation_type")),
+        {:class => 'form-control multi-text-field multi_value'} %>
+
+    <br>
+    <a href="#" style="color:red;"  class="remove_related_identifier form-group" data-removeUbiquityrelatedIdentifier=".ubiquity-meta-related-identifier">
+      <span class="glyphicon glyphicon-remove"></span>
+      <span class="controls-remove-text">Remove</span>
+    </a>
+    |
+    <a href="#" class="add_related_identifier" data-addUbiquityrelatedIdentifier=".ubiquity-meta-related-identifier">Add another </a>
+    <br><br>
+  </div>
+<% end %>

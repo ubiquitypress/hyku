@@ -1,0 +1,34 @@
+<script type="text/javascript">
+
+    // add linked fields
+    $(document).on("turbolinks:load", function(){
+
+        return $("body").on("click", ".add_related_identifier", function(event){
+            event.preventDefault();
+            var ubiquityRelatedIdentifierClass = $(this).attr('data-addUbiquityRelatedIdentifier');
+            var cloneUbiDiv = $(this).parent('div' + `${ubiquityRelatedIdentifierClass}`).clone();
+            _this = this;
+            $(`${ubiquityRelatedIdentifierClass}`+ ':last').after(cloneUbiDiv)
+        });
+    });
+
+    //remove linked fields
+    $(document).on("turbolinks:load", function(){
+        //$(document).ready(function() {
+        return $("body").on("click", ".remove_related_identifier", function(event){
+            event.preventDefault();
+            var ubiquityRelatedIdentifierClass = $(this).attr('data-removeUbiquityRelatedIdentifier');
+
+            _this = this;
+            removeUbiquityRelatedIdentifier(_this, ubiquityRelatedIdentifierClass);
+
+        });
+    });
+
+    function removeUbiquityRelatedIdentifier(self, related_identifierDiv) {
+        if ($(".ubiquity-meta-related-identifier").length > 1 ) {
+            $(self).parent('div' + `${related_identifierDiv}`).remove();
+        }
+    }
+
+</script>

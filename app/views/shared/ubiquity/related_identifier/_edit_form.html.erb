@@ -1,0 +1,5 @@
+<% array_of_hash = get_model(curation_concern.class, curation_concern.id, 'related_identifier') %>
+
+<% if (array_of_hash.class == Array && array_of_hash.first.class == Hash)  %>
+  <%= render "shared/ubiquity/related_identifier/edit_array_hash_form", array_of_hash: array_of_hash %>
+<% end %>

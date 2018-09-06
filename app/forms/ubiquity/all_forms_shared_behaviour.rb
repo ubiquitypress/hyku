@@ -11,8 +11,8 @@ module Ubiquity
                     :creator_family_name, :creator_orcid, :creator_isni,
                     :creator_position
 
-      attr_accessor :alternate_identifier_group
-      self.terms += %i[alternate_identifier]
+      attr_accessor :alternate_identifier_group, :related_identifier_group
+      self.terms += %i[alternate_identifier related_identifier]
 
     end
 
@@ -44,6 +44,8 @@ module Ubiquity
           ]}
 
           permitted_params << { alternate_identifier_group: %i[alternate_identifier alternate_identifier_type] }
+
+          permitted_params << { related_identifier_group: %i[related_identifier related_identifier_type relation_type] }
 
         end
       end

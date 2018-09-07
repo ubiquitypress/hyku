@@ -1,0 +1,57 @@
+<script type="text/javascript">
+
+    // add linked fields
+    $(document).on("turbolinks:load", function(){
+
+        return $("body").on("click", ".add_related_identifier", function(event){
+            event.preventDefault();
+            var ubiquityRelatedIdentifierClass = $(this).attr('data-addUbiquityRelatedIdentifier');
+            var cloneUbiDiv = $(this).parent('div' + `${ubiquityRelatedIdentifierClass}`).clone();
+            _this = this;
+            cloneUbiDiv.find('input').val('');
+            cloneUbiDiv.find('option').attr('selected', false);
+            $(`${ubiquityRelatedIdentifierClass}`+ ':last').after(cloneUbiDiv)
+        });
+    });
+
+    //remove linked fields
+    $(document).on("turbolinks:load", function(){
+        //$(document).ready(function() {
+        return $("body").on("click", ".remove_related_identifier", function(event){
+            event.preventDefault();
+            var ubiquityRelatedIdentifierClass = $(this).attr('data-removeUbiquityRelatedIdentifier');
+
+            _this = this;
+            removeUbiquityRelatedIdentifier(_this, ubiquityRelatedIdentifierClass);
+
+        });
+    });
+
+    function removeUbiquityRelatedIdentifier(self, related_identifierDiv) {
+        if ($(".ubiquity-meta-related-identifier").length > 1 ) {
+            $(self).parent('div' + `${related_identifierDiv}`).remove();
+        }
+    }
+
+    // make related_identifiers type and relation fields compulsory if the first field is filled in
+    $(document).on("turbolinks:load", function(){
+        return $("body").on("blur", ".related_identifier", function (event) {
+            event.preventDefault();
+            //trim Remove the whitespace from the beginning and end of a string
+            var input1Value = $.trim($(this).val());
+            // console.log('value', input1Value);
+            var input2 = $(".related_identifier_type");
+            var input3 = $(".related_identifier_relation");
+            if (input1Value) {
+                // console.log('enter')
+                input2.prop('required', true);
+                input3.prop('required', true);
+            } else {
+                input2.removeAttr('required');
+                input3.removeAttr('required');
+            }
+
+        });
+    });
+
+</script>

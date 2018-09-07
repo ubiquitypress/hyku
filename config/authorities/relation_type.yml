@@ -1,0 +1,63 @@
+terms:
+  - id: IsCitedBy
+    term: IsCitedBy
+  - id: Cites
+    term: Cites
+  - id: IsSupplementTo
+    term: IsSupplementTo
+  - id: IsSupplementedBy
+    term: IsSupplementedBy
+  - id: IsContinuedBy
+    term: IsContinuedBy
+  - id: Continues
+    term: Continues
+  - id: IsDescribedBy
+    term: IsDescribedBy
+  - id: Describes
+    term: Describes
+  - id: HasMetadata
+    term: HasMetadata
+  - id: IsMetadataFor
+    term: IsMetadataFor
+  - id: HasVersion
+    term: HasVersion
+  - id: IsVersionOf
+    term: IsVersionOf
+  - id: IsNewVersionOf
+    term: IsNewVersionOf
+  - id: IsPreviousVersionOf
+    term: IsPreviousVersionOf
+  - id: IsPartOf
+    term: IsPartOf
+  - id: HasPart
+    term: HasPart
+  - id: IsReferencedBy
+    term: IsReferencedBy
+  - id: References
+    term: References
+  - id: IsDocumentedBy
+    term: IsDocumentedBy
+  - id: Documents
+    term: Documents
+  - id: IsCompiledBy
+    term: IsCompiledBy
+  - id: Compiles
+    term: Compiles
+  - id: IsVariantFormOf
+    term: IsVariantFormOf
+  - id: IsOriginalFormOf
+    term: IsOriginalFormOf
+  - id: IsIdenticalTo
+    term: IsIdenticalTo
+  - id: IsReviewedBy
+    term: IsReviewedBy
+  - id: Reviews
+    term: Reviews
+  - id: IsDerivedFrom
+    term: IsDerivedFrom
+  - id: IsSourceOf
+    term: IsSourceOf
+  - id: IsRequiredBy
+    term: IsRequiredBy
+  - id: Requires
+    term: Requires

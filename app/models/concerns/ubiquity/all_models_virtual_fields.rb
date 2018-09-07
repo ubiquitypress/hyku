@@ -7,6 +7,7 @@ module Ubiquity
       before_save :save_contributor
       before_save :save_creator
       before_save :save_alternate_identifier
+      before_save :save_related_identifier
 
       attr_accessor :contributor_group, :contributor_name_type, :contributor_type, :contributor_given_name,
                     :contributor_family_name, :contributor_orcid, :contributor_isni,
@@ -16,7 +17,7 @@ module Ubiquity
                     :creator_family_name, :creator_orcid, :creator_isni,
                     :creator_position
 
-      attr_accessor :alternate_identifier_group
+      attr_accessor :alternate_identifier_group, :related_identifier_group
 
     end
 
@@ -50,6 +51,14 @@ module Ubiquity
         new_alternate_identifier_group = remove_hash_keys_with_empty_and_nil_values(self.alternate_identifier_group)
         alternate_identifier_json = new_alternate_identifier_group.to_json
         self.alternate_identifier = [alternate_identifier_json]
+      end
+    end
+
+    def save_related_identifier
+      if self.related_identifier_group.present?
+        new_related_identifier_group = remove_hash_keys_with_empty_and_nil_values(self.related_identifier_group)
+        related_identifier_json = new_related_identifier_group.to_json
+        self.related_identifier = [related_identifier_json]
       end
     end
   end

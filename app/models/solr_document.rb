@@ -56,5 +56,5 @@ class SolrDocument
   attribute :event_date, Solr::Array, solr_name('event_date')
   attribute :book_title, Solr::Array, solr_name('book_title')
   attribute :alternate_identifier, Solr::Array, solr_name('alternate_identifier')
-
+  attribute :related_identifier, Solr::Array, solr_name('related_identifier')
 end

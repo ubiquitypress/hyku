@@ -8,6 +8,8 @@
             var ubiquityAlternateIdentifierClass = $(this).attr('data-addUbiquityAlternateIdentifier');
             var cloneUbiDiv = $(this).parent('div' + `${ubiquityAlternateIdentifierClass}`).clone();
             _this = this;
+            cloneUbiDiv.find('input').val('');
+            cloneUbiDiv.find('option').attr('selected', false);
             $(`${ubiquityAlternateIdentifierClass}`+ ':last').after(cloneUbiDiv)
         });
     });

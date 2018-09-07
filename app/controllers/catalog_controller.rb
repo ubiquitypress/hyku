@@ -88,6 +88,7 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name("series_name", :stored_searchable), label: "Series name", link_to_search: solr_name("series_name", :facetable)
     config.add_index_field solr_name("edition", :stored_searchable), label: "Edition"
     config.add_index_field solr_name("doi", :stored_searchable), label: "DOI"
+    config.add_index_field solr_name("isbn", :stored_searchable), label: "ISBN"
     config.add_index_field solr_name("issn", :stored_searchable), label: "ISSN"
     config.add_index_field solr_name("eissn", :stored_searchable), label: "eISSN"
     config.add_index_field solr_name("proxy_depositor", :symbol), label: "Depositor", helper_method: :link_to_profile
@@ -152,6 +153,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("format", :stored_searchable)
     config.add_show_field solr_name("identifier", :stored_searchable)
     config.add_show_field solr_name("doi", :stored_searchable)
+    config.add_show_field solr_name("isbn", :stored_searchable)
     config.add_show_field solr_name("issn", :stored_searchable)
     config.add_show_field solr_name("eissn", :stored_searchable)
     config.add_show_field solr_name('extent', :stored_searchable)

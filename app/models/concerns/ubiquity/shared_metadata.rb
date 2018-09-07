@@ -40,7 +40,10 @@ module Ubiquity
       property :issue, predicate: ::RDF::Vocab::Bibframe.term(:Serial), multiple: false do |index|
         index.as :stored_searchable
       end
-      property :article_num, predicate: ::RDF::Vocab::BIBO.number  do |index|
+      property :article_num, predicate: ::RDF::Vocab::BIBO.number do |index|
+        index.as :stored_searchable
+      end
+      property :isbn, predicate: ::RDF::Vocab::BIBO.isbn, multiple: false do |index|
         index.as :stored_searchable
       end
     end

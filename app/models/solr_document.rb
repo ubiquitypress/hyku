@@ -45,6 +45,7 @@ class SolrDocument
   attribute :project_name, Solr::Array, solr_name('project_name')
   attribute :rights_holder, Solr::Array, solr_name('rights_holder')
   attribute :doi, Solr::Array, solr_name('doi')
+  attribute :isbn, Solr::Array, solr_name('isbn')
   attribute :issn, Solr::Array, solr_name('issn')
   attribute :eissn, Solr::Array, solr_name('eissn')
   attribute :official_link, Solr::Array, solr_name('official_link')

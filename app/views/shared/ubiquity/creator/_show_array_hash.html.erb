@@ -23,33 +23,26 @@
             </span>
 
             <span itemprop="name">
-             <span style="float:left" > &nbsp;(</span>
-              <% if hash['creator_orcid'].present? %>
+              <% if dont_display_empty_brackets(hash.keys, ["creator_orcid", 'creator_isni']) %>
+                <span style="float:left" > &nbsp;(</span>
+                  <% if hash['creator_orcid'].present? %>
+                    <a  href="<%= hash['creator_orcid'] %>" target="_blank" >
+                     <img src="https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/orcid_16x16.png" alt="ORCID"  height="16" width="16" class="img-responsive"  style="float:left"  >
+                   </a>
+                 <% end %>
 
-                <a  href="<%= hash['creator_orcid'] %>" target="_blank" >
-
-                 <img src="https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/orcid_16x16.png" alt="ORCID"  height="16" width="16" class="img-responsive"  style="float:left"  >
-
-                 </a>
-               <% end %>
-
-               <% if hash['creator_isni'].present? %>
-                 <a  href="<%= hash['creator_isni'] %>" target="_blank" >
-
-
-                 <img src="
-                 https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/logo_xml_isni-16.gif" alt="ISNI"  height="16" width="44" class="img-responsive" style="float:left"  >
-
-                  </a>
-
+                 <% if hash['creator_isni'].present? %>
+                   <a  href="<%= hash['creator_isni'] %>" target="_blank" >
+                    <img src="
+                       https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/logo_xml_isni-16.gif" alt="ISNI"  height="16" width="44" class="img-responsive" style="float:left"  >
+                    </a>
                   <% end %>
-               <span style="float:left">)<span>
+                <span style="float:left">)<span>
+              <% end %>
             </span>
 
-               <span itemprop="name">
-
-
-                 </span>
+            <span itemprop="name">
+            </span>
             </li>
         </ul>
         </td>

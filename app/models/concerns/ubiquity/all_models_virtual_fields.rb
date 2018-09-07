@@ -25,7 +25,7 @@ module Ubiquity
     #remove hash keys with value of nil, "", and "NaN"
     def remove_hash_keys_with_empty_and_nil_values(data)
       data.map do |hash|
-         hash.reject { |k,v| v.nil? || v.empty? ||v == "NaN" }
+         hash.reject { |k,v| v.nil? || v.to_s.empty? ||v == "NaN" }
       end
     end
 

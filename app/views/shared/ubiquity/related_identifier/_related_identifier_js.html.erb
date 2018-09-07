@@ -8,6 +8,8 @@
             var ubiquityRelatedIdentifierClass = $(this).attr('data-addUbiquityRelatedIdentifier');
             var cloneUbiDiv = $(this).parent('div' + `${ubiquityRelatedIdentifierClass}`).clone();
             _this = this;
+            cloneUbiDiv.find('input').val('');
+            cloneUbiDiv.find('option').attr('selected', false);
             $(`${ubiquityRelatedIdentifierClass}`+ ':last').after(cloneUbiDiv)
         });
     });
@@ -37,11 +39,11 @@
             event.preventDefault();
             //trim Remove the whitespace from the beginning and end of a string
             var input1Value = $.trim($(this).val());
-            console.log('value', input1Value);
+            // console.log('value', input1Value);
             var input2 = $(".related_identifier_type");
             var input3 = $(".related_identifier_relation");
             if (input1Value) {
-                console.log('enter')
+                // console.log('enter')
                 input2.prop('required', true);
                 input3.prop('required', true);
             } else {

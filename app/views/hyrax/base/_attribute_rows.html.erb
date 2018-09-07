@@ -49,6 +49,7 @@
 <%= presenter.attribute_to_html(:event_title) %>
 <%= presenter.attribute_to_html(:event_date) %>
 <%= presenter.attribute_to_html(:book_title) %>
+<%= presenter.attribute_to_html(:version) %>
 
 <!-- Future refactoring: can we achieve this below with an AlternateIdentifierAttributeRenderer in app/renderers -->
 <%= render "shared/ubiquity/alternate_identifier/show", presenter: @presenter %>

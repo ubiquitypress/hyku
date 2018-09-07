@@ -32,6 +32,7 @@ en:
         place_of_publication: Enter the town/city and country, or country only, e.g. London, UK or UK
         abstract: Please provide a short abstract or description of the item.
         resource_type: If required, select the specific type of resource that best describes the work; otherwise the default resource type is displayed.
+        publisher: The name of the organisation making an article available.
     labels:
       defaults:
         org_unit: Organisational Unit

@@ -9,7 +9,7 @@ en:
   simple_form:
     hints:
       defaults:
-        isni: An identifier for uniquely identifying the public identities of contributors to media content.
+        version: "The version number of the resource. Suggested practice: track major_version.minor_version. \n
+                  If there are major changes then you must mint a new identifier e.g. DOI."
     labels:
       defaults:
-        isni: International Standard Name Identifier (ISNI)

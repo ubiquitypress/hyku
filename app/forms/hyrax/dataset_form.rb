@@ -6,10 +6,10 @@ module Hyrax
     include ::Ubiquity::AllFormsSharedBehaviour
     
     self.model_class = ::Dataset
-    self.terms += %i[resource_type rendering_ids doi issn eissn date_published place_of_publication
+    self.terms += %i[resource_type rendering_ids doi version date_published place_of_publication
                      date_accepted date_submitted abstract institution org_unit refereed official_link
                      project_name funder fndr_project_ref add_info rights_holder]
-    self.terms -= %i[based_near description]
+    self.terms -= %i[based_near description source subject]
     self.required_fields += %i[resource_type institution publisher date_published]
     self.required_fields -= %i[keyword rights_statement]
   end

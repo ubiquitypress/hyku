@@ -31,4 +31,25 @@
         }
     }
 
+    // make related_identifiers type and relation fields compulsory if the first field is filled in
+    $(document).on("turbolinks:load", function(){
+        return $("body").on("blur", ".related_identifier", function (event) {
+            event.preventDefault();
+            //trim Remove the whitespace from the beginning and end of a string
+            var input1Value = $.trim($(this).val());
+            console.log('value', input1Value);
+            var input2 = $(".related_identifier_type");
+            var input3 = $(".related_identifier_relation");
+            if (input1Value) {
+                console.log('enter')
+                input2.prop('required', true);
+                input3.prop('required', true);
+            } else {
+                input2.removeAttr('required');
+                input3.removeAttr('required');
+            }
+
+        });
+    });
+
 </script>

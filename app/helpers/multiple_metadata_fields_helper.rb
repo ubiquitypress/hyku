@@ -1,5 +1,11 @@
 module MultipleMetadataFieldsHelper
 
+  def dont_display_empty_brackets(hash_keys, valid_keys)
+    puts "mano #{hash_keys}"
+    puts "valido #{valid_keys}"
+    (hash_keys & valid_keys).any?
+  end
+
   def get_model(model_class, model_id, field, multipart_sort_field_name = nil)
     model ||= fetch_model(model_class, model_id)
     record ||= model.send(field.to_sym)
@@ -42,7 +48,8 @@ module MultipleMetadataFieldsHelper
   def sort_hash(array_of_hash, key)
     return array_of_hash if array_of_hash.class != Array
     if key.present?
-      array_of_hash.sort_by!{ |hash| hash[key].to_i }
+      array_of_hash.sort_by!{ |hash| hash[key].to_i}
+      array_of_hash.map {|hash| hash.reject { |k,v| v.nil? || v.to_s.empty? ||v == "NaN" }}
     end
   end
 end

@@ -1,5 +1,6 @@
+<h3 class="ubiquity-title-success-message" style="color:blue;font-weight: 900;">  </h3>
 
-<h3 class="ubiquity-title-message" style="color:red; font-weight: 900;"> <a href="" class="ubiquity-title-message"></a></h3>
+<h3 class="ubiquity-title-fail-message" style="color:red;font-weight: 900;"> </h3>
 
 <%= f.input key,
             as: :text,
@@ -8,32 +9,41 @@
             },
             required: f.object.required?(key) %>
 
-
-<%# button_to 'Check title availability', main_app.check_available_ubiquity_titles_path,
-   class: "ubiquity-title-checker", data: { 'ubiquity-model' => "GenericWork" } %>
+<%= button_to 'Check title availability', main_app.check_available_ubiquity_titles_path,
+   class: "ubiquity-title-checker", data: { 'ubiquity-model' => curation_concern.class.to_s } %>
 
 <script>
+
   $(document).on("turbolinks:load", function(){
+    event.preventDefault();
     return $("body").on("click", ".ubiquity-title-checker", function(event) {
+      $(".ubiquity-title-success-message").hide()
+      $(".ubiquity-title-fail-message").hide()
       event.preventDefault();
       var ubiquityModel = $(this).attr('data-ubiquity-model');
-      var  ubiquityTitle = $(".ubiquity-title").val();
-
-      //clicked = $(this).parent('div' + `${ubiquityTitle}`)
-      checkTitle(ubiquityTitle, ubiquityModel);
+      var  ubiquityTitle = $(".ubiquity-title").val()
+      if (ubiquityTitle) {
+       checkTitle(ubiquityTitle, ubiquityModel);
+      }
     });
   });
 
-
   function checkTitle(ubiquityTitle, ubiquityModel){
     var host = window.location.host;
-    var fullHost = 'http://' + host + '/available_ubiquity_titles/check';
+    var protocol = window.location.protocol;
+    var fullHost = protocol + '//' + host + '/available_ubiquity_titles/check';
     $.ajax({
       url: `${fullHost}`,
       type: "POST",
       data: {"title": ubiquityTitle, "model_class": ubiquityModel},
       success: function(result){
-        $(".ubiquity-title-message").html(result.message);
+        if (result.response == 'taken'){
+          $(".ubiquity-title-fail-message").html(result.message)
+          $(".ubiquity-title-fail-message").show()
+        } else {
+          $(".ubiquity-title-success-message").html(result.message)
+          $(".ubiquity-title-success-message").show()
+        }
       },
       error: function(){
       }

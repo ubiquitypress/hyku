@@ -13,7 +13,7 @@ module Hyrax
                      abstract institution org_unit official_link project_name funder fndr_project_ref add_info
                      rights_holder]
     self.terms -= %i[based_near description source]
-    self.required_fields += %i[journal_title institution publisher date_published]
+    self.required_fields += %i[resource_type institution publisher date_published]
     self.required_fields -= %i[keyword rights_statement]
   end
 end

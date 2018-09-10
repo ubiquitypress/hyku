@@ -30,8 +30,8 @@
 
   function checkTitle(ubiquityTitle, ubiquityModel){
     var host = window.location.host;
-    var fullHost = 'http://' + host + '/available_ubiquity_titles/check';
-
+    var protocol = window.location.protocol;
+    var fullHost = protocol + '//' + host + '/available_ubiquity_titles/check';
     $.ajax({
       url: `${fullHost}`,
       type: "POST",

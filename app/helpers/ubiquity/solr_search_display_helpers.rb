@@ -29,6 +29,13 @@ module Ubiquity
       field.join(', ')
     end
 
+    def human_readable_resource_type(options={})
+      label = options[:value]
+      new_label = label.first.split.drop(1)
+      new_label = new_label.drop(1) if new_label.first == "default"
+      new_label.join(' ')
+    end
+
     private
 
       def pass_model(options)

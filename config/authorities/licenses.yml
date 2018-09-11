@@ -1,5 +1,5 @@
 terms:
-    - id: https://creativecommons.org/licenses/by/4.0/4
+    - id: https://creativecommons.org/licenses/by/4.0/
       term: CC BY 4.0 Attribution
       active: true
     - id: https://creativecommons.org/licenses/by-nc/4.0/
@@ -39,5 +39,8 @@ terms:
       term: ODBL
       active: true
     - id: https://www.mozilla.org/en-US/MPL/2.0/
-      term: Mozilla licence
+      term: Mozilla Public License (MPL)
+      active: true
+    - id: http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/
+      term: Open Government Licence (OGL)
       active: true

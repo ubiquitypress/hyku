@@ -6,3 +6,7 @@ en:
       book_contribution:
         name:               "Book Contribution"
         description:        "Separately-authored chapters or sections in books."
+  simple_form:
+    hints:
+      book_contribution:
+        book_title: The title of the book of which this item is part.

@@ -1,10 +1,10 @@
 en:
   hyrax:
     icons:
-      journal_article:     'fa fa-file-text-o'
+      article:     'fa fa-file-text-o'
     select_type:
-      journal_article:
-        name:               "Journal Article"
+      article:
+        name:               "Article"
         description:        "Articles in peer-reviewed publications that disseminate the results of original research and scholarship."
   simple_form:
     hints:

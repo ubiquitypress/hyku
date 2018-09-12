@@ -67,7 +67,7 @@ Style/MixinUsage:
   Exclude:
     - 'spec/support/devise.rb'
     - 'spec/features/create_image_spec.rb'
-    - 'spec/features/create_journal_article_spec.rb'
+    - 'spec/features/create_article_spec.rb'
     - 'spec/features/create_book_contribution_spec.rb'
     - 'spec/features/create_report_spec.rb'
     - 'spec/features/create_dataset_spec.rb'

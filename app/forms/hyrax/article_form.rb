@@ -1,10 +1,8 @@
-# Generated via
-#  `rails generate hyrax:work JournalArticle`
 module Hyrax
-  class JournalArticleForm < Hyrax::Forms::WorkForm
+  class ArticleForm < Hyrax::Forms::WorkForm
     include Hyrax::FormTerms
     include ::Ubiquity::AllFormsSharedBehaviour
-    self.model_class = ::JournalArticle
+    self.model_class = ::Article
 
     # alternate_identifier alternate_identifier_type
     self.terms += %i[resource_type rendering_ids journal_title doi volume issue pagination

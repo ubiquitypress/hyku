@@ -1,3 +1,5 @@
+# terms set to false (not to display/chose from) are kept to avoid errors from old records
+
 terms:
   - id: Article
     term: Article
@@ -5,14 +7,23 @@ terms:
     term: Audio
   - id: Book default Book
     term: Book
+  - id: Book
+    term: Book
+    active: false
   - id: Capstone Project
     term: Capstone Project
   - id: Conference Proceeding
     term: Conference Proceeding
   - id: Dataset default Dataset
     term: Dataset
+  - id: Dataset
+    term: Dataset
+    active: false
   - id: Dissertation
     term: Dissertation
+  - id: Image
+    term: Image
+    active: false
   - id: Journal
     term: Journal
   - id: Map or Cartographic Material
@@ -27,6 +38,9 @@ terms:
     term: Presentation
   - id: Project
     term: Project
+  - id: Report
+    term: Report
+    active: false
   - id: Research Paper
     term: Research Paper
   - id: Software or Program Code

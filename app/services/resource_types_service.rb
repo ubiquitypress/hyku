@@ -4,8 +4,12 @@ module ResourceTypesService
   mattr_accessor :authority
   self.authority = Qa::Authorities::Local.subauthority_for('resource_types')
 
+  def self.active_elements
+    authority.all.select { |e| e.fetch('active') }
+  end
+
   def self.template_fields(model_class)
-    authority.all.select { |e| e[:id].split.first == model_class.to_s }
+    active_elements.select { |e| e[:id].split.first == model_class.to_s }
   end
 
   def self.select_template_options(model_class)

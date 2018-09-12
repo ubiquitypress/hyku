@@ -121,7 +121,6 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name("pagination", :stored_searchable), label: "Pagination"
     config.add_index_field solr_name("article_num", :stored_searchable), label: "Article number"
     config.add_index_field solr_name("project_name", :stored_searchable), label: "Project Name"
-    config.add_index_field solr_name("official_link", :stored_searchable), label: "Official link"
     config.add_index_field solr_name("rights_holder", :stored_searchable), label: "Rights holder"
     config.add_index_field solr_name("alternate_identifier"), helper_method: :display_multi_part_fields_in_search, label: "Alternate Identifier"
     config.add_index_field solr_name("related_identifier"), helper_method: :display_multi_part_fields_in_search, label: "Related Identifier"

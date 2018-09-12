@@ -1,4 +1,5 @@
 Hyrax.config do |config|
+  config.register_curation_concern :article
   # Injected via `rails g hyrax:work Book`
   config.register_curation_concern :book
   # Injected via `rails g hyrax:work BookContribution`
@@ -8,8 +9,6 @@ Hyrax.config do |config|
   config.register_curation_concern :dataset
   # Injected via `rails g hyrax:work Image`
   config.register_curation_concern :image
-  # Injected via `rails g hyrax:work JournalArticle`
-  config.register_curation_concern :journal_article
   # Injected via `rails g hyrax:work Report`
   config.register_curation_concern :report
   config.register_curation_concern :generic_work

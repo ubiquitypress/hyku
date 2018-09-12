@@ -80,6 +80,9 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name("contributor"), helper_method: :display_contributor_fields_in_search, label: "Contributor"
     config.add_index_field solr_name("editor"), helper_method: :display_editor_fields_in_search, label: "Editor"
     config.add_index_field solr_name("version", :stored_searchable), label: "Version"
+    config.add_index_field solr_name("related_exhibition", :stored_searchable), label: "Related exhibition"
+    config.add_index_field solr_name("related_exhibition_date", :stored_searchable), label: "Related exhibition date"
+    config.add_index_field solr_name("media", :stored_searchable), label: "Material/media"
     config.add_index_field solr_name("institution", :stored_searchable), label: "Institution"
     config.add_index_field solr_name("event_title", :stored_searchable), label: "Event title", link_to_search: solr_name("event_title", :facetable)
     config.add_index_field solr_name("event_date", :stored_searchable), label: "Event date"
@@ -131,7 +134,9 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("journal_title", :stored_searchable)
     config.add_show_field solr_name("subject", :stored_searchable)
     config.add_show_field solr_name("creator", :stored_searchable)
-    config.add_show_field solr_name("version", :stored_searchable), label: "Version"
+    config.add_show_field solr_name("version", :stored_searchable)
+    config.add_show_field solr_name("related_exhibition", :stored_searchable)
+    config.add_show_field solr_name("media", :stored_searchable)
     config.add_show_field solr_name("event_title", :stored_searchable)
     config.add_show_field solr_name("event_date", :stored_searchable)
     config.add_show_field solr_name("abstract", :stored_searchable)
@@ -149,7 +154,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("date_created", :stored_searchable)
     config.add_show_field solr_name("rights_statement", :stored_searchable)
     config.add_show_field solr_name("license", :stored_searchable)
-    config.add_show_field solr_name("resource_type", :stored_searchable), label: "Resource Type"
+    config.add_show_field solr_name("resource_type", :stored_searchable)
     config.add_show_field solr_name("format", :stored_searchable)
     config.add_show_field solr_name("identifier", :stored_searchable)
     config.add_show_field solr_name("doi", :stored_searchable)

@@ -59,4 +59,7 @@ class SolrDocument
   attribute :alternate_identifier, Solr::Array, solr_name('alternate_identifier')
   attribute :related_identifier, Solr::Array, solr_name('related_identifier')
   attribute :version, Solr::Array, solr_name('version')
+  attribute :media, Solr::Array, solr_name('media')
+  attribute :related_exhibition, Solr::Array, solr_name('related_exhibition')
+  attribute :related_exhibition_date, Solr::Array, solr_name('related_exhibition_date')
 end

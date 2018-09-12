@@ -46,6 +46,15 @@ module Ubiquity
       property :isbn, predicate: ::RDF::Vocab::BIBO.isbn, multiple: false do |index|
         index.as :stored_searchable
       end
+      property :media, predicate: ::RDF::Vocab::MODS.physicalForm do |index|
+        index.as :stored_searchable
+      end
+      property :related_exhibition, predicate: ::RDF::Vocab::SCHEMA.term(:ExhibitionEvent) do |index|
+        index.as :stored_searchable
+      end
+      property :related_exhibition_date, predicate: ::RDF::Vocab::SCHEMA.term(:Date) do |index|
+        index.as :stored_searchable
+      end
     end
   end
 end

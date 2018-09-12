@@ -6,3 +6,12 @@ en:
       image:
         name:               "Image"
         description:        "Single or multi-page image works."
+  simple_form:
+    hints:
+      defaults:
+        media: Describe the material and/or media of the item, e.g. drawing, sculpture, video
+        related_exhibition: If the work relates to an exhibition, please enter it here.
+        related_exhibition_date: Please enter the dates of the related exhibition, either a single or range of dates.
+    labels:
+      defaults:
+        media: Material/media

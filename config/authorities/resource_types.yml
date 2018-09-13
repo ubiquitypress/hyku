@@ -49,19 +49,19 @@ terms:
     term: Video
   - id: Other
     term: Other
-  - id: JournalArticle default Journal article
+  - id: Article default Journal article
     term: Journal article
-  - id: JournalArticle Book review
+  - id: Article Book review
     term: Book review
-  - id: JournalArticle Data paper
+  - id: Article Data paper
     term: Data paper
-  - id: JournalArticle Editorial
+  - id: Article Editorial
     term: Editorial
-  - id: JournalArticle Letter to the editor
+  - id: Article Letter to the editor
     term: Letter to the editor
-  - id: JournalArticle Magazine article
+  - id: Article Magazine article
     term: Magazine article
-  - id: JournalArticle Newspaper article
+  - id: Article Newspaper article
     term: Newspaper article
   - id: Book Grey literature
     term: Grey literature

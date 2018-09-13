@@ -41,7 +41,7 @@
 <%= presenter.attribute_to_html(:pagination) %>
 <%= presenter.attribute_to_html(:article_num, label: "Article number") %>
 <%= presenter.attribute_to_html(:project_name) %>
-<%= presenter.attribute_to_html(:official_link) %>
+<%= presenter.attribute_to_html(:official_link, render_as: :external_link) %>
 <%= presenter.attribute_to_html(:rights_holder) %>
 <%= presenter.attribute_to_html(:place_of_publication) %>
 <%= presenter.attribute_to_html(:series_name) %>

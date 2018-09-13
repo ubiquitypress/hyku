@@ -7,7 +7,6 @@ module MultipleMetadataFieldsHelper
   def get_model(model_class, model_id, field, multipart_sort_field_name = nil)
     model ||= fetch_model(model_class, model_id)
     record ||= model.send(field.to_sym)
-    #value ||= record.first if record
     get_json_data = record.first if !record.empty?
     value =   get_json_data || model
 

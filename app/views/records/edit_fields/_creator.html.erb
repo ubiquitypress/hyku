@@ -1,9 +1,9 @@
 
-<% if  curation_concern.new_record? %>
-  <%= render "shared/ubiquity/creator/new_form" %>
+<% if  f.object.model.new_record? %>
+  <%= render "shared/ubiquity/creator/new_form", f: f %>
 <% else %>
-<% array_of_hash = get_model(curation_concern.class, curation_concern.id, 'creator', 'creator_position') %>
-  <%= render "shared/ubiquity/creator/edit_array_hash_form", array_of_hash: array_of_hash %>
+<% array_of_hash = get_model(f.object.model.class.to_s, f.object.model.id, 'creator', 'creator_position') %>
+  <%= render "shared/ubiquity/creator/edit_array_hash_form", array_of_hash: array_of_hash, f: f %>
 <% end %>
 
 <%= render "shared/ubiquity/creator/creator_js" %>

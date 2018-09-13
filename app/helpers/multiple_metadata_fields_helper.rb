@@ -1,15 +1,15 @@
 module MultipleMetadataFieldsHelper
 
   def dont_display_empty_brackets(hash_keys, valid_keys)
-    puts "mano #{hash_keys}"
-    puts "valido #{valid_keys}"
     (hash_keys & valid_keys).any?
   end
 
   def get_model(model_class, model_id, field, multipart_sort_field_name = nil)
     model ||= fetch_model(model_class, model_id)
     record ||= model.send(field.to_sym)
-    value ||= record.first if record
+    #value ||= record.first if record
+    get_json_data = record.first if !record.empty?
+    value =   get_json_data || model
 
     # if passed in field = contributor and it is nil, return getch model using creator
     # return empty string if passed in field has value in database ie (value == nil)
@@ -23,15 +23,16 @@ module MultipleMetadataFieldsHelper
       array_of_hash
     else
       # returned when field is not a json. Return array to avoiding returning ActiveTriples::Relation
-      model.send(field.to_sym).to_a
+      record || [value.attributes]
     end
   end
 
   private
 
-  def valid_json?(json)
+  # return false if json == String
+  def valid_json?(data)
     # return if json == nil
-    !!JSON.parse(json)
+    !!JSON.parse(data)  if data.class == String
     rescue JSON::ParserError
       false
   end

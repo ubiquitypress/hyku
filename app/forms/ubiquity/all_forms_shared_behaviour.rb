@@ -16,7 +16,24 @@ module Ubiquity
 
     end
 
+=begin
+    def self.multiple?(model_class,field)
+      if [:title].include? field.to_sym
+        false
+      else
+        super
+      end
+    end
+
+    def self.model_attributes(_)
+     attrs = super
+     attrs[:title] = Array(attrs[:title]) if attrs[:title]
+     attrs
+   end
+=end
     class_methods do
+
+=begin
       def multiple?(field)
         if [:title].include? field.to_sym
           false
@@ -30,6 +47,7 @@ module Ubiquity
         attrs[:title] = Array(attrs[:title]) if attrs[:title]
         attrs
       end
+=end
 
       def build_permitted_params
         super.tap do |permitted_params|

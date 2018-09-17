@@ -8,7 +8,7 @@ module Hyrax
 
     self.model_class = ::GenericWork
     include HydraEditor::Form::Permissions
-    self.terms += %i[resource_type rendering_ids doi series_name edition journal_title volume issue pagination
+    self.terms += %i[resource_type rendering_ids doi version series_name edition journal_title volume issue pagination
                      place_of_publication isbn issn eissn article_num media date_published date_accepted date_submitted
                      abstract institution org_unit official_link related_exhibition related_exhibition_date
                      project_name funder fndr_project_ref add_info rights_holder]

@@ -55,6 +55,9 @@ module Ubiquity
       property :related_exhibition_date, predicate: ::RDF::Vocab::SCHEMA.term(:Date) do |index|
         index.as :stored_searchable
       end
+      property :version, predicate: ::RDF::Vocab::BF2.version do |index|
+        index.as :stored_searchable
+      end
     end
   end
 end

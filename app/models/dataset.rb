@@ -13,10 +13,6 @@ class Dataset < ActiveFedora::Base
 
   self.human_readable_type = 'Dataset'
 
-  property :version, predicate: ::RDF::Vocab::BF2.version do |index|
-    index.as :stored_searchable
-  end
-
   # This must be included at the end, because it finalizes the metadata
   # schema (by adding accepts_nested_attributes)
   include ::Hyrax::BasicMetadata

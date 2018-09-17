@@ -7,11 +7,10 @@ module Hyrax
     include Ubiquity::EditorMetadataFormBehaviour
 
     self.model_class = ::Report
-    self.terms += %i[resource_type rendering_ids doi series_name volume edition place_of_publication pagination isbn
-                     issn eissn date_published date_accepted date_submitted abstract institution org_unit refereed
-                     official_link project_name funder fndr_project_ref add_info rights_holder]
-    self.terms -= %i[based_near description source subject]
-    self.required_fields += %i[resource_type institution publisher date_published]
-    self.required_fields -= %i[keyword rights_statement]
+    self.terms += %i[title resource_type creator contributor rendering_ids doi alternate_identifier
+                     related_identifier series_name volume edition editor publisher place_of_publication
+                     pagination isbn issn eissn date_published date_accepted date_submitted abstract keyword
+                     institution org_unit refereed official_link related_url project_name
+                     funder fndr_project_ref add_info language license rights_statement rights_holder]
   end
 end

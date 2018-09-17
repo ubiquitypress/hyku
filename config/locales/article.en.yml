@@ -33,6 +33,8 @@ en:
         abstract: Please provide a short abstract or description of the item.
         resource_type: If required, select the specific type of resource that best describes the work; otherwise the default resource type is displayed.
         publisher: The name of the organisation making an article available.
+        keyword: Words or phrases you select to describe what the work is about. These are used to search for content.
+        rights_statement: Please select the most appropriate rights statement for the item.
     labels:
       defaults:
         org_unit: Organisational Unit
@@ -45,3 +47,4 @@ en:
         eissn: eISSN
         isbn: ISBN
         license: Licence
+        keyword: Keywords

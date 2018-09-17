@@ -6,3 +6,7 @@ en:
       generic_work:
         name:               "Generic Work"
         description:        "General purpose work type. Select this if the more specific work types below are not suited to the work you want to add."
+  simple_form:
+    hints:
+      generic_work:
+        resource_type: Select the specific resource type that best describes the work.

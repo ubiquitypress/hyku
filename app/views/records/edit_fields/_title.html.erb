@@ -3,13 +3,14 @@
 <h3 class="ubiquity-title-fail-message" style="color:red;font-weight: 900;"> </h3>
 
 <% my_model_name = f.object.model.class.to_s.underscore %>
+<label class="control-label" for="<% my_model_name %>_title">Title</label>
 <%= text_field_tag "#{my_model_name}[title][]", f.object.model.title.first, id: "#{my_model_name}_title",
   class: "form-control text required form-control ubiquity-title", placeholder: "Add a title", required: "required" %>
 
 
 <%= button_to 'Check title availability', main_app.check_available_ubiquity_titles_path,
    class: "ubiquity-title-checker", data: { 'ubiquity-model' => f.object.model.class.to_s } %>
-
+<br><br>
 <script>
 
   $(document).on("turbolinks:load", function(event){

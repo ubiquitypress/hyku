@@ -12,8 +12,28 @@ module Ubiquity
                     :creator_position
 
       attr_accessor :alternate_identifier_group, :related_identifier_group
-      self.terms += %i[alternate_identifier related_identifier]
 
+      # terms inherited from Hyrax::Forms::WorkForm are removed
+      # to then be added at the desired position in each work type form (ex `article_form`)
+      self.terms -= %i[title
+                       creator
+                       contributor
+                       description
+                       keyword
+                       license
+                       rights_statement
+                       publisher
+                       date_created
+                       subject
+                       language
+                       identifier
+                       based_near
+                       related_url
+                       source]
+
+      self.required_fields -= %i[title creator keyword rights_statement]
+      # `title` and `creator` to be removed first then inserted in the desired order
+      self.required_fields += %i[title resource_type creator institution publisher date_published]
     end
 
     class_methods do
@@ -42,6 +62,5 @@ module Ubiquity
     def title
       super.first || ""
     end
-
   end
 end

@@ -71,59 +71,59 @@ class CatalogController < ApplicationController
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
     config.add_index_field solr_name("title", :stored_searchable), label: "Title", itemprop: 'name', if: false
-    config.add_index_field solr_name("description", :stored_searchable), itemprop: 'description', helper_method: :iconify_auto_link
-    config.add_index_field solr_name("keyword", :stored_searchable), itemprop: 'keywords', link_to_search: solr_name("keyword", :facetable)
-    config.add_index_field solr_name("journal_title", :stored_searchable), label: "Journal Title", link_to_search: solr_name("journal_title", :facetable)
-    config.add_index_field solr_name("subject", :stored_searchable), itemprop: 'about', link_to_search: solr_name("subject", :facetable)
-
+    # config.add_index_field solr_name("description", :stored_searchable), itemprop: 'description', helper_method: :iconify_auto_link
+    # config.add_index_field solr_name("keyword", :stored_searchable), itemprop: 'keywords', link_to_search: solr_name("keyword", :facetable)
+    # config.add_index_field solr_name("journal_title", :stored_searchable), label: "Journal Title", link_to_search: solr_name("journal_title", :facetable)
+    # config.add_index_field solr_name("subject", :stored_searchable), itemprop: 'about', link_to_search: solr_name("subject", :facetable)
     config.add_index_field solr_name("creator"), helper_method: :display_creator_fields_in_search #, label: "Creator"
     config.add_index_field solr_name("contributor"), helper_method: :display_contributor_fields_in_search, label: "Contributor"
-    config.add_index_field solr_name("editor"), helper_method: :display_editor_fields_in_search, label: "Editor"
-    config.add_index_field solr_name("version", :stored_searchable), label: "Version"
-    config.add_index_field solr_name("related_exhibition", :stored_searchable), label: "Related exhibition"
-    config.add_index_field solr_name("related_exhibition_date", :stored_searchable), label: "Related exhibition date"
-    config.add_index_field solr_name("media", :stored_searchable), label: "Material/media"
-    config.add_index_field solr_name("institution", :stored_searchable), label: "Institution"
-    config.add_index_field solr_name("event_title", :stored_searchable), label: "Event title", link_to_search: solr_name("event_title", :facetable)
-    config.add_index_field solr_name("event_date", :stored_searchable), label: "Event date"
-    config.add_index_field solr_name("abstract", :stored_searchable), label: "Abstract"
-    config.add_index_field solr_name("book_title", :stored_searchable), label: "Book title", link_to_search: solr_name("book_title", :facetable)
-    config.add_index_field solr_name("series_name", :stored_searchable), label: "Series name", link_to_search: solr_name("series_name", :facetable)
-    config.add_index_field solr_name("edition", :stored_searchable), label: "Edition"
-    config.add_index_field solr_name("doi", :stored_searchable), label: "DOI"
-    config.add_index_field solr_name("isbn", :stored_searchable), label: "ISBN"
-    config.add_index_field solr_name("issn", :stored_searchable), label: "ISSN"
-    config.add_index_field solr_name("eissn", :stored_searchable), label: "eISSN"
-    config.add_index_field solr_name("proxy_depositor", :symbol), label: "Depositor", helper_method: :link_to_profile
-    config.add_index_field solr_name("depositor"), label: "Owner", helper_method: :link_to_profile
-    config.add_index_field solr_name("publisher", :stored_searchable), itemprop: 'publisher', link_to_search: solr_name("publisher", :facetable)
-    config.add_index_field solr_name("place_of_publication", :stored_searchable), label: "Place of Publication", link_to_search: solr_name("place_of_publication", :facetable)
+    # config.add_index_field solr_name("editor"), helper_method: :display_editor_fields_in_search, label: "Editor"
+    # config.add_index_field solr_name("version", :stored_searchable), label: "Version"
+    # config.add_index_field solr_name("related_exhibition", :stored_searchable), label: "Related exhibition"
+    # config.add_index_field solr_name("related_exhibition_date", :stored_searchable), label: "Related exhibition date"
+    # config.add_index_field solr_name("media", :stored_searchable), label: "Material/media"
+    # config.add_index_field solr_name("institution", :stored_searchable), label: "Institution"
+    # config.add_index_field solr_name("event_title", :stored_searchable), label: "Event title", link_to_search: solr_name("event_title", :facetable)
+    # config.add_index_field solr_name("event_date", :stored_searchable), label: "Event date"
+    # config.add_index_field solr_name("abstract", :stored_searchable), label: "Abstract"
+    # config.add_index_field solr_name("book_title", :stored_searchable), label: "Book title", link_to_search: solr_name("book_title", :facetable)
+    # config.add_index_field solr_name("series_name", :stored_searchable), label: "Series name", link_to_search: solr_name("series_name", :facetable)
+    # config.add_index_field solr_name("edition", :stored_searchable), label: "Edition"
+    # config.add_index_field solr_name("doi", :stored_searchable), label: "DOI"
+    # config.add_index_field solr_name("isbn", :stored_searchable), label: "ISBN"
+    # config.add_index_field solr_name("issn", :stored_searchable), label: "ISSN"
+    # config.add_index_field solr_name("eissn", :stored_searchable), label: "eISSN"
+    # config.add_index_field solr_name("proxy_depositor", :symbol), label: "Depositor", helper_method: :link_to_profile
+    # config.add_index_field solr_name("depositor"), label: "Owner", helper_method: :link_to_profile
+    # config.add_index_field solr_name("publisher", :stored_searchable), itemprop: 'publisher', link_to_search: solr_name("publisher", :facetable)
+    # config.add_index_field solr_name("place_of_publication", :stored_searchable), label: "Place of Publication", link_to_search: solr_name("place_of_publication", :facetable)
     config.add_index_field solr_name("date_published", :stored_searchable), label: "Date Published"
-    config.add_index_field solr_name("based_near_label", :stored_searchable), itemprop: 'contentLocation', link_to_search: solr_name("based_near_label", :facetable)
-    config.add_index_field solr_name("language", :stored_searchable), itemprop: 'inLanguage', link_to_search: solr_name("language", :facetable)
-    config.add_index_field solr_name("date_uploaded", :stored_sortable, type: :date), itemprop: 'datePublished', helper_method: :human_readable_date
-    config.add_index_field solr_name("date_modified", :stored_sortable, type: :date), itemprop: 'dateModified', helper_method: :human_readable_date
+    # config.add_index_field solr_name("based_near_label", :stored_searchable), itemprop: 'contentLocation', link_to_search: solr_name("based_near_label", :facetable)
+    # config.add_index_field solr_name("language", :stored_searchable), itemprop: 'inLanguage', link_to_search: solr_name("language", :facetable)
+    # config.add_index_field solr_name("date_uploaded", :stored_sortable, type: :date), itemprop: 'datePublished', helper_method: :human_readable_date
+    # config.add_index_field solr_name("date_modified", :stored_sortable, type: :date), itemprop: 'dateModified', helper_method: :human_readable_date
     config.add_index_field solr_name("date_created", :stored_searchable), itemprop: 'dateCreated'
-    config.add_index_field solr_name("rights_statement", :stored_searchable), helper_method: :rights_statement_links, label: "Rights Statement"
-    config.add_index_field solr_name("license", :stored_searchable), helper_method: :license_links, label: "License"
+    # config.add_index_field solr_name("rights_statement", :stored_searchable), helper_method: :rights_statement_links, label: "Rights Statement"
+    # config.add_index_field solr_name("license", :stored_searchable), helper_method: :license_links, label: "License"
     config.add_index_field solr_name("resource_type", :stored_searchable), helper_method: :human_readable_resource_type, label: "Resource Type"
-    config.add_index_field solr_name("file_format", :stored_searchable), link_to_search: solr_name("file_format", :facetable)
-    config.add_index_field solr_name("identifier", :stored_searchable), helper_method: :index_field_link, field_name: 'identifier'
+    # config.add_index_field solr_name("file_format", :stored_searchable), link_to_search: solr_name("file_format", :facetable)
+    # config.add_index_field solr_name("identifier", :stored_searchable), helper_method: :index_field_link, field_name: 'identifier'
     config.add_index_field solr_name("embargo_release_date", :stored_sortable, type: :date), label: "Embargo release date", helper_method: :human_readable_date
     config.add_index_field solr_name("lease_expiration_date", :stored_sortable, type: :date), label: "Lease expiration date", helper_method: :human_readable_date
-    config.add_index_field solr_name("org_unit", :stored_searchable), label: "Organisational Unit"
-    config.add_index_field solr_name("funder", :stored_searchable), label: "Funder"
-    config.add_index_field solr_name("fndr_project_ref", :stored_searchable), label: "Funder project reference"
-    config.add_index_field solr_name("add_info", :stored_searchable), label: "Additional information"
-    config.add_index_field solr_name("date_accepted", :stored_searchable), label: "Date Accepted"
-    config.add_index_field solr_name("issue", :stored_searchable), label: "Issue"
-    config.add_index_field solr_name("volume", :stored_searchable), label: "Volume"
-    config.add_index_field solr_name("pagination", :stored_searchable), label: "Pagination"
-    config.add_index_field solr_name("article_num", :stored_searchable), label: "Article number"
-    config.add_index_field solr_name("project_name", :stored_searchable), label: "Project Name"
-    config.add_index_field solr_name("rights_holder", :stored_searchable), label: "Rights holder"
-    config.add_index_field solr_name("alternate_identifier"), helper_method: :display_multi_part_fields_in_search, label: "Alternate Identifier"
-    config.add_index_field solr_name("related_identifier"), helper_method: :display_multi_part_fields_in_search, label: "Related Identifier"
+    # config.add_index_field solr_name("org_unit", :stored_searchable), label: "Organisational Unit"
+    # config.add_index_field solr_name("funder", :stored_searchable), label: "Funder"
+    # config.add_index_field solr_name("fndr_project_ref", :stored_searchable), label: "Funder project reference"
+    # config.add_index_field solr_name("add_info", :stored_searchable), label: "Additional information"
+    # config.add_index_field solr_name("date_accepted", :stored_searchable), label: "Date Accepted"
+    # config.add_index_field solr_name("issue", :stored_searchable), label: "Issue"
+    # config.add_index_field solr_name("volume", :stored_searchable), label: "Volume"
+    # config.add_index_field solr_name("pagination", :stored_searchable), label: "Pagination"
+    # config.add_index_field solr_name("article_num", :stored_searchable), label: "Article number"
+    # config.add_index_field solr_name("project_name", :stored_searchable), label: "Project Name"
+    # config.add_index_field solr_name("rights_holder", :stored_searchable), label: "Rights holder"
+    # config.add_index_field solr_name("alternate_identifier"), helper_method: :display_multi_part_fields_in_search, label: "Alternate Identifier"
+    # config.add_index_field solr_name("related_identifier"), helper_method: :display_multi_part_fields_in_search, label: "Related Identifier"
+    config.add_index_field solr_name("member_of_collections", :symbol), label: 'Collection', link_to_search: solr_name("member_of_collections", :symbol)
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display

@@ -60,9 +60,9 @@ RSpec.describe Hyku::ManifestEnabledWorkShowPresenter do
 
   context "when the work has valid doi and isbns" do
     # the values are set in generic_works factory
-    describe "#doi" do
+    describe "#doi_from_identifier" do
       it "extracts the DOI from the identifiers" do
-        expect(presenter.doi).to eq('10.1038/nphys1170')
+        expect(presenter.doi_from_identifier).to eq('10.1038/nphys1170')
       end
     end
 
@@ -80,9 +80,9 @@ RSpec.describe Hyku::ManifestEnabledWorkShowPresenter do
       { "identifier_tesim" => nil }
     end
 
-    describe "#doi" do
+    describe "#doi_from_identifier" do
       it "is nil" do
-        expect(presenter.doi).to be_nil
+        expect(presenter.doi_from_identifier).to be_nil
       end
     end
 
@@ -110,9 +110,9 @@ RSpec.describe Hyku::ManifestEnabledWorkShowPresenter do
       { "identifier_tesim" => ['ISBN:978-83-7659-303-6'] }
     end
 
-    describe "#doi" do
+    describe "#doi_from_identifier" do
       it "is empty" do
-        expect(presenter.doi).to be_empty
+        expect(presenter.doi_from_identifier).to be_empty
       end
     end
   end
@@ -123,9 +123,9 @@ RSpec.describe Hyku::ManifestEnabledWorkShowPresenter do
       { "identifier_tesim" => %w[3207/2959859860 svnklvw24 0470841559.ch1] }
     end
 
-    describe "#doi" do
+    describe "#doi_from_identifier" do
       it "is empty" do
-        expect(presenter.doi).to be_empty
+        expect(presenter.doi_from_identifier).to be_empty
       end
     end
 

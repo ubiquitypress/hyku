@@ -42,7 +42,7 @@ module Hyku
     end
 
     # assumes there can only be one doi
-    def doi
+    def doi_from_identifier
       doi_regex = %r{10\.\d{4,9}\/[-._;()\/:A-Z0-9]+}i
       doi = extract_from_identifier(doi_regex)
       doi.join if doi

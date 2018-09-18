@@ -3,13 +3,13 @@
 <%# display contributor using the show partial  -->
 <%# presenter.attribute_to_html(:contributor, render_as: :faceted) %>
 <%= render "shared/ubiquity/contributor/show", presenter: presenter, source: 'show' %>
-<%= presenter.attribute_to_html(:media, label: "Material/media") %>
 <%= presenter.attribute_to_html(:event_title) %>
 <%= presenter.attribute_to_html(:event_date) %>
 <%= presenter.attribute_to_html(:book_title) %>
 <%= presenter.attribute_to_html(:journal_title, render_as: :faceted) %>
 <%= presenter.attribute_to_html(:resource_type, render_as: :resource_type) %>
 <%= presenter.attribute_to_html(:keyword, render_as: :faceted) %>
+<%= presenter.attribute_to_html(:media, label: "Material/media") %>
 <%= presenter.attribute_to_html(:institution) %>
 <%= presenter.attribute_to_html(:date_published, render_as: :linked, search_field: 'date_published_tesim') %>
 <%= presenter.attribute_to_html(:rights_statement) %>
@@ -30,7 +30,7 @@
 <%= presenter.attribute_to_html(:issn, label: "ISSN") %>
 <%= presenter.attribute_to_html(:eissn, label: "eISSN") %>
 <%= presenter.attribute_to_html(:article_num, label: "Article number") %>
-<%= presenter.attribute_to_html(:doi) %>
+<%= presenter.attribute_to_html(:doi, label: "DOI") %>
 <%= presenter.attribute_to_html(:org_unit, label: "Organisational unit") %>
 <%= presenter.attribute_to_html(:project_name) %>
 <%= presenter.attribute_to_html(:version) %>

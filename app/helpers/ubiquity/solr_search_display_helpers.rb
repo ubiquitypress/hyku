@@ -1,13 +1,14 @@
 module Ubiquity
   module SolrSearchDisplayHelpers
 
+    #doc is a solr document passed in from the view file
     def display_json_fields(doc, field_name)
       attr_name = field_name.split('_').first
-      field_data =  doc[field_name] if (!doc[field_name].nil?)
-      field = JSON.parse(field_data.first) if !field_data.nil?
+      field_data =  doc[field_name] if (doc[field_name].present?)
+      field = JSON.parse(field_data.first) if field_data.present?
       render "shared/ubiquity/search_display/show_array_hash", array_of_hash: field, attr_name: attr_name
     end
-    
+
     # method below was worked out reading http://jessiekeck.com/customizing-blacklight/metadata_fields/
     def display_multi_part_fields_in_search(options={})
       field = JSON.parse(options[:value][0]).map do |hash|

@@ -29,11 +29,17 @@ module Ubiquity
       field.join(', ')
     end
 
+    # remove the model name (i.e. "Collection" or "GenericWork") and "default";
+    # `type` is the id in config/authorities/resources_types.yml
     def human_readable_resource_type(options={})
-      label = options[:value]
-      new_label = label.first.split.drop(1)
-      new_label = new_label.drop(1) if new_label.first == "default"
-      new_label.join(' ')
+      type = options[:value]
+      readable_type = []
+      type.each do |t|
+        e = t.split.drop(1)
+        e = e.drop(1) if e.first == "default"
+        readable_type << e.join(' ')
+        end
+      readable_type.join(', ')
     end
 
     private

@@ -1,0 +1,24 @@
+
+   <div class="metadata">
+      <table class="table">
+        <% doc_presenter = index_presenter(document) %>
+
+        <% index_fields(document).each_with_index do |(field_name, field), index| -%>
+
+          <% if should_render_index_field? document, field %>
+            <tr>
+               <% if ["creator_tesim", "contributor_tesim" , "editor_tesim"].include? field_name %>
+                 <th><span class="attribute-label h4"><%= render_index_field_label document, field: field_name %></span></th>
+                   <%=  display_json_fields(document, field_name)  %>
+                 <% else %>
+                  <th><span class="attribute-label h4"><%= render_index_field_label document, field: field_name %></span></th>
+                  <td><%= doc_presenter.field_value field_name %></td>
+               <% end %>
+            </tr>
+          <% end %>
+        <% end %>
+
+
+
+      </table>
+    </div>

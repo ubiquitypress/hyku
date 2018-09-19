@@ -1,8 +1,8 @@
 
-<%= render "shared/ubiquity/creator/show", presenter: presenter, source: 'show' %>
+<%= render "shared/ubiquity/creator/show", presenter: presenter %>
 <%# display contributor using the show partial  -->
 <%# presenter.attribute_to_html(:contributor, render_as: :faceted) %>
-<%= render "shared/ubiquity/contributor/show", presenter: presenter, source: 'show' %>
+<%= render "shared/ubiquity/contributor/show", presenter: presenter %>
 <%= presenter.attribute_to_html(:event_title) %>
 <%= presenter.attribute_to_html(:event_date) %>
 <%= presenter.attribute_to_html(:book_title) %>
@@ -17,7 +17,7 @@
 <%= presenter.attribute_to_html(:related_exhibition) %>
 <%= presenter.attribute_to_html(:related_exhibition_date) %>
 <% if check_has_editor_fields?(presenter.model_name.to_s) %>
-  <%= render "shared/ubiquity/editor/show", presenter: presenter, source: 'show' %>
+  <%= render "shared/ubiquity/editor/show", presenter: presenter %>
 <% end %>
 <%= presenter.attribute_to_html(:series_name) %>
 <%= presenter.attribute_to_html(:volume) %>

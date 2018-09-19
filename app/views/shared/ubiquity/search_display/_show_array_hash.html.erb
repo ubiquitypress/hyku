@@ -1,0 +1,37 @@
+
+
+<td>
+   <% array_of_hash.each do |hash| %>
+          <span itemprop='<%= "#{attr_name}" %>' style="float:left">
+              <% if hash["#{attr_name}_organization_name"] %>
+                <%= hash["#{attr_name}_organization_name"] %>,&nbsp;
+              <% end %>
+              <% if hash["#{attr_name}_family_name"]  %>
+                <%= hash["#{attr_name}_family_name"] %>,&nbsp;
+              <% end %>
+              <% if hash["#{attr_name}_given_name"] %>
+                <%= hash["#{attr_name}_given_name"] %>
+              <% end %>
+        </span>
+
+        <span itemprop='<%= "#{attr_name}" %>'>
+         <% if dont_display_empty_brackets(hash.keys, ["#{attr_name}_orcid", "#{attr_name}_isni"]) %>
+           <span style="float:left" > &nbsp;(</span>
+             <% if hash["#{attr_name}_orcid"].present? %>
+               <a  href='<%= hash["#{attr_name}_orcid"] %>' target="_blank" >
+                <img src="https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/orcid_16x16.png" alt="ORCID"  height="16" width="16" class="img-responsive"  style="float:left"  >
+              </a>
+            <% end %>
+
+            <% if hash["#{attr_name}_isni"].present? %>
+              <a  href='<%= hash['#{attr_name}_isni'] %>' target="_blank" >
+               <img src="
+                  https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/logo_xml_isni-16.gif" alt="ISNI"  height="16" width="44" class="img-responsive" style="float:left"  >
+               </a>
+             <% end %>
+           <span >)<span>
+         <% end %>
+       </span>
+       <br/>
+    <% end %>
+</td>

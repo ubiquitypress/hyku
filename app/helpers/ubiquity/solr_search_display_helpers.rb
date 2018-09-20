@@ -38,7 +38,7 @@ module Ubiquity
         e = t.split.drop(1)
         e = e.drop(1) if e.first == "default"
         readable_type << e.join(' ')
-        end
+      end
       readable_type.join(', ')
     end
 

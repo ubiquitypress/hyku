@@ -10,15 +10,15 @@
 <% end %>
 <%= presenter.attribute_to_html(:event_title) %>
 <%= presenter.attribute_to_html(:event_date) %>
-<%= presenter.attribute_to_html(:book_title) %>
-<%= presenter.attribute_to_html(:journal_title, render_as: :faceted) %>
+<%= presenter.attribute_to_html(:book_title, render_as: :string) %>
+<%= presenter.attribute_to_html(:journal_title, render_as: :string) %>
 <%= presenter.attribute_to_html(:resource_type, render_as: :resource_type) %>
 <%= presenter.attribute_to_html(:keyword, render_as: :faceted) %>
 <%= presenter.attribute_to_html(:media, label: "Material/media") %>
 <%= presenter.attribute_to_html(:institution) %>
 <%= presenter.attribute_to_html(:date_published) %>
 <%= presenter.attribute_to_html(:rights_statement) %>
-<%= presenter.attribute_to_html(:abstract) %>
+<%= presenter.attribute_to_html(:abstract, render_as: :string) %>
 <%= presenter.attribute_to_html(:related_exhibition) %>
 <%= presenter.attribute_to_html(:related_exhibition_date) %>
 <% if check_has_editor_fields?(presenter.model_name.to_s) %>
@@ -28,24 +28,24 @@
 <% end %>
 <%= presenter.attribute_to_html(:series_name) %>
 <%= presenter.attribute_to_html(:volume) %>
-<%= presenter.attribute_to_html(:edition) %>
-<%= presenter.attribute_to_html(:issue) %>
-<%= presenter.attribute_to_html(:pagination) %>
+<%= presenter.attribute_to_html(:edition, render_as: :string) %>
+<%= presenter.attribute_to_html(:issue, render_as: :string) %>
+<%= presenter.attribute_to_html(:pagination, render_as: :string) %>
 <%= presenter.attribute_to_html(:publisher, render_as: :faceted) %>
 <%= presenter.attribute_to_html(:place_of_publication) %>
-<%= presenter.attribute_to_html(:isbn, label: "ISBN") %>
-<%= presenter.attribute_to_html(:issn, label: "ISSN") %>
-<%= presenter.attribute_to_html(:eissn, label: "eISSN") %>
+<%= presenter.attribute_to_html(:isbn, label: "ISBN", render_as: :string) %>
+<%= presenter.attribute_to_html(:issn, label: "ISSN", render_as: :string) %>
+<%= presenter.attribute_to_html(:eissn, label: "eISSN", render_as: :string) %>
 <%= presenter.attribute_to_html(:article_num, label: "Article number") %>
-<%= presenter.attribute_to_html(:doi, label: "DOI") %>
+<%= presenter.attribute_to_html(:doi, label: "DOI", render_as: :string) %>
 <%= presenter.attribute_to_html(:org_unit, label: "Organisational unit") %>
-<%= presenter.attribute_to_html(:project_name) %>
+<%= presenter.attribute_to_html(:project_name, render_as: :string) %>
 <%= presenter.attribute_to_html(:version) %>
 <%= presenter.attribute_to_html(:funder) %>
 <%= presenter.attribute_to_html(:fndr_project_ref, label: "Funder project reference") %>
-<%= presenter.attribute_to_html(:date_accepted) %>
-<%= presenter.attribute_to_html(:add_info, label: "Additional Information") %>
-<%= presenter.attribute_to_html(:official_link, render_as: :external_link) %>
+<%= presenter.attribute_to_html(:date_accepted, render_as: :string) %>
+<%= presenter.attribute_to_html(:add_info, label: "Additional Information", render_as: :string) %>
+<%= presenter.attribute_to_html(:official_link, render_as: :external_link, render_as: :string) %>
 <%= presenter.attribute_to_html(:related_url, render_as: :external_link) %>
 <%= presenter.attribute_to_html(:rights_holder) %>
 <%= presenter.attribute_to_html(:license, render_as: :license, html_dl: true, label: "Licence") %>

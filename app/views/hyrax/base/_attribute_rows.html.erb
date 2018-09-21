@@ -1,11 +1,7 @@
-<!-- check if the field has content other than the `position`
-    `field_has_value?` method cannot work since the field records a position even when not filled in by users -->
-<% if presenter.creator.first.match /name/ %>
-  <%= render "shared/ubiquity/creator/show", presenter: presenter, source: 'show' %>
-<% end %>
+<%= render "shared/ubiquity/creator/show", presenter: presenter, source: 'show' %>
 <!-- display contributor using the show partial  -->
 <%# presenter.attribute_to_html(:contributor, render_as: :faceted) %>
-<% if presenter.contributor.first.match /name/ %>
+<% if field_has_value?(presenter.contributor) %>
   <%= render "shared/ubiquity/contributor/show", presenter: presenter, source: 'show' %>
 <% end %>
 <%= presenter.attribute_to_html(:event_title) %>
@@ -22,7 +18,7 @@
 <%= presenter.attribute_to_html(:related_exhibition) %>
 <%= presenter.attribute_to_html(:related_exhibition_date) %>
 <% if check_has_editor_fields?(presenter.model_name.to_s) %>
-  <% if presenter.editor.first.match /name/ %>
+  <% if field_has_value?(presenter.editor) %>
     <%= render "shared/ubiquity/editor/show", presenter: presenter, source: 'show' %>
   <% end %>
 <% end %>

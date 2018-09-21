@@ -23,31 +23,34 @@ module Ubiquity
 
     private
 
-    #remove hash keys with value of nil, "", and "NaN"
+    # remove hash keys with value of nil, "", and "NaN"
     def remove_hash_keys_with_empty_and_nil_values(data)
       data.map do |hash|
-         hash.reject { |k,v| v.nil? || v.to_s.empty? ||v == "NaN" }
+        h = hash.reject { |k,v| v.nil? || v.to_s.empty? || v == "NaN" }
+        h.present? ? clean_position(h) : h
       end
+    end
+
+    def clean_position(hash)
+      k = hash.keys
+      return {} if k.first.include?("position")
+      hash
     end
 
     def save_creator
-      if !self.creator_group.nil?
-        new_creator_group = remove_hash_keys_with_empty_and_nil_values(self.creator_group)
-        creator_json = new_creator_group.to_json
-        self.creator = [creator_json]
-      end
+      new_creator_group = remove_hash_keys_with_empty_and_nil_values(self.creator_group)
+      creator_json = new_creator_group.to_json
+      self.creator = [creator_json]
     end
 
     def save_contributor
-      if !self.contributor_group.nil?
-        new_contributor_group = remove_hash_keys_with_empty_and_nil_values(self.contributor_group)
-        contributor_json = new_contributor_group.to_json
-        self.contributor = [contributor_json]
-      end
+      new_contributor_group = remove_hash_keys_with_empty_and_nil_values(self.contributor_group)
+      contributor_json = new_contributor_group.to_json
+      self.contributor = [contributor_json]
     end
 
     def save_alternate_identifier
-      if !self.alternate_identifier_group.nil?
+      if self.alternate_identifier_group.present?
         new_alternate_identifier_group = remove_hash_keys_with_empty_and_nil_values(self.alternate_identifier_group)
         alternate_identifier_json = new_alternate_identifier_group.to_json
         self.alternate_identifier = [alternate_identifier_json]
@@ -60,6 +63,6 @@ module Ubiquity
         related_identifier_json = new_related_identifier_group.to_json
         self.related_identifier = [related_identifier_json]
       end
-    end
+     end
   end
 end

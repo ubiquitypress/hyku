@@ -11,5 +11,6 @@ class StringAttributeRenderer < Hyrax::Renderers::AttributeRenderer
     end
     markup << %(</ul></td></tr>)
     markup.html_safe
+    super
   end
 end

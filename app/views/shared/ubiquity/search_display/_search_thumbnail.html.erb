@@ -1,0 +1,12 @@
+
+<%# Hyrax::ModelIcon.css_class_for(Collection) for adding font-awesome cube icon%>
+
+<% if  document.thumbnail_id %>
+  <div class="list-thumbnail ">
+      <%= render_thumbnail_tag document %>
+  </div>
+<% else %>
+  <div class=" col-sm-3">
+    <span class="<%# Hyrax::ModelIcon.css_class_for(Collection) %> collection-icon-search "></span>
+  </div>
+<% end %>

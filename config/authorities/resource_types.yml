@@ -3,6 +3,7 @@
 terms:
   - id: Article
     term: Article
+    active: false
   - id: Audio
     term: Audio
   - id: Book default Book
@@ -135,3 +136,89 @@ terms:
     term: Still image
   - id: Image 3D image
     term: 3D image
+  - id: Collection 3D image
+    term: 3D image
+  - id: Collection Abstract
+    term: Abstract
+  - id: Collection Blog post
+    term: Blog post
+  - id: Collection Book
+    term: Book
+  - id: Collection Book chapter
+    term: Book chapter
+  - id: Collection Book editorial
+    term: Book editorial
+  - id: Collection Book review
+    term: Book review
+  - id: Collection Cartographic material
+    term: Cartographic material
+  - id: Collection Conference paper (published)
+    term: Conference paper (published)
+  - id: Collection Conference paper (unpublished)
+    term: Conference paper (unpublished)
+  - id: Collection Conference poster (published)
+    term: Conference poster (published)
+  - id: Collection Conference poster (unpublished)
+    term: Conference poster (unpublished)
+  - id: Collection Data paper
+    term: Data paper
+  - id: Collection Database
+    term: Database
+  - id: Collection Dataset
+    term: Dataset
+  - id: Collection Editorial
+    term: Editorial
+  - id: Collection Exhibition
+    term: Exhibition
+  - id: Collection Geographical dataset
+    term: Geographical dataset
+  - id: Collection Grey literature
+    term: Grey literature
+  - id: Collection Interactive resource
+    term: Interactive resource
+  - id: Collection Journal article
+    term: Journal article
+  - id: Collection Learning object
+    term: Learning object
+  - id: Collection Lecture
+    term: Lecture
+  - id: Collection Letter to the editor
+    term: Letter to the editor
+  - id: Collection Magazine article
+    term: Magazine article
+  - id: Collection Moving image
+    term: Moving image
+  - id: Collection Musical notation
+    term: Musical notation
+  - id: Collection Newspaper article
+    term: Newspaper article
+  - id: Collection Numerical dataset
+    term: Numerical dataset
+  - id: Collection Patent
+    term: Patent
+  - id: Collection Policy report
+    term: Policy report
+  - id: Collection Presentation
+    term: Presentation
+  - id: Collection Research report
+    term: Research report
+  - id: Collection Software
+    term: Software
+  - id: Collection Sound
+    term: Sound
+  - id: Collection Still image
+    term: Still image
+  - id: Collection Technical documentation
+    term: Technical documentation
+  - id: Collection Technical report
+    term: Technical report
+  - id: Collection Thesis (doctoral)
+    term: Thesis (doctoral)
+  - id: Collection Website
+    term: Website
+  - id: Collection Workflow
+    term: Workflow
+  - id: Collection Working paper
+    term: Working paper
+  - id: Collection Other
+    term: Other

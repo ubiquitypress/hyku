@@ -1,7 +1,7 @@
 <footer class="navbar navbar-inverse site-footer">
   <div class="container-fluid">
     <div class="navbar-text text-left">
-        <p><%= t('hyrax.footer.service_html') %></p>
+        <p><%= t('hyrax.footer.service_html') %>   <%= link_to t(:'hyrax.pages.tabs.terms_page'), hyrax.terms_path, class: "navbar-link" %></p>
         <p>Hyku v<%= Hyku::VERSION %></p>
     </div>
     <div class="navbar-right">

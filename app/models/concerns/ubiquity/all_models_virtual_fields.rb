@@ -23,18 +23,11 @@ module Ubiquity
 
     private
 
-    # remove hash keys with value of nil, "", and "NaN"
+    #remove hash keys with value of nil, "", and "NaN"
     def remove_hash_keys_with_empty_and_nil_values(data)
       data.map do |hash|
-        h = hash.reject { |k,v| v.nil? || v.to_s.empty? || v == "NaN" }
-        h.present? ? clean_position(h) : h
+         hash.reject { |k,v| v.nil? || v.to_s.empty? ||v == "NaN" }
       end
-    end
-
-    def clean_position(hash)
-      k = hash.keys
-      return {} if k.first.include?("position")
-      hash
     end
 
     def save_creator
@@ -63,6 +56,6 @@ module Ubiquity
         related_identifier_json = new_related_identifier_group.to_json
         self.related_identifier = [related_identifier_json]
       end
-     end
+    end
   end
 end

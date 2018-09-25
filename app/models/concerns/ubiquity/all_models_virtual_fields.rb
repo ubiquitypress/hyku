@@ -31,23 +31,19 @@ module Ubiquity
     end
 
     def save_creator
-      if !self.creator_group.nil?
-        new_creator_group = remove_hash_keys_with_empty_and_nil_values(self.creator_group)
-        creator_json = new_creator_group.to_json
-        self.creator = [creator_json]
-      end
+      new_creator_group = remove_hash_keys_with_empty_and_nil_values(self.creator_group)
+      creator_json = new_creator_group.to_json
+      self.creator = [creator_json]
     end
 
     def save_contributor
-      if !self.contributor_group.nil?
-        new_contributor_group = remove_hash_keys_with_empty_and_nil_values(self.contributor_group)
-        contributor_json = new_contributor_group.to_json
-        self.contributor = [contributor_json]
-      end
+      new_contributor_group = remove_hash_keys_with_empty_and_nil_values(self.contributor_group)
+      contributor_json = new_contributor_group.to_json
+      self.contributor = [contributor_json]
     end
 
     def save_alternate_identifier
-      if !self.alternate_identifier_group.nil?
+      if self.alternate_identifier_group.present?
         new_alternate_identifier_group = remove_hash_keys_with_empty_and_nil_values(self.alternate_identifier_group)
         alternate_identifier_json = new_alternate_identifier_group.to_json
         self.alternate_identifier = [alternate_identifier_json]

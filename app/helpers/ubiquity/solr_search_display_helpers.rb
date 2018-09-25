@@ -1,22 +1,12 @@
 module Ubiquity
   module SolrSearchDisplayHelpers
-    # When this is called from CatalogController via config.add_index_field solr_name("creator"), helper_method: :display_creator_fields_in_search, label: "Creator"
-    # it gives you access to an instance of solr document which is what options represent
-    # Therefor options[:value][0] represents the json value stored in the creator metadata field but in solr called creator_tesim
-    def display_creator_fields_in_search(options={})
-      data ||= pass_model(options)
-      #source: 'search' is temporal and for now it stops multiple labels for linked  metadata on the search page
-      render "shared/ubiquity/creator/show", presenter: data, source: 'search'
-    end
 
-    def display_contributor_fields_in_search(options={})
-      data ||= pass_model(options)
-      render "shared/ubiquity/contributor/show", presenter: data, source: 'search'
-    end
-
-    def display_editor_fields_in_search(options={})
-      data ||= pass_model(options)
-      render "shared/ubiquity/editor/show", presenter: data, source: 'search'
+    #doc is a solr document passed in from the view file
+    def display_json_fields(doc, field_name)
+      attr_name = field_name.split('_').first
+      field_data =  doc[field_name] if (doc[field_name].present?)
+      field = JSON.parse(field_data.first) if field_data.present?
+      render "shared/ubiquity/search_display/show_array_hash", array_of_hash: field, attr_name: attr_name
     end
 
     # method below was worked out reading http://jessiekeck.com/customizing-blacklight/metadata_fields/
@@ -29,11 +19,17 @@ module Ubiquity
       field.join(', ')
     end
 
+    # remove the model name (i.e. "Collection" or "GenericWork") and "default";
+    # `type` is the id in config/authorities/resources_types.yml
     def human_readable_resource_type(options={})
-      label = options[:value]
-      new_label = label.first.split.drop(1)
-      new_label = new_label.drop(1) if new_label.first == "default"
-      new_label.join(' ')
+      type = options[:value]
+      readable_type = []
+      type.each do |t|
+        e = t.split.drop(1)
+        e = e.drop(1) if e.first == "default"
+        readable_type << e.join(' ')
+      end
+      readable_type.join(', ')
     end
 
     private

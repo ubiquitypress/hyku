@@ -20,9 +20,11 @@ module Ubiquity
     private
 
     def save_editor
-      new_editor_group = remove_hash_keys_with_empty_and_nil_values(self.editor_group)
-      editor_json = new_editor_group.to_json
-      self.editor = [editor_json]
+      if self.editor_group.present?
+        new_editor_group = remove_hash_keys_with_empty_and_nil_values(self.editor_group)
+        editor_json = new_editor_group.to_json
+        self.editor = [editor_json]
+      end
     end
   end
 end

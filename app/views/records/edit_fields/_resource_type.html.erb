@@ -1,8 +1,9 @@
 <!-- overrides hyrax/app/views/records/edit_fields/_resource_type.html.erb -->
 
-<% template = f.object.model.class.to_s.underscore %>
 <% model_name = f.object.model_class %>
-<% set_default = ResourceTypesService.select_default(model_name) %>
+<% template = model_name.to_s.underscore %>
+<% r_t = f.object.model.resource_type.first %>
+<% set_default = r_t || ResourceTypesService.select_default(model_name) %>
 
 <label class="control-label" for="<% template %>_resource_type">Resource Type</label>
 

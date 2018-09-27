@@ -13,4 +13,14 @@ module ApplicationHelper
     field.delete("[{}]")
     field.present?
   end
+
+  # override from blacklight/app/helpers/blacklight/facets_helper_behavior.rb
+  def render_facet_limit(display_facet, options = {})
+    if display_facet.name == "resource_type_sim"
+      display_facet.items.each do |i|
+        i[:value] = human_readable_resource_type(i[:value])
+      end
+    end
+    super
+  end
 end

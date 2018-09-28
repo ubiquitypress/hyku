@@ -20,4 +20,42 @@ terms:
  - id: Hosting Institution
    term: Hosting Institution
    active: true
-
+ - id: Producer
+   term: Producer
+   active: true
+ - id: Project Leader
+   term: Project Leader
+   active: true
+ - id: Project Manager
+   term: Project Manager
+   active: true
+ - id: Project Member
+   term: Project Member
+   active: true
+ - id: Registration Agency
+   term: Registration Agency
+   active: true
+ - id: Registration Authority
+   term: Registration Authority
+   active: true
+ - id: Related Person
+   term: Related Person
+   active: true
+ - id: Researcher
+   term: Researcher
+   active: true
+ - id: Research Group
+   term: Research Group
+   active: true
+ - id: Rights Holder
+   term: Rights Holder
+   active: true
+ - id: Sponsor Supervisor
+   term: Sponsor Supervisor
+   active: true
+ - id: Work Package Leader
+   term: Work Package Leader
+   active: true
+ - id : Other
+   term: Other
+   active:  true  

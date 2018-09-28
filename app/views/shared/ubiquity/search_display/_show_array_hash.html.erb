@@ -1,31 +1,32 @@
-
-
 <td>
    <% array_of_hash.each do |hash| %>
-          <span itemprop='<%= "#{attr_name}" %>' style="float:left">
-              <% if hash["#{attr_name}_organization_name"] %>
-                <%= hash["#{attr_name}_organization_name"] %>,&nbsp;
-              <% end %>
-              <% if hash["#{attr_name}_family_name"]  %>
-                <%= hash["#{attr_name}_family_name"] %>,&nbsp;
-              <% end %>
-              <% if hash["#{attr_name}_given_name"] %>
-                <%= hash["#{attr_name}_given_name"] %>
-              <% end %>
+        <span itemprop='<%= "#{attr_name}" %>' style="float:left">
+          <% if hash["#{attr_name}_organization_name"] %>
+            <%= hash["#{attr_name}_organization_name"] %>
+          <% end %>
+          <% if hash["#{attr_name}_family_name"]  %>
+            <%= hash["#{attr_name}_family_name"] %>
+            <% if display_comma?(hash.keys, ["#{attr_name}_family_name", "#{attr_name}_given_name"]) %> , &nbsp;<% end %>
+          <% end %>
+          <% if hash["#{attr_name}_given_name"] %>
+            <%= hash["#{attr_name}_given_name"] %>
+          <% end %>
         </span>
 
         <span itemprop='<%= "#{attr_name}" %>'>
-         <% if dont_display_empty_brackets(hash.keys, ["#{attr_name}_orcid", "#{attr_name}_isni"]) %>
+         <% if display_paren?(hash.keys, ["#{attr_name}_orcid", "#{attr_name}_isni"]) %>
            <span style="float:left" > &nbsp;(</span>
              <% if hash["#{attr_name}_orcid"].present? %>
-               <a  href='<%= hash["#{attr_name}_orcid"] %>' target="_blank" >
-                <img src="https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/orcid_16x16.png" alt="ORCID"  height="16" width="16" class="img-responsive"  style="float:left"  >
-              </a>
-            <% end %>
+               <% orcid_id = hash["#{attr_name}_orcid"] %>
+               <a href='<%= render_isni_or_orcid_url("#{orcid_id}", "orcid") %>'  target="_blank">
+                 <img src="https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/orcid_16x16.png" alt="ORCID"  height="16" width="16" class="img-responsive"  style="float:left"  >
+               </a>
+             <% end %>
 
             <% if hash["#{attr_name}_isni"].present? %>
-              <a  href='<%= hash['#{attr_name}_isni'] %>' target="_blank" >
-               <img src="
+              <% isni_id = hash["#{attr_name}_isni"] %>
+              <a href='<%= render_isni_or_orcid_url("#{isni_id}", "isni") %>'  target="_blank">
+                <img src="
                   https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/logo_xml_isni-16.gif" alt="ISNI"  height="16" width="44" class="img-responsive" style="float:left"  >
                </a>
              <% end %>

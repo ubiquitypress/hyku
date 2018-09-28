@@ -1,55 +1,53 @@
 <tr>
-     <th>Contributors</th>
-   <% array_of_hash.each do |hash| %>
-      <td style="display:inline">
-        <ul class="tabular">
+  <th>Contributor</th>
+  <td>
+    <ul class="tabular">
+      <% array_of_hash.each do |hash| %>
           <li class="attribute contributor">
 
             <span style="float:left">
               <% if hash['contributor_organization_name'] %>
-                <%= hash['contributor_organization_name'] %>,&nbsp;
+                <%= hash['contributor_organization_name'] %>
               <% end %>
               <% if hash['contributor_family_name'].present? %>
-
-                <%= hash['contributor_family_name'] %> ,&nbsp;
-                <% end %>
-                <% if hash['contributor_given_name'].present? %>
-                  <%= hash['contributor_given_name'] %>
-                <% end %>
-              </span>
+                <%= hash['contributor_family_name'] %>
+                <% if display_comma?(hash.keys, ["contributor_family_name", "contributor_given_name"]) %> , <% end %> &nbsp;
+              <% end %>
+              <% if hash['contributor_given_name'].present? %>
+                <%= hash['contributor_given_name'] %>
+              <% end %>
+             </span>
 
               <span itemprop="name">
-                <% if dont_display_empty_brackets(hash.keys, ["contributor_isni", "contributor_orcid", "contributor_type"]) %>
+                <% if display_paren?(hash.keys, ["contributor_isni", "contributor_orcid", "contributor_type"]) %>
                   <span style="float:left" > &nbsp;(</span>
                   <span style="float:left">
                     <% if hash['contributor_type'].present? %>
-                      <%= hash['contributor_type'] %>,  &nbsp;
+                      <%= hash['contributor_type'] %>  <% if display_comma?(hash.keys, ["contributor_type", "contributor_orcid", "contributor_isni"]) %> , &nbsp; <% end %>
                     <% end %>
                   </span>
 
                   <% if hash['contributor_orcid'].present? %>
-                      <a  href="<%= hash['contributor_orcid'] %>" target="_blank" >
+                        <% orcid_id = hash['contributor_orcid'] %>
+                        <a href='<%= render_isni_or_orcid_url("#{orcid_id}", "orcid") %>'  target="_blank">
                         <img src="https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/orcid_16x16.png" alt="orcid"  height="16" width="16" class="img-responsive" style="float:left"  >
                       </a>
                    <% end %>
 
                     <% if hash['contributor_isni'].present? %>
-                      <a  href="<%= hash['contributor_isni'] %>" target="_blank" >
+                       <% isni_id = hash['contributor_isni'] %>
+                       <a href='<%= render_isni_or_orcid_url("#{isni_id}", "isni") %>'  target="_blank">
                        <img src="
                           https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/logo_xml_isni-16.gif" alt="orcid"  height="16" width="44" class="img-responsive" style="float:left"  >
                        </a>
                     <% end %>
-                    <span style="float:left">)<span>
+                    <span>)</span>
                  <% end %>
                </span>
 
-               <span itemprop="name">
-              </span>
-
             </li>
-        </ul>
-        </td>
 
-    <% end %>
-
+      <% end %>
+    </ul>
+  </td>
 </tr>

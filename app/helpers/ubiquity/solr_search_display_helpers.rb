@@ -31,13 +31,5 @@ module Ubiquity
       end
       readable_type.join(', ')
     end
-
-    private
-
-      def pass_model(options)
-        my_model = options[:document].hydra_model.to_s
-        my_id = options[:document].id
-        presento ||= Ubiquity::SolrModelWrapper.new(my_model, my_id)
-      end
   end
 end

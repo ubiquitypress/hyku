@@ -10,14 +10,13 @@
                 <%= hash['contributor_organization_name'] %>
               <% end %>
               <% if hash['contributor_family_name'].present? %>
-
                 <%= hash['contributor_family_name'] %>
                 <% if display_comma?(hash.keys, ["contributor_family_name", "contributor_given_name"]) %> , <% end %> &nbsp;
-                <% end %>
-                <% if hash['contributor_given_name'].present? %>
-                  <%= hash['contributor_given_name'] %>
-                <% end %>
-              </span>
+              <% end %>
+              <% if hash['contributor_given_name'].present? %>
+                <%= hash['contributor_given_name'] %>
+              <% end %>
+             </span>
 
               <span itemprop="name">
                 <% if display_paren?(hash.keys, ["contributor_isni", "contributor_orcid", "contributor_type"]) %>

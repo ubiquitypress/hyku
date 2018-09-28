@@ -7,11 +7,12 @@
 
             <span style="float:left">
               <% if hash['contributor_organization_name'] %>
-                <%= hash['contributor_organization_name'] %> 
+                <%= hash['contributor_organization_name'] %>
               <% end %>
               <% if hash['contributor_family_name'].present? %>
 
-                <%= hash['contributor_family_name'] %> <% if should_comma_be_diplayed(hash.keys, ["contributor_family_name", "contributor_given_name"]) %> , <% end %> &nbsp;
+                <%= hash['contributor_family_name'] %>
+                <% if display_comma?(hash.keys, ["contributor_family_name", "contributor_given_name"]) %> , <% end %> &nbsp;
                 <% end %>
                 <% if hash['contributor_given_name'].present? %>
                   <%= hash['contributor_given_name'] %>
@@ -19,11 +20,11 @@
               </span>
 
               <span itemprop="name">
-                <% if should_parenthesis_be_displayed(hash.keys, ["contributor_isni", "contributor_orcid", "contributor_type"]) %>
+                <% if display_paren?(hash.keys, ["contributor_isni", "contributor_orcid", "contributor_type"]) %>
                   <span style="float:left" > &nbsp;(</span>
                   <span style="float:left">
                     <% if hash['contributor_type'].present? %>
-                      <%= hash['contributor_type'] %>  <% if should_comma_be_diplayed(hash.keys, ["contributor_type", "contributor_orcid", "contributor_isni"]) %> , &nbsp; <% end %>
+                      <%= hash['contributor_type'] %>  <% if display_comma?(hash.keys, ["contributor_type", "contributor_orcid", "contributor_isni"]) %> , &nbsp; <% end %>
                     <% end %>
                   </span>
 

@@ -5,7 +5,8 @@
             <%= hash["#{attr_name}_organization_name"] %>
           <% end %>
           <% if hash["#{attr_name}_family_name"]  %>
-            <%= hash["#{attr_name}_family_name"] %> <% if should_comma_be_diplayed(hash.keys, ["#{attr_name}_family_name", "#{attr_name}_given_name"]) %> , &nbsp;<% end %>
+            <%= hash["#{attr_name}_family_name"] %>
+            <% if display_comma?(hash.keys, ["#{attr_name}_family_name", "#{attr_name}_given_name"]) %> , &nbsp;<% end %>
           <% end %>
           <% if hash["#{attr_name}_given_name"] %>
             <%= hash["#{attr_name}_given_name"] %>
@@ -13,7 +14,7 @@
         </span>
 
         <span itemprop='<%= "#{attr_name}" %>'>
-         <% if should_parenthesis_be_displayed(hash.keys, ["#{attr_name}_orcid", "#{attr_name}_isni"]) %>
+         <% if display_paren?(hash.keys, ["#{attr_name}_orcid", "#{attr_name}_isni"]) %>
            <span style="float:left" > &nbsp;(</span>
              <% if hash["#{attr_name}_orcid"].present? %>
                <% orcid_id = hash["#{attr_name}_orcid"] %>

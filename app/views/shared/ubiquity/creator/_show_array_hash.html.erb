@@ -7,10 +7,11 @@
 
            <span style="float:left">
              <% if hash['creator_organization_name'] %>
-               <%= hash['creator_organization_name'] %> 
+               <%= hash['creator_organization_name'] %>
              <% end %>
              <% if hash['creator_family_name']  %>
-               <%= hash['creator_family_name'] %> <% if should_comma_be_diplayed(hash.keys, ["creator_family_name", "creator_given_name"]) %> , <% end %> &nbsp;
+               <%= hash['creator_family_name'] %>
+               <% if display_comma?(hash.keys, ["creator_family_name", "creator_given_name"]) %> , <% end %> &nbsp;
              <% end %>
              <% if hash['creator_given_name'] %>
                <%= hash['creator_given_name'] %>
@@ -18,7 +19,7 @@
            </span>
 
             <span itemprop="name">
-             <% if should_parenthesis_be_displayed(hash.keys, ["creator_orcid", 'creator_isni']) %>
+             <% if display_paren?(hash.keys, ["creator_orcid", 'creator_isni']) %>
                <span style="float:left" > &nbsp;(</span>
                  <% if hash['creator_orcid'].present? %>
                    <% orcid_id = hash['creator_orcid'] %>

@@ -24,7 +24,11 @@ module Ubiquity
     # @see CatalogController
     # a [Hash] is passed in index_field, whereas a [String] is passed in facet_field
     def human_readable_resource_type(options={})
-      type = options.is_a?(Hash) ? options[:value] : [options]
+      type = if options.respond_to?(:value)
+               [options.value]
+             else
+               options.is_a?(Hash) ? options[:value] : [options]
+             end
       readable_type = []
       type.each do |t|
         e = t.split.drop(1)

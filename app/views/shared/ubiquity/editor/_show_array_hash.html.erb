@@ -1,45 +1,42 @@
 <tr>
-    <th>Editor</th>
-    <td>
-      <ul class="tabular">
-        <% array_of_hash.each do |hash| %>
-          <li class="attribute editor">
+  <th>Editor</th>
+  <td>
+    <ul class="tabular">
+      <% array_of_hash.each do |hash| %>
+        <li itemprop="editor" class="attribute editor">
+          <span itemprop="name" style="float:left">
+            <% if hash['editor_organization_name'] %>
+              <%= hash['editor_organization_name'] %>
+            <% end %>
+            <% if hash['editor_family_name']  %>
+              <%= hash['editor_family_name'] %><% if display_comma?(hash.keys, ["editor_family_name", "editor_given_name"]) %>,<% end %>
+            <% end %>
+            <% if hash['editor_given_name'] %>
+              <%= hash['editor_given_name'] %>
+            <% end %>
+           </span>
+           <span itemprop="name">
+             <% if display_paren?(hash.keys, ["editor_orcid", 'editor_isni']) %>
+               <span style="float:left" >&nbsp;(</span>
+                 <% if hash['editor_orcid'].present? %>
+                   <% orcid_id = hash['editor_orcid'] %>
+                     <a href='<%= render_isni_or_orcid_url("#{orcid_id}", "orcid") %>'  target="_blank">
+                     <img src="https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/orcid_16x16.png" alt="ORCID"  height="16" width="16" class="img-responsive"  style="float:left"  >
+                   </a>
+                 <% end %>
 
-            <span style="float:left">
-              <% if hash['editor_organization_name'] %>
-                <%= hash['editor_organization_name'] %>
-              <% end %>
-              <% if hash['editor_family_name'] %>
-                <%= hash['editor_family_name'] %>
-                <% if display_comma?(hash.keys, ["editor_family_name", "editor_given_name"]) %> , <% end %> &nbsp;
-              <% end %>
-              <% if hash['editor_given_name'] %>
-                <%= hash['editor_given_name'] %>
-              <% end %>
-            </span>
-
-            <span itemprop="name">
-              <% if display_paren?(hash.keys, ["editor_orcid", 'editor_isni']) %>
-                <span style="float:left" > &nbsp;(</span>
-                   <% if hash['editor_orcid'].present? %>
-                       <% orcid_id = hash['editor_orcid'] %>
-                       <a href='<%= render_isni_or_orcid_url("#{orcid_id}", "orcid") %>'  target="_blank">
-                       <img src="https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/orcid_16x16.png" alt="orcid"  height="16" width="16" class="img-responsive" style="float:left">
-                     </a>
-                   <% end %>
-
-                  <% if hash['editor_isni'].present? %>
-                      <% isni_id = hash['editor_isni'] %>
-                      <a href='<%= render_isni_or_orcid_url("#{isni_id}", "isni") %>'  target="_blank">
-                      <img src="
-                       https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/logo_xml_isni-16.gif" alt="orcid"  height="16" width="44" class="img-responsive" style="float:left"  >
-                     </a>
-                     <% end %>
-                   <span>)</span>
-                  <% end %>
-                </span>
-              <br/>
-            </li>
+                 <% if hash['editor_isni'].present? %>
+                   <% isni_id = hash['editor_isni'] %>
+                   <a href='<%= render_isni_or_orcid_url("#{isni_id}", "isni") %>'  target="_blank">
+                   <img src="
+                      https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/logo_xml_isni-16.gif" alt="ISNI"  height="16" width="44" class="img-responsive" style="float:left"  >
+                   </a>
+                 <% end %>
+               <span>)</span>
+            <% end %>
+          </span>
+          <br/>
+        </li>
       <% end %>
     </ul>
   </td>

@@ -13,6 +13,9 @@ module MultipleMetadataFieldsHelper
     end
   end
 
+  #The uri looks like  `#<URI::Generic orcid.org/0000-0002-1825-0097>` hence the need to split_path;
+  # `split_domain_from_path` returns `["orcid.org", "0000-0002-1825-0097"]`
+  # get_type is subsctracting a sub array from the main array eg (["orcid", "org"] - ["org"]) and returns ["orcid"]
   def split_path(uri, type)
     split_domain_from_path = uri.path.split('/')
     if split_domain_from_path.length == 1

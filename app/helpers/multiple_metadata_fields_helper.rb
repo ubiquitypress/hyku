@@ -3,24 +3,38 @@ module MultipleMetadataFieldsHelper
   def render_isni_or_orcid_url(id, type)
     new_id = id.delete(' ')
     uri = URI.parse(new_id)
-
-    if %(http https).include? uri.scheme
-      uri
+    if (uri.scheme.present? &&  uri.host.present?)
+      domain = uri
+      domain.to_s
+    elsif (uri.scheme.present? == false && uri.path.present?)
+      split_path(uri, type)
+    elsif (uri.scheme.present? == false && uri.host.present? == false)
+      create_isni_and_orcid_url(new_id, type)
     end
-  rescue URI::BadURIError, StandardError
+  end
+
+  def split_path(uri, type)
+    split_domain_from_path = uri.path.split('/')
+    if split_domain_from_path.length == 1
+      id = split_domain_from_path.join('')
       create_isni_and_orcid_url(id, type)
+    else
+      get_host = split_domain_from_path.shift
+      split_host = get_host.split('.')
+      get_type = (split_host - ['org']).join('')
+      get_id = split_domain_from_path.join('')
+      create_isni_and_orcid_url(get_id, get_type)
+    end
   end
 
   def create_isni_and_orcid_url(id, type)
-    new_id = id.delete(' ')
-    uri = URI.parse(new_id)
     if type == 'orcid'
       host = URI('https://orcid.org/')
-      host.path = "/#{new_id}"
+      host.path = "/#{id}"
       host.to_s
-    else
+    elsif type == "isni"
       host = URI('http://www.isni.org')
-      host.path = "/isni/#{new_id}"
+      host.path = "/isni/#{id}"
       host.to_s
     end
   end

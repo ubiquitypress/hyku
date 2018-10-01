@@ -13,7 +13,6 @@ module Ubiquity
         add_breadcrumb_for_controller if user_signed_in?
         add_breadcrumb_for_action if user_signed_in?
       end
-      super
     end
   end
 end

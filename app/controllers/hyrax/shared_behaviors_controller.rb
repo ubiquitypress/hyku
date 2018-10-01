@@ -3,7 +3,7 @@ module Hyrax
     # Adds Hyrax behaviors to the controller.
     include Hyrax::WorksControllerBehavior
     include Hyrax::BreadcrumbsForWorks
-
+    include Ubiquity::BreadcrumbOverride
     include Hyku::IIIFManifest
 
     private

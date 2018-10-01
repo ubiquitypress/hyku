@@ -1,15 +1,26 @@
 module MultipleMetadataFieldsHelper
 
-  #Only the id of isni and orcid are saved in the database, hence we are using that to create the full url for clickable links
-  #in the works and search result page
   def render_isni_or_orcid_url(id, type)
+    new_id = id.delete(' ')
+    uri = URI.parse(new_id)
+
+    if %(http https).include? uri.scheme
+      uri
+    end
+  rescue URI::BadURIError, StandardError
+      create_isni_and_orcid_url(id, type)
+  end
+
+  def create_isni_and_orcid_url(id, type)
+    new_id = id.delete(' ')
+    uri = URI.parse(new_id)
     if type == 'orcid'
       host = URI('https://orcid.org/')
-      host.path = "/#{id}"
+      host.path = "/#{new_id}"
       host.to_s
     else
       host = URI('http://www.isni.org')
-      host.path = "/isni/#{id}"
+      host.path = "/isni/#{new_id}"
       host.to_s
     end
   end

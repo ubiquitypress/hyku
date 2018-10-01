@@ -47,3 +47,5 @@ en:
         eissn: eISSN
         isbn: ISBN
         license: Licence
+        official_link: Official URL
+        related_url: Related URL

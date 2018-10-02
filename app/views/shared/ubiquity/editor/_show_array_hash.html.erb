@@ -3,8 +3,8 @@
   <td>
     <ul class="tabular">
       <% array_of_hash.each do |hash| %>
-        <li itemprop="editor" class="attribute editor">
-          <span itemprop="name" style="float:left">
+        <li class="attribute editor">
+          <span itemprop="editor" style="float:left">
             <% if hash['editor_organization_name'] %>
               <%= hash['editor_organization_name'] %>
             <% end %>
@@ -15,7 +15,7 @@
               <%= hash['editor_given_name'] %>
             <% end %>
            </span>
-           <span itemprop="name">
+           <span itemprop="editor">
              <% if display_paren?(hash.keys, ["editor_orcid", 'editor_isni']) %>
                <span style="float:left" >&nbsp;(</span>
                  <% if hash['editor_orcid'].present? %>

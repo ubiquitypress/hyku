@@ -1,0 +1,21 @@
+<%#
+Thesame is copied from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/dashboard/collections/_show_document_list.html.erb
+       and
+       https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/collections/_show_document_list.html.erb
+    Consolidated here to share across both
+%>
+<table class="table table-striped">
+  <caption class="sr-only">List of items in this collection</caption>
+  <thead>
+  <tr>
+    <th>&nbsp;</th>
+    <th>Title</th>
+    <th>Creator</th>
+    <th>Date Uploaded</th>
+    <th>Visibility</th>
+  </tr>
+  </thead>
+  <tbody>
+    <%= render partial: 'show_document_list_row', collection: documents, as: :document %>
+  </tbody>
+</table>

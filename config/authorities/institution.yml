@@ -8,8 +8,13 @@ terms:
   - id: MOLA
     term: MOLA
     active: true
+    #  National Museums of Scotland has to be kept as `active: false` (i.e. not to display/chose from)
+    #  else any record already saved with one of them will throw an error
   - id: National Museums of Scotland
     term: National Museums of Scotland
+    active: false
+  - id: National Museums Scotland
+    term: National Museums Scotland
     active: true
   - id: TATE
     term: TATE

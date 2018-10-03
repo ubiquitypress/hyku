@@ -57,7 +57,7 @@
     <dl class="expanded-details row">
       <dt class="col-xs-3 col-lg-2">Resource Type:</dt>
       <%# Eg of resoure_type data are ["ConferenceItem default Conference paper (unpublished)"] and ["Image default Still image"] %>
-      <dd class="col-xs-9 col-lg-4"><%=  readable_resource_type(document.resource_type) %></dd>
+      <dd class="col-xs-9 col-lg-4"><%=  human_readable_resource_type(document.resource_type) %></dd>
       <dt class="col-xs-3 col-lg-2">Depositor:</dt>
       <dd class="col-xs-9 col-lg-4"><%= link_to_profile document.depositor %></dd>
       <dt class="col-xs-3 col-lg-2">Date Published:</dt>

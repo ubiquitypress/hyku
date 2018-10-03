@@ -1,13 +1,4 @@
 module MultipleMetadataFieldsHelper
-  
-  #resoure_type data are ["ConferenceItem default Conference paper (unpublished)"] and ["Image default Still image"] %>
-  def readable_resource_type(data)
-    if  data.first.to_s.split.first == "default"
-       e = e.drop(1)
-    else
-      data.first.to_s.split.drop(2).join(' ')
-    end
-  end
 
   #called in app/views/hyrax/collection/_sort_and_per_page.html
   #sort_fields is 2 dimensional array

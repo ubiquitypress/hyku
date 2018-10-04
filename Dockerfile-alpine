@@ -1,0 +1,15 @@
+FROM upress/hyku-base-alpine:latest
+
+ADD . /data
+
+RUN bundle exec rake assets:precompile
+
+COPY ./docker/set_work_requires_files.sh /data/set_work_requires_files.sh
+COPY ./docker/supervisord-worker.conf /etc/supervisor/supervisord-worker.conf
+COPY ./docker/supervisord-rails.conf /etc/supervisor/supervisord-rails.conf
+
+RUN rm -rf /var/cache/apk/*
+
+EXPOSE 3000
+
+ENTRYPOINT  ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord-rails.conf"]

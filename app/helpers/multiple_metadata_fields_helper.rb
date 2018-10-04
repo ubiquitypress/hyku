@@ -1,5 +1,27 @@
 module MultipleMetadataFieldsHelper
 
+  #called in app/views/hyrax/collection/_sort_and_per_page.html
+  #sort_fields is 2 dimensional array
+  def ubiquity_sort_field(sort_array)
+    sort_array - [["relevance", "score desc, system_create_dtsi desc"], ["date modified ▼", "system_modified_dtsi desc"], ["date modified ▲", "system_modified_dtsi asc"]]
+  end
+
+  #takes in the creator value passed in from a solr document
+  #It receives an array containing a single json string eg ['[{creator_family_name: mike}, {creator_given_name: hu}]']
+  #We parse that json into an array of hashes as in [{creator_family_name: mike}, {creator_given_name: hu}]
+  def display_json_values(json_data)
+    if json_data.class == Array
+      parsed_json = JSON.parse(json_data.first) if json_data.first.class == String
+      data = []
+      record = parsed_json.map do |hash|
+        data << (hash["creator_given_name"].to_s + ' ' + hash["creator_family_name"].to_s)
+        data << hash["creator_organization_name"]
+        data
+      end
+      data.flatten.reject(&:blank?).compact
+    end
+  end
+
   def render_isni_or_orcid_url(id, type)
     new_id = id.delete(' ')
     uri = URI.parse(new_id)

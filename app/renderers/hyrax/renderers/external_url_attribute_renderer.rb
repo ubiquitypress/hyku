@@ -4,8 +4,7 @@ class ExternalUrlAttributeRenderer < Hyrax::Renderers::AttributeRenderer
     markup = ''
     values.delete("") if values # delete an empty string in array or it would display
     return markup if values.blank? && !options[:include_empty]
-    return arr_of_li_values(values) if values.is_a?(Array)
-    Rails.logger.info("ExternalUrlAttributeRenderer did not render #{values}")
+    arr_of_li_values(values) if values.is_a?(Array)
   end
 
   private

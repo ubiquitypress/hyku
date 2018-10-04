@@ -1,7 +1,17 @@
 <!-- overrides hyrax/app/views/records/edit_fields/_resource_type.html.erb -->
+
 <% model_name = f.object.model_class %>
-<% set_default = ResourceTypesService.select_default(model_name) %>
-<%= f.input :resource_type, as: :select,
-            collection: ResourceTypesService.select_template_options(model_name),
-            selected: set_default,
-            input_html: { class: 'form-control', multiple: true } %>
+<% template = model_name.to_s.underscore %>
+<% r_t = f.object.model.resource_type.first %>
+<% set_default = r_t || ResourceTypesService.select_default(model_name) %>
+
+<label class="control-label" for="<% template %>_resource_type">Resource Type</label>
+<p class="help-block">Select the specific resource type that best describes the work.</p>
+<%= select_tag "#{template}[resource_type][]",
+      options_from_collection_for_select( ResourceTypesService.select_template_options(model_name),
+                                          :last,
+                                          :first,
+                                          set_default),
+      class: 'form-control'
+%>
+<br><br />

@@ -62,4 +62,5 @@ class SolrDocument
   attribute :media, Solr::Array, solr_name('media')
   attribute :related_exhibition, Solr::Array, solr_name('related_exhibition')
   attribute :related_exhibition_date, Solr::Array, solr_name('related_exhibition_date')
+  attribute :editor, Solr::Array, solr_name('editor')
 end

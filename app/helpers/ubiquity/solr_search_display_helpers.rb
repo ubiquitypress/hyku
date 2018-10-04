@@ -21,8 +21,14 @@ module Ubiquity
 
     # remove the model name (i.e. "Collection" or "GenericWork") and "default";
     # `type` is the id in config/authorities/resources_types.yml
+    # @see CatalogController
+    # a [Hash] is passed in index_field, whereas a [String] is passed in facet_field
     def human_readable_resource_type(options={})
-      type = options[:value]
+      type = if options.respond_to?(:value)
+               [options.value]
+             else
+               options.is_a?(Hash) ? options[:value] : [options]
+             end
       readable_type = []
       type.each do |t|
         e = t.split.drop(1)
@@ -31,13 +37,5 @@ module Ubiquity
       end
       readable_type.join(', ')
     end
-
-    private
-
-      def pass_model(options)
-        my_model = options[:document].hydra_model.to_s
-        my_id = options[:document].id
-        presento ||= Ubiquity::SolrModelWrapper.new(my_model, my_id)
-      end
   end
 end

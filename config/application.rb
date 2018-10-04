@@ -40,6 +40,8 @@ module Hyku
         require_dependency(c)
       end
       Hyrax::DownloadsController.include ::Hyrax::DownloadsControllerDecorator
+      #added by UbiquityPress to allow us render image when available without rendering default_icon
+      Hyrax::CollectionPresenter.class_eval {delegate :thumbnail_id, to: :solr_document}
     end
 
     config.before_initialize do

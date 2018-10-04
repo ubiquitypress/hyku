@@ -13,6 +13,9 @@ Thesame is copied from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hy
     <th>Creator</th>
     <th>Date Uploaded</th>
     <th>Visibility</th>
+    <% if (current_user && controller.class == Hyrax::Dashboard::CollectionsController) %>
+      <th>Action</th>
+    <% end %>
   </tr>
   </thead>
   <tbody>

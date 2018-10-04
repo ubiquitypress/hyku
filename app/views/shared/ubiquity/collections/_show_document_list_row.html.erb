@@ -46,7 +46,7 @@
   <td class="text-center">
     <%= render_visibility_link(document) %>
   </td>
-  <% if (controller.class == Hyrax::Dashboard::CollectionsController) && current_user %>
+  <% if (current_user && controller.class == Hyrax::Dashboard::CollectionsController) %>
     <td class="text-center">
       <%= render 'show_document_list_menu', document: document %>
     </td>

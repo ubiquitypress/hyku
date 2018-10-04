@@ -1,0 +1,15 @@
+<%# Copied from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/collections/_media_display.html.erb
+ by ubiquity inorder to hide default icon.
+ UbiquityPress replaced  'if presenter.thumbnail_path' with 'if presenter.thumbnail_id'
+  see
+  %>
+
+<% if presenter.thumbnail_id %>
+   <%= image_tag presenter.thumbnail_path,
+                class: "representative-media",
+                alt: "",
+                role: "presentation" %>
+<% else %>
+  <%# The line below is commented out by UbiquityPress%>
+  <span class="<%# Hyrax::ModelIcon.css_class_for(Collection) %> collection-icon-search"></span>
+<% end %>

@@ -1,0 +1,67 @@
+<!--
+  Copied from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/dashboard/collections/_list_collections.html.erb
+    and
+    https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/my/collections/_list_collections.html.erb
+
+    and consolidated here to use from dashbaord when we click
+     collections then 'All collections or Your collections' Tab
+-->
+
+<% id = document.id %>
+<tr id="document_<%= id %>">
+  <td>
+    <div class="media">
+      <!-- This if condiftion was added by UbiquityPress -->
+      <% if document.thumbnail_id %>
+        <span  class="collection-icon-small pull-left"><%= render_thumbnail_tag document, :style => 'width:18px' %></span>
+      <% else %>
+          <!-- this was the default in hyrax -->
+          <span class="<%# Hyrax::ModelIcon.css_class_for(Collection) %> collection-icon-small pull-left"></span>
+      <% end %>
+      <div class="media-body">
+        <div class="media-heading">
+          <%= link_to hyrax.dashboard_collection_path(id) do %>
+              <span class="sr-only"><%= t("hyrax.dashboard.my.sr.show_label") %> </span>
+              <%= document.title_or_label %>
+          <% end %>
+          <a href="#" class="small" title="Click for more details">
+            <i id="expand_<%= id %>" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></i>
+            <span class="sr-only"> <%= "#{t("hyrax.dashboard.my.sr.detail_label")} #{document.title_or_label}" %></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </td>
+  <td class="text-center date"><%= document.create_date.try(:to_formatted_s, :standard) %> </td>
+  <td class="text-center">
+    <%= render_visibility_link(document) %>
+  </td>
+  
+   <!-- Added by UbiquityPress to enable us share same partial from dashboard when we click
+    collections then 'All collections or Your collections' Tab-->
+   <td class="text-center">
+     <% if controller.class == Hyrax::Dashboard::CollectionsController %>
+       <!-- Displays when you click dashboard then click collections then all colections tab-->
+       <%= render 'collection_action_menu', id: id %>
+     <% elsif controller.class ==  Hyrax::My::CollectionsController %>
+        <!-- Displays when you click dashboard then click collections then all colections tab-->
+       <%= render 'hyrax/my/collection_action_menu', id: id %>
+     <% end %>
+    </td>
+</tr>
+<tr id="detail_<%= id %>"> <!--  collection detail"> -->
+  <td colspan="4">
+    <dl class="expanded-details row">
+      <dt class="col-xs-3 col-lg-2"><%= t("hyrax.dashboard.my.collection_list.description") %></dt>
+      <dd class="col-xs-9 col-lg-10"><%= document.description.first %></dd>
+      <dt class="col-xs-3 col-lg-2"><%= t("hyrax.dashboard.my.collection_list.edit_access") %></dt>
+      <dd class="col-xs-9 col-lg-10">
+      <% if document.edit_groups.present? %>
+        <%= t("hyrax.dashboard.my.collection_list.groups") %> <%= document.edit_groups.join(', ') %>
+        <br/>
+      <% end %>
+        <%= t("hyrax.dashboard.my.collection_list.users") %> <%= document.edit_people.join(', ') %>
+      </dd>
+    </dl>
+  </td>
+</tr>

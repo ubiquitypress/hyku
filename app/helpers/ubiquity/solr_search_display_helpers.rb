@@ -23,11 +23,16 @@ module Ubiquity
     # `type` is the id in config/authorities/resources_types.yml
     # @see CatalogController
     # a [Hash] is passed in index_field, whereas a [String] is passed in facet_field
+    # an [Array] is passed in collections/_show_document_list_row partial
     def human_readable_resource_type(options={})
       type = if options.respond_to?(:value)
                [options.value]
-             else
-               options.is_a?(Hash) ? options[:value] : [options]
+             elsif options.is_a?(Hash)
+               options[:value]
+             elsif options.is_a?(Array)
+               options
+             elsif options.is_a?(String)
+               [options]
              end
       readable_type = []
       type.each do |t|

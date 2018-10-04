@@ -15,3 +15,11 @@ th > span .attribute-label, .h4 {
 .image-masthead .background-container-gradient {
   background: none;
 }
+
+.nav, .navbar-nav, .homepage-nav-ul {
+  margin: 0px;
+}
+
+.nav, .navbar-nav > li > a {
+  padding: 8px 5px 7px 0px;
+}

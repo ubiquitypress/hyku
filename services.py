@@ -10,9 +10,9 @@ logger = logging.getLogger(__name__)
 class RepoImporterDataServiceReceiver(object):
     """Nameko receiver to listen for new entries from the repo-importer."""
 
-    name = 'repo_importer_data_service'
+    name = 'repo_importer_data_service_receiver'
 
-    @event_handler('importer_data_service', 'new_entry', handler_type=SINGLETON)
+    @event_handler('repo_importer_data_service_sender', 'new_entry', handler_type=SINGLETON)
     def save_entry(self, entry_data):
         """Save new text entry from repo-importer."""
 

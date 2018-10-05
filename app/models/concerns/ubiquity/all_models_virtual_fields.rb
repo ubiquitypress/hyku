@@ -34,6 +34,7 @@ module Ubiquity
       if self.creator_group.present?
         new_creator_group = remove_hash_keys_with_empty_and_nil_values(self.creator_group)
         creator_json = new_creator_group.to_json
+        populate_creator_search_field(creator_json)
         self.creator = [creator_json]
       end
     end
@@ -61,5 +62,13 @@ module Ubiquity
         self.related_identifier = [related_identifier_json]
       end
     end
+
+    private
+    def populate_creator_search_field(json_record)
+      #We parse the json in the an array before saving the value in creator_search
+      values = Ubiquity::ParseJson.new(json_record).data
+      self.creator_search = values
+    end
+
   end
 end

@@ -50,8 +50,16 @@ terms:
  - id: Rights Holder
    term: Rights Holder
    active: true
+#  kept as `active: false` (i.e. not to display/chose from)
+#  else if any record was previously saved with this it would break the app
  - id: Sponsor Supervisor
    term: Sponsor Supervisor
+   active: false
+ - id: Sponsor
+   term: Sponsor
+   active: true
+ - id: Supervisor
+   term: Supervisor
    active: true
  - id: Work Package Leader
    term: Work Package Leader

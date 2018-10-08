@@ -2,86 +2,81 @@
 
 <% array_of_hash.each_with_index do |hash, index| %>
 
-<div class="ubiquity-meta-contributor" >
+  <div class="ubiquity-meta-contributor" >
 
-   <label class="control-label multi_value optional" for="#{template}_contributor_name_type">
-    Contributor name type</label>
-
+    <label class="control-label multi_value optional" for="#{template}_contributor_name_type">
+      Contributor name type</label>
     <%= select_tag "#{template}[contributor_group][][contributor_name_type]",
-       content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("contributor_name_type")), class: "ubiquity_contributor_name_type" %>
-  <br/>
-  <label class="control-label multi_value optional" for="#{template}_contributor_type">
-   Contributor type</label>
+        content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("contributor_name_type")), class: "ubiquity_contributor_name_type" %>
 
- <%= select_tag "#{template}[contributor_group][][contributor_type]",
-         content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( ContributorGroupService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("contributor_type"))
-  %>
+    <p class="help-block">A person or group you want to recognize for playing a role in the creation of the work, but not
+      the primary role.</p>
 
-  <br/>
-  <label class="control-label multi_value optional" for="#{template}_contributor_isni">
-    contributor ISNI</label>
+    <label class="control-label multi_value optional" for="#{template}_contributor_isni">
+      Contributor ISNI</label>
+    <%= text_field_tag "#{template}[contributor_group][][contributor_isni]", hash.dig("contributor_isni"),
+                       class: "#{template}_contributor_group form-control multi-text-field multi_value",
+                       placeholder: 'Please enter the contributor\'s ISNI, e.g. 0000 1234 5678 9101.',
+                       name: "#{template}[contributor_group][][contributor_isni]"
+    %>
+    <br/>
+    <label class="ubiquity_contributor_organization_name control-label multi_value optional" for="#{template}_contributor_organization_name">
+      Contributor organisation name</label>
+    <%= text_field_tag  "#{template}[contributor_group][][contributor_organization_name]", hash.dig("contributor_organization_name"),
+                        class: "ubiquity_contributor_organization_name #{template}_contributor_organization_name form-control multi-text-field multi_value",
+                        placeholder: 'Please enter the organisation\'s name.',
+                        name: "#{template}[contributor_group][][contributor_organization_name]"
+    %>
 
-  <%= text_field_tag "#{template}[contributor_group][][contributor_isni]", hash.dig("contributor_isni"),
-                     class: "#{template}_contributor_group form-control multi-text-field multi_value",
-                     name: "#{template}[contributor_group][][contributor_isni]"
-  %>
-  <br/>
-  <label class="ubiquity_contributor_organization_name control-label multi_value optional" for="#{template}_contributor_organization_name">
-    Contributor organization name</label>
+    <span class="ubiquity_personal_fields">
 
-  <%= text_field_tag  "#{template}[contributor_group][][contributor_organization_name]", hash.dig("contributor_organization_name"),
-                      class: "ubiquity_contributor_organization_name #{template}_contributor_organization_name form-control multi-text-field multi_value",
-                      placeholder: 'Add contributor organization name',
-                      name: "#{template}[contributor_group][][contributor_organization_name]"
-  %>
-  </br>
+      <label class="control-label multi_value optional" for="#{template}_contributor_orcid">
+        Contributor ORCiD</label>
+      <%= text_field_tag "#{template}[contributor_group][][contributor_orcid]", hash.dig("contributor_orcid"),
+                         class: "#{template}_contributor_group form-control multi-text-field multi_value",
+                         placeholder: 'Please enter the contributor\'s ORCiD, e.g. 0000-1234-5678-9101.',
+                         name: "#{template}[contributor_group][][contributor_orcid]"
+      %>
+      <br>
 
-<span class="ubiquity_personal_fields">
       <label class="control-label multi_value optional" for="#{template}_contributor_given_name">
         Contributor given name</label>
-
       <%= text_field_tag "#{template}[contributor_group][][contributor_given_name]", hash.dig("contributor_given_name"),
                          class: "#{template}_contributor_group form-control multi-text-field multi_value",
+                         placeholder: 'Please enter the contributor\'s first name/given name.',
                          name: "#{template}[contributor_group][][contributor_given_name]"
       %>
-
       <br>
+
       <label class="control-label multi_value optional" for="#{template}_contributor_family">
         Contributor family name</label>
-
-
       <%= text_field_tag "#{template}[contributor_group][][contributor_family_name]", hash.dig("contributor_family_name"),
                          class: "#{template}_contributor_group form-control multi-text-field multi_value",
+                         placeholder: 'Please enter the contributor\'s last name/family name.',
                          name: "#{template}[contributor_group][][contributor_family_name]"
 
       %>
 
-      <br/>
+    </span>
+    <br>
+    <label class="control-label multi_value optional" for="#{template}_contributor_type">
+      Contributor type</label>
+    <%= select_tag "#{template}[contributor_group][][contributor_type]",
+                   content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( ContributorGroupService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("contributor_type"))
+    %>
+    <br><br/>
 
-      <label class="control-label multi_value optional" for="#{template}_contributor_orcid">
-        contributor ORCiD</label>
+    <%= hidden_field_tag "#{template}[contributor_group][][contributor_position]", index, class: 'ubiquity-contributor-score'  %>
 
-      <%= text_field_tag "#{template}[contributor_group][][contributor_orcid]", hash.dig("contributor_orcid"),
-                         class: "#{template}_contributor_group form-control multi-text-field multi_value",
-                         name: "#{template}[contributor_group][][contributor_orcid]"
-      %>
-  </span>
-      <br/>
+    <a href="#" style="color:red;"  class=" remove_contributor form-group " data-removeUbiquitycontributor=".ubiquity-meta-contributor">
+      <span class="glyphicon glyphicon-remove"></span>
+      <span class="controls-remove-text">Remove</span>
+    </a>
+    |
+    <a href="#" class=" add_contributor" data-addUbiquitycontributor=".ubiquity-meta-contributor">Add another </a>
 
+    <br><br><br/>
 
-      <%= hidden_field_tag "#{template}[contributor_group][][contributor_position]", index, class: 'ubiquity-contributor-score'  %>
-
-      <br/>
-      <a href="#" style="color:red;"  class=" remove_contributor form-group " data-removeUbiquitycontributor=".ubiquity-meta-contributor">
-        <span class="glyphicon glyphicon-remove"></span>
-        <span class="controls-remove-text">Remove</span>
-      </a>
-      |
-
-      <a href="#" class=" add_contributor" data-addUbiquitycontributor=".ubiquity-meta-contributor">Add another </a>
-
-      <br/>
-
-</div>
+  </div>
 
 <% end %>

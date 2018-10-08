@@ -53,7 +53,8 @@ class CatalogController < ApplicationController
     #   The ordering of the field names is the order of the display
     # config.add_facet_field solr_name("human_readable_type", :facetable), label: "Type", limit: 5
     config.add_facet_field solr_name("resource_type", :facetable), label: "Resource Type", limit: 5
-    config.add_facet_field solr_name("creator", :facetable), limit: 5
+    config.add_facet_field solr_name("creator_search", :facetable), label: "Creator",  limit: 5
+    #config.add_facet_field solr_name("creator", :facetable), limit: 5
     # config.add_facet_field solr_name("contributor", :facetable), label: "Contributor", limit: 5
     config.add_facet_field solr_name("keyword", :facetable), limit: 5
     config.add_facet_field solr_name('member_of_collections', :symbol), limit: 5, label: 'Collections'
@@ -175,6 +176,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("project_name", :stored_searchable)
     config.add_show_field solr_name("official_link", :stored_searchable)
     config.add_show_field solr_name("rights_holder", :stored_searchable)
+    config.add_show_field solr_name("creator_search", :stored_searchable)
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
@@ -382,6 +384,15 @@ class CatalogController < ApplicationController
 
     config.add_search_field('extent') do |field|
       solr_name = solr_name("extent", :stored_searchable)
+      field.solr_local_parameters = {
+        qf: solr_name,
+        pf: solr_name
+      }
+    end
+
+    config.add_search_field('creator_search') do |field|
+      field.solr_parameters = { "spellcheck.dictionary": "creator_search" }
+      solr_name = solr_name("creator_search", :stored_searchable)
       field.solr_local_parameters = {
         qf: solr_name,
         pf: solr_name

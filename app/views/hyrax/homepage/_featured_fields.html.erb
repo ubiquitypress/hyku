@@ -1,0 +1,16 @@
+<%# Override from Hyrax engine to customise front-end %>
+
+<% featured_doc = featured.solr_document %>
+<div class="featured-fields" >
+  <div class="featured-item-thumbnail" >
+    <%= render_thumbnail_tag(featured_doc, {suppress_link: true}) %>
+  </div>
+  <%= link_to [main_app, featured] do %>
+    <div class="featured-item homepage-field-title">
+      <%= featured.title.first %>
+    </div>
+  <% end %>
+  <div class="featured-item">
+    <%= link_to_facet_list(featured_doc['creator_search_tesim'], 'creator_search').html_safe %>
+  </div>
+</div>

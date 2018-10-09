@@ -2,11 +2,11 @@
 
 
 <div class="ubiquity-meta-contributor" >
-  
+
   <label class="control-label multi_value optional" for="#{template}_contributor_name_type">
     Contributor name type</label>
 
-  <%= select_tag "#{template}[contributor_group][][contributor_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s), class: "ubiquity_contributor_name_type" %>
+  <%= select_tag "#{template}[contributor_group][][contributor_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, 'Personal'), class: "ubiquity_contributor_name_type" %>
 
   <p class="help-block">A person or group you want to recognize for playing a role in the creation of the work, but not the primary role.</p>
 
@@ -40,7 +40,7 @@
                        placeholder: 'Please enter the contributor\'s ORCiD, e.g. 0000-1234-5678-9101.',
                        name: "#{template}[contributor_group][][contributor_orcid]"
     %>
-    <br>
+    <br/>
 
     <label class="control-label multi_value optional" for="#{template}_contributor_family_name">
       Contributor family name</label>
@@ -50,7 +50,7 @@
                        placeholder: 'Please enter the contributor\'s last name/family name.',
                        name: "#{template}[contributor_group][][contributor_family_name]"
     %>
-    <br>
+    <br/>
 
     <label class="control-label multi_value optional" for="#{template}_contributor_given_name">
       Contributor given name</label>
@@ -62,13 +62,13 @@
     %>
 
   </span>
-  <br>
+  <br/>
   <label class="control-label multi_value optional" for="#{template}_contributor_type">
     Contributor type</label>
   <%= select_tag "#{template}[contributor_group][][contributor_type]",
                  content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( ContributorGroupService.new.select_active_options.flatten.uniq!, :to_s, :to_s)
   %>
-  <br><br/>
+  <br/><br/>
 
   <%= hidden_field_tag "#{template}[contributor_group][][contributor_position]", 1, class: 'ubiquity-contributor-score'  %>
 
@@ -79,6 +79,6 @@
   |
   <a href="#" class=" add_contributor" data-addUbiquitycontributor=".ubiquity-meta-contributor">Add another </a>
 
-  <br><br><br/>
+  <br/><br/><br/>
 
 </div>

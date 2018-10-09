@@ -81,4 +81,22 @@
       };
     });
 
+    $(document).on("turbolinks:load", function(){
+      $("body").on("click",".additional-fields", function(event){
+        $(".ubiquity_contributor_name_type").each(function() {
+          _this = this;
+          if (this.value == 'Personal') {
+            $(this).siblings(".ubiquity_contributor_organization_name").hide();
+            $(this).siblings(".ubiquity_personal_fields").show();
+          } else if(this.value == "Organisational") {
+           $(this).siblings(".ubiquity_personal_fields").hide();
+           $(this).siblings(".ubiquity_contributor_organization_name").show();
+         } else {
+           $('.ubiquity_contributor_name_type:last').val('Personal').change()
+         }
+        });
+
+     });
+    });
+
 </script>

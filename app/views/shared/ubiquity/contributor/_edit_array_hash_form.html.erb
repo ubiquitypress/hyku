@@ -37,7 +37,7 @@
                          placeholder: 'Please enter the contributor\'s ORCiD, e.g. 0000-1234-5678-9101.',
                          name: "#{template}[contributor_group][][contributor_orcid]"
       %>
-      <br>
+      <br/>
 
       <label class="control-label multi_value optional" for="#{template}_contributor_given_name">
         Contributor given name</label>
@@ -46,7 +46,7 @@
                          placeholder: 'Please enter the contributor\'s first name/given name.',
                          name: "#{template}[contributor_group][][contributor_given_name]"
       %>
-      <br>
+      <br/>
 
       <label class="control-label multi_value optional" for="#{template}_contributor_family">
         Contributor family name</label>
@@ -58,13 +58,13 @@
       %>
 
     </span>
-    <br>
+    <br/>
     <label class="control-label multi_value optional" for="#{template}_contributor_type">
-      Contributor type</label>
+      Contributor type</label> 
     <%= select_tag "#{template}[contributor_group][][contributor_type]",
                    content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( ContributorGroupService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("contributor_type"))
     %>
-    <br><br/>
+    <br/><br/>
 
     <%= hidden_field_tag "#{template}[contributor_group][][contributor_position]", index, class: 'ubiquity-contributor-score'  %>
 
@@ -75,7 +75,7 @@
     |
     <a href="#" class=" add_contributor" data-addUbiquitycontributor=".ubiquity-meta-contributor">Add another </a>
 
-    <br><br><br/>
+    <br/><br/><br/>
 
   </div>
 

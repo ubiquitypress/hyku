@@ -70,7 +70,7 @@ class ApplicationController < ActionController::Base
     end
 
     def add_honeybadger_context
-      Honeybadger.context(user_email: current_user.email) if current_user
+      ::Honeybadger.context(user_email: current_user.email) if current_user
     end
 
     def ssl_configured?

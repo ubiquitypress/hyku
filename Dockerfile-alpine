@@ -4,7 +4,6 @@ ADD . /data
 
 RUN bundle exec rake assets:precompile
 
-COPY ./docker/set_work_requires_files.sh /data/set_work_requires_files.sh
 COPY ./docker/supervisord-worker.conf /etc/supervisor/supervisord-worker.conf
 COPY ./docker/supervisord-rails.conf /etc/supervisor/supervisord-rails.conf
 

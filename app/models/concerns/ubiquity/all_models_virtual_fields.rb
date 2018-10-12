@@ -42,7 +42,7 @@ module Ubiquity
         creator_json = new_creator_group.to_json
         populate_creator_search_field(creator_json)
         self.creator = [creator_json]
-      elsif data
+      elsif data == true || data == nil
         #save an empty array since the submitted data contains only default keys & values
         self.creator = []
       end
@@ -55,7 +55,7 @@ module Ubiquity
         new_contributor_group = remove_hash_with_default_keys(clean_submitted_data)
         contributor_json = new_contributor_group.to_json
         self.contributor = [contributor_json]
-      elsif data
+      elsif data == true || data == nil
        self.contributor = []
       end
     end
@@ -67,7 +67,7 @@ module Ubiquity
         new_related_identifier_group = remove_hash_with_default_keys(clean_submitted_data)
         related_identifier_json = new_related_identifier_group.to_json
         self.related_identifier = [related_identifier_json]
-      elsif data
+      elsif data == true || data == nil
        self.related_identifier = []
       end
     end
@@ -81,7 +81,7 @@ module Ubiquity
         new_alternate_identifier_group = remove_hash_with_default_keys(clean_submitted_data)
         alternate_identifier_json = new_alternate_identifier_group.to_json
         self.alternate_identifier = [alternate_identifier_json]
-      elsif data
+      elsif data == true || data == nil
         self.alternate_identifier = []
       end
     end

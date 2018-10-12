@@ -8,12 +8,6 @@ module ApplicationHelper
     ["Book", "BookContribution", "ConferenceItem", "Report", "GenericWork"].include? presenter
   end
 
-  # called in views/hyrax/base/_attribute_rows to avoid displaying empty content of multi-part fields on works show page
-  def field_has_value?(field)
-    field.delete("[{}]")
-    field.present?
-  end
-
   # override from blacklight/app/helpers/blacklight/facets_helper_behavior.rb
   # to customise the resource_type search behaviour
   def facet_display_value field, item

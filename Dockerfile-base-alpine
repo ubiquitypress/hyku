@@ -14,7 +14,9 @@ RUN apk add --update --no-cache \
     python-dev \
     py2-pip \
     tzdata \
-    openjdk8
+    openjdk8 \
+    libreoffice \
+    tree
 
 RUN pip install nameko==2.11.0
 

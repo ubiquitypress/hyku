@@ -1,5 +1,5 @@
-from ast import literal_eval
 from csv import writer, QUOTE_MINIMAL
+import json
 import logging
 from os import system, path
 
@@ -43,7 +43,7 @@ class RepoImporterDataServiceReceiver(object):
     def save_entry(self, entry_data):
         """Save new text entry from repo-importer."""
 
-        logger.info(str(entry_data))
+        entry_data = json.loads(entry_data)
 
         import_id = entry_data.pop('uuid')
         domain = entry_data.pop('domain')  # Cleanup entry data.
@@ -51,13 +51,14 @@ class RepoImporterDataServiceReceiver(object):
         _file_name = entry_data.pop('downloaded-file')
 
         import_folder = path.join('importer', domain, tenant)
+        csv_folder = path.join(import_folder, 'csv')
 
-        csv_name = '{folder}/{uuid}.csv'.format(
-            folder=import_folder,
+        csv_path = '{folder}/{uuid}.csv'.format(
+            folder=csv_folder,
             uuid=import_id,
         )
 
-        with open(csv_name, 'w') as csv_file:
+        with open(csv_path, 'w') as csv_file:
             csv_writer = writer(
                 csv_file,
                 delimiter=',',
@@ -65,9 +66,22 @@ class RepoImporterDataServiceReceiver(object):
                 quoting=QUOTE_MINIMAL,
             )
 
-            headers = list(entry_data)  # `entry_data` keys are CSV headers.
+            headers = ['id'] + list(entry_data) + ['file']
             csv_writer.writerow(headers)
-            csv_writer.writerow([value for value in entry_data.values()])
+
+            values = (
+                [import_id] +
+                [value for value in entry_data.values()] +
+                [_file_name]
+            )
+            csv_writer.writerow(values)
+
+        logger.info(
+            '[importer] Importing UUID :{uuid} - file: {file_name}'.format(
+                uuid=import_id,
+                file_name=_file_name,
+            )
+        )
 
         try:
             cmd = (
@@ -78,10 +92,10 @@ class RepoImporterDataServiceReceiver(object):
             ).format(
                 tenant=tenant,
                 domain=domain,
-                csv_file=csv_name,
+                csv_file=csv_path,
                 import_folder=import_folder,
             )
-            # system(cmd)
+            system(cmd)
             logger.info(cmd)
         except Exception as e:
             logger.info(e)

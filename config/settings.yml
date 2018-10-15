@@ -60,6 +60,6 @@ geonames_username: 'jcoyne'
 contact_email: ""
 
 devise:
-  account_signup: true
+  account_signup: false
   # The address from which user invitations are sent
   invitation_from_email: "change-me-in-hyku-settings@example.org"

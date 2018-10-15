@@ -6,6 +6,12 @@ module Importer
       autoload :CollectionFactory
       autoload :ETDFactory
       autoload :ImageFactory
+      autoload :ArticleFactory
+      autoload :BookFactory
+      autoload :BookContributionFactory
+      autoload :ConferenceItemFactory
+      autoload :DatasetFactory
+      autoload :ReportFactory
       autoload :ObjectFactory
       autoload :StringLiteralProcessor
       autoload :WithAssociatedCollection

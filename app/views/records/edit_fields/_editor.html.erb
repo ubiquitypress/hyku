@@ -2,7 +2,16 @@
 <% if  curation_concern.new_record? %>
   <%= render "shared/ubiquity/editor/new_form" %>
 <% else %>
-  <% array_of_hash = get_model(curation_concern.class, curation_concern.id, 'editor', 'editor_position') %>
+  <% array_hash = get_model(curation_concern.class, curation_concern.id, 'editor', 'editor_position') %>
+
+  <!--
+  Clicking edit button returns an error it is something other than an array of hash
+  it will throw either ActionView::Template::Error (undefined method `each_with_index' for nil:NilClass)
+    or
+  ActionView::Template::Error (undefined method `dig' for "null":String):
+  The line below fixes that
+  -->
+  <% array_of_hash = array_hash || [{}] %>
   <%= render "shared/ubiquity/editor/edit_array_hash_form", curation_concern: curation_concern, f: f, array_of_hash: array_of_hash %>
 <% end %>
 

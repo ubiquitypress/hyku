@@ -81,23 +81,21 @@ module MultipleMetadataFieldsHelper
 
   def get_model(model_class, model_id, field, multipart_sort_field_name = nil)
     model ||= fetch_model(model_class, model_id)
+    #get the record store in that field
     record ||= model.send(field.to_sym)
-    get_json_data = record.first if !record.empty?
-    value =   get_json_data || model
+    get_json_data = record.first if (!record.empty?)
 
-    # if passed in field = contributor and it is nil, return getch model using creator
-    # return empty string if passed in field has value in database ie (value == nil)
-    return ""  if (value == nil)
+    #If the value of the first is record is nil return the model
+    @value =   get_json_data || model
 
-    if valid_json?(value)
-      # when an creator is an array witha json string
-      # same as  JSON.parse(model.creator.first)
-      array_of_hash ||= JSON.parse(model.send(field.to_sym).first)
+    if valid_json?(@value)
+      array_of_hash ||= JSON.parse(record.first)
+      return  [model.attributes] if (array_of_hash.first.class == String  || array_of_hash.first.nil? )
+
+      #return sort_hash(array_of_hash, multipart_sort_field_name) if multipart_sort_field_name
       return sort_hash(array_of_hash, multipart_sort_field_name) if multipart_sort_field_name
+
       array_of_hash
-    else
-      # returned when field is not a json. Return array to avoiding returning ActiveTriples::Relation
-      record || [value.attributes]
     end
   end
 
@@ -105,7 +103,6 @@ module MultipleMetadataFieldsHelper
 
   # return false if json == String
   def valid_json?(data)
-    # return if json == nil
     !!JSON.parse(data)  if data.class == String
     rescue JSON::ParserError
       false
@@ -121,10 +118,12 @@ module MultipleMetadataFieldsHelper
   end
 
   def sort_hash(array_of_hash, key)
-    return array_of_hash if array_of_hash.class != Array
-    if key.present?
-      array_of_hash.sort_by!{ |hash| hash[key].to_i}
-      array_of_hash.map {|hash| hash.reject { |k,v| v.nil? || v.to_s.empty? ||v == "NaN" }}
+    #return array_of_hash if array_of_hash.class != Array
+
+    if (key.present? && array_of_hash.first.class == Hash)
+      #allows the sort to function even if the value of a hash is nil
+      array_of_hash.sort_by{ |hash| hash[key].to_i}
     end
   end
+
 end

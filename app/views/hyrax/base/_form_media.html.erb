@@ -1,8 +1,11 @@
 <% if f.object.persisted? && f.object.member_ids.present? %>
   <%= render 'form_representative', f: f %>
   <%= render 'form_thumbnail', f: f %>
+  <%# check if the work has a FileSet as representative media %>
+  <% if curation_concern.representative_id.present? %>
   <%# display the rendering dropdown only if the representitive responds to image? (ie. Universal Viewer is used) %>
-  <% if curation_concern.representative.image? %>
-    <%= render 'form_rendering', f: f %>
+    <% if curation_concern.representative.image? %>
+      <%= render 'form_rendering', f: f %>
+    <% end %>
   <% end %>
 <% end %>

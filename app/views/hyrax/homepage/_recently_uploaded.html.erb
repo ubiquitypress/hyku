@@ -1,0 +1,14 @@
+<%# Overrides file from Hyrax engine to customise front-end %>
+
+<h2 class="sr-only"><%= t('hyrax.homepage.recently_uploaded.title') %></h2>
+<% if recent_documents.blank? %>
+  <p><%= t('.no_public') %></p>
+<% else %>
+  <div id="recent_docs">
+    <table class="table table-striped collection-highlights">
+      <tbody>
+        <%= render partial: "recent_document", collection: recent_documents %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

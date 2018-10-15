@@ -1,0 +1,16 @@
+<%# Override file from Hyrax engine to customise front-end %>
+
+<div class="row">
+  <div class="col-md-4 col-sm-4">
+    <h5 id="featured_works" class="nav-tabs"><%= t('hyrax.homepage.featured_works.tab_label') %></h5>
+    <%= render 'featured_works' %>
+  </div>
+  <div class="col-md-4 col-sm-4">
+    <h5 id="recent_works" class="nav-tabs"><%= t('hyrax.homepage.recently_uploaded.tab_label') %></h5>
+    <%= render 'recently_uploaded', recent_documents: @recent_documents %>
+  </div>
+  <div class="col-md-4 col-sm-4">
+    <h5 id="explore_collections" class="nav-tabs"><%= t('hyrax.homepage.admin_sets.title') %></h5>
+    <%= render 'explore_collections', collections: @presenter.collections %>
+  </div>
+</div>

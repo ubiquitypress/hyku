@@ -1,23 +1,25 @@
 <%# Fix to not display default image icon. This file was copied from
   https://github.com/samvera/hyrax/blob/37a1c370cd05a7ed0a8ca2ad453bc15eb812f132/app/views/hyrax/homepage/_recent_document.html.erb
  %>
-
 <tr>
-    <td class="col-sm-2">
-      <%= link_to_profile recent_document.depositor("no depositor value") %>
+  <td>
+    <div class="media">
       <!-- if condition added by ubiquity to ensure default thumbnail is not displayed-->
-      <%if  recent_document.thumbnail_id %>
-        <%= link_to [main_app, recent_document] do %>
-          <%= render_thumbnail_tag recent_document, { width: 45 }, suppress_link: true %>
+      <% if recent_document.thumbnail_id %>
+        <%= link_to [main_app, recent_document], class: 'media-left', 'aria-hidden' => true do %>
+          <%= render_thumbnail_tag recent_document, { class: 'hidden-xs file_listing_thumbnail' }, { suppress_link: true } %>
+        <% end %>
+      <% else %>
+        <%= link_to "", class: 'media-left', 'aria-hidden' => true do %>
+          <span class="media-left hidden-xs file_listing_thumbnail mock-thumbnail" ></span>
         <% end %>
       <% end %>
-    </td>
-    <td>
-      <h3>
-        <span class="sr-only">Title</span><%= link_to truncate(recent_document.to_s, length: 28, separator: ' '), [main_app, recent_document] %>
-      </h3>
-      <p>
-        <span class="sr-only">Keywords</span><%= link_to_facet_list(recent_document.keyword, 'keyword', 'no keywords specified').html_safe %>
-      </p>
-    </td>
-  </tr>
+      <div class="media-body">
+        <h5 class="homepage-field-title">
+          <span class="sr-only">Title</span><%= link_to (recent_document.to_s), [main_app, recent_document] %>
+        </h5>
+        <span class="sr-only">Creator</span><%= link_to_facet_list(recent_document.creator_search, 'creator_search').html_safe %>
+      </div>
+    </div>
+  </td>
+</tr>

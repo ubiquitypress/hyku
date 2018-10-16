@@ -26,9 +26,7 @@ module Ubiquity
       data = compare_hash_keys?(clean_submitted_data)
 
       if (self.editor_group.present? && clean_submitted_data.present? && !data )
-        # remove hash that contains only default keys and values.
-        new_editor_group = remove_hash_with_default_keys(clean_submitted_data)
-        editor_json = new_editor_group.to_json
+        editor_json =   clean_submitted_data.to_json
         self.editor = [editor_json]
       elsif  data
         #save an empty array since the sunmitted data contains only default keys & values

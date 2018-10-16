@@ -19,10 +19,10 @@ module Ubiquity
       property :fndr_project_ref, predicate: ::RDF::Vocab::BF2.awards do |index|
         index.as :stored_searchable
       end
-      property :add_info, predicate: ::RDF::Vocab::BIBO.term(:Note), multiple: true do |index|
+      property :add_info, predicate: ::RDF::Vocab::BIBO.term(:Note), multiple: false do |index|
         index.as :stored_searchable
       end
-      property :date_published, predicate: ::RDF::Vocab::DC.available, multiple: true do |index|
+      property :date_published, predicate: ::RDF::Vocab::DC.available, multiple: false do |index|
         index.as :stored_searchable
       end
       property :date_accepted, predicate: ::RDF::Vocab::DC.dateAccepted, multiple: false do |index|
@@ -43,7 +43,7 @@ module Ubiquity
       property :place_of_publication, predicate: ::RDF::Vocab::BF2.term(:Place) do |index|
         index.as :stored_searchable, :facetable
       end
-      property :abstract, predicate: ::RDF::Vocab::DC.abstract, multiple: true do |index|
+      property :abstract, predicate: ::RDF::Vocab::DC.abstract, multiple: false do |index|
         index.type :text
         index.as :stored_searchable
       end

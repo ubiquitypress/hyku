@@ -9,7 +9,7 @@
               <%= hash['editor_organization_name'] %>
             <% end %>
             <% if hash['editor_family_name']  %>
-              <%= hash['editor_family_name'] %><% if display_comma?(hash.keys, ["editor_family_name", "editor_given_name"]) %>,<% end %>
+              <%= hash['editor_family_name'] %><% if display_comma?(hash.keys, ["editor_family_name", "editor_given_name"]) %>,&nbsp;<% end %>
             <% end %>
             <% if hash['editor_given_name'] %>
               <%= hash['editor_given_name'] %>
@@ -23,6 +23,10 @@
                      <a href='<%= render_isni_or_orcid_url("#{orcid_id}", "orcid") %>'  target="_blank">
                      <img src="https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/orcid_16x16.png" alt="ORCID"  height="16" width="16" class="img-responsive"  style="float:left"  >
                    </a>
+                 <% end %>
+
+                 <% if add_image_space?(hash.keys) %>
+                   <span style="float:left" >&nbsp;</span>
                  <% end %>
 
                  <% if hash['editor_isni'].present? %>

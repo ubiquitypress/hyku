@@ -79,6 +79,15 @@ module MultipleMetadataFieldsHelper
     end
   end
 
+  def add_image_space?(hash_keys)
+    if hash_keys.present?
+      first_key = hash_keys.first
+      get_field_name = first_key.split('_').first
+      desired_fields = ["#{get_field_name}_orcid", "#{get_field_name}_isni"]
+      desired_fields.to_set.subset? hash_keys.to_set
+    end
+  end
+
   def get_model(model_class, model_id, field, multipart_sort_field_name = nil)
     model ||= fetch_model(model_class, model_id)
     #get the record store in that field

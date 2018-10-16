@@ -18,20 +18,31 @@
            <span itemprop="contributor">
              <% if display_paren?(hash.keys, ["contributor_orcid", 'contributor_isni']) %>
                <span style="float:left" >&nbsp;(</span>
-                 <% if hash['contributor_orcid'].present? %>
-                   <% orcid_id = hash['contributor_orcid'] %>
-                     <a href='<%= render_isni_or_orcid_url("#{orcid_id}", "orcid") %>'  target="_blank">
-                     <img src="https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/orcid_16x16.png" alt="ORCID"  height="16" width="16" class="img-responsive"  style="float:left"  >
-                   </a>
-                 <% end %>
 
-                 <% if hash['contributor_isni'].present? %>
-                   <% isni_id = hash['contributor_isni'] %>
-                   <a href='<%= render_isni_or_orcid_url("#{isni_id}", "isni") %>'  target="_blank">
-                   <img src="
+                 <span style="float:left">
+                  <% if hash['contributor_type'].present? %>
+                    <%= hash['contributor_type'] %><% if display_comma?(hash.keys, ["contributor_type", "contributor_orcid", "contributor_isni"]) %>,&nbsp;<% end %>
+                  <% end %>
+                 </span>
+
+                  <% if hash['contributor_orcid'].present? %>
+                    <% orcid_id = hash['contributor_orcid'] %>
+                    <a href='<%= render_isni_or_orcid_url("#{orcid_id}", "orcid") %>'  target="_blank">
+                      <img src="https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/orcid_16x16.png" alt="ORCID"  height="16" width="16" class="img-responsive"  style="float:left"  >
+                    </a>
+                  <% end %>
+
+                  <% if add_image_space?(hash.keys) %>
+                    <span style="float:left" >&nbsp;</span>
+                  <% end %>
+
+                   <% if hash['contributor_isni'].present? %>
+                     <% isni_id = hash['contributor_isni'] %>
+                     <a href='<%= render_isni_or_orcid_url("#{isni_id}", "isni") %>'  target="_blank">
+                      <img src="
                       https://s3.eu-west-2.amazonaws.com/ox-dev/ubi/logo_xml_isni-16.gif" alt="ISNI"  height="16" width="44" class="img-responsive" style="float:left"  >
-                   </a>
-                 <% end %>
+                     </a>
+                   <% end %>
                <span>)</span>
             <% end %>
           </span>

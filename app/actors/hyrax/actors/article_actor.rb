@@ -1,7 +1,6 @@
 module Hyrax
   module Actors
-    class ArticleActor < Hyrax::Actors::BaseActor
-
+    class ArticleActor < ::Hyrax::Actors::UbiquitySharedActor
     end
   end
 end

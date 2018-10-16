@@ -34,10 +34,10 @@ module Ubiquity
       property :book_title, predicate: ::RDF::Vocab::BIBO.term(:Proceedings), multiple: false do |index|
         index.as :stored_searchable, :facetable
       end
-      property :journal_title, predicate: ::RDF::Vocab::BIBO.Journal, multiple: true do |index|
+      property :journal_title, predicate: ::RDF::Vocab::BIBO.Journal, multiple: false do |index|
         index.as :stored_searchable, :facetable
       end
-      property :issue, predicate: ::RDF::Vocab::Bibframe.term(:Serial), multiple: true do |index|
+      property :issue, predicate: ::RDF::Vocab::Bibframe.term(:Serial), multiple: false do |index|
         index.as :stored_searchable
       end
       property :article_num, predicate: ::RDF::Vocab::BIBO.number do |index|

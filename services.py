@@ -38,7 +38,6 @@ class RepoImporterDataServiceReceiver(object):
     @event_handler(
         'repo_importer_data_service_sender',
         'new_entry',
-        handler_type=SINGLETON
     )
     def save_entry(self, entry_data):
         """Save new text entry from repo-importer."""

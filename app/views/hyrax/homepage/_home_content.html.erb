@@ -2,15 +2,15 @@
 
 <div class="row">
   <div class="col-md-4 col-sm-4">
-    <h5 id="featured_works" class="nav-tabs"><%= t('hyrax.homepage.featured_works.tab_label') %></h5>
+    <h4 id="featured_works" class="nav-tabs homepage-nav-tabs"><%= t('hyrax.homepage.featured_works.tab_label') %></h4>
     <%= render 'featured_works' %>
   </div>
   <div class="col-md-4 col-sm-4">
-    <h5 id="recent_works" class="nav-tabs"><%= t('hyrax.homepage.recently_uploaded.tab_label') %></h5>
+    <h4 id="recent_works" class="nav-tabs homepage-nav-tabs"><%= t('hyrax.homepage.recently_uploaded.tab_label') %></h4>
     <%= render 'recently_uploaded', recent_documents: @recent_documents %>
   </div>
   <div class="col-md-4 col-sm-4">
-    <h5 id="explore_collections" class="nav-tabs"><%= t('hyrax.homepage.admin_sets.title') %></h5>
+    <h4 id="explore_collections" class="nav-tabs homepage-nav-tabs"><%= t('hyrax.homepage.admin_sets.title') %></h4>
     <%= render 'explore_collections', collections: @presenter.collections %>
   </div>
 </div>

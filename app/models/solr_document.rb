@@ -64,4 +64,5 @@ class SolrDocument
   attribute :related_exhibition_date, Solr::Array, solr_name('related_exhibition_date')
   attribute :editor, Solr::Array, solr_name('editor')
   attribute :creator_search, Solr::Array, solr_name('creator_search')
+  attribute :library_of_congress_classification, Solr::Array, solr_name('library_of_congress_classification')
 end

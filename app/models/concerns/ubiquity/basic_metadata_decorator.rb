@@ -53,11 +53,12 @@ module Ubiquity
       property :related_identifier, predicate: ::RDF::Vocab::BF2.identifiedBy do |index|
         index.as :stored_searchable
       end
-
       property :creator_search, predicate: ::RDF::Vocab::SCHEMA.creator do |index|
         index.as :stored_searchable, :facetable
       end
-
+      property :library_of_congress_classification, predicate: ::RDF::Vocab::BF2.term(:ClassificationLcc) do |index|
+        index.as :stored_searchable
+      end
     end
   end
 end

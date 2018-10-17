@@ -35,6 +35,7 @@ en:
         publisher: The name of the organisation making the work available.
         keyword: Words or phrases you select to describe what the work is about. These are used to search for content.
         rights_statement: Please select the most appropriate rights statement for the item.
+        library_of_congress_classification: "The letter code corresponding to the LCC - eg 'QK' for 'Botany' - see: <a href='https://en.wikipedia.org/wiki/Library_of_Congress_Classification' target='_blank'>https://en.wikipedia.org/wiki/Library_of_Congress_Classification</a>"
     labels:
       defaults:
         org_unit: Organisational Unit
@@ -48,3 +49,4 @@ en:
         isbn: ISBN
         license: Licence
         keyword: Keywords
+        library_of_congress_classification: Library of Congress Classification

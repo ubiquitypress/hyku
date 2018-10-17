@@ -45,10 +45,10 @@ class RepoImporterDataServiceReceiver(object):
 
         entry_data = json.loads(entry_data)
 
-        import_id = entry_data.pop('uuid')
-        domain = entry_data.pop('domain')  # Cleanup entry data.
+        domain = entry_data.pop('domain')
         tenant = entry_data.pop('tenant')
-        _file_name = entry_data.pop('downloaded-file')
+        import_id = entry_data['id']
+        file_name = entry_data['file']
 
         import_folder = path.join('importer', domain, tenant)
         csv_folder = path.join(import_folder, 'csv')
@@ -59,27 +59,14 @@ class RepoImporterDataServiceReceiver(object):
         )
 
         with open(csv_path, 'w') as csv_file:
-            csv_writer = writer(
-                csv_file,
-                delimiter=',',
-                quotechar='"',
-                quoting=QUOTE_MINIMAL,
-            )
-
-            headers = ['id'] + list(entry_data) + ['file']
-            csv_writer.writerow(headers)
-
-            values = (
-                [import_id] +
-                [value for value in entry_data.values()] +
-                [_file_name]
-            )
-            csv_writer.writerow(values)
+            csv_writer = writer(csv_file, quoting=QUOTE_MINIMAL)
+            csv_writer.writerows([entry_data['headers']])
+            csv_writer.writerows([entry_data['values']])
 
         logger.info(
             '[importer] Importing UUID :{uuid} - file: {file_name}'.format(
                 uuid=import_id,
-                file_name=_file_name,
+                file_name=file_name,
             )
         )
 

@@ -9,7 +9,7 @@
               <%= hash['editor_organization_name'] %>
             <% end %>
             <% if hash['editor_family_name']  %>
-              <%= hash['editor_family_name'] %><% if display_comma?(hash.keys, ["editor_family_name", "editor_given_name"]) %>,&nbsp;<% end %>
+              <%= hash['editor_family_name'] %><% if display_comma?(hash.keys, ["editor_family_name", "editor_given_name"]) %>,<% end %>
             <% end %>
             <% if hash['editor_given_name'] %>
               <%= hash['editor_given_name'] %>

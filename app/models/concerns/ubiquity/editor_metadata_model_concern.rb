@@ -28,7 +28,7 @@ module Ubiquity
       if (self.editor_group.present? && clean_submitted_data.present? && !data )
         editor_json =   clean_submitted_data.to_json
         self.editor = [editor_json]
-      elsif  data
+      elsif  data == true || data == nil
         #save an empty array since the sunmitted data contains only default keys & values
         self.editor = []
       end

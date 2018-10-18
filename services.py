@@ -1,13 +1,25 @@
+from collections import Mapping, Iterable
 from csv import writer, QUOTE_MINIMAL
 import json
 import logging
 from os import system, path
 
-from nameko.events import SINGLETON, event_handler, EventDispatcher
+from nameko.events import event_handler, EventDispatcher
 from nameko.rpc import rpc
 
 
 logger = logging.getLogger(__name__)
+
+
+def convert_unicode(data):
+    if isinstance(data, basestring):
+        return str(data.encode('utf-8'))
+    elif isinstance(data, Mapping):
+        return dict(map(convert_unicode, data.iteritems()))
+    elif isinstance(data, Iterable):
+        return type(data)(map(convert_unicode, data))
+    else:
+        return data
 
 
 class RepoImporterServiceDispatcher(object):
@@ -42,7 +54,8 @@ class RepoImporterDataServiceReceiver(object):
     def save_entry(self, entry_data):
         """Save new text entry from repo-importer."""
 
-        entry_data = json.loads(entry_data)
+        logger.info(entry_data)
+        entry_data = convert_unicode(json.loads(entry_data))
 
         domain = entry_data.pop('domain')
         tenant = entry_data.pop('tenant')

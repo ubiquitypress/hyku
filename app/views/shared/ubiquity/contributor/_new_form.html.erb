@@ -61,7 +61,13 @@
                        name: "#{template}[contributor_group][][contributor_given_name]"
     %>
 
-  </span>
+    <br/>
+    <p><label class="control-label multi_value optional" for="#{template}_contributor_institutional_relationship">
+      Contributor Institutional relationship  </label></p>
+    <%= select_tag "#{template}[contributor_group][][contributor_institutional_relationship][]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( ['Staff member', 'Research associate'], :to_s, :to_s),
+       multiple: true, class: "ubiquity-form-input"  %>
+
+  </span>  <!-- closes ubiquity_personal_fields -->
   <br/>
   <label class="control-label multi_value optional" for="#{template}_contributor_type">
     Contributor type</label>

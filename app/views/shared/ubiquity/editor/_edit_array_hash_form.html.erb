@@ -59,7 +59,14 @@
 
       %>
 
-    </span>
+      <br/>
+      <p><label class="control-label multi_value optional" for="#{template}_editor_institutional_relationship">
+        Editor Institutional relationship  </label> </p>
+      <%= select_tag "#{template}[editor_group][][editor_institutional_relationship]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( ['Staff member', 'Research associate'], :to_s, :to_s, hash.dig("editor_institutional_relationship")),
+          multiple: true,  class: "ubiquity-form-input"
+           %>
+
+    </span> <!-- closes ubiquity_personal_fields -->
 
     <%= hidden_field_tag "#{template}[editor_group][][editor_position]", index, class: 'ubiquity-editor-score'  %>
 

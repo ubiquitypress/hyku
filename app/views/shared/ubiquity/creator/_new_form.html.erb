@@ -66,7 +66,14 @@
                         name: "#{template}[creator_group][][creator_given_name]"
     %>
 
-  </span>
+    <br/>
+    <p><label class="control-label multi_value optional" for="#{template}_creator_institutional_relationship">
+      Creator Institutional relationship  </label></p>
+    <%= select_tag "#{template}[creator_group][][creator_institutional_relationship][]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( ['Staff member', 'Research associate'], :to_s, :to_s),
+       multiple: true, class: "ubiquity-form-input"  %>
+
+  </span>  <!-- closes ubiquity_personal_fields -->
+
   <br>
   <%= hidden_field_tag "#{template}[creator_group][][creator_position]", 1, class: 'ubiquity-creator-score'  %>
 

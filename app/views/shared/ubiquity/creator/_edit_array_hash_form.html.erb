@@ -66,13 +66,22 @@
       Creator given name  </label>
 
     <%= text_field_tag "#{template}[creator_group][][creator_given_name]", hash.dig("creator_given_name"),
-                       class: "ubiquity_creator_given_name #{template}_creator_group form-control multi-text-field multi_value",
+                       class: "ubiquity_creator_given_name #{template}_creator_group form-control  multi-text-field  multi_value",
                        placeholder: 'Please enter the creator\'s first name/given name.',
                        name: "#{template}[creator_group][][creator_given_name]"
 
     %>
 
-  </span>
+    <br/>
+    <p><label class="control-label multi_value optional" for="#{template}_creator_institutional_relationship">
+      Creator Institutional relationship  </label> </p>
+    <%= select_tag "#{template}[creator_group][][creator_institutional_relationship]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( ['Staff member', 'Research associate'], :to_s, :to_s, hash.dig("creator_institutional_relationship")),
+        multiple: true,  class: "ubiquity-form-input"
+         %>
+
+  </span> <!-- closes ubiquity_personal_fields -->
+
+
   <br>
 
   <%= hidden_field_tag "#{template}[creator_group][][creator_position]", index, class: 'ubiquity-creator-score'  %>

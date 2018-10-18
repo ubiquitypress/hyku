@@ -57,7 +57,7 @@ module Ubiquity
         index.as :stored_searchable, :facetable
       end
       property :library_of_congress_classification, predicate: ::RDF::Vocab::BF2.term(:ClassificationLcc) do |index|
-        index.as :stored_searchable
+        index.as :stored_searchable, :facetable
       end
     end
   end

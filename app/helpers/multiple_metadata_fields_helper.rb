@@ -67,7 +67,7 @@ module MultipleMetadataFieldsHelper
   # include a subset that is an array that includes either isni or orcid alongside contributor type before displaying a comma
   def display_comma?(hash_keys, valid_keys)
     all_keys_set = hash_keys.to_set
-    if valid_keys == ["contributor_type", "contributor_orcid", "contributor_isni"]
+    if (valid_keys == ["contributor_type", "contributor_orcid", "contributor_isni"])
       keys_with_orcid_id = valid_keys.take(2)
       keys_with_isni_id = [valid_keys.first, valid_keys.last]
       array_with_orcid_id_set = keys_with_orcid_id.to_set
@@ -76,6 +76,19 @@ module MultipleMetadataFieldsHelper
     else
       needed_keys_set = valid_keys.to_set
       needed_keys_set.subset? all_keys_set
+    end
+  end
+
+  def add_image_space?(hash_keys)
+    get_name = get_field_name(hash_keys)
+    desired_fields = ["#{get_name}_orcid", "#{get_name}_isni"]
+    desired_fields.to_set.subset? hash_keys.to_set
+  end
+
+  def get_field_name(hash_keys)
+    if hash_keys.present?
+      first_key = hash_keys.first
+      first_key.split('_').first
     end
   end
 

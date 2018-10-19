@@ -120,10 +120,15 @@ module Importer
         key ||= header.to_sym
         processed[key] ||= []
         val = val.strip
-        # Workaround for https://jira.duraspace.org/browse/FCREPO-2038
+        # Ubiquity commented out line 128 below as it breaks the CSV import for new metadata fields
+        # such as `official_link`
+        # and the status of the issue referred to is closed :
+        # # Workaround for https://jira.duraspace.org/browse/FCREPO-2038
         val.delete!("\r")
-        processed[key] << (looks_like_uri?(val) ? RDF::URI(val) : val)
+        # processed[key] << (looks_like_uri?(val) ? RDF::URI(val) : val)
+        processed[key] << val
       end
+
 
       def looks_like_uri?(str)
         str =~ %r{^https?://}

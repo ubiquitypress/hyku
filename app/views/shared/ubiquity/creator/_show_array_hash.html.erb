@@ -25,6 +25,10 @@
                    </a>
                  <% end %>
 
+                 <% if add_image_space?(hash.keys) %>
+                   <span style="float:left" >&nbsp;</span>
+                 <% end %>
+
                  <% if hash['creator_isni'].present? %>
                    <% isni_id = hash['creator_isni'] %>
                    <a href='<%= render_isni_or_orcid_url("#{isni_id}", "isni") %>'  target="_blank">

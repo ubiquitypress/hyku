@@ -12,10 +12,15 @@ en:
       service_html: A service of <a href="http://samvera.org/" class="navbar-link" target="_blank">Samvera</a>.
     homepage:
       recently_uploaded:
-        tab_label: Latest additions
+        tab_label: Latest Additions
   simple_form:
     hints:
       defaults:
         extent: "The extent (size, duration, number, etc.) of the work."
       labels:
         extent: "Extent"
+  blacklight:
+    search:
+      fields:
+        facet:
+          library_of_congress_classification_sim: Library of Congress Classification

@@ -11,7 +11,7 @@
             event.preventDefault();
             var ubiquityContributorClass = $(this).attr('data-addUbiquityContributor');
 
-            cloneUbiDiv = $(this).parent('div' + `${ubiquityContributorClass}`).clone();
+            cloneUbiDiv = $(this).parent('div' + `${ubiquityContributorClass}` + ':last').clone();
 
             _this = this;
              cloneUbiDiv.find('input').val('');

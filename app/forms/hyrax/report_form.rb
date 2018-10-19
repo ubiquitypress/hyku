@@ -10,7 +10,7 @@ module Hyrax
     self.terms += %i[title resource_type creator contributor rendering_ids doi alternate_identifier
                      related_identifier series_name volume edition editor publisher place_of_publication
                      pagination isbn issn eissn date_published date_accepted date_submitted abstract keyword
-                     institution org_unit refereed official_link related_url project_name
-                     funder fndr_project_ref add_info language license rights_statement rights_holder]
+                     library_of_congress_classification institution org_unit refereed official_link related_url
+                     project_name funder fndr_project_ref add_info language license rights_statement rights_holder]
   end
 end

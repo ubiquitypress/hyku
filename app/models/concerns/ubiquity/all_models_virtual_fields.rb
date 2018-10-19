@@ -37,9 +37,7 @@ module Ubiquity
       data = compare_hash_keys?(clean_submitted_data)
 
       if (self.creator_group.present? && clean_submitted_data.present? && data == false)
-        # remove hash that contains only default keys and values.
-        new_creator_group = remove_hash_with_default_keys(clean_submitted_data)
-        creator_json = new_creator_group.to_json
+        creator_json = clean_submitted_data.to_json
         populate_creator_search_field(creator_json)
         self.creator = [creator_json]
       elsif data == true || data == nil
@@ -52,8 +50,7 @@ module Ubiquity
       clean_submitted_data ||= remove_hash_keys_with_empty_and_nil_values(self.contributor_group)
       data = compare_hash_keys?(clean_submitted_data)
       if (self.contributor_group.present? && clean_submitted_data.present? && data == false )
-        new_contributor_group = remove_hash_with_default_keys(clean_submitted_data)
-        contributor_json = new_contributor_group.to_json
+        contributor_json = clean_submitted_data.to_json
         self.contributor = [contributor_json]
       elsif data == true || data == nil
        self.contributor = []
@@ -64,8 +61,7 @@ module Ubiquity
       clean_submitted_data ||= remove_hash_keys_with_empty_and_nil_values(self.related_identifier_group)
       data = compare_hash_keys?(clean_submitted_data)
       if (self.related_identifier_group.present?  && clean_submitted_data.present? && data == false)
-        new_related_identifier_group = remove_hash_with_default_keys(clean_submitted_data)
-        related_identifier_json = new_related_identifier_group.to_json
+        related_identifier_json = clean_submitted_data.to_json
         self.related_identifier = [related_identifier_json]
       elsif data == true || data == nil
        self.related_identifier = []
@@ -77,9 +73,8 @@ module Ubiquity
       data = compare_hash_keys?(clean_submitted_data)
       if (self.alternate_identifier_group.present? && clean_submitted_data.present? && data == false)
        #remove any empty hash in the array
-       clean_submitted_data = clean_submitted_data - [{}]
-        new_alternate_identifier_group = remove_hash_with_default_keys(clean_submitted_data)
-        alternate_identifier_json = new_alternate_identifier_group.to_json
+        clean_submitted_data = clean_submitted_data - [{}]
+        alternate_identifier_json = clean_submitted_data.to_json
         self.alternate_identifier = [alternate_identifier_json]
       elsif data == true || data == nil
         self.alternate_identifier = []
@@ -97,9 +92,12 @@ module Ubiquity
     #remove hash keys with value of nil, "", and "NaN"
     def remove_hash_keys_with_empty_and_nil_values(data)
       if (data.present? && data.class == Array)
-        data.map do |hash|
+        new_data = data.map do |hash|
           hash.reject { |k,v| v.nil? || v.to_s.empty? || v == "NaN"}
         end
+
+        # remove hash that contains only default keys and values.
+        remove_hash_with_default_keys(new_data)
       end
     end
 
@@ -123,13 +121,15 @@ module Ubiquity
     #data is an array of hash eg [{"contributor_organization_name"=>""}},{"contributor_name_type"=>"Personal"}]
     def get_default_hash_keys(data)
       if data.present? && data.first.present?
-
         #we get the first hash in the array and then get the first hash key
         record = data.first.keys.first || data
 
+        splitted_record = record.split('_')
+
         #the value of record will be "contributor_organization_name" when using array of hash from the above comments
         #This means field name after the record.split will be 'contributor' and will change depending on the hash keys
-        get_field_name ||= record.split('_').first
+        get_field_name ||= splitted_record.first
+        return   ["#{get_field_name}_position"] if (data.length == 1 && splitted_record.last == "position")
         ["#{get_field_name}_name_type", "#{get_field_name}_position"]
       end
     end

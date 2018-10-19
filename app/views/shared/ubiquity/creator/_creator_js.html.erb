@@ -7,8 +7,8 @@
         return $("body").on("click", ".add_creator", function(event){
             event.preventDefault();
             var ubiquityCreatorClass = $(this).attr('data-addUbiquityCreator');
-
-            var cloneUbiDiv = $(this).parent('div' + `${ubiquityCreatorClass}`).clone();
+            
+            var cloneUbiDiv = $(this).parent('div' + `${ubiquityCreatorClass}` + ':last').clone();
 
            _this = this;
             cloneUbiDiv.find('input').val('');

@@ -11,7 +11,7 @@
             event.preventDefault();
             var ubiquityEditorClass = $(this).attr('data-addUbiquityEditor');
 
-            var cloneUbiDiv = $(this).parent('div' + `${ubiquityEditorClass}`).clone();
+            var cloneUbiDiv = $(this).parent('div' + `${ubiquityEditorClass}` + ':last').clone();
 
            _this = this;
             cloneUbiDiv.find('input').val('');

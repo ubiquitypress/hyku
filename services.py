@@ -4,15 +4,14 @@ import json
 import logging
 from os import system, path
 
-from nameko.events import event_handler, EventDispatcher
-from nameko.rpc import rpc
+from nameko.events import event_handler
 
 
 logger = logging.getLogger(__name__)
 
 
 def convert_unicode(data):
-    if isinstance(data, basestring):
+    if isinstance(data, basestring):  # TODO: Python 2 only!
         return str(data.encode('utf-8'))
     elif isinstance(data, Mapping):
         return dict(map(convert_unicode, data.iteritems()))
@@ -20,26 +19,6 @@ def convert_unicode(data):
         return type(data)(map(convert_unicode, data))
     else:
         return data
-
-
-class RepoImporterServiceDispatcher(object):
-    """Nameko dispatcher: send import status to the repository importer."""
-
-    name = 'hyku_data_service_sender'
-    dispatch = EventDispatcher()
-
-    @staticmethod
-    def pre_send(data):
-        return data
-
-    @rpc
-    def send(self, data):
-        """ Send entry data as a notification to Indexer. """
-        self.dispatch('entry_status', data)
-
-    @staticmethod
-    def post_send(data):
-        pass
 
 
 class RepoImporterDataServiceReceiver(object):
@@ -54,7 +33,6 @@ class RepoImporterDataServiceReceiver(object):
     def save_entry(self, entry_data):
         """Save new text entry from repo-importer."""
 
-        logger.info(entry_data)
         entry_data = convert_unicode(json.loads(entry_data))
 
         domain = entry_data.pop('domain')

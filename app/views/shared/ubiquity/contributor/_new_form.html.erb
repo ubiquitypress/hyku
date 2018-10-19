@@ -14,7 +14,7 @@
     Contributor ISNI</label>
 
   <%= text_field_tag "#{template}[contributor_group][][contributor_isni]", nil,
-                     class: "#{template}_contributor_group form-control multi-text-field multi_value",
+                     class: "#{template}_contributor_group form-control multi-text-field multi_value ubiquity-form-input",
                      placeholder: 'Please enter the contributor\'s ISNI, e.g. 0000 1234 5678 9101.',
                      name: "#{template}[contributor_group][][contributor_isni]"
   %>
@@ -25,7 +25,7 @@
     Contributor organisation name</label>
 
   <%= text_field_tag "#{template}[contributor_group][][contributor_organization_name]", nil,
-                     class: "ubiquity_contributor_organization_name #{template}_contributor_organization_name form-control multi-text-field multi_value",
+                     class: "ubiquity_contributor_organization_name #{template}_contributor_organization_name form-control multi-text-field multi_value ubiquity-form-input",
                      placeholder: 'Please enter the organisation\'s name.',
                      name: "#{template}[contributor_group][][contributor_organization_name]"
   %>
@@ -36,7 +36,7 @@
       Contributor ORCiD</label>
 
     <%= text_field_tag "#{template}[contributor_group][][contributor_orcid]", nil,
-                       class: "#{template}_contributor_group form-control multi-text-field multi_value",
+                       class: "#{template}_contributor_group form-control multi-text-field multi_value ubiquity-form-input",
                        placeholder: 'Please enter the contributor\'s ORCiD, e.g. 0000-1234-5678-9101.',
                        name: "#{template}[contributor_group][][contributor_orcid]"
     %>
@@ -46,7 +46,7 @@
       Contributor family name</label>
 
     <%= text_field_tag "#{template}[contributor_group][][contributor_family_name]", nil,
-                       class: "#{template}_contributor_family_name form-control multi-text-field multi_value",
+                       class: "#{template}_contributor_family_name form-control multi-text-field multi_value ubiquity-form-input",
                        placeholder: 'Please enter the contributor\'s last name/family name.',
                        name: "#{template}[contributor_group][][contributor_family_name]"
     %>
@@ -56,12 +56,18 @@
       Contributor given name</label>
 
     <%= text_field_tag "#{template}[contributor_group][][contributor_given_name]", nil,
-                       class: "#{template}_contributor_given_name form-control multi-text-field multi_value",
+                       class: "#{template}_contributor_given_name form-control multi-text-field multi_value ubiquity-form-input",
                        placeholder: 'Please enter the contributor\'s first name/given name.',
                        name: "#{template}[contributor_group][][contributor_given_name]"
     %>
 
-  </span>
+    <br/>
+    <p><label class="control-label multi_value optional" for="#{template}_contributor_institutional_relationship">
+      Contributor institutional relationship  </label></p>
+    <%= select_tag "#{template}[contributor_group][][contributor_institutional_relationship][]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( ['Staff member', 'Research associate'], :to_s, :to_s),
+       multiple: true, class: "ubiquity-form-input"  %>
+
+  </span>  <!-- closes ubiquity_personal_fields -->
   <br/>
   <label class="control-label multi_value optional" for="#{template}_contributor_type">
     Contributor type</label>

@@ -5,11 +5,12 @@ module Ubiquity
     included do
       attr_accessor :contributor_group, :contributor_name_type, :contributor_type, :contributor_given_name,
                     :contributor_family_name, :contributor_orcid, :contributor_isni,
-                    :contributor_position, :contributor_organization_name
+                    :contributor_position, :contributor_organization_name,
+                    :contributor_institutional_relationship
 
       attr_accessor :creator_group, :creator_name_type, :creator_organization_name, :creator_given_name,
                     :creator_family_name, :creator_orcid, :creator_isni,
-                    :creator_position
+                    :creator_position, :creator_institutional_relationship
 
       attr_accessor :alternate_identifier_group, :related_identifier_group
 
@@ -42,12 +43,12 @@ module Ubiquity
         super.tap do |permitted_params|
           permitted_params << {contributor_group: [:contributor_organization_name, :contributor_given_name,
             :contributor_family_name, :contributor_name_type, :contributor_orcid, :contributor_isni,
-            :contributor_position, :contributor_type
+            :contributor_position, :contributor_type, :contributor_institutional_relationship => []
           ]}
 
           permitted_params << {creator_group: [:creator_organization_name, :creator_given_name,
             :creator_family_name, :creator_name_type, :creator_orcid, :creator_isni,
-            :creator_position
+            :creator_position, :creator_institutional_relationship => []
           ]}
 
           permitted_params << { alternate_identifier_group: %i[alternate_identifier alternate_identifier_type] }

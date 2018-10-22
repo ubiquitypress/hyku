@@ -13,6 +13,10 @@ en:
     homepage:
       recently_uploaded:
         tab_label: Latest Additions
+    works:
+      form:
+        tab:
+          notes: Notes
   simple_form:
     hints:
       defaults:

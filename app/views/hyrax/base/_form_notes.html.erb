@@ -1,0 +1,18 @@
+<%# see https://github.com/samvera/hyrax/blob/5a9d1be16ee1a9150646384471992b03aab527a5/app/models/sipity/entity.rb#L8-L12 %>
+<%# see hyrax/app/views/hyrax/base/_workflow_actions.html.erb Lines #31-34 and Line #7 %>
+
+<div class="notes" >
+  <% object = f.object.model %>
+  <% work_global_id = object.to_global_id.to_s %>
+  <% sipity_entity = Sipity::Entity.where(proxy_for_global_id: work_global_id).first %>
+  <dl>
+  <% sipity_entity.comments.each do |comment| %>
+    <dt><%= comment.name_of_commentor %></dt>
+    <dd><%= comment.comment %></dd>
+  <% end %>
+  </dl>
+  <br/>
+  <%#= form_tag main_app.hyrax_workflow_action_path(presenter), method: :put do %>
+  <%# end %>
+<!--  <input type="submit" class="btn btn-primary">-->
+</div>

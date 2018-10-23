@@ -7,12 +7,12 @@ module Ubiquity
     end
 
     def data
-      parsed_json = if @data.class == Array && @data.first.class == String
+      parsed_json = if @data.present? && @data.class == Array && @data.first.class == String
                       JSON.parse(@data.first)
                     elsif @data.class == String
                       JSON.parse(@data)
                     end
-      transform_data(parsed_json)
+      transform_data(parsed_json) if parsed_json.present?
     end
 
     def transform_data(parsed_json)
@@ -25,6 +25,7 @@ module Ubiquity
         value
       end
       value.reject(&:blank?).compact
+
     end
 
   end

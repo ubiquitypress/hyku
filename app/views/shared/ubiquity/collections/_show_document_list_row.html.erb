@@ -35,7 +35,7 @@
   <td>
     <div class="media-body">
       <%# UbiquityPress replaces document.creator.to_a.to_a pulled from document detail" %>
-      <span class="text-center"><%= display_json_values(document.creator).to_sentence %> </span>
+      <span class="text-center"><%= display_json_values(document.creator).try(:to_sentence) %> </span>
     </div>
   </td>
   <td>

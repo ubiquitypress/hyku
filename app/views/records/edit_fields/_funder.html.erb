@@ -1,0 +1,30 @@
+
+<%# f.input key,
+            as: :multi_value,
+            input_html: {
+              class: 'form-control',
+              data: { 'autocomplete-url' => "/authorities/search/local/funder",
+                      'autocomplete' => key }
+            },
+            required: f.object.required?(key) %>
+
+<% template = f.object.model.class.to_s.underscore %>
+<label class="control-label multi_value optional" for="#{template}_funder">Funder</label>
+<p class="help-block">Use full name e.g. Arts and Humanities Research Council</p>
+<%= select_tag "#{template}[funder][]",
+      options_from_collection_for_select(FunderService.new.select_active_options.flatten.uniq!, :to_s, :to_s, f.object.model.funder.to_a),
+        class: "ubiquity-autocomplete", multiple: true, data: {placeholder: "start typing a funder for autocompletion"}
+%>
+
+<br/><br/>
+
+<script>
+  $(document).on("turbolinks:load", function(event){
+    $("body").on("click",".additional-fields", function(event){
+      $(".ubiquity-autocomplete").chosen({
+        allow_single_deselect: true,
+        width: '52%'
+      });
+    });
+  });
+</script>

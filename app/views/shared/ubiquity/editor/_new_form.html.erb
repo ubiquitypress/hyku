@@ -14,7 +14,7 @@
     Editor ISNI</label>
 
   <%= text_field_tag "#{template}[editor_group][][editor_isni]", nil,
-                     class: "#{template}_editor_group form-control multi-text-field multi_value ubiquity-form-input",
+                     class: "#{template}_editor_group form-control multi-text-field multi_value",
                      placeholder: 'Please enter the editor\'s ISNI, e.g. 0000 1234 5678 9101.',
                      name: "#{template}[editor_group][][editor_isni]"
   %>
@@ -23,7 +23,7 @@
     Editor organisation name</label>
 
   <%= text_field_tag  "#{template}[editor_group][][editor_organization_name]", nil,
-                      class: "ubiquity_editor_organization_name #{template}_editor_organization_name form-control multi-text-field multi_value ubiquity-form-input",
+                      class: "ubiquity_editor_organization_name #{template}_editor_organization_name form-control multi-text-field multi_value",
                       placeholder: 'Please enter the organisation\'s name.',
                       name: "#{template}[editor_group][][editor_organization_name]"
   %>
@@ -33,7 +33,7 @@
     <label class="control-label multi_value optional" for="#{template}_editor_orcid">
       Editor ORCiD</label>
     <%= text_field_tag "#{template}[editor_group][][editor_orcid]", nil,
-                       class: "#{template}_editor_group form-control multi-text-field multi_value ubiquity-form-input",
+                       class: "#{template}_editor_group form-control multi-text-field multi_value",
                        placeholder: 'Please enter the editor\'s ORCiD, e.g. 0000-1234-5678-9101.',
                        name: "#{template}[editor_group][][editor_orcid]"
     %>
@@ -42,7 +42,7 @@
     <label class="control-label multi_value optional" for="#{template}_editor_family_name">
       Editor family name</label>
     <%= text_field_tag  "#{template}[editor_group][][editor_family_name]", nil,
-                        class: "#{template}_editor_family_name form-control multi-text-field multi_value ubiquity-form-input",
+                        class: "#{template}_editor_family_name form-control multi-text-field multi_value",
                         placeholder: 'Please enter the editor\'s last name/family name.',
                         name: "#{template}[editor_group][][editor_family_name]"
      %>
@@ -51,7 +51,7 @@
     <label class="control-label multi_value optional" for="#{template}_editor_given_name">
       Editor given name</label>
     <%= text_field_tag "#{template}[editor_group][][editor_given_name]", nil,
-                       class: "#{template}_editor_given_name form-control multi-text-field multi_value ubiquity-form-input",
+                       class: "#{template}_editor_given_name form-control multi-text-field multi_value",
                        placeholder: 'Please enter the editor\'s first name/given name.',
                        name: "#{template}[editor_group][][editor_given_name]"
     %>
@@ -60,7 +60,7 @@
     <p><label class="control-label multi_value optional" for="#{template}_editor_institutional_relationship">
       Editor institutional relationship  </label></p>
     <%= select_tag "#{template}[editor_group][][editor_institutional_relationship][]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( ['Staff member', 'Research associate'], :to_s, :to_s),
-       multiple: true, class: "ubiquity-form-input"  %>
+       multiple: true, class: "form-control"  %>
 
   </span> <!-- closes ubiquity_personal_fields -->
 

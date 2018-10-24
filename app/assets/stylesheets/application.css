@@ -10,10 +10,13 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ * added  by UbiquityPress for jquery chosen
+ *
  *= require hyrax
  *= require peek
  *= require peek/views/faraday
  *= require peek/views/performance_bar
  *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+ *= require chosen
  *= require_self
  */

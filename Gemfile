@@ -29,6 +29,9 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'active-fedora', '>= 11.1.4'
 
+#added by ubiquitypress
+gem 'chosen-rails'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

@@ -14,6 +14,8 @@
 //= require jquery_ujs
 //= require dataTables/jquery.dataTables
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+// ubiquityPress added jquery-chosen
+//= require chosen-jquery
 //= require turbolinks
 //= require peek
 //= require peek/views/faraday

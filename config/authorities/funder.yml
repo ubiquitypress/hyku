@@ -1,0 +1,55 @@
+terms:
+- id: Arts and Humanities Research Council (AHRC)
+  term: Arts and Humanities Research Council (AHRC)
+  active: true
+- id: Biotechnology and Biological Sciences Research Council (BBSRC)
+  term: Biotechnology and Biological Sciences Research Council (BBSRC)
+  active: true
+- id: Economic and Social Research Council (ESRC)
+  term: Economic and Social Research Council (ESRC)
+  active: true
+- id : Engineering and Physical Sciences Research Council (EPSRC)
+  term: Engineering and Physical Sciences Research Council (EPSRC)
+  active: true
+- id: Innovate UK
+  term: Innovate UK
+  active: true
+- id: Medical Research Council (MRC)
+  term: Medical Research Council (MRC)
+  active: true
+- id: Natural Environment Research Council (NERC)
+  term: Natural Environment Research Council (NERC)
+  active: true
+- id: Research England
+  term: Research England
+  active: true
+- id: Science and Technology Facilities Council (STFC)
+  term: Science and Technology Facilities Council (STFC)
+  active: true
+- id: UK Research and Innovation (UKRI)
+  term: UK Research and Innovation (UKRI)
+  active: true
+- id: Research Councils UK (RCUK)
+  term: Research Councils UK (RCUK)
+  active: true
+- id: British Academy
+  term: British Academy
+  active: true
+- id: Leverhulme Trust
+  term: Leverhulme Trust
+  active: true
+- id: Wellcome Trust
+  term: Wellcome Trust
+  active: true
+- id: European Union (EU)
+  term: European Union (EU)
+  active: true
+- id: Andrew W. Mellon Foundation
+  term: Andrew W. Mellon Foundation
+  active: true
+- id: Paul Mellon Centre
+  term: Paul Mellon Centre
+  active: true
+- id: The Arcadia Charitable Trust
+  term: The Arcadia Charitable Trust
+  active: true 

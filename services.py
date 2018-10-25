@@ -48,7 +48,7 @@ class RepoImporterDataServiceReceiver(object):
             uuid=import_id,
         )
 
-        with open(csv_path, 'w') as csv_file:
+        with open(csv_path, 'w+') as csv_file:
             csv_writer = writer(csv_file, quoting=QUOTE_MINIMAL)
             csv_writer.writerows([entry_data['headers']])
             csv_writer.writerows([entry_data['values']])

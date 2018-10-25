@@ -17,7 +17,7 @@ module Hyrax
       #We are ensuring json fields are saved and the search facet created, if the json  is coming via csv import or other source beside the UI
       def process_json_value(key, new_attributes)
          split_key = key.split('_')
-         field_name = split_key.first
+         field_name = split_key.length >= 2 ? split_key.join('_') : split_key.first
          group_field_name  = "#{field_name}_group"
          if new_attributes[key].first.present? && !new_attributes[group_field_name].present?
            new_attributes[group_field_name] = JSON.parse(new_attributes[key].first)

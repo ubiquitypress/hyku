@@ -7,11 +7,23 @@ module Hyrax
         env.curation_concern.attributes.each do |key, val|
           if new_attributes[key].present? && new_attributes[key].is_a?(Array)
             new_attributes[key] = new_attributes[key].first if val.nil? || val.is_a?(String)
+            process_json_value(key, new_attributes) if ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key
           end
         end
         env.curation_concern.attributes = new_attributes
         env.curation_concern.date_modified = TimeService.time_in_utc
       end
+
+      #We are ensuring json fields are saved and the search facet created, if the json  is coming via csv import or other source beside the UI
+      def process_json_value(key, new_attributes)
+         split_key = key.split('_')
+         field_name = split_key.length >= 2 ? split_key.join('_') : split_key.first
+         group_field_name  = "#{field_name}_group"
+         if new_attributes[key].first.present? && !new_attributes[group_field_name].present?
+           new_attributes[group_field_name] = JSON.parse(new_attributes[key].first)
+         end
+      end
+
     end
   end
 end

@@ -40,4 +40,9 @@ module ApplicationHelper
     img_path = img_path.split('!150,300').join(',600') if img_path.include?('!150,300')
     image_tag img_path
   end
+
+  def fetch_note_conversations(model, work_id)
+    conversation_subject = model + '_' + work_id
+    Mailboxer::Conversation.where(subject: conversation_subject).map(&:id)
+  end
 end

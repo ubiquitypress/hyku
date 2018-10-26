@@ -1,4 +1,6 @@
-<% # we will yield to content_for for each tab, e.g. :files_tab %>
+<%# file copied here by Ubiquity from Hyrax so we can insert a new 'Notes' tab %>
+
+<%# we will yield to content_for for each tab, e.g. :files_tab %>
 <% tabs ||= %w[metadata files relationships notes] # default tab order %>
 <div class="row">
   <div class="col-xs-12 col-sm-8">
@@ -11,15 +13,26 @@
           <% else %>
             <li role="presentation">
           <% end %>
-          <a href="#<%= tab %>" aria-controls="<%= tab %>" role="tab" data-toggle="tab">
-            <%= t("hyrax.works.form.tab.#{tab}") %>
-          </a>
-          </li>
+            <% if tab == 'notes' %>
+              <a href="#<%= tab %>" aria-controls="<%= tab %>" role="tab" data-toggle="tab">
+                <i class="fa fa-edit"></i> <%= t("hyrax.works.form.tab.#{tab}") %>
+                <% if curation_concern.id.present? %>
+                  <% notes_num = fetch_note_conversations(curation_concern.model_name.to_s, curation_concern.id).length %>
+                  <sup><%= notes_num if notes_num > 0 %></sup>
+                <% end %>
+              </a>
+            </li>
+            <% else %>
+              <a href="#<%= tab %>" aria-controls="<%= tab %>" role="tab" data-toggle="tab">
+                <i class="fa icon-<%= tab %>"></i> <%= t("hyrax.works.form.tab.#{tab}") %>
+              </a>
+            </li>
+            <% end %>
         <% end %>
 
         <li role="presentation" id="tab-share" class="hidden">
           <a href="#share" aria-controls="share" role="tab" data-toggle="tab">
-            <%= t("hyrax.works.form.tab.share") %>
+            <i class="fa icon-share"></i> <%= t("hyrax.works.form.tab.share") %>
           </a>
         </li>
       </ul>

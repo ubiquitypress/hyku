@@ -1,18 +1,9 @@
-<%# see https://github.com/samvera/hyrax/blob/5a9d1be16ee1a9150646384471992b03aab527a5/app/models/sipity/entity.rb#L8-L12 %>
-<%# see hyrax/app/views/hyrax/base/_workflow_actions.html.erb Lines #31-34 and Line #7 %>
-
-<div class="notes" >
-  <% object = f.object.model %>
-  <% work_global_id = object.to_global_id.to_s %>
-  <% sipity_entity = Sipity::Entity.where(proxy_for_global_id: work_global_id).first %>
-  <dl>
-  <% sipity_entity.comments.each do |comment| %>
-    <dt><%= comment.name_of_commentor %></dt>
-    <dd><%= comment.comment %></dd>
-  <% end %>
-  </dl>
-  <br/>
-  <%#= form_tag main_app.hyrax_workflow_action_path(presenter), method: :put do %>
-  <%# end %>
-<!--  <input type="submit" class="btn btn-primary">-->
-</div>
+<%# display previous notes on Edit form %>
+<% if curation_concern.id.present? %>
+  <% conversation_ids = fetch_note_conversations(curation_concern.model_name.to_s, curation_concern.id) %>
+  <div class="previous_notes" >
+    <%= render 'shared/ubiquity/mailboxer_note', conversation_ids: conversation_ids %>
+  </div>
+<% end %>
+<br/>
+<%= f.input :note, label: 'New Note', as: :text, input_html: { rows: '8' } %>

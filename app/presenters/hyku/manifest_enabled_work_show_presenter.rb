@@ -6,8 +6,9 @@ module Hyku
              :funder, :fndr_project_ref, :add_info, :date_published, :date_accepted, :date_submitted,
              :journal_title, :issue, :volume, :pagination, :article_num, :project_name, :rights_holder,
              :official_link, :place_of_publication, :series_name, :edition, :abstract, :version,
-             :event_title, :event_date, :book_title, :editor, :alternate_identifier, :related_identifier,
-             :media, :related_exhibition, :related_exhibition_date, :library_of_congress_classification,
+             :event_title, :event_date, :event_location, :book_title, :editor,
+             :alternate_identifier, :related_identifier, :media, :related_exhibition, :related_exhibition_date,
+             :library_of_congress_classification,
              to: :solr_document
 
     def manifest_url

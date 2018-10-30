@@ -141,6 +141,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("media", :stored_searchable)
     config.add_show_field solr_name("event_title", :stored_searchable)
     config.add_show_field solr_name("event_date", :stored_searchable)
+    config.add_show_field solr_name("event_location", :stored_searchable)
     config.add_show_field solr_name("abstract", :stored_searchable)
     config.add_show_field solr_name("book_title", :stored_searchable)
     config.add_show_field solr_name("series_name", :stored_searchable)

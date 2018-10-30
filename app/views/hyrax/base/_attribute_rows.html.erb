@@ -4,6 +4,7 @@
 <%= render "shared/ubiquity/contributor/show", presenter: presenter %>
 <%= presenter.attribute_to_html(:event_title) %>
 <%= presenter.attribute_to_html(:event_date) %>
+<%= presenter.attribute_to_html(:event_location) %>
 <%= presenter.attribute_to_html(:book_title, render_as: :string) %>
 <%= presenter.attribute_to_html(:journal_title, render_as: :string) %>
 <%= presenter.attribute_to_html(:resource_type, render_as: :resource_type) %>

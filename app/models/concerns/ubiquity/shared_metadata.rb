@@ -31,6 +31,9 @@ module Ubiquity
       property :event_date, predicate: ::RDF::Vocab::Bibframe.eventDate do |index|
         index.as :stored_searchable
       end
+      property :event_location, predicate: ::RDF::Vocab::Bibframe.eventPlace do |index|
+        index.as :stored_searchable
+      end
       property :book_title, predicate: ::RDF::Vocab::BIBO.term(:Proceedings), multiple: false do |index|
         index.as :stored_searchable, :facetable
       end

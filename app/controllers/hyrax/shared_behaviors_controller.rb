@@ -43,16 +43,23 @@ module Hyrax
         msg_subject = t("hyrax.works.form.note.subject")
         depositor_email = ActiveFedora::Base.find(work_id).depositor
         work_depositor = ::User.where(email: depositor_email)
-        current_user.send_message(work_depositor, note, msg_subject)
-        new_conversation_subject(model, work_id)
+        message_receipt = current_user.send_message(work_depositor, note, msg_subject)
+        new_conversation_subject(model, work_id, message_receipt)
       end
 
-      # change Mailboxer::Conversation subject to store the Work a 'Note' is about
-      def new_conversation_subject(model, work_id)
+     def new_conversation_subject(model, work_id, message_receipt)
         c_subject = model + '_' + work_id
-        conversation = Mailboxer::Conversation.last # TO DO `find.('some_conversation_id')`
+        conversation = get_conversation(message_receipt)
         conversation.subject = c_subject
         conversation.save
+      end
+
+      #When we send a message by calling 'send_message' it returns a MailboxeR::Receipts object.
+      #Since the receipt object belongs_to Mailboxer::Message, we can fetch the message through it
+      #and then fetch conversation_id through the message
+      def get_conversation(message_receipt)
+        message = message_receipt.message
+        message.conversation
       end
 
   end

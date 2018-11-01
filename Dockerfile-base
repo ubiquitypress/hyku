@@ -29,5 +29,3 @@ RUN apt-get update && \
 
 ADD Gemfile /data/Gemfile
 ADD Gemfile.lock /data/Gemfile.lock
-
-RUN bundle install

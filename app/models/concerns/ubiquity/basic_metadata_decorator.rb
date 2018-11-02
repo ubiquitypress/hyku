@@ -31,7 +31,7 @@ module Ubiquity
       property :date_submitted, predicate: ::RDF::Vocab::Bibframe.originDate, multiple: false do |index|
         index.as :stored_searchable
       end
-      property :project_name, predicate: ::RDF::Vocab::BF2.term(:CollectiveTitle), multiple: false do |index|
+      property :project_name, predicate: ::RDF::Vocab::BF2.term(:CollectiveTitle) do |index|
         index.as :stored_searchable
       end
       property :rights_holder, predicate: ::RDF::Vocab::DC.rightsHolder do |index|

@@ -35,15 +35,12 @@ module Hyrax
         create_notes(model, work_id)
       end
 
-      # TO DO: make the notification link to the work in a service instead of inserting a href here?
-      # see `split_note_from_work` view helper method if changing the note param passed to `send_message` below
       def create_notes(model, work_id)
-        note = '(<a href="/concern/' + model.underscore + 's/' + work_id + '">' + work_id + '</a>) '
-        note << params[hash_key_for_curation_concern]['note']
-        msg_subject = t("hyrax.works.form.note.subject")
-        depositor_email = ActiveFedora::Base.find(work_id).depositor
-        work_depositor = ::User.where(email: depositor_email)
-        message_receipt = current_user.send_message(work_depositor, note, msg_subject)
+        new_note = ::Hyrax::CreateNoteOnWorkService.new(current_user,
+                                                        params[hash_key_for_curation_concern]['note'],
+                                                        model,
+                                                        work_id)
+        message_receipt = new_note.call
         new_conversation_subject(model, work_id, message_receipt)
       end
 

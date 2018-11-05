@@ -24,7 +24,11 @@ module Ubiquity
     def run
       AccountElevator.switch!("#{@tenant_domain}")
       email = Hyrax.config.batch_user_key
-      @user = User.where(email: @work_instance.depositor).first || User.batch_user #||  User.create(email: email, password: 'abcdefgh',  password_confirmation: 'abcdefgh')
+
+      @user = User.where(email: @work_instance.depositor).first ||  User.find_or_create_by(email: email) { |user|  user.password = 'abcdefgh'; user.password_confirmation = 'abcdefgh'}
+
+      @work_instance.depositor = @user.email unless @work_instance.depositor
+
       @work_instance.attributes.each do |key, val|
         populate_array_field(key, val)
         populate_json_field(key, val)
@@ -135,6 +139,6 @@ module Ubiquity
         @work_instance.file_sets.map { |file_set| file_set.title.first }
       end
     end
-    
+
   end
 end

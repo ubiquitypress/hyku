@@ -43,7 +43,9 @@ module ApplicationHelper
 
   def fetch_note_conversations(model, work_id)
     conversation_subject = model + '_' + work_id
-    Mailboxer::Conversation.where(subject: conversation_subject).map(&:id)
+    notes = Mailboxer::Conversation.where(subject: conversation_subject)
+    sorted_notes = notes.sort_by(&:created_at)
+    sorted_notes.map(&:id)
   end
 
   # in shared_behaviors_controller, `notes_on_work` method saves a href in the text to be used in the notifications page

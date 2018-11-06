@@ -17,6 +17,11 @@ module Hyrax
       I18n.t("hyrax.works.form.note.subject")
     end
 
+    def previous_conversations
+      conversation_subject = @model + '_' + @work_id
+      Mailboxer::Conversation.where(subject: conversation_subject)
+    end
+
     def depositor
       depositor_email = ActiveFedora::Base.find(@work_id).depositor
       depositor = ::User.where(email: depositor_email)
@@ -24,8 +29,26 @@ module Hyrax
       depositor.first
     end
 
+    def recipients_ids(users_arr)
+      users_arr.flatten.map(&:id)
+    end
+
+    def other_commenters
+      other_commenters_ids = recipients_ids(previous_conversations.map(&:recipients))
+      commenters = []
+      other_commenters_ids.uniq.each do |id|
+        commenters << ::User.find(id)
+      end
+      commenters
+    end
+
     def recipients
-      [@user, depositor]
+      recipients = [@user, depositor]
+      r_ids = recipients_ids(recipients)
+      other_commenters.each do |r|
+        recipients << r unless r_ids.include?(r.id)
+      end
+      recipients
     end
 
     def call

@@ -14,9 +14,10 @@ class CatalogController < ApplicationController
   end
 
   configure_blacklight do |config|
-    config.view.gallery.partials = %i[index_header index]
-    config.view.masonry.partials = [:index]
-    config.view.slideshow.partials = [:index]
+    #commented out by UbiquityPress
+    #config.view.gallery.partials = %i[index_header index]
+    #config.view.masonry.partials = [:index]
+    #config.view.slideshow.partials = [:index]
 
     config.show.tile_source_field = :content_metadata_image_iiif_info_ssm
     config.show.partials.insert(1, :openseadragon)
@@ -29,9 +30,10 @@ class CatalogController < ApplicationController
 
     config.search_builder_class = Hyrax::CatalogSearchBuilder
 
+    #commented out by UbiquityPress
     # Show gallery view
-    config.view.gallery.partials = %i[index_header index]
-    config.view.slideshow.partials = [:index]
+    #config.view.gallery.partials = %i[index_header index]
+    #config.view.slideshow.partials = [:index]
 
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
     config.default_solr_params = {
@@ -139,6 +141,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("media", :stored_searchable)
     config.add_show_field solr_name("event_title", :stored_searchable)
     config.add_show_field solr_name("event_date", :stored_searchable)
+    config.add_show_field solr_name("event_location", :stored_searchable)
     config.add_show_field solr_name("abstract", :stored_searchable)
     config.add_show_field solr_name("book_title", :stored_searchable)
     config.add_show_field solr_name("series_name", :stored_searchable)

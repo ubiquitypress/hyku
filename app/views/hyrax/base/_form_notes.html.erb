@@ -1,0 +1,9 @@
+<%# display previous notes on Edit form %>
+<% if curation_concern.id.present? %>
+  <% conversation_ids = fetch_note_conversations(curation_concern.model_name.to_s, curation_concern.id) %>
+  <div class="previous_notes" >
+    <%= render 'shared/ubiquity/mailboxer_note', conversation_ids: conversation_ids %>
+  </div>
+<% end %>
+<br/>
+<%= f.input :note, label: 'New Note', as: :text, input_html: { rows: '8' } %>

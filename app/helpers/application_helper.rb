@@ -40,4 +40,15 @@ module ApplicationHelper
     img_path = img_path.split('!150,300').join(',600') if img_path.include?('!150,300')
     image_tag img_path
   end
+
+  def fetch_note_conversations(model, work_id)
+    conversation_subject = model + '_' + work_id
+    Mailboxer::Conversation.where(subject: conversation_subject).map(&:id)
+  end
+
+  # in shared_behaviors_controller, `notes_on_work` method saves a href in the text to be used in the notifications page
+  # so the text looks like: "(<a href=\"/concern/book_contributions/4f5417bc-0643-4f79-9ead-09caf7c82a77\">id</a>) lorem ipsum dolor etc"
+  def split_note_from_work(note_text)
+    note_text.split('</a>)').last
+  end
 end

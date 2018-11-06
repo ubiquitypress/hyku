@@ -4,6 +4,7 @@
 <%= render "shared/ubiquity/contributor/show", presenter: presenter %>
 <%= presenter.attribute_to_html(:event_title) %>
 <%= presenter.attribute_to_html(:event_date) %>
+<%= presenter.attribute_to_html(:event_location) %>
 <%= presenter.attribute_to_html(:book_title, render_as: :string) %>
 <%= presenter.attribute_to_html(:journal_title, render_as: :string) %>
 <%= presenter.attribute_to_html(:resource_type, render_as: :resource_type) %>
@@ -29,10 +30,10 @@
 <%= presenter.attribute_to_html(:isbn, label: "ISBN", render_as: :string) %>
 <%= presenter.attribute_to_html(:issn, label: "ISSN", render_as: :string) %>
 <%= presenter.attribute_to_html(:eissn, label: "eISSN", render_as: :string) %>
-<%= presenter.attribute_to_html(:article_num, label: "Article number") %>
+<%= presenter.attribute_to_html(:article_num, label: "Article number", render_as: :string) %>
 <%= presenter.attribute_to_html(:doi, label: "DOI", render_as: :external_url) %>
 <%= presenter.attribute_to_html(:org_unit, label: "Organisational unit") %>
-<%= presenter.attribute_to_html(:project_name, render_as: :string) %>
+<%= presenter.attribute_to_html(:project_name) %>
 <%= presenter.attribute_to_html(:version) %>
 <%= presenter.attribute_to_html(:funder) %>
 <%= presenter.attribute_to_html(:fndr_project_ref, label: "Funder project reference") %>

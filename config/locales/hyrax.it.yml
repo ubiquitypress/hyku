@@ -11,6 +11,12 @@ it:
     institution_name_full: Nome dell'Istituzione
     product_name: Hyku
     product_twitter_handle: "@HydraInABox"
+    works:
+      form:
+        tab:
+          notes: Commenti
+        note:
+          subject: Nuovo commento su un lavoro depositato
   simple_form:
     hints:
       defaults:

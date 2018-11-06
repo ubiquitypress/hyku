@@ -10,7 +10,7 @@ fi
 bundle exec rails zookeeper:upload
 
 # Start sidekiq
-bundle exec sidekiq -d -L kiq.log
+bundle exec sidekiq -d -q ubiquity_json_importer -q default -L kiq.log
 
 # Start server
 rm -f tmp/pids/server.pid && bundle exec rails db:migrate && bundle exec rails server -p 3000 -b '0.0.0.0'

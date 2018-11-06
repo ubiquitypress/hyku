@@ -14,6 +14,8 @@ module Ubiquity
 
       attr_accessor :alternate_identifier_group, :related_identifier_group
 
+      attr_accessor :note
+
       # terms inherited from Hyrax::Forms::WorkForm are removed
       # to then be added at the desired position in each work type form (ex `article_form`)
       self.terms -= %i[title

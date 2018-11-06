@@ -9,6 +9,7 @@ module Ubiquity
       end
 
       @data = data
+      $stdout.puts "Log Json data loaded #{@data}"
 
       @data_id  = data.first.delete('id') || data.first.delete(:id)
       @tenant = data.first.delete('tenant') || data.first.delete(:tenant)
@@ -28,13 +29,19 @@ module Ubiquity
       @user = User.where(email: @work_instance.depositor).first ||  User.find_or_create_by(email: email) { |user|  user.password = 'abcdefgh'; user.password_confirmation = 'abcdefgh'}
 
       @work_instance.depositor = @user.email unless @work_instance.depositor
+      $stdout.puts "Started parsing the json data"
 
       @work_instance.attributes.each do |key, val|
         populate_array_field(key, val)
         populate_json_field(key, val)
         populate_single_fields(key, val)
       end
+      @work_instance.date_modified = Hyrax::TimeService.time_in_utc
+      @work_instance.date_uploaded = Hyrax::TimeService.time_in_utc unless @work_instance.date_uploaded.present?
       @work_instance.save!
+
+      $stdout.puts "work was successfully created"
+
       attach_files
       @work_instance
     end
@@ -84,10 +91,12 @@ module Ubiquity
     end
 
     def create_file
-    AccountElevator.switch!("#{@tenant_domain}")
-      if @file =~ /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/ix
+    #AccountElevator.switch!("#{@tenant_domain}")
+      if @file.present? && @file =~ /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/ix
+        puts "creating file from url"
         create_file_from_url
-      else
+      elsif @file.present?
+        puts "creating file"
         create_file_directly
       end
     end
@@ -110,6 +119,7 @@ module Ubiquity
     end
 
     def create_hyrax_uploaded_file(file_io, file_name)
+      AccountElevator.switch!("#{@tenant_domain}")
       fetch_or_create_file ||= Hyrax::UploadedFile.where(file: file_name).first  || Hyrax::UploadedFile.create(file: file_io, user: @user)
       @hyrax_uploaded_file = [fetch_or_create_file]
       @hyrax_uploaded_file
@@ -122,14 +132,18 @@ module Ubiquity
      #Note that @hyrax_uploaded_file.first.file returns Hyrax::UploadedFileUploader object
      #Also @hyrax_uploaded_file.first.file.file returns a CarrierWave::SanitizedFile object
      #and @hyrax_uploaded_file.first.file.file.filename returns the the filename in carrierwave
-     if check_work_has_existing_file_title.present?
+     if check_work_has_existing_file_title.present? && @file.present?
        is_file_in_work = check_work_has_existing_file_title.include? @hyrax_uploaded_file.first.file.file.filename
-     else
+     elsif @file.present?
        is_file_in_work = false
+     else
+       is_file = nil
      end
 
      #pass both to AttachFilesToWorkJob
-      if @work_instance.present? && @hyrax_uploaded_file.present? &&  (is_file_in_work == false)
+      if @work_instance.present? && @hyrax_uploaded_file.present? && (is_file_in_work != nil) && (is_file_in_work == false)
+        $stdout.puts "Attaching files to work"
+
         AttachFilesToWorkJob.perform_later(@work_instance, @hyrax_uploaded_file)
       end
     end

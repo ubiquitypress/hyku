@@ -1,5 +1,5 @@
-module Hyrax
-  class CreateNoteOnWorkService < AbstractMessageService
+module Ubiquity
+  class CreateNoteOnWorkService < Hyrax::AbstractMessageService
     attr_reader :note_text, :model, :work_id, :user
     def initialize(current_user, note_text, model, work_id)
       @user = current_user

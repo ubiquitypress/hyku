@@ -36,7 +36,7 @@ module Hyrax
       end
 
       def create_notes(model, work_id)
-        new_note = ::Hyrax::CreateNoteOnWorkService.new(current_user,
+        new_note = ::Ubiquity::CreateNoteOnWorkService.new(current_user,
                                                         params[hash_key_for_curation_concern]['note'],
                                                         model,
                                                         work_id)

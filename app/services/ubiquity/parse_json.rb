@@ -16,17 +16,17 @@ module Ubiquity
     end
 
     def transform_data(parsed_json)
-      value = []
-      record = parsed_json.map do |hash|
+      value_arr = []
+      parsed_json.map do |hash|
         # we are using the union literal  '|' which is used to combine the unique values of two arrays
         #This means the script is idempotent, which for our use case means that you can re-run it several times without creating duplicates
-        value |= [(hash["creator_given_name"].to_s + ' ' + hash["creator_family_name"].to_s)]
+        value = []
+        value |= [hash["creator_family_name"].to_s]
+        value << (', ' + hash["creator_given_name"].to_s) if hash["creator_given_name"].present?
         value |= [hash["creator_organization_name"]]
-        value
+        value_arr << value.reject(&:blank?).join
       end
-      value.reject(&:blank?).compact
-
+      value_arr
     end
-
   end
 end

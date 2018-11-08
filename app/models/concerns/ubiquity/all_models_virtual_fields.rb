@@ -41,6 +41,7 @@ module Ubiquity
         populate_creator_search_field(creator_json)
         self.creator = [creator_json]
       elsif data == true || data == nil
+        self.creator_search = []
         #save an empty array since the submitted data contains only default keys & values
         self.creator = []
       end

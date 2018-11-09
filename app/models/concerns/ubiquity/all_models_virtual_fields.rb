@@ -30,6 +30,9 @@ module Ubiquity
     #    c. Save the the array of hashes from step 2b
     #
     def save_creator
+
+      self.creator_group ||= JSON.parse(self.creator.first) if self.creator.present?
+
       #remove Hash with empty values and nil
       clean_submitted_data ||= remove_hash_keys_with_empty_and_nil_values(self.creator_group)
 
@@ -41,12 +44,14 @@ module Ubiquity
         populate_creator_search_field(creator_json)
         self.creator = [creator_json]
       elsif data == true || data == nil
+        self.creator_search = []
         #save an empty array since the submitted data contains only default keys & values
         self.creator = []
       end
     end
 
     def save_contributor
+      self.contributor_group ||= JSON.parse(self.contributor.first) if self.contributor.present?
       clean_submitted_data ||= remove_hash_keys_with_empty_and_nil_values(self.contributor_group)
       data = compare_hash_keys?(clean_submitted_data)
       if (self.contributor_group.present? && clean_submitted_data.present? && data == false )
@@ -58,6 +63,7 @@ module Ubiquity
     end
 
     def save_related_identifier
+      self.related_identifier_group ||= JSON.parse(self.related_identifier.first) if self.related_identifier.present?
       clean_submitted_data ||= remove_hash_keys_with_empty_and_nil_values(self.related_identifier_group)
       data = compare_hash_keys?(clean_submitted_data)
       if (self.related_identifier_group.present?  && clean_submitted_data.present? && data == false)
@@ -69,6 +75,7 @@ module Ubiquity
     end
 
     def save_alternate_identifier
+      self.alternate_identifier_group ||= JSON.parse(self.alternate_identifier.first) if self.alternate_identifier.present?
       clean_submitted_data ||= remove_hash_keys_with_empty_and_nil_values(self.alternate_identifier_group)
       data = compare_hash_keys?(clean_submitted_data)
       if (self.alternate_identifier_group.present? && clean_submitted_data.present? && data == false)

@@ -18,9 +18,6 @@ RUN apk add --update --no-cache \
     libreoffice \
     tree
 
-RUN pip install \
-    nameko==2.11.0
-
 RUN mkdir -p /opt/fits && \
     curl -fSL -o /opt/fits-1.0.5.zip http://projects.iq.harvard.edu/files/fits/files/fits-1.0.5.zip && \
     cd /opt && unzip fits-1.0.5.zip && \

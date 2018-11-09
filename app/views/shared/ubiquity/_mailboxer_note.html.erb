@@ -2,6 +2,7 @@
 <% conversation_ids.each do |conversation_id| %>
   <% previous_note = Mailboxer::Message.where(id: conversation_id).first %>
   <p class="note-body"><%= split_note_from_work(previous_note.body) %></p>
-  <label><%= User.find(previous_note.sender_id).display_name %></label>&nbsp;
+  <% commenter = User.find(previous_note.sender_id) %>
+  <label><%= commenter.display_name || commenter.email  %></label>&nbsp;
   <%= previous_note.updated_at.to_formatted_s %>
 <% end %>

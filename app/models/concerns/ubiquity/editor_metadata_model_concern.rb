@@ -19,6 +19,7 @@ module Ubiquity
     private
 
     def save_editor
+      self.editor_group ||= JSON.parse(self.editor.first) if self.editor.present?
       #remove Hash with empty values and nil
       clean_submitted_data ||= remove_hash_keys_with_empty_and_nil_values(self.editor_group)
 

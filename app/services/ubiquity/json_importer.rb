@@ -38,6 +38,7 @@ module Ubiquity
       end
       @work_instance.date_modified = Hyrax::TimeService.time_in_utc
       @work_instance.date_uploaded = Hyrax::TimeService.time_in_utc unless @work_instance.date_uploaded.present?
+      @work_instance.visibility = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE unless @work_instance.visibility.present?
       @work_instance.save!
 
       $stdout.puts "work was successfully created"
@@ -80,8 +81,9 @@ module Ubiquity
     #all_models_virtual_fields.rb:96:
     def process_json_value(key)
       group_field_key = "#{key}_group"
-      record = JSON.parse(@data_hash[key])
-      @work_instance.send("#{group_field_key}=", record)
+      #record = JSON.parse(@data_hash[key])
+      #@work_instance.send("#{group_field_key}=", record)
+      @work_instance.send("#{group_field_key}=", @data_hash[key])
     end
 
     def populate_single_fields(key, val)

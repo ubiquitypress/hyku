@@ -15,12 +15,45 @@ namespace :creator_search do
     model_class.each do |model|
       #We fetching an instance of the models and then getting the value in the creator field
       model.find_each do |model_instance|
-        json_record = model_instance.creator.first
-        if json_record.present?
-          #We parse the json in the an array before saving the value in creator_search
-          values = Ubiquity::ParseJson.new(json_record).data
-          model_instance.update(creator_search: values)
-          sleep 2
+        if model_instance.model_name != "Collection"
+          json_creator_record = model_instance.creator.first
+          contributor_record = Ubiquity::ParseJson.new(model_instance.contributor.first).parsed_json
+          alt_id_record = Ubiquity::ParseJson.new(model_instance.alternate_identifier.first).parsed_json
+          related_id_record = Ubiquity::ParseJson.new(model_instance.related_identifier.first).parsed_json
+          if json_creator_record.present?
+            #We parse the json in the an array before saving the value in creator_search
+            values = Ubiquity::ParseJson.new(json_creator_record).data
+            if model_instance.respond_to?(:editor)
+              editor_record = Ubiquity::ParseJson.new(model_instance.editor.first).parsed_json
+              model_instance.update(creator_search: values,
+                                    creator_group:  Ubiquity::ParseJson.new(json_creator_record).parsed_json,
+                                    contributor_group: contributor_record,
+                                    alternate_identifier_group: alt_id_record,
+                                    related_identifier_group: related_id_record,
+                                    editor_group: editor_record)
+            else
+              model_instance.update(creator_search: values,
+                                    creator_group: Ubiquity::ParseJson.new(json_creator_record).parsed_json,
+                                    contributor_group: contributor_record,
+                                    alternate_identifier_group: alt_id_record,
+                                    related_identifier_group: related_id_record)
+            end
+            sleep 2
+          else
+            if model_instance.respond_to?(:editor)
+              model_instance.update(creator_search: [],
+                                    contributor_group: contributor_record,
+                                    alternate_identifier_group: alt_id_record,
+                                    related_identifier_group: related_id_record,
+                                    editor_group: editor_record)
+            else
+              model_instance.update(creator_search: [],
+                                    contributor_group: contributor_record,
+                                    alternate_identifier_group: alt_id_record,
+                                    related_identifier_group: related_id_record)
+            end
+            sleep 2
+          end
         end
       end
     end

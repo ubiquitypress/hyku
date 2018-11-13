@@ -34,7 +34,7 @@ class SolrDocument
   attribute :funder, Solr::Array, solr_name('funder')
   attribute :fndr_project_ref, Solr::Array, solr_name('fndr_project_ref')
   attribute :add_info, Solr::Array, solr_name('add_info')
-  attribute :date_published, Solr::Array, solr_name('date_published')
+  # attribute :date_published, Solr::Array, solr_name('date_published') see `manifest_enabled_work_show_presenter`
   attribute :date_accepted, Solr::Array, solr_name('date_accepted')
   attribute :date_submitted, Solr::Array, solr_name('date_submitted')
   attribute :journal_title, Solr::Array, solr_name('journal_title')

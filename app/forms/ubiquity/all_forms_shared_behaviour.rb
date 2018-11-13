@@ -12,7 +12,7 @@ module Ubiquity
                     :creator_family_name, :creator_orcid, :creator_isni,
                     :creator_position, :creator_institutional_relationship
 
-      attr_accessor :alternate_identifier_group, :related_identifier_group
+      attr_accessor :alternate_identifier_group, :related_identifier_group, :date_published_group
 
       attr_accessor :note
 
@@ -57,6 +57,7 @@ module Ubiquity
 
           permitted_params << { related_identifier_group: %i[related_identifier related_identifier_type relation_type] }
 
+          permitted_params << { date_published_group: %i[date_published_year date_published_month date_published_day] }
         end
       end
     end # closes class class_methods

@@ -3,7 +3,7 @@ module Hyku
     Hyrax::MemberPresenterFactory.file_presenter_class = Hyku::FileSetPresenter
 
     delegate :extent, :rendering_ids, :isni, :institution, :org_unit, :refereed, :doi, :isbn, :issn, :eissn,
-             :funder, :fndr_project_ref, :add_info, :date_published, :date_accepted, :date_submitted,
+             :funder, :fndr_project_ref, :add_info, :date_accepted, :date_submitted,
              :journal_title, :issue, :volume, :pagination, :article_num, :project_name, :rights_holder,
              :official_link, :place_of_publication, :series_name, :edition, :abstract, :version,
              :event_title, :event_date, :event_location, :book_title, :editor,
@@ -74,6 +74,15 @@ module Hyku
       solr_document['edit_access_person_ssim']
     end
 
+    def date_published
+      date = solr_document['date_published_dtsim']
+      if date.present?
+        return Date.parse(date.first).strftime("%F") unless date.first[(8..9)] == "01"
+        return Date.parse(date.first).strftime("%Y-%m") if date.first[(5..9)] != "01-01"
+        return Date.parse(date.first).strftime("%Y")
+      end
+      solr_document['date_published_tesim']
+    end
 
     private
 

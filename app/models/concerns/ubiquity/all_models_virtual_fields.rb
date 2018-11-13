@@ -9,10 +9,12 @@ module Ubiquity
       before_save :save_creator
       before_save :save_alternate_identifier
       before_save :save_related_identifier
+      before_save :save_date_published
 
       #These are used in the forms to populate fields that will be stored in json fields
       #The json fields in this case are creator, contributor, alternate_identifier and related_identifier
-      attr_accessor :creator_group, :contributor_group, :alternate_identifier_group, :related_identifier_group
+      attr_accessor :creator_group, :contributor_group, :alternate_identifier_group, :related_identifier_group,
+                    :date_published_group
     end
 
     private
@@ -30,7 +32,6 @@ module Ubiquity
     #    c. Save the the array of hashes from step 2b
     #
     def save_creator
-
       self.creator_group ||= JSON.parse(self.creator.first) if self.creator.present?
 
       #remove Hash with empty values and nil
@@ -86,6 +87,25 @@ module Ubiquity
       elsif data == true || data == nil
         self.alternate_identifier = []
       end
+    end
+
+    def save_date_published
+      date_published = ""
+      # iterate over year, month, day to obtain a String in format: 'YYYYMMDD'
+      # see 'all_forms_shared_behaviour'
+      date_published_group.first.each do |key, value|
+        if value.present?
+          if value.length > 1
+            date_published << value
+          else
+            date_published << '0' << value
+          end
+        else
+          date_published << '01'
+        end
+      end
+      d = Date.parse(date_published)
+      self.date_published = d
     end
 
     private

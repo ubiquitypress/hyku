@@ -53,3 +53,4 @@ public/assets/
 *.pyc
 .python-version
 kiq.log
+docker/kubernetes

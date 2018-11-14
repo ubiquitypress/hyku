@@ -1,0 +1,3 @@
+[submodule "docker/kubernetes"]
+	path = docker/kubernetes
+	url = git@bitbucket.org:ubiquitypress/kubernetes.git

@@ -76,7 +76,7 @@ module Ubiquity
       AccountElevator.switch!("#{tenant_name}")
       model_class.each do |model|
         model.find_each do |model_instance|
-         if model_instance.embargo.present? && model_instance.embargo_release_date.present? && model_instance.embargo_release_date.past? && (model_instance.visibility_after_embargo != model_instance.visibility)
+         if model_instance.embargo.present? && model_instance.visibility != model_instance.visibility_after_embargo && model_instance.embargo_release_date.present? && model_instance.embargo_release_date.past? && (model_instance.visibility_after_embargo != model_instance.visibility)
             @embargo_records_for_update << model_instance
             sleep 1
           end
@@ -91,7 +91,7 @@ module Ubiquity
       model_class.each do |model|
         #We fetching an instance of the models and then getting the value in the creator field
         model.find_each do |model_instance|
-         if model_instance.lease.present? && model_instance.lease_expiration_date.present? && model_instance.lease_expiration_date.past? && (model_instance.visibility_after_lease != model_instance.visibility)
+         if model_instance.lease.present? && model_instance.visibility != model_instance.visibility_after_lease && model_instance.lease_expiration_date.present? && model_instance.lease_expiration_date.past? && (model_instance.visibility_after_lease != model_instance.visibility)
             @leased_records_for_update << model_instance
             sleep 1
           end
@@ -105,7 +105,7 @@ module Ubiquity
     def add_files_with_embargo(model_instance, tenant_name)
       if model_instance.file_sets.present?
         @embargo_fileset[:tenant] = tenant_name
-        @embargo_fileset[:id] << model_instance.file_sets.map {|file_set| file_set.id if (file_set.embargo_release_date.present? && file_set.embargo_release_date.past?) }
+        @embargo_fileset[:id] << model_instance.file_sets.map {|file_set| file_set.id if (file_set.embargo.present? && file_set.visibility != file_set.visibility_after_embargo && file_set.embargo_release_date.present? && file_set.embargo_release_date.past?) }
         @embargo_fileset[:id]  =  @embargo_fileset[:id].flatten.compact
       end
     end
@@ -113,7 +113,7 @@ module Ubiquity
     def  add_files_with_lease(model_instance, tenant_name)
       if model_instance.file_sets.present?
          @leased_fileset[:tenant] = tenant_name
-         @leased_fileset[:id] << model_instance.file_sets.map {|file_set| file_set.id if (file_set.lease_expiration_date.present? && file_set.lease_expiration_date.past?) }
+         @leased_fileset[:id] << model_instance.file_sets.map {|file_set| file_set.id if (file_set.lease.present? && file_set.visibility != file_set.visibility_after_lease && file_set.lease_expiration_date.present? && file_set.lease_expiration_date.past?) }
          @leased_fileset[:id] = @leased_fileset[:id].flatten.compact
       end
     end

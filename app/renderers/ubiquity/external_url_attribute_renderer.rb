@@ -13,7 +13,8 @@ class ExternalUrlAttributeRenderer < Hyrax::Renderers::AttributeRenderer
       markup = %(<tr><th>#{label}</th>\n<td><ul class='tabular'>)
       attributes = microdata_object_attributes(field).merge(class: "attribute attribute-#{field}")
       markup << "<li#{html_attributes(attributes)}>"
-      links = value.map do |url|
+      sorted_arr = value.sort_by(&:downcase)
+      links = sorted_arr.map do |url|
         auto_link(url, html: { target: '_blank' })
       end
       markup << links.join('<br/>')

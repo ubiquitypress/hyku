@@ -9,6 +9,9 @@ module Ubiquity
       file_set.save!
       #this is the work that the file_set is attached to
       file_set.parent.save!
+    rescue ActiveFedora::ObjectNotFoundError
+       puts "bexit FileLeaseActor"
+        
     end
 
   end

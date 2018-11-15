@@ -9,6 +9,9 @@ module Ubiquity
       @embargo_fileset = {id: []}
       @leased_fileset = {id: []}
       fetch_records
+    rescue ActiveFedora::ObjectNotFoundError
+      puts "brexit initialize"
+       
     end
 
     def fetch_records
@@ -18,6 +21,9 @@ module Ubiquity
       get_tenant_names = Account.pluck(:cname)
       iterate_over_tenant_record(get_tenant_names, model_class)
       self
+    rescue ActiveFedora::ObjectNotFoundError
+      puts "brexit fetch-records"
+
     end
 
     def release_embargo!
@@ -26,6 +32,9 @@ module Ubiquity
         sleep 1
       end
       self
+    rescue ActiveFedora::ObjectNotFoundError
+        puts "brexit dont-embargo-me"
+
     end
 
     def release_lease!
@@ -34,6 +43,9 @@ module Ubiquity
         sleep 1
       end
       self
+    rescue ActiveFedora::ObjectNotFoundError
+        puts "brexit release-me"
+
     end
 
     def release_embargo_on_files!
@@ -45,6 +57,9 @@ module Ubiquity
         end
       end
       self
+    rescue ActiveFedora::ObjectNotFoundError
+       puts "brexit file-embargo"
+
     end
 
     def release_lease_on_files!
@@ -56,6 +71,9 @@ module Ubiquity
         end
       end
       self
+    rescue ActiveFedora::ObjectNotFoundError
+        puts "brexit file lease"
+
     end
 
     private
@@ -64,6 +82,9 @@ module Ubiquity
         fetch_embargo_records_for_single_tenant(tenant_name, model_class)
         fetch_lease_records_for_single_tenant(tenant_name, model_class)
       end
+    rescue ActiveFedora::ObjectNotFoundError
+       puts "brexit iterator-over-tenant"
+
     end
 
     def fetch_embargo_records_for_single_tenant(tenant_name, model_class)
@@ -79,6 +100,9 @@ module Ubiquity
         end
       end
       self
+    rescue ActiveFedora::ObjectNotFoundError
+        puts "brexit fetch-embargo"
+
     end
 
     def fetch_lease_records_for_single_tenant(tenant_name, model_class)
@@ -95,6 +119,9 @@ module Ubiquity
         end
       end
       self
+    rescue ActiveFedora::ObjectNotFoundError
+       puts "brexit fetch-lease"
+
     end
 
     def add_files_with_embargo(model_instance, tenant_name)
@@ -103,6 +130,9 @@ module Ubiquity
         @embargo_fileset[:id] << model_instance.file_sets.map {|file_set| file_set.id if (file_set.embargo.present? && file_set.visibility != file_set.visibility_after_embargo && file_set.embargo_release_date.present? && file_set.embargo_release_date.past?) }
         @embargo_fileset[:id]  =  @embargo_fileset[:id].flatten.compact
       end
+    rescue ActiveFedora::ObjectNotFoundError
+      puts "brexit add-files-emabrgo"
+
     end
 
     def  add_files_with_lease(model_instance, tenant_name)
@@ -111,14 +141,23 @@ module Ubiquity
          @leased_fileset[:id] << model_instance.file_sets.map {|file_set| file_set.id if (file_set.lease.present? && file_set.visibility != file_set.visibility_after_lease && file_set.lease_expiration_date.present? && file_set.lease_expiration_date.past?) }
          @leased_fileset[:id] = @leased_fileset[:id].flatten.compact
       end
+    rescue ActiveFedora::ObjectNotFoundError
+      puts "brexit add-files-lease"
+
     end
 
     def fetch_lease_file_set
       FileSet.where(id: leased_fileset[:id])
+    rescue ActiveFedora::ObjectNotFoundError
+      puts "brexit fetch-leased-files"
+
     end
 
     def fetch_embargo_file_set
       FileSet.where(id: embargo_fileset[:id])
+    rescue ActiveFedora::ObjectNotFoundError
+      puts "brexit fecth-embargo-files"
+
     end
 
   end

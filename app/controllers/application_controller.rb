@@ -26,6 +26,9 @@ class ApplicationController < ActionController::Base
   rescue_from Apartment::TenantNotFound do
     raise ActionController::RoutingError, 'Not Found'
   end
+  rescue_from ActiveFedora::ObjectNotFoundError do |exception|
+    invalid_record(exception)
+  end
 
   private
 
@@ -78,5 +81,10 @@ class ApplicationController < ActionController::Base
     def set_raven_context
       Raven.user_context(id: session[:current_user_id]) # or anything else in session
       Raven.extra_context(params: params.to_unsafe_h, url: request.url)
+    end
+
+    def invalid_record(error)
+      Rails.logger.info "Application Controller error #{error}"
+      redirect_to root_url, notice: "Record does not exist"
     end
 end

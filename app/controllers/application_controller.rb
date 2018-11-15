@@ -84,7 +84,11 @@ class ApplicationController < ActionController::Base
     end
 
     def invalid_record(error)
-      Rails.logger.info "Application Controller error #{error}"
+      if self.class == Hyrax::DownloadsController
+        parent = ActiveRecord::Base::FileSet.find(params['id']).parent
+        work = parent.has_model << parent.id
+        Rails.logger.info "Application Controller #{error} Work type and id: #{work.inspect}"
+      end
       redirect_to root_url, notice: "Record does not exist"
     end
 end

@@ -40,7 +40,7 @@ module Ubiquity
       @work_instance.date_uploaded = Hyrax::TimeService.time_in_utc unless @work_instance.date_uploaded.present?
       @work_instance.visibility = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE unless @work_instance.visibility.present?
       @work_instance.save!
-
+      add_state_to_work
       $stdout.puts "work was successfully created"
 
       attach_files
@@ -51,21 +51,32 @@ module Ubiquity
 
     def model_instance
       AccountElevator.switch!("#{@tenant_domain}")
-      if work = ubiquity_model_class.where(id: @data_id).first || ubiquity_model_class.where(title:@data_hash[:title]).first
+      if work = ubiquity_model_class.where(id: @data_id).first
         work
       else
-        return ubiquity_model_class.new(id: @data_id)  if @data_id.present?
-        ubiquity_model_class.new
+        new_work
       end
 
       rescue ActiveFedora::ObjectNotFoundError
-        return ubiquity_model_class.new(id: @data_id)  if @data_id.present?
-        ubiquity_model_class.new
+        new_work
+    end
+
+    def new_work
+      return ubiquity_model_class.new(id: @data_id)  if @data_id.present?
+      ubiquity_model_class.new
+    end
+
+    def add_state_to_work
+      work = @work_instance
+      state = Sipity::WorkflowState.where(name: "deposited").first
+      if state.present?
+        Sipity::Entity.create!(proxy_for_global_id: work.to_global_id.to_s, workflow_state: state, workflow: state.workflow)
+      end
     end
 
     def  populate_array_field(key, val)
       if (@data_hash[key].present? && (@work_instance.send(key).respond_to? :length) && (not val.class == String) && (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key))
-        @work_instance.send("#{key}=", @data_hash[key].split(','))
+        @work_instance.send("#{key}=", @data_hash[key].split('||'))
       end
     end
 
@@ -76,13 +87,8 @@ module Ubiquity
       end
     end
 
-    #`remove_hash_keys_with_empty_and_nil_values'
-    # undefined method `reject' for #<String:0x0055c27cb68a70
-    #all_models_virtual_fields.rb:96:
     def process_json_value(key)
       group_field_key = "#{key}_group"
-      #record = JSON.parse(@data_hash[key])
-      #@work_instance.send("#{group_field_key}=", record)
       @work_instance.send("#{group_field_key}=", @data_hash[key])
     end
 
@@ -92,29 +98,45 @@ module Ubiquity
       end
     end
 
-    def create_file
-    #AccountElevator.switch!("#{@tenant_domain}")
-      if @file.present? && @file =~ /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/ix
-        puts "creating file from url"
-        create_file_from_url
-      elsif @file.present?
-        puts "creating file"
-        create_file_directly
+    def create_file_from_array
+      @hyrax_uploaded_file = []
+      @file_array = @file.split('||')
+      if @file_array.length == 1
+         create_file(@file)
+      elsif @file_array.length > 1
+         create_multiple_files
       end
     end
 
-    def create_file_directly
-      temp_file = Tempfile.new(@file)
-      file_name = @file
+    def create_multiple_files
+      @file_array.each do |file|
+        create_file(file)
+      end
+    end
+
+    def create_file(file)
+    #AccountElevator.switch!("#{@tenant_domain}")
+      if file.present? && file =~ /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/ix
+        puts "creating file from url"
+        create_file_from_url(file)
+      elsif file.present?
+        puts "creating file"
+        create_file_directly(file)
+      end
+    end
+
+    def create_file_directly(file)
+      temp_file = Tempfile.new(file)
+      file_name = file
       io = ActionDispatch::Http::UploadedFile.new(tempfile: temp_file, filename: file_name)
       #An activerecord model so return nil when record not found
       temp_file.close
       create_hyrax_uploaded_file(io, file_name)
     end
 
-    def create_file_from_url
-      temp_file = open(@file)
-      file_name = File.basename(@file)
+    def create_file_from_url(file)
+      temp_file = open(file)
+      file_name = File.basename(file)
       io = ActionDispatch::Http::UploadedFile.new(tempfile: temp_file, filename: file_name)
       temp_file.close
       create_hyrax_uploaded_file(io, file_name)
@@ -123,13 +145,14 @@ module Ubiquity
     def create_hyrax_uploaded_file(file_io, file_name)
       AccountElevator.switch!("#{@tenant_domain}")
       fetch_or_create_file ||= Hyrax::UploadedFile.where(file: file_name).first  || Hyrax::UploadedFile.create(file: file_io, user: @user)
-      @hyrax_uploaded_file = [fetch_or_create_file]
-      @hyrax_uploaded_file
+      #@hyrax_uploaded_file = [fetch_or_create_file]
+      @hyrax_uploaded_file << fetch_or_create_file
     end
 
     def attach_files
       AccountElevator.switch!("#{@tenant_domain}")
-      create_file
+      #create_file
+       create_file_from_array
 
      #Note that @hyrax_uploaded_file.first.file returns Hyrax::UploadedFileUploader object
      #Also @hyrax_uploaded_file.first.file.file returns a CarrierWave::SanitizedFile object

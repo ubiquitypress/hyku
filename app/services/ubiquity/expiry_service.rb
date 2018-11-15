@@ -16,13 +16,7 @@ module Ubiquity
       model_class = [Article, Book, BookContribution, ConferenceItem, Dataset, Image, Report, GenericWork]
       # Dynamically get tenant names
       get_tenant_names = Account.pluck(:cname)
-      if get_tenant_names.length == 1
-        tenant_name = get_tenant_names.first
-        fetch_embargo_records_for_single_tenant(tenant_name, model_class)
-        fetch_lease_records_for_single_tenant(tenant_name, model_class)
-      elsif get_tenant_names.length > 1
-        iterate_over_tenant_record(get_tenant_names)
-      end
+      iterate_over_tenant_record(get_tenant_names, model_class)
       self
     end
 
@@ -65,8 +59,8 @@ module Ubiquity
     end
 
     private
-    def iterate_over_tenant_record(tenant_names)
-      tenant_names.each do |name|
+    def iterate_over_tenant_record(tenant_names, model_class)
+      tenant_names.each do |tenant_name|
         fetch_embargo_records_for_single_tenant(tenant_name, model_class)
         fetch_lease_records_for_single_tenant(tenant_name, model_class)
       end
@@ -80,6 +74,7 @@ module Ubiquity
             @embargo_records_for_update << model_instance
             sleep 1
           end
+          #on the assumption that files could be embargoed even if the work is not under embargo or have different expirartion date
           add_files_with_embargo(model_instance, tenant_name)
         end
       end
@@ -95,7 +90,7 @@ module Ubiquity
             @leased_records_for_update << model_instance
             sleep 1
           end
-          #on the assumption that files have a different expirartion date
+          #on the assumption that files could be leased even if the work is not under lease or have different expirartion date
           add_files_with_lease(model_instance, tenant_name)
         end
       end

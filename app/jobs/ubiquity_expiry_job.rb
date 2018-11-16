@@ -4,8 +4,8 @@ class UbiquityExpiryJob < ActiveJob::Base
     service.release_embargo!.release_lease!
     service.release_embargo_on_files!
     service.release_lease_on_files!
-  rescue ActiveFedora::ObjectNotFoundError
-    puts "bexit work ExpiryJob"
-  
+
+    rescue ActiveFedora::ObjectNotFoundError
+        puts "new-brexit FileExpiryJob"
   end
 end

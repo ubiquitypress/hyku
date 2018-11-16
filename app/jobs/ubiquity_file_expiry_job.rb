@@ -1,14 +1,20 @@
 class UbiquityFileExpiryJob < ActiveJob::Base
-  def perform(file_set, type, tenant)
+  def perform(file_set_id, type, tenant)
     AccountElevator.switch!("#{tenant}")
-    if type == "embargo"
+    file_set = fetch_fileset(file_set_id)
+    if file_set.present? && type == "embargo"
       Ubiquity::FileEmbargoActor.new(file_set).destroy
-    else
+    elsif file_set.present? && type == 'lease'
       Ubiquity::FileLeaseActor.new(file_set).destroy
     end
-  rescue ActiveFedora::ObjectNotFoundError
-      puts "bexit FileExpiryJob"
-      
+  end
+
+ private
+
+  def fetch_fileset(file_set_id)
+    if file_set_id.present?
+      FileSet.find(file_set_id)
+    end
   end
 
 end

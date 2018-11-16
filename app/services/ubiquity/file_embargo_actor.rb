@@ -8,9 +8,6 @@ module Ubiquity
       file_set.save!
       #parent is the work that this file is attached to
       file_set.parent.save!
-    rescue ActiveFedora::ObjectNotFoundError 
-      puts "bexit FileEmbargoActor"
-
     end
 
   end

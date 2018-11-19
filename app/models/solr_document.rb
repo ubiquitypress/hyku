@@ -35,8 +35,8 @@ class SolrDocument
   attribute :fndr_project_ref, Solr::Array, solr_name('fndr_project_ref')
   attribute :add_info, Solr::Array, solr_name('add_info')
   # attribute :date_published, Solr::Array, solr_name('date_published') see `manifest_enabled_work_show_presenter`
-  attribute :date_accepted, Solr::Array, solr_name('date_accepted')
-  attribute :date_submitted, Solr::Array, solr_name('date_submitted')
+  # attribute :date_accepted, Solr::Array, solr_name('date_accepted')
+  # attribute :date_submitted, Solr::Array, solr_name('date_submitted')
   attribute :journal_title, Solr::Array, solr_name('journal_title')
   attribute :issue, Solr::Array, solr_name('issue')
   attribute :volume, Solr::Array, solr_name('volume')

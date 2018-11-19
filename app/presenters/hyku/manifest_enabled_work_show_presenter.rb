@@ -3,7 +3,7 @@ module Hyku
     Hyrax::MemberPresenterFactory.file_presenter_class = Hyku::FileSetPresenter
 
     delegate :extent, :rendering_ids, :isni, :institution, :org_unit, :refereed, :doi, :isbn, :issn, :eissn,
-             :funder, :fndr_project_ref, :add_info, :date_accepted, :date_submitted,
+             :funder, :fndr_project_ref, :add_info,
              :journal_title, :issue, :volume, :pagination, :article_num, :project_name, :rights_holder,
              :official_link, :place_of_publication, :series_name, :edition, :abstract, :version,
              :event_title, :event_date, :event_location, :book_title, :editor,
@@ -76,15 +76,34 @@ module Hyku
 
     def date_published
       date = solr_document['date_published_dtsim']
-      if date.present?
-        return Date.parse(date.first).strftime("%F") unless date.first[(8..9)] == "01"
-        return Date.parse(date.first).strftime("%Y-%m") if date.first[(5..9)] != "01-01"
-        return Date.parse(date.first).strftime("%Y")
-      end
-      solr_document['date_published_tesim']
+      return formatted_date(date) if date.present?
+      solr_document['date_published_tesim'] # kept for backward compatibility
+    end
+
+    def date_accepted
+      date = solr_document['date_accepted_dtsim']
+      return formatted_date(date) if date.present?
+      solr_document['date_accepted_tesim']
+    end
+
+    def date_submitted
+      date = solr_document['date_submitted_dtsim']
+      return formatted_date(date) if date.present?
+      solr_document['date_submitted_tesim']
     end
 
     private
+
+
+      # `dtsim` fields are in format "2017-01-01T00:00:00Z"
+      # we save "01" instead of no value if a user does not enter a month or/and day in order to have a compatible date,
+      # thus avoid displaying default day and month here.
+      # see 'all_models_virtual_fields' `#transform_date_group`
+      def formatted_date(date)
+        return Date.parse(date.first).strftime("%F") unless date.first[(8..9)] == "01"
+        return Date.parse(date.first).strftime("%Y-%m") if date.first[(5..9)] != "01-01"
+        Date.parse(date.first).strftime("%Y")
+      end
 
       def extract_from_identifier(rgx)
         if solr_document['identifier_tesim'].present?

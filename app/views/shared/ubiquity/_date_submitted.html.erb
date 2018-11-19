@@ -4,13 +4,13 @@
 <% days = (1..31).to_a %>
 <% years = ((Date.today.year - 200)..(Date.today.year)).to_a.reverse %>
 
-<label class="control-label" for="date_published">Date submitted</label>
+<label class="control-label" for="date_submitted">Date submitted</label>
 <p class="help-block"><%= t('simple_form.hints.defaults.date_submitted') %></p>
 
 <% if date_submitted.present? %>
   <%= select_tag "#{template}[date_submitted_group][][date_submitted_year]",
                  content_tag(:option, 'select year', :value => "") + options_from_collection_for_select((years), 'to_i', 'to_i', date_submitted.try(:strftime, "%Y").to_i),
-                 required: true, class: 'form-control ubiquity-date-input'
+                 class: 'form-control ubiquity-date-input'
   %>
   <%= select_tag "#{template}[date_submitted_group][][date_submitted_month]",
                  content_tag(:option, 'select month if available', :value => "") + options_from_collection_for_select((months), 'to_i', 'to_i', date_submitted.try(:strftime, "%m").to_i),
@@ -23,7 +23,7 @@
 <% else %>
   <%= select_tag "#{template}[date_submitted_group][][date_submitted_year]",
                  content_tag(:option, 'select year', :value => "") + options_from_collection_for_select((years), 'to_i', 'to_i'),
-                 required: true, class: 'form-control ubiquity-date-input'
+                 class: 'form-control ubiquity-date-input'
   %>
   <%= select_tag "#{template}[date_submitted_group][][date_submitted_month]",
                  content_tag(:option, 'select month if available', :value => "") + options_from_collection_for_select((months), 'to_i', 'to_i'),

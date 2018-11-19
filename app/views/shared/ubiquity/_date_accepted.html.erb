@@ -1,0 +1,37 @@
+<%# see app/views/records/edit_fields/_date_published.html.erb %>
+<% template = @curation_concern.class.to_s.underscore %>
+<% months = (1..12).to_a %>
+<% days = (1..31).to_a %>
+<% years = ((Date.today.year - 200)..(Date.today.year)).to_a.reverse %>
+
+<label class="control-label" for="date_accepted">Date accepted</label>
+<p class="help-block"><%= t('simple_form.hints.defaults.date_accepted') %></p>
+
+<% if date_accepted.present? %>
+  <%= select_tag "#{template}[date_accepted_group][][date_accepted_year]",
+                 content_tag(:option, 'select year', :value => "") + options_from_collection_for_select((years), 'to_i', 'to_i', date_accepted.try(:strftime, "%Y").to_i),
+                 required: true, class: 'form-control ubiquity-date-input'
+  %>
+  <%= select_tag "#{template}[date_accepted_group][][date_accepted_month]",
+                 content_tag(:option, 'select month if available', :value => "") + options_from_collection_for_select((months), 'to_i', 'to_i', date_accepted.try(:strftime, "%m").to_i),
+                 {:class => 'form-control ubiquity-date-input'}
+  %>
+  <%= select_tag "#{template}[date_accepted_group][][date_accepted_day]",
+                 content_tag(:option, 'select day if available', :value => "") + options_from_collection_for_select((days), 'to_i', 'to_i', date_accepted.try(:strftime, "%d").to_i),
+                 {:class => 'form-control ubiquity-date-input'}
+  %>
+<% else %>
+  <%= select_tag "#{template}[date_accepted_group][][date_accepted_year]",
+                 content_tag(:option, 'select year', :value => "") + options_from_collection_for_select((years), 'to_i', 'to_i'),
+                 required: true, class: 'form-control ubiquity-date-input'
+  %>
+  <%= select_tag "#{template}[date_accepted_group][][date_accepted_month]",
+                 content_tag(:option, 'select month if available', :value => "") + options_from_collection_for_select((months), 'to_i', 'to_i'),
+                 {:class => 'form-control ubiquity-date-input'}
+  %>
+  <%= select_tag "#{template}[date_accepted_group][][date_accepted_day]",
+                 content_tag(:option, 'select day if available', :value => "") + options_from_collection_for_select((days), 'to_i', 'to_i'),
+                 {:class => 'form-control ubiquity-date-input'}
+  %>
+<% end %>
+<br/><br/><br/>

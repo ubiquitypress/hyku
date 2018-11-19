@@ -1,0 +1,37 @@
+<script type="text/javascript">
+
+    // add linked fields
+    $(document).on("turbolinks:load", function(){
+
+        return $("body").on("click", ".add_related_exhibition_date", function(event){
+            event.preventDefault();
+            var ubiquityRelatedExhibitionDateClass = $(this).attr('data-addUbiquityRelatedExhibitionDate');
+            var cloneUbiDiv = $(this).parent('div' + `${ubiquityRelatedExhibitionDateClass}`).clone();
+            _this = this;
+            cloneUbiDiv.find('input').val('');
+            cloneUbiDiv.find('option').attr('selected', false);
+            $(`${ubiquityRelatedExhibitionDateClass}`+ ':last').after(cloneUbiDiv)
+        });
+    });
+
+    //remove linked fields
+    $(document).on("turbolinks:load", function(){
+        //$(document).ready(function() {
+        return $("body").on("click", ".remove_related_exhibition_date", function(event){
+            event.preventDefault();
+            var ubiquityRelatedExhibitionDateClass = $(this).attr('data-removeUbiquityRelatedExhibitionDate');
+
+            _this = this;
+            removeUbiquityRelatedExhibitionDate(_this, ubiquityRelatedExhibitionDateClass);
+
+        });
+    });
+
+
+    function removeUbiquityRelatedExhibitionDate(self, related_exhibition_dateDiv) {
+        if ($(".ubiquity-meta-related-exhibition-date").length > 1 ) {
+            $(self).parent('div' + `${related_exhibition_dateDiv}`).remove();
+        }
+    }
+
+</script>

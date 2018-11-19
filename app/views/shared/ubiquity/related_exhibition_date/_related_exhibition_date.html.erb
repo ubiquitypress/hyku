@@ -1,0 +1,62 @@
+<%# see app/views/records/edit_fields/_date_published.html.erb %>
+<% template = @curation_concern.class.to_s.underscore %>
+<% months = (1..12).to_a %>
+<% days = (1..31).to_a %>
+<% years = ((Date.today.year - 200)..(Date.today.year)).to_a.reverse %>
+
+
+<% if related_exhibition_date.present? %>
+  <% related_exhibition_date.each do |date| %>
+    <div class="ubiquity-meta-related-exhibition-date">
+      <label class="control-label multi_value optional" for="<% template %>_related_exhibition_date">Related exhibition date</label>
+      <p class="help-block"><%= t('simple_form.hints.defaults.related_exhibition_date') %></p>
+      <%= select_tag "#{template}[related_exhibition_date_group][][related_exhibition_date_year]",
+                 content_tag(:option, 'select year', :value => "") + options_from_collection_for_select((years), 'to_i', 'to_i', Date.parse(date).try(:strftime, "%Y").to_i),
+                 class: 'form-control ubiquity-date-input'
+      %>
+      <%= select_tag "#{template}[related_exhibition_date_group][][related_exhibition_date_month]",
+                 content_tag(:option, 'select month if available', :value => "") + options_from_collection_for_select((months), 'to_i', 'to_i', Date.parse(date).try(:strftime, "%m").to_i),
+                 {:class => 'form-control ubiquity-date-input'}
+      %>
+      <%= select_tag "#{template}[related_exhibition_date_group][][related_exhibition_date_day]",
+                 content_tag(:option, 'select day if available', :value => "") + options_from_collection_for_select((days), 'to_i', 'to_i', Date.parse(date).try(:strftime, "%d").to_i),
+                 {:class => 'form-control ubiquity-date-input'}
+      %>
+      <br/><br/>
+      <a href="#" style="color:red;" class="remove_related_exhibition_date form-group" data-removeUbiquityRelatedExhibitionDate=".ubiquity-meta-related-exhibition-date">
+        <span class="glyphicon glyphicon-remove"></span>
+        <span class="controls-remove-text">Remove</span>
+      </a>
+      |
+      <a href="#" class="add_related_exhibition_date" data-addUbiquityRelatedExhibitionDate=".ubiquity-meta-related-exhibition-date">Add
+        another </a>
+      <br/><br/><br/>
+    </div>
+  <% end %>
+<% else %>
+  <div class="ubiquity-meta-related-exhibition-date">
+    <label class="control-label multi_value optional" for="<% template %>_related_exhibition_date">Related exhibition date</label>
+    <p class="help-block"><%= t('simple_form.hints.defaults.related_exhibition_date') %></p>
+    <%= select_tag "#{template}[related_exhibition_date_group][][related_exhibition_date_year]",
+                 content_tag(:option, 'select year', :value => "") + options_from_collection_for_select((years), 'to_i', 'to_i'),
+                 class: 'form-control ubiquity-date-input'
+    %>
+    <%= select_tag "#{template}[related_exhibition_date_group][][related_exhibition_date_month]",
+                 content_tag(:option, 'select month if available', :value => "") + options_from_collection_for_select((months), 'to_i', 'to_i'),
+                 {:class => 'form-control ubiquity-date-input'}
+    %>
+    <%= select_tag "#{template}[related_exhibition_date_group][][related_exhibition_date_day]",
+                 content_tag(:option, 'select day if available', :value => "") + options_from_collection_for_select((days), 'to_i', 'to_i'),
+                 {:class => 'form-control ubiquity-date-input'}
+    %>
+    <br/><br/>
+    <a href="#" style="color:red;" class="remove_related_exhibition_date form-group" data-removeUbiquityRelatedExhibitionDate=".ubiquity-meta-related-exhibition-date">
+      <span class="glyphicon glyphicon-remove"></span>
+      <span class="controls-remove-text">Remove</span>
+    </a>
+    |
+    <a href="#" class="add_related_exhibition_date" data-addUbiquityRelatedExhibitionDate=".ubiquity-meta-related-exhibition-date">Add
+      another </a>
+    <br/><br/><br/>
+  </div>
+<% end %>

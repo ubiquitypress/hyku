@@ -11,7 +11,7 @@
 
 <% if date_published.present? %>
   <%= select_tag "#{template}[date_published_group][][date_published_year]",
-                 content_tag(:option, options_from_collection_for_select((years), 'to_i', 'to_i', date_published.try(:strftime, "%Y").to_i)),
+                 content_tag(:option, 'select year', :value => "") + options_from_collection_for_select((years), 'to_i', 'to_i', date_published.try(:strftime, "%Y").to_i),
                  required: true, class: 'form-control ubiquity-date-input'
   %>
   <%= select_tag "#{template}[date_published_group][][date_published_month]",
@@ -24,7 +24,7 @@
   %>
 <% else %>
   <%= select_tag "#{template}[date_published_group][][date_published_year]",
-                 content_tag(:option, options_from_collection_for_select((years), 'to_i', 'to_i')),
+                 content_tag(:option, 'select year', :value => "") + options_from_collection_for_select((years), 'to_i', 'to_i'),
                  required: true, class: 'form-control ubiquity-date-input'
   %>
   <%= select_tag "#{template}[date_published_group][][date_published_month]",

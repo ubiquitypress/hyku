@@ -9,7 +9,7 @@ module Ubiquity
 
       @data_id  = data.delete('id') || data.delete(:id)
       @tenant = data['tenant'] || data[:tenant]
-      @domain = data['domain'] || data.first[:domain]
+      @domain = data['domain'] || data[:domain]
 
       @tenant_domain = @tenant + '.' + @domain
       #@data_hash = HashWithIndifferentAccess.new(data.first)

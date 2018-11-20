@@ -3,7 +3,7 @@
 <%# presenter.attribute_to_html(:contributor, render_as: :faceted) %>
 <%= render "shared/ubiquity/contributor/show", presenter: presenter %>
 <%= presenter.attribute_to_html(:event_title, render_as: :alphabetical_sort) %>
-<%= presenter.attribute_to_html(:event_date, render_as: :alphabetical_sort) %>
+<%= presenter.attribute_to_html(:event_date, render_as: :multiple_dates) %>
 <%= presenter.attribute_to_html(:event_location, render_as: :alphabetical_sort) %>
 <%= presenter.attribute_to_html(:book_title, render_as: :string) %>
 <%= presenter.attribute_to_html(:journal_title, render_as: :string) %>
@@ -16,7 +16,7 @@
 <%= presenter.attribute_to_html(:rights_statement, render_as: :alphabetical_sort_rights_statement) %>
 <%= presenter.attribute_to_html(:abstract, render_as: :string) %>
 <%= presenter.attribute_to_html(:related_exhibition, render_as: :alphabetical_sort) %>
-<%= presenter.attribute_to_html(:related_exhibition_date, render_as: :alphabetical_sort) %>
+<%= presenter.attribute_to_html(:related_exhibition_date, render_as: :multiple_dates) %>
 <% if check_has_editor_fields?(presenter.model_name.to_s) %>
   <%= render "shared/ubiquity/editor/show", presenter: presenter %>
 <% end %>

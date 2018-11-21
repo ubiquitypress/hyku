@@ -92,23 +92,25 @@ module Ubiquity
     end
 
     def save_date_published
-      date ||= JSON.parse(self.date_published.first) if (self.date_published.present? && self.date_published.class == String)
+      date ||= self.date_published if (self.date_published.present? && self.date_published.class == String)
+      puts "date class #{date.class}"
+      puts "date #{date.inspect}"
       new_value = populate_date_field(date, date_published)
-      self.date_published_group ||= new_value  if (new_value .present? && (not self.date_published_group.present?) )
+      self.date_published_group ||= new_value  if (new_value.present? && (not self.date_published_group.present?) )
       self.date_published = transform_date_group(date_published_group.first) if date_published_group
     end
 
     def save_date_accepted
-      date ||= JSON.parse(self.date_accepted.first) if (self.date_accepted.present? && self.date_accepted.class == String)
+      date ||= self.date_accepted if (self.date_accepted.present? && self.date_accepted.class == String)
       new_value = populate_date_field(date, date_accepted)
-      self.date_accepted_group ||= new_value  if (new_value .present? && (not self.date_accepted_group.present?) )
+      self.date_accepted_group ||= new_value  if (new_value.present? && (not self.date_accepted_group.present?) )
       self.date_accepted = transform_date_group(date_accepted_group.first) if date_accepted_group
     end
 
     def save_date_submitted
-      date ||= JSON.parse(self.date_submitted.first) if (self.date_submitted.present? && self.date_submitted.class == String)
+      date ||= self.date_submitted if (self.date_submitted.present? && self.date_submitted.class == String)
       new_value = populate_date_field(date, date_accepted)
-      self.date_submitted_group ||= new_value  if (new_value .present? && (not self.date_submitted_group.present?) )
+      self.date_submitted_group ||= new_value  if (new_value.present? && (not self.date_submitted_group.present?) )
       self.date_submitted = transform_date_group(date_submitted_group.first) if date_submitted_group
     end
 
@@ -207,7 +209,7 @@ module Ubiquity
     end
 
     def populate_date_field(date, name)
-      if date.present && name.present?
+      if date.present? && name.present?
         Ubiquity::ParseDate.new(date, name).process_dates
       end
     end

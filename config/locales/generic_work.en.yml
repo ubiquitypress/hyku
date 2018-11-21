@@ -10,3 +10,5 @@ en:
     hints:
       generic_work:
         resource_type: Select the specific resource type that best describes the work.
+      defaults:
+        related_exhibition_date: Please enter the dates of the related exhibition, either a single or range of dates.

@@ -9,12 +9,14 @@ module Ubiquity
       before_save :save_creator
       before_save :save_alternate_identifier
       before_save :save_related_identifier
-      before_save :save_date_published, :save_date_accepted, :save_date_submitted
+      before_save :save_date_published, :save_date_accepted, :save_date_submitted,
+                  :save_event_date, :save_related_exhibition_date
 
       #These are used in the forms to populate fields that will be stored in json fields
       #The json fields in this case are creator, contributor, alternate_identifier and related_identifier
       attr_accessor :creator_group, :contributor_group, :alternate_identifier_group, :related_identifier_group,
-                    :date_published_group, :date_accepted_group, :date_submitted_group
+                    :date_published_group, :date_accepted_group, :date_submitted_group,
+                    :event_date_group, :related_exhibition_date_group
     end
 
     private
@@ -90,15 +92,44 @@ module Ubiquity
     end
 
     def save_date_published
-      self.date_published = transform_date_group(date_published_group.first)
+      date ||= JSON.parse(self.date_published.first) if (self.date_published.present? && self.date_published.class == String)
+      new_value = populate_date_field(date, date_published)
+      self.date_published_group ||= new_value  if (new_value .present? && (not self.date_published_group.present?) )
+      self.date_published = transform_date_group(date_published_group.first) if date_published_group
     end
 
     def save_date_accepted
-      self.date_accepted = transform_date_group(date_accepted_group.first)
+      date ||= JSON.parse(self.date_accepted.first) if (self.date_accepted.present? && self.date_accepted.class == String)
+      new_value = populate_date_field(date, date_accepted)
+      self.date_accepted_group ||= new_value  if (new_value .present? && (not self.date_accepted_group.present?) )
+      self.date_accepted = transform_date_group(date_accepted_group.first) if date_accepted_group
     end
 
     def save_date_submitted
-      self.date_submitted = transform_date_group(date_submitted_group.first)
+      date ||= JSON.parse(self.date_submitted.first) if (self.date_submitted.present? && self.date_submitted.class == String)
+      new_value = populate_date_field(date, date_accepted)
+      self.date_submitted_group ||= new_value  if (new_value .present? && (not self.date_submitted_group.present?) )
+      self.date_submitted = transform_date_group(date_submitted_group.first) if date_submitted_group
+    end
+
+    def save_event_date
+      dates = []
+      if event_date_group
+        event_date_group.each do |e|
+          dates << transform_date_group(e).to_s
+        end
+      end
+      self.event_date = dates.reject(&:blank?)
+    end
+
+    def save_related_exhibition_date
+      dates = []
+      if related_exhibition_date_group
+        related_exhibition_date_group.each do |e|
+          dates << transform_date_group(e).to_s
+        end
+      end
+      self.related_exhibition_date = dates.reject(&:blank?)
     end
 
     private
@@ -155,21 +186,30 @@ module Ubiquity
     end
 
     def transform_date_group(hash)
-      date = ""
-      # iterate over year, month, day to obtain a String in format: 'YYYYMMDD'
-      # see 'all_forms_shared_behaviour'
-      hash.each do |key, value|
-        if value.present?
-          if value.length > 1
-            date << value
+      # check the year field: `hash.first` returns the year key, for example: ["date_published_year", "2002"]
+      if hash.first[1].present?
+        date = ""
+        # iterate over year, month, day to obtain a String in format: 'YYYYMMDD'
+        # see 'all_forms_shared_behaviour'
+        hash.each do |key, value|
+          if value.present?
+            if value.length > 1
+              date << value
+            else
+              date << '0' << value
+            end
           else
-            date << '0' << value
+            date << '01'
           end
-        else
-          date << '01'
         end
+        Date.parse(date) if date.present?
       end
-      Date.parse(date)
+    end
+
+    def populate_date_field(date, name)
+      if date.present && name.present?
+        Ubiquity::ParseDate.new(date, name).process_dates
+      end
     end
 
   end

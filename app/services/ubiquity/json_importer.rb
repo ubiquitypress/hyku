@@ -121,11 +121,12 @@ module Ubiquity
     end
 
     def create_file_directly(file)
-      temp_file = Tempfile.new(file)
-      file_name = file
-      io = ActionDispatch::Http::UploadedFile.new(tempfile: temp_file, filename: file_name)
+      #file = Tempfile.new(file)
+      file = File.new(File.expand_path(file))
+      file_name = File.basename(file.path)
+      io = ActionDispatch::Http::UploadedFile.new(tempfile: file, filename: file_name)
       #An activerecord model so return nil when record not found
-      temp_file.close
+      #file.close
       create_hyrax_uploaded_file(io, file_name)
     end
 

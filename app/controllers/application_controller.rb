@@ -21,12 +21,13 @@ class ApplicationController < ActionController::Base
   before_action :require_active_account!, if: :multitenant?
   before_action :set_account_specific_connections!
 
-  before_action :add_honeybadger_context
-
   before_action :set_raven_context
 
   rescue_from Apartment::TenantNotFound do
     raise ActionController::RoutingError, 'Not Found'
+  end
+  rescue_from ActiveFedora::ObjectNotFoundError do |exception|
+    invalid_record(exception)
   end
 
   private
@@ -69,10 +70,6 @@ class ApplicationController < ActionController::Base
       payload[:account_id] = current_account.cname if current_account
     end
 
-    def add_honeybadger_context
-      Honeybadger.context(user_email: current_user.email) if current_user
-    end
-
     def ssl_configured?
       ActiveRecord::Type::Boolean.new.cast(Settings.ssl_configured)
     end
@@ -84,5 +81,10 @@ class ApplicationController < ActionController::Base
     def set_raven_context
       Raven.user_context(id: session[:current_user_id]) # or anything else in session
       Raven.extra_context(params: params.to_unsafe_h, url: request.url)
+    end
+
+    def invalid_record(error)
+      Rails.logger.info "Application Controller error #{error}"
+      redirect_to root_url, notice: "Record does not exist"
     end
 end

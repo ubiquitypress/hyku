@@ -301,7 +301,6 @@ GEM
     hashdiff (0.3.4)
     highline (1.7.8)
     hiredis (0.6.1)
-    honeybadger (3.1.2)
     htmlentities (4.3.4)
     httmultiparty (0.3.16)
       httparty (>= 0.7.3)
@@ -925,7 +924,6 @@ DEPENDENCIES
   factory_girl_rails
   fcrepo_wrapper (~> 0.4)
   flipflop (~> 2.3)
-  honeybadger (~> 3.0)
   hyrax (= 2.0.2)
   i18n-debug
   i18n-tasks

@@ -13,7 +13,8 @@ module Ubiquity
                     :creator_position, :creator_institutional_relationship
 
       attr_accessor :alternate_identifier_group, :related_identifier_group,
-                    :date_published_group, :date_accepted_group, :date_submitted_group
+                    :date_published_group, :date_accepted_group, :date_submitted_group,
+                    :event_date, :related_exhibition_date
 
       attr_accessor :note
 
@@ -61,6 +62,10 @@ module Ubiquity
           permitted_params << { date_published_group: %i[date_published_year date_published_month date_published_day] }
           permitted_params << { date_accepted_group: %i[date_accepted_year date_accepted_month date_accepted_day] }
           permitted_params << { date_submitted_group: %i[date_submitted_year date_submitted_month date_submitted_day] }
+          permitted_params << { event_date_group: %i[event_date_year event_date_month event_date_day] }
+          permitted_params << { related_exhibition_date_group: %i[related_exhibition_date_year
+                                                                  related_exhibition_date_month
+                                                                  related_exhibition_date_day] }
         end
       end
     end # closes class class_methods

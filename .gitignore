@@ -51,4 +51,5 @@ public/uploads
 public/assets/
 *.env
 *.pyc
+.python-version
 kiq.log

@@ -7,15 +7,15 @@
       <label class="control-label" for="event_date">Event date</label>
       <p class="help-block"><%= t('simple_form.hints.defaults.event_date') %></p>
       <%= select_tag "#{template}[event_date_group][][event_date_year]",
-                 content_tag(:option, 'select year', :value => "") + options_from_collection_for_select((years_array), 'to_i', 'to_i', parse_date(date, 'year')),
+                 content_tag(:option, 'select year', :value => "") + options_from_collection_for_select((years_array), 'to_s', 'to_s', parse_date(date, 'year')),
                  class: 'form-control ubiquity-date-input'
       %>
       <%= select_tag "#{template}[event_date_group][][event_date_month]",
-                 content_tag(:option, 'select month if available', :value => "") + options_from_collection_for_select((months_array), 'to_i', 'to_i', parse_date(date, 'month')),
+                 content_tag(:option, 'select month if available', :value => "") + options_from_collection_for_select((months_array), 'to_s', 'to_s', parse_date(date, 'month')),
                  {:class => 'form-control ubiquity-date-input'}
       %>
       <%= select_tag "#{template}[event_date_group][][event_date_day]",
-                 content_tag(:option, 'select day if available', :value => "") + options_from_collection_for_select((days_array), 'to_i', 'to_i', parse_date(date, 'day')),
+                 content_tag(:option, 'select day if available', :value => "") + options_from_collection_for_select((days_array), 'to_s', 'to_s', parse_date(date, 'day')),
                  {:class => 'form-control ubiquity-date-input'}
       %>
       <br/><br/>
@@ -35,15 +35,15 @@
     <label class="control-label" for="event_date">Event date</label>
     <p class="help-block"><%= t('simple_form.hints.defaults.event_date') %></p>
     <%= select_tag "#{template}[event_date_group][][event_date_year]",
-                 content_tag(:option, 'select year', :value => "") + options_from_collection_for_select((years_array), 'to_i', 'to_i'),
+                 content_tag(:option, 'select year', :value => "") + options_from_collection_for_select((years_array), 'to_s', 'to_s'),
                  class: 'form-control ubiquity-date-input'
     %>
     <%= select_tag "#{template}[event_date_group][][event_date_month]",
-                 content_tag(:option, 'select month if available', :value => "") + options_from_collection_for_select((months_array), 'to_i', 'to_i'),
+                 content_tag(:option, 'select month if available', :value => "") + options_from_collection_for_select((months_array), 'to_s', 'to_s'),
                  {:class => 'form-control ubiquity-date-input'}
     %>
     <%= select_tag "#{template}[event_date_group][][event_date_day]",
-                 content_tag(:option, 'select day if available', :value => "") + options_from_collection_for_select((days_array), 'to_i', 'to_i'),
+                 content_tag(:option, 'select day if available', :value => "") + options_from_collection_for_select((days_array), 'to_s', 'to_s'),
                  {:class => 'form-control ubiquity-date-input'}
     %>
     <br/><br/>

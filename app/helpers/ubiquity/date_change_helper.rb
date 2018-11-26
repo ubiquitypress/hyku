@@ -1,9 +1,9 @@
 module  Ubiquity
   module DateChangeHelper
     
-    MONTHS = (1..12).to_a.freeze
-    DAYS = (1..31).to_a.freeze
-    YEARS =  ((Date.today.year - 200)..(Date.today.year)).to_a.reverse.freeze
+    MONTHS = (1..12).to_a.map { |n| n.to_s.rjust(2, '0')}.freeze
+    DAYS = (1..31).to_a.map { |n| n.to_s.rjust(2, '0')}.freeze
+    YEARS = ((Date.today.year - 200)..(Date.today.year)).to_a.reverse.freeze
 
     def days_array
       ApplicationHelper::DAYS
@@ -18,12 +18,17 @@ module  Ubiquity
     end
 
     def parse_date(date, date_part)
-      if date.present? && date_part == 'year'
-        Date.parse(date).try(:strftime, "%Y").to_i
-      elsif date.present? && date_part == 'month'
-        Date.parse(date).try(:strftime, "%m").to_i
-      elsif date.present? && date_part == 'day'
-        Date.parse(date).try(:strftime, "%d").to_i
+      return nil if date.blank?
+      split_date = date.split('-') if date.respond_to?(:split)
+      if date_part == 'year'
+        return date.strftime("%Y") if date.respond_to?(:strftime)
+        split_date[0]
+      elsif date_part == 'month'
+        return date.strftime("%m") if date.respond_to?(:strftime)
+        split_date[1] if split_date.length > 1
+      elsif date_part == 'day'
+        return date.strftime("%d") if date.respond_to?(:strftime)
+        split_date[2] if split_date.length == 3
       end
     end
 

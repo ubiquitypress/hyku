@@ -195,20 +195,17 @@ module Ubiquity
       # check the year field: `hash.first` returns the year key, for example: ["date_published_year", "2002"]
       if hash.first[1].present?
         date = ""
-        # iterate over year, month, day to obtain a String in format: 'YYYYMMDD'
+        # iterate over year, month, day to obtain a String in format: 'YYYY-MM-DD'
         # see 'all_forms_shared_behaviour'
         hash.each do |key, value|
           if value.present?
-            if value.length > 1
-              date << value
-            else
-              date << '0' << value
-            end
+            date << '-' if key.exclude?('year') # add a `-` before month or day
+            date << value
           else
-            date << '01'
+            return date
           end
         end
-        Date.parse(date) if date.present?
+        date
       end
     end
 

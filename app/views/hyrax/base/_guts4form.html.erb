@@ -1,4 +1,9 @@
-<%# file copied here by Ubiquity from Hyrax so we can insert a new 'Notes' tab %>
+<%# file copied here by Ubiquity from Hyrax %>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#get-datacite-doi-metadata" >
+  <%= t('helpers.action.doi.new')%>
+</button>
+<% work_type = curation_concern.model_name.to_s %>
 
 <%# we will yield to content_for for each tab, e.g. :files_tab %>
 <% tabs ||= %w[metadata files relationships notes] # default tab order %>
@@ -66,3 +71,25 @@
       <%= render 'form_progress', f: f %>
     </div>
   </div>
+
+  <div class="modal doi fade" id="get-datacite-doi-metadata" tabindex="-1" role="dialog" aria-labelledby="get-datacite-doi-metadata-label">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form class="get-datacite-doi-metadata-select">
+
+<!--      see https://github.com/samvera/hyrax/blob/v2.0.2/app/views/shared/_select_work_type_modal.html.erb -->
+
+          <div class="modal-body">
+            <%= work_type %>
+<!--            <input type="radio" name="payload_concern" value="<%#= work_type %>"-->
+<!--                   data-single="<%#= work_type.switch_to_new_work_path(route_set: main_app, params: params) %>">-->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal"><%= t('hyrax.dashboard.heading_actions.close') %></button>
+            <input type="submit" class="btn btn-primary" value="<%= t('hyrax.dashboard.heading_actions.create_work') %>">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

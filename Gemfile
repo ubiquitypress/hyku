@@ -29,12 +29,11 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'active-fedora', '>= 11.1.4'
 
+#added by ubiquitypress
 gem 'chosen-rails'
-gem 'peek-sidekiq'
-gem 'sidekiq'
-gem 'secure_headers'
-gem 'sentry-raven'
-gem 'mini_magick', '~> 4.9.2'
+
+# Use Capistrano for deployment
+# gem 'capistrano-rails', group: :development
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -116,3 +115,12 @@ end
 group :aws do
   gem 'active_elastic_job', '~> 2.0'
 end
+
+gem 'peek-sidekiq'
+gem 'sidekiq'
+
+gem 'secure_headers'
+
+gem 'sentry-raven'
+
+gem 'mini_magick', '~> 4.9.2'

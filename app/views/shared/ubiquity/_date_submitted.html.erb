@@ -6,28 +6,28 @@
 
 <% if date_submitted.present? %>
   <%= select_tag "#{template}[date_submitted_group][][date_submitted_year]",
-                 content_tag(:option, 'select year', :value => "") + options_from_collection_for_select((years_array), 'to_i', 'to_i', date_submitted.try(:strftime, "%Y").to_i),
+                 content_tag(:option, 'select year', :value => "") + options_from_collection_for_select((years_array), 'to_s', 'to_s', parse_date(date_submitted, 'year')),
                  class: 'form-control ubiquity-date-input'
   %>
   <%= select_tag "#{template}[date_submitted_group][][date_submitted_month]",
-                 content_tag(:option, 'select month if available', :value => "") + options_from_collection_for_select((months_array), 'to_i', 'to_i', date_submitted.try(:strftime, "%m").to_i),
+                 content_tag(:option, 'select month if available', :value => "") + options_from_collection_for_select((months_array), 'to_s', 'to_s', parse_date(date_submitted, 'month')),
                  {:class => 'form-control ubiquity-date-input'}
   %>
   <%= select_tag "#{template}[date_submitted_group][][date_submitted_day]",
-                 content_tag(:option, 'select day if available', :value => "") + options_from_collection_for_select((days_array), 'to_i', 'to_i', date_submitted.try(:strftime, "%d").to_i),
+                 content_tag(:option, 'select day if available', :value => "") + options_from_collection_for_select((days_array), 'to_s', 'to_s', parse_date(date_submitted, 'day')),
                  {:class => 'form-control ubiquity-date-input'}
   %>
 <% else %>
   <%= select_tag "#{template}[date_submitted_group][][date_submitted_year]",
-                 content_tag(:option, 'select year', :value => "") + options_from_collection_for_select((years_array), 'to_i', 'to_i'),
+                 content_tag(:option, 'select year', :value => "") + options_from_collection_for_select((years_array), 'to_s', 'to_s'),
                  class: 'form-control ubiquity-date-input'
   %>
   <%= select_tag "#{template}[date_submitted_group][][date_submitted_month]",
-                 content_tag(:option, 'select month if available', :value => "") + options_from_collection_for_select((months_array), 'to_i', 'to_i'),
+                 content_tag(:option, 'select month if available', :value => "") + options_from_collection_for_select((months_array), 'to_s', 'to_s'),
                  {:class => 'form-control ubiquity-date-input'}
   %>
   <%= select_tag "#{template}[date_submitted_group][][date_submitted_day]",
-                 content_tag(:option, 'select day if available', :value => "") + options_from_collection_for_select((days_array), 'to_i', 'to_i'),
+                 content_tag(:option, 'select day if available', :value => "") + options_from_collection_for_select((days_array), 'to_s', 'to_s'),
                  {:class => 'form-control ubiquity-date-input'}
   %>
 <% end %>

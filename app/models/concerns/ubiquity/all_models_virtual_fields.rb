@@ -93,8 +93,6 @@ module Ubiquity
 
     def save_date_published
       date ||= self.date_published if (self.date_published.present? && self.date_published.class == String)
-      puts "date class #{date.class}"
-      puts "date #{date.inspect}"
       new_value = populate_date_field(date, date_published)
       self.date_published_group ||= new_value  if (new_value.present? && (not self.date_published_group.present?) )
       self.date_published = transform_date_group(date_published_group.first) if date_published_group
@@ -115,6 +113,9 @@ module Ubiquity
     end
 
     def save_event_date
+      date ||= self.event_date if (self.event_date.present? && self.event_date.class == String)
+      new_value = populate_date_field(date, event_date)
+      self.event_date_group ||= new_value if (new_value.present? && (self.event_date_group.blank?) )
       dates = []
       if event_date_group
         event_date_group.each do |e|
@@ -125,6 +126,9 @@ module Ubiquity
     end
 
     def save_related_exhibition_date
+      date ||= self.related_exhibition_date if (self.related_exhibition_date.present? && self.related_exhibition_date.class == String)
+      new_value = populate_date_field(date, related_exhibition_date)
+      self.related_exhibition_date_group ||= new_value if (new_value.present? && (self.related_exhibition_date_group.blank?) )
       dates = []
       if related_exhibition_date_group
         related_exhibition_date_group.each do |e|
@@ -191,20 +195,17 @@ module Ubiquity
       # check the year field: `hash.first` returns the year key, for example: ["date_published_year", "2002"]
       if hash.first[1].present?
         date = ""
-        # iterate over year, month, day to obtain a String in format: 'YYYYMMDD'
+        # iterate over year, month, day to obtain a String in format: 'YYYY-MM-DD'
         # see 'all_forms_shared_behaviour'
         hash.each do |key, value|
           if value.present?
-            if value.length > 1
-              date << value
-            else
-              date << '0' << value
-            end
+            date << '-' if key.exclude?('year') # add a `-` before month or day
+            date << value
           else
-            date << '01'
+            return date
           end
         end
-        Date.parse(date) if date.present?
+        date
       end
     end
 

@@ -1,0 +1,7 @@
+
+<% provide :page_title, curation_concern_page_title(curation_concern) %>
+<% provide :page_header do %>
+  <h1><%= t("hyrax.works.create.header", type: curation_concern.human_readable_type) %></h1>
+<% end %>
+<%= render 'shared/ubiquity/datacite_doi' %>
+<%= render 'form' %>

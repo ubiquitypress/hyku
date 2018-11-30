@@ -1,9 +1,11 @@
 # overrides https://github.com/samvera/hyrax/blob/v2.0.2/app/forms/hyrax/forms/collection_form.rb
+# code changes in ::Ubiquity::CollectionFormBehaviour
 module Hyrax
   module Forms
     class CollectionForm
       include HydraEditor::Form
       include HydraEditor::Form::Permissions
+      include ::Ubiquity::CollectionFormBehaviour
       # Used by the search builder
       attr_accessor :current_ability, :repository
 
@@ -20,7 +22,7 @@ module Hyrax
       delegate :blacklight_config, to: Hyrax::CollectionsController
 
       self.terms = [:resource_type, :title, :creator, :contributor, :description,
-                    :keyword, :license, :publisher, :date_created, :language,
+                    :keyword, :license, :publisher, :date_created, :subject, :language,
                     :representative_id, :thumbnail_id, :identifier, :based_near,
                     :related_url, :visibility]
 
@@ -43,22 +45,6 @@ module Hyrax
       # Terms that appear above the accordion
       def primary_terms
         [:title]
-      end
-
-      # Terms that appear within the accordion
-      def secondary_terms
-        [:creator,
-         :contributor,
-         :description,
-         :keyword,
-         :license,
-         :publisher,
-         :date_created,
-         :language,
-         :identifier,
-         :based_near,
-         :related_url,
-         :resource_type]
       end
 
       # Do not display additional fields if there are no secondary terms

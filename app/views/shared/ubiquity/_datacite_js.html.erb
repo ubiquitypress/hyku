@@ -1,0 +1,111 @@
+
+
+
+<script>
+  //$(".ubiquity-datacite-fetch").click()
+  //$(".get-datacite-doi-metadata-select").submit()
+  $(document).on("turbolinks:load", function(event){
+    event.preventDefault();
+
+    //return $("body").on("click", ".ubiquity-datacite-fetch", function(event){
+    return $("body").on("submit", ".get-datacite-doi-metadata-select", function(event){
+
+      //
+      var dataciteUrl = $(".ubiquity-datacite-value").val();
+      //alert(dataciteUrl);
+        fetchDataciteData(dataciteUrl);
+
+      event.preventDefault();
+      $("#get-datacite-doi-metadata").modal('hide')
+    }); //closes return
+
+  });
+
+  function fetchDataciteData(url){
+    var host = window.location.host;
+    var protocol = window.location.protocol;
+    var fullHost = protocol + '//' + host + '/available_ubiquity_titles/call_datasite';
+    $.ajax({
+      url: `${fullHost}`,
+      type: "POST",
+      data: {"url": url},
+      success: function(result){
+        //alert(result.title);
+        $(".ubiquity-title").val(result.data.title)
+        //populate dropdown
+        $('.ubiquity-date-published-year').val(result.data.published).change()
+        populateRelatedIdentifierValues(result.data.related_identifier_group)
+         populateCreatorValues(result.data.creator_group)
+
+        $(".ubiquity-fields-populated").html(result.data.auto_populated)
+
+      },
+      error: function(){
+      }
+      })
+    } //function
+
+  function populateRelatedIdentifierValues(relatedArray){
+    $.each(relatedArray, function(key, value){
+       addValues(key, value);
+    })
+  }
+
+  function addValues(key, value) {
+
+    if (key === 0) {
+      div = $(".ubiquity-meta-related-identifier");
+      //console.log(div)
+      div.children(".related_identifier").val(value.related_identifier)
+      $('.related_identifier_type').val(value.related_identifier_type).change()
+      div.children(".related_identifier_relation:last").val(value.relation_type).change()
+      //$(".related_identifier_relation").val(value.relation_type).change()
+    }else {
+      div = $(".ubiquity-meta-related-identifier:last")
+      cloned =  div.clone();
+      cloned.find('input').val('');
+      cloned.find('option').attr('selected', false);
+      div.after(cloned)
+      cloned.children(".related_identifier:last").val(value.related_identifier)
+      $('.related_identifier_type').val(value.related_identifier_type).change()
+      cloned.children(".related_identifier_relation:last").val(value.relation_type).change()
+    }
+  }
+
+
+  function populateCreatorValues(creatorArray){
+    $.each(creatorArray, function(key, value){
+       addCreatorValues(key, value);
+    })
+  }
+
+  function addCreatorValues(key, value) {
+    console.log('json.key', value.creator_family_name)
+
+    if (key === 0) {
+      parent = $(".ubiquity-meta-creator");
+      //console.log(div)
+      div = parent.children(".ubiquity_personal_fields:last")
+      div.children(".creator_family_name:last").val(value.creator_family_name)
+      div.children('.creator_given_name').val(value.creator_given_name)
+      div.children(".creator_position:last").val(value.creator_position)
+      div.children('.ubiquity_creator_name_type:last').val('Personal').change()
+
+    }else {
+      parent = $(".ubiquity-meta-creator")
+      div = parent.children(".ubiquity_personal_fields:last")
+
+      cloned =  div.clone();
+      cloned.find('input').val('');
+      cloned.find('option').attr('selected', false);
+      div.after(cloned)
+      cloned.children(".creator_family_name:last").val(value.creator_family_name)
+      cloned.children('.creator_given_name:last').val(value.creator_given_name)
+      cloned.children(".creator_position:last").val(value.creator_position)
+      cloned.children('.ubiquity_creator_name_type:last').val('Personal').change()
+
+    }
+  }
+
+
+</script>

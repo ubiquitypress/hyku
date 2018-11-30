@@ -10,4 +10,11 @@ class AvailableUbiquityTitlesController < ApplicationController
        render json: {"data": 'false', "message": "Title is available"}
      end
   end
+
+  def call_datasite
+    url = params["url"]
+    datacite = Ubiquity::DataciteClient.new(url).fetch_record
+    render json: {'data': datacite.data}
+  end
+
 end

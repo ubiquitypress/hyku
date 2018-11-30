@@ -13,13 +13,20 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="<%= t('hyrax.dashboard.heading_actions.close') %>">
             <span aria-hidden="true">&times;</span></button>
           <p class="help-block ubiquity-modal-padding"><%= t('helpers.action.doi.placeholder') %></p>
-          <input class="form-control string optional" type="text" value="" name="<%= work_type.underscore %>[doi]" id="<%= work_type.underscore %>_doi">
-        </div>
+          <input class="ubiquity-datacite-value form-control string optional" type="text" value="" name="<%= work_type.underscore %>[doi]" id="<%= work_type.underscore %>_doi">
+
+         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal"><%= t('hyrax.dashboard.heading_actions.close') %></button>
+          <button type="button" class="btn btn-default ubiquity-datacite-fetch" data-dismiss="modal"><%= t('hyrax.dashboard.heading_actions.close') %></button>
           <input type="submit" class="btn btn-primary" value="<%= t('helpers.action.doi.submit') %>">
         </div>
       </div>
     </form>
   </div>
 </div>
+
+
+<h5 class="ubiquity-fields-populated" style="color:red;font-weight: 900;">  </h5>
+
+
+<%= render "shared/ubiquity/datacite_js"  %>

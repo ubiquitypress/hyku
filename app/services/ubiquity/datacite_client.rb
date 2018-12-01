@@ -7,31 +7,39 @@ module Ubiquity
     attr_accessor :path
 
     def initialize(url)
-      #@path = path
       #sets the value of the path ,ethod
       parse_url(url)
     end
 
     def fetch_record
-      #result = self.class.get("/works/#{path}")
-      result = self.class.get("#{path}")
-      response_object(result)
+      handle_client do
+        #result = self.class.get("/works/#{path}")
+        result = self.class.get("#{path}")
+        @response = response_object(result)
+      end
     end
 
     private
 
     def response_object(result)
       response_hash = result.parsed_response
-      Ubiquity::DataciteResponse.new(response_hash)
+      if response_hash.present? && response_hash.class == Hash && response_hash['data'].class == Hash
+        Ubiquity::DataciteResponse.new(response_hash: response_hash, result: result)
+      else
+        puts "Successful DataciteClient api call nut HTTParty parsed_response returne a string instead of hash, so change url"
+        Ubiquity::DataciteResponse.new(error: error_message, result: result)
+      end
     end
 
     def parse_url(url)
-      uri = URI.parse(url)
-      if (uri.scheme.present? &&  uri.host.present?)
-        path_name = uri.path
-        use_path(path_name)
-      elsif (uri.scheme.present? == false && uri.host.present? == false && uri.path.present?)
-        use_path(uri.path)
+      handle_client do
+        uri = URI.parse(url)
+        if (uri.scheme.present? &&  uri.host.present?)
+          path_name = uri.path
+          use_path(path_name)
+        elsif (uri.scheme.present? == false && uri.host.present? == false && uri.path.present?)
+          use_path(uri.path)
+        end
       end
     end
 
@@ -53,8 +61,24 @@ module Ubiquity
         @path = new_url_path
       elsif split_path.length == 2 && (not split_path.include? 'works')
         path_name = path_name.prepend('/') if path_name.slice(0) != "/"
-        @path = "/works/#{path_name}"
+        @path = "/works" + "#{path_name}"
       end
+    end
+
+    def handle_client
+      begin
+        yield
+      rescue  URI::InvalidURIError, HTTParty::Error, Net::HTTPNotFound, NoMethodError, Net::OpenTimeout, StandardError => e
+        puts "DataciteClient error #{e}"
+        Ubiquity::DataciteResponse.new(error: error_message)
+      else
+        #self
+        @response
+      end
+    end
+
+    def error_message
+      "Sorry no data fetched. Please ensure this is a valid datacite id or url eg 10.5438/0012 or https://doi.org/10.5438/0012 or http://dx.doi.org/10.18154/RWTH-CONV-020567"
     end
 
   end

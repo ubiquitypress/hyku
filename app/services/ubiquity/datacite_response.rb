@@ -1,14 +1,16 @@
 module Ubiquity
   class DataciteResponse
-    attr_accessor :api_response
+    attr_accessor :api_response, :error
      attr_reader :raw_http_response, :attributes
 
      #parsed_response_hash is httparty response body
-     def initialize(response_hash, result=nil)
+     def initialize(response_hash: nil, result: nil, error: nil)
        @api_response = response_hash
        @raw_http_response = result
-       @attributes =  response_hash['data']['attributes']
-
+       @error = error
+       if response_hash != nil && response_hash.class == Hash
+         @attributes =  response_hash['data']['attributes'] 
+       end
        self
      end
 
@@ -57,24 +59,29 @@ module Ubiquity
 
      def auto_populated_fields
        fields = []
-       fields << 'related_identifier' if related_identifier.present?
+       fields << 'creator' if creator.present?
        fields << 'title' if title.present?
        fields << "published" if date_published_year.present?
-       fields << 'creator' if creator.present?
+       fields << 'related_identifier' if related_identifier.present?
        fields << 'abstract' if abstract.present?
-       fields << 'version' if version.present?
        fields << 'license' if license.present?
+       #fields << 'version' if version.present?
+
        "The following fields were auto-populated - #{fields.to_sentence}"
      end
 
      def data
-       {
-         'related_identifier_group': related_identifier,
-         "title": title, "published": date_published_year,
-         "abstract": abstract, "version": version,
-         "creator_group": creator, license: license,
-         "auto_populated": auto_populated_fields
-      }
+       if error.present?
+         {'error' => error}
+       else
+         {
+           'related_identifier_group': related_identifier,
+           "title": title, "published": date_published_year,
+           "abstract": abstract, "version": version,
+            "creator_group": creator, license: license,
+            "auto_populated": auto_populated_fields
+         }
+    end
 
      end
 

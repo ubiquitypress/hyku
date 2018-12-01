@@ -42,6 +42,8 @@ module Hyku
       Hyrax::DownloadsController.include ::Hyrax::DownloadsControllerDecorator
       #added by UbiquityPress to allow us render image when available without rendering default_icon
       Hyrax::CollectionPresenter.class_eval {delegate :thumbnail_id, to: :solr_document}
+      #Removes subject from collection click additional fields to see subject is gone
+      Hyrax::Forms::CollectionForm.prepend(::Ubiquity::CollectionFormBehaviour)
     end
 
     config.before_initialize do
@@ -60,6 +62,6 @@ module Hyku
     end
 
     config.eager_load_paths << Rails.root.join('lib')
-    
+
   end
 end

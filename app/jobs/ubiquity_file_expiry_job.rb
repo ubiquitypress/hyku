@@ -1,5 +1,5 @@
 class UbiquityFileExpiryJob < ActiveJob::Base
-  queue_as :expiry_job
+  queue_as :expiry_service
   #adds get_visibility_after_expiration and compare_visibility_after_expiration?
   include Ubiquity::ExpiryUtil
 

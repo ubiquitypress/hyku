@@ -39,6 +39,16 @@
       %>
       <br/>
 
+      <label class="control-label multi_value optional" for="#{template}_contributor_family">
+        Contributor family name</label>
+      <%= text_field_tag "#{template}[contributor_group][][contributor_family_name]", hash.dig("contributor_family_name"),
+                         class: "#{template}_contributor_group form-control multi-text-field multi_value",
+                         placeholder: 'Please enter the contributor\'s last name/family name.',
+                         name: "#{template}[contributor_group][][contributor_family_name]"
+
+      %>
+      <br/>
+
       <label class="control-label multi_value optional" for="#{template}_contributor_given_name">
         Contributor given name</label>
       <%= text_field_tag "#{template}[contributor_group][][contributor_given_name]", hash.dig("contributor_given_name"),
@@ -48,24 +58,14 @@
       %>
       <br/>
 
-      <label class="control-label multi_value optional" for="#{template}_contributor_family">
-        Contributor family name</label>
-      <%= text_field_tag "#{template}[contributor_group][][contributor_family_name]", hash.dig("contributor_family_name"),
-                         class: "#{template}_contributor_group form-control multi-text-field multi_value",
-                         placeholder: 'Please enter the contributor\'s last name/family name.',
-                         name: "#{template}[contributor_group][][contributor_family_name]"
-
-      %>
-
-      <br/>
-      <p><label class="control-label multi_value optional" for="#{template}_contributor_institutional_relationship">
-        Contributor institutional relationship  </label> </p>
+      <label class="control-label multi_value optional" for="#{template}_contributor_institutional_relationship">
+        Contributor institutional relationship  </label>
       <%= select_tag "#{template}[contributor_group][][contributor_institutional_relationship]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( ['Staff member', 'Research associate'], :to_s, :to_s, hash.dig("contributor_institutional_relationship")),
           multiple: true,  class: "form-control"
            %>
 
     </span> <!-- closes ubiquity_personal_fields -->
-    <br/><br/>
+    <br/>
     <label class="control-label multi_value optional" for="#{template}_contributor_type">
       Contributor type</label>
     <%= select_tag "#{template}[contributor_group][][contributor_type]",

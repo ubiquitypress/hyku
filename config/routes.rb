@@ -84,6 +84,7 @@ Rails.application.routes.draw do
   mount Riiif::Engine => '/images', as: 'riiif'
 
   require 'sidekiq/web'
+  require 'sidekiq/cron/web'
   authenticate :user, lambda {|u| u.roles_name.include? 'admin' } do
     mount Sidekiq::Web => '/sidekiq'
   end

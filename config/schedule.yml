@@ -1,0 +1,11 @@
+#added by UbiquityPress for use by sidekiq cron
+ubiquity_expire_all_job:
+  cron: 00 06,18 * * *
+  class: "UbiquityExpiryJob"
+  queue: default
+
+
+ubiquity_expire_job:
+  cron: 00 10 * * *
+  class: "UbiquityExpiryJob"
+  queue: default

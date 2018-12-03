@@ -118,6 +118,8 @@ end
 
 gem 'peek-sidekiq'
 gem 'sidekiq'
+#added by ubiquitypress
+gem "sidekiq-cron", "~> 1.0.4"
 
 gem 'secure_headers'
 

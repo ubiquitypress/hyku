@@ -251,6 +251,8 @@ GEM
       nokogiri (>= 1.4.3)
     erubi (1.7.0)
     erubis (2.7.0)
+    et-orbi (1.1.6)
+      tzinfo
     execjs (2.7.0)
     factory_girl (4.8.0)
       activesupport (>= 3.0.0)
@@ -272,6 +274,9 @@ GEM
       jquery-rails
     font-awesome-rails (4.7.0.3)
       railties (>= 3.2, < 5.2)
+    fugit (1.1.6)
+      et-orbi (~> 1.1, >= 1.1.6)
+      raabro (~> 1.1)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     google-api-client (0.19.8)
@@ -611,6 +616,7 @@ GEM
       nokogiri (~> 1.6)
       rails (~> 5.0)
       rdf
+    raabro (1.1.6)
     rack (2.0.3)
     rack-protection (2.0.0)
       rack
@@ -796,6 +802,9 @@ GEM
       connection_pool (~> 2.2, >= 2.2.0)
       rack-protection (>= 1.5.0)
       redis (~> 3.3, >= 3.3.3)
+    sidekiq-cron (1.0.4)
+      fugit (~> 1.1)
+      sidekiq (>= 4.2.1)
     signet (0.8.1)
       addressable (~> 2.3)
       faraday (~> 0.9)
@@ -962,6 +971,7 @@ DEPENDENCIES
   selenium-webdriver
   sentry-raven
   sidekiq
+  sidekiq-cron (~> 1.0.4)
   simplecov
   solr_wrapper (~> 2.0)
   spring (~> 1.7)

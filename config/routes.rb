@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :available_ubiquity_titles, only: [:check] do
       collection do
         post :check
+        post :call_datasite
       end
   end
 
@@ -85,6 +86,6 @@ Rails.application.routes.draw do
   require 'sidekiq/web'
   authenticate :user, lambda {|u| u.roles_name.include? 'admin' } do
     mount Sidekiq::Web => '/sidekiq'
-  end 
+  end
 
 end

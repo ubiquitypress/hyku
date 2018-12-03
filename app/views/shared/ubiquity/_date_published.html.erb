@@ -9,28 +9,28 @@
 <% if date_published.present? %>
   <%= select_tag "#{template}[date_published_group][][date_published_year]",
                  content_tag(:option, 'select year', :value => "") + options_from_collection_for_select((years_array), 'to_s', 'to_s', parse_date(date_published, 'year')),
-                 required: true, class: 'form-control ubiquity-date-input'
+                 required: true, class: 'form-control ubiquity-date-published-year ubiquity-date-input'
   %>
   <%= select_tag "#{template}[date_published_group][][date_published_month]",
                  content_tag(:option, 'select month if available', :value => "") + options_from_collection_for_select((months_array), 'to_s', 'to_s',parse_date(date_published, 'month')),
-                 {:class => 'form-control ubiquity-date-input'}
+                 {:class => 'form-control ubiquity-date-input ubiquity-date-published-month'}
   %>
   <%= select_tag "#{template}[date_published_group][][date_published_day]",
                  content_tag(:option, 'select day if available', :value => "") + options_from_collection_for_select((days_array), 'to_s', 'to_s', parse_date(date_published, 'day')),
-                 {:class => 'form-control ubiquity-date-input'}
+                 {:class => 'form-control ubiquity-date-input ubiquity-date-published-day'}
   %>
 <% else %>
   <%= select_tag "#{template}[date_published_group][][date_published_year]",
                  content_tag(:option, 'select year', :value => "") + options_from_collection_for_select((years_array), 'to_s', 'to_s'),
-                 required: true, class: 'form-control ubiquity-date-input'
+                 required: true, class: 'form-control ubiquity-date-published-year ubiquity-date-input'
   %>
   <%= select_tag "#{template}[date_published_group][][date_published_month]",
                  content_tag(:option, 'select month if available', :value => "") + options_from_collection_for_select((months_array), 'to_s', 'to_s'),
-                 {:class => 'form-control ubiquity-date-input'}
+                 {:class => 'form-control ubiquity-date-published-month ubiquity-date-input'}
   %>
   <%= select_tag "#{template}[date_published_group][][date_published_day]",
                  content_tag(:option, 'select day if available', :value => "") + options_from_collection_for_select((days_array), 'to_s', 'to_s'),
-                 {:class => 'form-control ubiquity-date-input'}
+                 {:class => 'form-control ubiquity-date-published-day ubiquity-date-input'}
   %>
 <% end %>
 <br/><br/><br/>

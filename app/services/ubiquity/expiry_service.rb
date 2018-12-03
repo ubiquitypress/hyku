@@ -125,7 +125,7 @@ module Ubiquity
     def lease_file_ids(file_set, type)
       if (file_set.present? && file_set.send(type).present? && file_set.visibility != file_set.send("visibility_after_#{type}") && file_set.lease_expiration_date.present? && file_set.lease_expiration_date.past?)
         file_set.id
-      elsif file_set.lease.present? && (not file_set.active_lease?) && (not file_set.lease_expiration_date.present?) && compare_visibility_after_expiration?(fileset, 'lease')#needs_visibility_reset
+      elsif file_set.lease.present? && (not file_set.active_lease?) && (not file_set.lease_expiration_date.present?) && compare_visibility_after_expiration?(file_set, 'lease')#needs_visibility_reset
         file_set.id
       end
     end

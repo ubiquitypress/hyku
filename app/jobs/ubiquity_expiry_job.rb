@@ -1,4 +1,5 @@
 class UbiquityExpiryJob < ActiveJob::Base
+  queue_as :expiry_service
   def perform
     service = Ubiquity::ExpiryService.new
     service.release_embargo!

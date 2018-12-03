@@ -1,4 +1,5 @@
 class UbiquityWorkExpiryJob < ActiveJob::Base
+  queue_as :expiry_service
   #adds get_visibility_after_expiration and compare_visibility_after_expiration?
   include Ubiquity::ExpiryUtil
   def perform(work_id, work_class,  type, tenant)

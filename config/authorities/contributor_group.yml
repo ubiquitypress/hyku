@@ -1,4 +1,10 @@
 terms:
+ - id: Actor
+   term: Actor
+   active: true
+ - id: Author
+   term: Author
+   active: true
  - id: Contact Person
    term: Contact Person
    active: true

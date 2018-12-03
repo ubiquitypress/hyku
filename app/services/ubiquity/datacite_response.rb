@@ -9,7 +9,7 @@ module Ubiquity
        @raw_http_response = result
        @error = error
        if response_hash != nil && response_hash.class == Hash
-         @attributes =  response_hash['data']['attributes'] 
+         @attributes =  response_hash['data']['attributes']
        end
        self
      end
@@ -32,6 +32,10 @@ module Ubiquity
 
      def license
        attributes.dig('license')
+     end
+
+     def doi
+       attributes.dig('identifier')
      end
 
      def creator
@@ -59,9 +63,10 @@ module Ubiquity
 
      def auto_populated_fields
        fields = []
-       fields << 'creator' if creator.present?
        fields << 'title' if title.present?
+       fields << 'creator' if creator.present?
        fields << "published" if date_published_year.present?
+       fields << 'DOI' if doi.present?
        fields << 'related_identifier' if related_identifier.present?
        fields << 'abstract' if abstract.present?
        fields << 'license' if license.present?
@@ -79,7 +84,8 @@ module Ubiquity
            "title": title, "published": date_published_year,
            "abstract": abstract, "version": version,
             "creator_group": creator, license: license,
-            "auto_populated": auto_populated_fields
+            "auto_populated": auto_populated_fields,
+            "doi"  => doi
          }
     end
 

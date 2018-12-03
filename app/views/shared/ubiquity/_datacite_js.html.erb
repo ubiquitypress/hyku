@@ -36,6 +36,7 @@
         if (result.data.error  === undefined){
           $(".ubiquity-title").val(result.data.title)
           $('.ubiquity-abstract').val(result.data.abstract)
+          $('.ubiquity-doi').val(result.data.doi)
           //populate dropdown
           $('.ubiquity-date-published-year').val(result.data.published).change()
           $('.ubiquity-license').val(result.data.license).change()

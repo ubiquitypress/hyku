@@ -1,19 +1,21 @@
 
-#run with rake hyku:automatic_user:create['sandbox.repo-test.ubiquity.press']
+#run with:
+#bundle exec rake hyku:automatic_user:create
 
 namespace :hyku do
   namespace :automatic_user do
     desc "Create a user and make that user a superadmin"
-    task :create => :environment do 
-    #task :create, [:tenant_name] => :environment do |task, tenant|
-      #AccountElevator.switch!("#{tenant[:tenant_name]}")
+    task :create => :environment do
 
-      email = "tech_#{rand(252...41350)}@ubiquity.press.com"
+      email = ENV['DEFAULT_ADMIN_EMAIL']
+      password = ENV['DEFAULT_ADMIN_PASSWORD']
       puts "Creating user with email #{email}"
-      User.find_or_create_by(email: email) do |user|
+    
+      User.create! do |user|
          puts "assigning password to user"
-         user.password = 'ubiquity2197';
-         user.password_confirmation = 'ubiquity2197'
+         user.email = email
+         user.password = password;
+         user.password_confirmation = password
          puts "Granting user superadmin role"
          user.add_role(:superadmin)
      end

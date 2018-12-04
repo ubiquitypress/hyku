@@ -33,6 +33,6 @@ en:
   helpers:
     action:
       doi:
-        new: Fetch metadata from Datacite with DOI
+        new: Fetch metadata from DataCite with DOI
         submit: Fetch metadata
         placeholder: Please add a DataCite DOI below

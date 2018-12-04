@@ -21,6 +21,8 @@ Rails.application.routes.draw do
       collection do
         post :check
         post :call_datasite
+        get :csv_export
+
       end
   end
 

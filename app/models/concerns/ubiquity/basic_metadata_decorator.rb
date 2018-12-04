@@ -1,6 +1,7 @@
 module Ubiquity
   module BasicMetadataDecorator
     extend ActiveSupport::Concern
+    include Ubiquity::CsvExportUtil
     # include here properties (fields) shared across all templates
     # also see SharedMetadata
     included do
@@ -60,5 +61,6 @@ module Ubiquity
         index.as :stored_searchable, :facetable
       end
     end
+
   end
 end

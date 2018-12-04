@@ -16,5 +16,15 @@ class AvailableUbiquityTitlesController < ApplicationController
     datacite = Ubiquity::DataciteClient.new(url).fetch_record
     render json: {'data': datacite.data}
   end
+  
+  def csv_export
+    #data = Ubiquity::CsvDownloader.export_database
+    #data = Ubiquity::CsvDownloader.export_models
+    data = Ubiquity::CsvDownloader.ha
+    respond_to do |format|
+      #, content_type: 'text/plain'
+      format.csv {render plain: data, content_type: 'text/plain'}
+    end
+  end
 
 end

@@ -26,7 +26,7 @@ module Ubiquity
       if response_hash.present? && response_hash.class == Hash && response_hash['data'].class == Hash
         Ubiquity::DataciteResponse.new(response_hash: response_hash, result: result)
       else
-        puts "Successful DataciteClient api call nut HTTParty parsed_response returne a string instead of hash, so change url"
+        puts "Successful DataciteClient api call but HTTParty parsed_response returned a string instead of hash, so change url"
         Ubiquity::DataciteResponse.new(error: error_message, result: result)
       end
     end
@@ -46,7 +46,7 @@ module Ubiquity
     def use_path(path_name)
       puts "uri #{path_name}"
       split_path = path_name.split('/').reject(&:empty?)
-      if split_path.length == 3 && split_path.first == 'works'
+      if (split_path.length == 3 && split_path.first == 'works') || ( split_path.length == 4 && split_path.first == 'works')
         #changes "works/10.5438/0012" to "/works/10.5438/0012"
         path_name = path_name.prepend('/') if path_name.slice(0) != "/"
         @path = path_name
@@ -59,7 +59,11 @@ module Ubiquity
         #we get back "/works/#{path_name}"
         new_url_path = url_path.prepend('/')
         @path = new_url_path
-      elsif split_path.length == 2 && (not split_path.include? 'works')
+
+        #when split_path returns ["10.7488", "ds", "2109"]
+        #we get the first two elements that is "10" with
+        #split_path.first.slice(0..1)
+      elsif (split_path.length == 2 && (not split_path.include? 'works')) || (split_path.length == 3 && split_path.first.slice(0..1) == '10')
         path_name = path_name.prepend('/') if path_name.slice(0) != "/"
         @path = "/works" + "#{path_name}"
       end
@@ -78,7 +82,8 @@ module Ubiquity
     end
 
     def error_message
-      "Sorry no data fetched. Please ensure this is a valid datacite id or url eg 10.5438/0012 or https://doi.org/10.5438/0012 or http://dx.doi.org/10.18154/RWTH-CONV-020567"
+      "Sorry no data was fetched. Please ensure this is a valid DataCite DOI or URL eg 10.5438/0012 or https://doi.org/10.5438/0012 or http://dx.doi.org/10.18154/RWTH-CONV-020567.
+      If you are sure it is valid please refresh the page and try again."
     end
 
   end

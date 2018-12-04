@@ -52,3 +52,5 @@ public/assets/
 *.env
 *.pyc
 kiq.log
+
+/config/local_env.yml

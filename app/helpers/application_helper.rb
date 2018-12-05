@@ -54,4 +54,11 @@ module ApplicationHelper
   def split_note_from_work(note_text)
     note_text.split('</a>)').last
   end
+
+  def tenant_name
+    current_tenant = Account.where(tenant: Apartment::Tenant.current)
+    tenant_cname = current_tenant.first.cname if current_tenant.first.present? # current_tenant is an `ActiveRecord_Relation`
+    # remove host part; e.g. "test.localhost" returns "test":
+    tenant_cname.split('.').first if tenant_cname
+  end
 end

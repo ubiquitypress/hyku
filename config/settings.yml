@@ -51,7 +51,15 @@ s3:
 
 fits_path: "fits.sh"
 
+# Add tenant name here to enable GA tracking
+# see `tenant_name` helper method, called in app/views/_ga.html.erb
 google_analytics_id:
+  bl: <%= ENV["BL_GA_ID"] %>
+  britishmuseum: <%= ENV["BM_GA_ID"] %>
+  nms: <%= ENV["NMS_GA_ID"] %>
+  mola: <%= ENV["MOLA_GA_ID"] %>
+  tate: <%= ENV["TATE_GA_ID"] %>
+  claire-test: 123123
 
 # Register here: http://www.geonames.org/manageaccount
 geonames_username: 'jcoyne'

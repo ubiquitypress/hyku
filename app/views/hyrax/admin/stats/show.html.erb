@@ -7,7 +7,8 @@
     <ul id="statistics-tabs" class="nav nav-tabs" role="tablist">
       <li role="presentation" class="active"><a href="#collections" aria-controls="collections" role="tab" data-toggle="tab">Collections</a></li>
       <li role="presentation"><a href="#works" aria-controls="works" role="tab" data-toggle="tab">Works</a></li>
-      <li role="presentation"><a href="#downloads" aria-controls="downloads" role="tab" data-toggle="tab">Downloads</a></li>
+      <!-- Downloads will be accessed through Google Analytics instead -->
+<!--      <li role="presentation"><a href="#downloads" aria-controls="downloads" role="tab" data-toggle="tab">Downloads</a></li>-->
       <li role="presentation"><a href="#users" aria-controls="users" role="tab" data-toggle="tab">Users</a></li>
     </ul>
 
@@ -61,13 +62,14 @@
           </div>
         </div>
       </div>
-      <div role="tabpanel" class="tab-pane" id="downloads">
-        <div class="panel panel-default labels">
-          <div class="panel-body">
-            <%= render "hyrax/admin/stats/downloads" %>
-          </div>
-        </div>
-      </div>
+<!--      Downloads will be accessed through Google Analytics instead -->
+<!--      <div role="tabpanel" class="tab-pane" id="downloads">-->
+<!--        <div class="panel panel-default labels">-->
+<!--          <div class="panel-body">-->
+            <%#= render "hyrax/admin/stats/downloads" %>
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
       <div role="tabpanel" class="tab-pane" id="users">
         <div class="panel panel-default labels">
           <div class="panel-body">

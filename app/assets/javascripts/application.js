@@ -28,6 +28,7 @@
 //
 //= require hyku/groups/per_page
 //= require hyku/groups/add_member
+// require hyku/ga_events.js
 
 //= require hyrax
 //= require jquery.flot.pie

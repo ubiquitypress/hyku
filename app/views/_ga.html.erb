@@ -11,11 +11,15 @@
 
     ga('create', '<%= tracking_id %>', 'auto');
     ga('send', 'pageview');
-    ga('send', {
-        hitType: 'event',
-        eventCategory: 'fileset',
-        eventAction: 'Downloads',
-        eventLabel: '<%= current_work_title %>'
+
+    $(document).on('click', '#file_download', function(e) {
+      ga('send', {
+          hitType: 'event',
+          eventCategory: 'file',
+          eventAction: 'Downloads',
+          eventLabel: '<%= current_work_title %>'
+      });
     });
+
 </script>
 <!-- End Google Analytics -->

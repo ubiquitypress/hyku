@@ -11,6 +11,11 @@
 
     ga('create', '<%= tracking_id %>', 'auto');
     ga('send', 'pageview');
-    ga('send', 'event', 'fileset', 'download', '<%= current_work_title %>');
+    ga('send', {
+        hitType: 'event',
+        eventCategory: 'fileset',
+        eventAction: 'Downloads',
+        eventLabel: '<%= current_work_title %>'
+    });
 </script>
 <!-- End Google Analytics -->

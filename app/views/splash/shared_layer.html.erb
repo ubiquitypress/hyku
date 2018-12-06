@@ -1,0 +1,60 @@
+<div class="panel tabs">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+    <li role="presentation"><a href="#about" aria-controls="about" role="tab" data-toggle="tab">About</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="home">
+      <div class="panel panel-default labels">
+        <div class="panel-body">
+          <section class="jumbotron">
+            <div class="row">
+              <div class="col-xs-2 col-md-1">
+                <span class="partner-logo bl-logo"></span>
+              </div>
+              <div class="col-xs-10 col-md-11 shared-repo-header">
+                <h1><%= t('hyku.bl_partners.heading') %></h1>
+                <p><%= t('hyku.bl_partners.sub_heading') %></p>
+              </div>
+            </div>
+            <br/>
+            <div class="shared-repo-text">
+              <p><%= t('hyku.bl_partners.homepage_text') %></p>
+              <p><%= t('hyku.bl_partners.homepage_temp_announcement') %></p>
+            </div>
+          </section>
+
+          <section class="shared-layer-logos">
+            <div class="row grid-row">
+              <div class="col-sm-3 grid-item">
+                <a href="https://mola.oar.bl.uk" target="_blank"><span class="partner-logo mola-logo"></span></a>
+              </div>
+              <div class="col-sm-2 grid-item">
+                <a href="https://tate.oar.bl.uk" target="_blank"><span class="partner-logo tate-logo"></span></a>
+              </div>
+              <div class="col-sm-2 grid-item">
+                <a href="https://nms.oar.bl.uk" target="_blank"><span class="partner-logo nms-logo"></span></a>
+              </div>
+              <div class="col-sm-2 grid-item">
+                <a href="https://britishmuseum.oar.bl.uk" target="_blank"><span class="partner-logo bm-logo"></span></a>
+              </div>
+              <div class="col-sm-3 grid-item">
+                <a href="https://bl.oar.bl.uk" target="_blank"><span class="partner-logo bl-logo"></span></a>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="about">
+      <div class="panel panel-default labels">
+        <div class="panel-body">
+          <%= render 'proprietor/bl_partners_about' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

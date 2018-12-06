@@ -93,3 +93,74 @@ h4, .homepage-nav-tabs {
 .ubiquity-modal-padding {
   padding: 16px 0px 8px 0px;
 }
+
+.shared-layer-logos {
+  .grid-row {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .grid-item {
+    padding-left: 40px;
+    padding-right: 40px;
+    text-align: center;
+  }
+  .heading {
+    color: $gray;
+    font-size: 1.4em;
+  }
+}
+
+.partner-logo {
+  width: 120px;
+  height: 120px;
+  margin-top: 20px;
+}
+
+.small-partner-logo {
+  width: 80px;
+  height: 80px;
+  margin-top: 20px;
+}
+
+.bl-logo {
+  background: image_url("bl-logo.jpg") no-repeat;
+  -webkit-background-size: contain;
+  background-size: contain;
+  background-position: center;
+  display: block;
+}
+
+.mola-logo {
+  background: image_url("mola-logo.jpg") no-repeat;
+  -webkit-background-size: contain;
+  background-size: contain;
+  background-position: center;
+  display: block;
+}
+
+.tate-logo {
+  background: image_url("tate-logo-black.png") no-repeat;
+  -webkit-background-size: contain;
+  background-size: contain;
+  background-position: center;
+  display: block;
+}
+
+.jumbotron .shared-repo-header {
+  text-align: left;
+  padding-left: 40px;
+
+  h1 {
+    font-size: 1.8em;
+  }
+
+  p {
+    font-size: 1.4em;
+  }
+
+}
+
+.jumbotron .shared-repo-text p {
+  font-size: 1.2em;
+  font-weight: 400;
+}

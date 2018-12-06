@@ -4,6 +4,11 @@
         <p><%= t('hyrax.footer.service_html') %>   <%= link_to t(:'hyrax.pages.tabs.terms_page'), hyrax.terms_path, class: "navbar-link" %></p>
         <p>Hyku v<%= Hyku::VERSION %></p>
     </div>
+    <% if admin_host? %>
+      <div class="navbar-text">
+        <p><a href="mailto:openaccess@bl.uk"><%= t('hyku.footer.oar_bl_email') %></a></p>
+      </div>
+    <% end %>
     <div class="navbar-right">
       <div class="navbar-text text-right">
         <p><%= t('hyrax.footer.copyright_html') %></p>

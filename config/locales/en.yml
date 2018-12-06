@@ -57,6 +57,7 @@ en:
       right_text: "Customize the user interface to match your institution's brand identity. Tailor workflows to match how your staff likes to work."
     footer:
       admin_login: 'Administrator login'
+      oar_bl_email: 'Openaccess@bl.uk'
     proprietor:
       accounts:
         nav: 'Accounts'
@@ -121,6 +122,16 @@ en:
         user_key: 'Username'
         date_joined: 'Joined'
         last_login: 'Last access'
+    bl_partners:
+      bl: 'British Library'
+      bm: 'The British Museum'
+      nms: 'National Museums Scotland'
+      mola: 'MOLA'
+      tate: 'TATE'
+      heading: 'Shared Research Repository'
+      sub_heading: 'for cultural and heritage organisations'
+      homepage_text: 'Welcome to our new research repository where you’ll find research produced by staff of the British Library and our four pilot project partner organisations'
+      homepage_temp_announcement: 'You’ll soon be able to explore the research of all partners through a single search, but for now have a look at the first publications being added to our repositories.'
   hyrax:
     admin:
       appearances:

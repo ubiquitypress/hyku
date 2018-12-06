@@ -61,4 +61,13 @@ module ApplicationHelper
     # remove host part; e.g. "test.localhost" returns "test":
     tenant_cname.split('.').first if tenant_cname
   end
+
+  def current_work_title
+    return if @presenter.blank?
+    if @presenter.class == Hyku::FileSetPresenter
+      @presenter.parent.title[0]
+    elsif @presenter.class == Hyku::ManifestEnabledWorkShowPresenter
+      @presenter.title[0] # `title` is an array
+    end
+  end
 end

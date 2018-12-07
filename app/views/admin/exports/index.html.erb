@@ -6,8 +6,8 @@
   <div class="panel panel-default tabs">
     <!-- Nav tabs -->
     <ul id="exportCsvTabs" class="nav nav-tabs" role="tablist">
-      <li role="presentation" class="active"><a href="#export-database" aria-controls="export-database" role="tab" data-toggle="tab">Export Database</a></li>
-      <li role="presentation"><a href="#export-model-metadata" aria-controls="export-model-metadata" role="tab" data-toggle="tab">Export Individual Work Metadata</a></li>
+      <li role="presentation" class="active"><a href="#export-database" aria-controls="export-database" role="tab" data-toggle="tab">Export CSV for whole database</a></li>
+      <li role="presentation"><a href="#export-model-metadata" aria-controls="export-model-metadata" role="tab" data-toggle="tab">Download the CSV for individual work types</a></li>
       </ul>
 
     <!-- Tab panes -->
@@ -19,7 +19,7 @@
 
             <h5 class="ubiquity-db-exporter-message" data-type='database' style="color:red;font-weight: 900;">  </h5>
 
-             <p><%= link_to "Export database", main_app.export_database_admin_exports_path(format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'database' } %> </p>
+             <p><%= link_to "Export CSV for whole database", main_app.export_database_admin_exports_path(format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'database' } %> </p>
           </div>
         </div>
       </div>
@@ -31,14 +31,14 @@
             <h5 class="ubiquity-model-exporter-message"  style="color:red;font-weight: 900;">  </h5>
 
             <ul>
-              <li><%= link_to "export csv for Dataset", main_app.export_remap_model_admin_exports_path(model: 'Dataset', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model'} %> </li>
-              <li><%= link_to "download csv for Article", main_app.export_remap_model_admin_exports_path(model: 'Article', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model'}  %>
-              <li><%= link_to "export csv for Book", main_app.export_remap_model_admin_exports_path(model: 'Book', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model'}  %>
-              <li><%= link_to "download csv for Book Contribution", main_app.export_remap_model_admin_exports_path(model: 'BookContribution', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model'}  %>  </li>
-              <li><%= link_to "export csv for Conference Item", main_app.export_remap_model_admin_exports_path(model: 'ConferenceItem', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model'}  %>  </li>
-              <li><%= link_to "download csv for Image", main_app.export_remap_model_admin_exports_path(model: 'Image', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model' }  %>  </li>
-              <li><%= link_to "export csv for Report", main_app.export_remap_model_admin_exports_path(model: 'Report', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model' }  %>  </li>
-              <li><%= link_to "download csv for Generic Work", main_app.export_remap_model_admin_exports_path(model: 'GenericWork', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model' } %>  </li>
+              <li><%= link_to "Export CSV for Dataset", main_app.export_remap_model_admin_exports_path(model: 'Dataset', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model'} %> </li>
+              <li><%= link_to "Export CSV for Article", main_app.export_remap_model_admin_exports_path(model: 'Article', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model'}  %>
+              <li><%= link_to "Export CSV for Book", main_app.export_remap_model_admin_exports_path(model: 'Book', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model'}  %>
+              <li><%= link_to "Export CSV for Book Contribution", main_app.export_remap_model_admin_exports_path(model: 'BookContribution', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model'}  %>  </li>
+              <li><%= link_to "Export CSV for Conference Item", main_app.export_remap_model_admin_exports_path(model: 'ConferenceItem', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model'}  %>  </li>
+              <li><%= link_to "Export CSV for Image", main_app.export_remap_model_admin_exports_path(model: 'Image', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model' }  %>  </li>
+              <li><%= link_to "Export CSV for Report", main_app.export_remap_model_admin_exports_path(model: 'Report', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model' }  %>  </li>
+              <li><%= link_to "Export CSV for Generic Work", main_app.export_remap_model_admin_exports_path(model: 'GenericWork', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model' } %>  </li>
             </ul>
           </div>
         </div>
@@ -54,7 +54,7 @@
       <div role="tabpanel" class="tab-pane" id="export-model-metadata">
         <div class="panel panel-default labels">
           <div class="panel-body">
-            <p> If the metatdata is set to multiple the values are split</p>
+            <p> If the metadata is set to multiple the values are split</p>
 
           </div>
         </div>

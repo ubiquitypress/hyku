@@ -1,9 +1,9 @@
 #You can export all record in the database by calling
-# Ubiquity::CsvGenerator.export_database_as_remapped_data
+# Ubiquity::CsvGenerator.new.export_database_as_remapped_data
 #
 #You can export the metadata of a single model by calling
 #
-#Ubiquity::CsvGenerator.export_remap_model('Article')
+#Ubiquity::CsvGenerator.new.export_remap_model('Article')
 
 module Ubiquity
   class CsvGenerator
@@ -13,11 +13,6 @@ module Ubiquity
     #use with regular_export
     def self.csv_header
       removed_keys = ["head", "tail","proxy_depositor", "on_behalf_of", "arkivo_checksum", "owner",  "version", "label", "relative_path", "import_url", "based_near", "identifier", "access_control_id", "representative_id", "thumbnail_id", "admin_set_id", "embargo_id", "lease_id", "bibliographic_citation", "state",  "creator_search"]
-      #header_keys = self.attribute_names - removed_keys
-      #header_keys.unshift("id")
-      #header_keys.push('files')
-      #article = Article.attribute_names - removed_keys
-
       dataset = Dataset.attribute_names - removed_keys
       conference_item = ConferenceItem.attribute_names - removed_keys
       header_keys = dataset.concat(conference_item).uniq
@@ -29,7 +24,6 @@ module Ubiquity
   #use with csv_header
     def self.regular_export
       csv = CSV.generate(headers: true) do |csv|
-        #works
         csv << csv_header
         DEFAULT_WORKS.each do |klass|
           klass.all.each do |object|
@@ -45,9 +39,7 @@ module Ubiquity
       headers ||= merged_headers(@csv_data_object)
       sorted_header = headers.sort
       csv = CSV.generate(headers: true) do |csv|
-        #works
         csv << sorted_header
-
         @csv_data_object.all_records.each do |hash|
           row = sorted_header.map do |key|
             new_values = []

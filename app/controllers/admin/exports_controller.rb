@@ -1,6 +1,5 @@
 module Admin
   class ExportsController < AdminController
-    #before_action :ensure_authorized!
     layout 'dashboard'
     def index
     end

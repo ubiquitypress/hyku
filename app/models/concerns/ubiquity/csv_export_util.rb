@@ -18,7 +18,7 @@ module Ubiquity
 
         elsif (value != key && value.present? && (['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key) )
           #problem displays <ActiveTriples::Relation:0x007f1f147e6ca8>
-          #when just value is returned
+          #when just the value is returned without calling first on it
           value.first
         end
 
@@ -35,7 +35,6 @@ module Ubiquity
       def regular_header
          removed_keys = ["head", "tail","proxy_depositor", "on_behalf_of", "arkivo_checksum", "owner",  "version", "label", "relative_path", "import_url", "based_near", "identifier", "access_control_id", "representative_id", "thumbnail_id", "admin_set_id", "embargo_id", "lease_id", "bibliographic_citation", "state",  "creator_search"]
          header_keys = self.attribute_names - removed_keys
-         #header_keys = klass.attribute_names - removed_keys
          header_keys.unshift("id")
          header_keys.push('files')
        end
@@ -45,7 +44,6 @@ module Ubiquity
      end
 
      def csv_data
-       #find_each do |object|
         data ||= all.map do |object|
           #object.get_csv_data
           object.csv_hash
@@ -73,24 +71,22 @@ module Ubiquity
 
       end
 
-     def to_csv
-       CSV.generate do |csv|
-         removed_keys = ["head", "tail","proxy_depositor", "on_behalf_of", "arkivo_checksum", "owner",  "version", "label", "relative_path", "import_url", "based_near", "identifier", "access_control_id", "representative_id", "thumbnail_id", "admin_set_id", "embargo_id", "lease_id", "bibliographic_citation", "state",  "creator_search"]
-         header_keys = self.attribute_names - removed_keys
-         header_keys.unshift("id")
-         header_keys.push('files')
-         csv << header_keys
-         all.each do |object|
-           file_names = object.file_sets.map { |file| file.title.first} if object.file_sets.present?
-           files = file_names.join(',')
-           object.attributes.merge({files: files})
-
-           csv << object.attributes.values_at(*header_keys)
-         end
-       end
-     end #closes to_csv
+      def to_csv
+        CSV.generate do |csv|
+          removed_keys = ["head", "tail","proxy_depositor", "on_behalf_of", "arkivo_checksum", "owner",  "version", "label", "relative_path", "import_url", "based_near", "identifier", "access_control_id", "representative_id", "thumbnail_id", "admin_set_id", "embargo_id", "lease_id", "bibliographic_citation", "state",  "creator_search"]
+          header_keys = self.attribute_names - removed_keys
+          header_keys.unshift("id")
+          header_keys.push('files')
+          csv << header_keys
+          all.each do |object|
+            file_names = object.file_sets.map { |file| file.title.first} if object.file_sets.present?
+            files = file_names.join(',')
+            object.attributes.merge({files: files})
+            csv << object.attributes.values_at(*header_keys)
+          end
+        end
+      end
 
     end
-
   end
 end

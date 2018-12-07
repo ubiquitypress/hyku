@@ -17,12 +17,10 @@ Rails.application.routes.draw do
 
   get 'status', to: 'status#index'
 
-  resources :available_ubiquity_titles, only: [:check] do
+  resources :available_ubiquity_titles, only: [:check, :call_datasite] do
       collection do
         post :check
         post :call_datasite
-        get :csv_export
-
       end
   end
 
@@ -66,6 +64,14 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    resources :exports, only: [:index] do
+      collection do
+        get :export_database
+        get :export_remap_model
+        get :export_model
+      end
+    end
+
     resource :account, only: [:edit, :update]
     resources :users, only: [:destroy]
     resources :groups do

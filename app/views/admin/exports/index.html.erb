@@ -1,0 +1,91 @@
+<% content_for :page_header do %>
+
+  <h1><span class=""></span> Export data from <%= current_account.cname %> Repository</h1>
+<% end %>
+
+  <div class="panel panel-default tabs">
+    <!-- Nav tabs -->
+    <ul id="exportCsvTabs" class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#export-database" aria-controls="export-database" role="tab" data-toggle="tab">Export Database</a></li>
+      <li role="presentation"><a href="#export-model-metadata" aria-controls="export-model-metadata" role="tab" data-toggle="tab">Export Individual Work Metadata</a></li>
+      </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="export-database">
+        <div class="panel panel-default labels">
+          <div class="panel-body">
+            <h2>Download the CSV Metadata for all work types in this repository's Database</h2>
+
+            <h5 class="ubiquity-db-exporter-message" data-type='database' style="color:red;font-weight: 900;">  </h5>
+
+             <p><%= link_to "Export database", main_app.export_database_admin_exports_path(format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'database' } %> </p>
+          </div>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="export-model-metadata">
+        <div class="panel panel-default labels">
+          <div class="panel-body">
+
+            <h2>Click on a work type to export/download csv</h2>
+            <h5 class="ubiquity-model-exporter-message"  style="color:red;font-weight: 900;">  </h5>
+
+            <ul>
+              <li><%= link_to "export csv for Dataset", main_app.export_remap_model_admin_exports_path(model: 'Dataset', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model'} %> </li>
+              <li><%= link_to "download csv for Article", main_app.export_remap_model_admin_exports_path(model: 'Article', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model'}  %>
+              <li><%= link_to "export csv for Book", main_app.export_remap_model_admin_exports_path(model: 'Book', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model'}  %>
+              <li><%= link_to "download csv for Book Contribution", main_app.export_remap_model_admin_exports_path(model: 'BookContribution', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model'}  %>  </li>
+              <li><%= link_to "export csv for Conference Item", main_app.export_remap_model_admin_exports_path(model: 'ConferenceItem', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model'}  %>  </li>
+              <li><%= link_to "download csv for Image", main_app.export_remap_model_admin_exports_path(model: 'Image', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model' }  %>  </li>
+              <li><%= link_to "export csv for Report", main_app.export_remap_model_admin_exports_path(model: 'Report', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model' }  %>  </li>
+              <li><%= link_to "download csv for Generic Work", main_app.export_remap_model_admin_exports_path(model: 'GenericWork', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model' } %>  </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="export-database">
+        <div class="panel panel-default labels">
+          <div class="panel-body">
+            <%# link_to "download csv", main_app.export_database_admin_exports_path(format: 'csv')   %>
+
+          </div>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="export-model-metadata">
+        <div class="panel panel-default labels">
+          <div class="panel-body">
+            <p> If the metatdata is set to multiple the values are split</p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+      <script>
+
+        $(document).on("turbolinks:load", function(event){
+
+          return $("body").on("click", ".ubiquity-exporter", function(event) {
+            $(".ubiquity-model-exporter-message").hide();
+            $(".ubiquity-db-exporter-message").hide();
+
+            var exportType = $(this).attr('data-type');
+            //$(".ubiquity-exporter-message[data-type=`${exportType}`]").html("It could take a few seconds or minutes depending of data size. Be patient your data is in the process of conversion to CSV and will download automatically")
+            if (exportType === 'model') {
+              $(".ubiquity-model-exporter-message").html("It could take a few seconds or minutes depending on data size. Be patient, hum a tune, your data is in the process of conversion to CSV and will download automatically");
+              $(".ubiquity-model-exporter-message").show();
+            }
+
+            if (exportType === 'database') {
+              $(".ubiquity-db-exporter-message").html("It could take a few seconds or minutes depending on data size. Be patient, grab a cup of coffee, your data is in the process of conversion to CSV and will download automatically");
+              $(".ubiquity-db-exporter-message").show();
+            }
+
+          });
+        });
+
+
+
+
+      </script>
+
+  </div>

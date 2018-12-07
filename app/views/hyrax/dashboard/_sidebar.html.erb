@@ -65,10 +65,18 @@
 
   <% if menu.show_admin_menu_items? %>
     <li class="h5"><%= t('hyrax.admin.sidebar.tasks') %></li>
+
     <% if Site.account && can?(:manage, Site.account) %>
       <%= menu.nav_link(main_app.edit_admin_account_path) do %>
           Account
       <% end %>
+    <% end %>
+
+    <!-- added by ubiquitypress -->
+    <%# menu.nav_link(main_app.export_data_available_ubiquity_titles_path) do %>
+    <%= menu.nav_link(main_app.admin_exports_path) do %>
+
+      <span class="fas fa-download"></span> <span class="sidebar-action-text"><%= t('hyrax.admin.sidebar.export') %></span>
     <% end %>
 
     <%= menu.nav_link(hyrax.admin_workflows_path) do %>

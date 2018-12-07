@@ -142,6 +142,7 @@ en:
         roles_and_permissions:        'Users and groups'
         system_status:                'System status'
         technical:                    'Technical'
+        export:                       'Export metadata'
       users:
         index:
           action_label: Action

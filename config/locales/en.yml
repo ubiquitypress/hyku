@@ -57,6 +57,7 @@ en:
       right_text: "Customize the user interface to match your institution's brand identity. Tailor workflows to match how your staff likes to work."
     footer:
       admin_login: 'Administrator login'
+      admin_home: 'Administrator page'
       oar_bl_email: 'Openaccess@bl.uk'
     proprietor:
       accounts:

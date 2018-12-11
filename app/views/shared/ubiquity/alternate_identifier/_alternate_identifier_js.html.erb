@@ -6,31 +6,28 @@
         return $("body").on("click", ".add_alternate_identifier", function(event){
             event.preventDefault();
             var ubiquityAlternateIdentifierClass = $(this).attr('data-addUbiquityAlternateIdentifier');
-            var cloneUbiDiv = $(this).parent('div' + `${ubiquityAlternateIdentifierClass}`).clone();
+            var cloneUbiDiv = $(this).parent('div' + ubiquityAlternateIdentifierClass).clone();
             _this = this;
             cloneUbiDiv.find('input').val('');
             cloneUbiDiv.find('option').attr('selected', false);
-            $(`${ubiquityAlternateIdentifierClass}`+ ':last').after(cloneUbiDiv)
+            $(ubiquityAlternateIdentifierClass + ':last').after(cloneUbiDiv)
         });
     });
 
     //remove linked fields
     $(document).on("turbolinks:load", function(){
-        //$(document).ready(function() {
         return $("body").on("click", ".remove_alternate_identifier", function(event){
             event.preventDefault();
             var ubiquityAlternateIdentifierClass = $(this).attr('data-removeUbiquityAlternateIdentifier');
-
             _this = this;
             removeUbiquityAlternateIdentifier(_this, ubiquityAlternateIdentifierClass);
 
         });
     });
 
-
     function removeUbiquityAlternateIdentifier(self, alternate_identifierDiv) {
         if ($(".ubiquity-meta-alternate-identifier").length > 1 ) {
-            $(self).parent('div' + `${alternate_identifierDiv}`).remove();
+            $(self).parent('div' + alternate_identifierDiv).remove();
         }
     }
 

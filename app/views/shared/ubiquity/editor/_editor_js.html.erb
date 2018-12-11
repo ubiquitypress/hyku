@@ -8,60 +8,89 @@
 
         return $("body").on("click", ".add_editor", function(event){
 
-            console.log('add editor');
-
             event.preventDefault();
             var ubiquityEditorClass = $(this).attr('data-addUbiquityEditor');
-            var time = new Date().getTime();
-
-
-            var cloneUbiDiv = $(this).parent('div' + `${ubiquityEditorClass}`).clone();
-
+            var cloneUbiDiv = $(this).parent('div' + ubiquityEditorClass + ':last').clone();
            _this = this;
-
-           hiddenFieldIncrementer(cloneUbiDiv);
-
-            console.log('clone count', cloneUbiDiv.length );
-            $(`${ubiquityEditorClass}` +  ':last').after(cloneUbiDiv)
-
+            cloneUbiDiv.find('input').val('');
+            cloneUbiDiv.find('option').attr('selected', false);
+            //increment hidden_field counter after cloning
+            var lastInputCount = $('.ubiquity-editor-score:last').val();
+            var hiddenInput = $(cloneUbiDiv).find('.ubiquity-editor-score');
+            hiddenInput.val(parseInt(lastInputCount) + 1);
+            $(ubiquityEditorClass +  ':last').after(cloneUbiDiv)
+            $('.ubiquity_editor_name_type:last').val('Personal').change()
         });
     });
 
-
     //remove linked fields
     $(document).on("turbolinks:load", function(){
-        //$(document).ready(function() {
         return $("body").on("click", ".remove_editor", function(event){
             console.log('remove editor');
             event.preventDefault();
             var ubiquityEditorClass = $(this).attr('data-removeUbiquityEditor');
 
             _this = this;
-            //$(this).parent('div' + `${ubiquityeditorClass}`).remove();
             removeUbiquityEditor(_this, ubiquityEditorClass);
 
         });
     });
 
-
     function removeUbiquityEditor(self, editorDiv) {
-
         if ($(".ubiquity-meta-editor").length > 1 ) {
-            //$(this).parent('div' + `${ubiquityeditorClass}`).remove();
-            $(self).parent('div' + `${editorDiv}`).remove();
+            $(self).parent('div' + editorDiv).remove();
         }
     }
 
+   //for hiding and showing values on the edit form for editor sub fields
+   $(document).on("turbolinks:load", function(){
+     return $("body").on("change",".ubiquity_editor_name_type", function(event){
+       if (event.target.value == 'Personal') {
+         $(this).siblings(".ubiquity_editor_organization_name").hide();
+         $(this).siblings(".ubiquity_personal_fields").show();
+       } else {
 
-   function hiddenFieldIncrementer(clonedDiv){
-      //increment hidden_field counter after cloning
-      var lastInputCount = $('.ubiquity-editor-score:last');
-      var clonedInput = $(clonedDiv).find('.ubiquity-editor-score')
-     //clonedInput.val( parseInt(clonedInput.val()) + 1 )
-      clonedInput.val( parseInt(lastInputCount.val()) + 1 )
+        $(this).siblings(".ubiquity_personal_fields").hide();
+        $(this).siblings(".ubiquity_editor_organization_name").show();
+       }
+      });
+   });
 
-   }
+   $(document).on("turbolinks:load", function(){
+     if($(".ubiquity_editor_name_type").is(':visible')){
+      $(".ubiquity_editor_name_type").each(function() {
+        _this = this;
+         if (this.value == 'Personal') {
+           $(this).siblings(".ubiquity_editor_organization_name").hide();
+           $(this).siblings(".ubiquity_personal_fields").show();
+         } else if(this.value == "Organisational"){
+          $(this).siblings(".ubiquity_personal_fields").hide();
+          $(this).siblings(".ubiquity_editor_organization_name").show();
+        } else {
+          $('.ubiquity_editor_name_type:last').val('Personal').change()
+        }
 
+      })
 
+     };
+   });
+
+   $(document).on("turbolinks:load", function(){
+     $("body").on("click",".additional-fields", function(event){
+       $(".ubiquity_editor_name_type").each(function() {
+         _this = this;
+         if (this.value == 'Personal') {
+           $(this).siblings(".ubiquity_editor_organization_name").hide();
+           $(this).siblings(".ubiquity_personal_fields").show();
+         } else if(this.value == "Organisational") {
+          $(this).siblings(".ubiquity_personal_fields").hide();
+          $(this).siblings(".ubiquity_editor_organization_name").show();
+        } else {
+          $('.ubiquity_editor_name_type:last').val('Personal').change()
+        }
+       });
+
+    });
+   });
 
 </script>

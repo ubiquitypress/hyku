@@ -1,38 +1,29 @@
-
-
-
 <script>
-  //$(".ubiquity-datacite-fetch").click()
-  //$(".get-datacite-doi-metadata-select").submit()
+
   $(document).on("turbolinks:load", function(event){
     event.preventDefault();
 
-    //return $("body").on("click", ".ubiquity-datacite-fetch", function(event){
     return $("body").on("submit", ".get-datacite-doi-metadata-select", function(event){
-
-      //
       var dataciteUrl = $(".ubiquity-datacite-value").val();
       $(".ubiquity-fields-populated").hide()
       $(".ubiquity-fields-populated-error").hide()
-      //alert(dataciteUrl);
-      fetchDataciteData(dataciteUrl);
 
       event.preventDefault();
+      fetchDataciteData(dataciteUrl);
       $("#get-datacite-doi-metadata").modal('hide')
-    }); //closes return
+    });
 
   });
 
   function fetchDataciteData(url){
-    var host = window.location.host;
-    var protocol = window.location.protocol;
+    var host = window.document.location.host;
+    var protocol = window.document.location.protocol;
     var fullHost = protocol + '//' + host + '/available_ubiquity_titles/call_datasite';
     $.ajax({
-      url: `${fullHost}`,
+      url: fullHost,
       type: "POST",
       data: {"url": url},
       success: function(result){
-        //alert(result.title);
         if (result.data.error  === undefined){
           $(".ubiquity-title").val(result.data.title)
           $('.ubiquity-abstract').val(result.data.abstract)
@@ -49,12 +40,9 @@
           $(".ubiquity-fields-populated-error").show()
 
         }
-
-      },
-      error: function(){
       }
-      })
-    } //function
+    }) //closes $.ajax
+  } //function fetchDataciteData
 
   function populateRelatedIdentifierValues(relatedArray){
     $.each(relatedArray, function(key, value){
@@ -66,11 +54,9 @@
 
     if (key === 0) {
       div = $(".ubiquity-meta-related-identifier");
-      //console.log(div)
       div.children(".related_identifier").val(value.related_identifier)
       $('.related_identifier_type').val(value.related_identifier_type).change()
       div.children(".related_identifier_relation:last").val(value.relation_type).change()
-      //$(".related_identifier_relation").val(value.relation_type).change()
     }else {
       div = $(".ubiquity-meta-related-identifier:last")
       cloned =  div.clone();
@@ -83,7 +69,6 @@
     }
   }
 
-
   function populateCreatorValues(creatorArray){
     $.each(creatorArray, function(key, value){
        addCreatorValues(key, value);
@@ -91,11 +76,8 @@
   }
 
   function addCreatorValues(key, value) {
-    console.log('json.key', value.creator_family_name)
-
     if (key === 0) {
       parent = $(".ubiquity-meta-creator");
-      //console.log(div)
       div = parent.children(".ubiquity_personal_fields:last")
       div.children(".creator_family_name:last").val(value.creator_family_name)
       div.children('.creator_given_name').val(value.creator_given_name)
@@ -106,8 +88,6 @@
       parent = $(".ubiquity-meta-creator:last")
       parentClone = parent.clone();
       div = parentClone.children(".ubiquity_personal_fields:last")
-
-      //cloned =  div.clone();
       parentClone.find('input').val('');
       parentClone.find('option').attr('selected', false);
       parent.after(parentClone)
@@ -118,6 +98,5 @@
 
     }
   }
-
 
 </script>

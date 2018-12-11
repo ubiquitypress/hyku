@@ -168,3 +168,21 @@ h4, .homepage-nav-tabs {
   font-size: 1.2em;
   font-weight: 400;
 }
+
+.grey-zip-icon {
+  color: $gray;
+}
+
+.zip-thumbnail-homepage {
+  padding-left: 115px;
+  position: relative;
+  line-height: 60px;
+}
+.zip-thumbnail-homepage:before {
+  position: absolute;
+  font-family: 'FontAwesome';
+  left: 30px;
+  content: "\f1c6";
+  color: $gray;
+  font-size: 3em;
+}

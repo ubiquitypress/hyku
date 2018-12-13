@@ -33,10 +33,11 @@
           $('.ubiquity-license').val(result.data.license).change()
           populateRelatedIdentifierValues(result.data.related_identifier_group)
           populateCreatorValues(result.data.creator_group)
-          $(".ubiquity-fields-populated").val(result.data.auto_populated)
+          //IE11 will not show the ,message when  .val() is used hence .html()
+          $(".ubiquity-fields-populated").html(result.data.auto_populated)
           $(".ubiquity-fields-populated").show()
         } else {
-          $(".ubiquity-fields-populated-error").val(result.data.error)
+          $(".ubiquity-fields-populated-error").html(result.data.error)
           $(".ubiquity-fields-populated-error").show()
 
         }

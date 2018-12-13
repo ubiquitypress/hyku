@@ -52,7 +52,7 @@
     <label class="control-label multi_value optional" for="#{template}_creator_family_name">
       Creator family name</label>
     <%= text_field_tag  "#{template}[creator_group][][creator_family_name]", nil,
-                        class: "#{template}_creator_family_name form-control multi-text-field multi_value",
+                        class: "#{template}_creator_family_name creator_family_name form-control multi-text-field multi_value",
                         placeholder: 'Please enter the creator\'s last name/family name.',
                         name: "#{template}[creator_group][][creator_family_name]"
     %>
@@ -61,7 +61,7 @@
     <label class="control-label multi_value optional" for="#{template}_creator_given_name">
       Creator given name</label>
     <%= text_field_tag  "#{template}[creator_group][][creator_given_name]", nil,
-                        class: "#{template}_creator_given_name form-control multi-text-field multi_value",
+                        class: "#{template}_creator_given_name creator_given_name form-control multi-text-field multi_value",
                         placeholder: 'Please enter the creator\'s first name/given name.',
                         name: "#{template}[creator_group][][creator_given_name]"
     %>
@@ -75,7 +75,7 @@
   </span>  <!-- closes ubiquity_personal_fields -->
 
   <br>
-  <%= hidden_field_tag "#{template}[creator_group][][creator_position]", 1, class: 'ubiquity-creator-score'  %>
+  <%= hidden_field_tag "#{template}[creator_group][][creator_position]", 1, class: 'ubiquity-creator-score creator_position'  %>
 
   <a href="#" style="color:red;"  class=" remove_creator form-group " data-removeUbiquitycreator=".ubiquity-meta-creator">
     <span class="glyphicon glyphicon-remove"></span>

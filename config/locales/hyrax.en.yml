@@ -30,3 +30,9 @@ en:
       fields:
         facet:
           library_of_congress_classification_sim: Library of Congress Classification
+  helpers:
+    action:
+      doi:
+        new: Fetch metadata from DataCite with DOI
+        submit: Fetch metadata
+        placeholder: Please add a DataCite DOI below

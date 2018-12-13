@@ -1,0 +1,35 @@
+<%# called in hyrax/base/new.html.erb %>
+<% work_type = curation_concern.model_name.to_s %>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#get-datacite-doi-metadata" >
+  <%= t('helpers.action.doi.new')%>
+</button>
+<br/><br/>
+<div class="modal doi fade" id="get-datacite-doi-metadata" tabindex="-1" role="dialog" aria-labelledby="get-datacite-doi-metadata-label">
+  <div class="modal-dialog" role="document">
+    <form class="get-datacite-doi-metadata-select">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="close" data-dismiss="modal" aria-label="<%= t('hyrax.dashboard.heading_actions.close') %>">
+            <span aria-hidden="true">&times;</span></button>
+          <p class="help-block ubiquity-modal-padding"><%= t('helpers.action.doi.placeholder') %></p>
+          <p class="help-block"> for example 10.5438/0012 or https://doi.org/10.5438/0012 or http://dx.doi.org/10.18154/RWTH-CONV-02056 </p>
+
+           <input class="ubiquity-datacite-value form-control string optional" type="text" value="" name="<%= work_type.underscore %>[doi]" id="<%= work_type.underscore %>_doi">
+
+         </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default ubiquity-datacite-fetch" data-dismiss="modal"><%= t('hyrax.dashboard.heading_actions.close') %></button>
+          <input type="submit" class="btn btn-primary" value="<%= t('helpers.action.doi.submit') %>">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<h5 class="ubiquity-fields-populated" style="color:red;font-weight: 900;">  </h5>
+<h5 class="ubiquity-fields-populated-error" style="color:red;font-weight: 900;">  </h5>
+
+
+<%= render "shared/ubiquity/datacite_js"  %>

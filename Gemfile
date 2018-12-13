@@ -118,9 +118,11 @@ end
 
 gem 'peek-sidekiq'
 gem 'sidekiq'
+gem "sidekiq-cron", "~> 1.0.4"
 
 gem 'secure_headers'
 
 gem 'sentry-raven'
 
 gem 'mini_magick', '~> 4.9.2'
+gem 'httparty', '~> 0.16.3'

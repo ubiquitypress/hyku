@@ -7,8 +7,7 @@
         return $("body").on("click", ".add_creator", function(event){
             event.preventDefault();
             var ubiquityCreatorClass = $(this).attr('data-addUbiquityCreator');
-            
-            var cloneUbiDiv = $(this).parent('div' + `${ubiquityCreatorClass}` + ':last').clone();
+            cloneUbiDiv = $(this).parent('div' + ubiquityCreatorClass + ':last').clone();
 
            _this = this;
             cloneUbiDiv.find('input').val('');
@@ -17,7 +16,7 @@
             var lastInputCount = $('.ubiquity-creator-score:last').val();
             var hiddenInput = $(cloneUbiDiv).find('.ubiquity-creator-score');
             hiddenInput.val(parseInt(lastInputCount) + 1);
-            $(`${ubiquityCreatorClass}` +  ':last').after(cloneUbiDiv)
+            $(ubiquityCreatorClass +  ':last').after(cloneUbiDiv)
             $('.ubiquity_creator_name_type:last').val('Personal').change()
         });
     });
@@ -34,7 +33,7 @@
 
     function removeubiquityCreator(self, creatorDiv) {
         if ($(".ubiquity-meta-creator").length > 1 ) {
-            $(self).parent('div' + `${creatorDiv}`).remove();
+            $(self).parent('div' + creatorDiv).remove();
         }
     }
 

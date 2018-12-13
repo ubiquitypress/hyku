@@ -28,11 +28,11 @@
   });
 
   function checkTitle(ubiquityTitle, ubiquityModel){
-    var host = window.location.host;
-    var protocol = window.location.protocol;
+    var host = window.document.location.host;
+    var protocol = window.document.location.protocol;
     var fullHost = protocol + '//' + host + '/available_ubiquity_titles/check';
     $.ajax({
-      url: `${fullHost}`,
+      url: fullHost,
       type: "POST",
       data: {"title": ubiquityTitle, "model_class": ubiquityModel},
       success: function(result){

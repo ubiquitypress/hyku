@@ -17,9 +17,10 @@ Rails.application.routes.draw do
 
   get 'status', to: 'status#index'
 
-  resources :available_ubiquity_titles, only: [:check] do
+  resources :available_ubiquity_titles, only: [:check, :call_datasite] do
       collection do
         post :check
+        post :call_datasite
       end
   end
 
@@ -63,6 +64,14 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    resources :exports, only: [:index] do
+      collection do
+        get :export_database
+        get :export_remap_model
+        get :export_model
+      end
+    end
+
     resource :account, only: [:edit, :update]
     resources :users, only: [:destroy]
     resources :groups do
@@ -83,8 +92,9 @@ Rails.application.routes.draw do
   mount Riiif::Engine => '/images', as: 'riiif'
 
   require 'sidekiq/web'
+  require 'sidekiq/cron/web'
   authenticate :user, lambda {|u| u.roles_name.include? 'admin' } do
     mount Sidekiq::Web => '/sidekiq'
-  end 
+  end
 
 end

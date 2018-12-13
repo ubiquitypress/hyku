@@ -1,35 +1,31 @@
 <script type="text/javascript">
-
     // add linked fields
     $(document).on("turbolinks:load", function(){
         return $("body").on("click", ".add_event_date", function(event){
             event.preventDefault();
             var ubiquityEventDateClass = $(this).attr('data-addUbiquityEventDate');
-            var cloneUbiDiv = $(this).parent('div' + `${ubiquityEventDateClass}`).clone();
+            var cloneUbiDiv = $(this).parent('div' + ubiquityEventDateClass).clone();
             _this = this;
             cloneUbiDiv.find('input').val('');
             cloneUbiDiv.find('option').attr('selected', false);
-            $(`${ubiquityEventDateClass}`+ ':last').after(cloneUbiDiv)
+            $(ubiquityEventDateClass + ':last').after(cloneUbiDiv)
         });
     });
 
     //remove linked fields
     $(document).on("turbolinks:load", function(){
-        //$(document).ready(function() {
         return $("body").on("click", ".remove_event_date", function(event){
             event.preventDefault();
             var ubiquityEventDateClass = $(this).attr('data-removeUbiquityEventDate');
-
             _this = this;
             removeUbiquityEventDate(_this, ubiquityEventDateClass);
 
         });
     });
 
-
     function removeUbiquityEventDate(self, event_dateDiv) {
         if ($(".ubiquity-meta-event-date").length > 1 ) {
-            $(self).parent('div' + `${event_dateDiv}`).remove();
+            $(self).parent('div' + event_dateDiv).remove();
         }
     }
 

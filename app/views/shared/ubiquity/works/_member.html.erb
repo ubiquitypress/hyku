@@ -16,6 +16,9 @@
     <% end %>
   </td>
   <td>
-    <%= render 'actions', member: member %>
+
+    <!-- Copied from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/base/_actions.html.erb -->
+    <!-- Moved to shared/ubiquity/works/actions -->
+    <%= render 'shared/ubiquity/works/actions', member: member %>
   </td>
 </tr>

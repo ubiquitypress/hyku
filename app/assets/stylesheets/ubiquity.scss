@@ -94,19 +94,15 @@ h4, .homepage-nav-tabs {
   padding: 16px 0px 8px 0px;
 }
 
-.shared-layer-logos {
-  .grid-row {
-    margin-left: auto;
-    margin-right: auto;
-  }
+.shared-layer-logos-container {
+  display: grid;
+  grid-gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+
   .grid-item {
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
     text-align: center;
-  }
-  .heading {
-    color: $gray;
-    font-size: 1.4em;
   }
 }
 
@@ -117,8 +113,8 @@ h4, .homepage-nav-tabs {
 }
 
 .small-partner-logo {
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   margin-top: 20px;
 }
 
@@ -140,6 +136,14 @@ h4, .homepage-nav-tabs {
 
 .tate-logo {
   background: image_url("tate-logo-black.png") no-repeat;
+  -webkit-background-size: contain;
+  background-size: contain;
+  background-position: center;
+  display: block;
+}
+
+.nms-logo {
+  background: image_url("nms-logo.jpg") no-repeat;
   -webkit-background-size: contain;
   background-size: contain;
   background-position: center;

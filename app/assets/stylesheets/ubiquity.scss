@@ -150,6 +150,14 @@ h4, .homepage-nav-tabs {
   display: block;
 }
 
+.bm-logo {
+  background: image_url("bm-logo.jpg") no-repeat;
+  -webkit-background-size: contain;
+  background-size: contain;
+  background-position: center;
+  display: block;
+}
+
 .jumbotron .shared-repo-header {
   text-align: left;
   padding-left: 40px;

@@ -13,7 +13,11 @@
     <div class="media">
       <!-- This if condiftion was added by UbiquityPress -->
       <% if document.thumbnail_id %>
-        <span  class="collection-icon-small pull-left"><%= render_thumbnail_tag document, :style => 'width:18px' %></span>
+        <% if FileSet.find(document.thumbnail_id).format_label.first == 'ZIP Format' %>
+          <span class="fa fa-file-archive-o grey-zip-icon pull-left collection-icon-small"></span>
+        <% else %>
+          <span  class="collection-icon-small pull-left"><%= render_thumbnail_tag document, :style => 'width:18px' %></span>
+        <% end %>
       <% else %>
           <!-- this was the default in hyrax -->
           <span class="<%# Hyrax::ModelIcon.css_class_for(Collection) %> collection-icon-small pull-left"></span>

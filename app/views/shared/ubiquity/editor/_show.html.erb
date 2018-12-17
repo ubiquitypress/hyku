@@ -1,12 +1,9 @@
+<!-- rendered from views/hyrax/base///_attribute_rows.html.erb -->
 
 <% array_of_hash = get_model(presenter.model, presenter.id, 'editor', 'editor_position') %>
 
 <% if (array_of_hash.class == Array && array_of_hash.first.class == Hash)  %>
   <%= render "shared/ubiquity/editor/show_array_hash",  array_of_hash: array_of_hash %>
-<% elsif  array_of_hash.class == Array  %>
-  <%= render "shared/ubiquity/editor/show_array",  array_of_hash: array_of_hash %>
-<% elsif array_of_hash.class == Hash %>
-      <%= render "shared/ubiquity/editor/show_hash",  array_of_hash: array_of_hash %>
 <% else %>
 
 <% end %> <%# closes if array_of_hash.class %>

@@ -1,0 +1,79 @@
+# Contributor: Łukasz Jendrysik <scadu@yandex.com>
+# Contributor: Carlo Landmeter <clandmeter@gmail.com>
+# Maintainer: Natanael Copa <ncopa@alpinelinux.org>
+pkgname=imagemagick
+pkgver=7.0.8.16
+_abiver=7
+_pkgver=${pkgver%.*}-${pkgver##*.}
+pkgrel=0
+pkgdesc="Collection of tools and libraries for many image formats"
+url="https://www.imagemagick.org"
+arch="all"
+license="ImageMagick"
+options="libtool !checkroot"
+makedepends="zlib-dev libpng-dev libjpeg-turbo-dev freetype-dev fontconfig-dev
+	perl-dev ghostscript-dev libwebp-dev libtool tiff-dev lcms2-dev
+	libwebp-dev libxml2-dev librsvg-dev libx11-dev libxext-dev"
+checkdepends="freetype fontconfig ghostscript ghostscript-fonts lcms2 graphviz"
+subpackages="$pkgname-doc $pkgname-dev $pkgname-c++:_cxx $pkgname-libs"
+source="https://www.imagemagick.org/download/releases/ImageMagick-7.0.8-16.tar.xz"
+builddir="$srcdir/ImageMagick-${_pkgver}"
+
+build() {
+	cd "$builddir"
+	# fix doc dir, Gentoo bug 91911
+	sed -i -e \
+		's:DOCUMENTATION_PATH="${DATA_DIR}/doc/${DOCUMENTATION_RELATIVE_PATH}":DOCUMENTATION_PATH="/usr/share/doc/imagemagick":g' \
+		configure
+	./configure \
+		--build=$CBUILD \
+		--host=$CHOST \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--disable-static \
+		--disable-openmp \
+		--with-threads \
+        --with-djvu \
+		--with-x \
+		--with-tiff \
+		--with-png \
+		--with-webp \
+		--with-rsvg \
+		--with-gslib \
+		--with-gs-font-dir=/usr/share/fonts/Type1 \
+		--with-modules \
+		--with-xml \
+		$_pic
+	make
+}
+
+check() {
+	cd "$builddir"
+	#make check
+}
+
+package() {
+	cd "$builddir"
+	make -j1 DESTDIR="$pkgdir" install
+	if ! [ -e "$pkgdir"/usr/lib/libMagickCore-$_abiver.Q16HDRI.so ]; then
+		error "Has ABI verision changed? (current is $_abiver)"
+		return 1
+	fi
+
+	# we cannot let abuild delete the *.la files due to we need *.la
+	# for the modules
+	rm "$pkgdir"/usr/lib/*.la
+
+	find "$pkgdir" -name '.packlist' -o -name 'perllocal.pod' \
+		-o -name '*.bs' -delete
+}
+
+_cxx() {
+	pkgdesc="ImageMagick Magick++ library (C++ bindings)"
+	mkdir -p "$subpkgdir"/usr/lib
+	mv "$pkgdir"/usr/lib/libMagick++*.so.* "$subpkgdir"/usr/lib/
+}
+
+sha512sums="fbc0b0410702c15352989652c055e4e1a099878e30b859c75322e162eccd384cabb98e14cac14e3fb2c902f25f80a5b62f94380ef78f891731980de9a40b6867  ImageMagick-7.0.8-16.tar.xz"

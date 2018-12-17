@@ -17,4 +17,5 @@ class AvailableUbiquityTitlesController < ApplicationController
     render json: {'data': datacite.data}
   end
 
+  
 end

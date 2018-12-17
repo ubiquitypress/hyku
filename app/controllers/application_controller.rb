@@ -25,8 +25,9 @@ class ApplicationController < ActionController::Base
 
   before_action :set_raven_context
 
+  #UbiquityPress is temporarily using redirect_to to replace raise ActionController::RoutingError, 'Not Found' in rescue_from block
   rescue_from Apartment::TenantNotFound do
-    raise ActionController::RoutingError, 'Not Found'
+    redirect_to "#{request.protocol}#{Account.admin_host}:#{request.port}/"
   end
 
   private

@@ -1,0 +1,5 @@
+<!-- Copied from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/base/_actions.html.erb -->
+<% if member.model_name.singular.to_sym == :file_set %>
+  <!-- replaces <%# render "hyrax/file_sets/actions", file_set: member %>  -->
+  <%= render "shared/ubiquity/file_sets/actions", file_set: member %>
+<% end %>

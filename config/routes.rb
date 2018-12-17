@@ -4,10 +4,10 @@ Rails.application.routes.draw do
     constraints host: Account.admin_host do
       get '/account/sign_up' => 'account_sign_up#new', as: 'new_sign_up'
       post '/account/sign_up' => 'account_sign_up#create'
-      get '/', to: 'splash#index'
+      get '/', to: 'splash#shared_layer'
 
       # pending https://github.com/projecthydra-labs/hyrax/issues/376
-      get '/dashboard', to: redirect('/')
+      get '/dashboard', to: 'splash#index'
 
       namespace :proprietor do
         resources :accounts
@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
   get 'status', to: 'status#index'
 
-  resources :available_ubiquity_titles, only: [:check] do
+  resources :available_ubiquity_titles, only: [:check, :call_datasite] do
       collection do
         post :check
         post :call_datasite
@@ -64,6 +64,14 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    resources :exports, only: [:index] do
+      collection do
+        get :export_database
+        get :export_remap_model
+        get :export_model
+      end
+    end
+
     resource :account, only: [:edit, :update]
     resources :users, only: [:destroy]
     resources :groups do

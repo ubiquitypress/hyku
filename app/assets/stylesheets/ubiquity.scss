@@ -93,3 +93,103 @@ h4, .homepage-nav-tabs {
 .ubiquity-modal-padding {
   padding: 16px 0px 8px 0px;
 }
+
+.shared-layer-logos-container {
+  display: grid;
+  grid-gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+
+  .grid-item {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.partner-logo {
+  width: 120px;
+  height: 120px;
+  margin-top: 20px;
+}
+
+.small-partner-logo {
+  width: 90px;
+  height: 90px;
+  margin-top: 20px;
+}
+
+.bl-logo {
+  background: image_url("bl-logo.jpg") no-repeat;
+  -webkit-background-size: contain;
+  background-size: contain;
+  background-position: center;
+  display: block;
+}
+
+.mola-logo {
+  background: image_url("mola-logo.jpg") no-repeat;
+  -webkit-background-size: contain;
+  background-size: contain;
+  background-position: center;
+  display: block;
+}
+
+.tate-logo {
+  background: image_url("tate-logo-black.png") no-repeat;
+  -webkit-background-size: contain;
+  background-size: contain;
+  background-position: center;
+  display: block;
+}
+
+.nms-logo {
+  background: image_url("nms-logo.jpg") no-repeat;
+  -webkit-background-size: contain;
+  background-size: contain;
+  background-position: center;
+  display: block;
+}
+
+.bm-logo {
+  background: image_url("bm-logo.jpg") no-repeat;
+  -webkit-background-size: contain;
+  background-size: contain;
+  background-position: center;
+  display: block;
+}
+
+.jumbotron .shared-repo-header {
+  text-align: left;
+  padding-left: 40px;
+
+  h1 {
+    font-size: 1.8em;
+  }
+
+  p {
+    font-size: 1.4em;
+  }
+
+}
+
+.jumbotron .shared-repo-text p {
+  font-size: 1.2em;
+  font-weight: 400;
+}
+
+.grey-zip-icon {
+  color: $gray;
+}
+
+.zip-thumbnail-homepage {
+  padding-left: 115px;
+  position: relative;
+  line-height: 60px;
+}
+.zip-thumbnail-homepage:before {
+  position: absolute;
+  font-family: 'FontAwesome';
+  left: 30px;
+  content: "\f1c6";
+  color: $gray;
+  font-size: 3em;
+}

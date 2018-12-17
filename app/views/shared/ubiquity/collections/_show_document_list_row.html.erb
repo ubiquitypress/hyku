@@ -15,9 +15,7 @@
   <td>
     <div class="media">
       <% if  document.thumbnail_id %>
-        <%= link_to [main_app, document], class: "media-left" do %>
-          <%= render_thumbnail_tag document, { class: "hidden-xs file_listing_thumbnail" }, { suppress_link: true } %>
-        <% end %>
+        <%= render 'shared/ubiquity/thumbnail', document: document %>
       <% else %>
         <%= link_to "", class: 'media-left', 'aria-hidden' => true do %>
           <span class="media-left hidden-xs file_listing_thumbnail" style="height:55px;width:50px;padding-left: 60px;" ></span>

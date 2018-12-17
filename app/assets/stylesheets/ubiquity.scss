@@ -94,6 +94,18 @@ h4, .homepage-nav-tabs {
   padding: 16px 0px 8px 0px;
 }
 
+.ie-table {
+  display: table;
+  margin: auto;
+}
+.ie-table-item {
+  float: left;
+}
+.ie-table-item a {
+  display: block;
+  padding: .5em 3em;
+}
+
 .shared-layer-logos-container {
   display: grid;
   grid-gap: 30px;

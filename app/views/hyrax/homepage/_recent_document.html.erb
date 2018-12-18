@@ -7,7 +7,11 @@
       <!-- if condition added by ubiquity to ensure default thumbnail is not displayed-->
       <% if recent_document.thumbnail_id %>
         <%= link_to [main_app, recent_document], class: 'media-left', 'aria-hidden' => true do %>
-          <%= render_thumbnail_tag recent_document, { class: 'hidden-xs file_listing_thumbnail' }, { suppress_link: true } %>
+          <% if FileSet.find(recent_document.thumbnail_id).format_label.first == 'ZIP Format' %>
+            <span class="zip-thumbnail-homepage hidden-xs"></span>
+          <% else %>
+            <%= render_thumbnail_tag recent_document, { class: 'hidden-xs file_listing_thumbnail' }, { suppress_link: true } %>
+          <% end %>
         <% end %>
       <% else %>
         <%= link_to "", class: 'media-left', 'aria-hidden' => true do %>

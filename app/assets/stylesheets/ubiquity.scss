@@ -118,14 +118,14 @@ h4, .homepage-nav-tabs {
 }
 
 .partner-logo {
-  width: 120px;
-  height: 120px;
+  width: 121px;
+  height: 121px;
   margin-top: 20px;
 }
 
 .small-partner-logo {
-  width: 90px;
-  height: 90px;
+  width: 88px;
+  height: 88px;
   margin-top: 20px;
 }
 
@@ -135,6 +135,7 @@ h4, .homepage-nav-tabs {
   background-size: contain;
   background-position: center;
   display: block;
+  -ms-interpolation-mode: bicubic;
 }
 
 .mola-logo {
@@ -143,6 +144,7 @@ h4, .homepage-nav-tabs {
   background-size: contain;
   background-position: center;
   display: block;
+  -ms-interpolation-mode: bicubic;
 }
 
 .tate-logo {
@@ -151,6 +153,7 @@ h4, .homepage-nav-tabs {
   background-size: contain;
   background-position: center;
   display: block;
+  -ms-interpolation-mode: bicubic;
 }
 
 .nms-logo {
@@ -159,14 +162,16 @@ h4, .homepage-nav-tabs {
   background-size: contain;
   background-position: center;
   display: block;
+  -ms-interpolation-mode: bicubic;
 }
 
 .bm-logo {
-  background: image_url("bm-logo.jpg") no-repeat;
+  background: image_url("bm-logo.png") no-repeat;
   -webkit-background-size: contain;
   background-size: contain;
   background-position: center;
   display: block;
+  -ms-interpolation-mode: bicubic;
 }
 
 .jumbotron .shared-repo-header {

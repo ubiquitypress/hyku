@@ -13,7 +13,7 @@
     <div class="media">
       <!-- This if condiftion was added by UbiquityPress -->
       <% if document.thumbnail_id %>
-        <% if FileSet.find(document.thumbnail_id).format_label.first == 'ZIP Format' %>
+        <% if File.extname(document.thumbnail_path).blank? %>
           <span class="fa fa-file-archive-o grey-zip-icon pull-left collection-icon-small"></span>
         <% else %>
           <span  class="collection-icon-small pull-left"><%= render_thumbnail_tag document, :style => 'width:18px' %></span>
@@ -40,7 +40,7 @@
   <td class="text-center">
     <%= render_visibility_link(document) %>
   </td>
-  
+
    <!-- Added by UbiquityPress to enable us share same partial from dashboard when we click
     collections then 'All collections or Your collections' Tab-->
    <td class="text-center">

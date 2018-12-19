@@ -11,7 +11,7 @@
               <!-- if condition added by ubiquity to display image or empty border but not default icon-->
               <% if collection.thumbnail_id %>
                 <%= link_to [hyrax, collection], class: 'media-left', 'aria-hidden' => true do %>
-                  <% if FileSet.find(collection.thumbnail_id).format_label.first == 'ZIP Format' %>
+                  <% if File.extname(collection.thumbnail_path).blank? %>
                     <span class="zip-thumbnail-homepage hidden-xs"></span>
                   <% else %>
                     <%= render_thumbnail_tag collection, { class: 'hidden-xs file_listing_thumbnail' }, { suppress_link: true } %>

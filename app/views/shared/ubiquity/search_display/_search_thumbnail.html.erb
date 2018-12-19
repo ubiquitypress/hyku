@@ -3,7 +3,7 @@
 
 <% if document.thumbnail_id %>
   <div class="list-thumbnail">
-    <% if document.thumbnail_id && FileSet.find(document.thumbnail_id).format_label.first == 'ZIP Format' %>
+    <% if document.thumbnail_id && File.extname(document.thumbnail_path).blank? %>
       <span class="fa fa-file-archive-o fa-5x grey-zip-icon"></span>
     <% else %>
       <%= render_thumbnail_tag document, :style => "width:150px" %>

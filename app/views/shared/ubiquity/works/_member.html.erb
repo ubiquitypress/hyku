@@ -3,9 +3,8 @@
 <tr class="<%= dom_class(member) %> attributes">
   <td class="thumbnail">
      <!-- displays zip icon for files with archived format eg zip -->
-     <%= member.file_format %>
-
-    <% if zipped_types.include? member.file_format %>
+     
+    <% if zipped_types.include? check_for_zip(member.link_name) %>
       <span class="fa fa-file-archive-o fa-5x grey-zip-icon"></span>
     <% elsif check_file_is_restricted?(member) %>
       <%= render_thumbnail_tag member %>

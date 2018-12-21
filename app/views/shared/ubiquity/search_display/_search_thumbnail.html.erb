@@ -5,6 +5,7 @@
   <div class="list-thumbnail">
     <% file_set =  get_media_model(document.thumbnail_id, request.host) %>
     <% thumbnail = file_set_solr_doc(file_set) %>
+    <%= thumbnail.file_format %>
 
     <% if zipped_types.include? thumbnail.file_format %>
       <span class="fa fa-file-archive-o fa-5x grey-zip-icon"></span>

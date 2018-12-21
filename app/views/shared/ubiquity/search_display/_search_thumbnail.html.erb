@@ -3,10 +3,16 @@
 
 <% if document.thumbnail_id %>
   <div class="list-thumbnail">
-    <% if document.thumbnail_id && File.extname(document.thumbnail_path).blank? %>
+    <% file_set =  get_media_model(document.thumbnail_id, request.host) %>
+    <% thumbnail = file_set_solr_doc(file_set) %>
+
+    <% if zipped_types.include? thumbnail.file_format %>
       <span class="fa fa-file-archive-o fa-5x grey-zip-icon"></span>
+      <% elsif ((not file_set.active_lease?) && (not file_set.under_embargo?) ) %>
+        <%= render_thumbnail_tag document, :style => "width:150px" %>
     <% else %>
-      <%= render_thumbnail_tag document, :style => "width:150px" %>
+      <%# displays for logged out user for files under embargo/lease %>
+      <span class="<%# Hyrax::ModelIcon.css_class_for(Collection) %> collection-icon-search"></span>
     <% end %>
   </div>
 <% else %>

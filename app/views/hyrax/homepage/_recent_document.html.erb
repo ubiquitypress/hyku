@@ -9,11 +9,19 @@
      <div class="media">
        <!-- if condition added by ubiquity to ensure default thumbnail is not displayed-->
        <% if recent_document.thumbnail_id %>
+
+         <% file_set =  get_media_model(recent_document.thumbnail_id, request.host) %>
+         <% thumbnail = file_set_solr_doc(file_set) %>
+
          <%= link_to [main_app, recent_document], class: 'media-left', 'aria-hidden' => true do %>
-           <% if File.extname(recent_document.thumbnail_path).blank? %>
+           <%# if File.extname(recent_document.thumbnail_path).blank? %>
+           <% if zipped_types.include? thumbnail.file_format  %>
              <span class="zip-thumbnail-homepage hidden-xs"></span>
+           <% elsif ((not file_set.active_lease?) && (not file_set.under_embargo?) ) %>
+               <%= render_thumbnail_tag recent_document, { class: 'hidden-xs file_listing_thumbnail' }, { suppress_link: true } %>
            <% else %>
-             <%= render_thumbnail_tag recent_document, { class: 'hidden-xs file_listing_thumbnail' }, { suppress_link: true } %>
+           <!-- displays for logged out users on files with embargo/lease -->
+           <span class="media-left hidden-xs file_listing_thumbnail mock-thumbnail" ></span>
            <% end %>
          <% end %>
        <% else %>

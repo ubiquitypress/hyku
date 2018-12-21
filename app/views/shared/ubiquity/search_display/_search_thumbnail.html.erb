@@ -5,9 +5,8 @@
   <div class="list-thumbnail">
     <% file_set =  get_media_model(document.thumbnail_id, request.host) %>
     <% thumbnail = file_set_solr_doc(file_set) %>
-    <%= thumbnail.file_format %>
-
-    <% if zipped_types.include? thumbnail.file_format %>
+  
+    <% if zipped_types.include? check_for_zip(thumbnail.title.first) %>
       <span class="fa fa-file-archive-o fa-5x grey-zip-icon"></span>
       <% elsif ((not file_set.active_lease?) && (not file_set.under_embargo?) ) %>
         <%= render_thumbnail_tag document, :style => "width:150px" %>

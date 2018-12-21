@@ -1,6 +1,7 @@
 <!--  Hyku::ManifestEnabledWorkShowPresenter -->
 <!-- This whole file was add ubiquitypress to selectively display universalviewer-->
 <% if presenter.representative_presenter.image? %>
+  <% file_set_presenter = presenter.representative_presenter %>
   <% if zipped_types.include? check_for_zip(file_set_presenter.link_name) %>
     <!-- dont' displays universal viewer for files with archived format eg zip -->
   <% elsif check_file_is_restricted?(file_set_presenter) && presenter.representative_presenter.image? && (not zipped_types.include? check_for_zip(file_set_presenter.link_name)) %>

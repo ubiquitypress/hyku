@@ -95,14 +95,8 @@ module Ubiquity
 
     def populate_json_field(key, val)
       if (@data_hash[key].present? && (@work_instance.send(key).respond_to? :length) && (not val.class == String) && (['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key))
-         process_json_value(key)
         @work_instance.send("#{key}=", [@data_hash[key].to_json])
       end
-    end
-
-    def process_json_value(key)
-      group_field_key = "#{key}_group"
-      @work_instance.send("#{group_field_key}=", @data_hash[key])
     end
 
     def populate_single_fields(key, val)

@@ -1,5 +1,39 @@
 module MultipleMetadataFieldsHelper
 
+  #receives a file_set when called from views/hyrax/base/_representative_media.html.erb
+  #receives a Hyku::FileSetPresenter when called from views/shared/ubiquity/works/_member.html.erb
+  #used when work type was passed in
+  #  data = data.thumbnail if data.class != Hyku::FileSetPresenter
+  #
+  #Change zip to .zip and others too because calling file.format on a thumbnail in production
+  #returned *zip (ZIP Format)* instead of zip
+  def zipped_types
+    %w[.zip .zipx .bz2 .gz .dmg .rar .sit .sitx .tar .tar.gz .tgz .tar.Z .tar.bz2 .tbz2 .tar.lzma .tlz .tar.xz .txz].freeze
+  end
+  def check_file_is_restricted?(data)
+    if (current_user.present? && ((current_user.roles_name.include? "admin") || data.depositor == current_user.email || (can? :manage, data)) && ((data.lease_expiration_date.present?) || (data.embargo_release_date.present?) ) )
+      true
+    else
+      false
+    end
+  end
+
+  #receives a id reprsents a thumbnail_id and is used to fetch and return a file_set
+  def get_media_model(id, host=nil)
+    if id.class == String
+      ::AccountElevator.switch!("#{host}") if host.present?
+      file_set =  ActiveFedora::Base.find(id)
+    end
+  end
+
+  def check_for_zip(name)
+    File.extname(name)
+  end
+
+  def file_set_solr_doc(file_set)
+     SolrDocument.new(file_set.to_solr)
+  end
+
   #called in app/views/hyrax/collection/_sort_and_per_page.html
   #sort_fields is 2 dimensional array
   def ubiquity_sort_field(sort_array)

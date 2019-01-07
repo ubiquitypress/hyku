@@ -2,11 +2,17 @@
 
 <tr class="<%= dom_class(member) %> attributes">
   <td class="thumbnail">
-    <% check_zip = File.extname(member.link_name) %>
-    <% if check_zip == ".zip" %>
+     <!-- displays zip icon for files with archived format eg zip -->
+     
+    <% if zipped_types.include? check_for_zip(member.link_name) %>
       <span class="fa fa-file-archive-o fa-5x grey-zip-icon"></span>
-    <% else %>
+    <% elsif check_file_is_restricted?(member) %>
       <%= render_thumbnail_tag member %>
+    <% elsif ((not member.lease_expiration_date.present?) && (not member.embargo_release_date.present?) ) %>
+      <%= render_thumbnail_tag member %>
+    <% else %>
+     <!-- displays for logged out users on files with embargo/lease -->
+     <span class="media-left hidden-xs file_listing_thumbnail mock-thumbnail" ></span>
     <% end %>
  </td>
   <td class="attribute filename"><%= link_to(member.link_name, contextual_path(member, @presenter)) %></td>

@@ -35,10 +35,8 @@ module Ubiquity
     #
     def save_creator
       self.creator_group ||= JSON.parse(self.creator.first) if self.creator.present?
-
       #remove Hash with empty values and nil
       clean_submitted_data ||= remove_hash_keys_with_empty_and_nil_values(self.creator_group)
-
       #Check if the hash keys are only those used for default values like position
       data = compare_hash_keys?(clean_submitted_data)
 
@@ -146,18 +144,6 @@ module Ubiquity
       self.creator_search = values
     end
 
-    #remove hash keys with value of nil, "", and "NaN"
-    def remove_hash_keys_with_empty_and_nil_values(data)
-      if (data.present? && data.class == Array)
-        new_data = data.map do |hash|
-          hash.reject { |k,v| v.nil? || v.to_s.empty? || v == "NaN"}
-        end
-
-        # remove hash that contains only default keys and values.
-        remove_hash_with_default_keys(new_data)
-      end
-    end
-
     #Check if the hash keys are only those used for default values like position
     def compare_hash_keys?(record)
       if record.present? && record.first.present?
@@ -169,10 +155,23 @@ module Ubiquity
       end
     end
 
+    #remove hash keys with value of nil, "", and "NaN"
+    def remove_hash_keys_with_empty_and_nil_values(data)
+      if (data.present? && data.class == Array)
+        new_data = data.map do |hash|
+          hash.reject { |k,v| v.nil? || v.to_s.empty? || v == "NaN"}
+        end
+        # remove hash that contains only default keys and values.
+        remove_hash_with_default_keys(new_data)
+      end
+    end
+
     # remove any hash that contains only default keys and values.
     def remove_hash_with_default_keys(data)
       my_default_keys = get_default_hash_keys(data)
-      new_data = data.reject {|hash| hash.keys.uniq == my_default_keys}
+      new_data = data.reject do |hash|
+        hash.keys.uniq == my_default_keys
+      end
     end
 
     #data is an array of hash eg [{"contributor_organization_name"=>""}},{"contributor_name_type"=>"Personal"}]

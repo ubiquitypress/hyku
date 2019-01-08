@@ -9,9 +9,10 @@ services:
       internal:
 
   web:
-    build:
-      context: ../.
-      dockerfile: Dockerfile
+    image: upress/hyku:latest-test
+    #build:
+      #context: ../.
+      #dockerfile: Dockerfile
     volumes:
       - web:/data/tmp/uploads
       - ..:/data
@@ -24,8 +25,8 @@ services:
       - zoo2
       - zoo3
       - memcache
-    expose:
-      - 3000
+    ports:
+      - 3000:3000
     env_file:
       - credentials-dev.env
     networks:

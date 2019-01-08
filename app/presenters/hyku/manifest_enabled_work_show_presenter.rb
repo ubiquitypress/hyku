@@ -8,7 +8,7 @@ module Hyku
              :official_link, :place_of_publication, :series_name, :edition, :abstract, :version,
              :event_title, :event_date, :event_location, :book_title, :editor,
              :alternate_identifier, :related_identifier, :media, :related_exhibition, :related_exhibition_date,
-             :library_of_congress_classification,
+             :library_of_congress_classification, :audience,
              to: :solr_document
 
     def manifest_url

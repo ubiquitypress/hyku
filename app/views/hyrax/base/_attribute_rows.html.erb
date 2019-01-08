@@ -6,6 +6,7 @@
 <%= presenter.attribute_to_html(:event_date, render_as: :multiple_dates) %>
 <%= presenter.attribute_to_html(:event_location, render_as: :alphabetical_sort) %>
 <%= presenter.attribute_to_html(:book_title, render_as: :string) %>
+<%= presenter.attribute_to_html(:audience, render_as: :string) %>
 <%= presenter.attribute_to_html(:journal_title, render_as: :string) %>
 <%= presenter.attribute_to_html(:resource_type, render_as: :resource_type) %>
 <%= presenter.attribute_to_html(:keyword, render_as: :alphabetical_sort_facet) %>
@@ -49,3 +50,5 @@
 <%#= presenter.attribute_to_html(:date_submitted) %>
 <%#= presenter.attribute_to_html(:refereed) %>
 <%= presenter.attribute_to_html(:creator_search) %>
+
+

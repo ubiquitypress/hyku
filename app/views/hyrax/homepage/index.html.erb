@@ -1,0 +1,21 @@
+<!-- copied over from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/homepage/index.html.erb -->
+<!-- Changed share button text to 'Add new work', show this button for onlky logged in users -->
+<% provide :page_title, application_name %>
+
+  <div class="home_share_work row">
+    <div class="col-sm-12 text-center">
+      <% if signed_in? %>
+          <%= link_to '#',
+            class: "btn btn-primary btn-lg",
+            data: { behavior: 'select-work', target: '#worktypes-to-create', 'create-type' => 'single' } do %>
+            <i class="glyphicon glyphicon-upload"></i> <%= t(:'helpers.action.work.new') %>
+          <% end %>
+      <% end %>
+      <p><%# link_to t(:'hyrax.pages.tabs.terms_page'), hyrax.terms_path %></p>
+    </div>
+  </div>
+
+
+<div class="row home-content">
+  <%= render 'home_content' %>
+</div>

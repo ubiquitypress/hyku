@@ -1,0 +1,49 @@
+version: '2'
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      internal:
+
+  web:
+    build:
+      context: ../.
+      dockerfile: Dockerfile
+    volumes:
+      - web:/data/tmp/uploads
+      - ..:/data
+    depends_on:
+      - db
+      - solr
+      - fcrepo
+      - redis
+      - zoo1
+      - zoo2
+      - zoo3
+      - memcache
+    ports:
+      - 3000:3000
+    env_file:
+      - credentials-dev.env
+    networks:
+      internal:
+
+  lb:
+    image: dockercloud/haproxy:1.5.3
+    links:
+      - web
+    environment:
+      - DOCKER_TLS_VERIFY
+      - DOCKER_HOST
+      - DOCKER_CERT_PATH
+    ports:
+      - 8080:80
+      - 4443:443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      internal:
+      external:

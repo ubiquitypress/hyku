@@ -2,14 +2,14 @@
 <% template = @curation_concern.class.to_s.underscore %>
 
 <label class="control-label" for="date_published">
-  Date published <span class="label label-info required-tag">required</span>
+  Date published <span class="label label-info"></span>
 </label>
 <p class="help-block"><%= t('simple_form.hints.defaults.date_published') %></p>
 
 <% if date_published.present? %>
   <%= select_tag "#{template}[date_published_group][][date_published_year]",
                  content_tag(:option, 'select year', :value => "") + options_from_collection_for_select((years_array), 'to_s', 'to_s', parse_date(date_published, 'year')),
-                 required: true, class: 'form-control ubiquity-date-published-year ubiquity-date-input'
+                  class: 'form-control ubiquity-date-published-year ubiquity-date-input'
   %>
   <%= select_tag "#{template}[date_published_group][][date_published_month]",
                  content_tag(:option, 'select month if available', :value => "") + options_from_collection_for_select((months_array), 'to_s', 'to_s',parse_date(date_published, 'month')),
@@ -22,7 +22,7 @@
 <% else %>
   <%= select_tag "#{template}[date_published_group][][date_published_year]",
                  content_tag(:option, 'select year', :value => "") + options_from_collection_for_select((years_array), 'to_s', 'to_s'),
-                 required: true, class: 'form-control ubiquity-date-published-year ubiquity-date-input'
+                  class: 'form-control ubiquity-date-published-year ubiquity-date-input'
   %>
   <%= select_tag "#{template}[date_published_group][][date_published_month]",
                  content_tag(:option, 'select month if available', :value => "") + options_from_collection_for_select((months_array), 'to_s', 'to_s'),

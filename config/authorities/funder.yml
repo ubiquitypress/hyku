@@ -56,3 +56,15 @@ terms:
 - id: The Arcadia Charitable Trust
   term: The Arcadia Charitable Trust
   active: true 
+- id: Paul Hamlyn Foundation
+  term: Paul Hamlyn Foundation
+  active: true
+- id: Terra Foundation for American Art
+  term: Terra Foundation for American Art
+  active: true
+- id: Henry Moore Foundation
+  term: Henry Moore Foundation
+  active: true
+- id: Getty Foundation
+  term: Getty Foundation
+  active: true

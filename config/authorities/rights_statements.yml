@@ -28,10 +28,10 @@ terms:
   active: true
 - id: http://rightsstatements.org/vocab/CNE/1.0/
   term: "Copyright Not Evaluated"
-  active: true
+  active: false
 - id: http://rightsstatements.org/vocab/UND/1.0/
   term: "Copyright Undetermined"
-  active: true
+  active: false
 - id: http://rightsstatements.org/vocab/NKC/1.0/
   term: "No Known Copyright"
-  active: true
+  active: false

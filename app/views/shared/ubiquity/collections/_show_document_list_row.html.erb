@@ -1,6 +1,7 @@
 <%#
  Copied from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/dashboard/collections/_show_document_list_row.html.erb
     and
+    called in app/views/hyrax/collections/_show_document_list_row.html.erb
     https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/collections/_show_document_list_row.html.erb
     Consolidated since there is just a minor change of showing edit button when rendered via dashboard
 %>
@@ -15,7 +16,7 @@
   <td>
     <div class="media">
       <% if  document.thumbnail_id %>
-        <%= render 'shared/ubiquity/thumbnail', document: document %>
+        <%= render 'shared/ubiquity/thumbnail', document: document,  presenter: Hyrax::WorkShowPresenter.new(document, current_ability) %>
       <% else %>
         <%= link_to "", class: 'media-left', 'aria-hidden' => true do %>
           <span class="media-left hidden-xs file_listing_thumbnail" style="height:55px;width:50px;padding-left: 60px;" ></span>

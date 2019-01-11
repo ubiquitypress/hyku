@@ -5,8 +5,11 @@
 <div class="featured-fields" >
   <%= link_to [main_app, featured] do %>
     <div class="featured-item-thumbnail">
-      <% if featured_doc.thumbnail_id && File.extname(featured_doc.thumbnail_path).blank? %>
+      <%# if featured_doc.thumbnail_id && File.extname(featured_doc.thumbnail_path).blank? %>
+      <% if featured_doc.thumbnail_id && (zipped_types.include? check_for_zip(featured_doc.thumbnail.title.first) )  %>
         <span class="fa fa-file-archive-o fa-5x grey-zip-icon"></span>
+      <% elsif (check_for_zip(featured_doc.thumbnail.title.first) == ".pdf") && (featured_doc.thumbnail_path.split('?').last == "file=thumbnail") %>
+             <span class="fa fa-file-pdf-o fa-5x hidden-xs file_listing_thumbnail" style="font-size:48px;color:red"></span>
       <% else %>
         <%= render_related_img(featured_doc) %>
       <% end %>

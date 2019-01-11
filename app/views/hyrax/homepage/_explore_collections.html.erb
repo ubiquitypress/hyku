@@ -18,7 +18,7 @@
                  <%= link_to [hyrax, collection], class: 'media-left', 'aria-hidden' => true do %>
                    <% if zipped_types.include? check_for_zip(thumbnail.title.first) %>
                      <span class="zip-thumbnail-homepage hidden-xs"></span>
-                     <% elsif (check_for_zip(thumbnail.title.first) == ".pdf") && (thumbnail_path.split('?').last == "file=thumbnail") %>
+                     <% elsif (check_for_zip(thumbnail.title.first) == ".pdf") && (collection.thumbnail_path.split('?').last == "file=thumbnail") %>
                           <span class="fa fa-file-pdf-o fa-5x hidden-xs file_listing_thumbnail" style="font-size:48px;color:red"></span>
                    <% elsif ((not file_set.active_lease?) && (not file_set.under_embargo?) ) %>
                      <%= render_thumbnail_tag collection, { class: 'hidden-xs file_listing_thumbnail' }, { suppress_link: true } %>

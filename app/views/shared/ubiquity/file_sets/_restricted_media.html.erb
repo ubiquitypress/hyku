@@ -2,8 +2,9 @@
 <!-- This whole file was add ubiquitypress to selectively display universalviewer-->
 <% if presenter.representative_presenter.image? %>
   <% file_set_presenter = presenter.representative_presenter %>
+  <!-- dont' displays universal viewer for files with archived format eg zip -->
   <% if zipped_types.include? check_for_zip(file_set_presenter.link_name) %>
-    <!-- dont' displays universal viewer for files with archived format eg zip -->
+    <!-- here the universalviewer displays only for current_user or an admin user -->
   <% elsif check_file_is_restricted?(file_set_presenter) && presenter.representative_presenter.image? && (not zipped_types.include? check_for_zip(file_set_presenter.link_name)) %>
     <%= UniversalViewer.script_tag %>
     <div class="viewer-wrapper"><div class="uv viewer" data-uri="<%= main_app.polymorphic_path [main_app, :manifest, presenter] %>"></div></div>

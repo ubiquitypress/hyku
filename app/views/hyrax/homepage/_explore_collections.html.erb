@@ -1,53 +1,57 @@
 <%# Fix to not display default image icon. This file was copied from
   https://github.com/samvera/hyrax/blob/37a1c370cd05a7ed0a8ca2ad453bc15eb812f132/app/views/hyrax/homepage/_explore_collections.html.erb
  %>
-<% if collections.present? %>
-  <table class="table table-striped collection-highlights">
-    <tbody>
-      <% collections.each do |collection| %>
-        <tr>
-          <td>
-            <div class="media">
-              <!-- if condition added by ubiquity to display image or empty border but not default icon-->
-              <% if collection.thumbnail_id %>
-              <% file_set =  get_media_model(collection.thumbnail_id, request.host) %>
-              <% thumbnail = file_set_solr_doc(file_set) %>
 
-                <%= link_to [hyrax, collection], class: 'media-left', 'aria-hidden' => true do %>
-                  <% if zipped_types.include? check_for_zip(thumbnail.title.first) %>
-                    <span class="zip-thumbnail-homepage hidden-xs"></span>
-                  <% elsif ((not file_set.active_lease?) && (not file_set.under_embargo?) ) %>
-                    <%= render_thumbnail_tag collection, { class: 'hidden-xs file_listing_thumbnail' }, { suppress_link: true } %>
-                  <% else %>
-                    <!-- displays for logged out users on files with embargo/lease -->
-                    <span class="media-left hidden-xs file_listing_thumbnail mock-thumbnail" ></span>
-                  <% end %>
-                <% end %>
-              <% else %>
-                <%= link_to "", class: 'media-left', 'aria-hidden' => true do %>
-                  <span class="media-left hidden-xs file_listing_thumbnail mock-thumbnail" ></span>
-                <% end %>
-              <% end %>
-              <div class="media-body">
-                <div class="media-heading">
-                  <%= link_to [hyrax, collection] do %>
-                    <%= collection.title_or_label %>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <ul class="list-inline collection-highlights-list">
-    <li>
-      <%= link_to t('hyrax.homepage.admin_sets.link'),
-                  main_app.search_catalog_path(f: { human_readable_type_sim: ["Collection"]}),
-                  class: 'btn btn-default' %>
-    </li>
-  </ul>
-<% else %>
-  <p>There are no collections to display.</p>
-<% end %>
+
+ <% if collections.present? %>
+   <table class="table table-striped collection-highlights">
+     <tbody>
+       <% collections.each do |collection| %>
+         <tr>
+           <td>
+             <div class="media">
+               <!-- if condition added by ubiquity to display image or empty border but not default icon-->
+               <% if collection.thumbnail_id %>
+                 <% file_set =  get_media_model(collection.thumbnail_id, request.host) %>
+                 <% thumbnail = file_set_solr_doc(file_set) %>
+
+                 <%= link_to [hyrax, collection], class: 'media-left', 'aria-hidden' => true do %>
+                   <% if zipped_types.include? check_for_zip(thumbnail.title.first) %>
+                     <span class="zip-thumbnail-homepage hidden-xs"></span>
+                     <% elsif (check_for_zip(thumbnail.title.first) == ".pdf") && (thumbnail_path.split('?').last == "file=thumbnail") %>
+                          <span class="fa fa-file-pdf-o fa-5x hidden-xs file_listing_thumbnail" style="font-size:48px;color:red"></span>
+                   <% elsif ((not file_set.active_lease?) && (not file_set.under_embargo?) ) %>
+                     <%= render_thumbnail_tag collection, { class: 'hidden-xs file_listing_thumbnail' }, { suppress_link: true } %>
+                   <% else %>
+                     <!-- displays for logged out users on files with embargo/lease -->
+                     <span class="media-left hidden-xs file_listing_thumbnail mock-thumbnail" ></span>
+                   <% end %>
+                 <% end %>
+               <% else %>
+                 <%= link_to "", class: 'media-left', 'aria-hidden' => true do %>
+                   <span class="media-left hidden-xs file_listing_thumbnail mock-thumbnail" ></span>
+                 <% end %>
+               <% end %>
+               <div class="media-body">
+                 <div class="media-heading">
+                   <%= link_to [hyrax, collection] do %>
+                     <%= collection.title_or_label %>
+                   <% end %>
+                 </div>
+               </div>
+             </div>
+           </td>
+         </tr>
+       <% end %>
+     </tbody>
+   </table>
+   <ul class="list-inline collection-highlights-list">
+     <li>
+       <%= link_to t('hyrax.homepage.admin_sets.link'),
+                   main_app.search_catalog_path(f: { human_readable_type_sim: ["Collection"]}),
+                   class: 'btn btn-default' %>
+     </li>
+   </ul>
+ <% else %>
+   <p>There are no collections to display.</p>
+ <% end %>

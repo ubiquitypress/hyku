@@ -1,15 +1,12 @@
 <%# Override from Hyrax engine to customise front-end %>
+<!-- instance  of Hyrax::WorkShowPresenter: -->
 
 <% featured_doc = featured.solr_document %>
 
 <div class="featured-fields" >
   <%= link_to [main_app, featured] do %>
     <div class="featured-item-thumbnail">
-      <% if featured_doc.thumbnail_id && File.extname(featured_doc.thumbnail_path).blank? %>
-        <span class="fa fa-file-archive-o fa-5x grey-zip-icon"></span>
-      <% else %>
-        <%= render_related_img(featured_doc) %>
-      <% end %>
+      <%= render_related_img(featured_doc) %>
     </div>
     <div class="featured-item homepage-field-title">
       <%= featured.title.first %>

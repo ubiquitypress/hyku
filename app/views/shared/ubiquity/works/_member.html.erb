@@ -1,11 +1,14 @@
 <!-- copied from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/base/_member.html.erb -->
+<!--instance of Hyku::FileSetPresenter -->
 
 <tr class="<%= dom_class(member) %> attributes">
   <td class="thumbnail">
      <!-- displays zip icon for files with archived format eg zip -->
-     
+
     <% if zipped_types.include? check_for_zip(member.link_name) %>
       <span class="fa fa-file-archive-o fa-5x grey-zip-icon"></span>
+    <% elsif (check_for_zip(member.link_name) == ".pdf") && (member.solr_document.thumbnail_path.split('?').last == "file=thumbnail")  %>
+      <span class="fa fa-file-pdf-o fa-5x hidden-xs file_listing_thumbnail" style="color:red"></span> <span style="padding-left:125px"></span>
     <% elsif check_file_is_restricted?(member) %>
       <%= render_thumbnail_tag member %>
     <% elsif ((not member.lease_expiration_date.present?) && (not member.embargo_release_date.present?) ) %>
@@ -27,7 +30,6 @@
     <% end %>
   </td>
   <td>
-
     <!-- Copied from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/base/_actions.html.erb -->
     <!-- Moved to shared/ubiquity/works/actions -->
     <%= render 'shared/ubiquity/works/actions', member: member %>

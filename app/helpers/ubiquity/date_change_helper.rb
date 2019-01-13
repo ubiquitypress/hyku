@@ -3,7 +3,8 @@ module  Ubiquity
     
     MONTHS = (1..12).to_a.map { |n| n.to_s.rjust(2, '0')}.freeze
     DAYS = (1..31).to_a.map { |n| n.to_s.rjust(2, '0')}.freeze
-    YEARS = ((Date.today.year - 200)..(Date.today.year)).to_a.reverse.freeze
+    CURRENT_YEAR_PLUS2 = (Date.today.year) + 2
+    YEARS = ((Date.today.year - 200)..(CURRENT_YEAR_PLUS2)).to_a.reverse.freeze
 
     def days_array
       ApplicationHelper::DAYS

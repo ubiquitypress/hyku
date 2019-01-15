@@ -78,3 +78,6 @@ terms:
     - id: https://creativecommons.org/licenses/by/4.0/4
       term: (CC BY 4.0 Attribution) broken link - please edit to re-select working "CC BY 4.0 Attribution" from drop-down list
       active: false
+    - id: http://www.nationalarchives.gov.uk/doc/open-government-licence/version/1/
+      term: Open Government Licence v1.0
+      active: false

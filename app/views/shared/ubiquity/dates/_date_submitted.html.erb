@@ -1,0 +1,8 @@
+<%# see app/views/records/edit_fields/_date_submitted.html.erb %>
+<% template = @curation_concern.class.to_s.underscore %>
+
+<%= render 'shared/ubiquity/dates/date_fields', date_type: 'submitted', template: template, curation_concern: @curation_concern %>
+
+
+
+<br/><br/><br/>

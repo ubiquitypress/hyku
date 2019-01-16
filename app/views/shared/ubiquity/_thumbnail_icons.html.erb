@@ -1,0 +1,13 @@
+
+<!-- used in app/views/shared/ubiquity/_thumbnail.html.erb -->
+
+<% file_set = presenter.representative_presenter) %>
+<% ubiquity_thumbnail_format = check_for_zip(file_set.label) %>
+
+<% if zipped_types.include?  ubiquity_thumbnail_format %>
+  <span class="fa fa-file-archive-o fa-5x grey-zip-icon hidden-xs file_listing_thumbnail"></span>
+<% elsif (ubiquity_thumbnail_format == ".pdf") && (document.thumbnail_path.split('?').last == "file=thumbnail") %>
+  <span class="fa fa-file-pdf-o fa-5x hidden-xs file_listing_thumbnail"></span>
+<% else %>
+     <%= render_thumbnail_tag document, { class: 'hidden-xs file_listing_thumbnail' }, { suppress_link: true } %>
+ <% end %>

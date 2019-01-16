@@ -4,27 +4,14 @@
  <%# Fix to not display default image icon. This file was copied from
    https://github.com/samvera/hyrax/blob/37a1c370cd05a7ed0a8ca2ad453bc15eb812f132/app/views/hyrax/homepage/_recent_document.html.erb
   %>
+
  <tr>
    <td>
      <div class="media">
        <!-- if condition added by ubiquity to ensure default thumbnail is not displayed-->
        <% if recent_document.thumbnail_id %>
-
-         <% file_set =  get_media_model(recent_document.thumbnail_id, request.host) %>
-         <% thumbnail = file_set_solr_doc(file_set) %>
          <%= link_to [main_app, recent_document], class: 'media-left', 'aria-hidden' => true do %>
-           <%# if File.extname(recent_document.thumbnail_path).blank? %>
-           <% if zipped_types.include? check_for_zip(thumbnail.title.first)  %>
-              <!-- <span class="zip-thumbnail-homepage hidden-xs"></span> -->
-             <span class="fa fa-file-archive-o fa-5x grey-zip-icon"></span> <span style="padding-left:125px"></span>
-          <% elsif (check_for_zip(thumbnail.title.first) == ".pdf") && (recent_document.thumbnail_path.split('?').last == "file=thumbnail")  %>
-               <span class="fa fa-file-pdf-o fa-5x hidden-xs file_listing_thumbnail" style="color:red"></span> <span style="padding-left:125px"></span>
-           <% elsif ((not file_set.active_lease?) && (not file_set.under_embargo?) ) %>
-               <%= render_thumbnail_tag recent_document, { class: 'hidden-xs file_listing_thumbnail' }, { suppress_link: true } %>
-           <% else %>
-           <!-- displays for logged out users on files with embargo/lease -->
-             <span class="media-left hidden-xs file_listing_thumbnail mock-thumbnail" ></span>
-           <% end %>
+           <%= render 'shared/ubiquity/thumbnail_icons_with_restrictions', document: recent_document %>
          <% end %>
        <% else %>
          <%= link_to "", class: 'media-left', 'aria-hidden' => true do %>

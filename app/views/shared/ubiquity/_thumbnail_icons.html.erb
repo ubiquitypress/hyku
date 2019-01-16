@@ -1,8 +1,9 @@
 
 <!-- used in app/views/shared/ubiquity/_thumbnail.html.erb -->
+<% presenter = Hyku::ManifestEnabledWorkShowPresenter.new(document, current_ability) %>
 
-<% file_set = presenter.representative_presenter) %>
-<% ubiquity_thumbnail_format = check_for_zip(file_set.label) %>
+<% file_set = presenter.thumbnail_presenter %>
+<% ubiquity_thumbnail_format = check_for_zip(file_set.solr_document.label) %>
 
 <% if zipped_types.include?  ubiquity_thumbnail_format %>
   <span class="fa fa-file-archive-o fa-5x grey-zip-icon hidden-xs file_listing_thumbnail"></span>

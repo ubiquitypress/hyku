@@ -9,7 +9,7 @@
   <td>
     <div class='media'>
 
-      <%= render 'shared/ubiquity/thumbnail', document: document, presenter: presenter %>
+      <%= render 'shared/ubiquity/thumbnail', document: document, presenter:  Hyku::ManifestEnabledWorkShowPresenter.new(document, current_ability) %>
 
       <div class='media-body'>
         <div class='media-heading'>

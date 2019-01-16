@@ -92,6 +92,23 @@ module Hyku
       solr_document['date_submitted_tesim']
     end
 
+   #Added because there was no way to acces file_set_presenter from a  collection page or the search page.
+   #represengter_presenter which returns a file_set_presenter is nil in those places too
+    def thumbnail_presenter
+      return nil if thumbnail_id.blank?
+      @thumbnail_presenter ||=
+        begin
+          result = member_presenters([thumbnail_id]).first
+          puts " #{result.inspect}"
+          return nil if result.try(:id) == id
+          if result.respond_to?(:thumbnail_presenter)
+            result.thumbnail_presenter
+          else
+            result
+          end
+        end
+    end
+
     private
 
 

@@ -5,17 +5,14 @@
 <% if document.thumbnail_id %>
   <div class="list-thumbnail">
 
-      <% presenter = Hyku::ManifestEnabledWorkShowPresenter.new(document, current_ability) %>
-      <!-- we are fetching representative_presenter because it using representative_id to fetch the file_set
-        and that gives us the file_set behind the humbnail since thumbnail_id and representative_id are always thesame
-        -->
-      <% file_set_presenter = presenter.representative_presenter %>
+    <% presenter = Hyku::ManifestEnabledWorkShowPresenter.new(document, current_ability) %>
+    <% file_set_presenter = presenter.thumbnail_presenter %>
 
-    <% if zipped_types.include? check_for_zip(file_set_presenter.label) %>
+    <% if zipped_types.include? check_for_zip(file_set_presenter.solr_document.label) %>
       <span class="fa fa-file-archive-o fa-5x grey-zip-icon"></span>
-    <% elsif (check_for_zip(file_set_presenter.label) == ".pdf") && (document.thumbnail_path.split('?').last == "file=thumbnail")  %>
+    <% elsif (check_for_zip(file_set_presenter.solr_document.label) == ".pdf") && (document.thumbnail_path.split('?').last == "file=thumbnail")  %>
         <span class="fa fa-file-pdf-o fa-5x hidden-xs file_listing_thumbnail"></span> <span style="padding-left:125px"></span>
-    <% elsif ((not file_set_presenter.lease_expiration_date.present?) && (not file_set_presenter.embargo_release_date.present?) ) %>
+    <% elsif ((not file_set_presenter.solr_document.lease_expiration_date.present?) && (not file_set_presenter.solr_document.embargo_release_date.present?) ) %>
         <%= render_thumbnail_tag document, :style => "width:150px" %>
     <% else %>
       <%# displays for logged out user for files under embargo/lease %>

@@ -5,11 +5,8 @@
 -->
 
 <% presenter = Hyku::ManifestEnabledWorkShowPresenter.new(document, current_ability) %>
-<!-- we are fetching representative_presenter because it using representative_id to fetch the file_set
-  and that gives us the file_set behind the humbnail since thumbnail_id and representative_id are always thesame
-  -->
-<% file_set_presenter = presenter.representative_presenter %>
-
+<% file_set_presenter = presenter.thumbnail_presenter %>
+<%= file_set_presenter.label %>
 <% if zipped_types.include? check_for_zip(file_set_presenter.label) %>
   <span class="fa fa-file-archive-o fa-5x grey-zip-icon"></span>
 <% elsif (check_for_zip(file_set_presenter.label) == ".pdf") && (document.thumbnail_path.split('?').last == "file=thumbnail")  %>

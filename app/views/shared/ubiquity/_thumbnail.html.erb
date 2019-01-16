@@ -1,4 +1,3 @@
-
 <!-- This file is called from
 app/views/shared/collections/_show_document_list_row.html.erb
 app/views/hyrax/my/works/_list_works.html.erb
@@ -6,19 +5,10 @@ app/views/hyrax/dashboard/works/_list_works.html.erb
 
  -->
 <% if presenter.thumbnail_id.present? %>
-  <% file_set =  get_media_model(presenter.thumbnail_id, request.host) %>
-  <% ubiquity_thumbnail_format = check_for_zip(file_set.label) %>
-
   <%= link_to [main_app, document], class: 'media-left', 'aria-hidden' => true do %>
     <!-- dont' displays universal viewer for files with archived format eg zip -->
-    <% if zipped_types.include?  ubiquity_thumbnail_format %>
-      <span class="fa fa-file-archive-o fa-5x grey-zip-icon hidden-xs file_listing_thumbnail"></span>
-    <% elsif (ubiquity_thumbnail_format == ".pdf") && (document.thumbnail_path.split('?').last == "file=thumbnail") %>
-      <span class="fa fa-file-pdf-o fa-5x hidden-xs file_listing_thumbnail" style="color:red"></span>
-    <% else %>
-      <%= render_thumbnail_tag document, { class: 'hidden-xs file_listing_thumbnail' }, { suppress_link: true } %>
-    <% end %>
-  <% end %>
+    <%= render 'shared/ubiquity/thumbnail_icons', document: document,  presenter: presenter %>
+   <% end %>
 <% else %>
   <span class="media-left hidden-xs file_listing_thumbnail " ></span>
 <% end %>

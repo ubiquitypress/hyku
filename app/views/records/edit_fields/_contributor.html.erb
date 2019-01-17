@@ -1,8 +1,8 @@
-<br/> 
+<br/>
 <% if  f.object.model.new_record? %>
   <%= render "shared/ubiquity/contributor/new_form", f: f %>
 <% else %>
-  <% array_hash = get_model(f.object.model.class.to_s, f.object.model.id, 'contributor', 'contributor_position') %>
+  <% array_hash = get_model(f.object.model.contributor, f.object.model.class.to_s, 'contributor', 'contributor_position') %>
 
   <!--
   Clicking edit button returns an error it is something other than an array of hash

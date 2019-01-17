@@ -2,7 +2,7 @@
 <% if  curation_concern.new_record? %>
   <%= render "shared/ubiquity/editor/new_form" %>
 <% else %>
-  <% array_hash = get_model(curation_concern.class, curation_concern.id, 'editor', 'editor_position') %>
+  <% array_hash = get_model(curation_concern.editor, curation_concern.class, 'editor', 'editor_position') %>
 
   <!--
   Clicking edit button returns an error it is something other than an array of hash

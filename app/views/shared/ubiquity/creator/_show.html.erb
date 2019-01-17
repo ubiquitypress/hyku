@@ -1,6 +1,5 @@
 <!-- rendered from views/hyrax/base///_attribute_rows.html.erb -->
-
-<% array_of_hash = get_model(presenter.model, presenter.id, 'creator', 'creator_position') %>
+<% array_of_hash = get_model(presenter.creator, presenter.model, 'creator', 'creator_position') %>
 
 <% if (array_of_hash.class == Array && array_of_hash.first.class == Hash)  %>
   <%= render "shared/ubiquity/creator/show_array_hash",  array_of_hash: array_of_hash %>

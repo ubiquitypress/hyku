@@ -1,4 +1,4 @@
-<% array_of_hash = get_model(presenter.model, presenter.id, 'related_identifier') %>
+<% array_of_hash = get_model(presenter.related_identifier, presenter.model, 'related_identifier') %>
 
 <% if (array_of_hash.class == Array && array_of_hash.first.class == Hash )  %>
   <%= render "shared/ubiquity/related_identifier/show_array_hash", array_of_hash: array_of_hash  %>

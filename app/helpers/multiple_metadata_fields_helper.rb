@@ -126,17 +126,15 @@ module MultipleMetadataFieldsHelper
     end
   end
 
-  def get_model(model_class, model_id, field, multipart_sort_field_name = nil)
-    model ||= fetch_model(model_class, model_id)
-    #get the record store in that field
-    record ||= model.send(field.to_sym)
-    get_json_data = record.first if (!record.empty?)
+  def get_model(presenter_record, model_class, field, multipart_sort_field_name = nil)
+    #model ||= model_class.constantize.new
 
     #If the value of the first is record is nil return the model
-    @value =   get_json_data || model
+    #@value =   get_json_data || model
+    @value =  presenter_record.first
 
     if valid_json?(@value)
-      array_of_hash ||= JSON.parse(record.first)
+      array_of_hash ||= JSON.parse(presenter_record.first)
       return  [model.attributes] if (array_of_hash.first.class == String  || array_of_hash.first.nil? )
 
       #return sort_hash(array_of_hash, multipart_sort_field_name) if multipart_sort_field_name
@@ -153,15 +151,6 @@ module MultipleMetadataFieldsHelper
     !!JSON.parse(data)  if data.class == String
     rescue JSON::ParserError
       false
-  end
-
-  def fetch_model(model_class, model_id)
-    # from edit page the model class is a constant but from show page it is a string
-    if model_class.class == String
-      (model_class.constantize).find(model_id)
-    else
-      model_class.find(model_id)
-    end
   end
 
   def sort_hash(array_of_hash, key)

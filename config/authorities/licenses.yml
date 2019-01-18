@@ -30,10 +30,10 @@ terms:
       term: GNU General Public License v3.0
       active: true
     - id: https://www.apache.org/licenses/LICENSE-2.0
-      term: Apache 2.0
+      term: Apache License v2.0
       active: true
     - id: https://opendatacommons.org/licenses/odbl/1.0/
-      term: ODBL
+      term: Open Database License(ODBL)
       active: true
     - id: https://www.mozilla.org/en-US/MPL/2.0/
       term: Mozilla Public License (MPL)
@@ -50,7 +50,7 @@ terms:
       term: CC BY-SA Attribution-ShareAlike 3.0 United States
       active: false
     - id: http://creativecommons.org/licenses/by-nc/3.0/us/
-      term: CC BY_NC Attribution-NonCommercial 3.0 United States
+      term: CC BY-NC Attribution-NonCommercial 3.0 United States
       active: false
     - id: http://creativecommons.org/licenses/by-nd/3.0/us/
       term: CC BY-ND Attribution-NoDerivs 3.0 United States
@@ -60,15 +60,6 @@ terms:
       active: false
     - id: http://creativecommons.org/licenses/by-nc-sa/3.0/us/
       term: CC BY-NC-SA Attribution-NonCommercial-ShareAlike 3.0 United States
-      active: false
-    - id: http://creativecommons.org/publicdomain/mark/1.0/
-      term: Public Domain Mark 1.0
-      active: false
-    - id: http://creativecommons.org/publicdomain/zero/1.0/
-      term: CC0 1.0 Universal
-      active: false
-    - id: http://www.europeana.eu/portal/rights/rr-r.html
-      term: All rights reserved
       active: false
     - id: https://creativecommons.org/licenses/by/3.0/
       term: CC BY Attribution 3.0 Unported
@@ -142,8 +133,7 @@ terms:
     - id: http://www.europeana.eu/portal/rights/rr-r.html
       term: All rights reserved
       active: false
-
-      #   Below was broken link but has to be kept (as `false`) to avoid `key not found: "term"` error
+#   Below was broken link but has to be kept (as `false`) to avoid `key not found: "term"` error
 #   It can be removed when no record references it anymore
     - id: https://creativecommons.org/licenses/by/4.0/4
       term: (CC BY 4.0 Attribution) broken link - please edit to re-select working "CC BY 4.0 Attribution" from drop-down list

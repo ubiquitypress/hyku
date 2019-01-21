@@ -4,7 +4,6 @@
  <%# Fix to not display default image icon. This file was copied from
    https://github.com/samvera/hyrax/blob/37a1c370cd05a7ed0a8ca2ad453bc15eb812f132/app/views/hyrax/homepage/_recent_document.html.erb
   %>
-
  <tr>
    <td>
      <div class="media">
@@ -22,7 +21,7 @@
          <h5 class="homepage-field-title">
            <span class="sr-only">Title</span><%= link_to (recent_document.to_s), [main_app, recent_document] %>
          </h5>
-         <span class="sr-only">Creator</span><%= link_to_facet_list(recent_document.creator_search, 'creator_search').html_safe %>
+         <span class="sr-only">Creator</span><%= link_to_facet_list(extract_creator_names_for_homepage(recent_document), 'creator_search', '', '; ').html_safe %>
        </div>
      </div>
    </td>

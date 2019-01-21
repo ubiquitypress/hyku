@@ -126,6 +126,17 @@ module MultipleMetadataFieldsHelper
     end
   end
 
+  def extract_creator_names_for_homepage(record)
+    if record.present?
+      data  = JSON.parse(record.creator.first)
+      creator_names = []
+      data.each do |hash|
+        add_comma_if_both_names_present(hash, creator_names)
+      end
+      creator_names
+    end
+  end
+
   def get_model(presenter_record, model_class, field, multipart_sort_field_name = nil)
     #model ||= model_class.constantize.new
 
@@ -159,6 +170,15 @@ module MultipleMetadataFieldsHelper
     if (key.present? && array_of_hash.first.class == Hash)
       #allows the sort to function even if the value of a hash is nil
       array_of_hash.sort_by{ |hash| hash[key].to_i}
+    end
+  end
+
+  def add_comma_if_both_names_present(hash, creator_names)
+    if  (hash['creator_given_name'].present? && hash['creator_family_name'].present? )
+      add_comma = ','
+      creator_names <<  "#{hash['creator_family_name']}#{add_comma} #{ hash['creator_given_name']}"
+    else
+      creator_names <<  "#{hash['creator_family_name']}#{add_comma}#{ hash['creator_given_name']}"
     end
   end
 

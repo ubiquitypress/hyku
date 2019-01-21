@@ -127,7 +127,7 @@ module MultipleMetadataFieldsHelper
   end
 
   def extract_creator_names_for_homepage(record)
-    if record.present?
+    if record.present? && record.creator.present?
       data  = JSON.parse(record.creator.first)
       creator_names = []
       data.each do |hash|

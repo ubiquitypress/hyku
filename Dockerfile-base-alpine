@@ -1,4 +1,4 @@
-FROM ruby:2.3.7-alpine
+FROM ruby:2.3.1-alpine
 
 RUN apk add --update --no-cache \
     alpine-sdk \
@@ -12,11 +12,9 @@ RUN apk add --update --no-cache \
     exiftool \
     imagemagick \
     python-dev \
-    py2-pip \
     tzdata \
     openjdk8 \
     libreoffice \
-    shadow \
     libpng-dev \
     libjpeg-turbo-dev \
     freetype-dev \
@@ -47,18 +45,6 @@ ADD Gemfile /data/Gemfile
 ADD Gemfile.lock /data/Gemfile.lock
 
 RUN rm -rf /var/cache/apk/*
-
-RUN apk add --update --no-cache
-RUN useradd -m -K MAIL_DIR=/dev/null builder
-RUN usermod -a -G abuild builder
-WORKDIR /home/builder
-
-USER builder
-
-ADD docker/APKBUILD /home/builder/APKBUILD
-RUN abuild-keygen -a
-RUN mkdir /home/builder/packages
-RUN abuild -r
 
 WORKDIR /data
 USER root

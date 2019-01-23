@@ -2,8 +2,9 @@
 <% array_of_hash.each do |hash| %>
   <span itemprop='<%= "#{attr_name}" %>' style="float:left;">
     <% if hash["#{attr_name}_organization_name"] %>
-      <%= hash["#{attr_name}_organization_name"] %>
+      <%= hash["#{attr_name}_organization_name"] %><span>; &nbsp;</span>
     <% end %>
+
     <% if hash["#{attr_name}_family_name"]  %>
       <% last_name = hash["#{attr_name}_family_name"] %>
       <% last_name << ',' if display_comma?(hash.keys, ["#{attr_name}_family_name", "#{attr_name}_given_name"]) %>

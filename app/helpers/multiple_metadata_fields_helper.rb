@@ -166,11 +166,17 @@ module MultipleMetadataFieldsHelper
   end
 
   def add_comma_if_both_names_present(hash, creator_names)
+
+    if  (hash['creator_organization_name'].present?)
+      creator_names <<  "#{hash['creator_organization_name']}"
+    end
     if  (hash['creator_given_name'].present? && hash['creator_family_name'].present? )
       add_comma = ','
       creator_names <<  "#{hash['creator_family_name']}#{add_comma} #{ hash['creator_given_name']}"
-    else
-      creator_names <<  "#{hash['creator_family_name']}#{add_comma}#{ hash['creator_given_name']}"
+    elsif hash['creator_family_name'].present?
+      creator_names <<  "#{hash['creator_family_name']}"
+    elsif  hash['creator_given_name'].present?
+      creator_names <<  hash['creator_given_name']
     end
   end
 

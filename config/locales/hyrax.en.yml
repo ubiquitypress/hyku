@@ -22,6 +22,8 @@ en:
   simple_form:
     hints:
       defaults:
+        license: "Licensing and distribution information governing access to the work.
+                  Select from the provided drop-down list, or add to ‘additional information’ field below, if it is not included in the list"
         extent: "The extent (size, duration, number, etc.) of the work."
       labels:
         extent: "Extent"
@@ -36,3 +38,7 @@ en:
         new: Fetch metadata from DataCite with DOI
         submit: Fetch metadata
         placeholder: Please add a DataCite DOI below
+
+
+
+

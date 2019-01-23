@@ -13,6 +13,6 @@ module Hyrax
                      issue pagination editor publisher place_of_publication isbn issn eissn article_num media
                      date_published date_accepted date_submitted abstract keyword library_of_congress_classification
                      institution org_unit refereed official_link related_url related_exhibition related_exhibition_date
-                     project_name funder fndr_project_ref add_info language license rights_statement rights_holder]
+                     project_name funder fndr_project_ref language license rights_statement rights_holder add_info]
   end
 end

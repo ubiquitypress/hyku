@@ -10,6 +10,6 @@ module Hyrax
                      related_identifier publisher place_of_publication date_published date_accepted
                      date_submitted abstract keyword library_of_congress_classification media institution org_unit
                      official_link related_url related_exhibition related_exhibition_date project_name
-                     funder fndr_project_ref add_info language license rights_statement rights_holder]
+                     funder fndr_project_ref language license rights_statement rights_holder add_info]
   end
 end

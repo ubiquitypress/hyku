@@ -57,7 +57,7 @@ module Hyku
       end
     end
 
-
+    #Everything below added ubiquity
     Raven.configure do |config|
       if ENV['SENTRY_DSN']
         config.dsn = ENV['SENTRY_DSN']

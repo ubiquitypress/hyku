@@ -1,8 +1,8 @@
 <%# see app/views/records/edit_fields/_date_published.html.erb %>
-<% template = @curation_concern.class.to_s.underscore %>
+<% template = f.object.model.class.to_s.underscore %>
 
 
-<%= render 'shared/ubiquity/dates/date_fields', date_type: 'published', template: template, curation_concern: @curation_concern %>
+<%= render 'shared/ubiquity/dates/date_fields', date_type: 'published', template: template, f: f %>
 
 
 <br/><br/><br/>

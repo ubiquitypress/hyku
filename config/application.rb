@@ -44,6 +44,7 @@ module Hyku
       Hyrax::CollectionPresenter.class_eval {delegate :thumbnail_id, to: :solr_document}
       #Removes subject from collection click additional fields to see subject is gone
       Hyrax::Forms::CollectionForm.prepend(::Ubiquity::CollectionFormBehaviour)
+      Hyrax::Forms::BatchEditForm.prepend(::Ubiquity::AdditionalBatchEdit)
     end
 
     config.before_initialize do

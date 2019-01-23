@@ -1,8 +1,8 @@
 
-<% if  curation_concern.new_record? %>
-  <%= render "shared/ubiquity/editor/new_form" %>
+<% if  f.object.model.new_record? %>
+  <%= render "shared/ubiquity/editor/new_form", f: f %>
 <% else %>
-  <% array_hash = get_model(curation_concern.editor, curation_concern.class, 'editor', 'editor_position') %>
+  <% array_hash = get_model(f.object.model.editor, f.object.model.class, 'editor', 'editor_position') %>
 
   <!--
   Clicking edit button returns an error it is something other than an array of hash
@@ -12,7 +12,9 @@
   The line below fixes that
   -->
   <% array_of_hash = array_hash || [{}] %>
-  <%= render "shared/ubiquity/editor/edit_array_hash_form", curation_concern: curation_concern, f: f, array_of_hash: array_of_hash %>
+  <%# render "shared/ubiquity/editor/edit_array_hash_form", curation_concern: curation_concern, f: f, array_of_hash: array_of_hash %>
+  <%= render "shared/ubiquity/editor/edit_array_hash_form", f: f, array_of_hash: array_of_hash %>
+
 <% end %>
 
 <%= render "shared/ubiquity/editor/editor_js" %>

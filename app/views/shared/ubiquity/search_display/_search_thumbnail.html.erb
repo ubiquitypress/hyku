@@ -7,12 +7,18 @@
     <% presenter = Hyku::ManifestEnabledWorkShowPresenter.new(document, current_ability) %>
     <% file_set_presenter = presenter.thumbnail_presenter %>
 
-    <% if zipped_types.include? check_for_zip(file_set_presenter.solr_document.label) %>
+    <% if zipped_types.include? check_file_extension(file_set_presenter.solr_document.label) %>
       <span class="fa fa-file-archive-o fa-5x grey-zip-icon"></span>
-    <% elsif (check_for_zip(file_set_presenter.solr_document.label) == ".pdf") && (document.thumbnail_path.split('?').last == "file=thumbnail")  %>
-        <span class="fa fa-file-pdf-o fa-5x hidden-xs file_listing_thumbnail"></span> <span style="padding-left:125px"></span>
-    <% elsif ((not file_set_presenter.solr_document.lease_expiration_date.present?) && (not file_set_presenter.solr_document.embargo_release_date.present?) ) %>
-        <%= render_thumbnail_tag document, :style => "width:150px" %>
+    <% elsif (check_file_extension(file_set_presenter.solr_document.label) == ".pdf") && (document.thumbnail_path.split('?').last == "file=thumbnail")  %>
+      <span class="fa fa-file-pdf-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> <span style="padding-left:125px"></span>
+    <% elsif ([".docx", '.doc'].include? check_file_extension(file_set_presenter.solr_document.label)) && (document.thumbnail_path.split('?').last == "file=thumbnail")  %>
+       <span class="fa fa-file-word-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> <span style="padding-left:125px"></span>
+    <% elsif (document.thumbnail_path.split('?').last == "file=thumbnail") && ([".docx", '.doc', '.pdf'].exclude? check_file_extension(file_set_presenter.solr_document.label)) && (zipped_types.exclude? check_file_extension(file_set_presenter.solr_document.label) )   %>
+      <span class="fa fa-file fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> <span style="padding-left:125px"></span>
+    <% elsif (check_file_is_restricted?(file_set_presenter) == true || (not file_set_presenter.solr_document.lease_expiration_date.present?) && (not file_set_presenter.solr_document.embargo_release_date.present?) ) %>
+      <%= render_thumbnail_tag document, :style => "width:150px" %>
+    <% elsif (check_file_is_restricted?(file_set_presenter) == nil && (file_set_presenter.lease_expiration_date.present? || file_set_presenter.embargo_release_date.present?) ) %>
+      <span class="fa fa-file fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> <span style="padding-left:125px"></span>
     <% else %>
       <%# displays for logged out user for files under embargo/lease %>
       <span class="<%# Hyrax::ModelIcon.css_class_for(Collection) %> collection-icon-search"></span>

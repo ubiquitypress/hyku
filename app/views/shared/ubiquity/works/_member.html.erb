@@ -3,17 +3,26 @@
 <tr class="<%= dom_class(member) %> attributes">
   <td class="thumbnail">
      <!-- displays zip icon for files with archived format eg zip -->
-    <% if zipped_types.include? check_for_zip(member.link_name) %>
+    <% if zipped_types.include?  check_file_extension(member.label) %>
       <span class="fa fa-file-archive-o fa-5x grey-zip-icon"></span>
-    <% elsif (check_for_zip(member.link_name) == ".pdf") && (member.solr_document.thumbnail_path.split('?').last == "file=thumbnail")  %>
-      <span class="fa fa-file-pdf-o fa-5x hidden-xs file_listing_thumbnail" style="color:red"></span> <span style="padding-left:125px"></span>
-    <% elsif check_file_is_restricted?(member) %>
-      <%= render_thumbnail_tag member %>
-    <% elsif ((not member.lease_expiration_date.present?) && (not member.embargo_release_date.present?) ) %>
+    <% elsif (check_file_extension(member.label) == ".pdf") && (member.solr_document.thumbnail_path.split('?').last == "file=thumbnail")  %>
+      <span class="fa fa-file-pdf-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> <span style="padding-left:125px"></span>
+    <% elsif ([".docx", '.doc'].include? check_file_extension(member.label)) && (member.solr_document.thumbnail_path.split('?').last == "file=thumbnail")  %>
+      <span class="fa fa-file-word-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> <span style="padding-left:125px"></span>
+    <% elsif (member.solr_document.thumbnail_path.split('?').last == "file=thumbnail") && ([".docx", '.doc', '.pdf'].exclude? check_file_extension(member.label)) && (zipped_types.exclude? check_file_extension(member.label) )   %>
+      <span class="fa fa-file fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> <span style="padding-left:125px"></span>
+    <%# elsif check_file_is_restricted?(member) == nil %>
+    <% elsif ((check_file_is_restricted?(member) == nil) && (member.lease_expiration_date.present?) && (member.embargo_release_date.present?) ) %>
+      <span class="fa fa-file fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> <span style="padding-left:125px"></span>
+    <% elsif ((check_file_is_restricted?(member) == true) || (not member.lease_expiration_date.present?) && (not member.embargo_release_date.present?) ) %>
+      <!-- displays for logged out users on files without embargo/lease -->
+      <!-- also displays for logged_in users on files with embargo/lease -->
       <%= render_thumbnail_tag member %>
     <% else %>
      <!-- displays for logged out users on files with embargo/lease -->
-     <span class="media-left hidden-xs file_listing_thumbnail mock-thumbnail" ></span>
+     <!--<span class="media-left hidden-xs file_listing_thumbnail mock-thumbnail" ></span> -->
+      <span class="fa fa-file fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> <span style="padding-left:125px"></span>
+
     <% end %>
 
  </td>

@@ -11,27 +11,19 @@ module MultipleMetadataFieldsHelper
     %w[.zip .zipx .bz2 .gz .dmg .rar .sit .sitx .tar .tar.gz .tgz .tar.Z .tar.bz2 .tbz2 .tar.lzma .tlz .tar.xz .xz .txz].freeze
   end
   def check_file_is_restricted?(data)
-    if (current_user.present? && ((current_user.roles_name.include? "admin") || data.depositor == current_user.email || (can? :manage, data)) && ((data.lease_expiration_date.present?) || (data.embargo_release_date.present?) ) )
+    if (current_user.present? && ((current_user.roles_name.include? "admin") || data.depositor == current_user.email || (can? :manage, data)) && (data.lease_expiration_date.present? || data.embargo_release_date.present?))
       true
-    else
-      false
     end
   end
 
-  #receives a id reprsents a thumbnail_id and is used to fetch and return a file_set
-  def get_media_model(id, host=nil)
-    if id.class == String
-      ::AccountElevator.switch!("#{host}") if host.present?
-      file_set =  ActiveFedora::Base.find(id)
-    end
-  end
-
-  def check_for_zip(name)
+  #the method below ase well as zipped_types & check_file_is_resticted are called in multiple files:
+  #app/views/shared/ubiquity/file_sets/_restricted_media.html.erb
+  #app/views/shared/ubiquity/_thumbnail_icons.html.erb
+  #app/views/shared/ubiquity/_thumbnail_icons_with_restrictions.html.erb
+  #app/views/shared/ubiquity/search_display/_search_thumbnail.html.erb
+  #app/views/shared/ubiquity/works/_member.html.erb
+  def check_file_extension(name)
     File.extname(name)
-  end
-
-  def file_set_solr_doc(file_set)
-     SolrDocument.new(file_set.to_solr)
   end
 
   #called in app/views/hyrax/collection/_sort_and_per_page.html

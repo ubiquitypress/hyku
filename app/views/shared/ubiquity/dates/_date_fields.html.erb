@@ -3,12 +3,12 @@
 <p class="help-block"><%= t("simple_form.hints.defaults.date_#{date_type}") %></p>
 
 
-<%= select_year(parse_date(curation_concern.send("date_#{date_type}"), 'year').to_i, {start_year: (Date.today.year + 6), end_year: (Date.today.year - 159), prompt: "Select year"}, {name: "#{template}[date_#{date_type}_group][][date_#{date_type}_year]", class: "form-control ubiquity-date-#{date_type}-year ubiquity-date-input"} ) %>
+<%= select_year(parse_date(f.object.model.send("date_#{date_type}"), 'year').to_i, {start_year: (Date.today.year + 6), end_year: (Date.today.year - 159), prompt: "Select year"}, {name: "#{template}[date_#{date_type}_group][][date_#{date_type}_year]", class: "form-control ubiquity-date-#{date_type}-year ubiquity-date-input"} ) %>
 
-<%= select_month(parse_date(curation_concern.send("date_#{date_type}"), 'month').to_i, { use_two_digit_numbers: true,
+<%= select_month(parse_date(f.object.model.send("date_#{date_type}"), 'month').to_i, { use_two_digit_numbers: true,
                                                              prompt: 'select month if available'},   {name:  "#{template}[date_#{date_type}_group][][date_#{date_type}_month]", :class => "form-control ubiquity-date-#{date_type}-month ubiquity-date-input"}) %>
 
-<%= select_day(parse_date(curation_concern.send("date_#{date_type}"), 'day').to_i, { use_two_digit_numbers: true,
+<%= select_day(parse_date(f.object.model.send("date_#{date_type}"), 'day').to_i, { use_two_digit_numbers: true,
                                                         prompt: 'select day if available'},   {name:  "#{template}[date_#{date_type}_group][][date_#{date_type}_day]", :class => "form-control ubiquity-date-#{date_type}-day ubiquity-date-input"}) %>
 
 

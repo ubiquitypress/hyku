@@ -13,7 +13,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="<%= t('hyrax.dashboard.heading_actions.close') %>">
             <span aria-hidden="true">&times;</span></button>
           <p class="help-block ubiquity-modal-padding"><%= t('helpers.action.doi.placeholder') %></p>
-          <p class="help-block"> for example 10.5438/0012 or https://doi.org/10.5438/0012 or http://dx.doi.org/10.18154/RWTH-CONV-02056 </p>
+          <p class="help-block"> for example 10.21250/iad1 or https://doi.org/10.21250/iad1 or 10.5281/zenodo.1495800 </p>
 
            <input class="ubiquity-datacite-value form-control string optional" type="text" value="" name="<%= work_type.underscore %>[doi]" id="<%= work_type.underscore %>_doi">
 
@@ -33,3 +33,4 @@
 
 
 <%= render "shared/ubiquity/datacite_js"  %>
+s

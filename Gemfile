@@ -124,5 +124,5 @@ gem 'secure_headers'
 
 gem 'sentry-raven'
 
-gem 'mini_magick', '~> 4.9.2'
+gem 'mini_magick', '~> 4.8.0'
 gem 'httparty', '~> 0.16.3'

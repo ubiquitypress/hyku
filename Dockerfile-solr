@@ -1,0 +1,16 @@
+FROM solr:6.6.0
+
+USER root
+
+RUN apt-get update && \
+  apt-get -y install python && \
+  rm -rf /var/lib/apt/lists/*
+
+USER $SOLR_USER
+
+ADD solr /opt/solr/server/solr
+ADD docker/fill_opt_data.py /opt/solr/fill_opt_data.py
+
+ENV SOLR_HOME=/opt/solr/home
+
+ENTRYPOINT ["./docker-entrypoint.sh"]

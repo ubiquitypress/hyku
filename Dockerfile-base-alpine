@@ -1,0 +1,52 @@
+FROM ruby:2.3.1-alpine
+
+RUN apk add --update --no-cache \
+    alpine-sdk \
+    postgresql-dev \
+    nodejs \
+    unzip \
+    ghostscript \
+    bash \
+    supervisor \
+    ffmpeg \
+    exiftool \
+    imagemagick \
+    python-dev \
+    tzdata \
+    openjdk8 \
+    libreoffice \
+    libpng-dev \
+    libjpeg-turbo-dev \
+    freetype-dev \
+    fontconfig-dev \
+    perl-dev \
+    ghostscript-dev \
+    libwebp-dev \
+    libtool \
+    tiff-dev \
+    lcms2-dev \
+    libxml2-dev \
+    librsvg-dev \
+    libx11-dev \
+    libxext-dev \
+    ghostscript-fonts \
+    graphviz \
+    tree
+
+RUN mkdir -p /opt/fits && \
+    curl -fSL -o /opt/fits-1.0.5.zip http://projects.iq.harvard.edu/files/fits/files/fits-1.0.5.zip && \
+    cd /opt && unzip fits-1.0.5.zip && \
+    chmod +X fits-1.0.5/fits.sh
+
+RUN mkdir /data
+WORKDIR /data
+
+ADD Gemfile /data/Gemfile
+ADD Gemfile.lock /data/Gemfile.lock
+
+RUN rm -rf /var/cache/apk/*
+
+WORKDIR /data
+USER root
+
+RUN bundle install

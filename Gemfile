@@ -118,14 +118,11 @@ end
 
 gem 'peek-sidekiq'
 gem 'sidekiq'
-#added by ubiquitypress
 gem "sidekiq-cron", "~> 1.0.4"
 
 gem 'secure_headers'
 
-gem 'honeybadger', '~> 3.0'
-
 gem 'sentry-raven'
 
-#added by Ubiquity 
+gem 'mini_magick', '~> 4.8.0'
 gem 'httparty', '~> 0.16.3'

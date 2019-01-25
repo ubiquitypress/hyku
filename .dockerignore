@@ -13,8 +13,8 @@ CONTRIBUTING.md
 .github
 README.md
 log
-docker
 fits.log
 .hound.yml
 .rspec
 .scss-lint.yml
+Dockerfile*

@@ -41,6 +41,7 @@ module Ubiquity
 
   def get_tenant_name_from_url(host)
     tenant_name  = ubiquity_url_parser(host)
+    tenant_name = 'bl'  if tenant_name == 'sandbox'
     Rails.application.config.google_tag_manager_id[tenant_name.to_sym]
   end
 

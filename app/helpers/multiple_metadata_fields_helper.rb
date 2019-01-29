@@ -105,6 +105,11 @@ module MultipleMetadataFieldsHelper
     end
   end
 
+  def remove_last_semicolon(array_size, index)
+    ';' if index != array_size
+  end
+
+
   def add_image_space?(hash_keys)
     get_name = get_field_name(hash_keys)
     desired_fields = ["#{get_name}_orcid", "#{get_name}_isni"]

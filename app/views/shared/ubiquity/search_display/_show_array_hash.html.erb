@@ -1,14 +1,19 @@
 <span style="display:inline;float:left;">
-<% array_of_hash.each do |hash| %>
+
+  <% array_size = (array_of_hash.size - 1) %>
+
+
+<% array_of_hash.each_with_index do |hash, index| %>
+
   <span itemprop='<%= "#{attr_name}" %>' style="float:left;">
     <% if hash["#{attr_name}_organization_name"] %>
-      <%= hash["#{attr_name}_organization_name"] %><span>; &nbsp;</span>
+      <%= hash["#{attr_name}_organization_name"] %><span><%= remove_last_semicolon(array_size, index) %>&nbsp;</span>
     <% end %>
 
     <% if hash["#{attr_name}_family_name"]  %>
       <% last_name = hash["#{attr_name}_family_name"] %>
       <% last_name << ',' if display_comma?(hash.keys, ["#{attr_name}_family_name", "#{attr_name}_given_name"]) %>
-      <%= last_name %><% if hash["#{attr_name}_given_name"] %> <%= hash["#{attr_name}_given_name"] %><% end %><span>; &nbsp;</span>
+      <%= last_name %><% if hash["#{attr_name}_given_name"] %> <%= hash["#{attr_name}_given_name"] %><% end %><span><%= remove_last_semicolon(array_size, index) %>&nbsp;</span>
     <% end %>
 
   </span>
@@ -16,3 +21,4 @@
 
 <% end %>
   </span>
+

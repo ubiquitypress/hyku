@@ -1,0 +1,11 @@
+<!-- Google Tag Manager (noscript) -->
+<% tenant_name = ubiquity_url_parser("#{request.original_url}") %>
+<% id =  Rails.application.config.google_tag_manager_id[tenant_name.to_sym] %>
+
+<% if id.present? %>
+
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<%= "#{id}"%>"
+                    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<!-- End Google Tag Manager (noscript) -->
+<% end %>

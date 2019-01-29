@@ -4,6 +4,7 @@ module ApplicationHelper
   include MultipleMetadataFieldsHelper
   include Ubiquity::SolrSearchDisplayHelpers
   include Ubiquity::DateChangeHelper
+  include Ubiquity::GoogleTagManagerHelper
 
   def check_has_editor_fields?(presenter)
     ["Book", "BookContribution", "ConferenceItem", "Report", "GenericWork"].include? presenter

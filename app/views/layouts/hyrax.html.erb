@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="<%= t("hyrax.document_language", default: '') %>" prefix="og:http://ogp.me/ns#">
 <head>
-  <%= render_gtm_head %>
+  <%= render_gtm_head(request.original_url) %>
   <%= render partial: 'layouts/head_tag_content' %>
   <%= content_for(:head) %>
 </head>
 
 <body>
-<%= render_gtm_body %>
+<%= render_gtm_body(request.original_url) %>
 <a href="#skip_to_content" class="sr-only">Skip to Content</a>
 <%= render '/masthead' %>
 <%= content_for(:navbar) %>

@@ -34,8 +34,7 @@
   ((not file_set.lease_expiration_date.present?) && (not file_set.embargo_release_date.present?))
    %>
     <li role="menuitem" tabindex="-1">
-      <%= link_to 'Download', hyrax.download_path(file_set),
-        title: "Download #{file_set.to_s.inspect}", target: "_blank" %>
+      <%= display_file_download_link_or_contact_form(file_set) %>
     </li>
   <% end %>
 

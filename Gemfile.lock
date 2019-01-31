@@ -944,6 +944,7 @@ DEPENDENCIES
   jquery-rails
   listen (>= 3.0.5, < 3.2)
   lograge
+  mini_magick (~> 4.8.0)
   mods (~> 2.1)
   peek
   peek-faraday

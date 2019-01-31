@@ -1,37 +1,11 @@
 module MultipleMetadataFieldsHelper
 
-  #receives a file_set when called from views/hyrax/base/_representative_media.html.erb
-  #receives a Hyku::FileSetPresenter when called from views/shared/ubiquity/works/_member.html.erb
-  #used when work type was passed in
-  #  data = data.thumbnail if data.class != Hyku::FileSetPresenter
-  #
-  #Change zip to .zip and others too because calling file.format on a thumbnail in production
-  #returned *zip (ZIP Format)* instead of zip
-  def zipped_types
-    %w[.zip .zipx .bz2 .gz .dmg .rar .sit .sitx .tar .tar.gz .tgz .tar.Z .tar.bz2 .tbz2 .tar.lzma .tlz .tar.xz .xz .txz].freeze
-  end
-  def check_file_is_restricted?(data)
-    if (current_user.present? && ((current_user.roles_name.include? "admin") || data.depositor == current_user.email || (can? :manage, data)) && (data.lease_expiration_date.present? || data.embargo_release_date.present?))
-      true
-    end
-  end
-
-  #the method below ase well as zipped_types & check_file_is_resticted are called in multiple files:
-  #app/views/shared/ubiquity/file_sets/_restricted_media.html.erb
-  #app/views/shared/ubiquity/_thumbnail_icons.html.erb
-  #app/views/shared/ubiquity/_thumbnail_icons_with_restrictions.html.erb
-  #app/views/shared/ubiquity/search_display/_search_thumbnail.html.erb
-  #app/views/shared/ubiquity/works/_member.html.erb
-  def check_file_extension(name)
-    File.extname(name)
-  end
-
   #called in app/views/hyrax/collection/_sort_and_per_page.html
   #sort_fields is 2 dimensional array
   def ubiquity_sort_field(sort_array)
     sort_array - [["relevance", "score desc, system_create_dtsi desc"], ["date modified ▼", "system_modified_dtsi desc"], ["date modified ▲", "system_modified_dtsi asc"]]
   end
-
+  
   #takes in the creator value passed in from a solr document
   #It receives an array containing a single json string eg ['[{creator_family_name: mike}, {creator_given_name: hu}]']
   #We parse that json into an array of hashes as in [{creator_family_name: mike}, {creator_given_name: hu}]

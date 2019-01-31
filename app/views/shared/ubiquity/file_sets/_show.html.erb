@@ -1,0 +1,31 @@
+<!-- rendered in app/views/hyrax/file_sets/show.html.erb -->
+<!-- Copied from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/file_sets/show.html.erb -->
+<!-- media_partial helper is defined here https://github.com/samvera/hyrax/blob/master/app/helpers/hyrax/file_set_helper.rb#L13
+ -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12 col-sm-4">
+      <% if can?(:download, presenter.id) &&
+      ((not presenter.lease_expiration_date.present?) && (not presenter.embargo_release_date.present?))
+       %>
+        <%# we used the media_partial to replace the helper method  'media_display @presenter' %>
+        <!-- this is enables us to split file display and download link -->
+        <%= render 'shared/ubiquity/file_sets/media_display',  presenter: presenter %> <br/>
+        <b>File Size: <%= display_file_size(presenter.id) %></b> <br/>
+        <span class="btn btn-default"><%= display_file_download_link_or_contact_form(presenter) %></span>
+     <% end %>
+
+      <%= render 'show_actions', presenter: presenter %>
+      <%= render 'single_use_links', presenter: presenter if presenter.editor? %>
+    </div>
+    <div itemscope itemtype="<%= presenter.itemtype %>" class="col-xs-12 col-sm-8">
+      <header>
+        <%= render 'file_set_title', presenter: presenter %>
+      </header>
+
+      <%# TODO: render 'show_descriptions' See https://github.com/samvera/hyrax/issues/1481 %>
+      <%= render 'show_details' %>
+      <%= render 'hyrax/users/activity_log', events: presenter.events %>
+    </div><!-- /columns second -->
+  </div> <!-- /.row -->
+</div><!-- /.container-fluid -->

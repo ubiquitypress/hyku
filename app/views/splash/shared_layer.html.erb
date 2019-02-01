@@ -1,25 +1,6 @@
-<div class="panel tabs">
-  <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-    <li role="presentation"><a href="#about" aria-controls="about" role="tab" data-toggle="tab">About</a></li>
-  </ul>
 
-  <!-- Tab panes -->
-  <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="home">
-      <div class="panel panel-default labels">
-        <div class="panel-body">
-          <%= render 'proprietor/bl_partners_home' %>
-        </div>
-      </div>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="about">
-      <div class="panel panel-default labels">
-        <div class="panel-body">
-          <%= render 'proprietor/bl_partners_about' %>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<% if request.original_url ==  'https://oar.bl.uk/' || request.original_url ==  'https://repo-test.ubiquity.press/' %>
+  <%= render 'bl_shared_layer' %>
+<% else %>
+  <%= render 'new_index' %>
+<% end %>

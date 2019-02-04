@@ -5,6 +5,7 @@ class GenericWork < ActiveFedora::Base
   include Ubiquity::BasicMetadataDecorator
   include Ubiquity::AllModelsVirtualFields
   include Ubiquity::EditorMetadataModelConcern
+  include Ubiquity::VersionMetadataModelConcern
 
   validates :title, presence: { message: 'Your work must have a title.' }
 

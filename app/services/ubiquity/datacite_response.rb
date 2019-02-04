@@ -69,7 +69,7 @@ module Ubiquity
        fields << 'DOI' if doi.present?
        fields << 'related_identifier' if related_identifier.present?
        fields << 'abstract' if abstract.present?
-       fields << 'license' if license.present?
+       fields << 'licence' if (license.present? && licence_present?.include?(license))
        #fields << 'version' if version.present?
 
        "The following fields were auto-populated - #{fields.to_sentence}"
@@ -123,6 +123,14 @@ module Ubiquity
        end
        new_creator_group
      end
+
+    #fetches list licences from config/authorities/licenses.yml
+    # returns each record in the form of ["CC BY 4.0 Attribution", "https://creativecommons.org/licenses/by/4.0/"]
+    # we are returning just the last part eg [ "https://creativecommons.org/licenses/by/4.0/"]
+    def licence_present?
+      licences = Hyrax::LicenseService.new.select_all_options
+      licences.map(&:last)
+    end
 
 
   end

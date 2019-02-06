@@ -22,7 +22,7 @@ terms:
       active: true
     - id: http://creativecommons.org/publicdomain/mark/1.0/
       term: CC0 Public Domain Mark 1.0
-      active: true
+      active: false
     - id: http://creativecommons.org/publicdomain/zero/1.0/
       term: CC0 1.0 Universal Public Domain
       active: true
@@ -141,4 +141,3 @@ terms:
     - id: https://creativecommons.org/licenses/by/4.0/4
       term: (CC BY 4.0 Attribution) broken link - please edit to re-select working "CC BY 4.0 Attribution" from drop-down list
       active: false
-    

@@ -16,6 +16,7 @@ terms:
       active: true
     - id: http://creativecommons.org/publicdomain/mark/1.0/
       term: Public Domain Mark 1.0
+      active: true
     - id: https://creativecommons.org/licenses/by-nc-nd/4.0/
       term: CC BY-NC-ND 4.0 Attribution NonCommercial-NoDerivs
       active: true

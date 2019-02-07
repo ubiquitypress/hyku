@@ -4,9 +4,9 @@
 
 <a id="logo" class="navbar-brand" href="<%= hyrax.root_path %>" data-no-turbolink="true">
   <span class="glyphicon glyphicon-globe" role="img" aria-label="<%= application_name %>" aria-hidden="true"></span>
-  <% if request.original_url == 'https://oar.bl.uk/' %>
+  <% if request.original_url == 'https://oar.bl.uk/' || request.original_url ==  'https://repo-test.ubiquity.press/' %>
     Shared Research Repository
   <% else %>
     <span class="institution_name"><%= application_name %></span>
   <% end %>
-</a> 
+</a>

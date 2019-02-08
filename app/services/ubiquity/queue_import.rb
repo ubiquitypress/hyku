@@ -198,3 +198,78 @@ Nms =  {
                 "domain": "localhost",
                 "tenant": "library"
             }
+
+Sandbox = {
+                "doi": "https://doi.org/10.21250/aascc21",
+                "isbn": "",
+                "issn": "",
+                "eissn": "",
+                "issue": "",
+                "title": "AAS Card Catalogues: Sinhalese",
+                "funder": "",
+                "volume": "",
+                "edition": "",
+                "keyword": "AAS||card||catalogue||PDF||pdf||Sinhalese",
+                "license": "https://creativecommons.org/publicdomain/mark/1.0/",
+                "version": "",
+                "abstract": "This dataset contains digitised microfilms of Sinhalese card catalogues.",
+                "language": "Sinhalese",
+                "publisher": "British Library",
+                "type": "Dataset",
+                "book_title": "",
+                "pagination": "",
+                "event_title": "",
+                "institution": "British Library",
+                "related_url": "",
+                "series_name": "",
+                "official_link": "https://doi.org/10.21250/aascc21",
+                "project_name": "Asian and African Collections: Card Catalogues",
+                "date_accepted": "",
+                "journal_title": "",
+                "refereed": "",
+                "resource_type": "Dataset default Dataset",
+                "rights_holder": "",
+                "article_num": "",
+                "date_published": "2017",
+                "date_submitted": "",
+                "media": "",
+                "rights_statement": "",
+                "related_exhibition": "",
+                "organisational_unit": "Asian and African Studies",
+                "place_of_publication": "London, UK",
+                "add_info": "The 6.81 GB ZIP file (created using 7-Zip) contains 104 PDF documents.",
+                "related_exhibition_date": "",
+                "fndr_project_ref": "",
+                "editor": "",
+                "creator": [
+                    {
+                        "creator_name_type": "Organisational",
+                        "creator_isni": "0000 0001 2308 1542",
+                        "creator_organization_name": "British Library",
+                        "creator_position": "0"
+                    }
+                ],
+                "contributor": [
+                    {
+                        "contributor_name_type": "Personal",
+                        "contributor_isni": "0000 0004 4772 9640",
+                        "contributor_orcid": "0000-0002-7202-4875",
+                        "contributor_family_name": "Sobers-Khan",
+                        "contributor_given_name": "Nur",
+                        "contributor_type": "Curator",
+                        "contributor_position": "0"
+                    }
+                ],
+                "related_identifier": "",
+                "alternate_identifier": [
+                    {
+                        "alternate_identifier": "DAR00554",
+                        "alternate_identifier_type": "Digital Asset Register ID",
+                        "alternate_identifier_position": "0"
+                    }
+                ],
+                "file": "",
+                "id": "8525090e-5ed1-4f11-a378-5c420e04f276",
+                "domain": "localhost",
+                "tenant": "library"
+            }

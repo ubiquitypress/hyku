@@ -95,21 +95,48 @@ module Ubiquity
     def  populate_array_field(key, val, index)
       set_default_work_visibility(key) if index == 0
       if (@data_hash[key].present? && (@work_instance.send(key).respond_to? :length) && (not val.class == String) && (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key))
-        @work_instance.assign_attributes(key => @data_hash[key].split('||')) if (key == "file_only_import" && key != 'true')
+        #@work_instance.assign_attributes(key => @data_hash[key].split('||')) if (key == "file_only_import" && key != 'true')
+        create_or_skip_work_metadata('array', key)
       end
       @work_instance
     end
 
     def populate_json_field(key, val)
       if (@data_hash[key].present? && (@work_instance.send(key).respond_to? :length) && (not val.class == String) && (['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key))
-        @work_instance.assign_attributes(key => [@data_hash[key].to_json]) if (key == "file_only_import" && key != 'true')
+        #@work_instance.assign_attributes(key => [@data_hash[key].to_json]) if (key == "file_only_import" && key != 'true')
+        create_or_skip_work_metadata('json', key)
       end
       @work_instance
     end
 
     def populate_single_fields(key, val)
       if (@data_hash[key].present? && (@data_hash[key].class == String) && (not val.class == ActiveTriples::Relation) && (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key))
-        @work_instance.assign_attributes(key =>  @data_hash[key]) if (key == "file_only_import" && key != 'true')
+        #@work_instance.assign_attributes(key =>  @data_hash[key]) if (key == "file_only_import" && key != 'true')
+        create_or_skip_work_metadata('string', key)
+      end
+      @work_instance
+    end
+
+    def create_or_skip_work_metadata(type, key)
+      if (@data_hash["file_only_import"].present? == false) #&& @data_has["file_only_import"] == 'true')
+      #elsif @data_has["file_only_import"].present? == false
+        puts "populating metadata"
+        populate_work_values(type, key)
+      end
+      @work_instance
+    end
+
+    def populate_work_values(type, key)
+      if type == 'string'
+        #@work_instance.assign_attributes(key =>  @data_hash[key])
+        puts "populating metadata string fields"
+        @work_instance.assign_attributes(key =>  @data_hash[key])
+      elsif type == 'array'
+        puts "populating metadata array fields"
+        @work_instance.assign_attributes(key => @data_hash[key].split('||'))
+      elsif type == 'json'
+        puts "populating metadata json fields"
+        @work_instance.assign_attributes(key => [@data_hash[key].to_json])
       end
       @work_instance
     end
@@ -177,6 +204,7 @@ module Ubiquity
     end
 
     def create_hyrax_uploaded_file(file_io, file_name)
+      puts "creating hyrax_uploaded_file this happens before adding the files to the work"
       AccountElevator.switch!("#{@tenant_domain}")
       fetch_or_create_file ||= Hyrax::UploadedFile.where(file: file_name).first  || Hyrax::UploadedFile.create(file: file_io, user: @user)
       @hyrax_uploaded_file << fetch_or_create_file

@@ -11,9 +11,9 @@ module Ubiquity
       elsif ([".docx", '.doc'].include? check_file_extension(file_set_presenter.label)) && (file_set_presenter.solr_document.thumbnail_path.split('?').last == "file=thumbnail")
         '<span class="fa fa-file-word-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> <span style="padding-left:125px"></span>'
       elsif (file_set_presenter.solr_document.thumbnail_path.split('?').last == "file=thumbnail") && ([".docx", '.doc', '.pdf'].exclude? check_file_extension(file_set_presenter.label)) && (zipped_types.exclude? check_file_extension(file_set_presenter.label) )
-         '<span class="fa fa-file fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> <span style="padding-left:125px"></span>'
+         '<span class="fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> <span style="padding-left:125px"></span>'
       elsif ((check_file_is_restricted?(file_set_presenter) == nil) && (file_set_presenter.lease_expiration_date.present?) && (file_set_presenter.embargo_release_date.present?) )
-        '<span class="fa fa-file fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> <span style="padding-left:125px"></span>'
+        '<span class="fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> <span style="padding-left:125px"></span>'
       elsif ((check_file_is_restricted?(file_set_presenter) == true) || (not file_set_presenter.lease_expiration_date.present?) && (not file_set_presenter.embargo_release_date.present?) )
         #displays for logged out users on files without embargo/lease
         #also displays for logged_in users on files with embargo/lease
@@ -21,19 +21,19 @@ module Ubiquity
       else
         #displays for logged out users on files with embargo/lease
         #'<span class="media-left hidden-xs file_listing_thumbnail mock-thumbnail" ></span>'
-        '<span class="fa fa-file fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> <span style="padding-left:125px"></span>'
+        '<span class="fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> <span style="padding-left:125px"></span>'
       end
     end
-
+# <i class="far fa-file"></i>
     def display_file_size(id)
       if id.present?
         file_size_bytes = get_file_size_in_bytes(id)
         file_size_in_kb = (file_size_bytes/1000)
-        return "#{file_size_in_kb.round(2)} kb" if file_size_bytes < 5300
+        return "#{file_size_in_kb.round(2)} KB" if file_size_bytes < 5300
         file_size_in_mb = file_size_in_kb/(1000)
-        return "#{file_size_in_mb.round(2)} mb" if file_size_in_mb < 100
+        return "#{file_size_in_mb.round(2)} MB" if file_size_in_mb < 100
         file_size_in_gb = (file_size_in_mb/1000) if file_size_in_mb > 100
-        return "#{file_size_in_gb.round(2)} gb"
+        return "#{file_size_in_gb.round(2)} GB"
       end
     end
 

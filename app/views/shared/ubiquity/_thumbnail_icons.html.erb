@@ -12,7 +12,7 @@
 <% elsif ([".docx", '.doc'].include? check_file_extension(file_set_presenter.solr_document.label)) && (document.thumbnail_path.split('?').last == "file=thumbnail")  %>
     <span class="fa fa-file-word-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span>
 <% elsif (document.thumbnail_path.split('?').last == "file=thumbnail") && ([".docx", '.doc', '.pdf'].exclude? check_file_extension(file_set_presenter.solr_document.label)) && (zipped_types.exclude? check_file_extension(file_set_presenter.solr_document.label) )   %>
-    <span class="fa fa-file fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> 
+    <span class="fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> 
 <% else %>
      <%= render_thumbnail_tag document, { class: 'hidden-xs file_listing_thumbnail' }, { suppress_link: true } %>
  <% end %>

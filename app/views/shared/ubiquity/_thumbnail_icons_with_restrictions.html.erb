@@ -8,18 +8,18 @@
 <% file_set_presenter = presenter.thumbnail_presenter %>
 
 <% if zipped_types.include? check_file_extension(file_set_presenter.solr_document.label) %>
-  <span class="fa fa-file-archive-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey" ></span><span style="width:100px;padding-left:108px"></span>
+  <span class="fa fa-file-archive-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:20px"></span><span style="width:100px;padding-left:108px"></span>
 <% elsif (check_file_extension(file_set_presenter.solr_document.label) == ".pdf") && (document.thumbnail_path.split('?').last == "file=thumbnail")  %>
-  <span class="fa fa-file-pdf-o fa-5x hidden-xs file_listing_thumbnail style="color:grey"></span> <span style="width:100px;padding-left:105px"></span>
+  <span class="fa fa-file-pdf-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:20px"></span> <span style="width:100px;padding-left:105px"></span>
 <% elsif ([".docx", '.doc'].include? check_file_extension(file_set_presenter.solr_document.label)) && (document.thumbnail_path.split('?').last == "file=thumbnail")  %>
-  <span class="fa fa-file-word-o  fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span><span style="color:grey;width:100px;padding-left:105px;"></span>
+  <span class="fa fa-file-word-o  fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:20px"></span><span style="color:grey;width:100px;padding-left:105px;"></span>
 <% elsif (document.thumbnail_path.split('?').last == "file=thumbnail") && ([".docx", '.doc', '.pdf'].exclude? check_file_extension(file_set_presenter.solr_document.label)) && (zipped_types.exclude? check_file_extension(file_set_presenter.solr_document.label) ) %>
-  <span class="fa fa-file fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> </span><span style="width:100px;padding-left:108px"></span>
+  <span class="fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:20px"></span> </span><span style="width:100px;padding-left:108px"></span>
 <% elsif (check_file_is_restricted?(file_set_presenter) == nil && (file_set_presenter.lease_expiration_date.present?) && (file_set_presenter.embargo_release_date.present?)) %>
- <span class="fa fa-file fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> </span><span style="width:100px;padding-left:108px"></span>
+  <span class="fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:20px"></span> </span><span style="width:100px;padding-left:108px"></span>
 <% elsif (check_file_is_restricted?(file_set_presenter) == true || (not file_set_presenter.lease_expiration_date.present?) && (not file_set_presenter.embargo_release_date.present?) ) %>
   <%= render_thumbnail_tag(document, {width: 90, class: 'hidden-xs file_listing_thumbnail'}, {suppress_link: true}) %>
 <% else %>
  <!-- displays for logged out users on files with embargo/lease -->
- them <span class="media-left hidden-xs file_listing_thumbnail mock-thumbnail" ></span>
+  <span class="media-left hidden-xs file_listing_thumbnail mock-thumbnail" ></span>
 <% end %>

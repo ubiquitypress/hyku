@@ -36,7 +36,7 @@ terms:
       term: Apache License v2.0
       active: true
     - id: https://opendatacommons.org/licenses/odbl/1.0/
-      term: Open Database License(ODBL)
+      term: Open Database License (ODBL)
       active: true
     - id: https://www.mozilla.org/en-US/MPL/2.0/
       term: Mozilla Public License (MPL)
@@ -118,9 +118,6 @@ terms:
     - id: https://creativecommons.org/licenses/by-nc-sa/1.0/
       term: CC BY-NC-SA Attribution-NonCommercial-ShareAlike 2.0 Generic
       active: false
-    - id: http://creativecommons.org/publicdomain/zero/1.0/
-      term: CC0 1.0 Universal Public Domain
-      active: true
     - id: https://www.gnu.org/licenses/old-licenses/gpl-1.0.html
       term: GNU General Public License v1.0
       active: false

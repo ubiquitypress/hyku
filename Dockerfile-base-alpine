@@ -1,4 +1,4 @@
-FROM ruby:2.3.1-alpine
+FROM ruby:2.3.8-alpine3.7
 
 RUN apk add --update --no-cache \
     alpine-sdk \
@@ -10,7 +10,7 @@ RUN apk add --update --no-cache \
     supervisor \
     ffmpeg \
     exiftool \
-    imagemagick \
+    imagemagick6 \
     python-dev \
     tzdata \
     openjdk8 \
@@ -31,7 +31,7 @@ RUN apk add --update --no-cache \
     libxext-dev \
     ghostscript-fonts \
     graphviz \
-    tree
+    mediainfo
 
 RUN mkdir -p /opt/fits && \
     curl -fSL -o /opt/fits-1.0.5.zip http://projects.iq.harvard.edu/files/fits/files/fits-1.0.5.zip && \

@@ -1,4 +1,4 @@
-FROM upress/hyku-base-alpine:latest
+FROM upress/hyku-base-alpine
 
 ADD . /data
 
@@ -9,6 +9,13 @@ COPY ./docker/supervisord-worker.conf /etc/supervisor/supervisord-worker.conf
 COPY ./docker/supervisord-worker-sidekiq.conf /etc/supervisor/supervisord-worker-sidekiq.conf
 
 RUN rm -rf /var/cache/apk/*
+
+RUN ln -s /usr/bin/mogrify-6 /usr/bin/mogrify
+RUN ln -s /usr/bin/convert-6 /usr/bin/convert
+RUN ln -s /usr/bin/identify-6 /usr/bin/identify
+RUN ln -s /usr/bin/mogrify-6 /usr/local/bin/mogrify
+RUN ln -s /usr/bin/convert-6 /usr/local/bin/convert
+RUN ln -s /usr/bin/identify-6 /usr/local/bin/identify
 
 EXPOSE 3000
 

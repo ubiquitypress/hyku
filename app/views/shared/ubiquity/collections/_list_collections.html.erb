@@ -14,10 +14,10 @@
       <!-- This if condiftion was added by UbiquityPress -->
       <% if document.thumbnail_id %>
         <% if File.extname(document.thumbnail_path).blank? %>
-          <span class="fa fa-file-archive-o grey-zip-icon pull-left collection-icon-small"></span>
+         <span class="fa fa-file-archive-o grey-zip-icon pull-left collection-icon-small"></span>
         <% else %>
           <span  class="collection-icon-small pull-left"><%= render_thumbnail_tag document, :style => 'width:18px' %></span>
-        <% end %>
+      <% end %>
       <% else %>
           <!-- this was the default in hyrax -->
           <span class="<%# Hyrax::ModelIcon.css_class_for(Collection) %> collection-icon-small pull-left"></span>

@@ -28,6 +28,7 @@ module Ubiquity
     def display_file_size(id)
       if id.present?
         file_size_bytes = get_file_size_in_bytes(id)
+        return "Being calculated" if file_size_bytes == 0
         file_size_in_kb = (file_size_bytes/1000)
         return "#{file_size_in_kb.round(2)} KB" if file_size_bytes < 5300
         file_size_in_mb = file_size_in_kb/(1000)
@@ -41,6 +42,7 @@ module Ubiquity
     def display_file_download_link_or_contact_form(file_set_presenter)
       if file_set_presenter.id.present?
         file_size_bytes =  get_file_size_in_bytes(file_set_presenter.id)
+        return "Download temporarily unavailable" if file_size_bytes == 0
         file_size_in_mb = file_size_bytes/(1000 * 1000)
         file_size_in_gb = (file_size_in_mb/1000)
         return (link_to('Download', hyrax.download_path(file_set_presenter), title: "Download #{file_set_presenter.to_s.inspect}", target: "_blank") ) if file_size_in_gb < 10
@@ -81,8 +83,9 @@ module Ubiquity
     def get_file_size_in_bytes(id)
       @file_set = FileSet.find(id)
       pdcm_file_object = @file_set.original_file
-      #the pdcm file size is in byte so we convert it to megabyte
-      (pdcm_file_object.size.to_f)
+      #the pdcm file size is in bytes
+      return (pdcm_file_object.try(:size).try(:to_f) ) if pdcm_file_object.present?
+      return 0 if !pdcm_file_object.present?
     end
 
   end

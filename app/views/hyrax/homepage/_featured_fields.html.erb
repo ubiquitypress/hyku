@@ -1,18 +1,33 @@
 <%# Override from Hyrax engine to customise front-end %>
-<!-- instance  of Hyrax::WorkShowPresenter: -->
-
+<!-- featured instance  of Hyrax::WorkShowPresenter: -->
 <% featured_doc = featured.solr_document %>
+<% if featured.thumbnail_id.present? %>
 
-<div class="featured-fields" >
-  <%= link_to [main_app, featured] do %>
-    <div class="featured-item-thumbnail">
-      <%= render_related_img(featured_doc) %>
+  <div class="featured-fields" >
+    <%= link_to [main_app, featured] do %>
+      <div class="featured-item-thumbnail">
+        <%= render 'shared/ubiquity/thumbnail_featured', document: featured_doc %>
+      </div>
+      <div class="featured-item homepage-field-title">
+        <%= featured.title.first %>
+      </div>
+    <% end %>
+    <div class="featured-item">
+      <%= link_to_facet_list(featured_doc['creator_search_tesim'], 'creator_search').html_safe %>
     </div>
-    <div class="featured-item homepage-field-title">
-      <%= featured.title.first %>
+  </div>
+<% else %>
+<div>
+  <div class="featured-item-title">
+    <h3>
+      <span class="sr-only">Title</span><%= link_to (featured_doc.to_s), [main_app, featured_doc] %>
+      <%= link_to [main_app, featured] do %>
+        <span class="media-left hidden-xs file_listing_thumbnail" style="padding-left:62px" ></span>
+      <% end %>
+    </h3>
+    <div class="featured-item">
+      <%= link_to_facet_list(extract_creator_names_for_homepage(featured_doc), 'creator_search').html_safe %>
     </div>
-  <% end %>
-  <div class="featured-item">
-    <%= link_to_facet_list(featured_doc['creator_search_tesim'], 'creator_search').html_safe %>
   </div>
 </div>
+<% end %>

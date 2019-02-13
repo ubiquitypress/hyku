@@ -1,4 +1,6 @@
-FROM ruby:2.3.1
+FROM ruby:2.3.8-slim-stretch
+
+RUN mkdir -p /usr/share/man/man1
 
 RUN apt-get update -qq && \
     apt-get upgrade -qq && \
@@ -9,6 +11,8 @@ RUN apt-get update -qq && \
         libreoffice \
         imagemagick \
         unzip \
+        curl \
+        mediainfo \
         ghostscript \
         && \
     rm -rf /var/lib/apt/lists/*
@@ -23,7 +27,7 @@ RUN mkdir /data
 WORKDIR /data
 
 # Install ffmpeg required to get videos to work.
-RUN echo 'deb http://ftp.uk.debian.org/debian jessie-backports main' >> /etc/apt/sources.list
+RUN echo 'deb http://ftp.uk.debian.org/debian stretch-backports main' >> /etc/apt/sources.list
 RUN apt-get update && \
     apt-get install -y ffmpeg
 

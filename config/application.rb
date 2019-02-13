@@ -45,6 +45,7 @@ module Hyku
       #Removes subject from collection click additional fields to see subject is gone
       Hyrax::Forms::CollectionForm.prepend(::Ubiquity::CollectionFormBehaviour)
       Hyrax::Forms::BatchEditForm.prepend(::Ubiquity::AdditionalBatchEdit)
+      Hyrax::FileSetDerivativesService.prepend(::Ubiquity::FilesetDerivativesServiceOverride)
     end
 
     config.before_initialize do

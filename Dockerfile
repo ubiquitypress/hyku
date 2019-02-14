@@ -1,4 +1,4 @@
-FROM upress/hyku-base:experimental
+FROM upress/hyku-base:latest
 
 ADD . /data
 

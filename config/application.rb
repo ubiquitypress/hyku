@@ -45,6 +45,7 @@ module Hyku
       #Removes subject from collection click additional fields to see subject is gone
       Hyrax::Forms::CollectionForm.prepend(::Ubiquity::CollectionFormBehaviour)
       Hyrax::Forms::BatchEditForm.prepend(::Ubiquity::AdditionalBatchEdit)
+      Hyrax::FileSetDerivativesService.prepend(::Ubiquity::FilesetDerivativesServiceOverride)
     end
 
     config.before_initialize do
@@ -57,7 +58,7 @@ module Hyku
       end
     end
 
-
+    #Everything below added ubiquity
     Raven.configure do |config|
       if ENV['SENTRY_DSN']
         config.dsn = ENV['SENTRY_DSN']

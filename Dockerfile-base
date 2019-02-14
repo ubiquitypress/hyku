@@ -13,6 +13,7 @@ RUN apt-get update -qq && \
         unzip \
         curl \
         mediainfo \
+        supervisor \
         ghostscript \
         && \
     rm -rf /var/lib/apt/lists/*

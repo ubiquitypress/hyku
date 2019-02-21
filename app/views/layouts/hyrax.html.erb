@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="<%= t("hyrax.document_language", default: '') %>" prefix="og:http://ogp.me/ns#">
 <head>
+  <meta name="robots" content="noindex">
   <%= render_gtm_head(request.original_url) %>
   <%= render partial: 'layouts/head_tag_content' %>
   <%= content_for(:head) %>

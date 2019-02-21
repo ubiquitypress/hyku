@@ -56,4 +56,26 @@ module ApplicationHelper
   def split_note_from_work(note_text)
     note_text.split('</a>)').last
   end
+
+  def client_browser_name(request)
+   user_agent = request.env['HTTP_USER_AGENT'].downcase
+   if user_agent =~ /msie/i
+     render_browser_specific_files('internet explorer')
+    else
+     render_browser_specific_files('other')
+   end
+  end
+
+ private
+
+ def render_browser_specific_files(browser_name)
+    if browser_name == "Internet Explorer"
+      # this is a partial for ie
+      render 'bl_partners_home_ie11.html.erb'
+    else
+      # this is a partial
+      render 'bl_partners_home.html.erb'
+    end
+  end
+
 end

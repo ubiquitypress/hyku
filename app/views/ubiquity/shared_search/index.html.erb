@@ -1,0 +1,117 @@
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9 col-md-offset-3 ">
+          <%= render 'shared_search_form' %>
+       </div> <!-- closes col-md-9 -->
+    </div> <!-- closes .row -->
+
+    <div class="row">
+       <div class="col-md-7 col-md-offset-5">
+        <h3 class="text-danger"> Search results from multiple repositories </h3>
+       </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 col-md-offset-4">
+        <%= paginate @search_pagination %>
+       </div>
+
+       <div class="col-md-2">
+           <%= form_tag shared_search_index_path, method: :get, id: 'limit_form' do %>
+             <span class="bg-warning"> Per page: <%= select_tag :limit, options_from_collection_for_select(Ubiquity::SharedSearch::PER_PAGE_OPTIONS, :to_s, :to_s, selected: params[:limit] || 10) %>
+             </span>
+           <% end %>
+        </div>
+
+    </div>
+
+  </div>  <!-- closes .container for form -->
+  <br/>
+
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-md-3"><!-- facet sidebar --> </div>
+      <div  class="col-md-9">
+
+      <% @search_pagination.each do |model| %>
+
+        <% if  model["visibility_ssi"] == 'open' %>
+
+            <% url = generate_work_url(model['id'], model["account_cname_tesim"].try(:first), model["has_model_ssim"].first, request.host, request.protocol, request.port) %>
+
+          <div class="row">
+            <% model.each do |hash_key, data_value| %>
+
+              <div class="col-md-4 pull-left" >
+              <% if  ("title_tesim" == hash_key) && data_value.present? %>
+
+                <h2>
+                <span class="search-meta-label"><span class="attribute-label h4">
+                  <%= link_to data_value.first, url, target: "_blank" %></span></span>
+                </h2>
+                <div class="list-thumbnail">
+                <% if model["thumbnail_path_ss"].present? && File.extname(model['thumbnail_path_ss']).blank?  %>
+                      <span class="fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey;width:150px;padding-left:25px"></span>
+                <% elsif model["thumbnail_path_ss"].present? && model["thumbnail_path_ss"] != "/assets/work-ff055336041c3f7d310ad69109eda4a887b16ec501f35afc0a547c4adb97ee72.png" %>
+                    <img src="<%= request.protocol %><%= model["account_cname_tesim"].try(:first) %>:<%= request.port %><%= image_path(model['thumbnail_path_ss']) %>" alt="default" style="width:150px;padding-left:25px" >
+                <% else %>
+                  <span class="<%# Hyrax::ModelIcon.css_class_for(Collection) %> list-thumbnail"></span> <br/>
+                 <% end %>
+                 </div> <!--  closes list-thumbnail -->
+
+                <% end %>  <!-- closes if title_tesim -->
+                </div> <!-- closes col-md-2 -->
+
+               <div class="col-md-8 pull-right">
+
+                    <% if (["creator_tesim"].include? hash_key) && data_value.present? %>
+
+                       <% field = parse_json(data_value) %>
+                        <span class="search-meta-label pull-left"><span class="attribute-label h4"><%= Ubiquity::SharedSearch::NAME_MAPPING[hash_key] %></span></span>
+
+                        <span class="pull-right text-left"><span class="center-block"><%= render "shared/ubiquity/search_display/show_array_hash", array_of_hash: field, attr_name: 'creator' %></span></span>
+
+                     <% end %>
+
+                     <% if (["resource_type_tesim", "date_published_tesim", "institution_tesim"].include? hash_key) && data_value.present? %>
+
+                        <span class="search-meta-label pull-left"><span class=" attribute-label h4"><%= Ubiquity::SharedSearch::NAME_MAPPING[hash_key] %></span> </span>
+
+                        <span class="pull-right"><% if data_value.class != Array %> <span class="center-block"><%= data_value %> <% end %> </span></span>
+                        <span class="pull-right"><% if data_value.class == Array %>  <span class="text-right"> <%= data_value.to_sentence %> <% end %> </span> </span>
+
+                     <% end %>
+
+                 </div> <!--  closes col-md-6 -->
+
+
+              <% end %> <!-- model each loop -->
+               </div> <!-- closes .row -->
+
+          <% end %> <!-- closes model visbility check -->
+
+        <% end %> <!-- closes first loop -->
+          </div> <!-- closes class="col-md-9 col-md-push-3 col-sm-8 col-sm-push-4" -->
+
+    </div> <!-- closes row -->
+
+    <div class="row">
+      <div class="col-md-6 col-md-offset-5">
+        <%= paginate @search_pagination %>
+       </div>
+    </div>
+
+  </div> <!-- closes container -->
+
+  <div class="clearfix"></div>
+
+<script type="text/javascript" >
+  $(function(){
+    $('#limit').change(
+      function() {
+       $('#limit_form').submit();
+      });
+  });
+</script>

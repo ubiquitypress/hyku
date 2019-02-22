@@ -5,7 +5,6 @@ Rails.application.routes.draw do
       get '/account/sign_up' => 'account_sign_up#new', as: 'new_sign_up'
       post '/account/sign_up' => 'account_sign_up#create'
       get '/', to: 'splash#shared_layer'
-
       # pending https://github.com/projecthydra-labs/hyrax/issues/376
       get '/dashboard', to: 'splash#index'
 
@@ -24,6 +23,9 @@ Rails.application.routes.draw do
       end
   end
 
+  scope :module => "ubiquity" do
+    resources :shared_search, only: [:index]
+  end
   mount BrowseEverything::Engine => '/browse'
   resource :site, only: [:update] do
     resources :roles, only: [:index, :update]

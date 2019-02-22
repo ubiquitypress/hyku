@@ -1,0 +1,7 @@
+
+<%= form_with url: '/shared_search', local: true, class: 'form-inline',  method: :get do |form| %>
+ <div class="form-group">
+  <%= form.text_field :term, class: "form-control input-lg", size: '60'  %>
+ </div>
+ <%= form.submit "Go", class: "btn btn-primary" %>
+<% end %>

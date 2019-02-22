@@ -6,6 +6,7 @@ module ApplicationHelper
   include Ubiquity::DateChangeHelper
   include Ubiquity::GoogleTagManagerHelper
   include Ubiquity::FileDisplayHelpers
+  include Ubiquity::BrowserDetectionHelper
 
   def check_has_editor_fields?(presenter)
     ["Book", "BookContribution", "ConferenceItem", "Report", "GenericWork"].include? presenter
@@ -56,4 +57,5 @@ module ApplicationHelper
   def split_note_from_work(note_text)
     note_text.split('</a>)').last
   end
+
 end

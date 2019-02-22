@@ -6,6 +6,7 @@ module ApplicationHelper
   include Ubiquity::DateChangeHelper
   include Ubiquity::GoogleTagManagerHelper
   include Ubiquity::FileDisplayHelpers
+  include Ubiquity::BrowserDetectionHelper
 
   def check_has_editor_fields?(presenter)
     ["Book", "BookContribution", "ConferenceItem", "Report", "GenericWork"].include? presenter
@@ -55,27 +56,6 @@ module ApplicationHelper
   # so the text looks like: "(<a href=\"/concern/book_contributions/4f5417bc-0643-4f79-9ead-09caf7c82a77\">id</a>) lorem ipsum dolor etc"
   def split_note_from_work(note_text)
     note_text.split('</a>)').last
-  end
-
-  def client_browser_name(request)
-   user_agent = request.env['HTTP_USER_AGENT'].downcase
-   if user_agent =~ /msie/i
-     render_browser_specific_files('Internet Explorer')
-    else
-     render_browser_specific_files('other')
-   end
-  end
-
- private
-
- def render_browser_specific_files(browser_name)
-    if browser_name == "Internet Explorer"
-      # this is a partial for ie
-      render 'bl_partners_home_ie11'
-    else
-      # this is a partial
-      render 'bl_partners_home.html'
-    end
   end
 
 end

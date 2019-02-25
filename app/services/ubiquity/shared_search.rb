@@ -18,7 +18,7 @@ module Ubiquity
 
     PER_PAGE_OPTIONS = [5, 10, 15, 25, 50, 100].freeze
 
-    attr_accessor :tenant_names, :solr_url, :search_results, :search_results_per_tenant,
+    attr_accessor :tenant_names, :solr_url, :search_results,
                   :limit, :offset, :total_pages, :page
 
     def initialize(page, limit,  host)
@@ -26,11 +26,9 @@ module Ubiquity
       @limit = limit.to_i
       @records_size = []
       @search_results = []
-      @search_results_per_tenant = {}
       @accounts = Account.where("cname ILIKE ?", "%#{host}%")
       @tenant_names = @accounts.pluck(:cname)
       @solr_url  = @accounts.map {|j| j.solr_endpoint.options}.pluck('url')
-      build_hash
       self
     end
 
@@ -60,7 +58,8 @@ module Ubiquity
 
     def fetch_term(search_term)
       if search_term.present?
-        multiple_field_search(search_term)
+        sanitized_value = sanitize_input(search_term)
+        multiple_field_search(sanitized_value)
       end
     end
 
@@ -74,7 +73,7 @@ module Ubiquity
         @get_data_for_total = solr_connection.get("select", params: { q: "*:*", fq: LIST_OF_MODELS_TO_SEARCH })
         @records_size << @get_data_for_total["response"]["docs"].size
 
-        @search_response = solr_connection.get("select", params: { q: '*:*', fq: LIST_OF_MODELS_TO_SEARCH, start: offset, rows: limit })
+        @search_response = solr_connection.get("select", params: { q: '*:*', fq: LIST_OF_MODELS_TO_SEARCH, start: offset, rows: @limit })
         data =  @search_response["response"]["docs"]
         search_results << data.map {|hash| hash.slice(*Hash_keys)}
       end
@@ -97,23 +96,9 @@ module Ubiquity
        search_results.flatten.compact
     end
 
-    #a.tenant_names.each {|t| h[t] = []}
-    def build_hash
-      tenant_names.each do |tenant|
-        search_results_per_tenant[tenant] = []
-      end
-    end
-
-    def populate_new_hash(tenant_name, results_array)
-      hash = build_hash
-      #note id is an array
-      hash[tenant_name] |= results_array
-      hash
-    end
-
-    def fetch_hash(method_name, hash_value, tenant_name)
-      array_method = self.send(method_name.to_sym)
-      array_method.find {|hash| (hash[:work_class] == hash_value && hash[:tenant] == tenant_name)} if array_method.first.class == Hash
+    def sanitize_input(search_value)
+      regex = /[+ | ? * - ! ^ ~ ; :  || & ""]/
+      search_value.gsub(regex, "")
     end
 
   end

@@ -1,32 +1,5 @@
 
-  <div class="container">
-    <div class="row">
-      <div class="col-md-9 col-md-offset-3 ">
-          <%= render 'shared_search_form' %>
-       </div> <!-- closes col-md-9 -->
-    </div> <!-- closes .row -->
-
-    <div class="row">
-       <div class="col-md-7 col-md-offset-5">
-        <h3 class="text-danger"> Search results from multiple repositories </h3>
-       </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-6 col-md-offset-4">
-        <%= paginate @search_pagination %>
-       </div>
-
-       <div class="col-md-2">
-           <%= form_tag shared_search_index_path, method: :get, id: 'limit_form' do %>
-             <span class="bg-warning"> Per page: <%= select_tag :limit, options_from_collection_for_select(Ubiquity::SharedSearch::PER_PAGE_OPTIONS, :to_s, :to_s, selected: params[:limit] || 10) %>
-             </span>
-           <% end %>
-        </div>
-
-    </div>
-
-  </div>  <!-- closes .container for form -->
+  <%= render "search_page_top", search_pagination: @search_pagination  %>
   <br/>
 
   <div class="container-fluid">

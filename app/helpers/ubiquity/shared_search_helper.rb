@@ -19,5 +19,13 @@ module Ubiquity
       end
     end
 
+    def  get_thumbnail_visibility(file_id, tenant)
+      if file_id.present? && tenant.present?
+        AccountElevator.switch!(tenant)
+        @work ||= ActiveFedora::Base.find(file_id)
+        @work.try(:thumbnail).try(:visibility) 
+      end
+    end
+
   end
 end

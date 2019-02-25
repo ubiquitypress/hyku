@@ -14,8 +14,6 @@ module Ubiquity
       "date_published_tesim" => "Date Published:", "institution_tesim" => 'Institution:'
     }.freeze
 
-    LIST_OF_MODELS_TO_SEARCH = "(has_model_ssim:Article OR has_model_ssim:Book OR has_model_ssim:BookContribution OR has_model_ssim:ConferenceItem OR has_model_ssim:Dataset OR has_model_ssim:Image OR has_model_ssim:Report OR has_model_ssim:GenericWork)".freeze
-
     PER_PAGE_OPTIONS = [5, 10, 15, 25, 50, 100].freeze
 
     attr_accessor :tenant_names, :solr_url, :search_results,
@@ -70,10 +68,10 @@ module Ubiquity
         solr_connection = RSolr.connect :url => url
 
         #fetch_total
-        @get_data_for_total = solr_connection.get("select", params: { q: "*:*", fq: LIST_OF_MODELS_TO_SEARCH })
+        @get_data_for_total = solr_connection.get("select", params: { q: "*:*", fq: list_of_models_to_search })
         @records_size << @get_data_for_total["response"]["docs"].size
 
-        @search_response = solr_connection.get("select", params: { q: '*:*', fq: LIST_OF_MODELS_TO_SEARCH, start: offset, rows: @limit })
+        @search_response = solr_connection.get("select", params: { q: '*:*', fq: list_of_models_to_search, start: offset, rows: @limit })
         data =  @search_response["response"]["docs"]
         search_results << data.map {|hash| hash.slice(*Hash_keys)}
       end
@@ -86,10 +84,10 @@ module Ubiquity
          solr_connection = RSolr.connect :url => url
 
          #fetch_total
-         @get_data_for_total = solr_connection.get("select", params: { q: "#{search_term}", fq: LIST_OF_MODELS_TO_SEARCH } )
+         @get_data_for_total = solr_connection.get("select", params: { q: "#{search_term}", fq: list_of_models_to_search } )
          @records_size << @get_data_for_total["response"]["docs"].size
 
-         search_response = solr_connection.get "select", params: { q: "#{search_term}", fq: LIST_OF_MODELS_TO_SEARCH }
+         search_response = solr_connection.get "select", params: { q: "#{search_term}", fq: list_of_models_to_search }
          data = search_response["response"]["docs"]
          search_results << data.map {|hash| hash.slice(*Hash_keys)}
        end
@@ -99,6 +97,17 @@ module Ubiquity
     def sanitize_input(search_value)
       regex = /[+ | ? * - ! ^ ~ ; :  || & ""]/
       search_value.gsub(regex, "")
+    end
+
+    def list_of_models_to_search
+      model_names_array = ENV["SHARED_SEARCH_TYPES"].split(',')
+      model_names_string = "("
+      model_names_array.each_with_index do |model_name, index|
+        model_names_string << "has_model_ssim:#{model_name}" if  index == 0
+        model_names_string << " OR has_model_ssim:#{model_name}" if index <   model_names_array.size
+        model_names_string << " OR has_model_ssim:#{model_name})" if index == (model_names_array.size - 1)
+      end
+      model_names_string
     end
 
   end

@@ -6,7 +6,6 @@ module ApplicationHelper
   include Ubiquity::DateChangeHelper
   include Ubiquity::GoogleTagManagerHelper
   include Ubiquity::FileDisplayHelpers
-  include Ubiquity::BrowserDetectionHelper
   include Ubiquity::SharedSearchHelper
 
   def check_has_editor_fields?(presenter)

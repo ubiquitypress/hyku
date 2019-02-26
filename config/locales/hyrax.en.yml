@@ -16,7 +16,7 @@ en:
     contact_form:
       issue_types:
         browsing: Browsing and searching
-        changing: Request a very large file (over xxGB only) [replace xx with correct fig eg 10GB]
+        changing: Request a very large file (over 10GB only) 
         depositing:  Enquiry about a content item
         reporting: Report a problem with the site
         general: General enquiry

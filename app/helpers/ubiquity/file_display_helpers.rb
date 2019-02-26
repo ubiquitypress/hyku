@@ -5,15 +5,15 @@ module Ubiquity
     def render_file_or_icon(file_set_presenter)
       #displays zip icon for files with archived format eg zi
       if zipped_types.include?  check_file_extension(file_set_presenter.label)
-        '<span class="fa fa-file-archive-o fa-5x grey-zip-icon"></span>'
+        '<span class="center-block fa fa-file-archive-o fa-5x grey-zip-icon"></span>'
       elsif (check_file_extension(file_set_presenter.label) == ".pdf") && (file_set_presenter.solr_document.thumbnail_path.split('?').last == "file=thumbnail")
-        '<span class="fa fa-file-pdf-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> <span style="padding-left:125px"></span>'
+        '<span class="center-block fa fa-file-pdf-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span>'
       elsif ([".docx", '.doc'].include? check_file_extension(file_set_presenter.label)) && (file_set_presenter.solr_document.thumbnail_path.split('?').last == "file=thumbnail")
-        '<span class="fa fa-file-word-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> <span style="padding-left:125px"></span>'
+        '<span class="center-block fa fa-file-word-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span>'
       elsif (file_set_presenter.solr_document.thumbnail_path.split('?').last == "file=thumbnail") && ([".docx", '.doc', '.pdf'].exclude? check_file_extension(file_set_presenter.label)) && (zipped_types.exclude? check_file_extension(file_set_presenter.label) )
-         '<span class="fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> <span style="padding-left:125px"></span>'
+         '<span class="center-block fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span>'
       elsif ((check_file_is_restricted?(file_set_presenter) == nil) && (file_set_presenter.lease_expiration_date.present?) && (file_set_presenter.embargo_release_date.present?) )
-        '<span class="fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> <span style="padding-left:125px"></span>'
+        '<span class="center-block fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span>'
       elsif ((check_file_is_restricted?(file_set_presenter) == true) || (not file_set_presenter.lease_expiration_date.present?) && (not file_set_presenter.embargo_release_date.present?) )
         #displays for logged out users on files without embargo/lease
         #also displays for logged_in users on files with embargo/lease
@@ -21,7 +21,7 @@ module Ubiquity
       else
         #displays for logged out users on files with embargo/lease
         #'<span class="media-left hidden-xs file_listing_thumbnail mock-thumbnail" ></span>'
-        '<span class="fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span> <span style="padding-left:125px"></span>'
+        '<span class="center-block fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span>'
       end
     end
 # <i class="far fa-file"></i>

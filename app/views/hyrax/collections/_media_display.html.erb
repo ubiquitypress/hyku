@@ -5,10 +5,7 @@
   %>
 
 <% if presenter.thumbnail_id %>
-   <%= image_tag presenter.thumbnail_path,
-                class: "representative-media",
-                alt: "",
-                role: "presentation" %>
+   <%= render 'shared/ubiquity/thumbnail_icons_with_restrictions',  document: presenter.solr_document  %>
 <% else %>
   <%# The line below is commented out by UbiquityPress%>
   <span class="<%# Hyrax::ModelIcon.css_class_for(Collection) %> collection-icon-search"></span>

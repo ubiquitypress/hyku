@@ -38,6 +38,7 @@ module Ubiquity
         populate_json_field(key, val)
         populate_single_fields(key, val)
       end
+      @work_instance.account_cname = @tenant_domain
       @work_instance.date_modified = Hyrax::TimeService.time_in_utc
       @work_instance.date_uploaded = Hyrax::TimeService.time_in_utc unless @work_instance.date_uploaded.present?
       puts "#{@work_instance.inspect}"

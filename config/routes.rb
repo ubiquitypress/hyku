@@ -5,7 +5,6 @@ Rails.application.routes.draw do
       get '/account/sign_up' => 'account_sign_up#new', as: 'new_sign_up'
       post '/account/sign_up' => 'account_sign_up#create'
       get '/', to: 'splash#shared_layer'
-
       # pending https://github.com/projecthydra-labs/hyrax/issues/376
       get '/dashboard', to: 'splash#index'
 
@@ -24,6 +23,9 @@ Rails.application.routes.draw do
       end
   end
 
+  scope :module => "ubiquity" do
+    resources :shared_search, only: [:index]
+  end
   mount BrowseEverything::Engine => '/browse'
   resource :site, only: [:update] do
     resources :roles, only: [:index, :update]
@@ -93,8 +95,12 @@ Rails.application.routes.draw do
 
   require 'sidekiq/web'
   require 'sidekiq/cron/web'
-  authenticate :user, lambda {|u| u.roles_name.include? 'admin' } do
-    mount Sidekiq::Web => '/sidekiq'
-  end
+ #standalone authentication for sidekiq not using devise or sessions
+  Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+    ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(username), ::Digest::SHA256.hexdigest(ENV["SIDEKIQ_USERNAME"])) &
+    ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(password), ::Digest::SHA256.hexdigest(ENV["SIDEKIQ_PASSWORD"]))
+  end if Rails.env.production?
+
+  mount Sidekiq::Web => '/sidekiq'
 
 end

@@ -1,4 +1,6 @@
-FROM ruby:2.3.1
+FROM ruby:2.3.8-slim-stretch
+
+RUN mkdir -p /usr/share/man/man1
 
 RUN apt-get update -qq && \
     apt-get upgrade -qq && \
@@ -9,9 +11,13 @@ RUN apt-get update -qq && \
         libreoffice \
         imagemagick \
         unzip \
+        curl \
+        mediainfo \
+        supervisor \
         ghostscript \
         && \
     rm -rf /var/lib/apt/lists/*
+
 # If changes are made to fits version or location,
 # amend `LD_LIBRARY_PATH` in docker-compose.yml accordingly.
 RUN mkdir -p /opt/fits && \
@@ -19,11 +25,15 @@ RUN mkdir -p /opt/fits && \
     cd /opt && unzip fits-1.0.5.zip && \
     chmod +X fits-1.0.5/fits.sh
 
+# Remove for support for MediaInfo, which is not installed
+RUN sed -i '/mediainfo.MediaInfo/d' /opt/fits-1.0.5/xml/fits.xml
+RUN rm -f /opt/fits-1.0.5.zip
+
 RUN mkdir /data
 WORKDIR /data
 
 # Install ffmpeg required to get videos to work.
-RUN echo 'deb http://ftp.uk.debian.org/debian jessie-backports main' >> /etc/apt/sources.list
+RUN echo 'deb http://ftp.uk.debian.org/debian stretch-backports main' >> /etc/apt/sources.list
 RUN apt-get update && \
     apt-get install -y ffmpeg
 

@@ -46,7 +46,18 @@ module Ubiquity
         file_size_in_mb = file_size_bytes/(1000 * 1000)
         file_size_in_gb = (file_size_in_mb/1000)
         return (link_to('Download', hyrax.download_path(file_set_presenter), title: "Download #{file_set_presenter.to_s.inspect}", target: "_blank") ) if file_size_in_gb < 10
-        return (link_to('Contact us for download', hyrax.contact_form_index_path)) if file_size_in_gb > 10
+        return (link_to('Contact us for download', hyrax.contact_form_index_path(download_size: file_size_in_gb.round(2), file_path: manual_download_path(file_set_presenter.id) ) )) if file_size_in_gb > 10
+      end
+    end
+
+    def manual_download_path(id)
+       file = get_file(id)
+       tenant = file.parent.account_cname
+       #hardcoded to port 3000 so if your localhost uses eg port 8080 to test temporarily change the 3000 to 8080
+       if tenant.split('.').include? 'localhost'
+          "http://#{tenant}:3000/downloads/#{file.id}"
+       else
+         "https://#{tenant}/downloads/#{file.id}"
       end
     end
 
@@ -81,11 +92,19 @@ module Ubiquity
     private
 
     def get_file_size_in_bytes(id)
-      @file_set = FileSet.find(id)
+      #@file_set = FileSet.find(id)
+      @file_set = get_file(id)
       pdcm_file_object = @file_set.original_file
       #the pdcm file size is in bytes
       return (pdcm_file_object.try(:size).try(:to_f) ) if pdcm_file_object.present?
       return 0 if !pdcm_file_object.present?
+    end
+
+    def get_file(id)
+      if id.present?
+        @file_set ||= FileSet.find(id)
+      end
+
     end
 
   end

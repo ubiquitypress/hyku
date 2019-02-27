@@ -78,11 +78,17 @@ module Hyku
 
     #Access with  Rails.application.config.google_tag_manager_id[:bl], for mola change bl to mola etc
     config.google_tag_manager_id = {
-        bl: ENV["BL_GTM_ID"],
-        mola: ENV["MOLA_GTM_ID"],
-        nms: ENV["NMS_GTM_ID"],
-        tate: ENV["TATE_GTM_ID"],
-        bm: ENV["BM_GTM_ID"]
+        "bl" => ENV["BL_GTM_ID"],
+        "mola" => ENV["MOLA_GTM_ID"],
+        "nms" => ENV["NMS_GTM_ID"],
+        "tate" => ENV["TATE_GTM_ID"],
+        "britishmuseum" => ENV["BRITISHMUSEUM_GTM_ID"],
+        "bl-demo" => ENV["BL-DEMO_GTM_ID"],
+        "mola-demo" => ENV["MOLA-DEMO_GTM_ID"],
+        "tate-demo" => ENV["TATE-DEMO_GTM_ID"],
+        "britishmuseum-demo" => ENV["BRITISHMUSEUM-DEMO_GTM_ID"],
+        "nms-demo" => ENV["NMS-DEMO_GTM_ID"],
+        "sandbox" => ENV["SANDBOX-DEMO_GTM_ID"]
     }
   end
 end

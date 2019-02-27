@@ -13,6 +13,14 @@ en:
     homepage:
       recently_uploaded:
         tab_label: Latest Additions
+    contact_form:
+      issue_types:
+        browsing: Browsing and searching
+        changing: Request a very large file (over 10GB only) 
+        depositing:  Enquiry about a content item
+        reporting: Report a problem with the site
+        general: General enquiry
+      notice: Please use this form to send an enquiry about the repository or its contents. Your enquiry will be sent to the repository manager who will reply as soon as possible. Please include the URL of the item you are contacting us about, where relevant.
     works:
       form:
         tab:
@@ -38,7 +46,3 @@ en:
         new: Fetch metadata from DataCite with DOI
         submit: Fetch metadata
         placeholder: Please add a DataCite DOI below
-
-
-
-

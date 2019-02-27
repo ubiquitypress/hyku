@@ -1,9 +1,10 @@
 module Ubiquity
   module GoogleTagManagerHelper
 
-  def render_gtm_head(host)
+   def render_gtm_head(host)
 
      tenant_gtm_id =  get_tenant_name_from_url(host)
+     puts "mumiiii #{tenant_gtm_id}"
      return '' if tenant_gtm_id.blank?
 
     <<-HTML.strip_heredoc.html_safe
@@ -26,7 +27,7 @@ module Ubiquity
 
     <<-HTML.strip_heredoc.html_safe
      <!-- Google Tag Manager (noscript) -->
-    
+
     <noscript><iframe src='https://www.googletagmanager.com/ns.html?id="#{tenant_gtm_id}"'
                     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
@@ -34,18 +35,29 @@ module Ubiquity
     HTML
   end
 
-  private
+   private
 
-  def ubiquity_url_parser(host)
-    full_url = URI.parse(host)
-    full_url.host.split('.').first
-  end
+    def ubiquity_url_parser(host)
+      full_url = URI.parse(host)
+      full_url.host.split('.').first
+    end
 
-  def get_tenant_name_from_url(host)
-    tenant_name  = ubiquity_url_parser(host)
-    tenant_name = 'bl'  if tenant_name == 'sandbox'
-    Rails.application.config.google_tag_manager_id[tenant_name.to_sym]
-  end
+    def get_tenant_name_from_url(host)
+      tenant_name  = ubiquity_url_parser(host)
+      tenant_name = 'bl'  if tenant_name == tenants_hash(tenant_name)
+      Rails.application.config.google_tag_manager_id[tenant_name.to_sym]
+    end
 
+    def tenants_hash(tenant)
+      hash_map = {
+        'sandbox' => 'sandbox',
+        "bl-demo" => "bl-demo",
+        "mola-demo" => "mola-demo",
+        "tate-demo" => "tate-demo",
+        "britishmuseum-demo" => "britishmuseum-demo",
+        "nms-demo" => "nms-demo"
+      }
+      hash_map[tenant]
+    end
   end
 end

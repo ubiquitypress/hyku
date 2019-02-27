@@ -43,21 +43,9 @@ module Ubiquity
     end
 
     def get_tenant_name_from_url(host)
-      tenant_name  = ubiquity_url_parser(host)
-      tenant_name = 'bl'  if tenant_name == tenants_hash(tenant_name)
-      Rails.application.config.google_tag_manager_id[tenant_name.to_sym]
+      tenant_name = ubiquity_url_parser(host)
+      Rails.application.config.google_tag_manager_id[tenant_name]
     end
 
-    def tenants_hash(tenant)
-      hash_map = {
-        'sandbox' => 'sandbox',
-        "bl-demo" => "bl-demo",
-        "mola-demo" => "mola-demo",
-        "tate-demo" => "tate-demo",
-        "britishmuseum-demo" => "britishmuseum-demo",
-        "nms-demo" => "nms-demo"
-      }
-      hash_map[tenant]
-    end
   end
 end

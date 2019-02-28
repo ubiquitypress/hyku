@@ -88,7 +88,9 @@ module Hyku
         "tate-demo" => ENV["TATE-DEMO_GTM_ID"],
         "britishmuseum-demo" => ENV["BRITISHMUSEUM-DEMO_GTM_ID"],
         "nms-demo" => ENV["NMS-DEMO_GTM_ID"],
-        "sandbox" => ENV["SANDBOX-DEMO_GTM_ID"]
+        "sandbox" => ENV["SANDBOX-DEMO_GTM_ID"],
+        "repo-test" => ENV["REPOTEST_GTM_ID"],
+        "oar" => ENV["OAR_GTM_ID"]
     }
   end
 end

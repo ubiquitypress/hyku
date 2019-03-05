@@ -33,58 +33,59 @@
 
 <div class="metadata">
   <table class="table">
-    <tbody>
+
       <% model.each do |hash_key, data_value| %>
 
-        <% if (["creator_tesim"].include? hash_key) && data_value.present? %>
-          <hr class="pull-right">
-          <tr class="pull-right text-left">
+        <tbody>
+          <% if (["creator_tesim"].include? hash_key) && data_value.present? %>
             <% field = parse_json(data_value) %>
-            <th class="search-meta-label">
-              <span class="attribute-label h4"><%= Ubiquity::SharedSearch::NAME_MAPPING[hash_key] %></span>
-            </th>
-            <td>
-              <%= render "shared/ubiquity/search_display/show_array_hash", array_of_hash: field, attr_name: 'creator' %>
-            </td>
-          </tr>
-        <% end %>
+            
+            <tr class="pull-right text-left">
+              <th class="search-meta-label">
+                <span class="attribute-label h4"><%= Ubiquity::SharedSearch::NAME_MAPPING[hash_key] %></span>
+              </th>
+              <td>
+                <%= render "shared/ubiquity/search_display/show_array_hash", array_of_hash: field, attr_name: 'creator' %>
+              </td>
+            </tr>
+          <% end %>
 
         <% if (["date_published_tesim"].include? hash_key) && data_value.present? %>
-          <hr class="pull-right">
+
           <tr class="pull-right text-left">
             <th class="search-meta-label">
               <span class="attribute-label h4"><%= Ubiquity::SharedSearch::NAME_MAPPING[hash_key] %></span>
             </th>
             <td>
-              <span class="pull-right"><% if data_value.class == Array %> <span class="center-block"><%= data_value.first %> <% end %> </span></span>
+              <span class="pull-right"><% if data_value.class == Array %><span class="center-block"><%= data_value.first %> <% end %></span></span>
             </td>
           </tr>
         <% end %>
 
         <% if (["resource_type_tesim"].include? hash_key) && data_value.present? %>
-           <hr class="pull-right">
+
            <tr class="pull-right text-left">
              <th class="search-meta-label">
                <span class="attribute-label h4"><%= Ubiquity::SharedSearch::NAME_MAPPING[hash_key] %></span>
              </th>
              <td>
-              <span class="pull-right"><% if data_value.class == Array %> <span class="center-block"><%= human_readable_resource_type(data_value) %> <% end %> </span></span>
+              <span class="pull-right"><% if data_value.class == Array %><span class="center-block"><%= human_readable_resource_type(data_value) %> <% end %></span></span>
             </td>
         <% end %>
 
         <% if (["institution_tesim"].include? hash_key) && data_value.present? %>
-           <hr class="pull-right">
+
            <tr class="pull-right text-left">
              <th class="search-meta-label">
                <span class=" attribute-label h4"><%= Ubiquity::SharedSearch::NAME_MAPPING[hash_key] %></span>
              </th>
              <td>
-              <span class="pull-right"><% if data_value.class == Array %>  <span class="text-right"> <%= safe_join(data_value, '; ').html_safe %> <% end %> </span> </span>
+              <span class="pull-right"><% if data_value.class == Array %><span class="text-right"> <%= safe_join(data_value, '; ').html_safe %> <% end %></span></span>
             </td>
         <% end %>
+      </tbody>
+    <% end %> <!-- model each loop -->
 
-      <% end %> <!-- model each loop -->
-    </tbody>
   </table>
 </div>
   <% end %> <!-- closes model visbility check -->

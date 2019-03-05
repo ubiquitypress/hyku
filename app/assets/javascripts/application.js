@@ -17,9 +17,6 @@
 // ubiquityPress added jquery-chosen
 //= require chosen-jquery
 //= require turbolinks
-//= require peek
-//= require peek/views/faraday
-//= require peek/views/performance_bar
 // Required by Blacklight
 //= require blacklight/blacklight
 

@@ -90,7 +90,6 @@ Rails.application.routes.draw do
     end
   end
 
-  mount Peek::Railtie => '/peek'
   mount Riiif::Engine => '/images', as: 'riiif'
 
   require 'sidekiq/web'

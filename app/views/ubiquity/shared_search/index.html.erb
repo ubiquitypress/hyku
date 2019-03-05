@@ -6,32 +6,18 @@
     <div class="col-md-3"><!-- facet sidebar --> </div>
       <div  class="col-md-9">
         <div id="search-results">
-          <ol class="catalog" start="1">
+          <ol style="list-style-type:none" class="catalog" start="1">
             <% @search_pagination.each do |model| %>
-            <% if  model["visibility_ssi"] == 'open' %>
+            <% if model["visibility_ssi"] == 'open' %>
               <% url = generate_work_url(model['id'], model["account_cname_tesim"].try(:first), model["has_model_ssim"].first, request.host, request.protocol, request.port) %>
               <% if model["title_tesim"].present? %>
                 <li class="document blacklight-article">
-                  <h2>
+                  <h3>
                     <%= link_to model["title_tesim"].first, url %>
-                  </h2>
+                  </h3>
                   <% default_file_path =  "/assets/work-ff055336041c3f7d310ad69109eda4a887b16ec501f35afc0a547c4adb97ee72.png" %>
                   <% if model["thumbnail_path_ss"].present? &&  model["thumbnail_path_ss"] != default_file_path   %>
-<%# ### %>
-                    <% if  File.extname(model['thumbnail_path_ss']).blank? %>
-                      <div class="list-thumbnail">
-                        <span class="fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:60px"></span>
-                      </div>
-                    <% elsif get_thumbnail_visibility(model['id'], model["account_cname_tesim"].try(:first)) != 'open' %>
-                      <div class="list-thumbnail">
-                        <span class="fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:60px"></span>
-                      </div>
-                    <% else %>
-                      <div class="list-thumbnail">
-                        <img src="<%= request.protocol %><%= model["account_cname_tesim"].try(:first) %>:<%= request.port %><%= image_path(model['thumbnail_path_ss']) %>" alt="default" style="width:150px;padding-left:25px">
-                      </div>
-                    <% end %>
-<%# ### %>
+                    <%= render '/ubiquity/shared_search/shared_search_thumbnail', model: model %>
                   <% elsif model["thumbnail_path_ss"].present? && model["thumbnail_path_ss"] == default_file_path  %>
                     <div class="list-thumbnail col-md-2">
                       <span class="collection-icon-search"></span>

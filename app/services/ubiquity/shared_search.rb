@@ -4,9 +4,9 @@ module Ubiquity
   class SharedSearch
 
     Hash_keys = ["system_create_dtsi", "id", "depositor_ssim", "title_tesim", "creator_search_tesim",
-                "creator_tesim", "account_cname_tesim",  "pagination_tesim", "institution_tesim",
+                "creator_tesim",  "date_published_tesim", "resource_type_tesim", "account_cname_tesim",  "pagination_tesim", "institution_tesim",
                 "resource_type_tesim", "thumbnail_path_ss", "file_set_ids_ssim",
-                "visibility_ssi", "has_model_ssim", "date_published_tesim" ].freeze
+                "visibility_ssi", "has_model_ssim" ].freeze
 
     NAME_MAPPING = {
       "system_create_dtsi" => 'Date Created', "title_tesim" => 'Title',

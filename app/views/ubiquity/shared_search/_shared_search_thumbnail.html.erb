@@ -1,0 +1,17 @@
+<!-- This file is called from
+/home/antonio/hyku/hyku/app/views/ubiquity/shared_search/index.html.erb
+-->
+
+  <% if  File.extname(model['thumbnail_path_ss']).blank? %>
+    <div class="list-thumbnail">
+      <span class="fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:60px"></span>
+    </div>
+  <% elsif get_thumbnail_visibility(model['id'], model["account_cname_tesim"].try(:first)) != 'open' %>
+    <div class="list-thumbnail">
+      <span class="fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:60px"></span>
+    </div>
+  <% else %>
+    <div class="list-thumbnail">
+      <img src="<%= request.protocol %><%= model["account_cname_tesim"].try(:first) %>:<%= request.port %><%= image_path(model['thumbnail_path_ss']) %>" alt="default" style="width:150px;padding-left:25px">
+    </div>
+  <% end %>

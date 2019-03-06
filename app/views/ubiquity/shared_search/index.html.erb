@@ -1,6 +1,8 @@
 
 <%= render "search_page_top", search_pagination: @search_pagination  %>
-<br/><hr>
+<% if @search_pagination.present? %>
+  <br/><hr>
+<% end %>
 <div class="container-fluid id="search-results"">
   <div class="row">
     <div class="col-md-3"><!-- facet sidebar --> </div>
@@ -26,8 +28,8 @@
               <% end %>  <!-- closes if title_tesim -->
               <div class="metadata">
                 <table class="table">
-                  <% model.each do |hash_key, data_value| %>
                     <tbody>
+                  <% model.each do |hash_key, data_value| %>
 
                       <% if (["creator_tesim"].include? hash_key) && data_value.present? %>
                         <% field = parse_json(data_value) %>
@@ -76,8 +78,9 @@
                           </td>
                         </tr>
                       <% end %>
-                    </tbody>
+
                   <% end %> <!-- model each loop -->
+                    </tbody>
                 </table>
               </div>
 

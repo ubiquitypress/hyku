@@ -30,7 +30,7 @@
 
   </div>  <!-- closes .container for form -->
 <% else %>
-  
+
   <div class="container">
 
     <div class="row">
@@ -40,11 +40,23 @@
     </div> <!-- closes .row -->
 
     <div class="row">
-       <div class="col-md-7 col-md-offset-5">
-        <h3 class="text-danger">No results found for your search term </h3>
-        <p> Try modifying your search term </p>
+      <div class="col-md-7 col-md-offset-5">
+        <div id="SortAndPage" class="clearfix">
+          <div class="page_links" aria-hidden="true">
+            <span class="page_entries">No entries found</span>
+          </div>
+        </div>
+        <h2>No results found for your search</h2>
+        <div id="documents" class="noresults">
+          <h3>Try modifying your search<h3>
+          <ul>
+            <h5>
+              <li>Use fewer keywords to start, then refine your search using the links on the left</li>
+            </h5>
+          </ul>
        </div>
     </div>
+  </div>
 
-  </div>  <!-- closes .container for form -->
+</div>  <!-- closes .container for form -->
 <% end %>

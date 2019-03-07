@@ -1,7 +1,13 @@
 
 <%= form_with url: '/shared_search', local: true, class: 'form-inline',  method: :get do |form| %>
- <div class="form-group">
-  <%= form.text_field :term, class: "form-control input-lg", size: '60', placeholder: 'Search across all our repositories' %>
- </div>
- <%= form.submit "Go", class: "btn btn-primary" %>
-<% end %>
+  <div class="form-group">
+    <%= form.text_field :term, class: "form-control input-lg", size: '60', placeholder: 'Search across all our repositories' %>
+  </div>
+   <div class="input-group-btn">
+     <button id="search-submit-header" class="btn btn-primary" type="submit">
+       <span class="glyphicon glyphicon-search"></span>
+       Go
+      </button>
+    </div>
+   <%# <%= form.submit "Go", class: "btn btn-primary" %>
+ <% end %>

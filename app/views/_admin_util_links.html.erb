@@ -10,7 +10,8 @@
   <% end %>
 <% end %>
 <ul id="user_utility_links" class="nav navbar-nav navbar-right">
-  <%= render 'shared/locale_picker' if available_translations.size > 1 %>
+  <%# this line has been commented out to remove the translation menu form shared layer pages %>
+  <%# <%= render 'shared/locale_picker' if available_translations.size > 1 %>
   <% if user_signed_in? %>
     <li><%= link_to t("hyrax.toolbar.profile.logout"), main_app.destroy_user_session_path %></li>
   <% end %>

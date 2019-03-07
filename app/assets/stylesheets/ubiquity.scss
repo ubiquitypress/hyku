@@ -153,3 +153,13 @@ h4, .homepage-nav-tabs {
   color: $gray;
   font-size: 3em;
 }
+
+/* remove the numbered list from individual blacklight search page*/
+ol.catalog  {
+    list-style-type: none;
+}
+
+/* Reduce size of h2 tag for search result title in individual blacklight search page */
+h2, .modal-title, .h2 {
+    font-size: 25px;
+}

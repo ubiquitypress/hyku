@@ -1,6 +1,6 @@
 
 <% if request.original_url ==  'https://oar.bl.uk/' || request.original_url ==  'https://repo-test.ubiquity.press/' ||
-  request.original_url ==  'https://oar.bl.uk/?locale=en' || request.original_url ==  'https://repo-test.ubiquity.press/?locale=en'%>
+  request.original_url ==  'https://oar.bl.uk/?locale=en' || request.original_url ==  'https://repo-test.ubiquity.press/?locale=en' %>
 
   <h4 class="text-danger"> Search across all the repositories listed here </h4>
   <%= render 'ubiquity/shared_search/shared_search_form' %> <br/> <br/>

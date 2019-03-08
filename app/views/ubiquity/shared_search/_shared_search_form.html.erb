@@ -1,16 +1,15 @@
 
 <%= form_with url: '/shared_search', local: true, class: 'form-inline',  method: :get do |form| %>
 
-
-<div class="row">
-  <div class="col-md-9 col-md-offset-3">
-    <div class="row">
-      <div class="col-sm-5 col-md-6">
-        <div class="col-md-9 col-sm-7">
-          <div class="searchbar-right navbar-right col-sm-7 col-md-6">
-            <%= form.text_field :term, class: "q form-control input-md", size: '60', placeholder: 'Search across all our repositories'%>
+  <div class="row">
+    <div class="col-md-9 col-md-offset-4">
+      <div class="row">
+        <div class="col-sm-5 col-md-6">
+          <div class="col-md-9 col-sm-7">
+            <div class="searchbar-right navbar-right col-sm-7 col-md-6">
+              <%= form.text_field :term, class: "q form-control input-md", size: '60', placeholder: 'Search across all our repositories'%>
+            </div>
           </div>
-        </div>
 
           <div class="input-group-btn">
             <button id="search-submit-header" class="btn btn-primary" type="submit" style="margin-left:368%">
@@ -23,4 +22,4 @@
     </div>
   </div>
 
- <% end %>
+<% end %>

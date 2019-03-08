@@ -6,7 +6,10 @@
       <div class="col-md-12">
           <%= render 'shared_search_form' %>
        </div> <!-- closes col-md-9 -->
-    </div><br> <!-- closes .row -->
+    </div><!-- closes .row -->
+    <div class="col-md-7 col-md-offset-6">
+        <h4>Search results from multiple repositories</h4>
+    </div>
 
     <div class="row">
       <div class="col-md-6 col-md-offset-4">
@@ -19,10 +22,9 @@
              </span>
            <% end %>
         </div>
-
     </div>
-
   </div>  <!-- closes .container for form -->
+
 <% else %>
 
   <div class="container">
@@ -31,7 +33,7 @@
       <div class="col-md-12">
           <%= render 'shared_search_form' %>
        </div> <!-- closes col-md-9 -->
-    </div> <!-- closes .row -->
+    </div><br><!-- closes .row -->
 
     <div class="row">
       <div class="col-md-7 col-md-offset-5">

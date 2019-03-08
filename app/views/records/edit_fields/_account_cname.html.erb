@@ -3,9 +3,5 @@
   tenant to link when a work is clicked from the shared search page without this
 -->
 <% my_model_name = f.object.model.class.to_s.underscore %>
-<label class="control-label" for="<% my_model_name %>_account_cname">Account Cname</label>
-
-<%= text_field_tag "#{my_model_name}[account_cname]", current_account.cname, id: "#{my_model_name}_account_cname",
-  class: "form-control text required form-control ubiquity-account_cname" %>
 
 <%= hidden_field_tag "#{my_model_name}[account_cname]", current_account.cname %>

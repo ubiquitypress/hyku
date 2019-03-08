@@ -55,3 +55,5 @@ public/assets/
 kiq.log
 /config/local_env.yml
 fits.log
+supervisord.log
+supervisord.pid

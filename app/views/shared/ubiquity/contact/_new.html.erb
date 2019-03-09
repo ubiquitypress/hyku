@@ -12,11 +12,12 @@
 <% if user_signed_in? %>
   <% nm = current_user.name %>
   <% em = current_user.email %>
-  <% sbj = "Shared research repository enquiry" %>
+  <% sbj = "Research repository enquiry" %>
   <% message_value = "I would like to access the very large data file (file size #{params[:download_size]} GB) held at #{params[:file_path]}" %>
 <% else %>
   <% nm = '' %>
   <% em = '' %>
+  <% sbj = "Research repository enquiry" %>
 <% end %>
 
 <%= form_for contact_form, url: hyrax.contact_form_index_path,

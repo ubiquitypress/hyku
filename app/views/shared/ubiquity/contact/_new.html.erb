@@ -8,12 +8,11 @@
 <h1>
     <%= t('hyrax.contact_form.header') %>
 </h1>
-
+<% message_value = params[:message_value] %>
 <% if user_signed_in? %>
   <% nm = current_user.name %>
   <% em = current_user.email %>
   <% sbj = "Research repository enquiry" %>
-  <% message_value = "I would like to access the very large data file (file size #{params[:download_size]} GB) held at #{params[:file_path]}" %>
 <% else %>
   <% nm = '' %>
   <% em = '' %>

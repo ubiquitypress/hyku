@@ -4,7 +4,6 @@ module Ubiquity
    def render_gtm_head(host)
 
      tenant_gtm_id =  get_tenant_name_from_url(host)
-     puts "mumiiii #{tenant_gtm_id}"
      return '' if tenant_gtm_id.blank?
 
     <<-HTML.strip_heredoc.html_safe

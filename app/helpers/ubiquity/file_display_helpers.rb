@@ -45,8 +45,12 @@ module Ubiquity
         return "Download temporarily unavailable" if file_size_bytes == 0
         file_size_in_mb = file_size_bytes/(1000 * 1000)
         file_size_in_gb = (file_size_in_mb/1000)
-        return (link_to('Download', hyrax.download_path(file_set_presenter), title: "Download #{file_set_presenter.to_s.inspect}", target: "_blank") ) if file_size_in_gb < 10
-        return (link_to('Contact us for download', hyrax.contact_form_index_path(download_size: file_size_in_gb.round(2), file_path: manual_download_path(file_set_presenter.id) ) )) if file_size_in_gb > 10
+        #  download_size,   file_path  are passed to message_value for display in contact form
+        download_size = file_size_in_gb.round(2)
+        file_path = manual_download_path(file_set_presenter.id)
+        message_value = "I would like to access the very large data file (file size #{download_size} GB) held at #{file_path}"
+        return (link_to('Download', hyrax.download_path(file_set_presenter), title: "Download #{file_set_presenter.to_s}", target: "_blank") ) if file_size_in_gb < 10
+        return (link_to('Contact us for download', hyrax.contact_form_index_path(message_value: message_value ) )) if file_size_in_gb > 10
       end
     end
 

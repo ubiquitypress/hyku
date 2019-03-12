@@ -17,8 +17,11 @@
        </div>
 
        <div class="col-md-2">
+         <!-- cookie used instead of passing a default value to options_from_collection_for_select, so we can always display included_blank -->
+         <% params[:limit] = cookies[:per_page] %>
+         <% default_value = params[:limit] %>
            <%= form_tag shared_search_index_path, method: :get, id: 'limit_form' do %>
-             <span class="bg-warning"> Per page: <%= select_tag :limit, options_from_collection_for_select(Ubiquity::SharedSearch::PER_PAGE_OPTIONS, :to_s, :to_s, selected: params[:limit] || 10) %>
+             <span> <%= select_tag :limit, options_from_collection_for_select(Ubiquity::SharedSearch::PER_PAGE_OPTIONS, :to_s, :to_s), {:include_blank => "#{default_value} per page", class: "text-primary"} %>
              </span>
            <% end %>
         </div>

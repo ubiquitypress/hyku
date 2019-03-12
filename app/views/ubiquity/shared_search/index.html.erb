@@ -10,7 +10,7 @@
         <div id="search-results">
           <ol style="list-style-type:none" class="catalog" start="1">
             <% @search_pagination.each do |model| %>
-            <% if model["visibility_ssi"] == 'open' %>
+
               <% url = generate_work_url(model['id'], model["account_cname_tesim"].try(:first), model["has_model_ssim"].first, request.host, request.protocol, request.port) %>
               <% if model["title_tesim"].present? %>
                 <li class="document blacklight-article">
@@ -86,7 +86,7 @@
 
               <div class="clearfix"></div>
             </li>
-          <% end %> <!-- closes model visbility check -->
+
         <% end %> <!-- closes pagination each -->
       </ol>
     </div>

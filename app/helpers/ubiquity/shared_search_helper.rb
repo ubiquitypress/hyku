@@ -13,9 +13,9 @@ module Ubiquity
     def generate_work_url(id, tenant, model_class, request_host, request_protocol, request_port=nil)
       work_class = model_class.to_s.underscore.pluralize
       if request_host == 'localhost'
-        "#{request_protocol}#{tenant}:#{request_port}/concern/#{work_class}/#{id}"
+        "#{request_protocol}#{tenant}:#{request_port}/concern/#{work_class}/#{id}?locale=en"
       else
-        "#{request_protocol}#{tenant}/concern/#{work_class}/#{id}"
+        "#{request_protocol}#{tenant}/concern/#{work_class}/#{id}?locale=en"
       end
     end
 
@@ -23,7 +23,7 @@ module Ubiquity
       if file_id.present? && tenant.present?
         AccountElevator.switch!(tenant)
         @work ||= ActiveFedora::Base.find(file_id)
-        @work.try(:thumbnail).try(:visibility) 
+        @work.try(:thumbnail).try(:visibility)
       end
     end
 

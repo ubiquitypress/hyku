@@ -1,4 +1,4 @@
-#call locally h = Ubiquity::SharedSearch.new(1, 'local')
+#call locally h = Ubiquity::SharedSearch.new(1, 10, 'local')
 #
 module Ubiquity
   class SharedSearch
@@ -14,20 +14,29 @@ module Ubiquity
       "date_published_tesim" => "Date Published:", "institution_tesim" => 'Institution:'
     }.freeze
 
-    PER_PAGE_OPTIONS = [5, 10, 15, 25, 50, 100].freeze
+    PER_PAGE_OPTIONS = [10, 20, 50, 100].freeze
 
     attr_accessor :tenant_names, :solr_url, :search_results,
-                  :limit, :offset, :total_pages, :page
+                  :limit, :offset, :total_pages, :page, :demo_records,
+                  :live_records, :live_tenant_names, :demo_tenant_names,
+                  :live_solr_urls, :demo_solr_urls
 
     def initialize(page, limit,  host)
       @page = page.to_i
       @limit = limit.to_i
+
       @records_size = []
       @search_results = []
       @accounts = Account.where("cname ILIKE ?", "%#{host}%")
-      @tenant_names = @accounts.pluck(:cname)
-      @solr_url  = @accounts.map {|j| j.solr_endpoint.options}.pluck('url')
-      self
+
+      @demo_records = @accounts.map {|acct| j if acct.cname.include? 'demo'}.compact
+      @live_records = @accounts - @demo_records
+
+      @live_tenant_names = @live_records.pluck(:cname)
+
+      @live_solr_urls = @live_records.map {|j| j.solr_endpoint.options}.pluck('url')
+
+      #self
     end
 
     def current_page
@@ -35,12 +44,12 @@ module Ubiquity
     end
 
     def limit_value
-      (@limit/@tenant_names.size).ceil
+      (@limit/live_tenant_names.size).ceil
     end
 
    #cause of problems. when limit is 2 results in offset of -2 and @page is 1
     def offset
-      @limit * ([@page, 1].max - 1)
+      limit_value * ([@page, 1].max - 1)
     end
 
     def total_pages
@@ -64,15 +73,11 @@ module Ubiquity
     private
 
     def fetch_all
-      @solr_url.map do |url|
+      @live_solr_urls.map do |url|
         solr_connection = RSolr.connect :url => url
-
-        #fetch_total
-        @get_data_for_total = solr_connection.get("select", params: { q: "*:*", fq: list_of_models_to_search })
-        @records_size << @get_data_for_total["response"]["docs"].size
-
-        @search_response = solr_connection.get("select", params: { q: '*:*', fq: list_of_models_to_search, start: offset, rows: @limit })
-        data =  @search_response["response"]["docs"]
+        search_response = solr_connection.get("select", params: { q: "*:* or visibility_ssi:open", fq: list_of_models_to_search, sort: "score desc, system_create_dtsi desc"})
+        @records_size << search_response["response"]["docs"].size
+        data =  search_response["response"]["docs"]
         search_results << data.map {|hash| hash.slice(*Hash_keys)}
       end
       search_results.flatten.compact
@@ -80,15 +85,18 @@ module Ubiquity
 
 
     def multiple_field_search(search_term)
-       @solr_url.map do |url|
+       fl = 'title_ssim, resource_type_tesim, institution_tesim, date_published_tesim, account_cname_tesim, thumbnail_path_ss, id, visibility_ssi, creator_tesim, creator_search_tesim, has_model_ssim'
+       #fields to search against
+       qf = "title_tesim description_tesim keyword_tesim creator_tesim creator_search_ssim date_published_tesim  date_created_tesim resource_type_ssim institution_tesim "
+
+       @live_solr_urls.map do |url|
          solr_connection = RSolr.connect :url => url
-
          #fetch_total
-         @get_data_for_total = solr_connection.get("select", params: { q: "#{search_term}", fq: list_of_models_to_search } )
-         @records_size << @get_data_for_total["response"]["docs"].size
-
-         search_response = solr_connection.get "select", params: { q: "#{search_term}", fq: list_of_models_to_search }
-         data = search_response["response"]["docs"]
+         search_response = solr_connection.get("select", params: { q: "#{search_term} or visibility_ssi:open", :defType => "edismax", fq: list_of_models_to_search, qf: qf, sort: "score desc, system_create_dtsi desc" } )
+         @records_size << search_response["response"]["docs"].size
+         #data = @get_data_for_total["response"]["docs"]
+         #@records_size <<  @search_response["response"]["docs"].size
+         data =  search_response["response"]["docs"]
          search_results << data.map {|hash| hash.slice(*Hash_keys)}
        end
        search_results.flatten.compact
@@ -96,7 +104,7 @@ module Ubiquity
 
     def sanitize_input(search_value)
       regex = /[+ | ? * - ! ^ ~ ; :  || & ""]/
-      search_value.gsub(regex, "")
+      search_value.gsub(regex, " ")
     end
 
     def list_of_models_to_search

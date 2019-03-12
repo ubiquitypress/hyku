@@ -26,8 +26,11 @@ module Ubiquity
     end
 
     def set_per_page
-      @per_page = params[:limit] || 10
+      #we are storing params[:limit] in cookies[:per_page] because the dropdown
+      #will have no default value passed in, so we can
+      cookies[:per_page] = params[:limit] || 10
+      @per_page =  cookies[:per_page]
     end
-    
+
   end
 end

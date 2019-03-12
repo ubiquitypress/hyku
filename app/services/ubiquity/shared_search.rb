@@ -35,8 +35,6 @@ module Ubiquity
       @live_tenant_names = @live_records.pluck(:cname)
 
       @live_solr_urls = @live_records.map {|j| j.solr_endpoint.options}.pluck('url')
-
-      #self
     end
 
     def current_page
@@ -87,7 +85,9 @@ module Ubiquity
     def multiple_field_search(search_term)
        fl = 'title_ssim, resource_type_tesim, institution_tesim, date_published_tesim, account_cname_tesim, thumbnail_path_ss, id, visibility_ssi, creator_tesim, creator_search_tesim, has_model_ssim'
        #fields to search against
-       qf = "title_tesim description_tesim keyword_tesim creator_tesim creator_search_ssim date_published_tesim  date_created_tesim resource_type_ssim institution_tesim "
+       qf = "title_tesim description_tesim keyword_tesim creator_tesim creator_search_tesim date_published_tesim date_created_tesim
+       resource_type_tesim institution_tesim account_cname_tesim, thumbnail_path_ss id visibility_ssi has_model_ssim
+       journal_title_tesim issue_tesim human_readable_type_tesim contributor_tesim editor_tesim"
 
        @live_solr_urls.map do |url|
          solr_connection = RSolr.connect :url => url

@@ -1,5 +1,5 @@
 #call locally h = Ubiquity::SharedSearch.new(1, 10, 'local')
-#
+
 module Ubiquity
   class SharedSearch
 
@@ -33,8 +33,7 @@ module Ubiquity
       @live_records = @accounts - @demo_records
 
       @live_tenant_names = @live_records.pluck(:cname)
-
-      @live_solr_urls = @live_records.map {|j| j.solr_endpoint.options}.pluck('url')
+      @live_solr_urls = @live_records.map {|acct| acct.solr_endpoint.options}.pluck('url')
     end
 
     def current_page
@@ -54,9 +53,6 @@ module Ubiquity
       @total_pages = @records_size.inject(0, :+)
     end
 
-    #page that is the page number eg 1, next will be 2
-    #per_page is same as limit it can come from the page.
-    #The offset on page 1 could be 0, while on page 2 will be 100 ie page time limit
     def all
        fetch_all
     end
@@ -83,6 +79,7 @@ module Ubiquity
 
 
     def multiple_field_search(search_term)
+      #fields to return
        fl = 'title_ssim, resource_type_tesim, institution_tesim, date_published_tesim, account_cname_tesim, thumbnail_path_ss, id, visibility_ssi, creator_tesim, creator_search_tesim, has_model_ssim'
        #fields to search against
        qf = "title_tesim description_tesim keyword_tesim creator_tesim creator_search_tesim date_published_tesim date_created_tesim
@@ -91,12 +88,13 @@ module Ubiquity
 
        @live_solr_urls.map do |url|
          solr_connection = RSolr.connect :url => url
-         #fetch_total
+
          search_response = solr_connection.get("select", params: { q: "#{search_term} or visibility_ssi:open", :defType => "edismax", fq: list_of_models_to_search, qf: qf, sort: "score desc, system_create_dtsi desc" } )
+        #add to total
          @records_size << search_response["response"]["docs"].size
-         #data = @get_data_for_total["response"]["docs"]
-         #@records_size <<  @search_response["response"]["docs"].size
+         #pull out the data from the response
          data =  search_response["response"]["docs"]
+         #return only the desired hash keys
          search_results << data.map {|hash| hash.slice(*Hash_keys)}
        end
        search_results.flatten.compact

@@ -1,5 +1,6 @@
 module Ubiquity
   module CollectionFormBehaviour
+    Hyrax::Forms::CollectionForm.terms.push(:account_cname)
     # Terms that appear within the accordion
     def secondary_terms
       %i[creator
@@ -13,7 +14,9 @@ module Ubiquity
          identifier
          based_near
          related_url
-         resource_type]
+         resource_type
+         account_cname
+       ]
     end
   end
 end

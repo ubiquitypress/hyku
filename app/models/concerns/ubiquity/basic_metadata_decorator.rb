@@ -2,6 +2,8 @@ module Ubiquity
   module BasicMetadataDecorator
     extend ActiveSupport::Concern
     include Ubiquity::CsvExportUtil
+    include Ubiquity::WorkAndCollectionMetadata
+    
     # include here properties (fields) shared across all templates
     # also see SharedMetadata
     included do
@@ -59,9 +61,6 @@ module Ubiquity
       end
       property :library_of_congress_classification, predicate: ::RDF::Vocab::BF2.term(:ClassificationLcc) do |index|
         index.as :stored_searchable, :facetable
-      end
-      property :account_cname, predicate: ::RDF::Vocab::FOAF.account, multiple: false do |index|
-        index.as :stored_searchable
       end
 
     end

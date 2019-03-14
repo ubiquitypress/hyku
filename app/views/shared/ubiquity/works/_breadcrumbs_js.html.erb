@@ -1,0 +1,12 @@
+<!-- rendered in  /home/antonio/hyku/hyku/app/views/hyrax/base/show.html.erb
+      to override back to search result link when request.referer is empty
+-->
+
+<script type='text/javascript'>
+    $(document).on("turbolinks:load", function(){
+      return $("body").on("click", ".breadcrumb", function(event){
+        event.preventDefault();
+        window.history.back();
+     });
+  });
+</script>

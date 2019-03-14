@@ -1,0 +1,19 @@
+
+<% if session[:previous_search_term].present? %>
+<div id="appliedParams" class="clearfix constraints-container">
+        <div class="pull-right">
+          <a class="catalog_startOverLink btn btn-sm btn-text" id="startOverLink" href="/shared_search?locale=en">Clear filters</a>
+        </div>
+        <span class="constraints-label">Filtering by:</span>
+
+     <span class="btn-group appliedFilter constraint query">
+       <span class="constraint-value btn btn-sm btn-default btn-disabled">
+       <% term = session[:previous_search_term] %>
+       <span class="filterValue" title="<%= term %>"><%= term %></span>
+     </span>
+
+    <a class="btn btn-default btn-sm remove dropdown-toggle" href="/shared_search?locale;utf8=%E2%9C%93"><span class="glyphicon glyphicon-remove"></span><span class="sr-only">Remove constraint mola</span></a>
+</span>
+
+</div>
+<% end %>

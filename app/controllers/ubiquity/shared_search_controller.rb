@@ -15,8 +15,10 @@ module Ubiquity
     def return_search
       @search = Ubiquity::SharedSearch.new(@page, @per_page, request.host)
       if params["term"].present?
+        add_seach_term_session(params["term"])
         @search.fetch_term(params["term"])
       else
+        remove_seach_term_session
         @search.all
       end
     end
@@ -30,6 +32,15 @@ module Ubiquity
       #will have no default value passed in, so we can
       cookies[:per_page] = params[:limit] || 10
       @per_page =  cookies[:per_page]
+    end
+
+    def add_seach_term_session(term)
+      session[:previous_search_term] = term
+    end
+
+    def remove_seach_term_session
+      session.delete(:previous_search_term)
+      #
     end
 
   end

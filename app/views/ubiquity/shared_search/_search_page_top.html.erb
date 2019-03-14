@@ -12,6 +12,12 @@
     </div>
 
     <div class="row">
+      <div class="col-md-9 pull-right">
+        <%= render "search_state" %>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-md-6 col-md-offset-4">
         <%= paginate @search_pagination %>
        </div>
@@ -37,6 +43,12 @@
           <%= render 'shared_search_form' %>
        </div> <!-- closes col-md-9 -->
     </div><br><!-- closes .row -->
+
+    <div class="row">
+      <div class="col-md-9 pull-right">
+        <%= render "search_state" %>
+      </div>
+    </div>
 
     <div class="row">
       <div class="col-md-7 col-md-offset-5">

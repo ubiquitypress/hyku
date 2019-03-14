@@ -82,9 +82,12 @@ module Ubiquity
       #fields to return
        fl = 'title_ssim, resource_type_tesim, institution_tesim, date_published_tesim, account_cname_tesim, thumbnail_path_ss, id, visibility_ssi, creator_tesim, creator_search_tesim, has_model_ssim'
        #fields to search against
-       qf = "title_tesim description_tesim keyword_tesim creator_tesim creator_search_tesim date_published_tesim date_created_tesim
-       resource_type_tesim institution_tesim account_cname_tesim, thumbnail_path_ss id visibility_ssi has_model_ssim
-       journal_title_tesim issue_tesim human_readable_type_tesim contributor_tesim editor_tesim"
+       #
+       qf = "title_tesim description_tesim keyword_tesim journal_title_tesim subject_tesim creator_tesim version_tesim related_exhibition_tesim media_tesim event_title_tesim event_date_tesim
+        event_location_tesim abstract_tesim book_title_tesim series_name_tesim edition_tesim contributor_tesim publisher_tesim place_of_publication_tesim date_published_tesim based_near_label_tesim
+        language_tesim date_uploaded_tesim date_modified_tesim date_created_tesim rights_statement_tesim license_tesim resource_type_tesim format_tesim identifier_tesim doi_tesim isbn_tesim
+        issn_tesim eissn_tesim extent_tesim institution_tesim org_unit_tesim refereed_tesim funder_tesim fndr_project_ref_tesim add_info_tesim date_accepted_tesim issue_tesim volume_tesim
+         pagination_tesim article_num_tesim project_name_tesim official_link_tesim rights_holder_tesim library_of_congress_classification_tesim file_format_tesim all_text_timv"
 
        @live_solr_urls.map do |url|
          solr_connection = RSolr.connect :url => url

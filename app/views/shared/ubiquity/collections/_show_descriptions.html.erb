@@ -1,5 +1,11 @@
 <!--overrides Hyrax/app/views/hyrax/dashboard/collections/_show_descriptions.html.erb -->
 <!--so we can customise resource_type to display the term, not the id -->
+
+<!-- rendered in
+hyrax/collection/_show_descriptions.html.erb
+hyrax/dashboard/collection/_show_descriptions.html.erb
+-->
+
 <dl class="dl-horizontal metadata-collections">
   <% present_terms(presenter, presenter.terms_with_values) do |r, term| %>
       <% if term == :resource_type %>

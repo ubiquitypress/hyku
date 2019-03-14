@@ -1,20 +1,3 @@
-<!--overrides Hyrax/app/views/hyrax/collections/_show_descriptions.html.erb -->
+<!--overrides Hyrax/app/views/hyrax/dashboard/collections/_show_descriptions.html.erb -->
 <!--so we can customise resource_type to display the term, not the id -->
-
-<dl class="dl-horizontal metadata-collections">
-  <% present_terms(@presenter, @presenter.terms_with_values) do |r, term| %>
-    <div>
-      <% if term == :resource_type %>
-        <dt><%= r.label(term) %></dt>
-        <dd>
-          <% @presenter.resource_type.each do |rt| %>
-            <%= ::ResourceTypesService.label(rt) %><br>
-          <% end %>
-        </dd>
-        <% else %>
-        <dt><%= r.label(term) %></dt>
-        <dd><%= r.value(term) %></dd>
-      <% end %>
-    </div>
-  <% end %>
-</dl>
+<%= render 'shared/ubiquity/collections/show_descriptions', presenter: @presenter %>

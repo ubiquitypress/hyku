@@ -5,7 +5,7 @@ module Ubiquity
     before_action :set_per_page, only: [:index]
 
     def index
-      @search_results = return_search 
+      @search_results = return_search
       @search_pagination = Kaminari.paginate_array(@search_results, total_count: @search.total_pages).page(@page).per(@per_page.to_i)
     end
 
@@ -36,12 +36,12 @@ module Ubiquity
     end
 
     def add_search_term_cookie(term)
-      cookies[:previous_search_term] = term
+      cookies[:search_term] = term
     end
 
     #remove if facet is empty
     def remove_search_term_cookie
-      cookies.delete(:previous_search_term)
+      cookies.delete(:search_term)
     end
 
   end

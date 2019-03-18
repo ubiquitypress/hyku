@@ -92,6 +92,19 @@ module Ubiquity
       File.extname(name)
     end
 
+    def set_featured_img_size(document)
+      thumbnail_path = document.thumbnail_path
+      path_array = thumbnail_path.split('/')
+      if path_array[4] == "!150,300"
+        path_array[4] = "!360,360"
+        document[:thumbnail_path_ss] =   path_array.join('/')
+        document
+      else
+        document
+      end
+
+    end
+
 
     private
 

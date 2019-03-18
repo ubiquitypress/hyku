@@ -92,6 +92,20 @@ module Ubiquity
       File.extname(name)
     end
 
+   #Temporal solution for size passed from https://github.com/curationexperts/riiif/blob/master/app/controllers/riiif/images_controller.rb#L85
+    def set_featured_img_size(document)
+      thumbnail_path = document.thumbnail_path
+      path_array = thumbnail_path.split('/')
+      if path_array[4] == "!150,300"
+        path_array[4] = "!360,360"
+        document[:thumbnail_path_ss] = path_array.join('/')
+        document
+      else
+        document
+      end
+
+    end
+
 
     private
 

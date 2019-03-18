@@ -19,12 +19,12 @@
 <% else %>
 <div>
   <div class="featured-item-title">
-    <h3>
+    <h6 class="featured-item homepage-field-title">
       <span class="sr-only">Title</span><%= link_to (featured_doc.to_s), [main_app, featured_doc] %>
       <%= link_to [main_app, featured] do %>
         <span class="media-left hidden-xs file_listing_thumbnail" style="padding-left:62px" ></span>
       <% end %>
-    </h3>
+    </h6>
     <div class="featured-item">
       <%= link_to_facet_list(extract_creator_names_for_homepage(featured_doc), 'creator_search').html_safe %>
     </div>

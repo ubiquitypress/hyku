@@ -1,8 +1,10 @@
 
 <%= render "search_page_top", search_pagination: @search_pagination  %>
+
 <% if @search_pagination.present? %>
   <br/><hr>
 <% end %>
+
 <div class="container-fluid id="search-results"">
   <div class="row">
     <div class="col-md-3"><!-- facet sidebar --> </div>
@@ -101,11 +103,3 @@
 </div> <!-- closes container -->
 
 <div class="clearfix"></div>
-<script type="text/javascript" >
-$(function(){
-  $('#limit').change(
-    function() {
-     $('#limit_form').submit();
-    });
-});
-</script>

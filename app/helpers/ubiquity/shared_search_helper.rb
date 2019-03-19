@@ -27,6 +27,23 @@ module Ubiquity
       end
     end
 
+    def generate_sort_label(sort_value)
+      label_hash = {
+        "score_desc_system_create_dtsi_desc" => "relevance",
+        "system_create_dtsi_desc" => "date uploaded ▼",
+        "system_create_dtsi_asc"  => "date uploaded ▲"
+      }.freeze
+
+      split_value = sort_value.split(',')
+      new_value = split_value.first.split(' ').join('_') if split_value.size == 1
+      label = label_hash[new_value]
+      return label if label.present?
+      first_part_of_value = split_value.shift.split(' ').join('_') if split_value.size == 2
+      second_part_of_value = split_value.first.split(' ').join('_') if split_value.first.present?
+      joined_value = first_part_of_value + '_' + second_part_of_value if first_part_of_value.present? && second_part_of_value.present?
+      label_hash[joined_value]
+    end
+
     private
 
     def set_work_url(id, tenant, work_class, request_host, request_protocol, request_port)

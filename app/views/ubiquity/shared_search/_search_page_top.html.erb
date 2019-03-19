@@ -1,7 +1,7 @@
 
 <% if search_pagination.present? %>
 
-  <div class="container">
+<div class="container-fluid" id="search-results>
     <div class="row">
       <div class="col-md-12">
           <%= render 'shared_search_form' %>
@@ -18,25 +18,51 @@
     </div>
 
     <div class="row">
-      <div class="col-md-6 col-md-offset-4">
+      <!--  col-md-offset-2 -->
+      <div class="col-md-3 col-md-offset-4">
         <%= paginate @search_pagination %>
-       </div>
+      </div>
 
-       <div class="col-md-2">
-         <!-- cookie used instead of passing a default value to options_from_collection_for_select, so we can always display included_blank -->
-         <% params[:limit] = cookies[:per_page] %>
-         <% default_value = params[:limit] %>
-           <%= form_tag shared_search_index_path, method: :get, id: 'limit_form' do %>
-             <span> <%= select_tag :limit, options_from_collection_for_select(Ubiquity::SharedSearch::PER_PAGE_OPTIONS, :to_s, :to_s), {:include_blank => "#{default_value} per page", class: "text-primary"} %>
-             </span>
-           <% end %>
-        </div>
-    </div>
-  </div>  <!-- closes .container for form -->
+    <!-- cookie used instead of passing a default value to options_from_collection_for_select, so we can always display included_blank -->
+    <% params[:sort] = cookies[:sort] %>
+    <% default_sort_value = params[:sort] %>
+    <% selected_option_label = generate_sort_label(default_sort_value) %>
+
+    <% params[:per_page] = cookies[:per_page] %>
+    <% default_value = params[:per_page] %>
+
+  <!-- pagination class added to allow the dropdowns to be in line with pagination buttons -->
+  <div class="pagination pull-right col-md-4">
+   <div id="sort-dropdown" class="btn-group">
+     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      Sort by <%= selected_option_label %> <span class="caret"></span>
+     </button>
+
+     <ul class="dropdown-menu" role="menu">
+        <%  Ubiquity::SharedSearch::SORT_OPTIONS.each do |value| %>
+        <li><%= link_to value.first,  shared_search_index_path(locale: 'en', per_page: default_value, sort: value.last, q: cookies[:search_term]) %></li>
+        <% end %>
+      </ul>
+     </div>
+
+      <div id="per_page-dropdown" class="btn-group">
+       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+        <%= cookies[:per_page] %> per page <span class="caret"></span>
+       </button>
+         <ul class="dropdown-menu" role="menu">
+         <%  Ubiquity::SharedSearch::PER_PAGE_OPTIONS.each do |value| %>
+           <li><%= link_to value,  shared_search_index_path(locale: 'en', per_page: value, sort: default_sort_value, q: cookies[:search_term]) %></li>
+          <% end %>
+         </ul>
+      </div>
+
+   </div> <!-- coloses pull-right" -->
+
+ </div> <!-- closes .container for form -->
 
 <% else %>
 
-  <div class="container">
+<div class="container-fluid">
 
     <div class="row">
       <div class="col-md-12">
@@ -68,6 +94,6 @@
         </div>
       </div>
     </div>
-  </div>  <!-- closes .container for form -->
+  </div> <!-- closes .container for form -->
 
 <% end %>

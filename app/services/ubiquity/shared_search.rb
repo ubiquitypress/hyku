@@ -1,5 +1,8 @@
 #call locally h = Ubiquity::SharedSearch.new(1, 10, 'local')
 
+#encoding: UTF-8
+#https://markhneedham.com/blog/2013/01/27/ruby-invalid-multibyte-char-us-ascii/
+
 module Ubiquity
   class SharedSearch
 
@@ -16,14 +19,18 @@ module Ubiquity
 
     PER_PAGE_OPTIONS = [10, 20, 50, 100].freeze
 
+    SORT_OPTIONS =  [["relevance", "score desc, system_create_dtsi desc"], ["date uploaded ▼",
+      "system_create_dtsi desc"], ["date uploaded ▲", "system_create_dtsi asc"]].freeze
+
     attr_accessor :tenant_names, :solr_url, :search_results,
                   :limit, :offset, :total_pages, :page, :demo_records,
                   :live_records, :live_tenant_names, :demo_tenant_names,
-                  :live_solr_urls, :demo_solr_urls
+                  :live_solr_urls, :demo_solr_urls, :sort
 
-    def initialize(page, limit,  host)
+    def initialize(page, limit, host, sort=nil)
       @page = page.to_i
       @limit = limit.to_i
+      @sort = sort
 
       @records_size = []
       @search_results = []
@@ -69,7 +76,7 @@ module Ubiquity
     def fetch_all
       @live_solr_urls.map do |url|
         solr_connection = RSolr.connect :url => url
-        search_response = solr_connection.get("select", params: { q: "*:* or visibility_ssi:open", fq: list_of_models_to_search, sort: "score desc, system_create_dtsi desc"})
+        search_response = solr_connection.get("select", params: { q: "*:* or visibility_ssi:open", fq: list_of_models_to_search, sort: sort})
         @records_size << search_response["response"]["docs"].size
         data =  search_response["response"]["docs"]
         search_results << data.map {|hash| hash.slice(*Hash_keys)}

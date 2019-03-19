@@ -82,7 +82,7 @@ module Ubiquity
     def set_default_work_visibility(key)
       if (['open', 'restricted'].include? @data_hash[:visibility])
         puts "setting visibility from hash - #{@data_hash[:visibility]}"
-        @work_instance.assign_attributes(visibility:  @data_hash[:visibility]) if (key == "file_only_import" && key != 'true')
+        @work_instance.assign_attributes(visibility:  @data_hash[:visibility]) 
 
       else
         puts "setting visibility to private the json importer's default  #{@data_hash[:visibility]}"

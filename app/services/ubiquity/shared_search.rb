@@ -28,6 +28,7 @@ module Ubiquity
                   :live_solr_urls, :demo_solr_urls, :sort
 
     def initialize(page, limit, host, sort=nil)
+
       @page = page.to_i
       @limit = limit.to_i
       @sort = sort
@@ -76,8 +77,9 @@ module Ubiquity
     def fetch_all
       @live_solr_urls.map do |url|
         solr_connection = RSolr.connect :url => url
-        search_response = solr_connection.get("select", params: { q: "*:* or visibility_ssi:open", fq: list_of_models_to_search, sort: sort})
+        search_response = solr_connection.get("select", params: { q: "*:* or visibility_ssi:open", fq: list_of_models_to_search, sort: sort, rows: 2000 })
         @records_size << search_response["response"]["docs"].size
+
         data =  search_response["response"]["docs"]
         search_results << data.map {|hash| hash.slice(*Hash_keys)}
       end
@@ -99,9 +101,10 @@ module Ubiquity
        @live_solr_urls.map do |url|
          solr_connection = RSolr.connect :url => url
 
-         search_response = solr_connection.get("select", params: { q: "#{search_term} or visibility_ssi:open", :defType => "edismax", fq: list_of_models_to_search, qf: qf, sort: "score desc, system_create_dtsi desc" } )
+         search_response = solr_connection.get("select", params: { q: "#{search_term} or visibility_ssi:open", :defType => "edismax", fq: list_of_models_to_search, qf: qf, sort: sort, rows: 2000 } )
         #add to total
          @records_size << search_response["response"]["docs"].size
+
          #pull out the data from the response
          data =  search_response["response"]["docs"]
          #return only the desired hash keys

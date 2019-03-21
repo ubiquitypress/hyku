@@ -57,3 +57,4 @@ kiq.log
 fits.log
 supervisord.log
 supervisord.pid
+.dockerignore

@@ -71,9 +71,9 @@ module Ubiquity
     #  data = data.thumbnail if data.class != Hyku::FileSetPresenter
     #
     #Change zip to .zip and others too because calling file.format on a thumbnail in production
-    #returned *zip (ZIP Format)* instead of zip
+    #returned *zip (ZIP Format)* instead of zip 
     def zipped_types
-      %w[.zip .zipx .bz2 .gz .dmg .rar .sit .sitx .tar .tar.gz .tgz .tar.Z .tar.bz2 .tbz2 .tar.lzma .tlz .tar.xz .xz .txz].freeze
+      %w[.zip .zipx .bz2 .gz .dmg .rar .sit .sitx .tar .tar.gz .tgz .tar.Z .tar.bz2 .tbz2 .tar.lzma .tlz .tar.xz .xz .txz tt.tar.xz].freeze
     end
 
     def check_file_is_restricted?(data)

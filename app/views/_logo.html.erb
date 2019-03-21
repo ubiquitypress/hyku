@@ -1,11 +1,12 @@
 <!-- copied from https://github.com/samvera/hyrax/blob/master/app/views/_logo.html.erb
   to conditionally change Hyku label for BL
 -->
-
+<% search_term = cookies[:search_term] %>
 <a id="logo" class="navbar-brand" href="<%= hyrax.root_path %>" data-no-turbolink="true">
   <span class="glyphicon glyphicon-globe" role="img" aria-label="<%= application_name %>" aria-hidden="true"></span>
   <% if request.original_url == 'https://oar.bl.uk/' || request.original_url ==  'https://repo-test.ubiquity.press/' ||
-     request.original_url ==  'https://repo-test.ubiquity.press/?locale=en' || request.original_url ==  'https://oar.bl.uk//?locale=en' %>
+        request.original_url == 'https://oar.bl.uk/?locale=en' || request.original_url ==  'https://repo-test.ubiquity.press/?locale=en' ||
+        request.original_url == "https://oar.bl.uk/shared_search?utf8=%E2%9C%93&q=#{search_term}" || request.original_url == "https://repo-test.ubiquity.press/shared_search?utf8=%E2%9C%93&q=#{search_term}"%>
     Shared Research Repository
   <% else %>
     <span class="institution_name"><%= application_name %></span>

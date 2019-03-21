@@ -22,7 +22,6 @@ module Ubiquity
     def get_thumbnail_visibility(file_id, tenant)
       if file_id.present? && tenant.present?
         work =  get_thumbnail_file(file_id, tenant)
-        #work.try(:thumbnail).try(:visibility)
         work.thumbnail.try(:visibility)
       end
     end
@@ -30,16 +29,7 @@ module Ubiquity
     def get_thumbnail_label(file_id, tenant)
       if file_id.present? && tenant.present?
         work =  get_thumbnail_file(file_id, tenant)
-        #work.try(:thumbnail).try(:visibility)
         work.thumbnail.try(:label)
-      end
-    end
-
-    def get_thumbnail_file(file_id, tenant)
-      if file_id.present? && tenant.present?
-        AccountElevator.switch!(tenant)
-        work ||= ActiveFedora::Base.find(file_id)
-        work #.thumbnail
       end
     end
 
@@ -62,6 +52,14 @@ module Ubiquity
 
     private
 
+    def get_thumbnail_file(file_id, tenant)
+      if file_id.present? && tenant.present?
+        AccountElevator.switch!(tenant)
+        work ||= ActiveFedora::Base.find(file_id)
+        work
+      end
+    end
+    
     def set_work_url(id, tenant, work_class, request_host, request_protocol, request_port)
       if request_host == 'localhost'
         "#{request_protocol}#{tenant}:#{request_port}/concern/#{work_class}/#{id}?locale=en"

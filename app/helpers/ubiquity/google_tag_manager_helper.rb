@@ -36,11 +36,6 @@ module Ubiquity
 
    private
 
-    def ubiquity_url_parser(host)
-      full_url = URI.parse(host)
-      full_url.host.split('.').first
-    end
-
     def get_tenant_name_from_url(host)
       tenant_name = ubiquity_url_parser(host)
       Rails.application.config.google_tag_manager_id[tenant_name]

@@ -20,7 +20,9 @@
     <div class="row">
       <!--  col-md-offset-2 -->
       <div class="col-md-5 col-md-offset-3">
-        <%= paginate @search_pagination %>
+        <%= link_to_prev_page @search_pagination, '<< Previous |' %>
+        <%= page_entries_info(search_pagination)%>
+        <%= link_to_next_page @search_pagination, '| Next >>' %>
       </div>
 
     <!-- cookie used instead of passing a default value to options_from_collection_for_select, so we can always display included_blank -->

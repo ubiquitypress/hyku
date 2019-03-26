@@ -3,7 +3,7 @@
 -->
 
 <%  thumbnail_label = get_thumbnail_label(model['id'], model["account_cname_tesim"].try(:first))%>
-<% if zipped_types.include? thumbnail_label%>
+<% if zipped_types.include? check_file_extension(thumbnail_label)%>
   <div class="list-thumbnail">
     <span class="fa fa-file-archive-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:60px"></span>
   </div>

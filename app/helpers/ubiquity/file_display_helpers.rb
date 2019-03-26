@@ -59,9 +59,9 @@ module Ubiquity
        tenant = file.parent.account_cname
        #hardcoded to port 3000 so if your localhost uses eg port 8080 to test temporarily change the 3000 to 8080
        if tenant.split('.').include? 'localhost'
-          "http://#{tenant}:3000/downloads/#{file.id}"
+          "http://#{tenant}:3000/concern/parent/#{file.parent.id}/file_sets/#{file.id}"
        else
-         "https://#{tenant}/downloads/#{file.id}"
+         "https://#{tenant}/concern/parent/#{file.parent.id}/file_sets/#{file.id}"
       end
     end
 
@@ -71,7 +71,7 @@ module Ubiquity
     #  data = data.thumbnail if data.class != Hyku::FileSetPresenter
     #
     #Change zip to .zip and others too because calling file.format on a thumbnail in production
-    #returned *zip (ZIP Format)* instead of zip 
+    #returned *zip (ZIP Format)* instead of zip
     def zipped_types
       %w[.zip .zipx .bz2 .gz .dmg .rar .sit .sitx .tar .tar.gz .tgz .tar.Z .tar.bz2 .tbz2 .tar.lzma .tlz .tar.xz .xz .txz tt.tar.xz].freeze
     end

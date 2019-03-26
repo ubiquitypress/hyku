@@ -59,7 +59,7 @@ module Ubiquity
         work
       end
     end
-    
+
     def set_work_url(id, tenant, work_class, request_host, request_protocol, request_port)
       if request_host == 'localhost'
         "#{request_protocol}#{tenant}:#{request_port}/concern/#{work_class}/#{id}?locale=en"

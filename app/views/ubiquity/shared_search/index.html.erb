@@ -7,7 +7,9 @@
 
 <div class="container-fluid id="search-results"">
   <div class="row">
-    <div class="col-md-3"><!-- facet sidebar --> </div>
+    <div id="sidebar" class="col-md-3 col-sm-4"><!-- facet sidebar -->
+      <%= render 'search_facet', facet_records: @facet_records  %>
+    </div>
       <div  class="col-md-9">
         <div id="search-results">
           <ol style="list-style-type:none" class="catalog" start="1">

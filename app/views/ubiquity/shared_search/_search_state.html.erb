@@ -1,7 +1,14 @@
 
+<% if @search.valid_json?(cookies[:facet]) %>
+  <% parsed_facet_cookie = JSON.parse(cookies[:facet]) %>
+<% else %>
+  <% parsed_facet_cookie = {} %>
+<% end %>
+
 <% search_term = cookies[:search_term] %>
 
-<% if search_term.present? %>
+<% if search_term.present? && parsed_facet_cookie.blank? %>
+
 <div id="appliedParams" class="clearfix constraints-container">
         <div class="pull-right">
           <a class="catalog_startOverLink btn btn-sm btn-text" id="startOverLink" href="/shared_search">Clear filters</a>
@@ -10,12 +17,60 @@
 
      <span class="btn-group appliedFilter constraint query">
        <span class="constraint-value btn btn-sm btn-default btn-disabled">
+         <span class="filterValue" title="<%= search_term %>"> <%= search_term %> </span>
+         <a class="btn btn-default btn-sm remove dropdown-toggle" href="/shared_search/destroy"><span class="glyphicon glyphicon-remove"></span><span class="sr-only">Remove constraint <%= search_term %> </span></a>
+      </span>
 
-       <span class="filterValue" title="<%= search_term %>"> <%= search_term %> </span>
-     </span>
-
-    <a class="btn btn-default btn-sm remove dropdown-toggle" href="/shared_search"><span class="glyphicon glyphicon-remove"></span><span class="sr-only">Remove constraint mola</span></a>
+   &nbsp;
 </span>
 
 </div>
+<% elsif parsed_facet_cookie.present? %>
+
+<div id="appliedParams" class="clearfix constraints-container">
+      <div class="pull-right">
+        <a class="catalog_startOverLink btn btn-sm btn-text" id="startOverLink" href="/shared_search">Clear filters</a>
+      </div>
+    <span class="constraints-label">Filtering by:</span>
+    <% if search_term.present? %>
+
+     <span class="btn-group appliedFilter constraint query">
+       <span class="constraint-value btn btn-sm btn-default btn-disabled">
+         <span class="filterValue" title="<%= search_term %>"> <%= search_term %> </span> &nbsp;
+
+         <%= link_to shared_search_destroy_path, class: "btn btn-default btn-sm remove dropdown-toggle" do %>
+            <span class="glyphicon glyphicon-remove"></span>
+             <span class="sr-only">Remove constraint <%= search_term %> </span>
+         <% end %>
+        </span>
+       </span> &nbsp;
+    <% end %>
+
+
+  <% parsed_facet_cookie.each do |key, value| %>
+
+    <% display_key = Ubiquity::SharedSearch::Facet_mappings[key] %>
+
+     <span class="btn-group appliedFilter  constraint filter filter-<%= value %> ">
+       <span class="constraint-value btn btn-sm btn-default btn-disabled">
+         <% if key == 'resource_type_sim' %>
+           <span class="filterName"> <%= display_key %> </span>
+           <span class="filterValue" title="<%= value %>"> <%= human_readable_resource_type([value]) %> </span> &nbsp;
+
+         <% else %>
+           <span class="filterName"> <%= display_key %> </span>
+           <span class="filterValue" title="<%= value %>"> <%= value %> </span> &nbsp;
+         <% end %>
+
+         <%= link_to shared_search_destroy_path(f: {key.to_sym => value}), class: "btn btn-default btn-sm remove dropdown-toggle" do %>
+            <span class="glyphicon glyphicon-remove"></span>
+            <span class="sr-only">Remove constraint <%= value %> </span>
+          <% end %>
+
+       </span>
+     </span>  &nbsp;
+     <% end %>
+
+</div>
+
 <% end %>

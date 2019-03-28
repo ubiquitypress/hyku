@@ -26,6 +26,9 @@ Rails.application.routes.draw do
   scope :module => "ubiquity" do
     resources :shared_search, only: [:index]
   end
+  get '/shared_search/facet/:more_field', to: 'ubiquity/shared_search#facet', as: 'shared_search_facet'
+  get '/shared_search/destroy', to: 'ubiquity/shared_search#destroy'
+
   mount BrowseEverything::Engine => '/browse'
   resource :site, only: [:update] do
     resources :roles, only: [:index, :update]
@@ -72,9 +75,9 @@ Rails.application.routes.draw do
         get :export_remap_model
         get :export_model
       end
-    end
+  end
 
-    resource :account, only: [:edit, :update]
+   resource :account, only: [:edit, :update]
     resources :users, only: [:destroy]
     resources :groups do
       member do

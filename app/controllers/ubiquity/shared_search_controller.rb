@@ -1,25 +1,64 @@
 # ApplicationController
 module Ubiquity
   class SharedSearchController < ProprietorController
-    before_action :set_page, only: [:index]
-    before_action :set_per_page_cookie, only: [:index]
-    before_action :set_sort_cookie, only: [:index]
+    before_action :set_page, only: [:index, :facet]
+    before_action :set_per_page_cookie, only: [:index, :facet]
+    before_action :set_sort_cookie, only: [:index, :facet]
+    before_action :set_facet_cookie, only: [:index, :facet]
+    before_action :set_parmitted_params, only: [:index, :facet]
 
     def index
       @search_results = return_search
-      @search_pagination = Kaminari.paginate_array(@search_results, total_count: @search.total_pages).page(@page).per(@per_page.to_i)
+      @facet_records = @search.five_values_from_facet_hash  #@search.facet_values
+      @search_pagination = Kaminari.paginate_array(@search_results, total_count: (@search.total_pages) ).page(@page).per(@per_page.to_i)
+    end
+
+    def facet
+      @search_results = return_search
+      @facet_records = @search.facet_values
+      @facet_key = params['more_field']
+      @facet_more = @facet_records[@facet_key]
+      respond_to do |format|
+        format.js
+      end
+    end
+
+    def destroy
+      if  params["f"].present?
+        hash =   turn_params_facet_to_hash
+        cookie_hash = remove_facet_cookie(hash.keys.first)
+        return   redirect_to shared_search_index_url(f: '', q: cookies[:search_term]) if cookie_hash.blank?
+        redirect_to shared_search_index_url(f: cookies[:facet], q: cookies[:search_term])
+      else
+        remove_search_term_cookie
+        redirect_to shared_search_index_url(f: cookies[:facet])
+      end
     end
 
     private
 
+    def set_parmitted_params
+      params = ActionController::Parameters.new({q: '', sort: '', per_page: '', f: ''})
+      params.permit(:q, :sort, :per_page, f:  [:institution_sim, :creator_search_sim, :resource_type_sim])
+    end
+
     def return_search
       @search = Ubiquity::SharedSearch.new(@page, @per_page, request.host, @sort_value)
 
-      if params["q"].present?
+      if (params["q"].present?  &&  cookies[:facet].present?) || (params[:sort].presence && get_facet_hash.present?)  || (params[:per_page].presence && get_facet_hash.present?)
+        add_search_term_cookie(params["q"])
+        set_facet_cookie
+        return @search.combined_filter_query(params["q"], get_facet_hash) if params[:q].present?
+        return @search.facet_filter_query(get_facet_hash)  if params[:q].blank?
+      elsif  params["q"].present?
         add_search_term_cookie(params["q"])
         @search.fetch_term(params["q"])
+      elsif params["f"].present?
+        hash_term = turn_params_facet_to_hash
+        set_facet_cookie
+        @search.facet_filter_query(hash_term)
       else
-        remove_search_term_cookie
+        remove_all_cookies
         @search.all
       end
     end
@@ -37,7 +76,7 @@ module Ubiquity
       @per_page =  cookies[:per_page]
     end
 
-    def set_sort_cookie #(sort_value)
+    def set_sort_cookie
       cookies[:sort] = params[:sort] || "score desc, system_create_dtsi desc"
       @sort_value = cookies[:sort]
     end
@@ -46,10 +85,58 @@ module Ubiquity
       cookies[:search_term] = term
     end
 
+    def set_facet_cookie
+      if params[:f].present?
+        hash = turn_params_facet_to_hash
+        if cookies[:facet].blank?
+          cookies[:facet] = JSON.generate(hash) if hash.present?
+        else
+           cookie_hash = facet_cookie_to_hash if facet_cookie_to_hash
+           new_hash = cookie_hash.merge(hash) if hash.present?
+           cookies[:facet] = JSON.generate(new_hash) if new_hash.present?
+        end
+      end
+    end
+
+    def remove_facet_cookie(cookie_key)
+      cookie_hash = facet_cookie_to_hash
+      if cookie_hash.size == 1
+        cookies.delete(:facet)
+      else
+        cookie_hash.delete(cookie_key)
+        cookie_hash
+        cookies[:facet] = JSON.generate(cookie_hash)
+      end
+    end
+
     #remove if facet is empty
     def remove_search_term_cookie
       cookies.delete(:search_term)
     end
+
+    def remove_all_cookies
+      cookies.delete(:search_term)
+      cookies.delete(:facet)
+    end
+
+   def get_facet_hash
+      turn_params_facet_to_hash || facet_cookie_to_hash
+   end
+
+   def facet_cookie_to_hash
+     JSON.parse(cookies[:facet]) if cookies[:facet].present?
+   end
+
+   #leads to error of each_with_index when looping over hash because
+   #when coming from links like facet params class is ActionController::Parameters
+   #but sometimes it is a string
+   def turn_params_facet_to_hash
+     if params[:f].present?
+       return  hash_term = params.dig(:f).try(:to_unsafe_h) if (params.dig(:f).class == ActionController::Parameters)
+       return  hash_term = JSON.parse(params[:f]) if params[:f].class == String && !params[:f].blank?
+       return  hash_term = params[:f] if params[:f].class == Hash
+     end
+   end
 
   end
 end

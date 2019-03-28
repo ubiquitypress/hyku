@@ -5,7 +5,7 @@
 
 module Ubiquity
   class SharedSearch
-
+    #include Ubiquity::SharedSearchUtils
     Hash_keys = ["system_create_dtsi", "id", "depositor_ssim", "title_tesim", "creator_search_tesim",
                 "creator_tesim",  "date_published_tesim", "resource_type_tesim", "account_cname_tesim",  "pagination_tesim", "institution_tesim",
                 "resource_type_tesim", "thumbnail_path_ss", "file_set_ids_ssim",
@@ -22,13 +22,22 @@ module Ubiquity
     SORT_OPTIONS =  [["relevance", "score desc, system_create_dtsi desc"], ["date uploaded ▼",
       "system_create_dtsi desc"], ["date uploaded ▲", "system_create_dtsi asc"]].freeze
 
+    Facet_mappings = {
+      'resource_type_sim'  => 'Resource Type',
+      'institution_sim' => 'Institution',
+      'creator_search_sim' => 'Creator',
+      'keyword_sim' => 'Keyword',
+      'member_of_collections_ssim' => 'Collections'
+    }.freeze
+
     attr_accessor :tenant_names, :solr_url, :search_results,
                   :limit, :offset, :total_pages, :page, :demo_records,
                   :live_records, :live_tenant_names, :demo_tenant_names,
-                  :live_solr_urls, :demo_solr_urls, :sort
+                  :live_solr_urls, :demo_solr_urls, :sort, :facet_values,
+                  :facet_filtering
 
     def initialize(page, limit, host, sort=nil)
-
+      @facet_values = {}
       @page = page.to_i
       @limit = limit.to_i
       @sort = sort
@@ -67,9 +76,41 @@ module Ubiquity
 
     def fetch_term(search_term)
       if search_term.present?
-        sanitized_value = sanitize_input(search_term)
+        sanitized_value = clean_and_downcase_user_search_term(search_term)
         multiple_field_search(sanitized_value)
       end
+    end
+
+    def facet_filter_query(filters)
+      if filters.present?
+        term = build_query_params_from_facet_values(filters)
+        multiple_field_search(term)
+      end
+    end
+
+    def combined_filter_query(search_term, filters)
+      facet_query_terms = build_query_params_from_facet_values(filters)
+      search_input = clean_and_downcase_user_search_term(search_term)
+      combined_terms = facet_query_terms.prepend("#{search_input} OR ")
+      multiple_field_search(combined_terms)
+    end
+
+    # maby_by without calling .to_h return_search
+      #{:institution_sim=>[["Tate", 1], ["British Museum", 1], ["MOLA", 1], ["British Library", 1]]}
+    # max_by with .to_h returns {:institution_sim=>{"Tate"=>1, "British Museum"=>1, "MOLA"=>1, "British Library"=>1}}
+    #
+    def five_values_from_facet_hash
+     selected_facet = {}
+     number = ENV['BL_SHARED_SEARCH_FACETS_SIZE']
+     facet_size = number.present? ? number : 5
+     facet_values.each { |key, value| selected_facet[key] = value.max_by(facet_size.to_i, &:last).to_h }
+     selected_facet
+    end
+
+    def valid_json?(data)
+      !!JSON.parse(data)  if data.class == String
+      rescue JSON::ParserError
+        false
     end
 
     private
@@ -77,15 +118,15 @@ module Ubiquity
     def fetch_all
       @live_solr_urls.map do |url|
         solr_connection = RSolr.connect :url => url
-        search_response = solr_connection.get("select", params: { q: "*:* or visibility_ssi:open", fq: list_of_models_to_search, sort: sort, rows: 2000 })
+        search_response = solr_connection.get("select", params: { q: "*:* or visibility_ssi:open", fq: list_of_models_to_search, sort: sort, rows: 1000, "facet.field" => facet_fields })
         @records_size << search_response["response"]["docs"].size
-
+        facet_data = search_response["facet_counts"]['facet_fields']
+        remap_facet_values(facet_data)
         data =  search_response["response"]["docs"]
         search_results << data.map {|hash| hash.slice(*Hash_keys)}
       end
       search_results.flatten.compact
     end
-
 
     def multiple_field_search(search_term)
       #fields to return
@@ -100,11 +141,11 @@ module Ubiquity
 
        @live_solr_urls.map do |url|
          solr_connection = RSolr.connect :url => url
-
-         search_response = solr_connection.get("select", params: { q: "#{search_term} or visibility_ssi:open", :defType => "edismax", fq: list_of_models_to_search, qf: qf, sort: sort, rows: 2000 } )
+         search_response = solr_connection.get("select", params: { q: "#{search_term} or visibility_ssi:open", :defType => "edismax", fq: list_of_models_to_search, qf: qf, sort: sort, rows: 1000, "facet.field" => facet_fields } )
         #add to total
          @records_size << search_response["response"]["docs"].size
-
+         facet_data = search_response["facet_counts"]['facet_fields']
+         remap_facet_values(facet_data)
          #pull out the data from the response
          data =  search_response["response"]["docs"]
          #return only the desired hash keys
@@ -127,6 +168,48 @@ module Ubiquity
         model_names_string << " OR has_model_ssim:#{model_name})" if index == (model_names_array.size - 1)
       end
       model_names_string
+    end
+
+    #turns the result of query from multi-dimensional array to nested hash
+    #eg {institution_sim: [[tate, 1] [mola, 1]]}
+    #into {institution_sim: {tate: 1, mola: 1}}
+    #
+    def remap_facet_values(facet_data)
+      new_facet_hash = { }
+      facet_data.each { |key, value| new_facet_hash[key] = Hash[*facet_data[key].flatten(1)]}
+      @facet_values.deep_merge!(new_facet_hash) { |key, this_val, other_val| this_val + other_val }
+      new_facet_hash.clear
+      facet_values
+    end
+
+    #facet fields to return in query response 'keyword_sim', "member_of_collections_ssim"
+    def facet_fields
+      facet_to_display = ENV['BL_SHARED_SEARCH_FACETS']
+      if facet_to_display.present?
+        facet_to_display.split(',')
+      else
+        ['resource_type_sim', 'creator_search_sim', 'institution_sim']
+      end
+    end
+
+    def clean_and_downcase_user_search_term(search_term)
+      sanitized_term = sanitize_input(search_term)
+      sanitized_term #.downcase
+    end
+
+    def build_query_params_from_facet_values(filters)
+      data = filters
+      #needed because when deleting multiple filters, a string is sometimes sent instead of hash
+      #if the rquest is from the destroy action or a form submission
+      data = JSON.parse(filters) if valid_json?(filters)
+      term = ""
+      data.each_with_index do |(key, value), index|
+        #term << "#{key}:#{value}"  if index == 0
+        #term << " OR #{key}:#{value}"  if index > 0
+        term << "#{value}"  if index == 0
+        term << " OR #{value}"  if index > 0
+      end
+      term
     end
 
   end

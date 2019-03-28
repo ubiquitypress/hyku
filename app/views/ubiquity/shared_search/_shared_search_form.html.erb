@@ -1,13 +1,17 @@
 
 <% cookies.delete(:search_term) unless request.original_fullpath.include? 'shared_search' %>
-<% value = cookies[:search_term]  %>
+<% search_value = cookies[:search_term]  %>
 
 <div class="container-fluid">
   <div class="row">
     <div class="searchbar-right navbar-right col-sm-7 col-md-8">
-      <%= form_with url: '/shared_search', local: true, class: 'form-inline',  method: :get do |form| %>
+      <%= form_with url: '/shared_search', local: true, class: 'shared-search-form form-inline',  method: :get do |form| %>
           <div class="input-group">
-            <%= form.text_field :q,  value: value, class: "q form-control input-md", size: '80', placeholder: 'Search across all our repositories' %>
+            <%= form.text_field :q,  value: search_value, class: "q form-control input-md", size: '80', placeholder: 'Search across all our repositories' %>
+
+            <%= form.hidden_field :sort, value: cookies[:sort] %>
+            <%= form.hidden_field :per_per_page, value: cookies[:per_page] %>
+            <%# form.hidden_field :f,  value: cookies[:facet] %>
             <div class="input-group-btn">
               <button id="search-submit-header" class="btn btn-primary" type="submit">
                 <span class="glyphicon glyphicon-search"></span>

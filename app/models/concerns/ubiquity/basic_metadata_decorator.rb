@@ -3,12 +3,12 @@ module Ubiquity
     extend ActiveSupport::Concern
     include Ubiquity::CsvExportUtil
     include Ubiquity::WorkAndCollectionMetadata
-    
+
     # include here properties (fields) shared across all templates
     # also see SharedMetadata
     included do
       property :institution, predicate: ::RDF::Vocab::ORG.organization do |index|
-        index.as :stored_searchable
+        index.as :stored_searchable, :facetable
       end
       property :org_unit, predicate: ::RDF::Vocab::ORG.OrganizationalUnit do |index|
         index.as :stored_searchable

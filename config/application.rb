@@ -46,6 +46,7 @@ module Hyku
       Hyrax::Forms::CollectionForm.prepend(::Ubiquity::CollectionFormBehaviour)
       Hyrax::Forms::BatchEditForm.prepend(::Ubiquity::AdditionalBatchEdit)
       Hyrax::FileSetDerivativesService.prepend(::Ubiquity::FilesetDerivativesServiceOverride)
+      Hyrax::ContactFormController.prepend(::Ubiquity::ContactFormControllerOverride)
     end
 
     config.before_initialize do

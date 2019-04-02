@@ -1,8 +1,5 @@
-#call locally h = Ubiquity::SharedSearch.new(1, 10, 'local')
-
-#encoding: UTF-8
-#https://markhneedham.com/blog/2013/01/27/ruby-invalid-multibyte-char-us-ascii/
-
+#call locally h = Ubiquity::SharedSearch.new(1, 10, 'local', "score desc, system_create_dtsi desc")
+#
 module Ubiquity
   class SharedSearch
     #include Ubiquity::SharedSearchUtils
@@ -34,10 +31,12 @@ module Ubiquity
                   :limit, :offset, :total_pages, :page, :demo_records,
                   :live_records, :live_tenant_names, :demo_tenant_names,
                   :live_solr_urls, :demo_solr_urls, :sort, :facet_values,
-                  :facet_filtering
+                  :facet_filtering, :build_facet_qf, :build_facet_and_text_query_fq
 
     def initialize(page, limit, host, sort=nil)
       @facet_values = {}
+      @build_facet_qf = ''
+      @build_facet_and_text_query_fq = ''
       @page = page.to_i
       @limit = limit.to_i
       @sort = sort
@@ -61,9 +60,8 @@ module Ubiquity
       (@limit/live_tenant_names.size).ceil
     end
 
-   #cause of problems. when limit is 2 results in offset of -2 and @page is 1
     def offset
-      limit_value * ([@page, 1].max - 1)
+      limit * ([@page, 1].max - 1)
     end
 
     def total_pages
@@ -77,23 +75,25 @@ module Ubiquity
     def fetch_term(search_term)
       if search_term.present?
         sanitized_value = clean_and_downcase_user_search_term(search_term)
-        multiple_field_search(sanitized_value)
+        multiple_field_search(sanitized_value, fields_to_search_against)
       end
     end
 
     def facet_filter_query(filters)
       if filters.present?
         term = build_query_params_from_facet_values(filters)
-        multiple_field_search(term)
+        multiple_field_search(term, @build_facet_qf)
       end
     end
 
     def combined_filter_query(search_term, filters)
       facet_query_terms = build_query_params_from_facet_values(filters)
       search_input = clean_and_downcase_user_search_term(search_term)
-      combined_terms = facet_query_terms.prepend("#{search_input} OR ")
-      multiple_field_search(combined_terms)
+      #changed from AND to OR because search term of darius and resource_type_sim dataset fails
+      combined_terms = facet_query_terms.prepend("#{search_input} AND ")
+      multiple_field_search(combined_terms, fields_to_search_against, 'multiple')
     end
+
 
     # maby_by without calling .to_h return_search
       #{:institution_sim=>[["Tate", 1], ["British Museum", 1], ["MOLA", 1], ["British Library", 1]]}
@@ -115,43 +115,57 @@ module Ubiquity
 
     private
 
+    def fields_to_return
+      'title_tesim, resource_type_tesim, institution_tesim, date_published_tesim, account_cname_tesim, thumbnail_path_ss, id, visibility_ssi,
+      creator_tesim, creator_search_tesim, has_model_ssim, system_create_dtsi, system_modified_dtsi,  id, score, accessControl_ssim'
+    end
+
+    def fields_to_search_against
+      #fields to search against which is passed to the qf params
+      "title_tesim description_tesim keyword_tesim journal_title_tesim subject_tesim creator_tesim editor_tesim version_tesim related_exhibition_tesim media_tesim event_title_tesim event_date_tesim
+      event_location_tesim abstract_tesim book_title_tesim series_name_tesim edition_tesim contributor_tesim publisher_tesim place_of_publication_tesim date_published_tesim based_near_label_tesim
+      language_tesim date_uploaded_tesim date_modified_tesim date_created_tesim rights_statement_tesim license_tesim resource_type_tesim format_tesim identifier_tesim doi_tesim isbn_tesim
+      issn_tesim eissn_tesim extent_tesim institution_tesim org_unit_tesim refereed_tesim funder_tesim fndr_project_ref_tesim add_info_tesim date_accepted_tesim issue_tesim volume_tesim
+      pagination_tesim article_num_tesim project_name_tesim official_link_tesim rights_holder_tesim library_of_congress_classification_tesim file_format_tesim all_text_timv"
+    end
+
     def fetch_all
       @live_solr_urls.map do |url|
         solr_connection = RSolr.connect :url => url
-        search_response = solr_connection.get("select", params: { q: "*:* or visibility_ssi:open", fq: list_of_models_to_search, sort: sort, rows: 1000, "facet.field" => facet_fields })
+        search_response = solr_connection.get("select", params: { q: "*:* AND visibility_ssi:open", fq: list_of_models_to_search, sort: sort, rows: 4000, "facet.field" => facet_fields, fl: fields_to_return })
         @records_size << search_response["response"]["docs"].size
         facet_data = search_response["facet_counts"]['facet_fields']
         remap_facet_values(facet_data)
         data =  search_response["response"]["docs"]
         search_results << data.map {|hash| hash.slice(*Hash_keys)}
       end
-      search_results.flatten.compact
+      result = search_results.flatten.compact
+      return result.sort_by { |hash|[hash['system_create_dtsi'].to_date.strftime("%s").to_i, hash['score'] ]}.reverse if resort_search == 'relevance'
+      return result.sort_by { |hash| hash['system_create_dtsi'].to_date.strftime("%s").to_i} if resort_search == 'asc'
+      return result.sort_by { |hash| hash['system_create_dtsi'].to_date.strftime("%s").to_i}.reverse if resort_search == 'desc'
     end
 
-    def multiple_field_search(search_term)
-      #fields to return
-       fl = 'title_ssim, resource_type_tesim, institution_tesim, date_published_tesim, account_cname_tesim, thumbnail_path_ss, id, visibility_ssi, creator_tesim, creator_search_tesim, has_model_ssim'
-       #fields to search against
-       #
-       qf = "title_tesim description_tesim keyword_tesim journal_title_tesim subject_tesim creator_tesim version_tesim related_exhibition_tesim media_tesim event_title_tesim event_date_tesim
-        event_location_tesim abstract_tesim book_title_tesim series_name_tesim edition_tesim contributor_tesim publisher_tesim place_of_publication_tesim date_published_tesim based_near_label_tesim
-        language_tesim date_uploaded_tesim date_modified_tesim date_created_tesim rights_statement_tesim license_tesim resource_type_tesim format_tesim identifier_tesim doi_tesim isbn_tesim
-        issn_tesim eissn_tesim extent_tesim institution_tesim org_unit_tesim refereed_tesim funder_tesim fndr_project_ref_tesim add_info_tesim date_accepted_tesim issue_tesim volume_tesim
-         pagination_tesim article_num_tesim project_name_tesim official_link_tesim rights_holder_tesim library_of_congress_classification_tesim file_format_tesim all_text_timv"
-
-       @live_solr_urls.map do |url|
-         solr_connection = RSolr.connect :url => url
-         search_response = solr_connection.get("select", params: { q: "#{search_term} or visibility_ssi:open", :defType => "edismax", fq: list_of_models_to_search, qf: qf, sort: sort, rows: 1000, "facet.field" => facet_fields } )
-        #add to total
-         @records_size << search_response["response"]["docs"].size
-         facet_data = search_response["facet_counts"]['facet_fields']
-         remap_facet_values(facet_data)
-         #pull out the data from the response
-         data =  search_response["response"]["docs"]
-         #return only the desired hash keys
-         search_results << data.map {|hash| hash.slice(*Hash_keys)}
-       end
-       search_results.flatten.compact
+    def multiple_field_search(search_term, query_fields, type='single')
+         @live_solr_urls.map do |url|
+           solr_connection = RSolr.connect :url => url
+           if type == 'single'
+             search_response = solr_connection.get("select", params: { q: "#{search_term} AND visibility_ssi:open", :defType => "edismax", fq: list_of_models_to_search, qf: query_fields, sort: sort, rows: 4000, "facet.field" => facet_fields, fl: fields_to_return } )
+           else
+             search_response = solr_connection.get("select", params: { q: "#{search_term} AND visibility_ssi:open", :defType => "edismax", fq: @build_facet_and_text_query_fq, qf: query_fields, sort: sort, rows: 4000, "facet.field" => facet_fields, fl: fields_to_return } )
+           end
+          #add to total
+           @records_size << search_response["response"]["docs"].size
+           facet_data = search_response["facet_counts"]['facet_fields']
+           remap_facet_values(facet_data)
+           #pull out the data from the response
+           data =  search_response["response"]["docs"]
+           #return only the desired hash keys
+           search_results << data.map {|hash| hash.slice(*Hash_keys)}
+         end
+         result = search_results.flatten.compact
+         return result.sort_by { |hash|[hash['system_create_dtsi'].to_date.strftime("%s").to_i, hash['score'] ]}.reverse if resort_search == 'relevance'
+         return result.sort_by { |hash| hash['system_create_dtsi'].to_date.strftime("%s").to_i} if resort_search == 'asc'
+         return result.sort_by { |hash| hash['system_create_dtsi'].to_date.strftime("%s").to_i}.reverse if resort_search == 'desc'
     end
 
     def sanitize_input(search_value)
@@ -194,22 +208,38 @@ module Ubiquity
 
     def clean_and_downcase_user_search_term(search_term)
       sanitized_term = sanitize_input(search_term)
-      sanitized_term #.downcase
+      sanitized_term.downcase
     end
 
     def build_query_params_from_facet_values(filters)
+      query_key = {'institution_sim' => 'institution_tesim', 'resource_type_sim' => 'resource_type_tesim',
+      'creator_search_sim' => 'creator_search_tesim', 'keyword_sim' => 'Keyword_tesim',
+      'member_of_collections_ssim' => 'member_of_collections_ssim'
+      }
+
       data = filters
       #needed because when deleting multiple filters, a string is sometimes sent instead of hash
       #if the rquest is from the destroy action or a form submission
       data = JSON.parse(filters) if valid_json?(filters)
       term = ""
+      add_query_field = ""
       data.each_with_index do |(key, value), index|
-        #term << "#{key}:#{value}"  if index == 0
-        #term << " OR #{key}:#{value}"  if index > 0
         term << "#{value}"  if index == 0
-        term << " OR #{value}"  if index > 0
+        term << " AND #{value}"  if index > 0
+        @build_facet_qf << " #{query_key[key]} "
+        @build_facet_and_text_query_fq << " #{query_key[key]}:#{value.gsub(' ', '+')}"
       end
       term
+    end
+
+    def resort_search
+      if sort.present?
+        splitted_sort_value = sort.split(',')
+        return  splitted_sort_value.last.split(' ').last if splitted_sort_value.size == 1
+        return 'relevance' if splitted_sort_value.size == 2
+      else
+         'relevance'
+      end
     end
 
   end

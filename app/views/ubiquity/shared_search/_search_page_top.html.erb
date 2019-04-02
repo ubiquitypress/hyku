@@ -7,8 +7,8 @@
           <%= render 'shared_search_form' %>
        </div> <!-- closes col-md-9 -->
     </div><!-- closes .row -->
-    <div class="col-md-7 col-md-offset-6">
-        <h4>Search results from multiple repositories</h4>
+    <div class="col-md-8 col-md-offset-4">
+        <h4>&nbsp;&nbsp;Search results from multiple repositories</h4>
     </div>
 
     <div class="row">
@@ -24,13 +24,15 @@
         <%= page_entries_info(search_pagination)%>
         <%= link_to_next_page @search_pagination, '| Next »' %>
       </div>
-
+    <%# cookies.delete(:sort) %>
     <% params[:sort] = cookies[:sort] %>
     <% default_sort_value = params[:sort] %>
     <% selected_option_label = generate_sort_label(default_sort_value) %>
+    <%# selected_option_label = generate_sort_label(cookies[:sort]) %>
+
 
     <% params[:per_page] = cookies[:per_page] %>
-    <% default_value = params[:per_page] %>
+    <% default_per_page_value = params[:per_page] %>
 
   <div class="pull-right col-md-4">
    <div id="sort-dropdown" class="btn-group">
@@ -40,18 +42,18 @@
 
      <ul class="dropdown-menu" role="menu">
         <%  Ubiquity::SharedSearch::SORT_OPTIONS.each do |value| %>
-        <li><%= link_to value.first,  shared_search_index_path(locale: 'en', per_page: default_value, sort: value.last, q: cookies[:search_term]) %></li>
+        <li><%= link_to value.first,  shared_search_index_path(locale: 'en', per_page: default_per_page_value, sort: value.last, q: cookies[:search_term], f: facet_cookie_to_hash) %></li>
         <% end %>
       </ul>
      </div>
 
       <div id="per_page-dropdown" class="btn-group">
        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-        <%= cookies[:per_page] %> per page <span class="caret"></span>
+        <%# cookies[:per_page] %> <%= default_per_page_value %> per page <span class="caret"></span>
        </button>
          <ul class="dropdown-menu" role="menu">
          <%  Ubiquity::SharedSearch::PER_PAGE_OPTIONS.each do |value| %>
-           <li><%= link_to value,  shared_search_index_path(locale: 'en', per_page: value, sort: default_sort_value, q: cookies[:search_term]) %></li>
+           <li><%= link_to value,  shared_search_index_path(locale: 'en', per_page: value, sort: default_sort_value, q: cookies[:search_term], f: facet_cookie_to_hash) %></li>
           <% end %>
          </ul>
       </div>

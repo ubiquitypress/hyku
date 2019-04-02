@@ -25,13 +25,13 @@ module Ubiquity
 
     def destroy
       if  params["f"].present?
-        hash =   turn_params_facet_to_hash
+        hash =   helpers.turn_params_facet_to_hash
         cookie_hash = remove_facet_cookie(hash.keys.first)
-        return   redirect_to shared_search_index_url(f: '', q: cookies[:search_term]) if cookie_hash.blank?
-        redirect_to shared_search_index_url(f: cookies[:facet], q: cookies[:search_term])
+        #return redirect_to shared_search_index_url(f: nil, q: cookies[:search_term]) if cookie_hash.blank?
+        redirect_to shared_search_index_url(per_page: cookies[:per_page], sort: cookies[:sort], f: cookies[:facet], q: cookies[:search_term])
       else
         remove_search_term_cookie
-        redirect_to shared_search_index_url(f: cookies[:facet])
+        redirect_to shared_search_index_url(per_page: cookies[:per_page], sort: cookies[:sort], f: cookies[:facet])
       end
     end
 
@@ -45,21 +45,21 @@ module Ubiquity
     def return_search
       @search = Ubiquity::SharedSearch.new(@page, @per_page, request.host, @sort_value)
 
-      if (params["q"].present?  &&  cookies[:facet].present?) || (params[:sort].presence && get_facet_hash.present?)  || (params[:per_page].presence && get_facet_hash.present?)
+      if params["q"].blank? && params["f"].blank?
+        remove_all_cookies
+        @search.all
+      elsif (params["q"].present?  &&  cookies[:facet].present?) || (params[:sort].present? && get_facet_hash.present?)  || (params[:per_page].present? && get_facet_hash.present?)
         add_search_term_cookie(params["q"])
         set_facet_cookie
-        return @search.combined_filter_query(params["q"], get_facet_hash) if params[:q].present?
-        return @search.facet_filter_query(get_facet_hash)  if params[:q].blank?
+        puts "cooker"
+        return @search.combined_filter_query(params["q"], helpers.facet_cookie_to_hash) if params[:q].present?
+        return @search.facet_filter_query(helpers.facet_cookie_to_hash) if params[:q].blank?
       elsif  params["q"].present?
         add_search_term_cookie(params["q"])
         @search.fetch_term(params["q"])
       elsif params["f"].present?
-        hash_term = turn_params_facet_to_hash
         set_facet_cookie
-        @search.facet_filter_query(hash_term)
-      else
-        remove_all_cookies
-        @search.all
+        @search.facet_filter_query(helpers.facet_cookie_to_hash)
       end
     end
 
@@ -87,11 +87,11 @@ module Ubiquity
 
     def set_facet_cookie
       if params[:f].present?
-        hash = turn_params_facet_to_hash
+        hash = helpers.turn_params_facet_to_hash
         if cookies[:facet].blank?
           cookies[:facet] = JSON.generate(hash) if hash.present?
         else
-           cookie_hash = facet_cookie_to_hash if facet_cookie_to_hash
+           cookie_hash = helpers.facet_cookie_to_hash if helpers.facet_cookie_to_hash
            new_hash = cookie_hash.merge(hash) if hash.present?
            cookies[:facet] = JSON.generate(new_hash) if new_hash.present?
         end
@@ -99,8 +99,8 @@ module Ubiquity
     end
 
     def remove_facet_cookie(cookie_key)
-      cookie_hash = facet_cookie_to_hash
-      if cookie_hash.size == 1
+      cookie_hash = helpers.facet_cookie_to_hash
+      if  cookie_hash.nil? || cookie_hash.size == 1
         cookies.delete(:facet)
       else
         cookie_hash.delete(cookie_key)
@@ -120,22 +120,7 @@ module Ubiquity
     end
 
    def get_facet_hash
-      turn_params_facet_to_hash || facet_cookie_to_hash
-   end
-
-   def facet_cookie_to_hash
-     JSON.parse(cookies[:facet]) if cookies[:facet].present?
-   end
-
-   #leads to error of each_with_index when looping over hash because
-   #when coming from links like facet params class is ActionController::Parameters
-   #but sometimes it is a string
-   def turn_params_facet_to_hash
-     if params[:f].present?
-       return  hash_term = params.dig(:f).try(:to_unsafe_h) if (params.dig(:f).class == ActionController::Parameters)
-       return  hash_term = JSON.parse(params[:f]) if params[:f].class == String && !params[:f].blank?
-       return  hash_term = params[:f] if params[:f].class == Hash
-     end
+      helpers.turn_params_facet_to_hash || helpers.facet_cookie_to_hash
    end
 
   end

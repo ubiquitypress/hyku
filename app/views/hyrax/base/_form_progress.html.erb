@@ -18,12 +18,15 @@
       </fieldset>
     </div>
 
+    <% feature_list = ENV['FEATURE_ENABLED'].split(',') %>
+    <% if parse_environment_variable_json(request.original_url)['ENABLE_DOI'] == 'true'  &&  feature_list.include?('doi_options') %>
       <div class="list-group-item">
         <fieldset>
           <%= render 'shared/ubiquity/doi/doi_options', f: f %>
         </fieldset>
       </div>
-  
+    <% end %>
+
     <div class="set-access-controls list-group-item">
       <%= render 'form_visibility_component', f: f %>
     </div>

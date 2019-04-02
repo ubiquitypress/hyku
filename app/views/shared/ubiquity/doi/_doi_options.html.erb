@@ -1,16 +1,13 @@
-<% feature_list = ENV['FEATURE_ENABLED'].split(',') %>
-<% if parse_environment_variable_json(request.original_url)['ENABLE_DOI'] == 'true'  &&  feature_list.include?('doi_options') %>
-  <div>
-    <legend class="legend-save-work">DOI options: when work is Public:</legend>
-    <ul class= "visibility">
-      <% selected_option = f.object.model.doi_options.present? ? f.object.model.doi_options : 'Do not mint DOI' %>
-      <% ['Do not mint DOI', 'Keep DOI as Draft', 'Mint DOI:Registered', 'Mint DOI:Findable'].each do |option| %>
-         <% if selected_option == option %>
-           <%= radio_button_tag "#{f.object.model.class.to_s.underscore}[doi_options]", option, true %>&nbsp;&nbsp;<%= option %><br>
-         <% else %>
-           <%= radio_button_tag "#{f.object.model.class.to_s.underscore}[doi_options]", option %>&nbsp;&nbsp;<%= option %><br>
-         <% end %>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
+<!-- Rendered in app/views/hyrax/base/_form_progress.html.erb -->
+
+<legend class="legend-save-work">DOI options: when work is Public:</legend>
+<ul class= "visibility">
+  <% selected_option = f.object.model.doi_options.present? ? f.object.model.doi_options : 'Do not mint DOI' %>
+  <% ['Do not mint DOI', 'Keep DOI as Draft', 'Mint DOI:Registered', 'Mint DOI:Findable'].each do |option| %>
+     <% if selected_option == option %>
+       <%= radio_button_tag "#{f.object.model.class.to_s.underscore}[doi_options]", option, true %>&nbsp;&nbsp;<%= option %><br>
+     <% else %>
+       <%= radio_button_tag "#{f.object.model.class.to_s.underscore}[doi_options]", option %>&nbsp;&nbsp;<%= option %><br>
+     <% end %>
+  <% end %>
+</ul>

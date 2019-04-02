@@ -1,5 +1,9 @@
 
 <% cookies.delete(:search_term) unless request.original_fullpath.include? 'shared_search' %>
+<% cookies.delete(:facet) unless request.original_fullpath.include? 'shared_search' %>
+<% cookies.delete(:sort) unless (request.original_fullpath.include? 'shared_search' || params['q'].present?) %>
+<% cookies.delete(:per_page) unless (request.original_fullpath.include? 'shared_search' || params['q'].present?) %>
+
 <% search_value = cookies[:search_term]  %>
 
 <div class="container-fluid">
@@ -9,9 +13,8 @@
           <div class="input-group">
             <%= form.text_field :q,  value: search_value, class: "q form-control input-md", size: '80', placeholder: 'Search across all our repositories' %>
 
-            <%= form.hidden_field :sort, value: cookies[:sort] %>
-            <%= form.hidden_field :per_per_page, value: cookies[:per_page] %>
-            <%# form.hidden_field :f,  value: cookies[:facet] %>
+            <%= hidden_field_tag :sort,  cookies[:sort] %>
+            <%= hidden_field_tag :per_per_page, cookies[:per_page] %>
             <div class="input-group-btn">
               <button id="search-submit-header" class="btn btn-primary" type="submit">
                 <span class="glyphicon glyphicon-search"></span>

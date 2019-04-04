@@ -25,23 +25,29 @@ module Ubiquity
       work = ActiveFedora::Base.find(work_id)
       puts " Regenerating thumbnail for #{work.class} work with id #{work_id}"
 
-      if work.thumbnail.present?
-        file_set = work.thumbnail
+      if work.file_sets.present?
+        files_array = work.file_sets
+        iterate_over_files(files_array)
+      end
+    end
 
+    def iterate_over_files(file_set_array)
+      file_set_array.each do |file_set|
         #file_idwork_identifier for a Hydra::PCDM::File
         fedora_pdcm_file = file_set.original_file
         CreateDerivativesJob.perform_later(file_set, fedora_pdcm_file.id)
+        sleep 2
       end
     end
 
     def regenerate_all_thumbnails
       puts " Regenerating all thumbnail for all works"
-      model_class = [Article, Book, BookContribution, ConferenceItem, Dataset, Image, Report, GenericWork, Collection]
+      model_class = [Article, Book, BookContribution, ConferenceItem, Dataset, Image, Report, GenericWork]
       AccountElevator.switch!(tenant)
+      regenerate_collection_thumbnails
       model_class.each do |model|
         loop_over_records(model)
       end
-
     end
 
     def renegerate_work_thumbnails_for_model_class
@@ -55,12 +61,22 @@ module Ubiquity
 
     def loop_over_records(model)
       model.find_each do |model_instance|
+        if model_instance.file_sets.present?
+           files_array = model_instance.file_sets
+           iterate_over_files(files_array)
+        end
+      end
+    end
+
+    def regenerate_collection_thumbnails
+      puts "Generating all thumbnail for thumbnail in collection"
+      Collection.find_each do |model_instance|
         if model_instance.thumbnail.present?
-           file_set =  model_instance.thumbnail
-           #file_id identifier for a Hydra::PCDM::File
-           fedora_pdcm_file = file_set.original_file
-           CreateDerivativesJob.perform_later(file_set, fedora_pdcm_file.id)
-           sleep 2
+          file_set =  model_instance.thumbnail
+          #file_id identifier for a Hydra::PCDM::File
+          fedora_pdcm_file = file_set.original_file
+          CreateDerivativesJob.perform_later(file_set, fedora_pdcm_file.id)
+          sleep 2
         end
       end
     end

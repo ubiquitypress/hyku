@@ -43,6 +43,9 @@ module Ubiquity
       property :doi, predicate: ::RDF::Vocab::BIBO.doi, multiple: false do |index|
         index.as :stored_searchable
       end
+      property :draft_doi, predicate: ::RDF::Vocab::BF2.Doi, multiple: false do |index|
+        index.as :stored_searchable
+      end
       property :place_of_publication, predicate: ::RDF::Vocab::BF2.term(:Place) do |index|
         index.as :stored_searchable, :facetable
       end

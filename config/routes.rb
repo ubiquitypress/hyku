@@ -25,7 +25,9 @@ Rails.application.routes.draw do
 
   scope :module => "ubiquity" do
     resources :shared_search, only: [:index]
+    #resources :datacite, only: [:create, :index]
   end
+  post '/datacite', to: 'ubiquity/datacite#create', as: 'datacite'
   get '/shared_search/facet/:more_field', to: 'ubiquity/shared_search#facet', as: 'shared_search_facet'
   get '/shared_search/destroy', to: 'ubiquity/shared_search#destroy'
 

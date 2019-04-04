@@ -1,0 +1,33 @@
+<%# if env present %>
+
+<%= button_to "Create and save draft DOI",  main_app.datacite_path, remote: true, form: { "data-type" => "json" }, id: "ubiquity-datacite-suffix" %>
+<span id="suffix"></span>
+
+
+<script>
+
+  $(document).on("turbolinks:load", function(event){
+    event.preventDefault();
+    return $("body").on("click", "#ubiquity-datacite-suffix", function(event) {
+      $("#ubiquity-datacite-suffix").hide()
+
+      $.ajax({
+        url: '/datacite',
+        type: "POST",
+        data: {},
+        success: function(result){
+        $("#suffix").html(result.suffix);
+          if (result.suffix== 'taken'){
+
+          } else {
+
+          }
+        },
+        error: function(){
+        }
+      })
+
+    });
+  });
+
+</script>

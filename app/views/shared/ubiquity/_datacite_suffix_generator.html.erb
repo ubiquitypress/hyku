@@ -1,23 +1,23 @@
 <%# if env present %>
 
-<%= button_to "Create and save draft DOI",  main_app.datacite_path, remote: true, form: { "data-type" => "json" }, id: "ubiquity-datacite-suffix" %>
-<span id="suffix"></span>
+<%= button_to "Create and save draft DOI",  main_app.datacite_path, remote: true, form: { "data-type" => "json" }, id: "ubiquity-datacite-draft_doi" %>
+<span id="draft_doi"></span>
 
 
 <script>
 
   $(document).on("turbolinks:load", function(event){
     event.preventDefault();
-    return $("body").on("click", "#ubiquity-datacite-suffix", function(event) {
-      $("#ubiquity-datacite-suffix").hide()
+    return $("body").on("click", "#ubiquity-datacite-draft_doi", function(event) {
+      $("#ubiquity-datacite-draft_doi").hide()
 
       $.ajax({
         url: '/datacite',
         type: "POST",
         data: {},
         success: function(result){
-        $("#suffix").html(result.suffix);
-          if (result.suffix== 'taken'){
+        $("#draft_doi").html(result.draft_doi);
+          if (result.draft_doi== 'taken'){
 
           } else {
 

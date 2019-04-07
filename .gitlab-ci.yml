@@ -34,7 +34,7 @@ build-push-clean:
     - docker login -u _json_key --password-stdin https://eu.gcr.io < ${HOME}/gcloud-service-key.json
   script:
     - source variables
-    - docker build -t $IMAGE_NAME -f docker/Dockerfile .
+    - docker build -t $IMAGE_NAME -f Dockerfile .
     - docker tag $IMAGE_NAME "eu.gcr.io/$GCLOUD_PROJECT_ID/$IMAGE_NAME:$VERSION"
     - docker push "eu.gcr.io/$GCLOUD_PROJECT_ID/$IMAGE_NAME:$VERSION"
     - docker rmi "eu.gcr.io/$GCLOUD_PROJECT_ID/$IMAGE_NAME:$VERSION" 

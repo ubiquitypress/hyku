@@ -2,7 +2,7 @@
 #
 module Ubiquity
   class SharedSearch
-    
+
     Hash_keys = ["system_create_dtsi", "id", "depositor_ssim", "title_tesim", "creator_search_tesim",
                 "creator_tesim",  "date_published_tesim", "resource_type_tesim", "account_cname_tesim",  "pagination_tesim", "institution_tesim",
                 "resource_type_tesim", "thumbnail_path_ss", "file_set_ids_ssim",
@@ -122,11 +122,11 @@ module Ubiquity
 
     def fields_to_search_against
       #fields to search against which is passed to the qf params
-      "title_tesim description_tesim keyword_tesim journal_title_tesim subject_tesim creator_tesim editor_tesim version_tesim related_exhibition_tesim media_tesim event_title_tesim event_date_tesim
-      event_location_tesim abstract_tesim book_title_tesim series_name_tesim edition_tesim contributor_tesim publisher_tesim place_of_publication_tesim date_published_tesim based_near_label_tesim
-      language_tesim date_uploaded_tesim date_modified_tesim date_created_tesim rights_statement_tesim license_tesim resource_type_tesim format_tesim identifier_tesim doi_tesim isbn_tesim
-      issn_tesim eissn_tesim extent_tesim institution_tesim org_unit_tesim refereed_tesim funder_tesim fndr_project_ref_tesim add_info_tesim date_accepted_tesim issue_tesim volume_tesim
-      pagination_tesim article_num_tesim project_name_tesim official_link_tesim rights_holder_tesim library_of_congress_classification_tesim file_format_tesim all_text_timv"
+      "title_tesim^20.0 description_tesim keyword_tesim^14 journal_title_tesim^12 subject_tesim creator_tesim^16 editor_tesim^10 version_tesim related_exhibition_tesim media_tesim event_title_tesim event_date_tesim
+      event_location_tesim abstract_tesim^16 book_title_tesim series_name_tesim edition_tesim contributor_tesim^10 publisher_tesim place_of_publication_tesim date_published_tesim based_near_label_tesim
+      language_tesim date_uploaded_tesim date_modified_tesim date_created_tesim rights_statement_tesim license_tesim resource_type_tesim format_tesim identifier_tesim doi_tesim^8 isbn_tesim
+      issn_tesim eissn_tesim extent_tesim institution_tesim org_unit_tesim refereed_tesim funder_tesim fndr_project_ref_tesim add_info_tesim^9 date_accepted_tesim issue_tesim volume_tesim
+      pagination_tesim article_num_tesim project_name_tesim official_link_tesim^9 rights_holder_tesim library_of_congress_classification_tesim file_format_tesim all_text_timv"
     end
 
     def fetch_all
@@ -163,8 +163,9 @@ module Ubiquity
            #return only the desired hash keys
            search_results << data.map {|hash| hash.slice(*Hash_keys)}
          end
+         
          result = search_results.flatten.compact
-         return result.sort_by { |hash|[hash['system_create_dtsi'], hash['score'] ]}.reverse if resort_search == 'relevance'
+         return result.sort_by { |hash|[ hash['score'],  hash['system_create_dtsi'] ]}.reverse if resort_search == 'relevance'
          return result.sort_by { |hash| hash['system_create_dtsi'] } if resort_search == 'asc'
          return result.sort_by { |hash| hash['system_create_dtsi']}.reverse if resort_search == 'desc'
     end
@@ -209,7 +210,7 @@ module Ubiquity
 
     def clean_and_downcase_user_search_term(search_term)
       sanitized_term = sanitize_input(search_term)
-      sanitized_term.downcase
+      sanitized_term #.downcase
     end
 
     def build_query_params_from_facet_values(filters)

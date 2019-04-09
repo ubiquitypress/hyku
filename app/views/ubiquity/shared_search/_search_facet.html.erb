@@ -48,7 +48,7 @@
        <% end %>
       </ul>
 
-      <%= link_to  'more »',  shared_search_facet_path(locale: 'en', sort: '', q: cookies[:search_term], more_field: key), remote: true, class: "more_facets_link" %>
+      <%= link_to  'more »',  shared_search_facet_path(locale: 'en', sort: '', q: cookies[:search_term], more_field: key, f: facet_cookie_to_hash), remote: true, class: "more_facets_link" %>
       <span class="sr-only"><%= display_key %> </span>
 
     </div>

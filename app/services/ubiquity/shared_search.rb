@@ -2,11 +2,11 @@
 #
 module Ubiquity
   class SharedSearch
-    #include Ubiquity::SharedSearchUtils
+    
     Hash_keys = ["system_create_dtsi", "id", "depositor_ssim", "title_tesim", "creator_search_tesim",
                 "creator_tesim",  "date_published_tesim", "resource_type_tesim", "account_cname_tesim",  "pagination_tesim", "institution_tesim",
                 "resource_type_tesim", "thumbnail_path_ss", "file_set_ids_ssim",
-                "visibility_ssi", "has_model_ssim" ].freeze
+                "visibility_ssi", "has_model_ssim", "score" ].freeze
 
     NAME_MAPPING = {
       "system_create_dtsi" => 'Date Created', "title_tesim" => 'Title',
@@ -89,7 +89,7 @@ module Ubiquity
     def combined_filter_query(search_term, filters)
       facet_query_terms = build_query_params_from_facet_values(filters)
       search_input = clean_and_downcase_user_search_term(search_term)
-      #changed from AND to OR because search term of darius and resource_type_sim dataset fails
+      #changed from AND to OR because search term eg darius and resource_type_sim dataset fails
       combined_terms = facet_query_terms.prepend("#{search_input} AND ")
       multiple_field_search(combined_terms, fields_to_search_against, 'multiple')
     end
@@ -140,9 +140,9 @@ module Ubiquity
         search_results << data.map {|hash| hash.slice(*Hash_keys)}
       end
       result = search_results.flatten.compact
-      return result.sort_by { |hash|[hash['system_create_dtsi'].to_date.strftime("%s").to_i, hash['score'] ]}.reverse if resort_search == 'relevance'
-      return result.sort_by { |hash| hash['system_create_dtsi'].to_date.strftime("%s").to_i} if resort_search == 'asc'
-      return result.sort_by { |hash| hash['system_create_dtsi'].to_date.strftime("%s").to_i}.reverse if resort_search == 'desc'
+      return result.sort_by { |hash|[hash['system_create_dtsi'], hash['score'] ]}.reverse if resort_search == 'relevance'
+      return result.sort_by { |hash| hash['system_create_dtsi']} if resort_search == 'asc'
+      return result.sort_by { |hash| hash['system_create_dtsi']}.reverse if resort_search == 'desc'
     end
 
     def multiple_field_search(search_term, query_fields, type='single')
@@ -159,13 +159,14 @@ module Ubiquity
            remap_facet_values(facet_data)
            #pull out the data from the response
            data =  search_response["response"]["docs"]
+
            #return only the desired hash keys
            search_results << data.map {|hash| hash.slice(*Hash_keys)}
          end
          result = search_results.flatten.compact
-         return result.sort_by { |hash|[hash['system_create_dtsi'].to_date.strftime("%s").to_i, hash['score'] ]}.reverse if resort_search == 'relevance'
-         return result.sort_by { |hash| hash['system_create_dtsi'].to_date.strftime("%s").to_i} if resort_search == 'asc'
-         return result.sort_by { |hash| hash['system_create_dtsi'].to_date.strftime("%s").to_i}.reverse if resort_search == 'desc'
+         return result.sort_by { |hash|[hash['system_create_dtsi'], hash['score'] ]}.reverse if resort_search == 'relevance'
+         return result.sort_by { |hash| hash['system_create_dtsi'] } if resort_search == 'asc'
+         return result.sort_by { |hash| hash['system_create_dtsi']}.reverse if resort_search == 'desc'
     end
 
     def sanitize_input(search_value)

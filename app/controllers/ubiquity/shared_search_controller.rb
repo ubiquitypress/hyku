@@ -27,7 +27,6 @@ module Ubiquity
       if  params["f"].present?
         hash =   helpers.turn_params_facet_to_hash
         cookie_hash = remove_facet_cookie(hash.keys.first)
-        #return redirect_to shared_search_index_url(f: nil, q: cookies[:search_term]) if cookie_hash.blank?
         redirect_to shared_search_index_url(per_page: cookies[:per_page], sort: cookies[:sort], f: cookies[:facet], q: cookies[:search_term])
       else
         remove_search_term_cookie
@@ -51,7 +50,6 @@ module Ubiquity
       elsif (params["q"].present?  &&  cookies[:facet].present?) || (params[:sort].present? && get_facet_hash.present?)  || (params[:per_page].present? && get_facet_hash.present?)
         add_search_term_cookie(params["q"])
         set_facet_cookie
-        puts "cooker"
         return @search.combined_filter_query(params["q"], helpers.facet_cookie_to_hash) if params[:q].present?
         return @search.facet_filter_query(helpers.facet_cookie_to_hash) if params[:q].blank?
       elsif  params["q"].present?
@@ -119,9 +117,9 @@ module Ubiquity
       cookies.delete(:facet)
     end
 
-   def get_facet_hash
+    def get_facet_hash
       helpers.turn_params_facet_to_hash || helpers.facet_cookie_to_hash
-   end
+    end
 
   end
 end

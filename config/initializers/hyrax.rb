@@ -147,11 +147,11 @@ Hyrax.config do |config|
   # config.display_media_download_link = true
 
   # Options to control the file uploader
-  # config.uploader = {
-  #   limitConcurrentUploads: 6,
-  #   maxNumberOfFiles: 100,
-  #   maxFileSize: 500.megabytes
-  # }
+  config.uploader = {
+    limitConcurrentUploads: 6,
+    maxNumberOfFiles: 100,
+    maxFileSize: 10.gigabytes
+  }
 
   # Fedora import/export tool
   #

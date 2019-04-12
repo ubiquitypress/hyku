@@ -1,0 +1,1 @@
+# Rack::Multipart::Parser.const_set('BUFSIZE', 10_048_576) # Default BUFSIZE is 1_048_576

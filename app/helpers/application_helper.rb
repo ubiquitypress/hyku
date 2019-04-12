@@ -65,7 +65,7 @@ module ApplicationHelper
 
   def parse_environment_variable_json(original_url)
     cname = ubiquity_url_parser(original_url)
-    JSON.parse(ENV[cname.upcase])
+    JSON.parse(ENV[cname.upcase]) if cname.present?
   end
 
 end

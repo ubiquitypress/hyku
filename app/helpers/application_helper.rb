@@ -63,9 +63,17 @@ module ApplicationHelper
     image_tag img_path
   end
 
+  def verify_valid_json?(data)
+    !!JSON.parse(data)  if data.class == String
+    rescue JSON::ParserError
+      false
+  end
+
+
   def parse_environment_variable_json(original_url)
     cname = ubiquity_url_parser(original_url)
-    JSON.parse(ENV[cname.upcase]) if cname.present?
+    json_data = ENV[cname.upcase]
+    JSON.parse(json_data) if cname.present? && verify_valid_json?(json_data)
   end
 
 end

@@ -84,7 +84,6 @@ module Hyku
     tate_hash = JSON.parse(ENV["TATE"])
     britishmuseum_hash = JSON.parse(ENV["BRITISHMUSEUM"])
     sandbox_hash = JSON.parse(ENV["SANDBOX"])
-    adaria_hash = JSON.parse(ENV["ADARIA"])
     config.google_tag_manager_id = {
         "bl" => bl_hash["BL_GTM_ID"],
         "mola" => mola_hash["MOLA_GTM_ID"],
@@ -97,7 +96,7 @@ module Hyku
         "tate-demo" => tate_hash["TATE_DEMO_GTM_ID"],
         "britishmuseum-demo" => britishmuseum_hash["BRITISHMUSEUM_DEMO_GTM_ID"],
         "nms-demo" => nms_hash["NMS_DEMO_GTM_ID"],
-        "sandbox-demo" => sandbox_hash["SANDBOX_DEMO_GTM_ID"],
+        "sandbox2" => sandbox_hash["SANDBOX_DEMO_GTM_ID"],
         "repo-test" => bl_hash["REPOTEST_GTM_ID"],
         "oar" => bl_hash["OAR_GTM_ID"]
     }

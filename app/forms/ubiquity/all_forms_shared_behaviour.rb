@@ -16,7 +16,7 @@ module Ubiquity
                     :date_published_group, :date_accepted_group, :date_submitted_group,
                     :event_date, :related_exhibition_date
 
-      attr_accessor :note, :account
+      attr_accessor :note, :account, :doi_options
 
       # terms inherited from Hyrax::Forms::WorkForm are removed
       # to then be added at the desired position in each work type form (ex `article_form`)
@@ -69,6 +69,8 @@ module Ubiquity
           permitted_params << { related_exhibition_date_group: %i[related_exhibition_date_year
                                                                   related_exhibition_date_month
                                                                   related_exhibition_date_day] }
+
+            permitted_params << :doi_options                                                      
         end
       end
     end # closes class class_methods

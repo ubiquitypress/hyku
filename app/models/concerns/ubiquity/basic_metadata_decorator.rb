@@ -65,6 +65,9 @@ module Ubiquity
       property :library_of_congress_classification, predicate: ::RDF::Vocab::BF2.term(:ClassificationLcc) do |index|
         index.as :stored_searchable, :facetable
       end
+      property :doi_options, predicate: ::RDF::Vocab::Bibframe.doi, multiple: false do |index|
+        index.as :stored_searchable
+      end
 
     end
 

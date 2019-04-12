@@ -51,8 +51,8 @@ module ApplicationHelper
     note_text.split('</a>)').last
   end
 
-  def ubiquity_url_parser(host)
-    full_url = URI.parse(host)
+  def ubiquity_url_parser(original_url)
+    full_url = URI.parse(original_url)
     full_url.host.split('.').first
   end
 
@@ -62,5 +62,10 @@ module ApplicationHelper
     img_path = img_path.split('!150,300').join(',600') if img_path.include?('!150,300')
     image_tag img_path
   end
-  
+
+  def parse_environment_variable_json(original_url)
+    cname = ubiquity_url_parser(request.original_url)
+    JSON.parse(ENV[cname]) 
+  end
+
 end

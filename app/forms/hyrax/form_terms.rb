@@ -11,5 +11,7 @@ module Hyrax
     def secondary_terms
       super - %i[rendering_ids date_created identifier]
     end
+    #added by ubiquity press to store doi options
+    attr_accessor :doi_options
   end
 end

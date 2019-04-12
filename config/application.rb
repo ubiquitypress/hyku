@@ -78,17 +78,22 @@ module Hyku
     end
 
     #Access with  Rails.application.config.google_tag_manager_id[:bl], for mola change bl to mola etc
+    bl_hash = JSON.generate(ENV["BL"])
+    mola_hash = JSON.generate(ENV["MOLA"])
+    nms_hash = JSON.generate(ENV["NMS"])
+    tate_hash = JSON.generate(ENV["TATE"])
+    britishmuseum_hash = JSON.generate(ENV["BRITISHMUSEUM"])
     config.google_tag_manager_id = {
-        "bl" => ENV["BL_GTM_ID"],
-        "mola" => ENV["MOLA_GTM_ID"],
-        "nms" => ENV["NMS_GTM_ID"],
-        "tate" => ENV["TATE_GTM_ID"],
-        "britishmuseum" => ENV["BRITISHMUSEUM_GTM_ID"],
-        "bl-demo" => ENV["BL-DEMO_GTM_ID"],
-        "mola-demo" => ENV["MOLA-DEMO_GTM_ID"],
-        "tate-demo" => ENV["TATE-DEMO_GTM_ID"],
-        "britishmuseum-demo" => ENV["BRITISHMUSEUM-DEMO_GTM_ID"],
-        "nms-demo" => ENV["NMS-DEMO_GTM_ID"],
+        "bl" => bl_hash["BL_GTM_ID"],
+        "mola" => mola_hash["MOLA_GTM_ID"],
+        "nms" => nms_hash["NMS_GTM_ID"],
+        "tate" => tate_hash["TATE_GTM_ID"],
+        "britishmuseum" => britishmuseum_hash["BRITISHMUSEUM_GTM_ID"],
+        "bl-demo" => bl_hash["BL_DEMO_GTM_ID"],
+        "mola-demo" => mola_hash["MOLA_DEMO_GTM_ID"],
+        "tate-demo" => tate_hash["TATE_DEMO_GTM_ID"],
+        "britishmuseum-demo" => britishmuseum_hash["BRITISHMUSEUM_DEMO_GTM_ID"],
+        "nms-demo" => nms_hash["NMS_DEMO_GTM_ID"],
         "sandbox" => ENV["SANDBOX-DEMO_GTM_ID"],
         "repo-test" => ENV["REPOTEST_GTM_ID"],
         "oar" => ENV["OAR_GTM_ID"]

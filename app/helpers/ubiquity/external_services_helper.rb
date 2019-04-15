@@ -1,0 +1,2 @@
+module Ubiquity::ExternalServicesHelper
+end

@@ -44,6 +44,7 @@ class Account < ApplicationRecord
   belongs_to :solr_endpoint, dependent: :delete
   belongs_to :fcrepo_endpoint, dependent: :delete
   belongs_to :redis_endpoint, dependent: :delete
+  has_many :external_services, class_name: 'Ubiquity::ExternalService', dependent: :destroy
 
   accepts_nested_attributes_for :solr_endpoint, :fcrepo_endpoint, :redis_endpoint, update_only: true
 

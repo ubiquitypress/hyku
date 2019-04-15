@@ -1,0 +1,8 @@
+2019-04-15 13:08:59,408 CRIT Set uid to user 0
+2019-04-15 13:08:59,408 WARN For [program:rails], AUTO logging used for stderr_logfile without rollover, set maxbytes > 0 to avoid filling up filesystem unintentionally
+2019-04-15 13:08:59,410 INFO supervisord started with pid 1
+2019-04-15 13:09:00,413 INFO spawned: 'rails' with pid 10
+2019-04-15 13:09:01,418 INFO success: rails entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-04-15 13:09:08,033 INFO exited: rails (exit status 1; not expected)
+2019-04-15 13:09:09,037 INFO spawned: 'rails' with pid 20
+2019-04-15 13:09:10,039 INFO success: rails entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)

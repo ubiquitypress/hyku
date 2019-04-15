@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180612084347) do
+ActiveRecord::Schema.define(version: 20190415150956) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,6 +104,17 @@ ActiveRecord::Schema.define(version: 20180612084347) do
     t.binary "options"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "external_services", force: :cascade do |t|
+    t.string "draft_doi"
+    t.string "work_id"
+    t.bigint "account_id"
+    t.jsonb "property", default: "[ ]"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_external_services_on_account_id"
+    t.index ["draft_doi", "account_id"], name: "index_external_services_on_draft_doi_and_account_id", unique: true
   end
 
   create_table "featured_works", id: :serial, force: :cascade do |t|
@@ -628,6 +639,7 @@ ActiveRecord::Schema.define(version: 20180612084347) do
   add_foreign_key "accounts", "endpoints", column: "solr_endpoint_id", on_delete: :nullify
   add_foreign_key "content_blocks", "sites"
   add_foreign_key "curation_concerns_operations", "users"
+  add_foreign_key "external_services", "accounts"
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", column: "conversation_id", name: "mb_opt_outs_on_conversations_id"
   add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id"
   add_foreign_key "mailboxer_receipts", "mailboxer_notifications", column: "notification_id", name: "receipts_on_notification_id"

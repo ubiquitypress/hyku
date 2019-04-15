@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  namespace :ubiquity do
+    resources :external_services
+  end
   if Settings.multitenancy.enabled
     constraints host: Account.admin_host do
       get '/account/sign_up' => 'account_sign_up#new', as: 'new_sign_up'
@@ -27,7 +30,8 @@ Rails.application.routes.draw do
     resources :shared_search, only: [:index]
     #resources :datacite, only: [:create, :index]
   end
-  post '/datacite', to: 'ubiquity/datacite#create', as: 'datacite'
+
+  post '/external_services/generate_doi', to: 'ubiquity/external_services#generate_doi', as: 'external_services_generate_doi'
   get '/shared_search/facet/:more_field', to: 'ubiquity/shared_search#facet', as: 'shared_search_facet'
   get '/shared_search/destroy', to: 'ubiquity/shared_search#destroy'
 

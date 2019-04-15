@@ -1,33 +1,39 @@
-<%# if env present %>
-
-<%= button_to "Create and save draft DOI",  main_app.datacite_path, remote: true, form: { "data-type" => "json" }, id: "ubiquity-datacite-draft_doi" %>
+<%= button_to "Create and save draft DOI",  main_app.external_services_generate_doi_path, remote: true, form: { "data-type" => "json" },  data: { 'account-id' => current_account },
+id: "ubiquity-datacite-draft_doi", class: "btn btn-primary" %>
 <span id="draft_doi"></span>
 
 
 <script>
 
-  $(document).on("turbolinks:load", function(event){
-    event.preventDefault();
-    return $("body").on("click", "#ubiquity-datacite-draft_doi", function(event) {
-      $("#ubiquity-datacite-draft_doi").hide()
+ $(document).on("turbolinks:load", function(event){
+   event.preventDefault();
+   return $("body").on("click", "#ubiquity-datacite-draft_doi", function(event) {
+     $("#ubiquity-datacite-draft_doi").hide()
 
-      $.ajax({
-        url: '/datacite',
-        type: "POST",
-        data: {},
-        success: function(result){
-        $("#draft_doi").html(result.draft_doi);
-          if (result.draft_doi== 'taken'){
+     var accountId = $(this).attr('data-account-id');
 
-          } else {
+     $.ajax({
+       url: '/external_services/generate_doi',
+       type: "POST",
+       data: {account_id:  accountId},
+       success: function(result){
+       $("#draft_doi").html(result.draft_doi);
+       //var ubiquityModel = result.ubiquity_model_name;
+       //var draft_doi_id = "#" + ubiquityModel + "_draft_doi"
+       //$(draft_doi_id).html(result.draft_doi);
+         if (result.draft_doi== 'taken'){
 
-          }
-        },
-        error: function(){
-        }
-      })
+         } else {
 
-    });
-  });
+         }
+       },
+       error: function(){
+       }
+     })
+
+   });
+ });
+
+</script>
 
 </script>

@@ -77,28 +77,5 @@ module Hyku
       end
     end
 
-    #Access with  Rails.application.config.google_tag_manager_id[:bl], for mola change bl to mola etc
-    bl_hash = JSON.parse(ENV["BL"])
-    mola_hash = JSON.parse(ENV["MOLA"])
-    nms_hash = JSON.parse(ENV["NMS"])
-    tate_hash = JSON.parse(ENV["TATE"])
-    britishmuseum_hash = JSON.parse(ENV["BRITISHMUSEUM"])
-    sandbox_hash = JSON.parse(ENV["SANDBOX"])
-    config.google_tag_manager_id = {
-        "bl" => bl_hash["BL_GTM_ID"],
-        "mola" => mola_hash["MOLA_GTM_ID"],
-        "nms" => nms_hash["NMS_GTM_ID"],
-        "tate" => tate_hash["TATE_GTM_ID"],
-        "britishmuseum" => britishmuseum_hash["BRITISHMUSEUM_GTM_ID"],
-        "sandbox" => sandbox_hash["SANDBOX_GTM_ID"],
-        "bl-demo" => bl_hash["BL_DEMO_GTM_ID"],
-        "mola-demo" => mola_hash["MOLA_DEMO_GTM_ID"],
-        "tate-demo" => tate_hash["TATE_DEMO_GTM_ID"],
-        "britishmuseum-demo" => britishmuseum_hash["BRITISHMUSEUM_DEMO_GTM_ID"],
-        "nms-demo" => nms_hash["NMS_DEMO_GTM_ID"],
-        "sandbox2" => sandbox_hash["SANDBOX_DEMO_GTM_ID"],
-        "repo-test" => bl_hash["REPOTEST_GTM_ID"],
-        "oar" => bl_hash["OAR_GTM_ID"]
-    }
   end
 end

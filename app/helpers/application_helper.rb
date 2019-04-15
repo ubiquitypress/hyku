@@ -53,7 +53,9 @@ module ApplicationHelper
 
   def ubiquity_url_parser(original_url)
     full_url = URI.parse(original_url)
-    full_url.host.split('.').first
+    if full_url.host.present? && full_url.host.class == String
+      full_url.host.split('.').first
+    end
   end
 
   # For image thumbnails, override the default size for a better resolution on homepage
@@ -63,9 +65,41 @@ module ApplicationHelper
     image_tag img_path
   end
 
-  def parse_environment_variable_json(original_url)
-    cname = ubiquity_url_parser(request.original_url)
-    JSON.parse(ENV[cname]) 
+  def verify_valid_json?(data)
+    !!JSON.parse(data)  if data.class == String
+    rescue JSON::ParserError
+      false
+  end
+
+  def get_tenant_settings_hash(original_url)
+    cname = ubiquity_url_parser(original_url)
+    parse_tenant_settings_json(cname)
+  end
+
+  def parse_tenant_settings_json(cname)
+    json_data = ENV['TENANTS_SETTINGS']
+    if cname.present? && verify_valid_json?(json_data)
+      settings_hash = JSON.parse(json_data)
+      #returns tenant settings hash or empty hash if that tenant has no seetings in TENANT_SETTINGS
+      settings_hash.fetch(cname, {})
+    else
+      #return empty hash  when no TENANT_SETTINGS since we expect a hash in the views
+      #else it thows NoMethodError: undefined method `[]' for nil:NilClass
+
+      {}
+    end
+  end
+
+  def feature_list
+    feature_json = ENV['FEATURE_ENABLED']
+    if feature_json.present? && verify_valid_json?(feature_json)
+     JSON.parse(feature_json)
+   else
+     #return empty hash since we expect a hash in the views
+     #else it thows NoMethodError: undefined method `[]' for nil:NilClass
+
+     {}
+   end
   end
 
 end

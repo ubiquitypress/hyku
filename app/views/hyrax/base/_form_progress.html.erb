@@ -18,8 +18,7 @@
       </fieldset>
     </div>
 
-    <% feature_list = JSON.parse(ENV['FEATURE_ENABLED'] ) %>
-    <% if parse_environment_variable_json(request.original_url)['ENABLE_DOI'] == 'true'  &&  feature_list['doi_option'] == 'true' %>
+    <% if get_tenant_settings_hash(request.original_url)['ENABLE_DOI'] == 'true'  &&  feature_list['doi_option'] == 'true' %>
       <div class="list-group-item">
         <fieldset>
           <%= render 'shared/ubiquity/doi/doi_options', f: f %>

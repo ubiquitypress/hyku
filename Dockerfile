@@ -2,6 +2,8 @@ FROM upress/hyku-base:latest
 
 ADD . /data
 
+ARG DISABLE_TENANT_SETTINGS=false
+
 RUN bundle exec rake assets:precompile
 
 COPY ./docker/supervisord-rails.conf /etc/supervisor/supervisord-rails.conf

@@ -3,10 +3,6 @@ module Ubiquity
 
     def render_gtm_head(host)
       tenant_gtm_id = get_tenant_name_from_url(host)
-
-      puts "lucy #{tenant_gtm_id.class}"
-      puts "luck #{tenant_gtm_id.inspect}"
-
       return '' if tenant_gtm_id.blank?
 
       <<-HTML.strip_heredoc.html_safe
@@ -38,8 +34,9 @@ module Ubiquity
     end
 
     private
-    
+
     def get_tenant_name_from_url(host)
+      #defined IN Application_Helper.rb
       tenant_name = ubiquity_url_parser(host)
       if tenant_name.present?
         get_google_tag_manager_id(tenant_name)
@@ -47,8 +44,11 @@ module Ubiquity
     end
 
     def get_google_tag_manager_id(key)
-      #DEFINED IN Application_Helper.rb
+      #defined IN Application_Helper.rb
       tenant_hash = parse_tenant_settings_json(key)
+      #note &. is ruby's safe navigator similar to rails try method
+      #if tenant_hash is nil instead of a hash, it will return nil instead of noMethodError
+      #
       tenant_hash&.dig("GTM_ID")
     end
 

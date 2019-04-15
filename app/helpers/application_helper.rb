@@ -80,7 +80,7 @@ module ApplicationHelper
     json_data = ENV['TENANTS_SETTINGS']
     if cname.present? && verify_valid_json?(json_data)
       settings_hash = JSON.parse(json_data)
-      #returns tenant hash or empty hash if that tenant has no seetings in TENANT_SETTINGS
+      #returns tenant settings hash or empty hash if that tenant has no seetings in TENANT_SETTINGS
       settings_hash.fetch(cname, {})
     else
       #return empty hash  when no TENANT_SETTINGS since we expect a hash in the views
@@ -95,7 +95,7 @@ module ApplicationHelper
     if feature_json.present? && verify_valid_json?(feature_json)
      JSON.parse(feature_json)
    else
-     #return e,pty hash since we expect a hash in the views
+     #return empty hash since we expect a hash in the views
      #else it thows NoMethodError: undefined method `[]' for nil:NilClass
 
      {}

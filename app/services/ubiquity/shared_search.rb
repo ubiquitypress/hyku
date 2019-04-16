@@ -120,13 +120,16 @@ module Ubiquity
       creator_tesim, creator_search_tesim, has_model_ssim, system_create_dtsi, system_modified_dtsi,  id, score, accessControl_ssim'
     end
 
+    #You can not just increase a weight and expect to go one step higher sometimes it might go many steps,
+    #so you need to experiment and check it is in the right position on the web
+    #we applied a default weight 0.55
     def fields_to_search_against
       #fields to search against which is passed to the qf params
-      "title_tesim^20.0 description_tesim keyword_tesim^14 journal_title_tesim^12 subject_tesim creator_tesim^16 editor_tesim^10 version_tesim related_exhibition_tesim media_tesim event_title_tesim event_date_tesim
-      event_location_tesim abstract_tesim^16 book_title_tesim series_name_tesim edition_tesim contributor_tesim^10 publisher_tesim place_of_publication_tesim date_published_tesim based_near_label_tesim
-      language_tesim date_uploaded_tesim date_modified_tesim date_created_tesim rights_statement_tesim license_tesim resource_type_tesim format_tesim identifier_tesim doi_tesim^8 isbn_tesim
-      issn_tesim eissn_tesim extent_tesim institution_tesim org_unit_tesim refereed_tesim funder_tesim fndr_project_ref_tesim add_info_tesim^9 date_accepted_tesim issue_tesim volume_tesim
-      pagination_tesim article_num_tesim project_name_tesim official_link_tesim^9 rights_holder_tesim library_of_congress_classification_tesim file_format_tesim all_text_timv"
+      "title_tesim^42.0 description_tesim^0.55 keyword_tesim^34.50 journal_title_tesim^25.0 subject_tesim^0.55 creator_tesim^36.50 editor_tesim^8.47 version_tesim^2.53 related_exhibition_tesim^0.59 media_tesim event_title_tesim^6.80 event_date_tesim
+      event_location_tesim^6.85 abstract_tesim^70.0 book_title_tesim^0.61 series_name_tesim^7.40 edition_tesim^0.63 contributor_tesim^8.50 publisher_tesim^9.0 place_of_publication_tesim^10.0 date_published_tesim based_near_label_tesim^0.55
+      language_tesim^7.60 date_uploaded_tesim date_modified_tesim date_created_tesim rights_statement_tesim^0.55 license_tesim^0.55 resource_type_tesim format_tesim identifier_tesim^0.55 doi_tesim^16.0 isbn_tesim^2.50
+      issn_tesim^0.85 eissn_tesim^0.81 extent_tesim^0.55 institution_tesim org_unit_tesim^7.20 refereed_tesim^0.55 funder_tesim fndr_project_ref_tesim^0.83 add_info_tesim^45.0 date_accepted_tesim issue_tesim^0.65 volume_tesim^1.55
+      pagination_tesim^1.30 article_num_tesim^0.67 project_name_tesim^7.0 official_link_tesim^12.0 rights_holder_tesim^28.0 library_of_congress_classification_tesim^1.25 file_format_tesim^0.55 all_text_timv^6.0"
     end
 
     def fetch_all
@@ -163,7 +166,7 @@ module Ubiquity
            #return only the desired hash keys
            search_results << data.map {|hash| hash.slice(*Hash_keys)}
          end
-         
+
          result = search_results.flatten.compact
          return result.sort_by { |hash|[ hash['score'],  hash['system_create_dtsi'] ]}.reverse if resort_search == 'relevance'
          return result.sort_by { |hash| hash['system_create_dtsi'] } if resort_search == 'asc'

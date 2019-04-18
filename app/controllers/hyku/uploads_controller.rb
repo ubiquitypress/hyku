@@ -3,14 +3,13 @@ module Hyrax
     load_and_authorize_resource class: Hyrax::UploadedFile
 
     def create
-      @upload = Hyrax::UploadedFile.where(file: params[:files].first.original_filename, user_id: current_user.id).first
+      @upload = Hyrax::UploadedFile.where(file: params[:files].first.original_filename, user_id: current_user.id, file_status: 0).first
       if @upload.nil?
         @upload = Hyrax::UploadedFile.create(file: params[:files].first, user_id: current_user.id)
-      else
+      elsif @upload.file_status.zero?
         path = @upload.file.path
         File.open(path, "ab") { |f| f.write(params[:files].first.read) }
       end
-      @upload.save
     end
 
     def destroy

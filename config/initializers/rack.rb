@@ -1,1 +1,1 @@
-# Rack::Multipart::Parser.const_set('BUFSIZE', 108_576)
+# Rack::Multipart::Parser.const_set('BUFSIZE', 101_576)

@@ -3,7 +3,9 @@ module Hyrax
     load_and_authorize_resource class: Hyrax::UploadedFile
 
     def create
-      @upload = Hyrax::UploadedFile.where(file: params[:files].first.original_filename, user_id: current_user.id, file_status: 0).first
+      # Replace all the non characters to underscore except - and  .
+      file_name = params[:files].first.original_filename.gsub(/[^a-zA-Z0-9\-.]/, '_')
+      @upload = Hyrax::UploadedFile.where(file: file_name, user_id: current_user.id, file_status: 0).first
       if @upload.nil?
         @upload = Hyrax::UploadedFile.create(file: params[:files].first, user_id: current_user.id)
       elsif @upload.file_status.zero?

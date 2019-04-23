@@ -24,7 +24,8 @@ module Ubiquity
         '<span class="center-block fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span>'
       end
     end
-# <i class="far fa-file"></i>
+
+    # <i class="far fa-file"></i>
     def display_file_size(id)
       if id.present?
         file_size_bytes = get_file_size_in_bytes(id)
@@ -41,7 +42,7 @@ module Ubiquity
     #called in app/views/shared/ubiquity/file_sets/_show.html.erb and called in app/views/shared/ubiquity/file_sets/_actions.html.erb
     def display_file_download_link_or_contact_form(file_set_presenter)
       if file_set_presenter.id.present?
-        file_size_bytes =  get_file_size_in_bytes(file_set_presenter.id)
+        file_size_bytes = get_file_size_in_bytes(file_set_presenter.id)
         return "Download temporarily unavailable" if file_size_bytes == 0
         file_size_in_mb = file_size_bytes/(1000 * 1000)
         file_size_in_gb = (file_size_in_mb/1000)
@@ -49,8 +50,8 @@ module Ubiquity
         download_size = file_size_in_gb.round(2)
         file_path = manual_download_path(file_set_presenter.id)
         message_value = "I would like to access the very large data file (file size #{download_size} GB) held at #{file_path}"
-        return (link_to('Download', hyrax.download_path(file_set_presenter), title: "Download #{file_set_presenter.to_s}", target: "_blank") ) if file_size_in_gb < 10
-        return (link_to('Contact us for download', hyrax.contact_form_index_path(message_value: message_value ) )) if file_size_in_gb > 10
+        return (link_to('Download', hyrax.download_path(file_set_presenter), title: "Download #{file_set_presenter.to_s}", target: "_blank") ) if file_size_in_gb < 20
+        return (link_to('Contact us for download', hyrax.contact_form_index_path(message_value: message_value ) )) if file_size_in_gb > 20
       end
     end
 
@@ -103,27 +104,20 @@ module Ubiquity
       else
         document
       end
-
     end
-
 
     private
 
-    def get_file_size_in_bytes(id)
-      #@file_set = FileSet.find(id)
-      @file_set = get_file(id)
-      pdcm_file_object = @file_set.original_file
-      #the pdcm file size is in bytes
-      return (pdcm_file_object.try(:size).try(:to_f) ) if pdcm_file_object.present?
-      return 0 if !pdcm_file_object.present?
-    end
-
-    def get_file(id)
-      if id.present?
-        @file_set ||= FileSet.find(id)
+      def get_file_size_in_bytes(id)
+        file_set = get_file(id)
+        pdcm_file_object = file_set.original_file
+        # the pdcm file size is in bytes
+        return 0 if !pdcm_file_object.present?
+        return (pdcm_file_object.try(:size).try(:to_f) )
       end
 
-    end
-
+      def get_file(id)
+        FileSet.find(id)
+      end
   end
 end

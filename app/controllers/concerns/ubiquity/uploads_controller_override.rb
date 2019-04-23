@@ -1,6 +1,6 @@
-module Hyrax
-  class UploadsController < ApplicationController
-    load_and_authorize_resource class: Hyrax::UploadedFile
+module Ubiquity
+  module UploadsControllerOverride
+    include ActiveSupport::Concern
 
     def create
       # Replace all the non characters to underscore except - and  .
@@ -12,11 +12,6 @@ module Hyrax
         path = @upload.file.path
         File.open(path, "ab") { |f| f.write(params[:files].first.read) }
       end
-    end
-
-    def destroy
-      @upload.destroy
-      head :no_content
     end
   end
 end

@@ -106,6 +106,15 @@ ActiveRecord::Schema.define(version: 20190418121441) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "external_services", force: :cascade do |t|
+    t.string "draft_doi"
+    t.string "work_id"
+    t.jsonb "property", default: "[ ]"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["draft_doi"], name: "index_external_services_on_draft_doi", unique: true
+  end
+
   create_table "featured_works", id: :serial, force: :cascade do |t|
     t.integer "order", default: 5
     t.string "work_id"

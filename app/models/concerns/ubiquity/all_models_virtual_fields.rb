@@ -12,6 +12,8 @@ module Ubiquity
       before_save :save_date_published, :save_date_accepted, :save_date_submitted,
                   :save_event_date, :save_related_exhibition_date
 
+      after_save :update_external_service_record
+
       #These are used in the forms to populate fields that will be stored in json fields
       #The json fields in this case are creator, contributor, alternate_identifier and related_identifier
       attr_accessor :creator_group, :contributor_group, :alternate_identifier_group, :related_identifier_group,
@@ -20,6 +22,10 @@ module Ubiquity
     end
 
     private
+
+    def update_external_service_record
+       AddWorkIdToExternalServiceJob.perform_later(self.id, self.account_cname)
+    end
 
     #
     # We are addressing 2 use case for each json field

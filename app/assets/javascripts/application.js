@@ -27,6 +27,7 @@
 //= require hyku/groups/add_member
 
 //= require hyrax
+//= require hyku/groups/uploader
 //= require jquery.flot.pie
 //= require flot_graph
 //= require statistics_tab_manager

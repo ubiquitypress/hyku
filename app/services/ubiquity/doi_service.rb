@@ -19,7 +19,6 @@ module Ubiquity
       AccountElevator.switch!(tenant_name)
       ExternalService.create!(draft_doi: full_doi)
       rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid => e
-        puts"I AM HEREE #{e.inspect}"
          @failed_attempts = nil
          @failed_attempts = @failed_attempts.to_i + 1
         retry if @failed_attempts < MAX_RETRIES

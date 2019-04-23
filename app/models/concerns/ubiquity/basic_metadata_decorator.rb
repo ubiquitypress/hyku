@@ -3,6 +3,7 @@ module Ubiquity
     extend ActiveSupport::Concern
     include Ubiquity::CsvExportUtil
     include Ubiquity::WorkAndCollectionMetadata
+    include Ubiquity::WorkDoiLifecycle
 
     # include here properties (fields) shared across all templates
     # also see SharedMetadata

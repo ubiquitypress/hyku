@@ -47,6 +47,9 @@ module Hyku
       Hyrax::Forms::BatchEditForm.prepend(::Ubiquity::AdditionalBatchEdit)
       Hyrax::FileSetDerivativesService.prepend(::Ubiquity::FilesetDerivativesServiceOverride)
       Hyrax::ContactFormController.prepend(::Ubiquity::ContactFormControllerOverride)
+      Hyrax::UploadsController.prepend(::Ubiquity::UploadsControllerOverride)
+      # Loading module to initiateCall back for the Hyrax::UploadedFile model for file_status attribute
+      Hyrax::UploadedFile.include(::Ubiquity::FileUploadCallback)
     end
 
     config.before_initialize do

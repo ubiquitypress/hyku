@@ -1,5 +1,6 @@
 # Customer organization account
 class Account < ApplicationRecord
+  self.table_name = 'public.accounts'
   # @param [String] piece the tenant piece of the canonical name
   # @return [String] full canonical name
   # @raise [ArgumentError] if piece contains a trailing dot
@@ -44,7 +45,6 @@ class Account < ApplicationRecord
   belongs_to :solr_endpoint, dependent: :delete
   belongs_to :fcrepo_endpoint, dependent: :delete
   belongs_to :redis_endpoint, dependent: :delete
-  has_many :external_services, class_name: 'Ubiquity::ExternalService', dependent: :destroy
 
   accepts_nested_attributes_for :solr_endpoint, :fcrepo_endpoint, :redis_endpoint, update_only: true
 

@@ -1,1 +1,2 @@
-<%= f.input :draft_doi, as: :text, input_html: { rows: '14', class: 'ubiquity-draft-doi' } %>
+<% my_model_name = f.object.model.class.to_s.underscore %>
+<%= hidden_field_tag "#{my_model_name}[draft_doi]", '', class: 'ubiquity-draft-doi' %>

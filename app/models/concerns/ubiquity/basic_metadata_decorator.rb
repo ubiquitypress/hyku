@@ -4,6 +4,7 @@ module Ubiquity
     include Ubiquity::CsvExportUtil
     include Ubiquity::WorkAndCollectionMetadata
     include Ubiquity::WorkDoiLifecycle
+    include Ubiquity::TrackDoiOptions
 
     # include here properties (fields) shared across all templates
     # also see SharedMetadata
@@ -44,9 +45,7 @@ module Ubiquity
       property :doi, predicate: ::RDF::Vocab::BIBO.doi, multiple: false do |index|
         index.as :stored_searchable
       end
-      property :draft_doi, predicate: ::RDF::Vocab::BF2.Doi, multiple: false do |index|
-        index.as :stored_searchable
-      end
+
       property :place_of_publication, predicate: ::RDF::Vocab::BF2.term(:Place) do |index|
         index.as :stored_searchable, :facetable
       end
@@ -67,6 +66,12 @@ module Ubiquity
         index.as :stored_searchable, :facetable
       end
       property :doi_options, predicate: ::RDF::Vocab::Bibframe.doi, multiple: false do |index|
+        index.as :stored_searchable
+      end
+      property :draft_doi, predicate: ::RDF::Vocab::BF2.Doi, multiple: false do |index|
+        index.as :stored_searchable
+      end
+      property :disable_draft_doi, predicate: ::RDF::Vocab::Bibframe.label, multiple: false do |index|
         index.as :stored_searchable
       end
 

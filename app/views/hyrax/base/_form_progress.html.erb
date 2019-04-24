@@ -2,7 +2,7 @@
 <% if check_datacite_enable?(request.original_url) && draft_doi.blank?  %>
   <% selected_option = 'Do not mint DOI' %>
   <%= render 'shared/ubiquity/datacite_suffix_generator' %><br>
-  <% else %>
+  <% elsif f.object.model.disable_draft_doi == 'false' %>
     <strong>Draft Doi:</strong> <%= draft_doi %><br>
 <% end %>
 <aside id="form-progress" class="form-progress panel panel-default">

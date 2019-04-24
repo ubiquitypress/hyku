@@ -110,9 +110,12 @@ ActiveRecord::Schema.define(version: 20190418121441) do
     t.string "draft_doi"
     t.string "work_id"
     t.jsonb "property", default: "[ ]"
+    t.jsonb "data", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["draft_doi"], name: "index_external_services_on_draft_doi", unique: true
+    t.index ["data"], name: "index_external_services_on_data", where: "((data -> 'api_type'::text) IS NOT NULL)", using: :gin
+    t.index ["draft_doi", "work_id"], name: "index_external_services_on_draft_doi_and_work_id", unique: true, where: "(draft_doi IS NOT NULL)"
+    t.index ["property"], name: "index_external_services_on_property", using: :gin
   end
 
   create_table "featured_works", id: :serial, force: :cascade do |t|
@@ -528,6 +531,7 @@ ActiveRecord::Schema.define(version: 20190418121441) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "file_status", default: 0
+    t.index ["file", "user_id", "file_status"], name: "index_uploaded_files_on_file_and_user_id_and_file_status", unique: true
     t.index ["file_set_uri"], name: "index_uploaded_files_on_file_set_uri"
     t.index ["user_id"], name: "index_uploaded_files_on_user_id"
   end

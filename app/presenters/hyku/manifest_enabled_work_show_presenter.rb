@@ -99,7 +99,6 @@ module Hyku
       @thumbnail_presenter ||=
         begin
           result = member_presenters([thumbnail_id]).first
-          puts " #{result.inspect}"
           return nil if result.try(:id) == id
           if result.respond_to?(:thumbnail_presenter)
             result.thumbnail_presenter

@@ -1,10 +1,12 @@
 <% draft_doi = f.object.model.draft_doi %>
+
 <% if check_datacite_enable?(request.original_url) && draft_doi.blank?  %>
   <% selected_option = 'Do not mint DOI' %>
-  <%= render 'shared/ubiquity/datacite_suffix_generator' %><br>
+  <%= render 'ubiquity/external_services/datacite_suffix_generator' %><br>
   <% elsif f.object.model.disable_draft_doi == 'false' %>
     <strong>Draft Doi:</strong> <%= draft_doi %><br>
 <% end %>
+
 <aside id="form-progress" class="form-progress panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title"><%= t("hyrax.works.progress.header") %></h3>

@@ -39,7 +39,7 @@ module Ubiquity
       end
     end
 
-    # Called in app/views/shared/ubiquity/file_sets/_show.html.erb and called in app/views/shared/ubiquity/file_sets/_actions.html.erb
+    #Called in app/views/shared/ubiquity/file_sets/_show.html.erb and called in app/views/shared/ubiquity/file_sets/_actions.html.erb
     def display_file_download_link_or_contact_form(file_set_presenter)
       if file_set_presenter.id.present?
         file_size_bytes = get_file_size_in_bytes(file_set_presenter.id)
@@ -50,8 +50,8 @@ module Ubiquity
         download_size = file_size_in_gb.round(2)
         file_path = manual_download_path(file_set_presenter.id)
         message_value = "I would like to access the very large data file (file size #{download_size} GB) held at #{file_path}"
-        return (link_to('Download', hyrax.download_path(file_set_presenter), title: "Download #{file_set_presenter.to_s}", target: "_blank") ) if file_size_in_gb < 10
-        return (link_to('Contact us for download', hyrax.contact_form_index_path(message_value: message_value ) )) if file_size_in_gb > 10
+        return (link_to('Download', hyrax.download_path(file_set_presenter), title: "Download #{file_set_presenter.to_s}", target: "_blank") ) if file_size_in_gb < 20
+        return (link_to('Contact us for download', hyrax.contact_form_index_path(message_value: message_value ) )) if file_size_in_gb > 20
       end
     end
 

@@ -8,7 +8,7 @@
       <%= radio_button_tag "#{f.object.model.class.to_s.underscore}[doi_options]", option, true %>&nbsp;<%= option %><br>
     <% else %>
       <%= radio_button_tag "#{f.object.model.class.to_s.underscore}[doi_options]", option, false, data: {option: selected_option}, class: "options_unallowed" if ['Do not mint DOI', 'Keep DOI as Draft'].include? option %>
-      <%= radio_button_tag "#{f.object.model.class.to_s.underscore}[doi_options]", option, false, data: {option: selected_option} if not ['Do not mint DOI', 'Keep DOI as Draft'].include? option %>&nbsp;<%=option %><br>
+      <%= radio_button_tag "#{f.object.model.class.to_s.underscore}[doi_options]", option, false, data: {option: selected_option} if not ['Do not mint DOI', 'Keep DOI as Draft'].include? option %> <%=option %><br>
     <% end %>
   <% end %>
 </ul>

@@ -4,10 +4,24 @@
 <ul class= "visibility">
   <% selected_option = f.object.model.doi_options.present? ? f.object.model.doi_options : 'Do not mint DOI' %>
   <% ['Do not mint DOI', 'Keep DOI as Draft', 'Mint DOI:Registered', 'Mint DOI:Findable'].each do |option| %>
-     <% if selected_option == option %>
-       <%= radio_button_tag "#{f.object.model.class.to_s.underscore}[doi_options]", option, true %>&nbsp;&nbsp;<%= option %><br>
-     <% else %>
-       <%= radio_button_tag "#{f.object.model.class.to_s.underscore}[doi_options]", option %>&nbsp;&nbsp;<%= option %><br>
-     <% end %>
+    <% if selected_option == option %>
+      <%= radio_button_tag "#{f.object.model.class.to_s.underscore}[doi_options]", option, true %>&nbsp;<%= option %><br>
+    <% else %>
+      <%= radio_button_tag "#{f.object.model.class.to_s.underscore}[doi_options]", option, false, data: {option: selected_option}, class: "options_unallowed" if ['Do not mint DOI', 'Keep DOI as Draft'].include? option %>
+      <%= radio_button_tag "#{f.object.model.class.to_s.underscore}[doi_options]", option, false, data: {option: selected_option} if not ['Do not mint DOI', 'Keep DOI as Draft'].include? option %> <%=option %><br>
+    <% end %>
   <% end %>
 </ul>
+
+<script>
+
+ $(document).on("turbolinks:load", function(event){
+    var currentOption = $(".options_unallowed").data('option');
+    var checkInArray =  $.inArray(currentOption, ['Do not mint DOI', 'Keep DOI as Draft']);
+
+    if (checkInArray == -1){
+      return $(".options_unallowed").attr('disabled', 'disabled')
+    }
+ });
+
+</script>

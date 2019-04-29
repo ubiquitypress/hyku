@@ -1,11 +1,6 @@
 
 <% if ENV["BL_TENANTS"].split(',').include? ubiquity_url_parser(request.original_url)%>
-
-  <%= render 'ubiquity/shared_search/shared_search_form' %> <br/> <br/>
   <%= render 'bl_shared_layer' %>
-
 <% else %>
-
-  <%= render 'ubiquity/shared_search/shared_search_form' %> <br/> </br>
   <%= render 'new_index' %>
 <% end %>

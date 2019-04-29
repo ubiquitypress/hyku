@@ -32,6 +32,9 @@ Rails.application.routes.draw do
 
   post '/external_services/generate_doi', to: 'ubiquity/external_services#generate_doi', as: 'external_services_generate_doi'
 
+  # Fail Uploads Controller route
+  get '/fail_uploads/delete_file' => 'ubiquity/fail_uploads#delete_file'
+
   mount BrowseEverything::Engine => '/browse'
   resource :site, only: [:update] do
     resources :roles, only: [:index, :update]

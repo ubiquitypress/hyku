@@ -39,7 +39,7 @@ module Ubiquity
       end
     end
 
-    #Called in app/views/shared/ubiquity/file_sets/_show.html.erb and called in app/views/shared/ubiquity/file_sets/_actions.html.erb
+    #called in app/views/shared/ubiquity/file_sets/_show.html.erb and called in app/views/shared/ubiquity/file_sets/_actions.html.erb
     def display_file_download_link_or_contact_form(file_set_presenter)
       if file_set_presenter.id.present?
         file_size_bytes = get_file_size_in_bytes(file_set_presenter.id)

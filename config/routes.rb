@@ -27,13 +27,10 @@ Rails.application.routes.draw do
   end
 
   scope :module => "ubiquity" do
-    resources :shared_search, only: [:index]
     #resources :datacite, only: [:create, :index]
   end
 
   post '/external_services/generate_doi', to: 'ubiquity/external_services#generate_doi', as: 'external_services_generate_doi'
-  get '/shared_search/facet/:more_field', to: 'ubiquity/shared_search#facet', as: 'shared_search_facet'
-  get '/shared_search/destroy', to: 'ubiquity/shared_search#destroy'
 
   mount BrowseEverything::Engine => '/browse'
   resource :site, only: [:update] do

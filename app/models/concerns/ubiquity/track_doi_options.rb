@@ -6,7 +6,7 @@ module Ubiquity
     included do
       before_save :set_disable_draft_doi
       before_save :set_doi
-      #before_save :autocreate_draft_doi
+      after_save :autocreate_draft_doi
     end
 
     private
@@ -26,13 +26,14 @@ module Ubiquity
     end
 
     def autocreate_draft_doi
-      if self.doi_options != "Do not mint DOI"
+      if self.doi_options != "Do not mint DOI" && self.draft_doi.blank?
         tenant_name = self.account_cname.split('.').first
         tenant_json = ENV["TENANTS_SETTINGS"]
         tenant_hash = JSON.parse(tenant_json) if is_valid_json?(tenant_json)
         datacite_prefix = tenant_hash[tenant_name]['datacite_prefix']
-        doi = Ubiquity::DoiService.new(self.account_cname, datacite_prefix)
-        doi_suffix = doi.suffix_generator
+        doi_service = Ubiquity::DoiService.new(self.account_cname, datacite_prefix)
+        external_service_object = doi_service.suffix_generator
+        self.draft_doi = external_service_object.draft_doi
       end
     end
 

@@ -1,3 +1,4 @@
+# Called inside all_models_virtual_fields inside app/models/concerns
 class AddWorkIdToExternalServiceJob < ActiveJob::Base #ApplicationJob
   queue_as :default
 

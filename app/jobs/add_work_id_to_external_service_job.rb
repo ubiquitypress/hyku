@@ -7,7 +7,9 @@ class AddWorkIdToExternalServiceJob < ActiveJob::Base #ApplicationJob
     work = ActiveFedora::Base.find(work_id)
     if work.present?
       exter = ExternalService.where(draft_doi: work.draft_doi)
+      puts"BBC#{exter.data}"
       exter.update(work_id: work.id)
+
     end
   end
 end

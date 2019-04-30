@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190418121441) do
+ActiveRecord::Schema.define(version: 20190430130449) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,8 +109,8 @@ ActiveRecord::Schema.define(version: 20190418121441) do
   create_table "external_services", force: :cascade do |t|
     t.string "draft_doi"
     t.string "work_id"
-    t.jsonb "property", default: "[ ]"
-    t.jsonb "data", default: {}, null: false
+    t.jsonb "property", default: []
+    t.jsonb "data", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["data"], name: "index_external_services_on_data", where: "((data -> 'api_type'::text) IS NOT NULL)", using: :gin
@@ -531,7 +531,6 @@ ActiveRecord::Schema.define(version: 20190418121441) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "file_status", default: 0
-    t.index ["file", "user_id", "file_status"], name: "index_uploaded_files_on_file_and_user_id_and_file_status", unique: true
     t.index ["file_set_uri"], name: "index_uploaded_files_on_file_set_uri"
     t.index ["user_id"], name: "index_uploaded_files_on_user_id"
   end

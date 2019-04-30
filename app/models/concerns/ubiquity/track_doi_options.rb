@@ -30,10 +30,12 @@ module Ubiquity
         tenant_name = self.account_cname.split('.').first
         tenant_json = ENV["TENANTS_SETTINGS"]
         tenant_hash = JSON.parse(tenant_json) if is_valid_json?(tenant_json)
-        datacite_prefix = tenant_hash[tenant_name]['datacite_prefix']
-        doi_service = Ubiquity::DoiService.new(self.account_cname, datacite_prefix)
-        external_service_object = doi_service.suffix_generator
-        self.draft_doi = external_service_object.draft_doi
+        datacite_prefix = tenant_hash.dig(tenant_name, 'datacite_prefix')
+        if datacite_prefix.present?
+          doi_service = Ubiquity::DoiService.new(self.account_cname, datacite_prefix)
+          external_service_object = doi_service.suffix_generator
+          self.draft_doi = external_service_object.draft_doi
+        end
       end
     end
 

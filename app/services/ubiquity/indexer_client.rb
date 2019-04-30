@@ -16,7 +16,7 @@ module Ubiquity
         response = self.class.post(api_path, body: body, headers: headers )
 
         external_service = ExternalService.where(draft_doi: draft_doi).first
-        external_service.data['status_code'] = response.code
+        external_service.try(:data)['status_code'] = response.code
         external_service.save
         puts "sugar #{external_service.inspect}"
         response

@@ -6,12 +6,14 @@ module Ubiquity
     format :json
     base_uri 'https://importer.repo-test.ubiquity.press'
 
-    attr_accessor :file_url_hash
+    attr_accessor :file_url_hash, :file_status_hash
 
     def initialize(response)
       if response
+        @file_status_hash = Hash[response['works'].map { |ele| [ele['uuid'], ele['status']] }]
         @file_url_hash = Hash[response['works'].map { |ele| [ele['uuid'], ele['providers']['S3Storage']['link']] }]
       else
+        @file_status_hash = {}
         @file_url_hash = {}
       end
     end

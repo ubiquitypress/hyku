@@ -45,9 +45,14 @@ module Ubiquity
         uuid = params[:parent_id] || params[:id]
         @file_set_s3_object ||= trigger_api_call_for_s3_url uuid
         if @file_set_s3_object.file_url_hash[file_set_presenter.id].present?
-          link_to 'Download', @file_set_s3_object.file_url_hash[file_set_presenter.id].to_s
+          status = @file_set_s3_object.file_status_hash[file_set_presenter.id]
+          if status == "UPLOAD_COMPLETED"
+            link_to 'Download', @file_set_s3_object.file_url_hash[file_set_presenter.id].to_s
+          else
+            "<a style='text-decoration:none;' href='#' onclick='return false;'>Upload In-Progress</a>".html_safe
+          end
         else
-          'Download temporarily unavailable'
+          "<a style='text-decoration:none;' href='#' onclick='return false;'>Download Temporarily Unavailable</a>".html_safe
         end
       end
     end

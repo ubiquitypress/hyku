@@ -108,10 +108,6 @@ module Ubiquity
       end
     end
 
-    def trigger_api_call_for_s3_url uuid
-      Ubiquity::ImporterClient.get_s3_url uuid
-    end
-
     private
 
       def get_file_size_in_bytes(id)
@@ -124,6 +120,10 @@ module Ubiquity
 
       def get_file(id)
         FileSet.find(id)
+      end
+
+      def trigger_api_call_for_s3_url uuid
+        Ubiquity::ImporterClient.get_s3_url uuid
       end
   end
 end

@@ -1,4 +1,4 @@
-FROM upress/hyku-base:latest
+FROM eu.gcr.io/hyku-ucw/hyku-base:latest
 
 ADD . /data
 

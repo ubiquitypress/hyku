@@ -16,8 +16,9 @@ module Ubiquity
         response = self.class.post(api_path, body: body, headers: headers )
 
         external_service = ExternalService.where(draft_doi: draft_doi).first
-        external_service.data['status_code'] = response.code
+        external_service.try(:data)['status_code'] = response.code
         external_service.save
+        set_official_url(work_uuid, response.code)
         puts "sugar #{external_service.inspect}"
         response
       end
@@ -44,6 +45,15 @@ module Ubiquity
         }
 
     end
+
+    def set_official_url(id, status_code)
+      work = ActiveFedora::Base.find(id)
+      #if (work.doi_options == 'Mint DOI:Registered' || self.doi_options == 'Mint DOI:Findable') && self.visibility == 'open'
+      if [201, 200].include? status_code
+        work.update(official_link: "https://doi.org/#{work.draft_doi}")
+      end
+    end
+
 
   end
 end

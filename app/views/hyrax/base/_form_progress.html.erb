@@ -38,7 +38,7 @@
         </fieldset>
       </div>
     <% end %>
-    
+
     <% if Flipflop.proxy_deposit? && current_user.can_make_deposits_for.any? %>
         <div class="list-group-item">
           <%= f.input :on_behalf_of, collection: current_user.can_make_deposits_for.map(&:user_key), prompt: "Yourself" %>
@@ -77,4 +77,24 @@
       </div>
     </div>
   </div>
+
+  <!-- Modal -->
+  <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Warning Message Title</h3>
+        </div>
+        <div class="modal-body" >
+            <p id ='modal_message'></p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-primary" id = 'modal_button_save'>Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </aside>

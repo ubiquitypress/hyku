@@ -3,7 +3,6 @@ module Ubiquity
     extend ActiveSupport::Concern
     included do
       # For updating the file status column which is uploade by large file chunks
-      enum file_status: { pending: 0, completed: 1 }
       after_commit :set_file_status
     end
 

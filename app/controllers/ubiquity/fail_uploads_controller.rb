@@ -2,7 +2,7 @@ module Ubiquity
   class FailUploadsController < ApplicationController
     def delete_file
       file_name = params[:file_upload][:filename].gsub(/[^a-zA-Z0-9\-.]/, '_')
-      failed_upload = Hyrax::UploadedFile.where(file: file_name, user_id: current_user.id, file_status: 'pending').first
+      failed_upload = Hyrax::UploadedFile.where(file: file_name, user_id: current_user.id, file_status: 0).first
       if failed_upload
         failed_upload.destroy
       end

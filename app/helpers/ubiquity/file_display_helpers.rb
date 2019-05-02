@@ -56,13 +56,15 @@ module Ubiquity
     end
 
     def manual_download_path(id)
-       file = get_file(id)
-       tenant = file.parent.account_cname
-       #hardcoded to port 3000 so if your localhost uses eg port 8080 to test temporarily change the 3000 to 8080
-       if tenant.split('.').include? 'localhost'
+      file = get_file(id)
+      tenant = file.parent.account_cname
+      # hardcoded to port 3000 so if your localhost uses eg port 8080 to test temporarily change the 3000 to 8080
+      if tenant.present?
+        if tenant.split('.').include? 'localhost'
           "http://#{tenant}:3000/concern/parent/#{file.parent.id}/file_sets/#{file.id}"
-       else
-         "https://#{tenant}/concern/parent/#{file.parent.id}/file_sets/#{file.id}"
+        else
+          "https://#{tenant}/concern/parent/#{file.parent.id}/file_sets/#{file.id}"
+        end
       end
     end
 

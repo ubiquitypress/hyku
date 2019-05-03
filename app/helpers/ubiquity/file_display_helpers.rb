@@ -54,7 +54,7 @@ module Ubiquity
             "<a style='text-decoration:none;' href='#' onclick='return false;'>Upload In-Progress</a>".html_safe
           end
         else
-          load_file_from_file_set(file_set_presenter, file_size_bytes)
+          fetch_link_based_on_environment(file_set_presenter, file_size_bytes)
         end
       end
     end
@@ -113,6 +113,16 @@ module Ubiquity
 
       def get_file(id)
         FileSet.find(id)
+      end
+
+      def fetch_link_based_on_environment(file_set_presenter, file_size_bytes)
+        file = get_file(file_set_presenter.id)
+        tenant = file.parent.account_cname
+        if tenant.present? && (tenant.split('.').include? 'localhost')
+          load_file_from_file_set(file_set_presenter, file_size_bytes)
+        else
+          "<a style='text-decoration:none;' href='#' onclick='return false;'>Download Temporarily Unavailable</a>".html_safe
+        end
       end
 
       def load_file_from_file_set(file_set_presenter, file_size_bytes)

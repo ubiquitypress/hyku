@@ -43,30 +43,23 @@ module Ubiquity
     def display_file_download_link_or_contact_form(file_set_presenter)
       if file_set_presenter.id.present?
         file_size_bytes = get_file_size_in_bytes(file_set_presenter.id)
-        return "Download temporarily unavailable" if file_size_bytes == 0
-        file_size_in_mb = file_size_bytes/(1000 * 1000)
-        file_size_in_gb = (file_size_in_mb/1000)
-        #  download_size,   file_path  are passed to message_value for display in contact form
-        download_size = file_size_in_gb.round(2)
-        file_path = manual_download_path(file_set_presenter.id)
-        message_value = "I would like to access the very large data file (file size #{download_size} GB) held at #{file_path}"
-        return (link_to('Download', hyrax.download_path(file_set_presenter), title: "Download #{file_set_presenter.to_s}", target: "_blank") ) if file_size_in_gb < 20
-        return (link_to('Contact us for download', hyrax.contact_form_index_path(message_value: message_value ) )) if file_size_in_gb > 20
-      end
-    end
-
-    def manual_download_path(id)
-      file = get_file(id)
-      tenant = file.parent.account_cname
-      # hardcoded to port 3000 so if your localhost uses eg port 8080 to test temporarily change the 3000 to 8080
-      if tenant.present?
-        if tenant.split('.').include? 'localhost'
-          "http://#{tenant}:3000/concern/parent/#{file.parent.id}/file_sets/#{file.id}"
+        return "Download temporarily unavailable" if file_size_bytes.zero?
+        uuid = params[:parent_id] || params[:id]
+        @file_set_s3_object ||= trigger_api_call_for_s3_url uuid
+        if @file_set_s3_object.file_url_hash[file_set_presenter.id].present?
+          status = @file_set_s3_object.file_status_hash[file_set_presenter.id]
+          if status == "UPLOAD_COMPLETED"
+            link_to 'Download', @file_set_s3_object.file_url_hash[file_set_presenter.id].to_s
+          else
+            "<a style='text-decoration:none;' href='#' onclick='return false;'>Upload In-Progress</a>".html_safe
+          end
         else
-          "https://#{tenant}/concern/parent/#{file.parent.id}/file_sets/#{file.id}"
+          load_file_from_file_set(file_set_presenter, file_size_bytes)
         end
       end
     end
+
+
 
     #receives a file_set when called from views/hyrax/base/_representative_media.html.erb
     #receives a Hyku::FileSetPresenter when called from views/shared/ubiquity/works/_member.html.erb
@@ -120,6 +113,34 @@ module Ubiquity
 
       def get_file(id)
         FileSet.find(id)
+      end
+
+      def load_file_from_file_set(file_set_presenter, file_size_bytes)
+        file_size_in_mb = file_size_bytes/(1000 * 1000)
+        file_size_in_gb = (file_size_in_mb/1000)
+        #  download_size,   file_path  are passed to message_value for display in contact form
+        download_size = file_size_in_gb.round(2)
+        file_path = manual_download_path(file_set_presenter.id)
+        return link_to('Download', hyrax.download_path(file_set_presenter), title: "Download #{file_set_presenter}", target: "_blank") if file_size_in_gb < 10
+        message_value = "I would like to access the very large data file (file size #{download_size} GB) held at #{file_path}"
+        return link_to('Contact us for download', hyrax.contact_form_index_path(message_value: message_value)) if file_size_in_gb > 10
+      end
+
+      def manual_download_path(id)
+        file = get_file(id)
+        tenant = file.parent.account_cname
+        # hardcoded to port 3000 so if your localhost uses eg port 8080 to test temporarily change the 3000 to 8080
+        if tenant.present?
+          if tenant.split('.').include? 'localhost'
+            "http://#{tenant}:3000/concern/parent/#{file.parent.id}/file_sets/#{file.id}"
+          else
+            "https://#{tenant}/concern/parent/#{file.parent.id}/file_sets/#{file.id}"
+          end
+        end
+      end
+
+      def trigger_api_call_for_s3_url uuid
+        Ubiquity::ImporterClient.get_s3_url uuid
       end
   end
 end

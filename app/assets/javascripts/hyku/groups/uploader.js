@@ -34,15 +34,14 @@ Blacklight.onLoad(function() {
       $('#modal_button_save').attr('disabled', false);
     }
     $('#modal_message').text(msg)
-
-    if ((visibility == "open") || (visibility == "embargo") && (doiOptions == "Mint DOI:Registered") || (doiOptions == "Mint DOI:Findable") ) {
+    var visibilityCheck = (visibility == "open" || visibility == "embargo")
+    var doiOptionsCheck = (doiOptions == "Mint DOI:Registered" || doiOptions == "Mint DOI:Findable")
+    if (visibilityCheck && doiOptionsCheck) {
       console.log('MODALL');
-
       $('#doi-options-modal').modal('show');
       e.preventDefault();
     }
 
-    // $('#doi-options-modal').modal('show');
     console.log('preventing Submitted');
 
   });

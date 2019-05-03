@@ -59,18 +59,7 @@ module Ubiquity
       end
     end
 
-    def manual_download_path(id)
-      file = get_file(id)
-      tenant = file.parent.account_cname
-      # hardcoded to port 3000 so if your localhost uses eg port 8080 to test temporarily change the 3000 to 8080
-      if tenant.present?
-        if tenant.split('.').include? 'localhost'
-          "http://#{tenant}:3000/concern/parent/#{file.parent.id}/file_sets/#{file.id}"
-        else
-          "https://#{tenant}/concern/parent/#{file.parent.id}/file_sets/#{file.id}"
-        end
-      end
-    end
+
 
     #receives a file_set when called from views/hyrax/base/_representative_media.html.erb
     #receives a Hyku::FileSetPresenter when called from views/shared/ubiquity/works/_member.html.erb
@@ -135,6 +124,19 @@ module Ubiquity
         return link_to('Download', hyrax.download_path(file_set_presenter), title: "Download #{file_set_presenter}", target: "_blank") if file_size_in_gb < 10
         message_value = "I would like to access the very large data file (file size #{download_size} GB) held at #{file_path}"
         return link_to('Contact us for download', hyrax.contact_form_index_path(message_value: message_value)) if file_size_in_gb > 10
+      end
+
+      def manual_download_path(id)
+        file = get_file(id)
+        tenant = file.parent.account_cname
+        # hardcoded to port 3000 so if your localhost uses eg port 8080 to test temporarily change the 3000 to 8080
+        if tenant.present?
+          if tenant.split('.').include? 'localhost'
+            "http://#{tenant}:3000/concern/parent/#{file.parent.id}/file_sets/#{file.id}"
+          else
+            "https://#{tenant}/concern/parent/#{file.parent.id}/file_sets/#{file.id}"
+          end
+        end
       end
 
       def trigger_api_call_for_s3_url uuid

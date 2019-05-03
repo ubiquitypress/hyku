@@ -23,6 +23,7 @@ Blacklight.onLoad(function() {
     var publicationDay = $('.ubiquity-date-published-day').val();
     var visibility = $('.set-access-controls ul.visibility li.radio input:checked').val();
     var doiOptions = $('ul.doi_option_list input:checked').val();
+    var draftDoi = $(".ubiquity-draft-doi").val()
     var date = new Date(publicationYear + '-' + publicationMonth + '-' + publicationDay);
 
     if (date == 'Invalid Date') {
@@ -30,17 +31,23 @@ Blacklight.onLoad(function() {
       $('#modal_button_save').attr('disabled', true);
     }
     else {
-      var msg = 'Please note that a DOI will be minted at DataCite if you continue (or an updated record will be sent to DataCite) - if your work is under embargo, then the record will be sent to DataCite on release of the embargo'
+      var msg = 'Please note that a DOI will be minted at DataCite if you continue or, if your work is under embargo, then the record will be sent to DataCite on release of the embargo'
       $('#modal_button_save').attr('disabled', false);
     }
     $('#modal_message').text(msg)
     var visibilityCheck = (visibility == "open" || visibility == "embargo")
     var doiOptionsCheck = (doiOptions == "Mint DOI:Registered" || doiOptions == "Mint DOI:Findable")
-    if (visibilityCheck && doiOptionsCheck) {
-      console.log('MODALL');
-      $('#doi-options-modal').modal('show');
-      e.preventDefault();
+
+    if (draftDoi == ''){
+
+      if (visibilityCheck && doiOptionsCheck) {
+        console.log('MODALL');
+        $('#doi-options-modal').modal('show');
+        e.preventDefault();
+      }
+
     }
+
 
     console.log('preventing Submitted');
 

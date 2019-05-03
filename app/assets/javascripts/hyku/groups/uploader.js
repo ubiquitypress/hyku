@@ -21,13 +21,13 @@ Blacklight.onLoad(function() {
     var publicationYear = $('#date_year').val();
     var publicationMonth = $('#date_month').val();
     var publicationDay = $('#date_day').val();
-    var date = new Date(publicationYear + '-' + publicationMonth + '-' + publicationDay)
-    if (date == 'Valid Date') {
-      var msg = 'Message in the case of publication year is Not blank'
+    var date = new Date(publicationYear + '-' + publicationMonth + '-' + publicationDay);
+    if (date instanceof Date) {
+      var msg = 'Please note that a DOI will be minted at DataCite if you continue (or an updated record will be sent to DataCite) - if your work is under embargo, then the record will be sent to DataCite on release of the embargo'
       $('#modal_button_save').attr('disabled', false);
     }
     else {
-      var msg = 'hi this is condition when the published Date  is blank'
+      var msg = 'Please go back and add a publication year, as this is required by DataCite'
       $('#modal_button_save').attr('disabled', true);
     }
     $('#modal_message').text(msg)

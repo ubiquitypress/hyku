@@ -16,7 +16,7 @@ Blacklight.onLoad(function() {
       }
     });
   });
-  console.log('thisis loading');
+
   $('#with_files_submit').on('click', function(e) {
     var publicationYear = $('.ubiquity-date-published-year').val();
     var publicationMonth = $('.ubiquity-date-published-month').val();
@@ -30,26 +30,25 @@ Blacklight.onLoad(function() {
       var msg = 'Please go back and add a publication year, as this is required by DataCite'
       $('#modal_button_save').attr('disabled', true);
     }
+    else if (draftDoi !== ''){
+      var msg = 'PPPPPPPlease note that a DOI will be minted at DataCite if you continue or, if your work is under embargo, then the record will be sent to DataCite on release of the embargo'
+      $('#modal_button_save').attr('disabled', false);
+    }
     else {
       var msg = 'Please note that a DOI will be minted at DataCite if you continue or, if your work is under embargo, then the record will be sent to DataCite on release of the embargo'
       $('#modal_button_save').attr('disabled', false);
     }
+
     $('#modal_message').text(msg)
     var visibilityCheck = (visibility == "open" || visibility == "embargo")
     var doiOptionsCheck = (doiOptions == "Mint DOI:Registered" || doiOptions == "Mint DOI:Findable")
 
-    if (draftDoi == ''){
 
       if (visibilityCheck && doiOptionsCheck) {
-        console.log('MODALL');
         $('#doi-options-modal').modal('show');
         e.preventDefault();
       }
 
-    }
-
-
-    console.log('preventing Submitted');
 
   });
 });

@@ -22,7 +22,7 @@ Blacklight.onLoad(function() {
     var publicationMonth = $('#date_month').val();
     var publicationDay = $('#date_day').val();
     var date = new Date(publicationYear + '-' + publicationMonth + '-' + publicationDay)
-    if (date == 'Valid Date') //check for public visibility and embargo {
+    if (date == 'Valid Date') {
       var msg = 'Message in the case of publication year is Not blank'
       $('#modal_button_save').attr('disabled', false);
     }

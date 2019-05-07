@@ -28,15 +28,23 @@ Blacklight.onLoad(function() {
     var date = new Date(publicationYear + '-' + publicationMonth + '-' + publicationDay);
 
     if (date == 'Invalid Date') {
-      var msg = 'Please go back and add a publication year, as this is required by DataCite'
+      var msg = 'Please go back and add a publication year, as this is required by DataCite.'
       $('#modal_button_save').attr('disabled', true);
     }
+    else if (doi !== '' && visibility == "embargo"){
+      var msg = 'Please note that an updated record will be sent to DataCite on release of embargo, if you continue.'
+      $('#modal_button_save').attr('disabled', false);
+    }
     else if (doi !== ''){
-      var msg = 'Please note an updated record will be sent to DataCite, if you continue'
+      var msg = 'Please note an updated record will be sent to DataCite, if you continue.'
+      $('#modal_button_save').attr('disabled', false);
+    }
+    else if (draftDoi !== '' && visibility == "embargo"){
+      var msg = 'Please note that a DOI will be minted at DataCite on release of embargo, if you continue.'
       $('#modal_button_save').attr('disabled', false);
     }
     else if (draftDoi !== ''){
-      var msg = 'Please note that a DOI will be minted at DataCite if you continue or, if your work is under embargo, then the record will be sent to DataCite on release of the embargo'
+      var msg = 'Please note that a DOI will be minted at DataCite if you continue.'
       $('#modal_button_save').attr('disabled', false);
     }
 

@@ -19,15 +19,12 @@ Blacklight.onLoad(function() {
 
   $('#with_files_submit').on('click', function(e) {
     var publicationYear = $('.ubiquity-date-published-year').val();
-    var publicationMonth = $('.ubiquity-date-published-month').val();
-    var publicationDay = $('.ubiquity-date-published-day').val();
     var visibility = $('.set-access-controls ul.visibility li.radio input:checked').val();
     var doiOptions = $('ul.doi_option_list input:checked').val();
     var draftDoi = $(".ubiquity-draft-doi").val()
     var doi = $(".ubiquity-doi").val()
-    var date = new Date(publicationYear + '-' + publicationMonth + '-' + publicationDay);
 
-    if (date == 'Invalid Date') {
+    if (publicationYear == '') {
       var msg = 'Please go back and add a publication year, as this is required by DataCite.'
       $('#modal_button_save').attr('disabled', true);
     }
@@ -58,7 +55,6 @@ Blacklight.onLoad(function() {
         $('#doi-options-modal').modal('show');
         e.preventDefault();
       }
-
 
   });
 });

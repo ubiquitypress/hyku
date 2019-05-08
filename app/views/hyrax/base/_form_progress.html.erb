@@ -8,17 +8,17 @@
     <div class="list-group">
       <% if check_datacite_enable?(request.original_url) %>
         <div class="list-group-item">
-          <div class='col-md-7 di-options-padding-left-adj'>
-            <%= render 'ubiquity/external_services/doi_options', f: f %>
-          </div>
-          <div class='col-md-5'>
+          <div>
             <% if f.object.model.disable_draft_doi == 'false' %>
-              <strong>Draft Doi:</strong> <%= draft_doi %>
+              <span class='draft-doi-text-styling'>Draft Doi:</span> <span><%= draft_doi %></span>
             <%else%>
               <div style='display:none;' class='draft_doi_hidden_div'>
-                <strong>Draft Doi:</strong> <span id="draft_doi"></span>
+                <span class='draft-doi-text-styling'>Draft Doi:</span> <span id="draft_doi"></span>
               </div>
             <%end%>
+          </div>
+          <div class='di-options-padding-left-adj'>
+            <%= render 'ubiquity/external_services/doi_options', f: f %>
           </div>
         </div>
       <%end%>

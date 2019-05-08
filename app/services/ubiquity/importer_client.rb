@@ -11,7 +11,7 @@ module Ubiquity
     def initialize(response)
       if response
         @file_status_hash = Hash[response['works'].map { |ele| [ele['uuid'], ele['status']] }]
-        @file_url_hash = Hash[response['works'].map { |ele| [ele['uuid'], ele['providers']['S3Storage']['link']] }]
+        @file_url_hash = Hash[response['works'].map { |ele| [ele['uuid'], ele['providers'].try(:fetch, 'S3Storage', '').try(:fetch, 'link')] }]
       else
         @file_status_hash = {}
         @file_url_hash = {}

@@ -10,10 +10,10 @@
         <div class="list-group-item">
           <div>
             <% if f.object.model.disable_draft_doi == 'false' %>
-              <span class='draft-doi-text-styling'>Draft Doi:</span> <span><%= draft_doi %></span>
+              <span class='draft-doi-text-styling'>Draft DOI:</span> <span><%= draft_doi %></span>
             <%else%>
               <div style='display:none;' class='draft_doi_hidden_div'>
-                <span class='draft-doi-text-styling'>Draft Doi:</span> <span id="draft_doi"></span>
+                <span class='draft-doi-text-styling'>Draft DOI:</span> <span id="draft_doi"></span>
               </div>
             <%end%>
           </div>

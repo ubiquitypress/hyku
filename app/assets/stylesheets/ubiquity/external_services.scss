@@ -1,7 +1,21 @@
 // Place all the styles related to the ubiquity/external_services controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.doi-block {
-  display: inline-block;
-  padding: 0 !important;
+
+.doi_option_visibility_list{
+  list-style-type: none;
+  padding-left: 8px;
+}
+
+.di-options-padding-left-adj{
+  padding-left: 0px;
+}
+
+.margin-adjustment-doi-option{
+  margin-top: -26px;
+}
+
+.doi-save-draft-button-padding{
+  float: right;
+  margin-top: -60px;
 }

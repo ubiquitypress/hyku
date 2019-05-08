@@ -61,7 +61,13 @@
         </div>
       </div>
     </div>
-
+    <% draft_doi = f.object.model.draft_doi %>
+    <div class='col-md-4 doi-save-draft-button-padding'>
+      <% if check_datacite_enable?(request.original_url) && draft_doi.blank?  %>
+        <% selected_option = 'Do not mint DOI' %>
+        <%= render 'ubiquity/external_services/datacite_suffix_generator' %>
+      <%end%>
+    </div>
     <div id="savewidget" class="col-xs-12 col-sm-4 fixedsticky" role="complementary">
       <%= render 'form_progress', f: f %>
     </div>

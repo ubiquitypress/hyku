@@ -15,5 +15,6 @@
  *= require hyrax
  *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
  *= require chosen
+ *= require ubiquity/external_services
  *= require_self
  */

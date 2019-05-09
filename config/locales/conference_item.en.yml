@@ -30,7 +30,8 @@ en:
         article_num: If there is an article number, e.g. e0183455 (usually found in online-only journals)
         rights_holder: Please identify the rights holder if different from the creator.
         project_name: The name of the project the work relates to, where relevant
-        doi: A persistent digital object identifier, if your item already has one then enter this here in the following model e.g. https://doi.org/10.21250/tcq
+        doi: A persistent digital object identifier, if your item already has one then enter this here in the following model e.g. 10.21250/tcq.
+             If you would like a DOI to be created for this item then leave this field blank.
         issn: ISSN, International Standard Serial Number. You can enter either the ISSN or the eISSN or both, if available.
         eissn: eISSN, Electronic International Standard Serial Number. You can enter either the ISSN or the eISSN or both, if available.
         official_link: Please enter the official URL, e.g. the publisher's link to the item.

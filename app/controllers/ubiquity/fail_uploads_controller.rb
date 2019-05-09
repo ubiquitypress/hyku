@@ -8,6 +8,14 @@ module Ubiquity
       end
     end
 
+    def download_file
+      params[:fileset_id]
+      uuid = params[:uuid]
+      s3_file_set_url = Ubiquity::ImporterClient.get_s3_url uuid
+      url = s3_file_set_url.file_url_hash[params[:fileset_id]]
+      redirect_to url
+    end
+
     private
 
       def uploaded_file_params

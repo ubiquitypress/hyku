@@ -49,7 +49,8 @@ module Ubiquity
         if @file_set_s3_object.file_url_hash[file_set_presenter.id].present?
           status = @file_set_s3_object.file_status_hash[file_set_presenter.id]
           if status == "UPLOAD_COMPLETED"
-            link_to 'Download', @file_set_s3_object.file_url_hash[file_set_presenter.id].to_s
+            # link_to 'Download', @file_set_s3_object.file_url_hash[file_set_presenter.id].to_s
+            link_to 'Download', main_app.fail_uploads_download_file_path(uuid: uuid, fileset_id: file_set_presenter.id), method: 'post'
           else
             "<a style='text-decoration:none;' href='#' onclick='return false;'>Upload In-Progress</a>".html_safe
           end
@@ -58,8 +59,6 @@ module Ubiquity
         end
       end
     end
-
-
 
     #receives a file_set when called from views/hyrax/base/_representative_media.html.erb
     #receives a Hyku::FileSetPresenter when called from views/shared/ubiquity/works/_member.html.erb

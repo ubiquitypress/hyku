@@ -34,6 +34,7 @@ Rails.application.routes.draw do
 
   # Fail Uploads Controller route
   get '/fail_uploads/delete_file' => 'ubiquity/fail_uploads#delete_file'
+  post '/fail_uploads/download_file' => 'ubiquity/fail_uploads#download_file'
 
   mount BrowseEverything::Engine => '/browse'
   resource :site, only: [:update] do

@@ -29,6 +29,7 @@
 //= require hyrax
 //= require hyku/groups/uploader
 //= require ubiquity/external_services_modal
+//= require ubiquity/datacite
 //= require jquery.flot.pie
 //= require flot_graph
 //= require statistics_tab_manager

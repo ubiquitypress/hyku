@@ -75,7 +75,7 @@ module Ubiquity
       else
         {
           'related_identifier_group': related_identifier,
-          "title": title, "published": date_published_year,
+          "title": title, "published_year": date_published_year,
           "abstract": abstract, "version": version,
           "creator_group": creator, "license": license,
           "auto_populated": auto_populated_fields,

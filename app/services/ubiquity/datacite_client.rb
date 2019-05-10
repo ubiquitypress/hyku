@@ -14,11 +14,10 @@ module Ubiquity
     def fetch_record
       result = fetch_record_from_crossref
       response_hash = result.parsed_response
-      unless response_hash.class == Hash && response_hash['data'].class == Hash
-        result = fetch_record_from_datacite
-        response_hash = result.parsed_response
-      end
-      @response = response_object(response_hash, result)
+      return response_object_from_crossref(response_hash) if response_hash.class == Hash && response_hash['message'].class == Hash
+      result = fetch_record_from_datacite
+      response_hash = result.parsed_response
+      response_object_from_datacite(response_hash, result)
     end
 
     def fetch_record_from_crossref
@@ -31,13 +30,17 @@ module Ubiquity
 
     private
 
-      def response_object(response_hash, result)
+      def response_object_from_datacite(response_hash, result)
         if response_hash.present? && response_hash.class == Hash && response_hash['data'].class == Hash
           Ubiquity::DataciteResponse.new(response_hash: response_hash, result: result)
         else
           puts "Successful DataciteClient api call but HTTParty parsed_response returned a string instead of hash, so change url"
           Ubiquity::DataciteResponse.new(error: error_message, result: result)
         end
+      end
+
+      def response_object_from_crossref(response_hash)
+        Ubiquity::CrossrefResponse.new(response_hash)
       end
 
       def parse_url(url)

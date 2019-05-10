@@ -1,16 +1,16 @@
-$(document).on("turbolinks:load", function(event){
-  event.preventDefault();
+$(document).on("turbolinks:load", function(event) {
   return $("body").on("submit", ".get-datacite-doi-metadata-select", function(event){
     var dataciteUrl = $(".ubiquity-datacite-value").val();
     $(".ubiquity-fields-populated").hide()
     $(".ubiquity-fields-populated-error").hide()
+
     event.preventDefault();
     fetchDataciteData(dataciteUrl);
     $("#get-datacite-doi-metadata").modal('hide')
   });
 });
 
-function fetchDataciteData(url){
+function fetchDataciteData(url) {
   var host = window.document.location.host;
   var protocol = window.document.location.protocol;
   var fullHost = protocol + '//' + host + '/available_ubiquity_titles/call_datasite';
@@ -19,22 +19,26 @@ function fetchDataciteData(url){
     type: "POST",
     data: {"url": url},
     success: function(result){
-      if (result.data.error  === undefined){
+      if (result.data.error  === undefined) {
         $(".ubiquity-title").val(result.data.title)
         $('.ubiquity-abstract').val(result.data.abstract)
         $('.ubiquity-doi').val(result.data.doi)
         //populate dropdown
-        $('.ubiquity-date-published-year').val(result.data.published).change()
-        $('.ubiquity-license').val(result.data.license).change()
+        $('.ubiquity-date-published-year').val(result.data.published_year);
+        $('.ubiquity-date-published-month').val(result.data.published_month);
+        $('.ubiquity-date-published-day').val(result.data.published_day);
+        $('.ubiquity-license').val(result.data.license);
+        $('.ubiquity-issn').val(result.data.issn);
+        $('.ubiquity-journal-title').val(result.data.journal_title);
+        $('.ubiquity-eissn').val(result.data.eissn);
         populateRelatedIdentifierValues(result.data.related_identifier_group)
         populateCreatorValues(result.data.creator_group)
-        //IE11 will not show the ,message when  .val() is used hence .html()
+        //IE11 will not show the ,message when .val() is used hence .html()
         $(".ubiquity-fields-populated").html(result.data.auto_populated)
         $(".ubiquity-fields-populated").show()
       } else {
         $(".ubiquity-fields-populated-error").html(result.data.error)
         $(".ubiquity-fields-populated-error").show()
-
       }
     }
   }) //closes $.ajax
@@ -42,11 +46,12 @@ function fetchDataciteData(url){
 
 function populateRelatedIdentifierValues(relatedArray){
   $.each(relatedArray, function(key, value){
-    addValues(key, value);
+      addValues(key, value);
   })
 }
 
 function addValues(key, value) {
+
   if (key === 0) {
     var div = $(".ubiquity-meta-related-identifier");
     div.children(".related_identifier").val(value.related_identifier)
@@ -66,7 +71,7 @@ function addValues(key, value) {
 
 function populateCreatorValues(creatorArray){
   $.each(creatorArray, function(key, value){
-    addCreatorValues(key, value);
+      addCreatorValues(key, value);
   })
 }
 
@@ -76,9 +81,9 @@ function addCreatorValues(key, value) {
     var div = parent.children(".ubiquity_personal_fields:last")
     div.children(".creator_family_name:last").val(value.creator_family_name)
     div.children('.creator_given_name').val(value.creator_given_name)
+    div.children('.creator_orcid:last').val(value.creator_orcid)
     div.children(".creator_position:last").val(value.creator_position)
     parent.children('.ubiquity_creator_name_type:last').val('Personal').change()
-
   }else {
     var parent = $(".ubiquity-meta-creator:last")
     var parentClone = parent.clone();
@@ -88,8 +93,8 @@ function addCreatorValues(key, value) {
     parent.after(parentClone)
     parentClone.find(".creator_family_name:last").val(value.creator_family_name)
     parentClone.find('.creator_given_name:last').val(value.creator_given_name)
+    parentClone.find('.creator_orcid:last').val(value.creator_orcid)
     parentClone.find(".creator_position:last").val(value.creator_position)
     parentClone.find('.ubiquity_creator_name_type:last').val('Personal').change()
-
   }
 }

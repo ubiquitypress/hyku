@@ -50,6 +50,7 @@ module Hyku
       Hyrax::UploadsController.prepend(::Ubiquity::UploadsControllerOverride)
       # Loading module to initiateCall back for the Hyrax::UploadedFile model for file_status attribute
       Hyrax::UploadedFile.include(::Ubiquity::FileUploadCallback)
+      Hyrax::FileSetPresenter.class_eval {delegate :visibility, to: :solr_document}
     end
 
     config.before_initialize do

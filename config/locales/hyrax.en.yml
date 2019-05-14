@@ -16,7 +16,7 @@ en:
     contact_form:
       issue_types:
         browsing: Browsing and searching
-        changing: Request a very large file (over 10GB only) 
+        changing: Request a very large file (over 10GB only)
         depositing:  Enquiry about a content item
         reporting: Report a problem with the site
         general: General enquiry
@@ -43,6 +43,6 @@ en:
   helpers:
     action:
       doi:
-        new: Fetch metadata from DataCite with DOI
+        new: Fetch metadata from CrossRef or DataCite with DOI
         submit: Fetch metadata
-        placeholder: Please add a DataCite DOI below
+        placeholder: Please add a CrossRef or DataCite DOI below

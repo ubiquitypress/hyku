@@ -94,8 +94,8 @@ module Ubiquity
       end
 
       def error_message
-        "Sorry no data was fetched. Please ensure this is a valid DataCite DOI or URL eg 10.5438/0012 or https://doi.org/10.5438/0012 or http://dx.doi.org/10.18154/RWTH-CONV-020567.
-        If you are sure it is valid please refresh the page and try again."
+        "Sorry no data was fetched. Please ensure this is a valid DataCite DOI or URL eg 10.5438/0012 or https://doi.org/10.5438/0012 or
+        http://dx.doi.org/10.18154/RWTH-CONV-020567 or http://api.crossref.org/works/10.11647/OBP.0172. If you are sure it is valid please refresh the page and try again."
       end
   end
 end

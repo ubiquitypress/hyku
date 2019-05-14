@@ -31,8 +31,11 @@ function fetchDataciteData(url) {
         $('.ubiquity-issn').val(result.data.issn);
         $('.ubiquity-journal-title').val(result.data.journal_title);
         $('.ubiquity-eissn').val(result.data.eissn);
+        $('.ubiquity-isbn').val(result.data.isbn);
+        $('.ubiquity-publisher').val(result.data.publisher);
         populateRelatedIdentifierValues(result.data.related_identifier_group)
         populateCreatorValues(result.data.creator_group)
+        populateKeyword(result.data.keyword)
         //IE11 will not show the ,message when .val() is used hence .html()
         $(".ubiquity-fields-populated").html(result.data.auto_populated)
         $(".ubiquity-fields-populated").show()
@@ -49,6 +52,26 @@ function populateRelatedIdentifierValues(relatedArray){
       addValues(key, value);
   })
 }
+
+function populateKeyword(keywordArray){
+  $.each(keywordArray, function(key, value){
+    addKeywordValues(key, value);
+  })
+}
+
+function addKeywordValues(key, value){
+  if (key == 0) {
+   $(".ubiquity-keyword:last").val(value)
+  }
+  else{
+    var parent_li = $(".ubiquity-keyword:last").parent();
+    var clonedParent = parent_li.clone();
+    var parent_ul = parent_li.parent();
+    parent_ul.append(clonedParent);
+    $(".ubiquity-keyword:last").val(value);
+  }
+}
+
 
 function addValues(key, value) {
 

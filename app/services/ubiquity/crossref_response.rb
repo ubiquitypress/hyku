@@ -27,6 +27,15 @@ module Ubiquity
       attributes['published-online']['date-parts'].first[1] if attributes['published-online'].present?
     end
 
+    def license
+      return nil if attributes['license'].blank?
+      url_array = fetch_url_from_response.split('/')
+      url_collection = Hyrax::LicenseService.new.select_active_options.map{|e| e.last}
+      regex_url = %r{(?:http|https):\/\/(?:www.|)(#{url_array[-4]})\/(#{url_array[-3]})\/(#{url_array[-2]})\/(#{url_array[-1]})}
+      url_collection.select { |e| e =~ regex_url }.first
+    end
+
+
     def date_published_day
       attributes['published-online']['date-parts'].first[2] if attributes['published-online'].present?
     end
@@ -37,6 +46,13 @@ module Ubiquity
 
     def eissn
       attributes['issn-type'].first['value'] if attributes['issn-type'].present?
+    end
+
+    def isbn
+      return nil if attributes['isbn-type'].blank?
+      print_value = attributes['isbn-type'].detect { |h| h['type'] == 'print' || h['type'] == 'electronic' }
+      return print_value['value'] if print_value['value']
+      attributes['isbn-type'].first['value']
     end
 
     def doi
@@ -58,33 +74,54 @@ module Ubiquity
       end
     end
 
+    def keyword
+      attributes['subject']
+    end
+
+    def publisher
+      attributes['publisher']
+    end
+
+
     def creator_with_seperated_names(data)
       new_creator_group = []
       data.each_with_index do |hash, index|
         hash = {
-          "creator_orcid" => hash['ORCID'].split('/').last,
-          "creator_given_name" =>  hash["given"],
-          "creator_family_name" => hash["family"],
-          "creator_name_type" => 'Personal',
-          "creator_position" => index
+          creator_orcid: hash.try(:fetch, 'ORCID', '').split('/').last,
+          creator_given_name:  hash["given"],
+          creator_family_name: hash["family"],
+          creator_name_type: 'Personal',
+          creator_position: index
         }
         new_creator_group << hash
       end
       new_creator_group
     end
 
+    url = def fetch_url_from_response
+      vor_version_license = attributes['license'].detect { |h| h['content-version'] == 'vor' }
+      return vor_version_license['URL'] if vor_version_license.present?
+      max_time_stamp_license = attributes['license'].max_by { |h| h.try(:fetch, 'date-parts', '')['time-stamp'].to_f }
+      return max_time_stamp_license['URL']  if max_time_stamp_license.present?
+      attributes['license'].first['URL']
+    end
+
     def auto_populated_fields
       fields = []
-      fields << 'title' if title.present?
-      fields << 'creator' if creator.present?
-      fields << "published year" if date_published_year.present?
-      fields << "published month" if date_published_month.present?
-      fields << "published day" if date_published_day.present?
+      fields << 'Title' if title.present?
+      fields << 'Creator' if creator.present?
+      fields << "Published year" if date_published_year.present?
+      fields << "Published month" if date_published_month.present?
+      fields << "Published day" if date_published_day.present?
       fields << 'DOI' if doi.present?
       fields << 'Journal Title' if journal_title.present?
       fields << 'ISSN' if issn.present?
       fields << 'eISSN' if eissn.present?
-      fields << 'abstract' if abstract.present?
+      fields << 'Abstract' if abstract.present?
+      fields << 'Keyword' if keyword.present?
+      fields << 'ISBN' if isbn.present?
+      fields << 'Licence' if license.present?
+      fields << 'Publisher' if publisher.present?
       # fields << 'version' if version.present?
 
       "The following fields were auto-populated - #{fields.to_sentence}"
@@ -95,14 +132,12 @@ module Ubiquity
         { 'error' => error }
       else
         {
-          "title": title, "published_year": date_published_year,
-          "published_month": date_published_month,
-          "published_day": date_published_day,
-          "issn": issn, "eissn": eissn, journal_title: journal_title,
-          "abstract": abstract, "version": version,
-          "creator_group": creator,
-          "auto_populated": auto_populated_fields,
-          "doi": doi
+          title: title, published_year: date_published_year,
+          published_month: date_published_month, published_day: date_published_day,
+          issn: issn, eissn: eissn, journal_title: journal_title,
+          abstract: abstract, version: version, isbn: isbn,
+          creator_group: creator, doi: doi, keyword: keyword, license: license,
+          auto_populated: auto_populated_fields, publisher: publisher
         }
       end
     end

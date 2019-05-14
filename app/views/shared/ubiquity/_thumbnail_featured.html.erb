@@ -17,7 +17,7 @@
   <span class="fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:20px"></span> </span><span style="width:100px;padding-left:115px"></span>
 <% elsif (check_file_is_restricted?(file_set_presenter) == nil && (file_set_presenter.lease_expiration_date.present?) && (file_set_presenter.embargo_release_date.present?)) %>
   <span class="fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:20px"></span> </span><span style="width:100px;padding-left:115px"></span>
-<% elsif (check_file_is_restricted?(file_set_presenter) == true || (not file_set_presenter.lease_expiration_date.present?) && (not file_set_presenter.embargo_release_date.present?) && ( file_set_presenter.visibility == "open") ) %>
+<% elsif (check_file_is_restricted?(file_set_presenter) == true || (not file_set_presenter.lease_expiration_date.present?) && (not file_set_presenter.embargo_release_date.present?) && ( file_set_presenter.solr_document['visibility_ssi'] == "open") ) %>
    <% set_featured_img_size(document) %>
   <%= render_thumbnail_tag(document, {width: 90, class: 'hidden-xs file_listing_thumbnail'}, {suppress_link: true}) %>
 <% else %>

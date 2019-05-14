@@ -30,7 +30,7 @@ module Ubiquity
     def license
       return nil if attributes['license'].blank?
       url_array = fetch_url_from_response.split('/')
-      url_collection = Hyrax::LicenseService.new.select_active_options.map{|e| e.last}
+      url_collection = Hyrax::LicenseService.new.select_active_options.map(&:last)
       regex_url = %r{(?:http|https):\/\/(?:www.|)(#{url_array[-4]})\/(#{url_array[-3]})\/(#{url_array[-2]})\/(#{url_array[-1]})}
       url_collection.select { |e| e =~ regex_url }.first
     end

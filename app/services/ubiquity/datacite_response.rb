@@ -57,13 +57,13 @@ module Ubiquity
 
     def auto_populated_fields
       fields = []
-      fields << 'title' if title.present?
-      fields << 'creator' if creator.present?
-      fields << "published" if date_published_year.present?
+      fields << 'Title' if title.present?
+      fields << 'Creator' if creator.present?
+      fields << "Published" if date_published_year.present?
       fields << 'DOI' if doi.present?
-      fields << 'related_identifier' if related_identifier.present?
-      fields << 'abstract' if abstract.present?
-      fields << 'licence' if (license.present? && licence_present?.include?(license))
+      fields << 'Related Identifier' if related_identifier.present?
+      fields << 'Abstract' if abstract.present?
+      fields << 'Licence' if (license.present? && licence_present?.include?(license))
       # fields << 'version' if version.present?
 
       "The following fields were auto-populated - #{fields.to_sentence}"

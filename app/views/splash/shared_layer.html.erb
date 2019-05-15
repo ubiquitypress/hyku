@@ -1,3 +1,5 @@
+<%# render 'ubiquity/shared_search/search_form' %> 
+<%= render partial: 'catalog/search_form' %><br/>
 
 <% if ENV["BL_TENANTS"].split(',').include? ubiquity_url_parser(request.original_url)%>
   <%= render 'bl_shared_layer' %>

@@ -6,6 +6,7 @@ class BookContribution < ActiveFedora::Base
   include Ubiquity::SharedMetadata
   include Ubiquity::AllModelsVirtualFields
   include Ubiquity::EditorMetadataModelConcern
+  include Ubiquity::UpdateSharedIndex
 
   self.indexer = BookContributionIndexer
   # Change this to restrict which works can be added as a child.

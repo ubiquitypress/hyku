@@ -84,7 +84,7 @@ module Ubiquity
     #app/views/shared/ubiquity/search_display/_search_thumbnail.html.erb
     #app/views/shared/ubiquity/works/_member.html.erb
     def check_file_extension(name)
-      File.extname(name)
+      File.extname(name) if name.present?
     end
 
    #Temporal solution for size passed from https://github.com/curationexperts/riiif/blob/master/app/controllers/riiif/images_controller.rb#L85

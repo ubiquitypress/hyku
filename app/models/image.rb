@@ -8,6 +8,7 @@ class Image < ActiveFedora::Base
   include Ubiquity::AllModelsVirtualFields
   include Ubiquity::EditorMetadataModelConcern
   include HasRendering
+  include Ubiquity::UpdateSharedIndex
 
   property :extent, predicate: ::RDF::Vocab::DC.extent, multiple: true do |index|
     index.as :stored_searchable

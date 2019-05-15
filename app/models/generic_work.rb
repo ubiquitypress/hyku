@@ -6,6 +6,7 @@ class GenericWork < ActiveFedora::Base
   include Ubiquity::AllModelsVirtualFields
   include Ubiquity::EditorMetadataModelConcern
   include Ubiquity::VersionMetadataModelConcern
+  include Ubiquity::UpdateSharedIndex
 
   validates :title, presence: { message: 'Your work must have a title.' }
 

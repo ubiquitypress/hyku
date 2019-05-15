@@ -38,6 +38,7 @@
       var doiOptionsCheck = (doiOptions == "Mint DOI:Registered" || doiOptions == "Mint DOI:Findable")
       //conditions to be met to show modal window
       $("#doi-options-modal").on("click", "#modal_button_save", function() {
+        $('#doi-options-modal').modal('hide');
         $('.simple_form').submit();
       });
       if (visibilityCheck && doiOptionsCheck) {

@@ -7,25 +7,35 @@ module Ubiquity
     attr_accessor :path
 
     def initialize(url)
-      #sets the value of the path ,ethod
+      #sets the value of the path ,method
       parse_url(url)
     end
 
     def fetch_record
       result = fetch_record_from_crossref
-      response_hash = result.parsed_response
-      return response_object_from_crossref(response_hash) if response_hash.class == Hash && response_hash['message'].class == Hash
+      if result.class == HTTParty::Response
+        response_hash = result.parsed_response
+        return response_object_from_crossref(response_hash) if response_hash.class == Hash && response_hash['message'].class == Hash
+      end
       result = fetch_record_from_datacite
-      response_hash = result.parsed_response
-      response_object_from_datacite(response_hash, result)
+      if result.class == HTTParty::Response
+        response_hash = result.parsed_response
+        response_object_from_datacite(response_hash, result)
+      else
+        Ubiquity::DataciteResponse.new(error: error_message, result: result)
+      end
     end
 
     def fetch_record_from_crossref
-      HTTParty.get("https://api.crossref.org#{path}")
+      handle_client do
+        HTTParty.get("https://api.crossref.org#{path}")
+      end
     end
 
     def fetch_record_from_datacite
-      HTTParty.get("https://api.datacite.org#{path}")
+      handle_datacite_client do
+        HTTParty.get("https://api.datacite.org#{path}")
+      end
     end
 
     private
@@ -85,11 +95,15 @@ module Ubiquity
         begin
           yield
         rescue  URI::InvalidURIError, HTTParty::Error, Net::HTTPNotFound, NoMethodError, Net::OpenTimeout, StandardError => e
-          puts "DataciteClient error #{e}"
-          Ubiquity::DataciteResponse.new(error: error_message)
-        else
-          #self
-          @response
+          puts "DataciteClient error #{e.inspect}"
+        end
+      end
+
+      def handle_datacite_client
+        begin
+          yield
+        rescue URI::InvalidURIError, HTTParty::Error, Net::HTTPNotFound, NoMethodError, Net::OpenTimeout, StandardError => e
+          puts " This is from the datacitre client #{e.inspect}"
         end
       end
 

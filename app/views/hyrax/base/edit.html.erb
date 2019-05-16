@@ -1,0 +1,8 @@
+<!-- Copied from  https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/base/edit.html.erb-->
+
+<% provide :page_title, curation_concern_page_title(curation_concern) %>
+<% provide :page_header do %>
+  <h1><span class="fa fa-edit" aria-hidden="true"></span><%= t("hyrax.works.update.header") %></h1>
+<% end %>
+<%= render 'ubiquity/external_services/datacite_modal' %>
+<%= render 'form' %>

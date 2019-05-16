@@ -51,6 +51,7 @@ module Hyku
       # Loading module to initiateCall back for the Hyrax::UploadedFile model for file_status attribute
       Hyrax::UploadedFile.include(::Ubiquity::FileUploadCallback)
       Account.class_eval {include Ubiquity::AccountSelfJoinAssociation}
+      Hyrax::FileSetPresenter.class_eval {delegate :visibility, to: :solr_document}
     end
 
     config.before_initialize do

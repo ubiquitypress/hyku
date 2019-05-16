@@ -70,7 +70,7 @@ module Ubiquity
                                                                   related_exhibition_date_month
                                                                   related_exhibition_date_day] }
 
-            permitted_params << :doi_options                                                      
+            permitted_params << :doi_options
         end
       end
     end # closes class class_methods

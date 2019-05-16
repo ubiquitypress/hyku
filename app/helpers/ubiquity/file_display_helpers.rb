@@ -14,7 +14,7 @@ module Ubiquity
          '<span class="center-block fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span>'
       elsif ((check_file_is_restricted?(file_set_presenter) == nil) && (file_set_presenter.lease_expiration_date.present?) && (file_set_presenter.embargo_release_date.present?) )
         '<span class="center-block fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey"></span>'
-      elsif ((check_file_is_restricted?(file_set_presenter) == true) || (not file_set_presenter.lease_expiration_date.present?) && (not file_set_presenter.embargo_release_date.present?) )
+      elsif ((check_file_is_restricted?(file_set_presenter) == true) || (not file_set_presenter.lease_expiration_date.present?) && (not file_set_presenter.embargo_release_date.present?) && ( file_set_presenter.solr_document['visibility_ssi'] == "open") )
         #displays for logged out users on files without embargo/lease
         #also displays for logged_in users on files with embargo/lease
         render_thumbnail_tag(file_set_presenter)
@@ -72,7 +72,8 @@ module Ubiquity
     end
 
     def check_file_is_restricted?(data)
-      if (current_user.present? && ((current_user.roles_name.include? "admin") || data.depositor == current_user.email || (can? :manage, data)) && (data.lease_expiration_date.present? || data.embargo_release_date.present?))
+    # if (current_user.present? && ((current_user.roles_name.include? "admin") || data.depositor == current_user.email || (can? :manage, data)) && (data.lease_expiration_date.present? || data.embargo_release_date.present?) )
+      if (current_user.present? && ((current_user.roles_name.include? "admin") || data.depositor == current_user.email || (can? :manage, data)) )
         true
       end
     end

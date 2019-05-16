@@ -43,7 +43,7 @@
     <label class="control-label multi_value optional" for="#{template}_creator_orcid">
       Creator ORCiD</label>
     <%= text_field_tag "#{template}[creator_group][][creator_orcid]", nil,
-                       class: "#{template}_creator_group form-control multi-text-field multi_value",
+                       class: "#{template}_creator_group creator_orcid form-control multi-text-field multi_value",
                        placeholder: 'Please enter the creator\'s ORCiD, e.g. 0000-1234-5678-9101.',
                        name: "#{template}[creator_group][][creator_orcid]"
     %>

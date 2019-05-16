@@ -31,8 +31,11 @@ module Ubiquity
       return nil if attributes['license'].blank?
       url_array = fetch_url_from_response.split('/')
       url_collection = Hyrax::LicenseService.new.select_active_options.map(&:last)
-      regex_url = %r{(?:http|https):\/\/(?:www.|)(#{url_array[-4]})\/(#{url_array[-3]})\/(#{url_array[-2]})\/(#{url_array[-1]})}
-      url_collection.select { |e| e =~ regex_url }.first
+      rurl_array.pop if url_array.last == 'legalcode'
+      url_array.shift(2) # Removing the http, https and // part in the url
+      regex_url_str = "(?:http|https)://" + url_array.map { |ele| "(#{ele})" }.join('/')
+      regex_url_exp = Regexp.new regex_url_str
+      url_collection.select { |e| e.match regex_url_exp }.first
     end
 
 

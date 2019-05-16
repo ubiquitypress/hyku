@@ -55,19 +55,19 @@ module Ubiquity
       end
     end
 
-    def auto_populated_fields
-      fields = []
-      fields << 'Title' if title.present?
-      fields << 'Creator' if creator.present?
-      fields << "Published" if date_published_year.present?
-      fields << 'DOI' if doi.present?
-      fields << 'Related Identifier' if related_identifier.present?
-      fields << 'Abstract' if abstract.present?
-      fields << 'Licence' if (license.present? && licence_present?.include?(license))
-      # fields << 'version' if version.present?
+    # def auto_populated_fields
+    #   fields = []
+    #   fields << 'Title' if title.present?
+    #   fields << 'Creator' if creator.present?
+    #   fields << "Published" if date_published_year.present?
+    #   fields << 'DOI' if doi.present?
+    #   fields << 'Related Identifier' if related_identifier.present?
+    #   fields << 'Abstract' if abstract.present?
+    #   fields << 'Licence' if (license.present? && licence_present?.include?(license))
+    #   # fields << 'version' if version.present?
 
-      "The following fields were auto-populated - #{fields.to_sentence}"
-    end
+    #   "The following fields were auto-populated - #{fields.to_sentence}"
+    # end
 
     def data
       if error.present?
@@ -78,7 +78,6 @@ module Ubiquity
           "title": title, "published_year": date_published_year,
           "abstract": abstract, "version": version,
           "creator_group": creator, "license": license,
-          "auto_populated": auto_populated_fields,
           "doi": doi
         }
       end

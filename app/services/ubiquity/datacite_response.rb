@@ -27,7 +27,15 @@ module Ubiquity
     end
 
     def license
-      attributes.dig('license')
+      if attributes.dig('license').present?
+        url_array = attributes.dig('license').split('/')
+        url_collection = Hyrax::LicenseService.new.select_active_options.map(&:last)
+        url_array.pop if url_array.last == 'legalcode'
+        url_array.shift(2) # Removing the http, https and // part in the url
+        regex_url_str = "(?:http|https)://" + url_array.map { |ele| "(#{ele})" }.join('/')
+        regex_url_exp = Regexp.new regex_url_str
+        url_collection.select { |e| e.match regex_url_exp }.first
+      end
     end
 
     def doi

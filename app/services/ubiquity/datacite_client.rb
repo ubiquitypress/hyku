@@ -54,6 +54,7 @@ module Ubiquity
       end
 
       def parse_url(url)
+        url = url.strip
         handle_client do
           uri = URI.parse(url)
           if (uri.scheme.present? &&  uri.host.present?)

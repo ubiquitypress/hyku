@@ -1,6 +1,6 @@
 <!--  Hyku::ManifestEnabledWorkShowPresenter -->
 <!-- This whole file was add ubiquitypress to selectively display universalviewer-->
-<% if presenter.representative_presenter.image? %>
+<% if presenter.try(:representative_presenter).try(:image?) %>
   <% file_set_presenter = presenter.representative_presenter %>
   <!-- dont' displays universal viewer for files with archived format eg zip -->
   <% if zipped_types.include? check_file_extension(file_set_presenter.label) %>
@@ -13,5 +13,5 @@
     <div class="viewer-wrapper"><div class="uv viewer" data-uri="<%= main_app.polymorphic_path [main_app, :manifest, presenter] %>"></div></div>
   <% end %>
 <% else %>
-  <%= media_display presenter.representative_presenter %>
+    <%= media_display presenter.try(:representative_presenter) %>
 <% end %>

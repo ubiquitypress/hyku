@@ -11,7 +11,7 @@ module Ubiquity
 
     def add_work
       if parent_tenant.present? && !self.account_cname.include?('demo')
-        Ubiquity::SharedIndexSolrServiceWrapper.new(self.to_solr, 'add', parent_tenant).update
+        Ubiquity::SharedIndexSolrServiceWrapper.new(self.to_solr, 'add', parent_tenant, get_file_sets).update
 
         #if you switch the tenant back to the one that owns the work, you will get a blacklight error rendering show
         AccountElevator.switch!(self.account_cname)
@@ -30,6 +30,12 @@ module Ubiquity
       if account.present? && account.parent.present?
         parent = account.parent
         parent.cname
+      end
+    end
+
+    def get_file_sets
+      if self.try(:file_sets).present?
+        self.file_sets
       end
     end
 

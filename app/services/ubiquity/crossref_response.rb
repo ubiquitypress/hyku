@@ -109,27 +109,6 @@ module Ubiquity
       attributes['license'].first['URL']
     end
 
-    # def auto_populated_fields
-    #   fields = []
-    #   fields << 'Title' if title.present?
-    #   fields << 'Creator' if creator.present?
-    #   fields << "Published year" if date_published_year.present?
-    #   fields << "Published month" if date_published_month.present?
-    #   fields << "Published day" if date_published_day.present?
-    #   fields << 'DOI' if doi.present?
-    #   fields << 'Journal Title' if journal_title.present?
-    #   fields << 'ISSN' if issn.present?
-    #   fields << 'eISSN' if eissn.present?
-    #   fields << 'Abstract' if abstract.present?
-    #   fields << 'Keyword' if keyword.present?
-    #   fields << 'ISBN' if isbn.present?
-    #   fields << 'Licence' if license.present?
-    #   fields << 'Publisher' if publisher.present?
-    #   # fields << 'version' if version.present?
-
-    #   "The following fields were auto-populated - #{fields.to_sentence}"
-    # end
-
     def data
       if error.present?
         { 'error' => error }

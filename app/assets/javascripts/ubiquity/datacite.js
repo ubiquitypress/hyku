@@ -83,8 +83,8 @@ function fetchDataciteData(url) {
           populateKeyword(result.data.keyword)
         }
         //IE11 will not show the ,message when .val() is used hence .html()
-        var str = "The following fields were auto-populated " + field_array.slice(0, field_array.length - 1).join(', ') + ", and " + field_array.slice(-1);
-        $(".ubiquity-fields-populated").html(str)
+        var message = "The following fields were auto-populated " + field_array.slice(0, field_array.length - 1).join(', ') + ", and " + field_array.slice(-1);
+        $(".ubiquity-fields-populated").html(message)
         $(".ubiquity-fields-populated").show()
       } else {
         $(".ubiquity-fields-populated-error").html(result.data.error)
@@ -96,7 +96,7 @@ function fetchDataciteData(url) {
 
 function populateRelatedIdentifierValues(relatedArray){
   $.each(relatedArray, function(key, value){
-      addValues(key, value);
+    addValues(key, value);
   })
 }
 
@@ -108,7 +108,7 @@ function populateKeyword(keywordArray){
 
 function addKeywordValues(key, value){
   if (key == 0) {
-  $(".ubiquity-keyword:last").val(value)
+    $(".ubiquity-keyword:last").val(value)
   }
   else{
     var parent_li = $(".ubiquity-keyword:last").parent();
@@ -140,7 +140,7 @@ function addValues(key, value) {
 
 function populateCreatorValues(creatorArray){
   $.each(creatorArray, function(key, value){
-      addCreatorValues(key, value);
+    addCreatorValues(key, value);
   })
 }
 

@@ -27,7 +27,15 @@ module Ubiquity
     end
 
     def license
-      attributes.dig('license')
+      if attributes.dig('license').present?
+        url_array = attributes.dig('license').split('/')
+        url_collection = Hyrax::LicenseService.new.select_active_options.map(&:last)
+        url_array.pop if url_array.last == 'legalcode'
+        url_array.shift(2) # Removing the http, https and // part in the url
+        regex_url_str = "(?:http|https)://" + url_array.map { |ele| "(#{ele})" }.join('/')
+        regex_url_exp = Regexp.new regex_url_str
+        url_collection.select { |e| e.match regex_url_exp }.first
+      end
     end
 
     def doi
@@ -63,7 +71,7 @@ module Ubiquity
       fields << 'DOI' if doi.present?
       fields << 'Related Identifier' if related_identifier.present?
       fields << 'Abstract' if abstract.present?
-      fields << 'Licence' if (license.present? && licence_present?.include?(license))
+      fields << 'Licence' if license.present?
       # fields << 'version' if version.present?
 
       "The following fields were auto-populated - #{fields.to_sentence}"

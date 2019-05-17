@@ -63,20 +63,6 @@ module Ubiquity
       end
     end
 
-    def auto_populated_fields
-      fields = []
-      fields << 'Title' if title.present?
-      fields << 'Creator' if creator.present?
-      fields << "Published" if date_published_year.present?
-      fields << 'DOI' if doi.present?
-      fields << 'Related Identifier' if related_identifier.present?
-      fields << 'Abstract' if abstract.present?
-      fields << 'Licence' if license.present?
-      # fields << 'version' if version.present?
-
-      "The following fields were auto-populated - #{fields.to_sentence}"
-    end
-
     def data
       if error.present?
         { 'error' => error }
@@ -86,13 +72,12 @@ module Ubiquity
           "title": title, "published_year": date_published_year,
           "abstract": abstract, "version": version,
           "creator_group": creator, "license": license,
-          "auto_populated": auto_populated_fields,
           "doi": doi
         }
       end
     end
 
-     private
+    private
 
       def creator_without_seperated_names(data)
         new_group = data.map {|hash| hash['literal']}
@@ -124,13 +109,5 @@ module Ubiquity
         end
         new_creator_group
       end
-
-    #fetches list licences from config/authorities/licenses.yml
-    # returns each record in the form of ["CC BY 4.0 Attribution", "https://creativecommons.org/licenses/by/4.0/"]
-    # we are returning just the last part eg [ "https://creativecommons.org/licenses/by/4.0/"]
-    def licence_present?
-      licences = Hyrax::LicenseService.new.select_all_options
-      licences.map(&:last)
-    end
   end
 end

@@ -14,30 +14,77 @@ function fetchDataciteData(url) {
   var host = window.document.location.host;
   var protocol = window.document.location.protocol;
   var fullHost = protocol + '//' + host + '/available_ubiquity_titles/call_datasite';
+  var field_array = [];
   $.ajax({
     url: fullHost,
     type: "POST",
     data: {"url": url},
     success: function(result){
       if (result.data.error  === undefined) {
-        $(".ubiquity-title").val(result.data.title)
-        $('.ubiquity-abstract').val(result.data.abstract)
-        $('.ubiquity-doi').val(result.data.doi)
+        if($('.ubiquity-title').length != 0 && result.data.title != null) {
+          $(".ubiquity-title").val(result.data.title)
+          field_array.push('Title')
+        }
+        if ($('.ubiquity-abstract').length != 0 && result.data.abstract != null) {
+          field_array.push('Abstract')
+          $('.ubiquity-abstract').val(result.data.abstract)
+        }
+        if($('.ubiquity-doi').length != 0 && result.data.doi != null) {
+          field_array.push('DOI')
+          $('.ubiquity-doi').val(result.data.doi)
+        }
         //populate dropdown
-        $('.ubiquity-date-published-year').val(result.data.published_year);
-        $('.ubiquity-date-published-month').val(result.data.published_month);
-        $('.ubiquity-date-published-day').val(result.data.published_day);
-        $('.ubiquity-license').val(result.data.license);
-        $('.ubiquity-issn').val(result.data.issn);
-        $('.ubiquity-journal-title').val(result.data.journal_title);
-        $('.ubiquity-eissn').val(result.data.eissn);
-        $('.ubiquity-isbn').val(result.data.isbn);
-        $('.ubiquity-publisher').val(result.data.publisher);
-        populateRelatedIdentifierValues(result.data.related_identifier_group)
-        populateCreatorValues(result.data.creator_group)
-        populateKeyword(result.data.keyword)
+        if($('.ubiquity-date-published-year').length != 0 && result.data.published_year != null) {
+          field_array.push('Published Year')
+          $('.ubiquity-date-published-year').val(result.data.published_year);
+        }
+        if($('.ubiquity-date-published-month').length != 0 && result.data.published_month != null) {
+          field_array.push('Published Month')
+          $('.ubiquity-date-published-month').val(result.data.published_month);
+        }
+        if($('.ubiquity-date-published-day').length != 0 && result.data.published_day != null) {
+          field_array.push('Published Day')
+          $('.ubiquity-date-published-day').val(result.data.published_day);
+        }
+        if($('.ubiquity-license').length != 0 && result.data.license != null) {
+          field_array.push('Licence')
+          $('.ubiquity-license').val(result.data.license);
+        }
+        if($('.ubiquity-issn').length != 0 && result.data.issn != null) {
+          field_array.push('ISSN')
+          $('.ubiquity-issn').val(result.data.issn);
+        }
+        if($('.ubiquity-journal-title').length != 0 && result.data.journal_title != null) {
+          field_array.push('Journal Title')
+          $('.ubiquity-journal-title').val(result.data.journal_title);
+        }
+        if($('.ubiquity-eissn').length != 0 && result.data.eissn != null) {
+          field_array.push('eISSN')
+          $('.ubiquity-eissn').val(result.data.eissn);
+        }
+        if($('.ubiquity-isbn').length != 0 && result.data.isbn != null) {
+          field_array.push('ISBN')
+          $('.ubiquity-isbn').val(result.data.isbn);
+        }
+        if($('.ubiquity-publisher').length != 0 && result.data.publisher != null) {
+          field_array.push('Publisher')
+          $('.ubiquity-publisher').val(result.data.publisher);
+        }
+        if ($(".ubiquity-meta-related-identifier") != 0 && result.data.related_identifier_group != null) {
+          field_array.push('Related Identifier')
+          populateRelatedIdentifierValues(result.data.related_identifier_group)
+        }
+        if ($(".ubiquity-meta-creator").length != 0 && result.data.creator_group != null) {
+          field_array.push('Creator')
+          populateCreatorValues(result.data.creator_group)
+        }
+        if ($(".ubiquity-keyword").length != 0 && result.data.keyword != null) {
+          field_array.push('Keyword')
+          populateKeyword(result.data.keyword)
+        }
         //IE11 will not show the ,message when .val() is used hence .html()
-        $(".ubiquity-fields-populated").html(result.data.auto_populated)
+        var message = "The following fields were auto-populated " + field_array.slice(0, field_array.length - 1).join(', ') + ", and " + field_array.slice(-1);
+        $(".ubiquity-fields-populated").html(message)
         $(".ubiquity-fields-populated").show()
       } else {
         $(".ubiquity-fields-populated-error").html(result.data.error)
@@ -49,7 +96,7 @@ function fetchDataciteData(url) {
 
 function populateRelatedIdentifierValues(relatedArray){
   $.each(relatedArray, function(key, value){
-      addValues(key, value);
+    addValues(key, value);
   })
 }
 
@@ -61,7 +108,7 @@ function populateKeyword(keywordArray){
 
 function addKeywordValues(key, value){
   if (key == 0) {
-   $(".ubiquity-keyword:last").val(value)
+    $(".ubiquity-keyword:last").val(value)
   }
   else{
     var parent_li = $(".ubiquity-keyword:last").parent();
@@ -71,7 +118,6 @@ function addKeywordValues(key, value){
     $(".ubiquity-keyword:last").val(value);
   }
 }
-
 
 function addValues(key, value) {
 
@@ -94,7 +140,7 @@ function addValues(key, value) {
 
 function populateCreatorValues(creatorArray){
   $.each(creatorArray, function(key, value){
-      addCreatorValues(key, value);
+    addCreatorValues(key, value);
   })
 }
 

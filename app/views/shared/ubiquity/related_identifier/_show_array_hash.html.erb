@@ -15,7 +15,8 @@
         </li>
         <li class="attribute relation_type">
           <% if hash['related_identifier_type'] %>
-            <%= "relation: #{hash['relation_type']}" %>
+            <% array_list = RelationTypeService.new.select_active_options.uniq %>
+            <%= "relation: " + array_list.select{|e| e[1] == hash['relation_type']}.first[0] %>
           <% end %>
         </li>
       </ul>

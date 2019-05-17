@@ -2,7 +2,7 @@
 
 <div class="ubiquity-meta-related-identifier" >
   <label class="control-label multi_value optional" for="<% template %>_related_identifier">Related identifier</label>
-  <p class="help-block">Globally unique identifiers, such as ISNI, ARK, ISBN, ISSN, EISSN, arXiv, etc.</p>
+  <p class="help-block">Globally unique identifiers, such as ISNI, ARK etc. For ISBN, ISSN and EISSN, use the separate fields.</p>
   <%= text_field_tag "#{template}[related_identifier_group][][related_identifier]", nil,
                      class: "#{template}_related_identifier_group form-control multi-text-field multi_value related_identifier",
                      name: "#{template}[related_identifier_group][][related_identifier]"
@@ -21,8 +21,8 @@
   <p class="help-block">If you have listed a related identifier, then state its relationship to the work, e.g. cites or
     continues the work.</p>
   <%= select_tag "#{template}[related_identifier_group][][relation_type]",
-      content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select(RelationTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s),
-      {:class => 'form-control multi-text-field multi_value related_identifier_relation'} %>
+      options_for_select(RelationTypeService.new.select_active_options.uniq),
+      {:class => 'form-control multi-text-field multi_value related_identifier_relation', prompt: 'select one...'} %>
 
   <br>
   <a href="#" style="color:red;" class="remove_related_identifier form-group" data-removeUbiquityrelatedIdentifier=".ubiquity-meta-related-identifier">

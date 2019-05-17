@@ -30,7 +30,7 @@ en:
   simple_form:
     hints:
       defaults:
-        license: "Licencing and distribution information governing access to the work.
+        license: "Licensing and distribution information governing access to the work.
                   Select from the provided drop-down list, or add to ‘additional information’ field below, if it is not included in the list"
         extent: "The extent (size, duration, number, etc.) of the work."
       labels:

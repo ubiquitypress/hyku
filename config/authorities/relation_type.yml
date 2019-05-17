@@ -1,63 +1,63 @@
 terms:
   - id: IsCitedBy
-    term: IsCitedBy
+    term: Is Cited By
   - id: Cites
     term: Cites
   - id: IsSupplementTo
-    term: IsSupplementTo
+    term: Is Supplement To
   - id: IsSupplementedBy
-    term: IsSupplementedBy
+    term: Is Supplemented By
   - id: IsContinuedBy
-    term: IsContinuedBy
+    term: Is Continued By
   - id: Continues
     term: Continues
   - id: IsDescribedBy
-    term: IsDescribedBy
+    term: Is Described By
   - id: Describes
     term: Describes
   - id: HasMetadata
-    term: HasMetadata
+    term: Has Metadata
   - id: IsMetadataFor
-    term: IsMetadataFor
+    term: Is Metadata For
   - id: HasVersion
-    term: HasVersion
+    term: Has Version
   - id: IsVersionOf
-    term: IsVersionOf
+    term: Is Version Of
   - id: IsNewVersionOf
-    term: IsNewVersionOf
+    term: Is New Version Of
   - id: IsPreviousVersionOf
-    term: IsPreviousVersionOf
+    term: Is Previous Version Of
   - id: IsPartOf
-    term: IsPartOf
+    term: Is Part Of
   - id: HasPart
-    term: HasPart
+    term: Has Part
   - id: IsReferencedBy
-    term: IsReferencedBy
+    term: Is Referenced By
   - id: References
     term: References
   - id: IsDocumentedBy
-    term: IsDocumentedBy
+    term: Is Documented By
   - id: Documents
     term: Documents
   - id: IsCompiledBy
-    term: IsCompiledBy
+    term: Is Compiled By
   - id: Compiles
     term: Compiles
   - id: IsVariantFormOf
-    term: IsVariantFormOf
+    term: Is Variant Form Of
   - id: IsOriginalFormOf
-    term: IsOriginalFormOf
+    term: Is Original Form Of
   - id: IsIdenticalTo
-    term: IsIdenticalTo
+    term: Is Identical To
   - id: IsReviewedBy
-    term: IsReviewedBy
+    term: Is Reviewed By
   - id: Reviews
     term: Reviews
   - id: IsDerivedFrom
-    term: IsDerivedFrom
+    term: Is Derived From
   - id: IsSourceOf
-    term: IsSourceOf
+    term: Is Source Of
   - id: IsRequiredBy
-    term: IsRequiredBy
+    term: Is Required By
   - id: Requires
     term: Requires

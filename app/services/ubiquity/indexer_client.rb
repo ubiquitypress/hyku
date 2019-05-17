@@ -47,7 +47,7 @@ module Ubiquity
     def set_official_url(id, status_code)
       work = ActiveFedora::Base.find(id)
       if [201, 200].include? status_code
-        work.update(official_link: "https://doi.org/#{work.draft_doi}")
+        work.update(official_link: "https://doi.org/#{work.draft_doi}") if work.official_link.blank?
       end
     end
 

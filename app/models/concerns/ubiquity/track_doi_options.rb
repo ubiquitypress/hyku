@@ -7,9 +7,38 @@ module Ubiquity
       before_save :set_disable_draft_doi
       before_save :set_doi
       before_save :autocreate_draft_doi
+      before_save :set_manual_doi
+    end
+
+    def set_manual_doi
+      if self.doi.present?
+        clean_doi
+      end
     end
 
     private
+
+    def clean_doi
+      new_doi = URI(self.doi.strip)
+      new_doi_path = prepend_protocol.try(:path)
+      if new_doi_path.slice(0) == "/"
+        new_doi_path.slice!(0)
+        self.doi = new_doi_path
+      else
+        self.doi = new_doi_path
+      end
+    end
+
+    def prepend_protocol
+     doi = URI(self.doi.strip)
+     doi_path = doi.path
+     if doi.scheme  == nil
+       new_doi = doi_path.split('/').count < 3 ? doi_path : 'https://' + doi_path
+       full_doi = URI(new_doi)
+     else
+       doi
+     end
+    end
 
     def set_disable_draft_doi
       if self.doi_options == "Do not mint DOI"

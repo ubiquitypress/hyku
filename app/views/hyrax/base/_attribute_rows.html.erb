@@ -20,9 +20,9 @@
   <%= render "shared/ubiquity/editor/show", presenter: presenter %>
 <% end %>
 <%= presenter.attribute_to_html(:journal_title, render_as: :string) %>
-<%= presenter.attribute_to_html(:volume, render_as: :alphabetical_sort) %>
+<%= presenter.attribute_to_html(:volume, render_as: :string) %>
 <%= presenter.attribute_to_html(:edition, render_as: :string) %>
-<%= presenter.attribute_to_html(:version, render_as: :alphabetical_sort) %>
+<%= presenter.attribute_to_html(:version, render_as: :string) %>
 <%= presenter.attribute_to_html(:issue, render_as: :string) %>
 <%= presenter.attribute_to_html(:pagination, render_as: :page) %>
 <%= presenter.attribute_to_html(:article_num, label: "Article number", render_as: :string) %>

@@ -102,4 +102,8 @@ module ApplicationHelper
    end
   end
 
+  def check_is_parent_shared_search_page
+    @record =  Account.where(cname: request.host, data: {'is_parent': 'true'}).first
+  end
+
 end

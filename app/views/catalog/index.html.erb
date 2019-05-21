@@ -1,0 +1,18 @@
+<!-- copied from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/catalog/index.html.erb -->
+<div id="sidebar" class="<%= sidebar_classes %>">
+  <%= render 'search_sidebar' %>
+</div>
+
+<div id="content" class="<%= main_content_classes %>">
+  <% unless has_search_parameters? %>
+    <%# if there are no input/search related params, display the "home" partial -%>
+    <%= render 'home' %>
+    <%= render 'shared/sitelinks_search_box' %>
+  <% else %>
+  <!-- added by Ubiquity for shared search page -->
+  <% if  check_is_parent_shared_search_page.present? %>
+   <h4 class="text-center text-muted facet-headings">Search results from Shared Research Repository</h4>
+  <% end %>
+    <%= render 'search_results' %>
+  <% end %>
+</div>

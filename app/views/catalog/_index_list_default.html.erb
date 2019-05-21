@@ -11,7 +11,10 @@
         <% if ["creator_tesim", "contributor_tesim" , "editor_tesim"].include? field_name %>
           <th class="search-meta-label"><span class="attribute-label h4"><%= render_index_field_label document, field: field_name %></span></th>
           <td><%= display_json_fields(document, field_name) %></td>
-        <% else %>
+        <% elsif check_is_parent_shared_search_page.present? && field_name == 'institution_tesim' %>
+          <th class="search-meta-label"><span class="attribute-label h4"><%= render_index_field_label document, field: field_name %></span></th>
+          <td><%= document.institution.sort.to_sentence %></td>
+        <% elsif field_name != 'institution_tesim'  %>
           <th class="search-meta-label"><span class="attribute-label h4"><%= render_index_field_label document, field: field_name %></span></th>
           <td><%= doc_presenter.field_value field_name %></td>
         <% end %>
@@ -19,8 +22,16 @@
       <% end %>
 
     <% end %>
+      <tr>
+        <th class="search-meta-label"><span class="attribute-label h4"> Type: </span></th>
+        <% if document.to_h["has_model_ssim"].first == 'Collection' %>
+          <td><%= document.to_h["has_model_ssim"].first %></td>
+        <% else %>
+          <td>Work</td>
+        <% end %>
+      </tr>
+      
   </table>
 </div>
 
 <div class="clearfix"></div>
-    

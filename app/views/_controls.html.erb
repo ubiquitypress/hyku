@@ -2,6 +2,8 @@
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
   <div class="container-fluid">
     <div class="row">
+      <!-- condition by ubiquity to hide tabs on shared search page -->
+      <% if check_is_parent_shared_search_page.blank? %>
       <div class="row col-sm-5 col-md-6">
         <ul class="nav navbar-nav homepage-nav-ul">
           <li class="col-xs-2 col-sm-3 col-md-3" <%= 'class=active' if current_page?(hyrax.root_path) %>>
@@ -14,6 +16,7 @@
             <%= link_to t(:'hyrax.controls.contact'), hyrax.contact_path %></li>
         </ul>
       </div>
+      <% end %>
       <div class="searchbar-right navbar-right col-sm-7 col-md-6">
         <%= render partial: 'catalog/search_form' %>
       </div>

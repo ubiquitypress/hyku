@@ -61,7 +61,9 @@ class CatalogController < ApplicationController
     config.add_facet_field solr_name("keyword", :facetable), limit: 5
     config.add_facet_field solr_name('member_of_collections', :symbol), limit: 5, label: 'Collections'
     # config.add_facet_field solr_name("subject", :facetable), limit: 5
-    config.add_facet_field solr_name("language", :facetable), limit: 5
+    config.add_facet_field solr_name("institution", :facetable), limit: 5, label: 'Institution'
+
+    config.add_facet_field solr_name("language", :facetable), limit: 5, label: 'Language'
     # config.add_facet_field solr_name("based_near_label", :facetable), limit: 5
     # config.add_facet_field solr_name("publisher", :facetable), limit: 5
     # config.add_facet_field solr_name("file_format", :facetable), limit: 5
@@ -85,7 +87,7 @@ class CatalogController < ApplicationController
     # config.add_index_field solr_name("related_exhibition", :stored_searchable), label: "Related exhibition"
     # config.add_index_field solr_name("related_exhibition_date", :stored_searchable), label: "Related exhibition date"
     # config.add_index_field solr_name("media", :stored_searchable), label: "Material/media"
-    # config.add_index_field solr_name("institution", :stored_searchable), label: "Institution"
+    config.add_index_field solr_name("institution", :stored_searchable), label: "Institution"
     # config.add_index_field solr_name("event_title", :stored_searchable), label: "Event title", link_to_search: solr_name("event_title", :facetable)
     # config.add_index_field solr_name("event_date", :stored_searchable), label: "Event date"
     # config.add_index_field solr_name("abstract", :stored_searchable), label: "Abstract"

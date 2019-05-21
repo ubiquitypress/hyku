@@ -1,0 +1,12 @@
+<%# Copied from hyrax/app/views/hyrax/base/_form_metadata.html.erb to remove the form instructions %>
+<div class="base-terms">
+  <% f.object.primary_terms.each do |term| %>
+    <%= render_edit_field_partial(term, f: f) %>
+  <% end %>
+</div>
+<div id="extended-terms">
+  <%= render 'form_media', f: f %>
+  <% f.object.secondary_terms.each do |term| %>
+    <%= render_edit_field_partial(term, f: f) %>
+  <% end %>
+</div>

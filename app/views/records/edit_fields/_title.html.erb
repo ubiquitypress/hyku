@@ -3,7 +3,7 @@
 <h3 class="ubiquity-title-fail-message" style="color:red;font-weight: 900;"> </h3>
 
 <% my_model_name = f.object.model.class.to_s.underscore %>
-<label class="control-label" for="<% my_model_name %>_title">Title
+<label class="control-label" for="<%= my_model_name %>_title">Title
   <span class="label label-info required-tag">required</span>
 </label>
 <%= text_field_tag "#{my_model_name}[title][]", f.object.model.title.first, id: "#{my_model_name}_title",

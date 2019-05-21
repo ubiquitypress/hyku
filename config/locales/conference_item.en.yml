@@ -24,7 +24,7 @@ en:
         date_accepted: The date the item was accepted for publication. For example, this may be when receiving an acceptance letter from a publisher or when the final text has been copyedited and approved. You can provide just the year or a more specific date if you have this available.
         date_submitted: The date the item was submitted for review to the publisher.  You can provide just the year or a more specific date if you have this available.
         journal_title: Please enter the journal title, e.g. Journal of Eighteenth-Century Studies.
-        issue: For journals, specify the issue number (if available). For books/reports, if this is not the first edition, please specify in the format e.g. 1st, 2nd. Leave blank if not required.
+        issue: Specify the issue number, where available.
         volume: Please enter the number, e.g. 2, 76. Leave blank if there are no volumes.
         pagination: For a contribution or article, this can be the range of pages e.g. 1-13, for an entire volume it can be the total number of pages.
         article_num: If there is an article number, e.g. e0183455 (usually found in online-only journals)

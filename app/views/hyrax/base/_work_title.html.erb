@@ -1,13 +1,2 @@
-<% presenter.title.each_with_index do |title, index| %>
-  <% if index == 0 %>
-    <h1>
-      <%= title %>
-      <% if current_user %>
-        <%= presenter.permission_badge %>
-        <%= presenter.workflow.badge %>
-      <%end%>
-    </h1>
-  <% else %>
-    <h1><%= title %></h1>
-  <% end %>
-<% end %>
+<!-- Copied from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/base/_work_title.erb -->
+<%= render 'shared/ubiquity/works/custom_work_title', presenter: presenter %>

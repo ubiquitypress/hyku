@@ -5,7 +5,9 @@
 <% r_t = f.object.model.resource_type.first %>
 <% set_default = r_t || ResourceTypesService.select_default(model_name) %>
 
-<label class="control-label" for="<% template %>_resource_type">Resource Type</label>
+<label class="control-label" for="<% template %>_resource_type">Resource Type
+      <span class="label label-info required-tag">required</span>
+</label>
 <p class="help-block">Select the specific resource type that best describes the work.</p>
 <%= select_tag "#{template}[resource_type][]",
       options_from_collection_for_select( ResourceTypesService.select_template_options(model_name),

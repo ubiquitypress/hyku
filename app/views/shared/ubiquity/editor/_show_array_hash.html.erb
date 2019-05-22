@@ -5,7 +5,7 @@
       <% array_of_hash.each do |hash| %>
         <li class="attribute editor">
           <span itemprop="editor" style="float:left">
-            <% order_ary = ['editor_isni', 'editor_orcid', 'editor_family_name', 'editor_given_name', 'editor_organization_name']%>
+            <% order_ary = ['editor_family_name', 'editor_given_name', 'editor_organization_name']%>
             <%= display_data_with_comma_separated(hash, order_ary)%>
            </span>
            <span itemprop="editor">

@@ -9,7 +9,7 @@
     <%= select_tag "#{template}[contributor_group][][contributor_name_type]",
         content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("contributor_name_type")), class: "ubiquity_contributor_name_type" %>
 
-    <p class="help-block">A person or group you want to recognize for playing a role in the creation of the work, but not
+    <p class="help-block">A person or group you want to recognise for playing a role in the creation of the work, but not
       the primary role.</p>
 
     <label class="control-label multi_value optional" for="#{template}_contributor_isni">
@@ -31,10 +31,10 @@
     <span class="ubiquity_personal_fields">
 
       <label class="control-label multi_value optional" for="#{template}_contributor_orcid">
-        Contributor ORCiD</label>
+        Contributor ORCID</label>
       <%= text_field_tag "#{template}[contributor_group][][contributor_orcid]", hash.dig("contributor_orcid"),
                          class: "#{template}_contributor_group form-control multi-text-field multi_value",
-                         placeholder: 'Please enter the contributor\'s ORCiD, e.g. 0000-1234-5678-9101.',
+                         placeholder: 'Please enter the contributor\'s ORCID, e.g. 0000-1234-5678-9101.',
                          name: "#{template}[contributor_group][][contributor_orcid]"
       %>
       <br/>
@@ -67,7 +67,7 @@
     </span> <!-- closes ubiquity_personal_fields -->
     <br/>
     <label class="control-label multi_value optional" for="#{template}_contributor_type">
-      Contributor type</label>
+      Contributor Role</label>
     <%= select_tag "#{template}[contributor_group][][contributor_type]",
                    content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( ContributorGroupService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("contributor_type"))
     %>

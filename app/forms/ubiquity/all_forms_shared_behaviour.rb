@@ -35,9 +35,9 @@ module Ubiquity
                        based_near
                        related_url
                        source]
-      self.required_fields -= %i[title creator keyword rights_statement]
+      self.required_fields -= %i[title creator keyword rights_statement institution]
       # `title` and `creator` to be removed first then inserted in the desired order
-      self.required_fields += %i[title resource_type creator institution]
+      self.required_fields += %i[title resource_type creator ]
       #add to enable the form to a hidden_field needed to set the
       #tenants cname on each each work to allow for cross tenant shared search
       self.terms.push(:account_cname)

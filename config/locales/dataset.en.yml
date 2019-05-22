@@ -17,20 +17,19 @@ en:
         funder: Use full name e.g. Arts and Humanities Research Council
         fndr_project_ref: This may be the grant number as allocated by the funding body.
         add_info: Please enter any additional information here that has not been entered. The information added in this field will be visible to everyone in the public view.
-        date_published: The date the item was published and made publicly available. You can provide just the year or a more specific date if you have this available.
+        date_published: The date the item was published and made publicly available. Provide just the year or a more specific date. If you are minting a DOI for this item, this field is mandatory.
         date_accepted: The date the item was accepted for publication. For example, this may be when receiving an acceptance letter from a publisher or when the final text has been copyedited and approved. You can provide just the year or a more specific date if you have this available.
         date_submitted: The date the item was submitted for review to the publisher.  You can provide just the year or a more specific date if you have this available.
-        journal_title: Please enter the journal title, e.g. Journal of Eighteenth-Century Studies
-        issue: For journals, specify the issue number (if available). For books/reports, if this is not the first edition, please specify in the format e.g. 1st, 2nd. Leave blank if not required.
+        journal_title: Please enter the journal title, e.g. Journal of Eighteenth-Century Studies.
+        issue: Specify the issue number, where available.
         volume: Please enter the number, e.g. 2, 76. Leave blank if there are no volumes.
-        pagination: Please enter details of the pagination. For a contribution or article, this can be the range of pages e.g. 1-13, for an entire volume it can be the total number of pages.
+        pagination: For a contribution or article, this can be the range of pages e.g. 1-13, for an entire volume it can be the total number of pages.
         article_num: If there is an article number, e.g. e0183455 (usually found in online-only journals)
         rights_holder: Please identify the rights holder if different from the creator.
         project_name: The name of the project the work relates to, where relevant
         doi: A persistent digital object identifier, if your item already has one then enter this here in the following model e.g. 10.21250/tcq.
-             If you would like a DOI to be created for this item then leave this field blank.
-        issn: ISSN, International Standard Serial Number. You can enter either the ISSN or the eISSN or both, if available.
-        eissn: eISSN, Electronic International Standard Serial Number. You can enter either the ISSN or the eISSN or both, if available.
+        issn: Enter either the ISSN or the eISSN or both, if available.
+        eissn: Enter either the ISSN or the eISSN or both, if available.
         official_link: Please enter the official URL, e.g. the publisher's link to the item.
         place_of_publication: Enter the town/city and country, or country only, e.g. London, UK or UK
         abstract: Please provide a short abstract or description of the item.

@@ -30,6 +30,8 @@
 //= require hyku/groups/uploader
 //= require ubiquity/external_services_modal
 //= require ubiquity/datacite
+//= require ubiquity/custom_required_fields
+//= require ubiquity/preselect_institution_by_tenant
 //= require jquery.flot.pie
 //= require flot_graph
 //= require statistics_tab_manager

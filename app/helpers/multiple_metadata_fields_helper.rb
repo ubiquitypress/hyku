@@ -5,7 +5,7 @@ module MultipleMetadataFieldsHelper
   def ubiquity_sort_field(sort_array)
     sort_array - [["relevance", "score desc, system_create_dtsi desc"], ["date modified ▼", "system_modified_dtsi desc"], ["date modified ▲", "system_modified_dtsi asc"]]
   end
-  
+
   #takes in the creator value passed in from a solr document
   #It receives an array containing a single json string eg ['[{creator_family_name: mike}, {creator_given_name: hu}]']
   #We parse that json into an array of hashes as in [{creator_family_name: mike}, {creator_given_name: hu}]
@@ -79,10 +79,13 @@ module MultipleMetadataFieldsHelper
     end
   end
 
+  def display_data_with_comma_separated(creator_hash, display_order)
+    display_order.map { |ele| creator_hash[ele].presence }.compact.join(', ')
+  end
+
   def remove_last_semicolon(array_size, index)
     ';' if index != array_size
   end
-
 
   def add_image_space?(hash_keys)
     get_name = get_field_name(hash_keys)

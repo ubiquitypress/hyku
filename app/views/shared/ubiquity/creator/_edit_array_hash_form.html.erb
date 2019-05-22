@@ -42,11 +42,11 @@
   <span class="ubiquity_personal_fields">
 
     <label class="ubiquity_creator_orcid control-label multi_value optional" for="#{template}_creator_orcid">
-      Creator ORCiD</label>
+      Creator ORCID</label>
 
     <%= text_field_tag "#{template}[creator_group][][creator_orcid]", hash.dig("creator_orcid"),
                        class: "ubiquity_creator_orcid #{template}_creator_group form-control multi-text-field multi_value",
-                       placeholder: 'Please enter the creator\'s ORCiD, e.g. 0000-1234-5678-9101.',
+                       placeholder: 'Please enter the creator\'s ORCID, e.g. 0000-1234-5678-9101.',
                        name: "#{template}[creator_group][][creator_orcid]"
     %>
     <br>

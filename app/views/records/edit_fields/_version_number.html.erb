@@ -1,0 +1,5 @@
+<% my_model_name = f.object.model.class.to_s.underscore %>
+<label class="control-label" for="<%= my_model_name %>_version_number">Version number</label>
+<%= text_field_tag "#{my_model_name}[version_number][]", f.object.model.version_number.first, id: "#{my_model_name}_version_number",
+  class: "form-control ubiquity-version-number" %>
+<br>

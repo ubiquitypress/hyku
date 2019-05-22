@@ -1,0 +1,14 @@
+<%# Called in app/views/hyrax/base/_work_title.html.erb %>
+<% presenter.title.each_with_index do |title, index| %>
+  <% if index == 0 %>
+    <h1>
+      <%= title %>
+      <% if current_user %>
+        <%= presenter.permission_badge %>
+        <%= presenter.workflow.badge %>
+      <%end%>
+    </h1>
+  <% else %>
+    <h1><%= title %></h1>
+  <% end %>
+<% end %>

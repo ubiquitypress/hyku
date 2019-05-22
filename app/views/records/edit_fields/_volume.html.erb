@@ -1,0 +1,6 @@
+<% my_model_name = f.object.model.class.to_s.underscore %>
+<label class="control-label" for="<%= my_model_name %>_volume">Volume</label>
+<p class='help-block'> <%= t('simple_form.hints.defaults.volume') %></p>
+<%= text_field_tag "#{my_model_name}[volume][]", f.object.model.volume.first, id: "#{my_model_name}_volume",
+  class: "form-control ubiquity-volume" %>
+<br>

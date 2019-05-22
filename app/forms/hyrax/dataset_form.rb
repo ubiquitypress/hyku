@@ -7,11 +7,11 @@ module Hyrax
 
     self.model_class = ::Dataset
     #version is used in the show page but populated by version_number from the edit and new form
-    self.terms += %i[title resource_type creator contributor rendering_ids doi draft_doi alternate_identifier
-
-                     version_number related_identifier publisher place_of_publication
-                     date_published date_accepted date_submitted abstract keyword library_of_congress_classification
-                     institution org_unit refereed official_link related_url project_name funder fndr_project_ref
-                     language license rights_statement rights_holder add_info]
+    self.terms += %i[title resource_type creator contributor abstract date_published institution
+                     org_unit project_name funder fndr_project_ref version_number publisher place_of_publication
+                     date_accepted date_submitted official_link related_url language license rights_statement
+                     rights_holder doi draft_doi alternate_identifier related_identifier refereed keyword
+                     library_of_congress_classification add_info rendering_ids
+                    ]
   end
 end

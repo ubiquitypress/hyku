@@ -1,7 +1,8 @@
 <!--based on hyrax/app/views/hyrax/base/_metadata.html.erb, so we can change spelling of 'licence' on the show page -->
 
 <table class="table table-striped <%= dom_class(presenter) %> attributes" <%= presenter.microdata_type_to_html %>>
-  <%= render 'relationships_parent_rows', presenter: presenter %>
+  <%# Commented as part of removing the Admin Set row from the show page %>
+  <%#= render 'relationships_parent_rows', presenter: presenter %>
   <%= render 'attribute_rows', presenter: presenter %>
   <%= presenter.attribute_to_html(:embargo_release_date, render_as: :date, html_dl: true) %>
   <%= presenter.attribute_to_html(:lease_expiration_date, render_as: :date, html_dl: true) %>

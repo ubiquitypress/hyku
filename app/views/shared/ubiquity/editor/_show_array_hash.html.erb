@@ -5,15 +5,8 @@
       <% array_of_hash.each do |hash| %>
         <li class="attribute editor">
           <span itemprop="editor" style="float:left">
-            <% if hash['editor_organization_name'] %>
-              <%= hash['editor_organization_name'] %>
-            <% end %>
-            <% if hash['editor_family_name']  %>
-              <%= hash['editor_family_name'] %><% if display_comma?(hash.keys, ["editor_family_name", "editor_given_name"]) %>,<% end %>
-            <% end %>
-            <% if hash['editor_given_name'] %>
-              <%= hash['editor_given_name'] %>
-            <% end %>
+            <% order_ary = ['editor_isni', 'editor_orcid', 'editor_family_name', 'editor_given_name', 'editor_organization_name']%>
+            <%= display_data_with_comma_separated(hash, order_ary)%>
            </span>
            <span itemprop="editor">
              <% if display_paren?(hash.keys, ["editor_orcid", 'editor_isni']) %>

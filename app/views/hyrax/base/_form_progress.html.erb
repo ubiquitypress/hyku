@@ -10,8 +10,8 @@
       <% if check_datacite_enable?(request.original_url) %>
         <div class="list-group-item">
           <div>
-            <% if f.object.model.disable_draft_doi == 'false' %>
-              <span class='draft-doi-text-styling'>Draft DOI:</span> <span><%= draft_doi %></span>
+            <% if draft_doi.present? %>
+                <span class='draft-doi-text-styling'><%= display_doi_text(f)%>:</span> <span><%= draft_doi %></span>
             <%else%>
               <div style='display:none;' class='draft_doi_hidden_div'>
                 <span class='draft-doi-text-styling'>Draft DOI:</span> <span id="draft_doi"></span>

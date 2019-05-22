@@ -5,8 +5,8 @@ module Ubiquity
 
     included do
       before_save :set_disable_draft_doi
-      before_save :set_doi
       before_save :autocreate_draft_doi
+      before_save :set_doi
       before_save :set_manual_doi
     end
 

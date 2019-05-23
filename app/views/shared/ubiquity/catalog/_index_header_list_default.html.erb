@@ -1,0 +1,10 @@
+<!-- copied from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/catalog/_index_header_list_default.html.erb -->
+<!-- this partial is called in app/views/catalog/_index_header_list_default.html.erb -->
+
+<h2>
+    <% model = document.to_h %>
+    <% url = generate_work_url(model['id'], model["account_cname_tesim"].try(:first), model["has_model_ssim"].first, request.host, request.protocol, request.port) %>
+    <%= link_to model["title_tesim"].first, url %>
+    <!-- please dont remove yet-->
+    <%# link_to document.title_or_label, document %>
+</h2>

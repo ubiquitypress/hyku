@@ -15,7 +15,7 @@
 
         <% if check_is_parent_shared_search_page.present? && field_name == 'institution_tesim'  %>
           <th class="search-meta-label"><span class="attribute-label h4"><%= render_index_field_label document, field: field_name %></span></th>
-          <td><%= document.institution.sort.to_sentence %></td>
+          <td><%= link_to_facet_list(document.institution.sort, 'institution', '', '; ').html_safe %></td>
         <% end %>
 
         <% if ['resource_type_tesim', 'institution_tesim', "creator_tesim", "contributor_tesim" , "editor_tesim"].exclude? field_name %>

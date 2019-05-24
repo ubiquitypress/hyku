@@ -7,7 +7,7 @@ module Hyrax
     include Ubiquity::EditorMetadataFormBehaviour
 
     self.model_class = ::BookContribution
-    self.terms += %i[title resource_type creator contributor date_published abstract institution
+    self.terms += %i[title alternate_title resource_type creator contributor date_published abstract institution
                      org_unit project_name funder fndr_project_ref series_name book_title editor
                      volume edition pagination publisher place_of_publication isbn issn eissn
                      date_accepted date_submitted official_link related_url language license

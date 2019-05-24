@@ -1,0 +1,10 @@
+<tr>
+  <th>Collections</th>
+  <td>
+    <ul class="tabular">
+      <% presenter.member_of_collection_presenters.each do |p| %>
+        <li class='attribute'><%= link_to p.to_s, hyrax.collection_path(p.id), class: 'collection-link' %></li>
+      <% end %>
+    </ul>
+  </td>
+</tr>

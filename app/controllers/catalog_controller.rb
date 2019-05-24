@@ -133,9 +133,11 @@ class CatalogController < ApplicationController
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
     config.add_show_field solr_name("title", :stored_searchable)
+    config.add_show_field solr_name("alternative_title", :stored_searchable)
     config.add_show_field solr_name("description", :stored_searchable)
     config.add_show_field solr_name("keyword", :stored_searchable)
     config.add_show_field solr_name("journal_title", :stored_searchable)
+    config.add_show_field solr_name("alternative_journal_title", :stored_searchable)
     config.add_show_field solr_name("subject", :stored_searchable)
     config.add_show_field solr_name("creator", :stored_searchable)
     config.add_show_field solr_name("version", :stored_searchable)
@@ -183,7 +185,6 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("rights_holder", :stored_searchable)
     # config.add_show_field solr_name("creator_search", :stored_searchable)
     config.add_show_field solr_name("library_of_congress_classification", :stored_searchable)
-    config.add_show_field solr_name("alternative_title", :stored_searchable)
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
     #

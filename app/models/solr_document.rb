@@ -67,4 +67,5 @@ class SolrDocument
   attribute :creator_search, Solr::Array, solr_name('creator_search')
   attribute :library_of_congress_classification, Solr::Array, solr_name('library_of_congress_classification')
   attribute :alternative_title, Solr::Array, solr_name('alternative_title')
+  attribute :alternative_journal_title, Solr::Array, solr_name('alternative_title')
 end

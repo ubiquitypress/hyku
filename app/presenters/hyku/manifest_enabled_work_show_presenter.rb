@@ -4,7 +4,7 @@ module Hyku
 
     delegate :extent, :rendering_ids, :isni, :institution, :org_unit, :refereed, :doi, :isbn, :issn, :eissn,
              :funder, :fndr_project_ref, :add_info,
-             :journal_title, :issue, :volume, :pagination, :article_num, :project_name, :rights_holder,
+             :journal_title, :alternative_journal_title, :issue, :volume, :pagination, :article_num, :project_name, :rights_holder,
              :official_link, :place_of_publication, :series_name, :edition, :abstract, :version,
              :event_title, :event_date, :event_location, :book_title, :editor,
              :alternate_identifier, :related_identifier, :media, :related_exhibition, :related_exhibition_date,

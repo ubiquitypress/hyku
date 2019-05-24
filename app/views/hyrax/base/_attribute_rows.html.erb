@@ -1,6 +1,9 @@
 <%# display contributor using the show partial  -->
 <%# presenter.attribute_to_html(:contributor, render_as: :faceted) %>
 <%= presenter.attribute_to_html(:resource_type, render_as: :resource_type) %>
+<% if presenter.member_of_collection_presenters.present?%>
+  <%= render 'shared/ubiquity/collections/show_collection_list', presenter: presenter %>
+<%end%>
 <%= render "shared/ubiquity/creator/show", presenter: presenter %>
 <%= render "shared/ubiquity/contributor/show", presenter: presenter %>
 <%= presenter.attribute_to_html(:abstract, render_as: :string) %>

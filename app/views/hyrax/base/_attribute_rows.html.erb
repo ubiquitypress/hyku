@@ -45,6 +45,7 @@
 <%= presenter.attribute_to_html(:keyword, render_as: :alphabetical_sort_facet) %>
 <%= presenter.attribute_to_html(:library_of_congress_classification, render_as: :faceted, label: "Library of Congress Classification") %>
 <%= presenter.attribute_to_html(:add_info, label: "Additional Information", render_as: :string) %>
+<%= presenter.attribute_to_html(:alternative_title, render_as: :string) %>
 <%#= presenter.attribute_to_html(:date_submitted) %>
 <%#= presenter.attribute_to_html(:refereed) %>
 <%#= presenter.attribute_to_html(:creator_search) %>

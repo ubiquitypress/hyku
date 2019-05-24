@@ -67,6 +67,10 @@ module Ubiquity
         index.as :stored_searchable
       end
 
+      property :alternative_journal_title, predicate: ::RDF::Vocab::SCHEMA.alternativeHeadline, multiple: true do |index|
+        index.as :stored_searchable
+      end
+
     end
   end
 end

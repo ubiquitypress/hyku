@@ -24,8 +24,9 @@ module Ubiquity
       all_existing_titles = []
       alternative_titles_array.each {|object| all_existing_titles.push(*object.alternative_title)}
       #calling to_a on Active Triple relation
+      all_existing_titles = all_existing_titles & alternative_title
       if all_existing_titles && title_object
-        records = all_existing_titles.to_a + title_object.to_a
+        all_existing_titles.to_a.push title_object.first
         elsif all_existing_titles
           all_existing_titles.to_a
         elsif  title_object

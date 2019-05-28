@@ -9,6 +9,7 @@ en:
   simple_form:
     hints:
       defaults:
+        alternative_title: Alternative title for the item, such as a translated or abbreviated form of the title.
         institution: The institution to which the item is affiliated.
         org_unit: The department, or unit, that the works sits within as per the organisational structure.
         refereed: Please select if the item was peer-reviewed.

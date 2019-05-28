@@ -12,7 +12,6 @@ function checkTitle (ubiquityAlternativeTitleAry, ubiquityModel, ubiquityTitle) 
       'alternative_title': ubiquityAlternativeTitleAry
     },
     success: function(result) {
-      console.log(result.title_list)
       if (result.data === 'true') {
         $('.ubiquity-title-fail-message').html(result.message + result.title_list);
         $('.ubiquity-title-fail-message').show();
@@ -36,7 +35,6 @@ function checkTitle (ubiquityAlternativeTitleAry, ubiquityModel, ubiquityTitle) 
     ubiquityAlternativeTitleAry = $('.ubiquity-alternative-title').map(function() {
       return $(this).val();
     }).get();
-    //ubiquityAlternativeTitleAry.push(ubiquityTitle);
     if (ubiquityAlternativeTitleAry.length !== 0) {
       checkTitle(ubiquityAlternativeTitleAry, ubiquityModel, ubiquityTitle);
     }

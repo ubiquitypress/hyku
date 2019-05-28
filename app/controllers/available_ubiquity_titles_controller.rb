@@ -4,8 +4,9 @@ class AvailableUbiquityTitlesController < ApplicationController
     title_present_ary = []
     title = params["title"]
     alternative_title = params["alternative_title"]
-    both_title = [params["title"]] + params["alternative_title"].to_a
-    returned_titles = get_records(title, alternative_title)
+    #add title to array so we can add to the alternative_title which is an array
+    both_title = [ params["title"] ] + params["alternative_title"].to_a
+    returned_titles = Ubiquity::TitleChecker.new(title, alternative_title, params["model_class"]).get_records
       if returned_titles.present?
         title_present_ary.push(*returned_titles)
         should_find_title = true
@@ -26,39 +27,6 @@ end
 
 
 private
-
- def find_title(title)
-   data = params["model_class"].constantize.where(title: title).first
- end
-
- def find_alternative_title(alternative_title)
-   data = params["model_class"].constantize.where(alternative_title: alternative_title) #.first
- end
-
-  def get_records(title, alternative_title)
-    title_object = find_title(title).try(:title)
-    alternative_titles_array = find_alternative_title(alternative_title)
-    all_existing_titles = []
-    alternative_titles_array.each {|object| all_existing_titles.push(*object.alternative_title)}
-    #calling to_a on Active Triple relation
-    if all_existing_titles && title_object
-      records = all_existing_titles.to_a + title_object.to_a
-      elsif all_existing_titles
-        all_existing_titles.to_a
-      elsif  title_object
-        title_object.title.to_a
-    end
-  end
-
-  def add_all_titles(alternative_titles_array, title_object)
-    if all_existing_titles && title_object
-      records = all_existing_titles.to_a + title_object.to_a
-    elsif all_existing_titles
-      all_existing_titles.to_a
-    elsif  title_object
-       title_object.title.to_a
-    end
-  end
 
   def title_unavailable_message_based_on_count(record_ary)
     if record_ary.count > 1

@@ -5,13 +5,14 @@
     var doiOptions = $('ul.doi_option_list input:checked').val();
     var draftDoi = $(".ubiquity-draft-doi").val()
     var doi = $(".ubiquity-doi").val()
+    var officialLink = $(".ubiquity-official-link").val()
 
     if (publicationYear == '') {
       var msg = 'Please go back and add a publication year, as this is required by DataCite.'
       $('#modal_button_save').attr('disabled', true);
     }
-    else if (doi !== '' && visibility == "embargo"){
-      var msg = 'Please note that an updated record will be sent to DataCite on release of embargo, if you continue.'
+    else if ( officialLink !== '' && visibility == "embargo"){
+      var msg = 'This work has a live DOI which will fail to lead to the work if you add an embargo. If you do continue, an updated record will be sent to DataCite on release of the embargo. '
       $('#modal_button_save').attr('disabled', false);
     }
     else if (doi !== ''){

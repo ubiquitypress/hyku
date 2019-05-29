@@ -12,6 +12,12 @@ $(document).on("turbolinks:load", function(){
     }
     appendRequiredTagToLabel($('.ubiquity-institution').attr('id'))
   }
+  if ($('.resource-type').length != 0){
+    if ($('.resource-type').val() == ''){
+      $('.resource-type').prop('required', true)
+    }
+    appendRequiredTagToLabel($('.resource-type').attr('id'))
+  }
 
   $('#with_files_submit').on('click', function(e) {
     if ($('.ubiquity-institution:first').val() == ''){

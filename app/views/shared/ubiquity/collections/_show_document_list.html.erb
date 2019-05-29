@@ -4,21 +4,36 @@ Thesame is copied from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hy
        https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/collections/_show_document_list.html.erb
     Consolidated here to share across both
 %>
-<table class="table table-striped">
-  <caption class="sr-only">List of items in this collection</caption>
-  <thead>
-  <tr>
-    <th>&nbsp;</th>
-    <th>Title</th>
-    <th>Creator</th>
-    <th>Date Uploaded</th>
-    <th>Visibility</th>
-    <% if (current_user && controller.class == Hyrax::Dashboard::CollectionsController) %>
-      <th>Action</th>
-    <% end %>
-  </tr>
-  </thead>
-  <tbody>
-    <%= render partial: 'show_document_list_row', collection: documents, as: :document %>
-  </tbody>
-</table>
+<div class="panel-body">
+  <div class="table-responsive">
+    <table class="table table-striped" id="collection-table-datatable">
+      <caption class="sr-only">List of items in this collection</caption>
+      <thead>
+      <tr>
+        <th></th>
+        <th class="text-center">Title</th>
+        <th>Creator</th>
+        <th>Date Published</th>
+        <th>Resource Type</th>
+        <% if (current_user && controller.class == Hyrax::Dashboard::CollectionsController) %>
+          <th>Action</th>
+        <% end %>
+      </tr>
+      </thead>
+      <tbody>
+        <%= render partial: 'show_document_list_row', collection: documents, as: :document %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  $('#collection-table-datatable').DataTable({
+    'aaSorting': [[1, 'asc']],
+    "columnDefs": [{
+      "targets": [0],
+      "orderable": false,
+      "searchable": false
+    }],
+  });
+</script>

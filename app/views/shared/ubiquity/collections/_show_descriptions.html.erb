@@ -8,20 +8,11 @@ hyrax/dashboard/collection/_show_descriptions.html.erb
 
 <dl class="dl-horizontal metadata-collections">
   <% present_terms(presenter, presenter.terms_with_values) do |r, term| %>
-      <% if term == :resource_type %>
+    <% if term == :total_items %>
       <div>
         <dt><%= r.label(term) %></dt>
-        <dd>
-          <% presenter.resource_type.each do |rt| %>
-            <%= ::ResourceTypesService.label(rt) %><br>
-          <% end %>
-        </dd>
+        <dd><%= r.value(term) %></dd>
       </div>
-      <% elsif term == :total_items %>
-        <div>
-          <dt><%= r.label(term) %></dt>
-          <dd><%= r.value(term) %></dd>
-        </div>
-      <% end %>
+    <% end %>
   <% end %>
 </dl>

@@ -2,7 +2,8 @@
 // We removed these fields as required from the back end and made it required via JS
 
 $(document).on("turbolinks:load", function(){
-  if ($('.ubiquity-journal-title').length != 0){
+  var ubiquityModel = $('.ubiquity-title-checker').data('ubiquity-model')
+  if (($('.ubiquity-journal-title').length != 0) && (ubiquityModel === 'Article')) {
     $('.ubiquity-journal-title').prop('required', true)
     appendRequiredTagToLabel($('.ubiquity-journal-title').attr('id'))
   }

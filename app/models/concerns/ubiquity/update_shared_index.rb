@@ -11,7 +11,6 @@ module Ubiquity
 
       after_save :reindex_members_after_collection_update
       after_destroy :reindex_members_to_remove_deleted_collection
-      attr_accessor :works_in_collection
     end
 
     private

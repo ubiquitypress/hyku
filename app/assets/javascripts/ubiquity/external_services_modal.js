@@ -37,11 +37,11 @@
       var doiOptions = $('ul.doi_option_list input:checked').val();
       var visibilityCheck = (visibility == "open" || visibility == "embargo")
       var doiOptionsCheck = (doiOptions == "Mint DOI:Registered" || doiOptions == "Mint DOI:Findable")
-      //conditions to be met to show modal window
       $("#doi-options-modal").on("click", "#modal_button_save", function() {
         $('#doi-options-modal').modal('hide');
         $('.simple_form').submit();
       });
+      //conditions to be met to show modal window
       if (visibilityCheck && doiOptionsCheck) {
         $('#doi-options-modal').modal('show');
         e.preventDefault();

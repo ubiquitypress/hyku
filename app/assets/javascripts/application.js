@@ -16,7 +16,6 @@
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 // ubiquityPress added jquery-chosen
 //= require chosen-jquery
-//= require ubiquity/datatable-settings
 //= require turbolinks
 // Required by Blacklight
 //= require blacklight/blacklight
@@ -24,6 +23,7 @@
 // Moved the Hyku JS *above* the Hyrax JS to resolve #1187 (following
 // a pattern found in ScholarSphere)
 //
+//= require ubiquity/datatable-settings
 //= require hyku/groups/per_page
 //= require hyku/groups/add_member
 

@@ -6,9 +6,6 @@ class Ubiquity::AccountSettingsController < AdminController
   def index
   end
 
-  def create
-  end
-
   def edit
   end
 

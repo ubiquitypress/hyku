@@ -7,9 +7,9 @@ module Ubiquity
     def create
     # not spam and a valid form
       if @contact_form.valid?
-        Hyrax::ContactMailer.contact(@contact_form).deliver_now unless params["bot_catch"].present?
+        Hyrax::ContactMailer.contact(@contact_form).deliver_now unless params["fax-number"].present?
         flash.now[:notice] = 'Thank you for your message!'
-        after_deliver unless params["bot_catch"].present?
+        after_deliver unless params["fax-number"].present?
         @contact_form = Hyrax::ContactForm.new
       else
         flash.now[:error] = 'Sorry, this message was not sent successfully. '
@@ -20,5 +20,18 @@ module Ubiquity
       handle_create_exception(exception)
     end
 
- end
+    # Declare the e-mail headers. It accepts anything the mail method
+   # in ActionMailer accepts.
+   def headers
+     #account = Account.where(cname: 'adaria.localhost').first
+     account = Account.find_by(tenant: Apartment::Tenant.current)
+     {
+       subject: "#{Hyrax.config.subject_prefix} #{subject}",
+       #to: Hyrax.config.contact_email,
+       to: account.contact_email || Hyrax.config.contact_email,
+       from: email
+     }
+   end
+
+  end
 end

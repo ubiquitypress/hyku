@@ -1,0 +1,18 @@
+
+<% provide :page_header do %>
+  <h1><span class="fa fa-user"></span> Account Settings</h1>
+<% end %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Account Email</th>
+        <th>Actions</th>
+    </tr>
+  </thead>
+    <tbody>
+      <tr>
+        <td><%= @account && @account.settings && @account.settings["contact_email"] %></td>
+        <td><%= link_to "Edit this email", edit_admin_account_setting_path(@account), class: "btn btn-xs btn-default" %></td>
+      </tr>
+    </tbody>
+</table>

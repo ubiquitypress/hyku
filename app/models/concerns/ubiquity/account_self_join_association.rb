@@ -6,7 +6,7 @@ module Ubiquity
       belongs_to :parent, class_name: "Account", inverse_of: :parent, foreign_key: "parent_id", optional: true
 
       store_accessor :data, :is_parent
-      store_accessor :settings
+      store_accessor :settings, :contact_email
     end
   end
 end

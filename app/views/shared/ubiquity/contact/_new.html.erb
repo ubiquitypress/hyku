@@ -11,6 +11,7 @@
 <% message_value = params[:message_value] %>
 <% if user_signed_in? %>
   <% nm = current_user.name %>
+  <%= current_user.inspect %>
   <% em = current_user.email %>
   <% sbj = "Research repository enquiry" %>
 <% else %>
@@ -31,7 +32,7 @@
     </div>
   </div>
 
-  <input type="text" name="bot_catch" style="display:none !important" tabindex="-1" autocomplete="off">
+  <input type="text" name="fax-number" style="display:none !important" tabindex="-1" autocomplete="off">
 
   <div class="form-group">
     <%= f.label :name, t('hyrax.contact_form.name_label'), class: "col-sm-2 control-label" %>

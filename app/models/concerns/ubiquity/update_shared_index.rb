@@ -3,13 +3,19 @@ module Ubiquity
     extend ActiveSupport::Concern
 
     included do
-      after_save :add_work, on: [:create, :update]
-      before_destroy :remove_work
+      after_save :add_record_to_index, on: [:create, :update]
+      before_destroy :remove_record_from_index
+
+      before_save :get_collection_child_records
+      before_destroy :get_collection_child_records
+
+      after_save :reindex_members_after_collection_update
+      after_destroy :reindex_members_to_remove_deleted_collection
     end
 
     private
 
-    def add_work
+    def add_record_to_index
       if parent_tenant.present? && !self.account_cname.include?('demo')
         Ubiquity::SharedIndexSolrServiceWrapper.new(self.to_solr, 'add', parent_tenant, get_file_sets).update
 
@@ -18,7 +24,7 @@ module Ubiquity
       end
     end
 
-    def remove_work
+    def remove_record_from_index
       if parent_tenant.present? && !self.account_cname.include?('demo')
           Ubiquity::SharedIndexSolrServiceWrapper.new(self.to_solr, 'remove', parent_tenant).update
           AccountElevator.switch!(self.account_cname)
@@ -34,8 +40,32 @@ module Ubiquity
     end
 
     def get_file_sets
-      if self.try(:file_sets).present?
-        self.file_sets
+      if self.try(:thumbnail).present?
+        self.thumbnail.to_solr
+      end
+    end
+
+    def get_collection_child_records
+      if self.class == Collection
+        #get works in this collection
+        self.try(:member_objects)
+      end
+    end
+
+    def reindex_members_to_remove_deleted_collection
+      if self.class == Collection && get_collection_child_records.present?
+        get_collection_child_records.each do |work|
+          work.member_of_collections.clear
+          work.save
+        end
+      end
+    end
+
+    def reindex_members_after_collection_update
+      if self.class == Collection && get_collection_child_records.present?
+        get_collection_child_records.each do |work|
+          work.save
+        end
       end
     end
 

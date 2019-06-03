@@ -13,9 +13,14 @@ module Ubiquity
       AccountElevator.switch!(tenant_cname)
       if action_type == "add"
         add_record
+        index_file_set
       elsif action_type == "remove"
         remove_record
       end
+    end
+
+    def self.deindex_work(solr_document, parent_cname)
+      new(solr_document, 'remove', parent_cname).update
     end
 
     private
@@ -29,6 +34,7 @@ module Ubiquity
 
     def index_file_set
       if file_set_doc.present?
+        #this is not an rsolr coonection but it calls it
         service = ActiveFedora::SolrService
         service.add(file_set_doc, softCommit: true)
         service.commit
@@ -36,8 +42,16 @@ module Ubiquity
     end
 
     def remove_record
-      service = ActiveFedora::SolrService
-      service.delete(solr_document[:id])
+      #get rsolr connection
+      service = ActiveFedora::SolrService.instance.conn
+
+      if solr_document.class == Hash
+        service.delete_by_id(solr_document[:id])
+      else
+        ids = solr_document.map { |hash| hash[:id] }
+        #an rsolr method
+        service.delete_by_id(ids)
+      end
       service.commit
     end
 

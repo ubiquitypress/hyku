@@ -1,0 +1,10 @@
+<% presenter.title.each_with_index do |title, index| %>
+  <% if index == 0 %>
+    <h1 class='collection-title'><%= title %>
+    <% if current_user %>
+      <%= presenter.permission_badge %></h1>
+    <% end %>
+  <% else %>
+    <h1 class='collection-title'><%= title %></h1>
+  <% end %>
+<% end %>

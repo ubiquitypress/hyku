@@ -174,3 +174,15 @@ h2, .modal-title, .h2 {
 div#announcement {
   background-color: rgb(60, 60, 60);
 }
+
+.collection-title{
+  font-size: 30px;
+}
+
+td.details-control {
+  background: url(asset-path('details_open.png')) no-repeat center center;
+  cursor: pointer;
+}
+tr.shown td.details-control {
+  background: url(asset-path('details_close.png')) no-repeat center center;
+}

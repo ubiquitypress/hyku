@@ -1,5 +1,5 @@
 <%#
-  displays dashboard collection list including the works 
+  displays dashboard collection list including the works
  Copied from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/dashboard/collections/_show_document_list_row.html.erb
     and
     called in app/views/hyrax/collections/_show_document_list_row.html.erb
@@ -9,13 +9,12 @@
 %>
 
 <% id = document.id %>
-<tr id="document_<%= id %>">
-  <td>&nbsp;
-    <% if current_user and document.depositor != current_user.user_key %>
-      <i class="glyphicon glyphicon-share-alt"/>
-    <% end %>
-  </td>
+<tr id="document_<%= id %>" data-child-value="<%= collection_child_row_details(document)%>">
+  <td class='details-control'></td>
   <td>
+    <% if current_user and document.depositor != current_user.user_key %>
+      <i class="glyphicon glyphicon-share-alt"></i>
+    <% end %>
     <div class="media">
       <% if  document.thumbnail_id %>
         <%= render 'shared/ubiquity/thumbnail', document: document,  presenter: Hyku::ManifestEnabledWorkShowPresenter.new(document, current_ability) %>
@@ -27,7 +26,6 @@
       <div class="media-body">
         <h4 class="media-heading">
           <%= link_to document.title_or_label, [main_app, document], id: "src_copy_link#{id}", class: "#{'document-title' if document.title_or_label == document.label}" %>
-          <a href="#" class="small" title="Click for more details"><i id="expand_<%= id %>" class="glyphicon glyphicon-chevron-right"></i></a>
         </h4>
         <%= render_collection_links(document) %>
       </div>
@@ -41,32 +39,15 @@
   </td>
   <td>
     <div class="media-body">
-      <span class="text-center"><%= document.date_uploaded %></span>
+      <span class="text-center"><%= document.date_published.first %></span>
     </div>
   </td>
   <td class="text-center">
-    <%= render_visibility_link(document) %>
+    <%= human_readable_resource_type(document.resource_type) %>
   </td>
   <% if (current_user && controller.class == Hyrax::Dashboard::CollectionsController) %>
     <td class="text-center">
       <%= render 'show_document_list_menu', document: document %>
     </td>
   <% end %>
-</tr>
-<tr id="detail_<%= id %>"> <!--  document detail"> -->
-  <td colspan="6">
-    <dl class="expanded-details row">
-      <dt class="col-xs-3 col-lg-2">Resource Type:</dt>
-      <%# Eg of resoure_type data are ["ConferenceItem default Conference paper (unpublished)"] and ["Image default Still image"] %>
-      <dd class="col-xs-9 col-lg-4"><%=  human_readable_resource_type(document.resource_type) %></dd>
-      <dt class="col-xs-3 col-lg-2">Depositor:</dt>
-      <dd class="col-xs-9 col-lg-4"><%= link_to_profile document.depositor %></dd>
-      <dt class="col-xs-3 col-lg-2">Date Published:</dt>
-      <dd class="col-xs-9 col-lg-4"><%= document.date_published.first %></dd>
-        <% if document.keyword.present? %>
-          <dt class="col-xs-3 col-lg-2">Keywords:</dt>
-          <dd class="col-xs-9 col-lg-4"><%= document.keyword.to_sentence %></dd>
-        <% end %>
-    </dl>
-  </td>
 </tr>

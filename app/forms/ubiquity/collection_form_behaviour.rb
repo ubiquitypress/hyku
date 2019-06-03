@@ -14,7 +14,6 @@ module Ubiquity
          identifier
          based_near
          related_url
-         resource_type
          account_cname
        ]
     end

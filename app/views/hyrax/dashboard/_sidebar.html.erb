@@ -106,6 +106,9 @@
           <%= menu.nav_link(hyrax.edit_pages_path) do %>
             <span class="fa fa-file-text-o"></span> <span class="sidebar-action-text"><%= t('hyrax.admin.sidebar.pages') %></span>
           <% end %>
+          <%= menu.nav_link(main_app.admin_account_settings_path) do %>
+            <span class="fa fa-user"></span> <span class="sidebar-action-text"><%= t('hyrax.admin.sidebar.account_settings') %></span>
+          <% end %>
           <%= menu.nav_link(hyrax.edit_content_blocks_path) do %>
             <span class="fa fa-square-o"></span> <span class="sidebar-action-text"><%= t('hyrax.admin.sidebar.content_blocks') %></span>
           <% end %>

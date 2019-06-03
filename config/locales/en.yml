@@ -144,6 +144,7 @@ en:
             colors: 'Colors'
       sidebar:
         accounts:                     'Accounts'
+        account_settings:             'Account Settings'
         activity_summary:             'Activity summary'
         content_blocks:               'Content Blocks'
         labels:                       'Labels'

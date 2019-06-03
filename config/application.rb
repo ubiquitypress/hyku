@@ -50,6 +50,8 @@ module Hyku
       Hyrax::UploadsController.prepend(::Ubiquity::UploadsControllerOverride)
       # Loading module to initiateCall back for the Hyrax::UploadedFile model for file_status attribute
       Hyrax::UploadedFile.include(::Ubiquity::FileUploadCallback)
+      # Modifying the default limit of the per page in the collection list to 100
+      Hyrax::CollectionMemberSearchBuilder.include(::Ubiquity::CollectionListPerPage)
       Account.class_eval {include Ubiquity::AccountSelfJoinAssociation}
       Hyrax::FileSetPresenter.class_eval {delegate :visibility, to: :solr_document}
     end

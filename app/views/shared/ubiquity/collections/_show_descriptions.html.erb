@@ -11,7 +11,7 @@ hyrax/dashboard/collection/_show_descriptions.html.erb
     <% if term == :total_items %>
       <div>
         <dt><%= r.label(term) %></dt>
-        <dd><%= r.value(term) %></dd>
+        <dd id='total_count_div'><%= r.value(term) %></dd>
       </div>
     <% end %>
   <% end %>

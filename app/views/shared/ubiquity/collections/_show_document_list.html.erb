@@ -6,17 +6,17 @@ Thesame is copied from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hy
 %>
 <div class="panel-body">
   <div class="table-responsive">
-    <table class="table table-striped" id="collection-table-datatable">
+    <table class="table table-striped collection-table-datatable">
       <caption class="sr-only">List of items in this collection</caption>
       <thead>
       <tr>
-        <th></th>
+        <th class='no-sort'></th>
         <th class="text-center">Title</th>
         <th>Creator</th>
         <th>Date Published</th>
-        <th>Resource Type</th>
+        <th style='width:15%;'>Resource Type</th>
         <% if (current_user && controller.class == Hyrax::Dashboard::CollectionsController) %>
-          <th>Action</th>
+          <th class='no-sort'>Action</th>
         <% end %>
       </tr>
       </thead>
@@ -26,14 +26,3 @@ Thesame is copied from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hy
     </table>
   </div>
 </div>
-
-<script>
-  $('#collection-table-datatable').DataTable({
-    'aaSorting': [[1, 'asc']],
-    "columnDefs": [{
-      "targets": [0],
-      "orderable": false,
-      "searchable": false
-    }],
-  });
-</script>

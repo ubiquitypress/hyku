@@ -16,6 +16,7 @@
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 // ubiquityPress added jquery-chosen
 //= require chosen-jquery
+//= require ubiquity/datatable-settings
 //= require turbolinks
 // Required by Blacklight
 //= require blacklight/blacklight

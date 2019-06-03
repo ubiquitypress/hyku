@@ -15,6 +15,8 @@ terms:
     term: Capstone Project
   - id: Conference Proceeding
     term: Conference Proceeding
+  - id: Collection
+    term: Collection
   - id: Dataset default Dataset
     term: Dataset
   - id: Dataset

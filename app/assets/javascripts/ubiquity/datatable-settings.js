@@ -19,9 +19,9 @@ $(document).on("turbolinks:load", function(event){
       if(str2 == "")
         return -1;
       if(str1.length > str2.length & str1.slice(0,str2.length) === str2)
-        return 1
-      if(str2.length > str1.length & str2.slice(0,str1.length) === str1)
         return -1
+      if(str2.length > str1.length & str2.slice(0,str1.length) === str1)
+        return 1
 
       return ((str1 < str2) ? -1 : ((str1 > str2) ? 1 : 0));
     },
@@ -34,9 +34,9 @@ $(document).on("turbolinks:load", function(event){
       if(str2 == "")
         return -1;
       if(str1.length > str2.length & str1.slice(0,str2.length) === str2)
-        return 1
-      if(str2.length > str1.length & str2.slice(0,str1.length) === str1)
         return -1
+      if(str2.length > str1.length & str2.slice(0,str1.length) === str1)
+        return 1
 
       return ((str1 < str2) ? 1 : ((str1 > str2) ? -1 : 0));
     }

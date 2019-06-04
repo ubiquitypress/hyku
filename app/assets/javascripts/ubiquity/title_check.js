@@ -26,7 +26,6 @@ function checkTitle (ubiquityAlternativeTitleAry, ubiquityModel, ubiquityTitle) 
 
   $(document).on('turbolinks:load', function() {
   $('.ubiquity-title-checker').click(function(event) {
-    console.log('enter here')
     var ubiquityModel, ubiquityAlternativeTitleAry, ubiquityTitle;
     event.preventDefault();
     $('.ubiquity-title-success-message').hide();

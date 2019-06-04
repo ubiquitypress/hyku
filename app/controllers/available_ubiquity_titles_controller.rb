@@ -1,6 +1,5 @@
 class AvailableUbiquityTitlesController < ApplicationController
   def check
-    title_present_ary = []
     title = params["title"]
     alternative_title = params["alternative_title"].reject(&:blank?)
     both_title = [ params["title"] ] + params["alternative_title"].to_a

@@ -25,6 +25,9 @@ $(document).on("turbolinks:load", function(){
       $('.ubiquity-institution').prop('required', true)
     }
   });
+
+  // Setting the defaut admin set value for the Administrative Set
+  $('.ubiquity-admin-set').val('admin_set/default');
 });
 
 // This method appends the 'Required' tag in the label of the corresponding field

@@ -35,8 +35,6 @@ function checkTitle (ubiquityAlternativeTitleAry, ubiquityModel, ubiquityTitle) 
     ubiquityAlternativeTitleAry = $('.ubiquity-alternative-title').map(function() {
       return $(this).val();
     }).get();
-    if (ubiquityAlternativeTitleAry.length !== 0) {
-      checkTitle(ubiquityAlternativeTitleAry, ubiquityModel, ubiquityTitle);
-    }
+    checkTitle(ubiquityAlternativeTitleAry, ubiquityModel, ubiquityTitle);
   });
 });

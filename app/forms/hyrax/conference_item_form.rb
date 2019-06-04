@@ -5,7 +5,7 @@ module Hyrax
     include Ubiquity::EditorMetadataFormBehaviour
 
     self.model_class = ::ConferenceItem
-    self.terms += %i[title alternative_title resource_type creator contributor abstract date_published institution
+    self.terms += %i[title alt_title resource_type creator contributor abstract date_published institution
                      org_unit project_name funder fndr_project_ref event_title event_location
                      event_date series_name book_title editor volume pagination publisher
                      place_of_publication isbn issn eissn date_accepted date_submitted

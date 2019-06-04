@@ -12,7 +12,7 @@ module Hyrax
     include HydraEditor::Form::Permissions
 
     #version is used in the show page but populated by version_number from the edit and new form
-    self.terms += %i[title alternative_title resource_type creator contributor rendering_ids abstract date_published media
+    self.terms += %i[title alt_title resource_type creator contributor rendering_ids abstract date_published media
                      institution org_unit project_name funder fndr_project_ref event_title event_location event_date
                      series_name book_title editor journal_title volume edition version_number issue pagination article_num
                      publisher place_of_publication isbn issn eissn date_accepted date_submitted official_link

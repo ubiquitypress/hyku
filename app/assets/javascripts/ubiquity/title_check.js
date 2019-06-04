@@ -26,6 +26,7 @@ function checkTitle (ubiquityAlternativeTitleAry, ubiquityModel, ubiquityTitle) 
 
   $(document).on('turbolinks:load', function() {
   $('.ubiquity-title-checker').click(function(event) {
+    console.log('enter here')
     var ubiquityModel, ubiquityAlternativeTitleAry, ubiquityTitle;
     event.preventDefault();
     $('.ubiquity-title-success-message').hide();
@@ -35,8 +36,6 @@ function checkTitle (ubiquityAlternativeTitleAry, ubiquityModel, ubiquityTitle) 
     ubiquityAlternativeTitleAry = $('.ubiquity-alternative-title').map(function() {
       return $(this).val();
     }).get();
-    if (ubiquityAlternativeTitleAry.length !== 0) {
-      checkTitle(ubiquityAlternativeTitleAry, ubiquityModel, ubiquityTitle);
-    }
+    checkTitle(ubiquityAlternativeTitleAry, ubiquityModel, ubiquityTitle);
   });
 });

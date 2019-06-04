@@ -133,7 +133,7 @@ class CatalogController < ApplicationController
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
     config.add_show_field solr_name("title", :stored_searchable)
-    config.add_show_field solr_name("alternative_title", :stored_searchable)
+    config.add_show_field solr_name("alt_title", :stored_searchable)
     config.add_show_field solr_name("description", :stored_searchable)
     config.add_show_field solr_name("keyword", :stored_searchable)
     config.add_show_field solr_name("journal_title", :stored_searchable)
@@ -206,7 +206,7 @@ class CatalogController < ApplicationController
       all_names = config.show_fields.values.map(&:field).join(" ")
       title_name = solr_name("title", :stored_searchable)
       field.solr_parameters = {
-        qf: "#{all_names} file_format_tesim all_text_timv alternative_title_tesim^4.15",
+        qf: "#{all_names} file_format_tesim all_text_timv alt_title_tesim^4.15",
         pf: title_name.to_s
       }
     end

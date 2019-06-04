@@ -74,7 +74,7 @@ module Ubiquity
       property :disable_draft_doi, predicate: ::RDF::Vocab::Bibframe.label, multiple: false do |index|
         index.as :stored_searchable
       end
-      property :alternative_title, predicate: ::RDF::Vocab::Bibframe.identifier, multiple: true do |index|
+      property :alt_title, predicate: ::RDF::Vocab::DC.alternative, multiple: true do |index|
         index.as :stored_searchable
       end
 

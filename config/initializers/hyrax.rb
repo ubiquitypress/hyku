@@ -12,6 +12,8 @@ Hyrax.config do |config|
   # Injected via `rails g hyrax:work Report`
   config.register_curation_concern :report
   config.register_curation_concern :generic_work
+  # Injected via `rails g hyrax:work Exhibition`
+  config.register_curation_concern :exhibition
 
   # Email recipient of messages sent via the contact form
   config.contact_email = Settings.contact_email

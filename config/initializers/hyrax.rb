@@ -13,6 +13,8 @@ Hyrax.config do |config|
   config.register_curation_concern :image
   # Injected via `rails g hyrax:work Report`
   config.register_curation_concern :report
+  # Injected via `rails g hyrax:work ThesisOrDissertation`
+  config.register_curation_concern :thesis_or_dissertation
   config.register_curation_concern :generic_work
 
 

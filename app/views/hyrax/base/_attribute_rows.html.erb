@@ -41,6 +41,7 @@
 <%= presenter.attribute_to_html(:official_link, render_as: :external_url, label: "Official URL") %>
 <%= presenter.attribute_to_html(:related_url, render_as: :external_url, label: "Related URL") %>
 <%= presenter.attribute_to_html(:related_exhibition, render_as: :alphabetical_sort) %>
+<%= presenter.attribute_to_html(:related_exhibition_venue, render_as: :string) %>
 <%= presenter.attribute_to_html(:related_exhibition_date, render_as: :multiple_dates) %>
 <%= presenter.attribute_to_html(:license, render_as: :alphabetical_sort_license, html_dl: true, label: "Licence") %>
 <%= presenter.attribute_to_html(:rights_statement, render_as: :alphabetical_sort_rights_statement) %>
@@ -49,6 +50,7 @@
 <%= render "shared/ubiquity/alternate_identifier/show", presenter: @presenter %>
 <%= render "shared/ubiquity/related_identifier/show", presenter: @presenter %>
 <%= presenter.attribute_to_html(:keyword, render_as: :alphabetical_sort_facet) %>
+<%= presenter.attribute_to_html(:dewey, render_as: :string) %>
 <%= presenter.attribute_to_html(:library_of_congress_classification, render_as: :faceted, label: "Library of Congress Classification") %>
 <%= presenter.attribute_to_html(:add_info, label: "Additional Information", render_as: :string) %>
 <%#= presenter.attribute_to_html(:date_submitted) %>

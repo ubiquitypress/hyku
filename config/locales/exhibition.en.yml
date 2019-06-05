@@ -5,4 +5,4 @@ en:
     select_type:
       exhibition:
         name:               "Exhibition"
-        description:        "Exhibition works"
+        description:        "A single or series of short-term, long-term or permanent installations, or associated outputs."

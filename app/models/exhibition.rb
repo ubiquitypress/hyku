@@ -2,6 +2,13 @@
 #  `rails generate hyrax:work Exhibition`
 class Exhibition < ActiveFedora::Base
   include ::Hyrax::WorkBehavior
+  include HasRendering
+  include Ubiquity::SharedMetadata
+  include Ubiquity::BasicMetadataDecorator
+  include Ubiquity::AllModelsVirtualFields
+  include Ubiquity::EditorMetadataModelConcern
+  include Ubiquity::VersionMetadataModelConcern
+  include Ubiquity::UpdateSharedIndex
 
   self.indexer = ExhibitionIndexer
   # Change this to restrict which works can be added as a child.

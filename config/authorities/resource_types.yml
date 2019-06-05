@@ -102,6 +102,22 @@ terms:
     term: Software
   - id: Dataset Database
     term: Database
+  - id: Exhibition Exhibition
+    term: Exhibition
+  - id: Exhibition Exhibition catalogue
+    term: Exhibition catalogue
+  - id: Exhibition Exhibition object labels
+    term: Exhibition object labels
+  - id: Exhibition Exhibition gallery text
+    term: Exhibition gallery text
+  - id: Exhibition Exhibition-related event
+    term: Exhibition-related event
+  - id: Exhibition Exhibition media transcription
+    term: Exhibition media transcription
+  - id: Exhibition Exhibition audio-visual guide
+    term: Exhibition audio-visual guide
+  - id: Exhibition Festival
+    term: Festival
   - id: GenericWork Blog post
     term: Blog post
   - id: GenericWork Cartographic material

@@ -142,6 +142,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("creator", :stored_searchable)
     config.add_show_field solr_name("version", :stored_searchable)
     config.add_show_field solr_name("related_exhibition", :stored_searchable)
+    config.add_show_field solr_name("related_exhibition_venue", :stored_searchable)
     config.add_show_field solr_name("media", :stored_searchable)
     config.add_show_field solr_name("event_title", :stored_searchable)
     config.add_show_field solr_name("event_date", :stored_searchable)
@@ -183,6 +184,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("project_name", :stored_searchable)
     config.add_show_field solr_name("official_link", :stored_searchable)
     config.add_show_field solr_name("rights_holder", :stored_searchable)
+    config.add_show_field solr_name("dewey", :stored_searchable)
     # config.add_show_field solr_name("creator_search", :stored_searchable)
     config.add_show_field solr_name("library_of_congress_classification", :stored_searchable)
     # "fielded" search configuration. Used by pulldown among other places.

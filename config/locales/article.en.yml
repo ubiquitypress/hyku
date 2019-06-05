@@ -24,6 +24,7 @@ en:
         volume: Please enter the number, e.g. 2, 76. Leave blank if there are no volumes.
         pagination: For a contribution or article, this can be the range of pages e.g. 1-13, for an entire volume it can be the total number of pages.
         article_num: If there is an article number, e.g. e0183455 (usually found in online-only journals)
+        related_exhibition_venue: The venue(s) that hosted the related exhibition.
         rights_holder: Please identify the rights holder if different from the creator.
         project_name: The name of the project the work relates to, where relevant
         doi: A persistent digital object identifier, if your item already has one then enter this here in the following model e.g. 10.21250/tcq.

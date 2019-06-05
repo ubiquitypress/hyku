@@ -71,6 +71,10 @@ module Ubiquity
         index.as :stored_searchable
       end
 
+      property :related_exhibition_venue, predicate: ::RDF::Vocab::SCHEMA.EventVenue, multiple: true do |index|
+        index.as :stored_searchable
+      end
+
     end
   end
 end

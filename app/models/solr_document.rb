@@ -46,6 +46,7 @@ class SolrDocument
   attribute :rights_holder, Solr::Array, solr_name('rights_holder')
   attribute :doi, Solr::Array, solr_name('doi')
   attribute :qualification_name, Solr::Array, solr_name('qualification_name')
+  attribute :qualification_level, Solr::Array, solr_name('qualification_level')
   attribute :isbn, Solr::Array, solr_name('isbn')
   attribute :issn, Solr::Array, solr_name('issn')
   attribute :eissn, Solr::Array, solr_name('eissn')

@@ -1,6 +1,6 @@
 <%# display contributor using the show partial  -->
 <%# presenter.attribute_to_html(:contributor, render_as: :faceted) %>
-<%= presenter.attribute_to_html(:alt_title, render_as: :string) %>
+<%= presenter.attribute_to_html(:alt_title, label: "Alternative Title",  render_as: :string) %>
 <%= presenter.attribute_to_html(:resource_type, render_as: :resource_type) %>
 <% if presenter.member_of_collection_presenters.present?%>
   <%= render 'shared/ubiquity/collections/show_collection_list', presenter: presenter %>
@@ -49,6 +49,7 @@
 <%= presenter.attribute_to_html(:rights_holder, render_as: :alphabetical_sort) %>
 <%= presenter.attribute_to_html(:doi, label: "DOI", render_as: :external_url) %>
 <%= presenter.attribute_to_html(:qualification_name, render_as: :string) %>
+<%= presenter.attribute_to_html(:qualification_level, render_as: :string) %>
 <%= render "shared/ubiquity/alternate_identifier/show", presenter: @presenter %>
 <%= render "shared/ubiquity/related_identifier/show", presenter: @presenter %>
 <%= presenter.attribute_to_html(:keyword, render_as: :alphabetical_sort_facet) %>

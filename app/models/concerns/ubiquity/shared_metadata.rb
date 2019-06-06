@@ -83,6 +83,10 @@ module Ubiquity
         index.as :stored_searchable
       end
 
+      property :qualification_level, predicate: ::RDF::Vocab::BF2.degree, multiple: false do |index|
+        index.as :stored_searchable
+      end
+
     end
   end
 end

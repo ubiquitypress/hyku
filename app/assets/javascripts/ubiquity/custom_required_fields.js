@@ -11,6 +11,10 @@ $(document).on("turbolinks:load", function(){
     $('.ubiquity-qualification-name').prop('required', true)
     appendRequiredTagToLabel($('.ubiquity-qualification-name').attr('id'))
   }
+  if (($('.ubiquity-qualification-level').length != 0) && (ubiquityModel === 'ThesisOrDissertation')) {
+    $('.ubiquity-qualification-level').prop('required', true)
+    appendRequiredTagToLabel($('.ubiquity-qualification-level').attr('id'))
+  }
   if ($('.ubiquity-institution').length != 0){
     if ($('.ubiquity-institution:first').val() == ''){
       $('.ubiquity-institution').prop('required', true)

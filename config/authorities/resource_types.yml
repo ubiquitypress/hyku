@@ -152,6 +152,10 @@ terms:
     term: Moving image
   - id: Image default Still image
     term: Still image
+  - id: ThesisOrDissertation Doctoral thesis
+    term: Doctoral thesis
+  - id: ThesisOrDissertation Master's dissertation
+    term: Master's dissertation
   - id: Image 3D image
     term: 3D image
   - id: Collection 3D image

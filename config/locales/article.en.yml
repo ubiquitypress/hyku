@@ -30,6 +30,7 @@ en:
         doi: A persistent digital object identifier, if your item already has one then enter this here in the following model e.g. 10.21250/tcq.
         issn: Enter either the ISSN or the eISSN or both, if available.
         eissn: Enter either the ISSN or the eISSN or both, if available.
+        current_he_institution: The current name of the HE institution responsible for the thesis. Select one.
         official_link: Please enter the official URL, e.g. the publisher's link to the item.
         place_of_publication: Enter the town/city and country, or country only, e.g. London, UK or UK
         abstract: Please provide a short abstract or description of the item.

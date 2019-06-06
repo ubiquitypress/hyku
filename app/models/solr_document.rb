@@ -48,6 +48,7 @@ class SolrDocument
   attribute :isbn, Solr::Array, solr_name('isbn')
   attribute :issn, Solr::Array, solr_name('issn')
   attribute :eissn, Solr::Array, solr_name('eissn')
+  attribute :current_he_institution, Solr::Array, solr_name('current_he_institution')
   attribute :official_link, Solr::Array, solr_name('official_link')
   attribute :place_of_publication, Solr::Array, solr_name('place_of_publication')
   attribute :series_name, Solr::Array, solr_name('series_name')

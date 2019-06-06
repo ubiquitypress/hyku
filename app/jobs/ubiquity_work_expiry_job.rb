@@ -11,40 +11,40 @@ class UbiquityWorkExpiryJob < ActiveJob::Base
     end
   end
 
-  def perform_work_expiry(work_id)
-    @work = ActiveFedora::Base.find(work_id)
-    if @work
-      if @work.under_embargo?
-        auto_expire_embargo
-      elsif @work.active_lease?
-        auto_expire_lease
-      end
-      update_expired_file_sets
-      unless @work.under_embargo? || @work.active_lease?
-        WorkExpiryService.where(work_id: work_id).first.destroy
-      end
-    else
-      WorkExpiryService.where(work_id: work_id).first.destroy
-    end
-  end
-
-  def perform_file_expiry(work_id)
-    file_set = ActiveFedora::Base.find(work_id)
-    if file_set
-      if file_set.under_embargo?
-        auto_expire_file_embargo file_set
-      elsif file_set.active_lease?
-        auto_expire_file_lease file_set
-      end
-      unless file_set.under_embargo? ||file_set.active_lease?
-        WorkExpiryService.where(work_id: work_id).first.destroy
-      end
-    else
-      WorkExpiryService.where(work_id: work_id).first.destroy
-    end
-  end
-
   private
+
+    def perform_work_expiry(work_id)
+      @work = ActiveFedora::Base.find(work_id)
+      if @work
+        if @work.under_embargo?
+          auto_expire_embargo
+        elsif @work.active_lease?
+          auto_expire_lease
+        end
+        update_expired_file_sets
+        unless @work.under_embargo? || @work.active_lease?
+          WorkExpiryService.where(work_id: work_id).first.destroy
+        end
+      else
+        WorkExpiryService.where(work_id: work_id).first.destroy
+      end
+    end
+
+    def perform_file_expiry(work_id)
+      file_set = ActiveFedora::Base.find(work_id)
+      if file_set
+        if file_set.under_embargo?
+          auto_expire_file_embargo file_set
+        elsif file_set.active_lease?
+          auto_expire_file_lease file_set
+        end
+        unless file_set.under_embargo? ||file_set.active_lease?
+          WorkExpiryService.where(work_id: work_id).first.destroy
+        end
+      else
+        WorkExpiryService.where(work_id: work_id).first.destroy
+      end
+    end
 
     def auto_expire_embargo
       # compare_visibility_after_expiration?(work, 'embargo')

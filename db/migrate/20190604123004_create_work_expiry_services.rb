@@ -4,12 +4,11 @@ class CreateWorkExpiryServices < ActiveRecord::Migration[5.1]
       t.string :work_id
       t.string :work_type
       t.string :tenant_name
-      t.string :status
       t.datetime :expiry_time
       t.jsonb :data, default: {}
 
       t.timestamps
     end
-    add_index :work_expiry_services, [:work_id, :work_type], where: "work_id IS NOT NULL"
+    add_index :work_expiry_services, [:work_id, :work_type]
   end
 end

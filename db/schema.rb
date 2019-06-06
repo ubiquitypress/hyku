@@ -633,12 +633,11 @@ ActiveRecord::Schema.define(version: 20190604123004) do
     t.string "work_id"
     t.string "work_type"
     t.string "tenant_name"
-    t.string "status"
     t.datetime "expiry_time"
     t.jsonb "data", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["work_id", "work_type"], name: "index_work_expiry_services_on_work_id_and_work_type", where: "(work_id IS NOT NULL)"
+    t.index ["work_id", "work_type"], name: "index_work_expiry_services_on_work_id_and_work_type"
   end
 
   create_table "work_view_stats", id: :serial, force: :cascade do |t|

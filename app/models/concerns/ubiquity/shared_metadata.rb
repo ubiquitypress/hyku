@@ -79,6 +79,10 @@ module Ubiquity
         index.as :stored_searchable
       end
 
+      property :qualification_name, predicate: ::RDF::Vocab::SCHEMA.qualifications, multiple: false do |index|
+        index.as :stored_searchable
+      end
+
     end
   end
 end

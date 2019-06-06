@@ -15,7 +15,10 @@ Hyrax.config do |config|
   config.register_curation_concern :report
   # Injected via `rails g hyrax:work ThesisOrDissertation`
   config.register_curation_concern :thesis_or_dissertation
+  # Injected via `rails g hyrax:work TimeBasedMedia`
+  config.register_curation_concern :time_based_media
   config.register_curation_concern :generic_work
+
 
 
   # Email recipient of messages sent via the contact form

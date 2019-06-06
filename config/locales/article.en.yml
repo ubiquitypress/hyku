@@ -28,6 +28,7 @@ en:
         rights_holder: Please identify the rights holder if different from the creator.
         project_name: The name of the project the work relates to, where relevant
         doi: A persistent digital object identifier, if your item already has one then enter this here in the following model e.g. 10.21250/tcq.
+        qualification_name: The name of the qualification.
         issn: Enter either the ISSN or the eISSN or both, if available.
         eissn: Enter either the ISSN or the eISSN or both, if available.
         current_he_institution: The current name of the HE institution responsible for the thesis. Select one.

@@ -48,6 +48,7 @@
 <%= presenter.attribute_to_html(:rights_statement, render_as: :alphabetical_sort_rights_statement) %>
 <%= presenter.attribute_to_html(:rights_holder, render_as: :alphabetical_sort) %>
 <%= presenter.attribute_to_html(:doi, label: "DOI", render_as: :external_url) %>
+<%= presenter.attribute_to_html(:qualification_name, render_as: :string) %>
 <%= render "shared/ubiquity/alternate_identifier/show", presenter: @presenter %>
 <%= render "shared/ubiquity/related_identifier/show", presenter: @presenter %>
 <%= presenter.attribute_to_html(:keyword, render_as: :alphabetical_sort_facet) %>

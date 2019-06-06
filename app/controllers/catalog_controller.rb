@@ -166,6 +166,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("format", :stored_searchable)
     config.add_show_field solr_name("identifier", :stored_searchable)
     config.add_show_field solr_name("doi", :stored_searchable)
+    config.add_show_field solr_name("qualification_name", :stored_searchable)
     config.add_show_field solr_name("isbn", :stored_searchable)
     config.add_show_field solr_name("issn", :stored_searchable)
     config.add_show_field solr_name("eissn", :stored_searchable)

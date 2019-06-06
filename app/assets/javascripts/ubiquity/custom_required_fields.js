@@ -7,6 +7,10 @@ $(document).on("turbolinks:load", function(){
     $('.ubiquity-journal-title').prop('required', true)
     appendRequiredTagToLabel($('.ubiquity-journal-title').attr('id'))
   }
+  if (($('.ubiquity-qualification-name').length != 0) && (ubiquityModel === 'ThesisOrDissertation')) {
+    $('.ubiquity-qualification-name').prop('required', true)
+    appendRequiredTagToLabel($('.ubiquity-qualification-name').attr('id'))
+  }
   if ($('.ubiquity-institution').length != 0){
     if ($('.ubiquity-institution:first').val() == ''){
       $('.ubiquity-institution').prop('required', true)

@@ -48,18 +48,33 @@ module Ubiquity
     end
 
     def eissn
-      attributes['issn-type'].first['value'] if attributes['issn-type'].present?
+      return nil if attributes['issn-type'].blank?
+      print_value = attributes['issn-type'].detect { |h| h['type'] == 'electronic' } || attributes['issn-type'].detect { |h| h['type'] == 'print' }
+      return print_value['value'] if print_value['value']
+      attributes['issn-type'].first['value']
     end
 
     def isbn
       return nil if attributes['isbn-type'].blank?
-      print_value = attributes['isbn-type'].detect { |h| h['type'] == 'print' || h['type'] == 'electronic' }
+      print_value = attributes['isbn-type'].detect { |h| h['type'] == 'print' } || attributes['isbn-type'].detect { |h| h['type'] == 'electronic' }
       return print_value['value'] if print_value['value']
       attributes['isbn-type'].first['value']
     end
 
     def doi
       attributes['DOI']
+    end
+
+    def volume
+      attributes['volume']
+    end
+
+    def pagination
+      attributes['page']
+    end
+
+    def issue
+      attributes['issue']
     end
 
     def journal_title
@@ -119,7 +134,7 @@ module Ubiquity
           issn: issn, eissn: eissn, journal_title: journal_title,
           abstract: abstract, version: version, isbn: isbn,
           creator_group: creator, doi: doi, keyword: keyword, license: license,
-          publisher: publisher
+          publisher: publisher, volume: volume, pagination: pagination, issue: issue
         }
       end
     end

@@ -12,9 +12,6 @@
 <tr id="document_<%= id %>" data-child-value="<%= collection_child_row_details(document)%>">
   <td class='details-control'></td>
   <td>
-    <% if current_user and document.depositor != current_user.user_key %>
-      <i class="glyphicon glyphicon-share-alt"></i>
-    <% end %>
     <div class="media">
       <% if  document.thumbnail_id %>
         <%= render 'shared/ubiquity/thumbnail', document: document,  presenter: Hyku::ManifestEnabledWorkShowPresenter.new(document, current_ability) %>
@@ -23,6 +20,10 @@
           <span class="media-left hidden-xs file_listing_thumbnail" style="height:55px;width:50px;padding-left: 55px;" ></span>
         <% end %>
       <% end %>
+    </div>
+  </td>
+  <td>
+    <div class="media">
       <div class="media-body">
         <h4 class="media-heading">
           <%= link_to document.title_or_label, [main_app, document], id: "src_copy_link#{id}", class: "#{'document-title' if document.title_or_label == document.label}" %>
@@ -42,7 +43,7 @@
       <span class="text-center"><%= document.date_published.first %></span>
     </div>
   </td>
-  <td class="text-center">
+  <td>
     <%= human_readable_resource_type(document.resource_type) %>
   </td>
   <% if (current_user && controller.class == Hyrax::Dashboard::CollectionsController) %>

@@ -2,9 +2,9 @@ $(document).on("turbolinks:load", function(event){
   var dataTable = $('.collection-table-datatable').DataTable({
     "columnDefs": [
       { "targets":["no-sort"], "orderable": false, "searchable": false },
-      { type: 'non-empty-string', targets: 3 }
+      { type: 'non-empty-string', targets: 4 }
     ],
-    order: [[ 1, "asc" ]]
+    order: [[ 2, "asc" ]]
   });
 
   var totalCount = dataTable.rows().count();

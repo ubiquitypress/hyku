@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190513100115) do
+ActiveRecord::Schema.define(version: 20190604123004) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -627,6 +627,17 @@ ActiveRecord::Schema.define(version: 20190513100115) do
     t.datetime "updated_at", null: false
     t.index ["owner_id"], name: "index_work_download_stats_on_owner_id"
     t.index ["work_uid"], name: "index_work_download_stats_on_work_uid"
+  end
+
+  create_table "work_expiry_services", force: :cascade do |t|
+    t.string "work_id"
+    t.string "work_type"
+    t.string "tenant_name"
+    t.datetime "expiry_time"
+    t.jsonb "data", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["work_id", "work_type"], name: "index_work_expiry_services_on_work_id_and_work_type"
   end
 
   create_table "work_view_stats", id: :serial, force: :cascade do |t|

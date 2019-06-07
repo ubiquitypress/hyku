@@ -46,6 +46,18 @@ function fetchDataciteData(url) {
           field_array.push('Published Day')
           $('.ubiquity-date-published-day').val(result.data.published_day);
         }
+        if($('.ubiquity-volume').length != 0 && result.data.volume != null) {
+          field_array.push('Volume')
+          $('.ubiquity-volume').val(result.data.volume);
+        }
+        if($('.ubiquity-issue').length != 0 && result.data.issue != null) {
+          field_array.push('Issue')
+          $('.ubiquity-issue').val(result.data.issue);
+        }
+        if($('.ubiquity-pagination').length != 0 && result.data.pagination != null) {
+          field_array.push('Pagination')
+          $('.ubiquity-pagination').val(result.data.pagination);
+        }
         if($('.ubiquity-license').length != 0 && result.data.license != null) {
           field_array.push('Licence')
           $('.ubiquity-license').val(result.data.license);

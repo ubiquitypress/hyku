@@ -1,0 +1,10 @@
+zh:
+  hyrax:
+    icons:
+      time_based_media:     'fa fa-file-text-o'
+    select_type:
+      time_based_media:
+        # TODO: translate `human_name` into Chinese
+        name:               "Time Based Media"
+        # TODO: translate `human_name` into Chinese
+        description:        "Time based media 作品"

@@ -2,8 +2,23 @@ terms:
  - id: Actor
    term: Actor
    active: true
+ - id: Animator
+   term: Animator
+   active: true
+ - id: Artist
+   term: Artist
+   active: true
  - id: Author
    term: Author
+   active: true
+ - id: Collaborative Doctoral Partner
+   term: Collaborative Doctoral Partner
+   active: true
+ - id: Collaborative Institution
+   term: Collaborative Institution
+   active: true
+ - id: Composer
+   term: Composer
    active: true
  - id: Contact Person
    term: Contact Person
@@ -32,14 +47,29 @@ terms:
  - id: Editor
    term: Editor
    active: true
+ - id: Examiner
+   term: Examiner
+   active: true
  - id: Hosting Institution
    term: Hosting Institution
    active: true
  - id: Illustrator
    term: Illustrator
    active: true
+ - id: Interviewee
+   term: Interviewee
+   active: true
+ - id: Interviewer
+   term: Interviewer
+   active: true
+ - id: Narrator
+   term: Narrator
+   active: true
  - id: Photographer
    term: Photographer
+   active: true
+ - id: Presenter
+   term: Presenter
    active: true
  - id: Producer
    term: Producer
@@ -102,4 +132,4 @@ terms:
    active: true
  - id : Other
    term: Other
-   active:  true  
+   active:  true

@@ -1,0 +1,8 @@
+en:
+  hyrax:
+    icons:
+      time_based_media:     'fa fa-file-text-o'
+    select_type:
+      time_based_media:
+        name:               "Time Based Media"
+        description:        "Multimedia outputs dependent on technology with a durational dimension."

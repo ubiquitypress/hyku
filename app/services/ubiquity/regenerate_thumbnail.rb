@@ -42,7 +42,7 @@ module Ubiquity
 
     def regenerate_all_thumbnails
       puts " Regenerating all thumbnail for all works"
-      model_class = [Article, Book, BookContribution, ConferenceItem, Dataset, Image, Report, GenericWork]
+      model_class = [Article, Book, BookContribution, ConferenceItem, Dataset, Exhibition, Image, Report, ThesisOrDissertation, TimeBasedMedia, GenericWork]
       AccountElevator.switch!(tenant)
       regenerate_collection_thumbnails
       model_class.each do |model|

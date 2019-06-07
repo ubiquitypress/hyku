@@ -7,11 +7,19 @@ Hyrax.config do |config|
   config.register_curation_concern :conference_item
   # Injected via `rails g hyrax:work Dataset`
   config.register_curation_concern :dataset
+  # Injected via `rails g hyrax:work Exhibition`
+  config.register_curation_concern :exhibition
   # Injected via `rails g hyrax:work Image`
   config.register_curation_concern :image
   # Injected via `rails g hyrax:work Report`
   config.register_curation_concern :report
+  # Injected via `rails g hyrax:work ThesisOrDissertation`
+  config.register_curation_concern :thesis_or_dissertation
+  # Injected via `rails g hyrax:work TimeBasedMedia`
+  config.register_curation_concern :time_based_media
   config.register_curation_concern :generic_work
+
+
 
   # Email recipient of messages sent via the contact form
   config.contact_email = Settings.contact_email

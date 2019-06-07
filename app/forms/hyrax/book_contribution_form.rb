@@ -12,7 +12,7 @@ module Hyrax
                      volume edition pagination publisher place_of_publication isbn issn eissn
                      date_accepted date_submitted official_link related_url language license
                      rights_statement rights_holder doi draft_doi alternate_identifier
-                     related_identifier refereed keyword library_of_congress_classification
+                     related_identifier refereed keyword dewey library_of_congress_classification
                      add_info rendering_ids
                     ]
   end

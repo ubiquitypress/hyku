@@ -102,6 +102,24 @@ terms:
     term: Software
   - id: Dataset Database
     term: Database
+  - id: Exhibition Exhibition
+    term: Exhibition
+  - id: Exhibition Exhibition catalogue
+    term: Exhibition catalogue
+  - id: Exhibition Exhibition object labels
+    term: Exhibition object labels
+  - id: Exhibition Exhibition gallery text
+    term: Exhibition gallery text
+  - id: Exhibition Exhibition-related event
+    term: Exhibition-related event
+  - id: Exhibition Exhibition media transcription
+    term: Exhibition media transcription
+  - id: Exhibition Exhibition audio-visual guide
+    term: Exhibition audio-visual guide
+  - id: Exhibition Festival
+    term: Festival
+  - id: GenericWork
+    term:
   - id: GenericWork Blog post
     term: Blog post
   - id: GenericWork Cartographic material
@@ -136,6 +154,28 @@ terms:
     term: Moving image
   - id: Image default Still image
     term: Still image
+  - id: ThesisOrDissertation Doctoral thesis
+    term: Doctoral thesis
+  - id: ThesisOrDissertation Master's dissertation
+    term: Master's dissertation
+  - id:  TimeBasedMedia
+    term:
+  - id:  TimeBasedMedia Audio
+    term: Audio
+  - id:  TimeBasedMedia Animation
+    term: Animation
+  - id:  TimeBasedMedia Digital creative works
+    term: Digital creative works
+  - id:  TimeBasedMeaia Interview (radio, television)
+    term: Interview (radio, television)
+  - id:  TimeBasedMedia Musical composition
+    term: Musical composition
+  - id:  TimeBasedMedia Performance (theatre, dance, musical)
+    term: Performance (theatre, dance, musical)
+  - id:  TimeBasedMedia Podcast
+    term: Podcast
+  - id:  TimeBasedMedia Video
+    term: Video        
   - id: Image 3D image
     term: 3D image
   - id: Collection 3D image

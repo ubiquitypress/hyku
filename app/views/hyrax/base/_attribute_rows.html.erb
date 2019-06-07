@@ -1,6 +1,6 @@
 <%# display contributor using the show partial  -->
 <%# presenter.attribute_to_html(:contributor, render_as: :faceted) %>
-<%= presenter.attribute_to_html(:alt_title, render_as: :string) %>
+<%= presenter.attribute_to_html(:alt_title, label: "Alternative Title",  render_as: :string) %>
 <%= presenter.attribute_to_html(:resource_type, render_as: :resource_type) %>
 <% if presenter.member_of_collection_presenters.present?%>
   <%= render 'shared/ubiquity/collections/show_collection_list', presenter: presenter %>
@@ -10,6 +10,7 @@
 <%= presenter.attribute_to_html(:abstract, render_as: :string) %>
 <%= presenter.attribute_to_html(:date_published) %>
 <%= presenter.attribute_to_html(:media, render_as: :alphabetical_sort, label: "Material/media") %>
+<%= presenter.attribute_to_html(:duration, render_as: :string) %>
 <%= presenter.attribute_to_html(:institution, render_as: :alphabetical_sort) %>
 <%= presenter.attribute_to_html(:org_unit, render_as: :alphabetical_sort, label: "Organisational unit") %>
 <%= presenter.attribute_to_html(:project_name) %>
@@ -37,18 +38,23 @@
 <%= presenter.attribute_to_html(:isbn, label: "ISBN", render_as: :string) %>
 <%= presenter.attribute_to_html(:issn, label: "ISSN", render_as: :string) %>
 <%= presenter.attribute_to_html(:eissn, label: "eISSN", render_as: :string) %>
+<%= presenter.attribute_to_html(:current_he_institution, render_as: :string) %>
 <%= presenter.attribute_to_html(:date_accepted, render_as: :string) %>
 <%= presenter.attribute_to_html(:official_link, render_as: :external_url, label: "Official URL") %>
 <%= presenter.attribute_to_html(:related_url, render_as: :external_url, label: "Related URL") %>
 <%= presenter.attribute_to_html(:related_exhibition, render_as: :alphabetical_sort) %>
+<%= presenter.attribute_to_html(:related_exhibition_venue, render_as: :string) %>
 <%= presenter.attribute_to_html(:related_exhibition_date, render_as: :multiple_dates) %>
 <%= presenter.attribute_to_html(:license, render_as: :alphabetical_sort_license, html_dl: true, label: "Licence") %>
 <%= presenter.attribute_to_html(:rights_statement, render_as: :alphabetical_sort_rights_statement) %>
 <%= presenter.attribute_to_html(:rights_holder, render_as: :alphabetical_sort) %>
 <%= presenter.attribute_to_html(:doi, label: "DOI", render_as: :external_url) %>
+<%= presenter.attribute_to_html(:qualification_name, render_as: :string) %>
+<%= presenter.attribute_to_html(:qualification_level, render_as: :string) %>
 <%= render "shared/ubiquity/alternate_identifier/show", presenter: @presenter %>
 <%= render "shared/ubiquity/related_identifier/show", presenter: @presenter %>
 <%= presenter.attribute_to_html(:keyword, render_as: :alphabetical_sort_facet) %>
+<%= presenter.attribute_to_html(:dewey, render_as: :string) %>
 <%= presenter.attribute_to_html(:library_of_congress_classification, render_as: :faceted, label: "Library of Congress Classification") %>
 <%= presenter.attribute_to_html(:add_info, label: "Additional Information", render_as: :string) %>
 <%#= presenter.attribute_to_html(:date_submitted) %>

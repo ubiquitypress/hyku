@@ -71,6 +71,26 @@ module Ubiquity
         index.as :stored_searchable
       end
 
+      property :related_exhibition_venue, predicate: ::RDF::Vocab::SCHEMA.EventVenue, multiple: true do |index|
+        index.as :stored_searchable
+      end
+
+      property :current_he_institution, predicate: ::RDF::Vocab::SCHEMA.EducationalOrganization, multiple: false do |index|
+        index.as :stored_searchable
+      end
+
+      property :qualification_name, predicate: ::RDF::Vocab::SCHEMA.qualifications, multiple: false do |index|
+        index.as :stored_searchable
+      end
+
+      property :qualification_level, predicate: ::RDF::Vocab::BF2.degree, multiple: false do |index|
+        index.as :stored_searchable
+      end
+
+      property :duration, predicate: ::RDF::Vocab::BF2.duration, multiple: false do |index|
+        index.as :stored_searchable
+      end
+
     end
   end
 end

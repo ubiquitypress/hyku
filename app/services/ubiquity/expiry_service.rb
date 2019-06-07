@@ -19,7 +19,7 @@ module Ubiquity
       @lease_works = []
       @embargo_fileset = []
       @lease_fileset = []
-      @model_class = [Article, Book, BookContribution, ConferenceItem, Dataset, Image, Report, GenericWork]
+      @model_class = [Article, Book, BookContribution, ConferenceItem, Dataset, Exhibition, Image, Report, ThesisOrDissertation, TimeBasedMedia, GenericWork]
       @tenant_names = Account.where.not(data: {'is_parent': 'true'}).pluck(:cname)
       fetch_records
     end

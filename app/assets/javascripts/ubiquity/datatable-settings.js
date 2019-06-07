@@ -4,7 +4,7 @@ $(document).on("turbolinks:load", function(event){
       { "targets":["no-sort"], "orderable": false, "searchable": false },
       { type: 'non-empty-string', targets: 4 }
     ],
-    order: [[ 2, "asc" ]]
+    order: [[ 4, "asc" ]]
   });
 
   var totalCount = dataTable.rows().count();

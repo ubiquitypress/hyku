@@ -3,6 +3,7 @@ class FileSet < ActiveFedora::Base
   include ::Hyrax::FileSetBehavior
 
   before_destroy :remove_rendering_relationship
+  after_save :fetch_file_sets_and_create_work_expiry_service
 
   # Hyku has its own FileSetIndexer: app/indexers/file_set_indexer.rb
   # It overrides Hyrax to inject IIIF behavior.
@@ -10,6 +11,10 @@ class FileSet < ActiveFedora::Base
 
   def rendering_ids
     to_param
+  end
+
+  def account_cname
+    parent.account_cname
   end
 
   private
@@ -24,6 +29,15 @@ class FileSet < ActiveFedora::Base
           new_rendering_ids = work.rendering_ids.delete(id)
           work.update(rendering_ids: new_rendering_ids)
         end
+      end
+    end
+
+    def fetch_file_sets_and_create_work_expiry_service
+      embargo_condition_check = under_embargo? || active_lease?
+      if embargo_condition_check
+        work_service = WorkExpiryService.find_or_create_by(work_id: id)
+        release_date = under_embargo? ? embargo.embargo_release_date : lease.lease_expiration_date
+        work_service.update(work_type: 'file', tenant_name: account_cname, status: 'pending', expiry_time: release_date)
       end
     end
 end

@@ -12,7 +12,7 @@ module Ubiquity
       before_save :save_date_published, :save_date_accepted, :save_date_submitted,
                   :save_event_date, :save_related_exhibition_date
 
-      after_save :update_external_service_record
+      after_save :update_external_service_record, :create_work_service_if_embargo_or_lease
 
       #These are used in the forms to populate fields that will be stored in json fields
       #The json fields in this case are creator, contributor, alternate_identifier and related_identifier
@@ -23,9 +23,15 @@ module Ubiquity
 
     private
 
-    def update_external_service_record
-       AddWorkIdToExternalServiceJob.perform_later(self.id, self.account_cname)
-    end
+      def update_external_service_record
+        AddWorkIdToExternalServiceJob.perform_later(self.id, self.account_cname)
+      end
+
+      def create_work_service_if_embargo_or_lease
+        if under_embargo? || active_lease?
+          create_work_expiry_service
+        end
+      end
 
     #
     # We are addressing 2 use case for each json field
@@ -143,6 +149,12 @@ module Ubiquity
     end
 
     private
+
+    def create_work_expiry_service
+      work_service = WorkExpiryService.find_or_create_by(work_id: id)
+      release_date = under_embargo? ? embargo.embargo_release_date : lease.lease_expiration_date
+      work_service.update(work_type: 'work', tenant_name: account_cname, status: 'pending', expiry_time: release_date)
+    end
 
     #We parse the json in the an array before saving the value in creator_search
     def populate_creator_search_field(json_record)

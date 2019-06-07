@@ -10,6 +10,7 @@
 <%= presenter.attribute_to_html(:abstract, render_as: :string) %>
 <%= presenter.attribute_to_html(:date_published) %>
 <%= presenter.attribute_to_html(:media, render_as: :alphabetical_sort, label: "Material/media") %>
+<%= presenter.attribute_to_html(:duration, render_as: :string) %>
 <%= presenter.attribute_to_html(:institution, render_as: :alphabetical_sort) %>
 <%= presenter.attribute_to_html(:org_unit, render_as: :alphabetical_sort, label: "Organisational unit") %>
 <%= presenter.attribute_to_html(:project_name) %>

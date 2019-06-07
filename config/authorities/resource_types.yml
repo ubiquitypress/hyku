@@ -118,6 +118,8 @@ terms:
     term: Exhibition audio-visual guide
   - id: Exhibition Festival
     term: Festival
+  - id: GenericWork
+    term:
   - id: GenericWork Blog post
     term: Blog post
   - id: GenericWork Cartographic material
@@ -156,6 +158,24 @@ terms:
     term: Doctoral thesis
   - id: ThesisOrDissertation Master's dissertation
     term: Master's dissertation
+  - id:  TimeBasedMedia
+    term:
+  - id:  TimeBasedMedia Audio
+    term: Audio
+  - id:  TimeBasedMedia Animation
+    term: Animation
+  - id:  TimeBasedMedia Digital creative works
+    term: Digital creative works
+  - id:  TimeBasedMeaia Interview (radio, television)
+    term: Interview (radio, television)
+  - id:  TimeBasedMedia Musical composition
+    term: Musical composition
+  - id:  TimeBasedMedia Performance (theatre, dance, musical)
+    term: Performance (theatre, dance, musical)
+  - id:  TimeBasedMedia Podcast
+    term: Podcast
+  - id:  TimeBasedMedia Video
+    term: Video        
   - id: Image 3D image
     term: 3D image
   - id: Collection 3D image

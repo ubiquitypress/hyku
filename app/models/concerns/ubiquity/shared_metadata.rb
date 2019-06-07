@@ -87,6 +87,10 @@ module Ubiquity
         index.as :stored_searchable
       end
 
+      property :duration, predicate: ::RDF::Vocab::BF2.duration, multiple: false do |index|
+        index.as :stored_searchable
+      end
+
     end
   end
 end

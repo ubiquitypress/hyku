@@ -10,7 +10,7 @@ module Hyrax
     self.model_class = ::TimeBasedMedia
     include HydraEditor::Form::Permissions
 
-    self.terms += %i[title alt_title resource_type creator contributor rendering_ids abstract date_published media
+    self.terms += %i[title alt_title resource_type creator contributor rendering_ids abstract date_published media duration
                      institution org_unit project_name funder fndr_project_ref event_title event_location event_date
                      editor version
                      publisher place_of_publication date_accepted date_submitted official_link

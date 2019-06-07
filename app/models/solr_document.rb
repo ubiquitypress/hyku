@@ -64,6 +64,7 @@ class SolrDocument
   attribute :related_identifier, Solr::Array, solr_name('related_identifier')
   attribute :version, Solr::Array, solr_name('version')
   attribute :media, Solr::Array, solr_name('media')
+  attribute :duration, Solr::Array, solr_name('duration')
   attribute :related_exhibition, Solr::Array, solr_name('related_exhibition')
   attribute :related_exhibition_venue, Solr::Array, solr_name('related_exhibition_venue')
   attribute :related_exhibition_date, Solr::Array, solr_name('related_exhibition_date')

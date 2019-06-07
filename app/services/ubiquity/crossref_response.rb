@@ -20,11 +20,13 @@ module Ubiquity
     end
 
     def date_published_year
-      attributes['published-online']['date-parts'].first[0] if attributes['published-online'].present?
+      date_hash = attributes['published-online'].presence || attributes['published-print']
+      return date_hash['date-parts'].first[0] if date_hash
     end
 
     def date_published_month
-      attributes['published-online']['date-parts'].first[1] if attributes['published-online'].present?
+      date_hash = attributes['published-online'].presence || attributes['published-print']
+      return date_hash['date-parts'].first[1] if date_hash
     end
 
     def license
@@ -38,9 +40,9 @@ module Ubiquity
       url_collection.select { |e| e.match regex_url_exp }.first
     end
 
-
     def date_published_day
-      attributes['published-online']['date-parts'].first[2] if attributes['published-online'].present?
+      date_hash = attributes['published-online'].presence || attributes['published-print']
+      return date_hash['date-parts'].first[2] if date_hash
     end
 
     def issn

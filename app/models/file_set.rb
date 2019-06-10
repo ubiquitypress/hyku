@@ -37,7 +37,7 @@ class FileSet < ActiveFedora::Base
       if embargo_condition_check
         work_service = WorkExpiryService.find_or_create_by(work_id: id)
         release_date = under_embargo? ? embargo.embargo_release_date : lease.lease_expiration_date
-        work_service.update(work_type: 'file', tenant_name: account_cname, status: 'pending', expiry_time: release_date)
+        work_service.update(work_type: 'file', tenant_name: account_cname, expiry_time: release_date)
       end
     end
 end

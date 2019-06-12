@@ -67,10 +67,10 @@ module ApplicationHelper
     image_tag "#{img_path}/full/150,120/0/default.jpg"
   end
 
-  def render_thumbnail_on_list(file_set)
+  def render_thumbnail_on_list(file_set, size = '100,80')
     solr_doc = FileSet.find(file_set.id)
     img_path = CGI.escape(ActiveFedora::File.uri_to_id(solr_doc.original_file.versions.last.uri))
-    image_tag "#{img_path}/full/100,80/0/default.jpg"
+    image_tag "#{img_path}/full/#{size}/0/default.jpg"
   end
 
   def verify_valid_json?(data)

@@ -12,25 +12,26 @@ module DisplaysImage
     original_file = FileSet.find(id).original_file
 
     # TODO: We want url to be like https://libimages1.princeton.edu/loris/plum/0c%2F48%2F3j%2F48%2F8-intermediate_file.jp2/full/!200,200/0/default.jpg
-    url = display_image_url(original_file)
-    IIIFManifest::DisplayImage.new(url, width: 640, height: 480, iiif_endpoint: iiif_endpoint(original_file))
+    latest_file_uri = original_file.has_versions? ? ActiveFedora::File.uri_to_id(original_file.versions.last.uri) : original_file.uri.value
+    url = display_image_url(latest_file_uri)
+    IIIFManifest::DisplayImage.new(url, width: 640, height: 480, iiif_endpoint: iiif_endpoint(latest_file_uri))
   end
 
   private
 
-    def display_image_url(original_file, size = '600,')
-      Riiif::Engine.routes.url_helpers.image_url(original_file.id,
+    def display_image_url(original_file_uri, size = '600,')
+      Riiif::Engine.routes.url_helpers.image_url(original_file_uri,
                                                  host: request.base_url,
                                                  size: size)
     end
 
-    def base_image_url(original_file)
-      uri = Riiif::Engine.routes.url_helpers.info_url(original_file.id, host: request.base_url)
+    def base_image_url(original_file_uri)
+      uri = Riiif::Engine.routes.url_helpers.info_url(original_file_uri, host: request.base_url)
       # TODO: There should be a riiif route for this:
       uri.sub(%r{/info\.json\Z}, '')
     end
 
-    def iiif_endpoint(original_file)
-      IIIFManifest::IIIFEndpoint.new(base_image_url(original_file), profile: "http://iiif.io/api/image/2/level2.json")
+    def iiif_endpoint(original_file_uri)
+      IIIFManifest::IIIFEndpoint.new(base_image_url(original_file_uri), profile: "http://iiif.io/api/image/2/level2.json")
     end
 end

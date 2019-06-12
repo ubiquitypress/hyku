@@ -17,7 +17,7 @@
       <% elsif (check_file_is_restricted?(file_set_presenter) == nil && (file_set_presenter.lease_expiration_date.present? || file_set_presenter.embargo_release_date.present? || ( file_set_presenter.solr_document['visibility_ssi'] == "restricted") ) ) %>
         <span class="fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:60px"></span> <span style="padding-left:125px"></span>
      <% elsif (check_file_is_restricted?(file_set_presenter) == true || (not file_set_presenter.solr_document.lease_expiration_date.present?) && (not file_set_presenter.solr_document.embargo_release_date.present?) && ( file_set_presenter.solr_document['visibility_ssi'] == "open") ) %>
-        <%= render_thumbnail_tag document, :style => "width:150px;padding-left:25px" %>
+        <%= render_thumbnail_on_list(file_set_presenter) %>
       <% end %>
     <% else %>
       <%# displays for logged out user for files under embargo/lease %>

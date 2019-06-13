@@ -54,6 +54,7 @@ module Hyku
       Hyrax::CollectionMemberSearchBuilder.include(::Ubiquity::CollectionListPerPage)
       Account.class_eval {include Ubiquity::AccountSelfJoinAssociation}
       Hyrax::FileSetPresenter.class_eval {delegate :visibility, to: :solr_document}
+      Hyrax::Actors::FileSetActor.prepend(::Ubiquity::FileSetActorOverride)
     end
 
     config.before_initialize do

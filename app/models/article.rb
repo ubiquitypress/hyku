@@ -5,6 +5,7 @@ class Article < ActiveFedora::Base
   include Ubiquity::AllModelsVirtualFields
   include Ubiquity::UpdateSharedIndex
 
+
   self.indexer = ::ArticleIndexer
 
   # Change this to restrict which works can be added as a child.

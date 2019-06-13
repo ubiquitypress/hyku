@@ -443,3 +443,128 @@
 2019-04-23 14:44:23,898 INFO reaped unknown pid 262
 2019-04-23 15:12:55,732 INFO reaped unknown pid 265
 2019-04-23 15:15:06,764 INFO reaped unknown pid 966
+2019-06-12 09:34:22,693 CRIT Set uid to user 0
+2019-06-12 09:34:22,693 WARN For [program:rails], AUTO logging used for stderr_logfile without rollover, set maxbytes > 0 to avoid filling up filesystem unintentionally
+2019-06-12 09:34:22,703 INFO supervisord started with pid 1
+2019-06-12 09:34:23,706 INFO spawned: 'rails' with pid 10
+2019-06-12 09:34:24,707 INFO success: rails entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-06-12 09:37:12,019 WARN received SIGTERM indicating exit request
+2019-06-12 09:37:12,019 INFO waiting for rails to die
+2019-06-12 09:37:12,113 INFO stopped: rails (exit status 0)
+2019-06-12 09:37:32,662 CRIT Set uid to user 0
+2019-06-12 09:37:32,663 WARN For [program:rails], AUTO logging used for stderr_logfile without rollover, set maxbytes > 0 to avoid filling up filesystem unintentionally
+2019-06-12 09:37:32,670 INFO supervisord started with pid 1
+2019-06-12 09:37:33,673 INFO spawned: 'rails' with pid 10
+2019-06-12 09:37:34,686 INFO success: rails entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-06-12 09:43:04,367 INFO reaped unknown pid 244
+2019-06-12 09:45:52,799 INFO reaped unknown pid 247
+2019-06-12 09:46:24,487 INFO reaped unknown pid 759
+2019-06-12 09:47:57,687 INFO reaped unknown pid 762
+2019-06-12 09:48:48,378 INFO reaped unknown pid 954
+2019-06-12 09:52:48,156 INFO reaped unknown pid 957
+2019-06-12 09:53:52,380 INFO reaped unknown pid 1154
+2019-06-12 09:58:41,707 INFO reaped unknown pid 1157
+2019-06-12 09:59:23,350 INFO reaped unknown pid 1654
+2019-06-12 10:08:07,991 INFO reaped unknown pid 1657
+2019-06-12 10:08:31,617 INFO reaped unknown pid 2350
+2019-06-12 10:32:37,568 INFO reaped unknown pid 2353
+2019-06-12 10:32:43,763 INFO reaped unknown pid 3245
+2019-06-12 10:40:07,191 INFO reaped unknown pid 3248
+2019-06-12 10:41:13,021 INFO reaped unknown pid 4793
+2019-06-12 11:08:05,249 INFO reaped unknown pid 4796
+2019-06-12 11:08:47,207 INFO reaped unknown pid 9354
+2019-06-12 11:15:03,494 INFO reaped unknown pid 9357
+2019-06-12 11:15:43,683 INFO reaped unknown pid 10067
+2019-06-12 11:21:38,023 INFO reaped unknown pid 10070
+2019-06-12 11:21:58,595 INFO reaped unknown pid 11403
+2019-06-12 11:29:24,749 INFO reaped unknown pid 11406
+2019-06-12 11:29:46,478 INFO reaped unknown pid 12156
+2019-06-12 11:49:20,574 INFO reaped unknown pid 12159
+2019-06-12 11:50:01,535 WARN received SIGTERM indicating exit request
+2019-06-12 11:50:01,542 INFO waiting for rails to die
+2019-06-12 11:50:01,667 INFO stopped: rails (exit status 0)
+2019-06-12 11:50:22,503 CRIT Set uid to user 0
+2019-06-12 11:50:22,503 WARN For [program:rails], AUTO logging used for stderr_logfile without rollover, set maxbytes > 0 to avoid filling up filesystem unintentionally
+2019-06-12 11:50:22,520 INFO supervisord started with pid 1
+2019-06-12 11:50:23,522 INFO spawned: 'rails' with pid 10
+2019-06-12 11:50:24,523 INFO success: rails entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-06-12 11:51:59,241 INFO reaped unknown pid 75
+2019-06-12 12:07:08,025 INFO reaped unknown pid 78
+2019-06-12 12:07:35,916 INFO reaped unknown pid 547
+2019-06-12 12:09:32,981 INFO reaped unknown pid 550
+2019-06-12 12:10:53,922 INFO reaped unknown pid 897
+2019-06-12 12:19:53,713 INFO reaped unknown pid 900
+2019-06-12 12:20:28,710 INFO reaped unknown pid 1369
+2019-06-12 12:36:38,809 INFO reaped unknown pid 1372
+2019-06-12 12:37:07,708 INFO reaped unknown pid 2663
+2019-06-12 13:21:11,536 CRIT Set uid to user 0
+2019-06-12 13:21:11,537 WARN For [program:rails], AUTO logging used for stderr_logfile without rollover, set maxbytes > 0 to avoid filling up filesystem unintentionally
+2019-06-12 13:21:11,568 INFO supervisord started with pid 1
+2019-06-12 13:21:12,574 INFO spawned: 'rails' with pid 10
+2019-06-12 13:21:13,584 INFO success: rails entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-06-12 13:21:23,386 INFO exited: rails (exit status 1; not expected)
+2019-06-12 13:21:24,393 INFO spawned: 'rails' with pid 26
+2019-06-12 13:21:25,395 INFO success: rails entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-06-12 13:27:41,508 INFO reaped unknown pid 367
+2019-06-12 13:27:44,415 INFO reaped unknown pid 375
+2019-06-12 13:28:18,993 INFO reaped unknown pid 378
+2019-06-12 13:35:15,838 INFO reaped unknown pid 370
+2019-06-12 13:35:55,963 INFO reaped unknown pid 1498
+2019-06-12 13:58:44,911 INFO reaped unknown pid 1501
+2019-06-12 13:59:18,359 INFO reaped unknown pid 4264
+2019-06-12 14:02:11,748 INFO reaped unknown pid 4267
+2019-06-12 14:02:31,527 INFO reaped unknown pid 4581
+2019-06-12 14:23:12,105 INFO reaped unknown pid 4584
+2019-06-12 14:23:18,790 INFO reaped unknown pid 4775
+2019-06-12 14:29:43,582 INFO reaped unknown pid 4778
+2019-06-12 14:30:26,715 INFO reaped unknown pid 4970
+2019-06-12 14:38:25,604 INFO reaped unknown pid 4973
+2019-06-12 14:38:52,374 INFO reaped unknown pid 5286
+2019-06-12 14:44:15,737 INFO reaped unknown pid 5289
+2019-06-12 14:45:15,054 INFO reaped unknown pid 5532
+2019-06-12 15:09:28,438 INFO reaped unknown pid 5535
+2019-06-12 15:11:15,409 INFO reaped unknown pid 6776
+2019-06-12 16:34:16,633 INFO reaped unknown pid 6779
+2019-06-12 16:34:22,809 INFO reaped unknown pid 7600
+2019-06-12 16:52:31,891 INFO reaped unknown pid 7603
+2019-06-12 16:53:02,113 INFO reaped unknown pid 7991
+2019-06-12 18:41:25,723 INFO reaped unknown pid 8331
+2019-06-12 18:42:08,249 INFO reaped unknown pid 7994
+2019-06-12 18:54:44,828 INFO reaped unknown pid 8334
+2019-06-12 18:54:53,186 INFO reaped unknown pid 8823
+2019-06-13 09:13:45,513 CRIT Set uid to user 0
+2019-06-13 09:13:45,513 WARN For [program:rails], AUTO logging used for stderr_logfile without rollover, set maxbytes > 0 to avoid filling up filesystem unintentionally
+2019-06-13 09:13:45,527 INFO supervisord started with pid 1
+2019-06-13 09:13:46,530 INFO spawned: 'rails' with pid 9
+2019-06-13 09:13:47,540 INFO success: rails entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-06-13 09:46:48,166 INFO reaped unknown pid 809
+2019-06-13 10:07:31,902 INFO reaped unknown pid 812
+2019-06-13 10:07:43,186 INFO reaped unknown pid 5523
+2019-06-13 10:30:18,851 INFO reaped unknown pid 5526
+2019-06-13 10:30:23,958 INFO reaped unknown pid 9624
+2019-06-13 11:41:00,309 INFO reaped unknown pid 9627
+2019-06-13 11:41:43,165 INFO reaped unknown pid 11726
+2019-06-13 11:57:31,913 INFO reaped unknown pid 11729
+2019-06-13 11:58:14,379 INFO reaped unknown pid 15997
+2019-06-13 12:33:19,264 INFO reaped unknown pid 16000
+2019-06-13 12:33:35,186 INFO reaped unknown pid 16974
+2019-06-13 12:50:34,522 INFO reaped unknown pid 16977
+2019-06-13 12:50:54,162 INFO reaped unknown pid 18212
+2019-06-13 13:00:17,512 INFO reaped unknown pid 18215
+2019-06-13 13:02:10,214 INFO reaped unknown pid 20163
+2019-06-13 13:08:24,338 INFO reaped unknown pid 20166
+2019-06-13 13:08:31,017 INFO reaped unknown pid 21271
+2019-06-13 13:41:59,214 INFO reaped unknown pid 22632
+2019-06-13 13:42:10,612 INFO reaped unknown pid 21274
+2019-06-13 13:53:34,921 INFO reaped unknown pid 22635
+2019-06-13 13:58:36,485 INFO reaped unknown pid 23766
+2019-06-13 14:03:31,842 INFO reaped unknown pid 23769
+2019-06-13 14:04:05,235 INFO reaped unknown pid 25932
+2019-06-13 14:12:21,683 INFO reaped unknown pid 25935
+2019-06-13 14:12:50,989 INFO reaped unknown pid 26951
+2019-06-13 14:25:31,008 INFO reaped unknown pid 26954
+2019-06-13 14:26:43,922 INFO reaped unknown pid 27970
+2019-06-13 14:30:38,196 INFO reaped unknown pid 27973
+2019-06-13 14:31:01,743 INFO reaped unknown pid 29599
+2019-06-13 14:36:55,781 INFO reaped unknown pid 29602
+2019-06-13 15:17:41,397 INFO reaped unknown pid 30470

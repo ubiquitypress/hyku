@@ -18,6 +18,20 @@ module Ubiquity
       transform_data(parsed_json) if parsed_json.present?
     end
 
+    def separate_creator_with_semicolon
+      if parsed_json.present?
+        value_arr = []
+        parsed_json.map do |hash|
+          value = []
+          value << hash['creator_family_name']  if hash['creator_family_name'].present?
+          value << hash['creator_given_name'] if hash['creator_given_name'].present?
+          value << hash["creator_organization_name"] if hash["creator_organization_name"].present?
+          value_arr << value.reject(&:blank?).join(', ')
+        end
+        value_arr.join('; ')
+      end
+    end
+
     def transform_data(parsed_json)
       value_arr = []
       parsed_json.map do |hash|

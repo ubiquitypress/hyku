@@ -15,6 +15,11 @@ module MultipleMetadataFieldsHelper
     Ubiquity::ParseJson.new(json_record).data
   end
 
+  def display_json_values_comma_separated(json_record)
+    Ubiquity::ParseJson.new(json_record).separate_creator_with_semicolon
+  end
+
+
   def render_isni_or_orcid_url(id, type)
     new_id = id.delete(' ')
     uri = URI.parse(new_id)

@@ -33,12 +33,12 @@ class UbiquityWorkExpiryJob < ActiveJob::Base
     def perform_file_expiry(work_id)
       file_set = ActiveFedora::Base.find(work_id)
       if file_set
-        if file_set.under_embargo?
+        if file_set.embargo.try(:embargo_release_date).present?
           auto_expire_file_embargo file_set
-        elsif file_set.active_lease?
+        elsif file_set.lease.try(:lease_expiration_date).present?
           auto_expire_file_lease file_set
         end
-        unless file_set.under_embargo? ||file_set.active_lease?
+        unless file_set.embargo.try(:embargo_release_date).present? ||file_set.lease.try(:lease_expiration_date).present?
           WorkExpiryService.where(work_id: work_id).first.destroy
         end
       else

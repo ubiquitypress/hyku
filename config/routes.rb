@@ -41,6 +41,9 @@ Rails.application.routes.draw do
   get '/fail_uploads/delete_file' => 'ubiquity/fail_uploads#delete_file'
   post '/fail_uploads/download_file' => 'ubiquity/fail_uploads#download_file'
 
+  # Citation download format
+  post '/citation_exports/export_to_rif' => 'ubiquity/citation_exports#export_to_rif'
+
   mount BrowseEverything::Engine => '/browse'
   resource :site, only: [:update] do
     resources :roles, only: [:index, :update]

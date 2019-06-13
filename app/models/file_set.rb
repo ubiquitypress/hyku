@@ -3,7 +3,7 @@ class FileSet < ActiveFedora::Base
   include ::Hyrax::FileSetBehavior
 
   before_destroy :remove_rendering_relationship
-  after_save :fetch_file_sets_and_create_work_expiry_service
+  before_update :fetch_file_sets_and_create_work_expiry_service
 
   # Hyku has its own FileSetIndexer: app/indexers/file_set_indexer.rb
   # It overrides Hyrax to inject IIIF behavior.

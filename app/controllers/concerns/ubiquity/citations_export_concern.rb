@@ -67,30 +67,12 @@ module Ubiquity
         end
       end
 
-
       def ris_format_keys
         {
-          'T1' => :title,
-          'T2' => :alt_title,
-          'TI' => :book_title,
-          'CR' => :creator,
-          'ED' => :editor,
-          'AB' => :abstract,
-          'DA' => :date_published,
-          'DO' => :doi,
-          'ED' => :edition,
-          'JO' => :journal_title,
-          'LA' => :language,
-          'N1' => :add_info,
-          'KW' => :keyword,
-          'IS' => :issue,
-          'PB' => :publisher,
-          'PP' => :place_of_publication,
-          'PY' => :date_published,
-          'SN' => %i[isbn, issn eissn],
-          'SP' => %i[pagination article_num],
-          'UR' => :official_link,
-          'VL' => :volume
+          'T1' => :title, 'T2' => :alt_title, 'TI' => :book_title, 'CR' => :creator, 'ED' => :editor, 'AB' => :abstract,
+          'DA' => :date_published, 'DO' => :doi, 'JO' => :journal_title, 'LA' => :language, 'N1' => :add_info,
+          'KW' => :keyword, 'IS' => :issue, 'PB' => :publisher, 'PP' => :place_of_publication, 'PY' => :date_published,
+          'SN' => %i[isbn issn eissn], 'SP' => %i[pagination article_num], 'UR' => :official_link, 'VL' => :volume
         }
       end
   end

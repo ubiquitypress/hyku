@@ -32,6 +32,36 @@ module Ubiquity
       end
     end
 
+    def creator_for_rif_template
+      return nil if parsed_json.blank?
+      value_arr = []
+      parsed_json.map do |hash|
+        value = []
+        if hash['creator_family_name'].present? ||  hash['creator_given_name'].present?
+          value << "#{hash['creator_family_name']}, #{hash['creator_given_name']}"
+        elsif hash["creator_organization_name"].present?
+          value << hash["creator_organization_name"]
+        end
+        value_arr << value.reject(&:blank?).join(', ')
+      end
+      value_arr.join('; ')
+    end
+
+    def editor_for_rif_template
+      return nil if parsed_json.blank?
+      value_arr = []
+      parsed_json.map do |hash|
+        value = []
+        if hash['editor_family_name'].present? ||  hash['editor_given_name'].present?
+          value << "#{hash['editor_family_name']}, #{hash['editor_given_name']}"
+        elsif hash["editor_organization_name"].present?
+          value << hash["editor_organization_name"]
+        end
+        value_arr << value.reject(&:blank?).join(', ')
+      end
+      value_arr.join('; ')
+    end
+
     def transform_data(parsed_json)
       value_arr = []
       parsed_json.map do |hash|

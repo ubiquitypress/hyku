@@ -48,6 +48,5 @@ module Ubiquity
         return false if kk.blank?
       end
     end
-
   end
 end

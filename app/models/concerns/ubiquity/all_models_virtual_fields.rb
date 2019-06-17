@@ -24,7 +24,6 @@ module Ubiquity
     private
 
       def update_external_service_record
-        UbiquityFileFacetDoiJob.set(wait: 2.minute).perform_later(self.id, self.account_cname)
         AddWorkIdToExternalServiceJob.perform_later(self.id, self.account_cname)
       end
 

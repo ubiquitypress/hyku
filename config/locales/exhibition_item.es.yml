@@ -1,0 +1,10 @@
+es:
+  hyrax:
+    icons:
+      exhibition_item:     'fa fa-file-text-o'
+    select_type:
+      exhibition_item:
+        # TODO: translate `human_name` into Spanish
+        name:               "Exhibition Item"
+        # TODO: translate `human_name` into Spanish
+        description:        "Exhibition item trabajos"

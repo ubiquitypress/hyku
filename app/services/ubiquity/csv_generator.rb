@@ -7,7 +7,7 @@
 
 module Ubiquity
   class CsvGenerator
-    DEFAULT_WORKS = [Article, Book, BookContribution, ConferenceItem, Dataset, Exhibition, Image, Report, ThesisOrDissertation, TimeBasedMedia, GenericWork].freeze
+    DEFAULT_WORKS = [Article, Book, BookContribution, ConferenceItem, Dataset, ExhibitionItem, Image, Report, ThesisOrDissertation, TimeBasedMedia, GenericWork].freeze
     attr_accessor :db_record_count, :model_record_count
 
     #use with regular_export

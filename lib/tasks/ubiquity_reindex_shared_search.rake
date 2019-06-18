@@ -10,7 +10,7 @@ namespace :ubiquity_reindex_shared_search do
     account = Account.where(cname: cname).first
     parent_cname = account.parent.cname
     #These are the names of the existing work type in UbiquityPress's Hyku
-    model_class = [Collection, Article, Book, BookContribution, ConferenceItem, Dataset, Exhibition, Image, Report, ThesisOrDissertation, TimeBasedMedia, GenericWork, FileSet]
+    model_class = [Collection, Article, Book, BookContribution, ConferenceItem, Dataset, ExhibitionItem, Image, Report, ThesisOrDissertation, TimeBasedMedia, GenericWork, FileSet]
     AccountElevator.switch!(cname)
     #ActiveFedora::Base.reindex_everything
     model_class .each do |model|
@@ -29,7 +29,7 @@ namespace :ubiquity_reindex_shared_search do
       account = Account.where(cname: cname).first
       parent_cname = account.parent.cname
       #These are the names of the existing work type in UbiquityPress's Hyku
-      model_class = [Collection, Article, Book, BookContribution, ConferenceItem, Dataset, Exhibition, Image, Report, ThesisOrDissertation, TimeBasedMedia, GenericWork, FileSet]
+      model_class = [Collection, Article, Book, BookContribution, ConferenceItem, Dataset, ExhibitionItem, Image, Report, ThesisOrDissertation, TimeBasedMedia, GenericWork, FileSet]
       AccountElevator.switch!(cname)
       #ActiveFedora::Base.reindex_everything
       model_class .each do |model|

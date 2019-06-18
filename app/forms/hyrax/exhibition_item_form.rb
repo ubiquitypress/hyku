@@ -1,14 +1,13 @@
 # Generated via
-#  `rails generate hyrax:work Exhibition`
+#  `rails generate hyrax:work ExhibitionItem`
 module Hyrax
-  class ExhibitionForm < Hyrax::Forms::WorkForm
+  class ExhibitionItemForm < Hyrax::Forms::WorkForm
     include Hyrax::FormTerms
     include ::Ubiquity::AllFormsSharedBehaviour
     include Ubiquity::EditorMetadataFormBehaviour
     include Ubiquity::VersionMetadataFormBehaviour
 
-    self.model_class = ::Exhibition
-
+    self.model_class = ::ExhibitionItem
     self.terms += %i[title alt_title resource_type creator contributor rendering_ids abstract date_published media
                      institution org_unit project_name funder fndr_project_ref event_title event_location event_date
                      series_name editor version_number pagination

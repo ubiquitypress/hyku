@@ -1,7 +1,7 @@
 namespace :create_expiry_service_records do
   desc "Rake task to populate the Embargo or Lease works to WrokExpiryService model"
   task :populate_data, [:name] => :environment do |task, tenant|
-    model_class = [Article, Book, BookContribution, ConferenceItem, Dataset, Exhibition, ThesisOrDissertation, TimeBasedMedia, Image, Report, GenericWork]
+    model_class = [Article, Book, BookContribution, ConferenceItem, Dataset, ExhibitionItem, ThesisOrDissertation, TimeBasedMedia, Image, Report, GenericWork]
     AccountElevator.switch!(tenant[:name].to_s)
     model_class.each do |model_instance|
       model_instance.all.each do |work|

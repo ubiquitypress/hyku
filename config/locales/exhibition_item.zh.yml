@@ -1,0 +1,10 @@
+zh:
+  hyrax:
+    icons:
+      exhibition_item:     'fa fa-file-text-o'
+    select_type:
+      exhibition_item:
+        # TODO: translate `human_name` into Chinese
+        name:               "Exhibition Item"
+        # TODO: translate `human_name` into Chinese
+        description:        "Exhibition item 作品"

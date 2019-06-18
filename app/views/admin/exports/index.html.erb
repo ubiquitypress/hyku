@@ -39,6 +39,9 @@
               <li><%= link_to "Export CSV for Image", main_app.export_remap_model_admin_exports_path(model: 'Image', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model' }  %>  </li>
               <li><%= link_to "Export CSV for Report", main_app.export_remap_model_admin_exports_path(model: 'Report', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model' }  %>  </li>
               <li><%= link_to "Export CSV for Generic Work", main_app.export_remap_model_admin_exports_path(model: 'GenericWork', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model' } %>  </li>
+              <li><%= link_to "Export CSV for Exhibition", main_app.export_remap_model_admin_exports_path(model: 'Exhibition', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model'} %> </li>
+              <li><%= link_to "Export CSV for ThesisOrDissertation", main_app.export_remap_model_admin_exports_path(model: 'ThesisOrDissertation', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model'} %> </li>
+              <li><%= link_to "Export CSV for TimeBasedMedia", main_app.export_remap_model_admin_exports_path(model: 'TimeBasedMedia', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'model'} %> </li>
             </ul>
           </div>
         </div>

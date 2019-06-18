@@ -149,13 +149,12 @@ module Ubiquity
 
     def populate_work_values(type, key)
       if type == 'string'
-        puts "dele populating metadata string fields"
+        puts "populating metadata string fields"
         @attributes_hash[key] = @data_hash[key]
       elsif type == 'array'
-        puts "dele populating metadata array fields"
+        puts "populating metadata array fields"
         value = (@data_hash[key].present? ? @data_hash[key].split('||') : [])
         @attributes_hash[key] = value
-        puts "ariya #{key} #{attributes_hash}"
       elsif type == 'json'
         puts "populating metadata json fields"
         @attributes_hash[key] = [@data_hash[key].to_json]

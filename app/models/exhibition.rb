@@ -9,6 +9,7 @@ class Exhibition < ActiveFedora::Base
   include Ubiquity::EditorMetadataModelConcern
   include Ubiquity::VersionMetadataModelConcern
   include Ubiquity::UpdateSharedIndex
+  include Ubiquity::MultipleModules
 
   self.indexer = ExhibitionIndexer
   # Change this to restrict which works can be added as a child.

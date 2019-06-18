@@ -17,7 +17,7 @@ module Ubiquity
       #called for new record and updating of old record where visibility_changed is true
       if doi_enabled? && self.visibility == 'open' && (self.doi_options == 'Mint DOI:Registered' || self.doi_options == 'Mint DOI:Findable')
         puts "Post to indexer #{self.id}"
-        UbiquityPostToIndexerJob.perform_later(self.id, self.draft_doi)
+        ::UbiquityPostToIndexerJob.perform_later(self.id, self.draft_doi)
       end
     end
 

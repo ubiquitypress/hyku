@@ -4,6 +4,7 @@ class Article < ActiveFedora::Base
   include Ubiquity::SharedMetadata
   include Ubiquity::AllModelsVirtualFields
   include Ubiquity::UpdateSharedIndex
+  include Ubiquity::MultipleModules
 
   self.indexer = ::ArticleIndexer
 

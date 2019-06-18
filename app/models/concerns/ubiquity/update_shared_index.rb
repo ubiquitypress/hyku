@@ -4,7 +4,8 @@ module Ubiquity
 
     included do
       after_save :add_record_to_index, on: [:create, :update]
-      before_destroy :remove_record_from_index
+      #before_destroy :remove_record_from_index
+      after_destroy :remove_record_from_index
 
       before_save :get_collection_child_records
       before_destroy :get_collection_child_records

@@ -80,6 +80,9 @@ module Ubiquity
       property :dewey, predicate: ::RDF::Vocab::SCHEMA.CategoryCode, multiple: false do |index|
         index.as :stored_searchable
       end
+      property :file_availability, predicate: ::RDF::Vocab::SCHEMA.ItemAvailability do |index|
+        index.as :stored_searchable, :facetable
+      end
 
     end
 

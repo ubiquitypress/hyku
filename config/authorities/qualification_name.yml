@@ -1,6 +1,6 @@
 terms:
-- id: PHD
-  term: PHD
+- id: PhD
+  term: PhD
   active: true
 - id: DBA
   term: DBA
@@ -26,8 +26,8 @@ terms:
 - id: DPhil
   term: DPhil
   active: true
-- id: DMustrue
-  term: DMustrue
+- id: DMus
+  term: DMus
   active: true
 - id: DPT
   term: DPT

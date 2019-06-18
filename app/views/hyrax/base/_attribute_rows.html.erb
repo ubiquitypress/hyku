@@ -38,7 +38,7 @@
 <%= presenter.attribute_to_html(:isbn, label: "ISBN", render_as: :string) %>
 <%= presenter.attribute_to_html(:issn, label: "ISSN", render_as: :string) %>
 <%= presenter.attribute_to_html(:eissn, label: "eISSN", render_as: :string) %>
-<%= presenter.attribute_to_html(:current_he_institution, render_as: :string) %>
+<%= presenter.attribute_to_html(:current_he_institution, render_as: :string, label: "Current HE Institution") %>
 <%= presenter.attribute_to_html(:date_accepted, render_as: :string) %>
 <%= presenter.attribute_to_html(:official_link, render_as: :external_url, label: "Official URL") %>
 <%= presenter.attribute_to_html(:related_url, render_as: :external_url, label: "Related URL") %>

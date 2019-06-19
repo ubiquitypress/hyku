@@ -46,14 +46,15 @@ module Ubiquity
     end
 
     def issn
-      attributes['ISSN'].first if attributes['ISSN'].present?
+      return nil if attributes['issn-type'].blank?
+      print_value = attributes['issn-type'].detect { |h| h['type'] == 'print' }
+      return print_value['value'] if print_value
     end
 
     def eissn
       return nil if attributes['issn-type'].blank?
-      print_value = attributes['issn-type'].detect { |h| h['type'] == 'electronic' } || attributes['issn-type'].detect { |h| h['type'] == 'print' }
-      return print_value['value'] if print_value['value']
-      attributes['issn-type'].first['value']
+      print_value = attributes['issn-type'].detect { |h| h['type'] == 'electronic' }
+      return print_value['value'] if print_value
     end
 
     def isbn

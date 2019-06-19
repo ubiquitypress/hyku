@@ -22,7 +22,13 @@
           <div class="form-group">
             <%= f.fields_for :settings do |ff| %>
               <%= ff.label :email %><br>
-              <%= ff.text_field :contact_email, :value => @account.contact_email, class: 'form-control' %>
+              <%= ff.text_field :contact_email, :value => @account.contact_email, class: 'form-control' %><br>
+              <%= ff.label :weekly_email_list %><br>
+              <%= ff.text_field :weekly_email_list, :value => current_account.settings["weekly_email_list"], name: "#{f.object_name}[settings][weekly_email_list][]", class: 'form-control' %><br>
+              <%= ff.label :monthly_email_list %><br>
+              <%= ff.text_field :monthly_email_list, :value => current_account.settings["monthly_email_list"], name: "#{f.object_name}[settings][monthly_email_list][]", class: 'form-control' %><br>
+              <%= ff.label :yearly_email_list %><br>
+              <%= ff.text_field :yearly_email_list, :value => current_account.settings["yearly_email_list"], name: "#{f.object_name}[settings][yearly_email_list][]", class: 'form-control' %>
             <% end %>
           </div>
 

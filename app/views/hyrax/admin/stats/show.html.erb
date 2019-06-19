@@ -1,7 +1,7 @@
 <% content_for :page_header do %>
   <h1><span class="fa fa-edit"></span> Statistics for <%= application_name %></h1>
 <% end %>
-  
+
   <div class="panel panel-default tabs">
     <!-- Nav tabs -->
     <ul id="statistics-tabs" class="nav nav-tabs" role="tablist">
@@ -9,6 +9,7 @@
       <li role="presentation"><a href="#works" aria-controls="works" role="tab" data-toggle="tab">Works</a></li>
       <li role="presentation"><a href="#downloads" aria-controls="downloads" role="tab" data-toggle="tab">Downloads</a></li>
       <li role="presentation"><a href="#users" aria-controls="users" role="tab" data-toggle="tab">Users</a></li>
+      <li role="presentation"><a href="#email_reports" aria-controls="email_reports" role="tab" data-toggle="tab">Email reports</a></li>
     </ul>
 
     <!-- Tab panes -->
@@ -73,6 +74,13 @@
           <div class="panel-body">
             <%= render "hyrax/admin/stats/stats_by_date" %>
             <%= render "hyrax/admin/stats/top_data" %>
+          </div>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="email_reports">
+        <div class="panel panel-default labels">
+          <div class="panel-body">
+            <%= render "hyrax/admin/stats/email_reports" %>
           </div>
         </div>
       </div>

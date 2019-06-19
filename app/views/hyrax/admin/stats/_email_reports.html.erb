@@ -1,0 +1,22 @@
+<h2>Account Email reports</h2><br>
+<div class="email-reports">
+  <h3>Weekly email reports list</h3>
+  <div>
+    <ul>
+      <li><%= current_account.settings["weekly_email_list"].to_sentence %></li>
+    </ul>
+  </div>
+  <h3>Monthly email reports list</h3>
+  <div>
+    <ul>
+      <li><%= current_account.settings["monthly_email_list"].to_sentence %></li>
+    </ul>
+  </div>
+  <h3>Yearly email reports list</h3>
+  <div>
+    <ul>
+      <li><%= current_account.settings["yearly_email_list"].to_sentence %></li>
+    </ul>
+  </div>
+</div>
+<!--The to_sentence called on the array will throw an no method error for nil class if empty-->

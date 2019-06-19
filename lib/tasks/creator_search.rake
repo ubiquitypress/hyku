@@ -10,7 +10,7 @@ namespace :creator_search do
   task :update, [:name] => :environment do |task, tenant|
 
     #These are the names of the existing work type in UbiquityPress's Hyku
-    model_class = [Collection, Article, Book, BookContribution, ConferenceItem, Dataset, Exhibition, Image, Report, ThesisOrDissertation, TimeBasedMedia, GenericWork]
+    model_class = [Collection, Article, Book, BookContribution, ConferenceItem, Dataset, ExhibitionItem, Image, Report, ThesisOrDissertation, TimeBasedMedia, GenericWork]
     AccountElevator.switch!("#{tenant[:name]}")
     model_class.each do |model|
       #We fetching an instance of the models and then getting the value in the creator field

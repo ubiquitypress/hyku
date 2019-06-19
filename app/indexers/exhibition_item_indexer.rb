@@ -1,6 +1,6 @@
 # Generated via
-#  `rails generate hyrax:work Exhibition`
-class ExhibitionIndexer < Hyrax::WorkIndexer
+#  `rails generate hyrax:work ExhibitionItem`
+class ExhibitionItemIndexer < Hyrax::WorkIndexer
   # This indexes the default metadata. You can remove it if you want to
   # provide your own metadata and indexing.
   include Hyrax::IndexesBasicMetadata

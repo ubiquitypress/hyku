@@ -21,7 +21,7 @@ module Ubiquity
       Image.find_each {|record| @all_records << Ubiquity::CsvDataRemap.new(record).unordered_hash  if record.present?}
       Report.find_each {|record| @all_records << Ubiquity::CsvDataRemap.new(record).unordered_hash  if record.present?}
       GenericWork.find_each {|record| @all_records << Ubiquity::CsvDataRemap.new(record).unordered_hash  if record.present?}
-      Exhibition.find_each {|record| @all_records << Ubiquity::CsvDataRemap.new(record).unordered_hash  if record.present?}
+      ExhibitionItem.find_each {|record| @all_records << Ubiquity::CsvDataRemap.new(record).unordered_hash  if record.present?}
       ThesisOrDissertation.find_each {|record| @all_records << Ubiquity::CsvDataRemap.new(record).unordered_hash  if record.present?}
       TimeBasedMedia.find_each {|record| @all_records << Ubiquity::CsvDataRemap.new(record).unordered_hash  if record.present?}
 

@@ -1,8 +1,8 @@
 # Generated via
-#  `rails generate hyrax:work Exhibition`
+#  `rails generate hyrax:work ExhibitionItem`
 require 'rails_helper'
 
-RSpec.describe Hyrax::Actors::ExhibitionActor do
+RSpec.describe Hyrax::ExhibitionItemForm do
   it "has tests" do
     skip "Add your tests here"
   end

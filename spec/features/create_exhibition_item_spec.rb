@@ -1,10 +1,10 @@
 # Generated via
-#  `rails generate hyrax:work Exhibition`
+#  `rails generate hyrax:work ExhibitionItem`
 require 'rails_helper'
 include Warden::Test::Helpers
 
 # NOTE: If you generated more than one work, you have to set "js: true"
-RSpec.feature 'Create a Exhibition', js: false do
+RSpec.feature 'Create a ExhibitionItem', js: false do
   context 'a logged in user' do
     let(:user_attributes) do
       { email: 'test@example.com' }
@@ -24,10 +24,10 @@ RSpec.feature 'Create a Exhibition', js: false do
       click_link "Add new work"
 
       # If you generate more than one work uncomment these lines
-      # choose "payload_concern", option: "Exhibition"
+      # choose "payload_concern", option: "ExhibitionItem"
       # click_button "Create work"
 
-      expect(page).to have_content "Add New Exhibition"
+      expect(page).to have_content "Add New Exhibition item"
     end
   end
 end

@@ -1,4 +1,5 @@
 <% draft_doi = f.object.model.draft_doi %>
+<%= hidden_field_tag :ubiquity_work_visibility, fetch_permission_badge(f.object)%>
 <br>
 
 <div class='margin-adjustment-doi-option'>

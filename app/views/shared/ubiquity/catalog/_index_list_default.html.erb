@@ -39,17 +39,6 @@
 
     <% end %>
 
-      <% if ['localhost', 'repo-test'].any? { |name| name.in?(request.original_url)} %>
-        <tr>
-          <th class="search-meta-label"><span class="attribute-label h4"> Debug Date Created: </span></th>
-          <td><%= DateTime.parse(document.to_h["system_create_dtsi"]) %></td>
-        </tr>
-        <tr>
-          <th class="search-meta-label"><span class="attribute-label h4"> Debug Score: </span></th>
-          <td> <%= document.to_h['score'] %> </td>
-         </tr>
-       <% end %>
-
   </table>
 </div>
 

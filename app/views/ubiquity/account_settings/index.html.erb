@@ -12,7 +12,7 @@
     <tbody>
       <tr>
         <td><%= @account && @account.settings && @account.settings["contact_email"] %></td>
-        <td><%= link_to "Edit this email", edit_admin_account_setting_path(@account), class: "btn btn-xs btn-default" %></td>
+        <td><%= link_to "Edit email & mailing lists", edit_admin_account_setting_path(@account), class: "btn btn-xs btn-default" %></td>
       </tr>
     </tbody>
 </table>

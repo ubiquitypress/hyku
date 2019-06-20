@@ -74,8 +74,15 @@
 
     <!-- added by ubiquitypress -->
     <%= menu.nav_link(main_app.admin_exports_path) do %>
-
       <span class="fa fa-download"></span> <span class="sidebar-action-text"><%= t('hyrax.admin.sidebar.export') %></span>
+    <% end %>
+
+    <%= menu.nav_link(hyrax.embargoes_path) do %>
+      <span class="fa fa-tasks"></span> <span class="sidebar-action-text"><%= t('hyrax.admin.sidebar.embargoes') %></span>
+    <% end %>
+
+    <%= menu.nav_link(hyrax.leases_path) do %>
+      <span class="fa fa-tasks"></span> <span class="sidebar-action-text"><%= t('hyrax.admin.sidebar.leases') %></span>
     <% end %>
 
     <%= menu.nav_link(hyrax.admin_workflows_path) do %>

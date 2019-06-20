@@ -148,6 +148,7 @@ en:
         activity_summary:             'Activity summary'
         content_blocks:               'Content Blocks'
         labels:                       'Labels'
+        leases:                       'Manage Leases'
         manage_groups:                'Manage groups'
         manage_roles_and_permissions: 'Define roles and permissions'
         manage_users:                 'Manage users'
@@ -156,6 +157,7 @@ en:
         system_status:                'System status'
         technical:                    'Technical'
         export:                       'Export metadata'
+        embargoes:                    'Manage Embargoes'
       users:
         index:
           action_label: Action

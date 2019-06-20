@@ -3,6 +3,10 @@
     var publicationYear = $('.ubiquity-date-published-year').val();
     var visibility = $('.set-access-controls ul.visibility li.radio input:checked').val();
     var doiOptions = $('ul.doi_option_list input:checked').val();
+    var doiOptionsCheck = (doiOptions == "Mint DOI:Registered" || doiOptions == "Mint DOI:Findable")
+    if (visibility === undefined){
+      visibility = $('#ubiquity_work_visibility').val();
+    }
     var draftDoi = $(".ubiquity-draft-doi").val()
     var doi = $(".ubiquity-doi").val()
     var officialLink = $(".ubiquity-official-link").val()
@@ -19,7 +23,7 @@
       var msg = 'Please note an updated record will be sent to DataCite, if you continue.'
       $('#modal_button_save').attr('disabled', false);
     }
-    else if (draftDoi !== '' && visibility == "embargo"){
+    else if (visibility == "embargo" && (draftDoi !== '' || doiOptionsCheck)){
       var msg = 'Please note that a DOI will be minted at DataCite on release of embargo, if you continue.'
       $('#modal_button_save').attr('disabled', false);
     }
@@ -34,6 +38,9 @@
     $('#with_files_submit').on('click', function(e) {
       messagesSwitcher();
       var visibility = $('.set-access-controls ul.visibility li.radio input:checked').val();
+      if (visibility === undefined){
+        visibility = $('#ubiquity_work_visibility').val();
+      }
       var doiOptions = $('ul.doi_option_list input:checked').val();
       var visibilityCheck = (visibility == "open" || visibility == "embargo")
       var doiOptionsCheck = (doiOptions == "Mint DOI:Registered" || doiOptions == "Mint DOI:Findable")

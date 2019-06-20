@@ -102,21 +102,21 @@ terms:
     term: Software
   - id: Dataset Database
     term: Database
-  - id: Exhibition Exhibition
+  - id: ExhibitionItem Exhibition
     term: Exhibition
-  - id: Exhibition Exhibition catalogue
+  - id: ExhibitionItem catalogue
     term: Exhibition catalogue
-  - id: Exhibition Exhibition object labels
+  - id: ExhibitionItem Exhibition object labels
     term: Exhibition object labels
-  - id: Exhibition Exhibition gallery text
+  - id: ExhibitionItem Exhibition gallery text
     term: Exhibition gallery text
-  - id: Exhibition Exhibition-related event
+  - id: ExhibitionItem Exhibition-related event
     term: Exhibition-related event
-  - id: Exhibition Exhibition media transcription
+  - id: ExhibitionItem Exhibition media transcription
     term: Exhibition media transcription
-  - id: Exhibition Exhibition audio-visual guide
+  - id: ExhibitionItem Exhibition audio-visual guide
     term: Exhibition audio-visual guide
-  - id: Exhibition Festival
+  - id: ExhibitionItem Festival
     term: Festival
   - id: GenericWork
     term:
@@ -175,7 +175,7 @@ terms:
   - id:  TimeBasedMedia Podcast
     term: Podcast
   - id:  TimeBasedMedia Video
-    term: Video        
+    term: Video
   - id: Image 3D image
     term: 3D image
   - id: Collection 3D image

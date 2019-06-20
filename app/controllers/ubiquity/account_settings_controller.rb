@@ -23,7 +23,7 @@ class Ubiquity::AccountSettingsController < AdminController
   end
 
   def account_params
-    params.require(:account).permit(:settings => [:contact_email])
+    params.require(:account).permit(:settings => [:contact_email, weekly_email_list: [], monthly_email_list: [], yearly_email_list: []])
   end
 
 end

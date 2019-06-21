@@ -28,7 +28,7 @@ module Ubiquity
         self.file_availability = ['File available from this repository']
       elsif self.present? && self.official_link.present? && !draft_doi_check? && ('open'.in? get_work_filesets_visibility)
         self.file_availability = self.file_availability | ["External link (access may be restricted)", 'File available from this repository']
-      elsif self.present? && self.official_link.present? && !draft_doi_check? || (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] })
+      elsif self.present? && self.official_link.present? && !draft_doi_check? && (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] })
         self.file_availability = self.file_availability | ["External link (access may be restricted)"]
       elsif self.present? && !self.official_link.present? && draft_doi_check? || (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] })
         self.file_availability = ['File not available']

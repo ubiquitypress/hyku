@@ -1,6 +1,9 @@
 <%# Override from Hyrax engine to remove `render_thumbnail_tag` and customise front-end %>
 
 <% presenter = featured.presenter %>
-<li class="featured-item" data-id="<%= presenter.id %>">
-  <%= render 'hyrax/homepage/featured_fields', featured: presenter %>
-</li>
+<% visibility = presenter.solr_document.visibility%>
+<% if visibility == 'open' || visibility == 'lease'%>
+  <li class="featured-item" data-id="<%= presenter.id %>">
+    <%= render 'hyrax/homepage/featured_fields', featured: presenter %>
+  </li>
+<%end%>

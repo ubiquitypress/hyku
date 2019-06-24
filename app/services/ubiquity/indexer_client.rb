@@ -11,7 +11,8 @@ module Ubiquity
     end
 
     def post
-      body = {resource_type: resource_type, uuid: work_uuid}.to_json
+      service_code = ENV['SERVICE_CODE']
+      body = {resource_type: resource_type, uuid: work_uuid, service_code: service_code}.to_json
       handle_client do
         response = self.class.post(api_path, body: body, headers: headers )
         external_service = ExternalService.where(draft_doi: draft_doi).first

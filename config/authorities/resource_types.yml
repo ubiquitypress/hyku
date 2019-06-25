@@ -118,8 +118,6 @@ terms:
     term: Exhibition audio-visual guide
   - id: ExhibitionItem Festival
     term: Festival
-  - id: GenericWork
-    term:
   - id: GenericWork Blog post
     term: Blog post
   - id: GenericWork Cartographic material

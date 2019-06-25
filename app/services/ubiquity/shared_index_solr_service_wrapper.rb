@@ -1,11 +1,11 @@
 module Ubiquity
   class SharedIndexSolrServiceWrapper
-    attr_accessor :solr_document, :action_type, :tenant_cname, :file_set_doc
+    attr_accessor :solr_document, :action_type, :tenant_cname, :file_sets
 
-    def initialize(solr_document, action_type, tenant_cname, file_set_doc = nil)
+    def initialize(solr_document, action_type, tenant_cname, file_sets = nil)
       @solr_document = solr_document
       @action_type = action_type
-      @file_set_doc = file_set_doc
+      @file_sets = file_sets
       @tenant_cname = tenant_cname
     end
 
@@ -33,10 +33,12 @@ module Ubiquity
     end
 
     def index_file_set
-      if file_set_doc.present?
+      if file_sets.present?
         #this is not an rsolr coonection but it calls it
         service = ActiveFedora::SolrService
-        service.add(file_set_doc, softCommit: true)
+        file_sets.each do |file_set_doc|
+          service.add(file_set_doc, softCommit: true)
+        end
         service.commit
       end
     end

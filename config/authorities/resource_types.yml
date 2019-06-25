@@ -118,8 +118,6 @@ terms:
     term: Exhibition audio-visual guide
   - id: ExhibitionItem Festival
     term: Festival
-  - id: GenericWork
-    term:
   - id: GenericWork Blog post
     term: Blog post
   - id: GenericWork Cartographic material
@@ -158,8 +156,6 @@ terms:
     term: Doctoral thesis
   - id: ThesisOrDissertation Master's dissertation
     term: Master's dissertation
-  - id:  TimeBasedMedia
-    term:
   - id:  TimeBasedMedia Audio
     term: Audio
   - id:  TimeBasedMedia Animation

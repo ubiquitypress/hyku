@@ -158,8 +158,6 @@ terms:
     term: Doctoral thesis
   - id: ThesisOrDissertation Master's dissertation
     term: Master's dissertation
-  - id:  TimeBasedMedia
-    term:
   - id:  TimeBasedMedia Audio
     term: Audio
   - id:  TimeBasedMedia Animation

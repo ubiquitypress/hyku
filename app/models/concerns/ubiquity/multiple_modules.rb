@@ -2,14 +2,14 @@ module Ubiquity
 #This module was created by Ubiquity to set the file_avialabiliy to allow for faceting. The status will change according to the business rule below:
 #  A: File available from this repository, B: External link (access may be restricted), C: File not available
 
-# public files attached, official URL present, draft DOI present = A
-# public files attached, no official URL present, no draft DOI present = A
-# public files attached, no official URL present, draft DOI present = A
-# public files attached, official URL present, no draft DOI present = A, B
-# no public files attached, official URL present, no draft DOI present = B
-# no public files attached, official URL present, draft DOI present = C
-# no public files attached, no official URL present, draft DOI present = C
-# no public files attached, no official URL present, no draft DOI present = C
+# public files attached, official URL present, doi_options.in? ["Mint DOI:Registered", "Mint DOI:Findable" present = A
+# public files attached, no official URL present, no doi_options.in? ["Mint DOI:Registered", "Mint DOI:Findable"present = A
+# public files attached, no official URL present, doi_options.in? ["Mint DOI:Registered", "Mint DOI:Findable" present = A
+# public files attached, official URL present, no doi_options.in? ["Mint DOI:Registered", "Mint DOI:Findable" present = A, B
+# no public files attached, official URL present, no doi_options.in? ["Mint DOI:Registered", "Mint DOI:Findable" present = B
+# no public files attached, official URL present, doi_options.in? ["Mint DOI:Registered", "Mint DOI:Findable" present = C
+# no public files attached, no official URL present, doi_options.in? ["Mint DOI:Registered", "Mint DOI:Findable" present = C
+# no public files attached, no official URL present, doi_options.in? ["Mint DOI:Registered", "Mint DOI:Findable" DOI present = C
   module MultipleModules
     extend ActiveSupport::Concern
 
@@ -20,29 +20,25 @@ module Ubiquity
     private
 
     def set_file_availability_for_faceting
-      if self.present? && !self.official_link.present? && draft_doi_check? && ('open'.in? get_work_filesets_visibility)
+      if self.present? && ('open'.in? get_work_filesets_visibility)
         self.file_availability = ['File available from this repository']
-      elsif self.present? && self.official_link.present? && draft_doi_check? && ('open'.in? get_work_filesets_visibility)
+      elsif self.present? && self.official_link.present? && doi_option_value_check? && ('open'.in? get_work_filesets_visibility)
         self.file_availability = ['File available from this repository']
-      elsif self.present? && !self.official_link.present? && !draft_doi_check? && ('open'.in? get_work_filesets_visibility)
-        self.file_availability = ['File available from this repository']
-      elsif self.present? && self.official_link.present? && !draft_doi_check? && ('open'.in? get_work_filesets_visibility)
+      elsif self.present? && self.official_link.present? && !doi_option_value_check? && ('open'.in? get_work_filesets_visibility)
         self.file_availability = self.file_availability | ["External link (access may be restricted)", 'File available from this repository']
-      elsif self.present? && self.official_link.present? && !draft_doi_check? && (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] })
+      elsif self.present? && self.official_link.present? && !doi_option_value_check? && (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] })
         self.file_availability = self.file_availability | ["External link (access may be restricted)"]
-      elsif self.present? && !self.official_link.present? && draft_doi_check? || (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] })
+      elsif self.present? && self.official_link.present? && doi_option_value_check? && (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] })
         self.file_availability = ['File not available']
-      elsif self.present? && !self.official_link.present? && !draft_doi_check? || (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] })
+      elsif self.present? && !self.official_link.present? && doi_option_value_check? && (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] })
         self.file_availability = ['File not available']
-      elsif self.present? && self.official_link.present? && draft_doi_check? || (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] })
+      elsif self.present? && !self.official_link.present? && !doi_option_value_check? && (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] })
         self.file_availability = ['File not available']
       end
     end
 
-    def draft_doi_check?
-      draft_doi_object = ExternalService.where(draft_doi: self.try(:draft_doi)).first
-      return true if draft_doi_object.present?
-      return false if draft_doi_object.blank?
+    def doi_option_value_check?
+      self.doi_options.in? ["Mint DOI:Registered", "Mint DOI:Findable"]
     end
 
 

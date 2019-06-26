@@ -14,26 +14,50 @@ module Ubiquity
     extend ActiveSupport::Concern
 
     included do
-      before_save :set_file_availability_for_faceting
+      #before_save :set_file_availability_for_faceting
+      after_save :set_file_availability_for_faceting
     end
 
     private
 
     def set_file_availability_for_faceting
-      if self.present? && ('open'.in? get_work_filesets_visibility)
+      if ('open'.in? get_work_filesets_visibility)  && self.official_link.present? && (doi_option_value_check? == true)
         self.file_availability = ['File available from this repository']
-      elsif self.present? && self.official_link.present? && doi_option_value_check? && ('open'.in? get_work_filesets_visibility)
+          puts"LONDONN21"
+
+      elsif ('open'.in? get_work_filesets_visibility) && !self.official_link.present? && (doi_option_value_check? == false)
         self.file_availability = ['File available from this repository']
-      elsif self.present? && self.official_link.present? && !doi_option_value_check? && ('open'.in? get_work_filesets_visibility)
-        self.file_availability = self.file_availability | ["External link (access may be restricted)", 'File available from this repository']
-      elsif self.present? && self.official_link.present? && !doi_option_value_check? && (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] })
-        self.file_availability = self.file_availability | ["External link (access may be restricted)"]
-      elsif self.present? && self.official_link.present? && doi_option_value_check? && (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] })
+          puts"MADRID22"
+
+      elsif ('open'.in? get_work_filesets_visibility) && !self.official_link.present? && (doi_option_value_check? == true)
+        self.file_availability = ['File available from this repository']
+          puts"NAPOLI23"
+
+      elsif ('open'.in? get_work_filesets_visibility) && self.official_link.present? && (doi_option_value_check? == false)
+        #self.file_availability = self.file_availability | ["External link (access may be restricted)", 'File available from this repository']
+        self.file_availability = ["External link (access may be restricted)", 'File available from this repository']
+
+        puts"LONDONN24"
+
+      elsif (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] }) && self.official_link.present? && (doi_option_value_check? == false)
+        self.file_availability =  ["External link (access may be restricted)"]
+          puts"LONDONN25"
+
+      elsif (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] } || get_work_filesets_visibility.blank?) && self.official_link.present? && (doi_option_value_check? == true)
         self.file_availability = ['File not available']
-      elsif self.present? && !self.official_link.present? && doi_option_value_check? && (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] })
+          puts"LONDONN26"
+
+      elsif (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] } || get_work_filesets_visibility.blank?) && self.official_link.present? && (doi_option_value_check? == false)
+          self.file_availability = ['File not available']
+            puts"LONDONN27"
+
+      elsif (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] } || get_work_filesets_visibility.blank?) && !self.official_link.present? && (doi_option_value_check? == true)
         self.file_availability = ['File not available']
-      elsif self.present? && !self.official_link.present? && !doi_option_value_check? && (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] })
+          puts"LONDONN28"
+
+      elsif (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] } || get_work_filesets_visibility.blank?) && !self.official_link.present? && (doi_option_value_check? == false)
         self.file_availability = ['File not available']
+          puts"LONDONN29"
       end
     end
 

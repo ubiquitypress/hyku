@@ -3,7 +3,7 @@
 <div class="metadata">
   <table class="table">
     <% doc_presenter = index_presenter(document) %>
-
+    <%= hidden_field_tag :sort_order, params[:sort].to_s.split(' ').last || 'desc'%>
     <% index_fields(document).each_with_index do |(field_name, field), index| %>
 
       <% if should_render_index_field? document, field %>
@@ -18,7 +18,12 @@
           <td><%= link_to_facet_list(document.institution.sort, 'institution', '', '; ').html_safe %></td>
         <% end %>
 
-        <% if ['resource_type_tesim', 'institution_tesim', "creator_tesim", "contributor_tesim" , "editor_tesim"].exclude? field_name %>
+        <% if field_name == 'date_published_tesim' %>
+          <th class="search-meta-label"><span class="attribute-label h4"><%= render_index_field_label document, field: field_name %></span></th>
+          <td class='published-date-td'><%= doc_presenter.field_value field_name %></td>
+        <% end %>
+
+        <% if ['resource_type_tesim', 'institution_tesim', 'date_published_tesim', "creator_tesim", "contributor_tesim" , "editor_tesim"].exclude? field_name %>
           <th class="search-meta-label"><span class="attribute-label h4"><%= render_index_field_label document, field: field_name %></span></th>
           <td><%= doc_presenter.field_value field_name %></td>
         <% end %>

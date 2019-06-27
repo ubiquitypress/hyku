@@ -177,7 +177,10 @@ module Ubiquity
     def remove_hash_keys_with_empty_and_nil_values(data)
       if (data.present? && data.class == Array)
         new_data = data.map do |hash|
-          hash.reject { |_k, v| v.nil? || v.to_s.empty? || v == "NaN"}
+          ['contributor_orcid', 'contributor_isni', 'creator_orcid', 'creator_isni', 'editor_isni', 'editor_orcid'].each do|ele|
+            hash[ele] = hash[ele].strip.chomp('/').split('/').last.gsub(/[^a-z-0-9]/, '') if hash[ele].present?
+          end
+          hash.reject { |_k, v| v.nil? || v.to_s.empty? || v == "NaN" }
         end
         # remove hash that contains only default keys and values.
         remove_hash_with_default_keys(new_data)

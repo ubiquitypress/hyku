@@ -7,16 +7,15 @@
 module Ubiquity
   class JsonImporter
     attr_reader :ubiquity_model_class
-    attr_accessor :attributes_hash, :work, :hash_for_import
 
     def initialize(data)
-      @attributes_hash = {}
       @data = data
       $stdout.puts "Log Json data loaded #{@data}"
 
       @data_id  = data.delete('id') || data.delete(:id)
       @tenant = data['tenant'] || data[:tenant]
       @domain = data['domain'] || data[:domain]
+
       @tenant_domain = @tenant + '.' + @domain
       @data_hash = HashWithIndifferentAccess.new(data)
       @file = @data_hash[:file]
@@ -30,54 +29,28 @@ module Ubiquity
 
       @user = User.where(email: @work_instance.depositor).first ||  User.find_or_create_by(email: email) { |user|  user.password = 'abcdefgh'; user.password_confirmation = 'abcdefgh'}
 
-      @attributes_hash['depositor'] = @user.email unless @work_instance.depositor
+      @work_instance.depositor = @user.email unless @work_instance.depositor
       $stdout.puts "Started parsing the json data"
 
-      hash_from_work_and_submitted_data.each_with_index do |(key, val), index|
+      @work_instance.attributes.each_with_index do |(key, val), index|
         #index needed to to ensure set_default_work_visibility is called once inside populate_array_field
         populate_array_field(key, val, index)
         populate_json_field(key, val)
         populate_single_fields(key, val)
       end
-      @attributes_hash['account_cname'] = @tenant_domain
-      @attributes_hash['date_modified'] = Hyrax::TimeService.time_in_utc
-      @attributes_hash['date_uploaded'] = Hyrax::TimeService.time_in_utc unless @work_instance.date_uploaded.present?
-
-      #save the work
-      create_or_update_work
+      @work_instance.account_cname = @tenant_domain
+      @work_instance.date_modified = Hyrax::TimeService.time_in_utc
+      @work_instance.date_uploaded = Hyrax::TimeService.time_in_utc unless @work_instance.date_uploaded.present?
+      puts "#{@work_instance.inspect}"
+      @work_instance.save!
       add_state_to_work
       $stdout.puts "work was successfully created"
 
       attach_files
       @work_instance
-      @work = @work_instance
-      self
     end
 
     private
-
-    def hash_from_work_and_submitted_data
-      work_keys = @work_instance.attributes.keys
-      work_hash_with_indifference_access = @work_instance.attributes.with_indifferent_access
-      data_with_indifferent_access = @data.with_indifferent_access
-      if @work_instance.new_record?
-         @hash_for_import = data_with_indifferent_access.slice(*work_keys)
-      else
-        @hash_for_import = work_hash_with_indifference_access.slice(*@data.keys)
-      end
-
-    end
-
-    def create_or_update_work
-      if @work_instance.new_record?
-        @work_instance.attributes = attributes_hash
-        puts "new-work #{@work_instance.inspect}"
-        @work_instance.save!
-      else
-        puts "updating-work with #{attributes_hash.inspect}"
-        @work_instance.update(attributes_hash)
-      end
-    end
 
     def model_instance
       AccountElevator.switch!("#{@tenant_domain}")
@@ -109,55 +82,62 @@ module Ubiquity
     def set_default_work_visibility(key)
       if (['open', 'restricted'].include? @data_hash[:visibility])
         puts "setting visibility from hash - #{@data_hash[:visibility]}"
-        @attributes_hash['visibility'] = @data_hash[:visibility]
+        @work_instance.assign_attributes(visibility:  @data_hash[:visibility])
+
       else
         puts "setting visibility to private the json importer's default  #{@data_hash[:visibility]}"
+        #@work_instance.visibility = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE unless @work_instance.visibility.present?
         if (key == "file_only_import" && key != 'true')
-         @attributes_hash['visibility'] = (Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE) unless @work_instance.visibility.present?
+         @work_instance.assign_attributes(visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE) unless @work_instance.visibility.present?
         end
       end
     end
 
     def  populate_array_field(key, val, index)
       set_default_work_visibility(key) if index == 0
-
-      if ( (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key) && (@work_instance.send(key).class == ActiveTriples::Relation) )
+      if (@data_hash[key].present? && (@work_instance.send(key).respond_to? :length) && (not val.class == String) && (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key))
+        #@work_instance.assign_attributes(key => @data_hash[key].split('||')) if (key == "file_only_import" && key != 'true')
         create_or_skip_work_metadata('array', key)
       end
       @work_instance
     end
 
     def populate_json_field(key, val)
-      if ( (['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key)  && (not val.class == String) )
+      if (@data_hash[key].present? && (@work_instance.send(key).respond_to? :length) && (not val.class == String) && (['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key))
+        #@work_instance.assign_attributes(key => [@data_hash[key].to_json]) if (key == "file_only_import" && key != 'true')
         create_or_skip_work_metadata('json', key)
       end
       @work_instance
     end
 
     def populate_single_fields(key, val)
-      if ( (@work_instance.send(key).class != ActiveTriples::Relation) && (val.class == String) && (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key))
+      if (@data_hash[key].present? && (@data_hash[key].class == String) && (not val.class == ActiveTriples::Relation) && (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key))
+        #@work_instance.assign_attributes(key =>  @data_hash[key]) if (key == "file_only_import" && key != 'true')
         create_or_skip_work_metadata('string', key)
       end
       @work_instance
     end
 
     def create_or_skip_work_metadata(type, key)
-      puts "populating metadata"
-      populate_work_values(type, key)
+      if (@data_hash["file_only_import"].present? == false) #&& @data_has["file_only_import"] == 'true')
+      #elsif @data_has["file_only_import"].present? == false
+        puts "populating metadata"
+        populate_work_values(type, key)
+      end
       @work_instance
     end
 
     def populate_work_values(type, key)
       if type == 'string'
+        #@work_instance.assign_attributes(key =>  @data_hash[key])
         puts "populating metadata string fields"
-        @attributes_hash[key] = @data_hash[key]
+        @work_instance.assign_attributes(key =>  @data_hash[key])
       elsif type == 'array'
         puts "populating metadata array fields"
-        value = (@data_hash[key].present? ? @data_hash[key].split('||') : [])
-        @attributes_hash[key] = value
+        @work_instance.assign_attributes(key => @data_hash[key].split('||'))
       elsif type == 'json'
         puts "populating metadata json fields"
-        @attributes_hash[key] = [@data_hash[key].to_json]
+        @work_instance.assign_attributes(key => [@data_hash[key].to_json])
       end
       @work_instance
     end
@@ -185,6 +165,7 @@ module Ubiquity
     end
 
     def create_file_directly(file)
+      #file = Tempfile.new(file)
       file = File.new(File.expand_path(file))
       file_name = File.basename(file.path)
       io = ActionDispatch::Http::UploadedFile.new(tempfile: file, filename: file_name)

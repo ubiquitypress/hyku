@@ -45,17 +45,21 @@ module Ubiquity
         file_size_bytes = get_file_size_in_bytes(file_set_presenter.id)
         return "Download temporarily unavailable" if file_size_bytes.zero?
         uuid = params[:parent_id] || params[:id]
-        @file_set_s3_object ||= trigger_api_call_for_s3_url uuid
-        if @file_set_s3_object.file_url_hash[file_set_presenter.id].present?
-          status = @file_set_s3_object.file_status_hash[file_set_presenter.id]
-          if status == "UPLOAD_COMPLETED"
-            # link_to 'Download', @file_set_s3_object.file_url_hash[file_set_presenter.id].to_s
-            link_to 'Download', main_app.fail_uploads_download_file_path(uuid: uuid, fileset_id: file_set_presenter.id), method: 'post'
-          else
-            "<a style='text-decoration:none;' href='#' onclick='return false;'>Upload In-Progress</a>".html_safe
-          end
+        if ENV['SETTINGS__MULTITENANCY__ADMIN_HOST'] == 'oar.bl.uk'
+          load_file_from_file_set(file_set_presenter, file_size_bytes)
         else
-          fetch_link_based_on_environment(file_set_presenter, file_size_bytes)
+          @file_set_s3_object ||= trigger_api_call_for_s3_url uuid
+          if @file_set_s3_object.file_url_hash[file_set_presenter.id].present?
+            status = @file_set_s3_object.file_status_hash[file_set_presenter.id]
+            if status == "UPLOAD_COMPLETED"
+              # link_to 'Download', @file_set_s3_object.file_url_hash[file_set_presenter.id].to_s
+              link_to 'Download', main_app.fail_uploads_download_file_path(uuid: uuid, fileset_id: file_set_presenter.id), method: 'post'
+            else
+              "<a style='text-decoration:none;' href='#' onclick='return false;'>Upload In-Progress</a>".html_safe
+            end
+          else
+            fetch_link_based_on_environment(file_set_presenter, file_size_bytes)
+          end
         end
       end
     end

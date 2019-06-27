@@ -2,20 +2,27 @@ module Ubiquity
   class IndexerClient
     include HTTParty
     base_uri "http://indexer.ubiquity.press"
-    attr_reader :api_path, :headers, :resource_type, :work_uuid, :draft_doi
+    attr_reader :api_path, :headers, :resource_type, :work_uuid, :draft_doi, :tenant_name
 
-    def initialize(uuid, draft_doi)
+    def initialize(uuid, draft_doi, tenant_name)
       @resource_type = "repository_work"
       @work_uuid = uuid
       @draft_doi = draft_doi
+      @tenant_name = tenant_name
     end
 
     def post
       service_code = ENV['SERVICE_CODE']
       body = {resource_type: resource_type, uuid: work_uuid, service_code: service_code}.to_json
+      puts"BODY#{body}"
       handle_client do
         response = self.class.post(api_path, body: body, headers: headers )
-        external_service = ExternalService.where(draft_doi: draft_doi).first
+        puts"CANADA#{response}"
+        AccountElevator.switch!(tenant_name)
+        external_service = ExternalService.find_by(draft_doi: draft_doi) || ExternalService.find_by(work_id: work_uuid)
+        puts"MADAGASCAR#{external_service}"
+        puts"ARGENTINA#{draft_doi}"
+        puts"ITALY#{@draft_doi}"
         external_service.try(:data)['status_code'] = response.code
         external_service.save
         set_official_url(work_uuid, response.code)

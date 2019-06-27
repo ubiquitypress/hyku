@@ -18,10 +18,14 @@ module Ubiquity
       handle_client do
         response = self.class.post(api_path, body: body, headers: headers )
         puts"CANADA#{response}"
+        puts"ACCOUNTELEVATOR#{ExternalService.find_by(draft_doi: draft_doi).inspect}"
         AccountElevator.switch!(tenant_name)
+        puts"BEFORE QUERY DRAFT_DOI#{draft_doi}"
+        puts"BEFORE QUERY DRAFT_DOI#{work_uuid}"
         external_service = ExternalService.find_by(draft_doi: draft_doi) || ExternalService.find_by(work_id: work_uuid)
         puts"MADAGASCAR#{external_service}"
-        puts"ARGENTINA#{draft_doi}"
+        puts"AFTER QUERY DRAFT_DOI#{draft_doi}"
+        puts"AFTER QUERY UUID#{work_uuid}"
         puts"ITALY#{@draft_doi}"
         external_service.try(:data)['status_code'] = response.code
         external_service.save

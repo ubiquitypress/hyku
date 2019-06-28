@@ -12,6 +12,7 @@ module Ubiquity
 
     def set_manual_doi
       if self.doi.present?
+        puts"MADAGASCAR"
         clean_doi
       end
     end
@@ -19,23 +20,30 @@ module Ubiquity
     private
 
     def clean_doi
-      new_doi = URI(self.doi.strip)
+      puts"CANCUN"
+    #  new_doi = URI(self.doi.strip)
+      new_doi = Addressable::URI.parse(self.doi.strip)
       new_doi_path = prepend_protocol.try(:path)
       if new_doi_path.slice(0) == "/"
+        puts"NAPOLI"
         new_doi_path.slice!(0)
         self.doi = new_doi_path
       else
+        puts"ROME"
         self.doi = new_doi_path
       end
     end
 
     def prepend_protocol
-     doi = URI(self.doi.strip)
+      puts"MADRID"
+     doi = Addressable::URI.parse(self.doi.strip)
      doi_path = doi.path
      if doi.scheme  == nil
+       puts"SPAIN"
        new_doi = doi_path.split('/').count < 3 ? doi_path : 'https://' + doi_path
-       full_doi = URI(new_doi)
+       full_doi = Addressable::URI.parse(new_doi)
      else
+       puts"LONDON"
        doi
      end
     end

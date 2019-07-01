@@ -24,7 +24,10 @@ module Ubiquity
     private
 
       def update_external_service_record
-        AddWorkIdToExternalServiceJob.perform_later(self.id, self.account_cname)
+        exter = ExternalService.where(draft_doi: self.draft_doi).first
+        if exter.try(:work_id).blank?
+          AddWorkIdToExternalServiceJob.perform_later(self.id, self.account_cname)
+        end
       end
 
       def create_work_service_if_embargo_or_lease

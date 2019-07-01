@@ -17,6 +17,9 @@ module Ubiquity
       handle_client do
         response = self.class.post(api_path, body: body, headers: headers )
         AccountElevator.switch!(tenant_name)
+        puts"PICTURE #{draft_doi} - #{ExternalService.find_by(draft_doi: draft_doi)}"
+        puts"KITCHEN #{work_uuid} - #{ExternalService.find_by(work_id: work_uuid)}"
+
         external_service = ExternalService.find_by(draft_doi: draft_doi) || ExternalService.find_by(work_id: work_uuid)
         external_service.try(:data)['status_code'] = response.code
         external_service.save

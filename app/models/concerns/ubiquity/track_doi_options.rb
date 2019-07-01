@@ -19,7 +19,7 @@ module Ubiquity
     private
 
     def clean_doi
-      new_doi = URI(self.doi.strip)
+      new_doi = Addressable::URI.parse(self.doi.strip)
       new_doi_path = prepend_protocol.try(:path)
       if new_doi_path.slice(0) == "/"
         new_doi_path.slice!(0)
@@ -30,11 +30,11 @@ module Ubiquity
     end
 
     def prepend_protocol
-     doi = URI(self.doi.strip)
+     doi = Addressable::URI.parse(self.doi.strip)
      doi_path = doi.path
      if doi.scheme  == nil
        new_doi = doi_path.split('/').count < 3 ? doi_path : 'https://' + doi_path
-       full_doi = URI(new_doi)
+       full_doi = Addressable::URI.parse(new_doi)
      else
        doi
      end

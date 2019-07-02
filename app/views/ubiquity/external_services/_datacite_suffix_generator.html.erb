@@ -15,9 +15,9 @@
         type: "POST",
         data: {tenant_name: tenantName},
         success: function(result){
+        $(".ubiquity-draft-doi").val(result.draft_doi);
         $("#draft_doi").html(result.draft_doi);
         $('.draft_doi_hidden_div').toggle('slide');
-        $(".ubiquity-draft-doi").val(result.draft_doi);
           if (result.draft_doi== 'taken'){
 
           } else {

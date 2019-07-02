@@ -25,7 +25,6 @@ module Ubiquity
 
       def update_external_service_record
         exter = ExternalService.where(draft_doi: self.draft_doi).first
-        puts"MOUSE #{exter}"
         if exter.try(:work_id).blank?
           AddWorkIdToExternalServiceJob.perform_later(self.id, self.account_cname)
         end

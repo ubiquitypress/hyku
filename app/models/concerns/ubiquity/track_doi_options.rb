@@ -49,8 +49,6 @@ module Ubiquity
     end
 
     def set_doi
-      puts"PAPER"
-
       if (self.doi_options == 'Mint DOI:Registered' || self.doi_options == 'Mint DOI:Findable') && self.visibility == 'open'
         self.doi = self.draft_doi
       end
@@ -62,9 +60,7 @@ module Ubiquity
         tenant_json = ENV["TENANTS_SETTINGS"]
         tenant_hash = JSON.parse(tenant_json) if is_valid_json?(tenant_json)
         datacite_prefix = tenant_hash.dig(tenant_name, 'datacite_prefix')
-        puts"TIE #{datacite_prefix}"
         if datacite_prefix.present?
-          puts"HOME #{datacite_prefix}"
           doi_service = Ubiquity::DoiService.new(self.account_cname, datacite_prefix)
           external_service_object = doi_service.suffix_generator
           self.draft_doi = external_service_object.draft_doi

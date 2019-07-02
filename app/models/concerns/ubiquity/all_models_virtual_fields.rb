@@ -25,8 +25,9 @@ module Ubiquity
 
       def update_external_service_record
         exter = ExternalService.where(draft_doi: self.draft_doi).first
+        puts "huel yummy  #{exter.inspect}"
         if exter.try(:work_id).blank?
-          AddWorkIdToExternalServiceJob.perform_later(self.id, self.account_cname)
+          AddWorkIdToExternalServiceJob.perform_later(self.id, self.draft_doi, self.account_cname)
         end
       end
 

@@ -2,10 +2,12 @@
 class AddWorkIdToExternalServiceJob < ActiveJob::Base #ApplicationJob
   queue_as :default
 
-  def perform(work_id, tenant_name)
+  def perform(work_id, draft_doi, tenant_name)
     AccountElevator.switch!(tenant_name)
-    work = ActiveFedora::Base.find(work_id)
-    exter = ExternalService.where(draft_doi: work.draft_doi).first
-    exter.update(work_id: work.id)
+    puts"BOXING #{tenant_name.inspect}- work_id #{work_id.inspect} - draft_doi #{draft_doi.inspect}"
+    exter = ExternalService.where(draft_doi: draft_doi).first
+    puts"GYM #{exter.inspect}"
+
+    exter && exter.update(work_id: work_id)
   end
 end

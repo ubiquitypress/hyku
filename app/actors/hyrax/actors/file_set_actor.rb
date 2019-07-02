@@ -42,11 +42,7 @@ module Hyrax
       # @param [Symbol, #to_s] relation
       # @return [IngestJob] the queued job
       def update_content(file, relation = :original_file)
-        puts "=========================Called Updated Content method from File Set Actor ======================================================="
-        puts file
         hyrax_uploaded_file = Hyrax::UploadedFile.create(file: file)
-        puts 'Saved file to the model Hyrax::UploadedFile'
-        puts hyrax_uploaded_file.inspect
         IngestJob.perform_later(wrapper!(file: hyrax_uploaded_file, relation: relation), notification: true)
       end
 

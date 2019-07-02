@@ -17,8 +17,9 @@ module Ubiquity
       handle_client do
         response = self.class.post(api_path, body: body, headers: headers )
         AccountElevator.switch!(tenant_name)
-        puts"PICTURE #{draft_doi} - #{ExternalService.find_by(draft_doi: draft_doi)}"
-        puts"KITCHEN #{work_uuid} - #{ExternalService.find_by(work_id: work_uuid)}"
+        puts"NANTNAME #{tenant_name}"
+        puts"CREAM #{draft_doi} - #{ExternalService.find_by(draft_doi: draft_doi).inspect} "
+        puts"NIZZA #{work_uuid} - #{ExternalService.find_by(work_id: work_uuid).inspect}"
 
         external_service = ExternalService.find_by(draft_doi: draft_doi) || ExternalService.find_by(work_id: work_uuid)
         external_service.try(:data)['status_code'] = response.code
@@ -53,12 +54,13 @@ module Ubiquity
     def set_official_url(id, status_code)
       work = ActiveFedora::Base.find(id)
       if [201, 200].include? status_code
-        #work.update(official_link: "https://doi.org/#{work.draft_doi}") if work.official_link.blank?
-         if work.official_link.blank?
-          work.official_link = "https://doi.org/#{work.draft_doi}"
-          puts"TAKEAWAY #{work.official_link_changed?}"
-          work.save
-        end
+        work.update(official_link: "https://doi.org/#{work.draft_doi}") if work.official_link.blank?
+        puts"MORNING #{work.official_link_changed?}"
+        #  if work.official_link.blank?
+        #   work.official_link = "https://doi.org/#{work.draft_doi}"
+        #   puts"TAKEAWAY #{work.official_link_changed?}"
+        #   work.save
+        # end
       end
     end
 

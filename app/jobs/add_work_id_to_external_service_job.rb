@@ -6,9 +6,6 @@ class AddWorkIdToExternalServiceJob < ActiveJob::Base #ApplicationJob
     AccountElevator.switch!(tenant_name)
     work = ActiveFedora::Base.find(work_id)
     exter = ExternalService.where(draft_doi: work.draft_doi).first
-    puts "NOTEBOOK #{exter}"
-    if work.present? && exter.try(:work_id).present?
-      exter.update(work_id: work.id)
-    end
+    exter.update(work_id: work.id)
   end
 end

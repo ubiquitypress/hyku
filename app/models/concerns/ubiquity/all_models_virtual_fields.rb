@@ -27,7 +27,13 @@ module Ubiquity
         exter = ExternalService.where(draft_doi: self.draft_doi).first
         puts "huel yummy  #{exter.inspect}"
         if exter.try(:work_id).blank?
-          AddWorkIdToExternalServiceJob.perform_later(self.id, self.draft_doi, self.account_cname)
+          #AddWorkIdToExternalServiceJob.perform_later(self.id, self.draft_doi, self.account_cname)
+          begin
+            exter && exter.update!(work_id: self.id)
+          rescue ActiveFedora::RecordNotSaved, ActiveFedora::RecordInvalid => e
+            puts'ExternalService record not saved in the model'
+            AddWorkIdToExternalServiceJob.perform_later(self.id, self.draft_doi, self.account_cname)
+          end
         end
       end
 

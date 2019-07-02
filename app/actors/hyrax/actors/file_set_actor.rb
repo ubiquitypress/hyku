@@ -121,11 +121,6 @@ module Hyrax
 
         # uses create! because object must be persisted to serialize for jobs
         def wrapper!(file:, relation:)
-          puts "=============================================================="
-          puts "Called File Set Acote with the file and the relation arguments"
-          puts file
-          puts relation
-          puts "=============================================================="
           JobIoWrapper.create_with_varied_file_handling!(user: user, file: file, relation: relation, file_set: file_set)
         end
 

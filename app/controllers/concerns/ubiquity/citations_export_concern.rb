@@ -26,7 +26,7 @@ module Ubiquity
         end
         value = work.try(column)
         next if value.blank?
-        if ris_key == 'KY'
+        if ris_key == 'KW'
           value.each do |kw_value|
             rif_data_ary << "#{ris_key}  - #{kw_value}"
           end

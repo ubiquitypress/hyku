@@ -5,7 +5,7 @@ class ConferenceItem < ActiveFedora::Base
   include Ubiquity::AllModelsVirtualFields
   include Ubiquity::EditorMetadataModelConcern
   include Ubiquity::UpdateSharedIndex
-  include Ubiquity::MultipleModules
+  #include Ubiquity::MultipleModules
 
   self.indexer = ConferenceItemIndexer
   # Change this to restrict which works can be added as a child.

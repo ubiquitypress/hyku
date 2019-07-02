@@ -11,12 +11,13 @@ namespace :add_tenant_cname_to_work do
 
   task :update, [:name] => :environment do |task, tenant|
     #These are the names of the existing work type in UbiquityPress's Hyku
-    model_class = [Article, Book, BookContribution, ConferenceItem, Dataset, ExhibitionItem, Image, Report, ThesisOrDissertation, TimeBasedMedia, GenericWork, Collection]
+    model_class = [Article, Book, BookContribution, ConferenceItem, Dataset, ExhibitionItem, Image, Report, ThesisOrDissertation, TimeBasedMedia, GenericWork, Collection, FileSet]
     cname = tenant[:name]
     AccountElevator.switch!("#{cname}")
 
     model_class.each do |model|
-      model.find_each do |model_instance|
+      all_records = model.where(account_cname: nil)
+      all_records.each do |model_instance|
         if model_instance.account_cname.blank?
           model_instance.update(account_cname: cname)
           sleep 2

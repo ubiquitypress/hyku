@@ -21,6 +21,7 @@ module MultipleMetadataFieldsHelper
 
 
   def render_isni_or_orcid_url(id, type)
+    id = id.strip.chomp('/').split('/').last
     new_id = id.delete('\n').delete('\t').gsub(/[^a-z0-9]/, '')
     uri = URI.parse(new_id)
     if (uri.scheme.present? &&  uri.host.present?)

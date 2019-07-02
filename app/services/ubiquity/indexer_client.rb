@@ -2,19 +2,26 @@ module Ubiquity
   class IndexerClient
     include HTTParty
     base_uri "http://indexer.ubiquity.press"
-    attr_reader :api_path, :headers, :resource_type, :work_uuid, :draft_doi
+    attr_reader :api_path, :headers, :resource_type, :work_uuid, :draft_doi, :tenant_name
 
-    def initialize(uuid, draft_doi)
+    def initialize(uuid, draft_doi, tenant_name)
       @resource_type = "repository_work"
       @work_uuid = uuid
       @draft_doi = draft_doi
+      @tenant_name = tenant_name
     end
 
     def post
-      body = {resource_type: resource_type, uuid: work_uuid}.to_json
+      service_code = ENV['SERVICE_CODE']
+      body = {resource_type: resource_type, uuid: work_uuid, service_code: service_code}.to_json
       handle_client do
         response = self.class.post(api_path, body: body, headers: headers )
-        external_service = ExternalService.where(draft_doi: draft_doi).first
+        AccountElevator.switch!(tenant_name)
+        puts"BACKPACK #{tenant_name}"
+        puts"PEN #{draft_doi} - #{ExternalService.find_by(draft_doi: draft_doi).inspect} "
+        puts"PENCIL #{work_uuid} - #{ExternalService.find_by(work_id: work_uuid).inspect}"
+
+        external_service =  ExternalService.find_by(work_id: work_uuid) || ExternalService.where(work_id: work_uuid).first || ExternalService.find_by(draft_doi: draft_doi)
         external_service.try(:data)['status_code'] = response.code
         external_service.save
         set_official_url(work_uuid, response.code)
@@ -48,6 +55,12 @@ module Ubiquity
       work = ActiveFedora::Base.find(id)
       if [201, 200].include? status_code
         work.update(official_link: "https://doi.org/#{work.draft_doi}") if work.official_link.blank?
+        puts"MORNING #{work.official_link_changed?}"
+        #  if work.official_link.blank?
+        #   work.official_link = "https://doi.org/#{work.draft_doi}"
+        #   puts"TAKEAWAY #{work.official_link_changed?}"
+        #   work.save
+        # end
       end
     end
 

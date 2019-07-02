@@ -14,7 +14,9 @@ module Ubiquity
       AccountElevator.switch!(self.account_cname)
       if doi_enabled? && self.visibility == 'open' && self.draft_doi && (self.doi_options == 'Mint DOI:Registered' || self.doi_options == 'Mint DOI:Findable')
         puts "Post to indexer #{self.id}"
-        UbiquityPostToIndexerJob.perform_later(self.id, self.draft_doi, self.account_cname)
+        #UbiquityPostToIndexerJob.perform_later(self.id, self.draft_doi, self.account_cname)
+        Ubiquity::IndexerClient.new(self.id, self.draft_doi, self.account_cname).post
+
       end
     end
 

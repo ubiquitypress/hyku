@@ -18,12 +18,13 @@ module Ubiquity
         response = self.class.post(api_path, body: body, headers: headers )
         AccountElevator.switch!(tenant_name)
         puts"BACKPACK #{tenant_name}"
+
         puts"PEN #{draft_doi} - #{ExternalService.find_by(draft_doi: draft_doi).inspect} "
         puts"PENCIL #{work_uuid} - #{ExternalService.find_by(work_id: work_uuid).inspect}"
 
         external_service =  ExternalService.find_by(work_id: work_uuid) || ExternalService.where(work_id: work_uuid).first || ExternalService.find_by(draft_doi: draft_doi)
         external_service.try(:data)['status_code'] = response.code
-        external_service.save
+        external_service.save!
         set_official_url(work_uuid, response.code)
         response
       end
@@ -38,8 +39,12 @@ module Ubiquity
     def handle_client
       begin
         yield
-      rescue HTTParty::Error => e
+      rescue HTTParty::Error  => e
         puts "Nothing pushed to indexer #{e.inspect}"
+        UbiquityPostToIndexerJob.perform_later(work_uuid, draft_doi, tenant_name)
+      rescue ActiveFedora::RecordNotSaved, ActiveFedora::RecordInvalid  => e
+        puts "ExternalService Record not saved or updatedin the IndexerClient  #{e.inspect}"
+        UbiquityPostToIndexerJob.perform_later(work_uuid, draft_doi, tenant_name)
       end
     end
 
@@ -56,11 +61,6 @@ module Ubiquity
       if [201, 200].include? status_code
         work.update(official_link: "https://doi.org/#{work.draft_doi}") if work.official_link.blank?
         puts"MORNING #{work.official_link_changed?}"
-        #  if work.official_link.blank?
-        #   work.official_link = "https://doi.org/#{work.draft_doi}"
-        #   puts"TAKEAWAY #{work.official_link_changed?}"
-        #   work.save
-        # end
       end
     end
 

@@ -11,7 +11,7 @@ module Ubiquity
 #no public files attached, no official URL present, 'mint:register' or 'mint:findable' = C
 #no public files attached, no official URL present, no 'mint:register' or 'mint:findable' = C
 
-  module MultipleModules
+  module FileAvailabilityFaceting
     extend ActiveSupport::Concern
 
     included do

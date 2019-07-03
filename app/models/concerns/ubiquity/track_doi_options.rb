@@ -19,7 +19,7 @@ module Ubiquity
     private
 
     def clean_doi
-      new_doi = URI(self.doi.strip)
+      new_doi = Addressable::URI.parse(self.doi.strip)
       new_doi_path = prepend_protocol.try(:path)
       if new_doi_path.slice(0) == "/"
         new_doi_path.slice!(0)
@@ -30,11 +30,11 @@ module Ubiquity
     end
 
     def prepend_protocol
-     doi = URI(self.doi.strip)
+     doi = Addressable::URI.parse(self.doi.strip)
      doi_path = doi.path
      if doi.scheme  == nil
        new_doi = doi_path.split('/').count < 3 ? doi_path : 'https://' + doi_path
-       full_doi = URI(new_doi)
+       full_doi = Addressable::URI.parse(new_doi)
      else
        doi
      end
@@ -61,6 +61,7 @@ module Ubiquity
         tenant_hash = JSON.parse(tenant_json) if is_valid_json?(tenant_json)
         datacite_prefix = tenant_hash.dig(tenant_name, 'datacite_prefix')
         if datacite_prefix.present?
+          puts"LAPTOP #{datacite_prefix}"
           doi_service = Ubiquity::DoiService.new(self.account_cname, datacite_prefix)
           external_service_object = doi_service.suffix_generator
           self.draft_doi = external_service_object.draft_doi

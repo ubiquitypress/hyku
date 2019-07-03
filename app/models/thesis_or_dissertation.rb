@@ -9,7 +9,7 @@ class ThesisOrDissertation < ActiveFedora::Base
   include Ubiquity::EditorMetadataModelConcern
   include Ubiquity::VersionMetadataModelConcern
   include Ubiquity::UpdateSharedIndex
-  #include Ubiquity::MultipleModules
+  include Ubiquity::FileAvailabilityFaceting
 
   self.indexer = ThesisOrDissertationIndexer
   # Change this to restrict which works can be added as a child.

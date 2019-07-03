@@ -6,23 +6,24 @@
 
 <% presenter = Hyku::ManifestEnabledWorkShowPresenter.new(document, current_ability) %>
 <% file_set_presenter = presenter.thumbnail_presenter %>
-
-<% if zipped_types.include? check_file_extension(file_set_presenter.solr_document.label) %>
-  <span class="fa fa-file-archive-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:20px"></span><span style="width:100px;padding-left:115px"></span>
-<% elsif (check_file_extension(file_set_presenter.solr_document.label) == ".pdf") && (document.thumbnail_path.split('?').last == "file=thumbnail")  %>
-  <span class="fa fa-file-pdf-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:20px"></span> <span style="width:100px;padding-left:115px"></span>
-<% elsif ([".docx", '.doc'].include? check_file_extension(file_set_presenter.solr_document.label)) && (document.thumbnail_path.split('?').last == "file=thumbnail")  %>
-  <span class="fa fa-file-word-o  fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:20px"></span><span style="color:grey;width:100px;padding-left:115px;"></span>
-<% elsif (document.thumbnail_path.split('?').last == "file=thumbnail") && ([".docx", '.doc', '.pdf'].exclude? check_file_extension(file_set_presenter.solr_document.label)) && (zipped_types.exclude? check_file_extension(file_set_presenter.solr_document.label) ) %>
-  <span class="fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:20px"></span> </span><span style="width:100px;padding-left:115px"></span>
-<% elsif (check_file_is_restricted?(file_set_presenter) == nil && (file_set_presenter.lease_expiration_date.present?) && (file_set_presenter.embargo_release_date.present?)) %>
-  <span class="fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:20px"></span> </span><span style="width:100px;padding-left:115px"></span>
-<% elsif (check_file_is_restricted?(file_set_presenter) == true || (not file_set_presenter.lease_expiration_date.present?) && (not file_set_presenter.embargo_release_date.present?) && ( file_set_presenter.solr_document['visibility_ssi'] == "open") ) %>
-  <%= render_thumbnail_on_list(file_set_presenter) %>
-<% else %>
+<% if file_set_presenter.present? %>
+  <% if zipped_types.include? check_file_extension(file_set_presenter.solr_document.label) %>
+    <span class="fa fa-file-archive-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:20px"></span><span style="width:100px;padding-left:115px"></span>
+  <% elsif (check_file_extension(file_set_presenter.solr_document.label) == ".pdf") && (document.thumbnail_path.split('?').last == "file=thumbnail")  %>
+    <span class="fa fa-file-pdf-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:20px"></span> <span style="width:100px;padding-left:115px"></span>
+  <% elsif ([".docx", '.doc'].include? check_file_extension(file_set_presenter.solr_document.label)) && (document.thumbnail_path.split('?').last == "file=thumbnail")  %>
+    <span class="fa fa-file-word-o  fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:20px"></span><span style="color:grey;width:100px;padding-left:115px;"></span>
+  <% elsif (document.thumbnail_path.split('?').last == "file=thumbnail") && ([".docx", '.doc', '.pdf'].exclude? check_file_extension(file_set_presenter.solr_document.label)) && (zipped_types.exclude? check_file_extension(file_set_presenter.solr_document.label) ) %>
+    <span class="fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:20px"></span> </span><span style="width:100px;padding-left:115px"></span>
+  <% elsif (check_file_is_restricted?(file_set_presenter) == nil && (file_set_presenter.lease_expiration_date.present?) && (file_set_presenter.embargo_release_date.present?)) %>
+    <span class="fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:20px"></span> </span><span style="width:100px;padding-left:115px"></span>
+  <% elsif (check_file_is_restricted?(file_set_presenter) == true || (not file_set_presenter.lease_expiration_date.present?) && (not file_set_presenter.embargo_release_date.present?) && ( file_set_presenter.solr_document['visibility_ssi'] == "open") ) %>
+     <%= render_thumbnail_on_list(file_set_presenter) %>
+  <% else %>
  <!-- displays for logged out users on files with embargo/lease
   <span class="media-left hidden-xs file_listing_thumbnail mock-thumbnail" ></span>
   -->
-  <span class="fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:20px"></span> </span><span style="width:100px;padding-left:115px"></span>
+    <span class="fa fa-file-o fa-5x hidden-xs file_listing_thumbnail" style="color:grey;padding-left:20px"></span> </span><span style="width:100px;padding-left:115px"></span>
+  <% end %>
 
 <% end %>

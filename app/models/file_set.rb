@@ -4,7 +4,7 @@ class FileSet < ActiveFedora::Base
   #from Hyrax::FileSetBehavior needs to be at the bottom of the new metadata field added by us
   include Ubiquity::WorkAndCollectionMetadata
   include ::Hyrax::FileSetBehavior
-  include Ubiquity::FileUtilityMethods
+  #include Ubiquity::FileUtilityMethods
   include Ubiquity::UpdateSharedIndex
 
   before_destroy :remove_rendering_relationship

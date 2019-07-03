@@ -2,19 +2,19 @@ module Ubiquity
 #This module was created by Ubiquity to set the file_avialabiliy to allow for faceting. The status will change according to the business rule below:
 #  A: File available from this repository, B: External link (access may be restricted), C: File not available
 
-# public files attached, official URL present, doi_options.in? ["Mint DOI:Registered", "Mint DOI:Findable" present = A
-# public files attached, no official URL present, no doi_options.in? ["Mint DOI:Registered", "Mint DOI:Findable"present = A
-# public files attached, no official URL present, doi_options.in? ["Mint DOI:Registered", "Mint DOI:Findable" present = A
-# public files attached, official URL present, no doi_options.in? ["Mint DOI:Registered", "Mint DOI:Findable" present = A, B
-# no public files attached, official URL present, no doi_options.in? ["Mint DOI:Registered", "Mint DOI:Findable" present = B
-# no public files attached, official URL present, doi_options.in? ["Mint DOI:Registered", "Mint DOI:Findable" present = C
-# no public files attached, no official URL present, doi_options.in? ["Mint DOI:Registered", "Mint DOI:Findable" present = C
-# no public files attached, no official URL present, doi_options.in? ["Mint DOI:Registered", "Mint DOI:Findable" DOI present = C
+#public files attached, official URL present, 'mint:register' or 'mint:findable' = A
+#public files attached, no official URL present, no 'mint:register' or 'mint:findable' = A
+#public files attached, no official URL present, 'mint:register' or 'mint:findable' = A
+#public files attached, official URL present, no 'mint:register' or 'mint:findable' = A, B
+#no public files attached, official URL present, no 'mint:register' or 'mint:findable' = B
+#no public files attached, official URL present, 'mint:register' or 'mint:findable' = C
+#no public files attached, no official URL present, 'mint:register' or 'mint:findable' = C
+#no public files attached, no official URL present, no 'mint:register' or 'mint:findable' = C
+
   module MultipleModules
     extend ActiveSupport::Concern
 
     included do
-      #before_save :set_file_availability_for_faceting
       after_save :set_file_availability_for_faceting
     end
 
@@ -23,46 +23,38 @@ module Ubiquity
     def set_file_availability_for_faceting
       if ('open'.in? get_work_filesets_visibility)  && self.official_link.present? && (doi_option_value_check? == true)
         self.file_availability = ['File available from this repository']
-          puts"LONDONN21"
 
       elsif ('open'.in? get_work_filesets_visibility) && !self.official_link.present? && (doi_option_value_check? == false)
         self.file_availability = ['File available from this repository']
-          puts"MADRID22"
-
-      elsif ('open'.in? get_work_filesets_visibility) && !self.official_link.present? && (doi_option_value_check? == true)
-        self.file_availability = ['File available from this repository']
-          puts"NAPOLI23"
 
       elsif ('open'.in? get_work_filesets_visibility) && self.official_link.present? && (doi_option_value_check? == false)
-        #self.file_availability = self.file_availability | ["External link (access may be restricted)", 'File available from this repository']
-        self.file_availability = ["External link (access may be restricted)", 'File available from this repository']
+        multiple_values
 
-        puts"LONDONN24"
-
-      elsif (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] }) && self.official_link.present? && (doi_option_value_check? == false)
+      elsif (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] } || get_work_filesets_visibility.blank? ) && self.official_link.present? && (doi_option_value_check? == false)
         self.file_availability =  ["External link (access may be restricted)"]
-          puts"LONDONN25"
 
       elsif (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] } || get_work_filesets_visibility.blank?) && self.official_link.present? && (doi_option_value_check? == true)
         self.file_availability = ['File not available']
-          puts"LONDONN26"
-
-      elsif (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] } || get_work_filesets_visibility.blank?) && self.official_link.present? && (doi_option_value_check? == false)
-          self.file_availability = ['File not available']
-            puts"LONDONN27"
-
-      elsif (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] } || get_work_filesets_visibility.blank?) && !self.official_link.present? && (doi_option_value_check? == true)
-        self.file_availability = ['File not available']
-          puts"LONDONN28"
 
       elsif (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] } || get_work_filesets_visibility.blank?) && !self.official_link.present? && (doi_option_value_check? == false)
         self.file_availability = ['File not available']
-          puts"LONDONN29"
       end
     end
 
     def doi_option_value_check?
+      puts"DOIOPTIONS#{self.doi_options.inspect}"
       self.doi_options.in? ["Mint DOI:Registered", "Mint DOI:Findable"]
+    end
+
+    def multiple_values
+      if self.file_availability.include? "File not available"
+        puts"IF CONDITION"
+        self.file_availability.delete "File not available"
+        self.file_availability = self.file_availability | ['External link (access may be restricted)', 'File available from this repository']
+      else
+        puts"ELSE CONDITION"
+        self.file_availability = self.file_availability | ['External link (access may be restricted)', 'File available from this repository']
+      end
     end
 
 

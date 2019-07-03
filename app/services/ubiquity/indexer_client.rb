@@ -55,7 +55,6 @@ module Ubiquity
       work = ActiveFedora::Base.find(id)
       if [201, 200].include? status_code
         work.update(official_link: "https://doi.org/#{work.draft_doi}") if work.official_link.blank?
-        puts"MORNING #{work.official_link_changed?}"
       end
     end
 

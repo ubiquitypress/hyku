@@ -42,7 +42,6 @@ module Ubiquity
     end
 
     def doi_option_value_check?
-      puts"DOIOPTIONS#{self.doi_options.inspect}"
       self.doi_options.in? ["Mint DOI:Registered", "Mint DOI:Findable"]
     end
 

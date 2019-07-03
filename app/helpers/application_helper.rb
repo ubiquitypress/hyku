@@ -62,16 +62,16 @@ module ApplicationHelper
   # For image thumbnails, override the default size for a better resolution on homepage
   def render_related_img(doc)
     solr_doc = FileSet.find(doc.id)
-    return nil if solr_doc.original_file.versions.blank?
-    img_path = CGI.escape(ActiveFedora::File.uri_to_id(solr_doc.original_file.versions.last.uri))
+    return nil if solr_doc.original_file.versions.all.blank?
+    img_path = CGI.escape(ActiveFedora::File.uri_to_id(solr_doc.original_file.versions.all.last.uri))
     # img_path = solr_doc['thumbnail_path_ss'].presence || ['/assets/collection-a38b932554788aa578debf2319e8c4ba8a7db06b3ba57ecda1391a548a4b6e0a.png']
     image_tag "#{img_path}/full/150,120/0/default.jpg"
   end
 
   def render_thumbnail_on_list(file_set, size = '100,80')
     solr_doc = FileSet.find(file_set.id)
-    return nil if solr_doc.original_file.versions.blank?
-    img_path = CGI.escape(ActiveFedora::File.uri_to_id(solr_doc.original_file.versions.last.uri))
+    return nil if solr_doc.original_file.versions.all.blank?
+    img_path = CGI.escape(ActiveFedora::File.uri_to_id(solr_doc.original_file.versions.all.last.uri))
     image_tag "#{img_path}/full/#{size}/0/default.jpg"
   end
 

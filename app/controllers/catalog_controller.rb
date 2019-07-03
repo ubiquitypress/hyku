@@ -441,6 +441,7 @@ class CatalogController < ApplicationController
         sample_id: Settings.oai.sample_id
       },
       document: {
+        set_model: NewListSet, # Overriding the file set #app/models/file_set
         limit: 25, # number of records returned with each request, default: 15
         set_fields: [ # ability to define ListSets, optional, default: nil
           { label: 'collection', solr_field: 'isPartOf_ssim' }

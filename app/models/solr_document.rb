@@ -78,12 +78,13 @@ class SolrDocument
 
   field_semantics.merge!(
     contributor: 'contributor_tesim',
-    creator: 'creator_tesim',
+    creator: 'creator',
     date: 'date_created_tesim',
-    description: 'description_tesim',
+    description: 'abstract_tesim',
     identifier: 'identifier_tesim',
     language: 'language_tesim',
     publisher: 'publisher_tesim',
+    keyword: 'keyword_sim',
     relation: 'nesting_collection__pathnames_ssim',
     rights: 'rights_statement_tesim',
     subject: 'subject_tesim',
@@ -91,4 +92,8 @@ class SolrDocument
     type: 'human_readable_type_tesim'
   )
 
+  # Override existing set to process the keys -> Creator and Contributor
+  def sets
+    NewListSet.sets_for(self)
+  end
 end

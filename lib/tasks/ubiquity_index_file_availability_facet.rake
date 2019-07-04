@@ -17,6 +17,10 @@ namespace :ubiquity_index_file_availability_facet do
          #by calling save we trigger the before_save callback in app/models/ubiquity/concerns/multiple_modules.rb
           model_instance.save
           sleep 2
+
+          #to avoid lossing the current tenant in account elevator switch, since another switch
+          #happens after save when indexing to shared searh, hence the need to switch back
+          AccountElevator.switch!("#{tenant[:name]}")
       end
     end
 

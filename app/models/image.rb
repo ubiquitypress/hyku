@@ -9,7 +9,7 @@ class Image < ActiveFedora::Base
   include Ubiquity::EditorMetadataModelConcern
   include HasRendering
   include Ubiquity::UpdateSharedIndex
-  #include Ubiquity::MultipleModules
+  include Ubiquity::FileAvailabilityFaceting
 
   property :extent, predicate: ::RDF::Vocab::DC.extent, multiple: true do |index|
     index.as :stored_searchable

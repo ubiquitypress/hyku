@@ -19,7 +19,7 @@ module Ubiquity
         AccountElevator.switch!(tenant_name)
         external_service =  ExternalService.find_by(work_id: work_uuid) || ExternalService.where(work_id: work_uuid).first || ExternalService.find_by(draft_doi: draft_doi)
         external_service.try(:data)['status_code'] = response.code
-        external_service.save!
+        external_service.save
         set_official_url(work_uuid, response.code)
         response
       end

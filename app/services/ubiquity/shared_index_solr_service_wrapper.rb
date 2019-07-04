@@ -11,7 +11,6 @@ module Ubiquity
     end
 
     def update
-      AccountElevator.switch!(tenant_cname)
       if action_type == "add" && add_to_in_shared_search == 'true'
         add_record
         index_file_set
@@ -28,6 +27,7 @@ module Ubiquity
     private
 
     def add_record
+      AccountElevator.switch!(tenant_cname)
       service = ActiveFedora::SolrService
       #softCommit first commits to memory then to disk
       service.add(solr_document, softCommit: true)
@@ -35,6 +35,7 @@ module Ubiquity
     end
 
     def index_file_set
+      AccountElevator.switch!(tenant_cname)
       if file_sets.present?
         #this is not an rsolr coonection but it calls it
         service = ActiveFedora::SolrService
@@ -46,11 +47,9 @@ module Ubiquity
     end
 
     def remove_record
+      AccountElevator.switch!(tenant_cname)
       service = ActiveFedora::SolrService.instance.conn
-      puts "sera #{service.inspect}"
-       puts "lima #{solr_document.inspect}"
       if solr_document.class == Hash
-        puts "loku #{solr_document['id'].inspect}"
        #solr_conn.delete_by_id(solr_document['id'])
         service.delete_by_id(solr_document.with_indifferent_access['id'])
       else

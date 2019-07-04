@@ -46,8 +46,8 @@ module Ubiquity
     def get_file_sets
       if self.class != FileSet && self.try(:file_sets).present?
         self.file_sets.map do |file_set|
-          file_set.to_solr
-        end
+          file_set.try(:to_solr)
+        end.compact
       end
     end
 

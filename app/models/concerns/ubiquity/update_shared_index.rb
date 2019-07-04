@@ -47,6 +47,9 @@ module Ubiquity
       if self.class != FileSet && self.try(:file_sets).present?
         self.file_sets.map do |file_set|
           file_set.try(:to_solr)
+        rescue Ldp::HttpError => exception
+          puts "indexing files to or removing files from shared search #{exception}"
+          next
         end.compact
       end
     end

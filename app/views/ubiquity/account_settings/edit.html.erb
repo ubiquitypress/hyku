@@ -1,5 +1,6 @@
 
 <% content_for :page_header do %>
+ <h1> <%= link_to "Back",  admin_account_settings_path, class: "btn btn-xs btn-default" %></h1><br>
   <h1><span class="fa fa-gears"></span> Editing Account Settings</h1>
 <% end %>
 
@@ -28,7 +29,9 @@
               <%= ff.label :monthly_email_list %><br>
               <%= ff.text_field :monthly_email_list, :value => current_account.settings["monthly_email_list"], name: "#{f.object_name}[settings][monthly_email_list][]", class: 'form-control' %><br>
               <%= ff.label :yearly_email_list %><br>
-              <%= ff.text_field :yearly_email_list, :value => current_account.settings["yearly_email_list"], name: "#{f.object_name}[settings][yearly_email_list][]", class: 'form-control' %>
+              <%= ff.text_field :yearly_email_list, :value => current_account.settings["yearly_email_list"], name: "#{f.object_name}[settings][yearly_email_list][]", class: 'form-control' %><br>
+              <%= ff.label 'Should we index record to shared search. Example values are true or false' %><br>
+              <%= ff.text_field :include_in_shared_search, :value => @account.settings['include_in_shared_search'], class: 'form-control' %>
             <% end %>
           </div>
 

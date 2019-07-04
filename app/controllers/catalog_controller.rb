@@ -68,7 +68,7 @@ class CatalogController < ApplicationController
     # config.add_facet_field solr_name("publisher", :facetable), limit: 5
     # config.add_facet_field solr_name("file_format", :facetable), limit: 5
 
-    #config.add_facet_field solr_name('file_availability', :facetable), limit: 5, label: 'File Availability'
+    config.add_facet_field solr_name('file_availability', :facetable), limit: 5, label: 'File Availability'
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
@@ -118,7 +118,7 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name("embargo_release_date", :stored_sortable, type: :date), label: "Embargo release date", helper_method: :human_readable_date
     config.add_index_field solr_name("lease_expiration_date", :stored_sortable, type: :date), label: "Lease expiration date", helper_method: :human_readable_date
 
-    config.add_index_field solr_name("official_link", :stored_searchable), label: "Official link"
+    #config.add_index_field solr_name("official_link", :stored_searchable), label: "Official link"
 
     # config.add_index_field solr_name("org_unit", :stored_searchable), label: "Organisational Unit"
     # config.add_index_field solr_name("funder", :stored_searchable), label: "Funder"

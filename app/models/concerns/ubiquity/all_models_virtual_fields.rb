@@ -28,7 +28,7 @@ module Ubiquity
         if exter.try(:work_id).blank?
           begin
             exter && exter.update!(work_id: self.id)
-          rescue ActiveFedora::RecordNotSaved, ActiveFedora::RecordInvalid => e
+          rescue ActiveRecord::RecordNotSaved, ActiveRecord::RecordInvalid => e
             puts'ExternalService record not saved in the model'
             AddWorkIdToExternalServiceJob.perform_later(self.id, self.draft_doi, self.account_cname)
           end

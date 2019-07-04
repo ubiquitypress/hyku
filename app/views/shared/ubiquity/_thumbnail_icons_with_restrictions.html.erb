@@ -4,6 +4,7 @@
   app/views/hyrax/homepage/_explore_collections.html.erb
 -->
 
+
 <% presenter = Hyku::ManifestEnabledWorkShowPresenter.new(document, current_ability) %>
 <% file_set_presenter = presenter.thumbnail_presenter %>
 <% if file_set_presenter.present? %>

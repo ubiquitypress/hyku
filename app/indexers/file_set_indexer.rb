@@ -9,6 +9,6 @@ class FileSetIndexer < Hyrax::FileSetIndexer
   rescue Ldp::HttpError => exception
      puts "exception is: #{exception.inspect}"
      puts "calling to_solr on fileset failed #{object.inspect}"
-
+     object 
   end
 end

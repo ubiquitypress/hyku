@@ -47,8 +47,9 @@ module Ubiquity
 
     def get_file_sets
       if self.class != FileSet && self.try(:file_sets).present?
+        AccountElevator.switch!(self.account_cname)
         self.file_sets.map do |file_set|
-          file_set.try(:to_solr)
+          file_set.to_solr if file_set.present?
         end.compact
       end
     end

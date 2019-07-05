@@ -77,23 +77,18 @@ class SolrDocument
   attribute :alternative_journal_title, Solr::Array, solr_name('alternative_journal_title')
 
   field_semantics.merge!(
+    creator: 'creator_tesim',
     contributor: 'contributor_tesim',
-    creator: 'creator',
     date: 'date_created_tesim',
     description: 'abstract_tesim',
     identifier: 'identifier_tesim',
     language: 'language_tesim',
     publisher: 'publisher_tesim',
-    keyword: 'keyword_sim',
     relation: 'nesting_collection__pathnames_ssim',
     rights: 'rights_statement_tesim',
-    subject: 'subject_tesim',
+    subject: 'keyword_tesim',
     title: 'title_tesim',
     type: 'human_readable_type_tesim'
   )
 
-  # Override existing set to process the keys -> Creator and Contributor
-  def sets
-    NewListSet.sets_for(self)
-  end
 end

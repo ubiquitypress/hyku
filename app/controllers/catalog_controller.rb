@@ -433,13 +433,6 @@ class CatalogController < ApplicationController
     #config.add_sort_field "#{modified_field} asc", label: "date modified \u25B2"
 
     config.oai = {
-      provider: {
-        repository_name: Settings.oai.name,
-        repository_url: Settings.oai.url,
-        record_prefix: Settings.oai.prefix,
-        admin_email: Settings.oai.email,
-        sample_id: Settings.oai.sample_id
-      },
       document: {
         set_model: NewListSet, # Overriding the file set #app/models/file_set
         limit: 25, # number of records returned with each request, default: 15

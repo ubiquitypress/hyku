@@ -6,9 +6,9 @@ class FileSetIndexer < Hyrax::FileSetIndexer
       solr_doc['hasFormat_ssim'] = object.rendering_ids
     end
 
-    rescue Ldp::HttpErro => exception
+  rescue Ldp::HttpError => exception
      puts "exception is: #{exception.inspect}"
      puts "calling to_solr on fileset failed #{object.inspect}"
-    
+
   end
 end

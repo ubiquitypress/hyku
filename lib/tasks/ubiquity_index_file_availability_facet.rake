@@ -2,6 +2,8 @@
 # Note the tenant name is supplied when running the rake task, for example
 # if the tenant name is 'sandbox.repo-test.ubiquity.press', you will pass it as shown below
 # rake ubiquity_index_file_availability_facet:update['sandbox.repo-test.ubiquity.press']
+#for updatinga specific model note the surrounding string after the rake command
+# rake "ubiquity_index_file_availability_facet:update_specific_model[sandbox.repo-test.ubiquity.press,  generic_work]"
 
 namespace :ubiquity_index_file_availability_facet do
   desc "Run this task to popolate the file_availability field for existing works"
@@ -17,13 +19,24 @@ namespace :ubiquity_index_file_availability_facet do
          #by calling save we trigger the before_save callback in app/models/ubiquity/concerns/multiple_modules.rb
           model_instance.save
           sleep 2
-
-          #to avoid lossing the current tenant in account elevator switch, since another switch
-          #happens after save when indexing to shared searh, hence the need to switch back
-          AccountElevator.switch!("#{tenant[:name]}")
       end
     end
+  end
 
+  task :update_specific_model, [:tenant_name, :model_name] => :environment do |task, args|
+    tenant_name = args[:tenant_name]
+    puts "tenant_cname in file_availability rake task: #{tenant_name}"
+    AccountElevator.switch!(tenant_name)
+    model = args[:model_name]
+    model_class = model.to_s.classify.constantize
+    puts "model_name  in file_availability rake task: #{model_class}"
+
+    model_class.find_each do |model_instance|
+      puts "model_id in in file_availability rake task:   #{model_instance.id}"
+       #by calling save we trigger the before_save callback in app/models/ubiquity/concerns/multiple_modules.rb
+      model_instance.save
+      sleep 2
+    end
   end
 
 end

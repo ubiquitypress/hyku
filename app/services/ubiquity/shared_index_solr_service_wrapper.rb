@@ -2,7 +2,7 @@ module Ubiquity
   class SharedIndexSolrServiceWrapper
     attr_accessor :solr_document, :action_type, :tenant_cname, :file_sets, :add_to_in_shared_search
 
-    def initialize(solr_document, action_type, tenant_cname, file_sets = nil, add_to_in_shared_search = nil)
+    def initialize(solr_document, action_type, tenant_cname, add_to_in_shared_search = nil, file_sets = nil)
       @solr_document = solr_document
       @action_type = action_type
       @file_sets = file_sets

@@ -195,7 +195,6 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("official_link", :stored_searchable)
     config.add_show_field solr_name("rights_holder", :stored_searchable)
     config.add_show_field solr_name("dewey", :stored_searchable)
-    # config.add_show_field solr_name("creator_search", :stored_searchable)
     config.add_show_field solr_name("library_of_congress_classification", :stored_searchable)
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
@@ -433,8 +432,11 @@ class CatalogController < ApplicationController
     #config.add_sort_field "#{modified_field} asc", label: "date modified \u25B2"
 
     config.oai = {
+      provider: {
+        repository_name: Settings.oai.name,
+        repository_url: Settings.oai.url,
+      },
       document: {
-        set_model: NewListSet, # Overriding the file set #app/models/file_set
         limit: 25, # number of records returned with each request, default: 15
         set_fields: [ # ability to define ListSets, optional, default: nil
           { label: 'collection', solr_field: 'isPartOf_ssim' }

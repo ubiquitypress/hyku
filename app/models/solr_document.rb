@@ -77,8 +77,9 @@ class SolrDocument
   attribute :alternative_journal_title, Solr::Array, solr_name('alternative_journal_title')
 
   field_semantics.merge!(
-    creator: 'creator_tesim',
-    contributor: 'contributor_tesim',
+    creator: 'creator_search_tesim',
+    contributor: 'contributor_list_tesim',
+    editor: 'editor_list_tesim',
     date: 'date_created_tesim',
     description: 'abstract_tesim',
     identifier: 'identifier_tesim',
@@ -90,5 +91,4 @@ class SolrDocument
     title: 'title_tesim',
     type: 'human_readable_type_tesim'
   )
-
 end

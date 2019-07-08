@@ -9,10 +9,10 @@ class BookContributionIndexer < SharedIndexer
   # this behavior
   include Hyrax::IndexesLinkedMetadata
 
-  # Uncomment this block if you want to add custom indexing behavior:
-  # def generate_solr_document
-  #  super.tap do |solr_doc|
-  #    solr_doc['my_custom_field_ssim'] = object.my_custom_property
-  #  end
-  # end
+  # Adding custom indexing behavior for the editor column, added as part of the OAI Harvesting:
+  def generate_solr_document
+    super.tap do |solr_doc|
+      solr_doc['editor_list_tesim'] = Ubiquity::ParseJson.new(object.editor.first).fetch_value_based_on_key('editor')
+    end
+  end
 end

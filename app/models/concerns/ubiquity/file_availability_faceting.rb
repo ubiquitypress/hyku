@@ -15,7 +15,7 @@ module Ubiquity
     extend ActiveSupport::Concern
 
     included do
-      after_save :set_file_availability_for_faceting
+      before_save :set_file_availability_for_faceting
     end
 
     private
@@ -33,6 +33,9 @@ module Ubiquity
       elsif (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] } || get_work_filesets_visibility.blank? ) && self.official_link.present? && (doi_option_value_check? == false)
         self.file_availability =  ["External link (access may be restricted)"]
 
+      elsif (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] } || get_work_filesets_visibility.blank?) && !self.official_link.present? && (doi_option_value_check? == true)
+        self.file_availability = ['File not available']
+
       elsif (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] } || get_work_filesets_visibility.blank?) && self.official_link.present? && (doi_option_value_check? == true)
         self.file_availability = ['File not available']
 
@@ -47,11 +50,9 @@ module Ubiquity
 
     def multiple_values
       if self.file_availability.include? "File not available"
-        puts"IF CONDITION"
         self.file_availability.delete "File not available"
         self.file_availability = self.file_availability | ['External link (access may be restricted)', 'File available from this repository']
       else
-        puts"ELSE CONDITION"
         self.file_availability = self.file_availability | ['External link (access may be restricted)', 'File available from this repository']
       end
     end

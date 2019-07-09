@@ -20,15 +20,17 @@ module Ubiquity
 
     def fetch_value_based_on_key(key_field)
       value_arr = []
-      parsed_json.map do |hash|
-        # we are using the union literal  '|' which is used to combine the unique values of two arrays
-        #This means the script is idempotent, which for our use case means that you can re-run it several times without creating duplicates
-        value = []
-        value |= [hash["#{key_field}_family_name"].to_s]
-        value |= [', '] if hash["#{key_field}_family_name"].present? && hash["#{key_field}_given_name"].present?
-        value |= [hash["#{key_field}_given_name"].to_s]
-        value |= [hash["#{key_field}_organization_name"]]
-        value_arr << value.reject(&:blank?).join
+      if parsed_json
+        parsed_json.map do |hash|
+          # we are using the union literal  '|' which is used to combine the unique values of two arrays
+          #This means the script is idempotent, which for our use case means that you can re-run it several times without creating duplicates
+          value = []
+          value |= [hash["#{key_field}_family_name"].to_s]
+          value |= [', '] if hash["#{key_field}_family_name"].present? && hash["#{key_field}_given_name"].present?
+          value |= [hash["#{key_field}_given_name"].to_s]
+          value |= [hash["#{key_field}_organization_name"]]
+          value_arr << value.reject(&:blank?).join
+        end
       end
       value_arr
     end

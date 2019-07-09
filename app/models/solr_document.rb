@@ -9,7 +9,6 @@ class SolrDocument
   include Hyrax::SolrDocumentBehavior
 
   # self.unique_key = 'id'
-
   # Email uses the semantic field mappings below to generate the body of an email.
   SolrDocument.use_extension(Blacklight::Document::Email)
 
@@ -77,18 +76,18 @@ class SolrDocument
   attribute :alternative_journal_title, Solr::Array, solr_name('alternative_journal_title')
 
   field_semantics.merge!(
+    title: 'title_tesim',
     creator: 'creator_search_tesim',
-    contributor: 'contributor_list_tesim',
-    editor: 'editor_list_tesim',
-    date: 'date_created_tesim',
+    subject: 'keyword_tesim',
     description: 'abstract_tesim',
+    publisher: 'publisher_tesim',
+    contributor: 'contributor_list_tesim',
+    source: 'editor_list_tesim',
+    date: 'date_published_tesim',
     identifier: 'identifier_tesim',
     language: 'language_tesim',
-    publisher: 'publisher_tesim',
     relation: 'nesting_collection__pathnames_ssim',
     rights: 'rights_statement_tesim',
-    subject: 'keyword_tesim',
-    title: 'title_tesim',
     type: 'human_readable_type_tesim'
   )
 end

@@ -16,7 +16,7 @@ module MultipleMetadataFieldsHelper
   end
 
   def display_json_values_comma_separated(json_record)
-    Ubiquity::ParseJson.new(json_record).separate_creator_with_semicolon
+    Ubiquity::ParseJson.new(json_record).fetch_value_based_on_key('creator', '; ')
   end
 
 

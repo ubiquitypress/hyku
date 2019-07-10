@@ -4,8 +4,6 @@ module Ubiquity
 
     included do
       after_save :add_record_to_index, on: [:create, :update]
-      after_save :get_file_sets, on: [:create, :update]
-
       before_destroy :remove_record_from_index
 
       before_save :get_collection_child_records
@@ -18,29 +16,22 @@ module Ubiquity
     private
 
     def add_record_to_index
-      shared_search_check =  get_account_tenant && get_account_tenant.settings['include_in_shared_search']
-      if parent_tenant.present? && shared_search_check == 'true'
-        Ubiquity::SharedIndexSolrServiceWrapper.new(self.to_solr, 'add', parent_tenant, shared_search_check).update
+      if parent_tenant.present? && !self.account_cname.include?('demo')
+        Ubiquity::SharedIndexSolrServiceWrapper.new(self.to_solr, 'add', parent_tenant, get_file_sets).update
         #if you switch the tenant back to the one that owns the work, you will get a blacklight error rendering show
         AccountElevator.switch!(self.account_cname)
       end
     end
 
     def remove_record_from_index
-      if parent_tenant.present?
+      if parent_tenant.present? && !self.account_cname.include?('demo')
           Ubiquity::SharedIndexSolrServiceWrapper.new(self.to_solr, 'remove', parent_tenant).update
           AccountElevator.switch!(self.account_cname)
       end
     end
 
-    def get_account_tenant
-      if self.account_cname.present?
-        @account ||=  Account.where(cname: self.account_cname).first
-      end
-    end
-
     def parent_tenant
-      account =  get_account_tenant
+      account = Account.where(cname: self.account_cname).first
       if account.present? && account.parent.present?
         parent = account.parent
         parent.cname
@@ -48,12 +39,10 @@ module Ubiquity
     end
 
     def get_file_sets
-      shared_search_check =  get_account_tenant && get_account_tenant.settings['include_in_shared_search']
-
-      if self.class != FileSet && self.try(:file_sets).present? && parent_tenant.present? && shared_search_check == 'true'
-        file_sets_solr =  self.file_sets.map(&:to_solr)
-        Ubiquity::SharedIndexSolrServiceWrapper.new(file_sets_solr, 'add', parent_tenant, shared_search_check).update
-        AccountElevator.switch!(self.account_cname)
+      if self.class != FileSet && self.try(:file_sets).present?
+        self.file_sets.map do |file_set|
+          file_set.to_solr
+        end
       end
     end
 

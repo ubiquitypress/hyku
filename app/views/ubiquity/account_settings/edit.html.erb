@@ -30,8 +30,12 @@
               <%= ff.text_field :monthly_email_list, :value => current_account.settings["monthly_email_list"], name: "#{f.object_name}[settings][monthly_email_list][]", class: 'form-control' %><br>
               <%= ff.label :yearly_email_list %><br>
               <%= ff.text_field :yearly_email_list, :value => current_account.settings["yearly_email_list"], name: "#{f.object_name}[settings][yearly_email_list][]", class: 'form-control' %><br>
-              <%= ff.label 'Should we index record to shared search. Example values are true or false' %><br>
-              <%= ff.text_field :include_in_shared_search, :value => @account.settings['include_in_shared_search'], class: 'form-control' %>
+              <b><%= ff.label 'Index record to shared search' %></b><br>
+              <p> True: newly added/edited works will appear in Shared Search</p>
+              <p>False: newly added works will NOT appear in Shared Search</p>
+              <p>If you change this setting, please contact Ubiquity Press in order to apply the change to existing works.</p> 
+              <%= ff.select :include_in_shared_search, options_for_select(['true', 'false'], @account.settings['include_in_shared_search']), class: 'form-control' %>
+
             <% end %>
           </div>
 

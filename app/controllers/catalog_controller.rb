@@ -1,7 +1,7 @@
 class CatalogController < ApplicationController
   include Hydra::Catalog
   include Hydra::Controller::ControllerBehavior
-  include BlacklightOaiProvider::Controller
+  include BlacklightOaiProvider::Controller if ENV['ENABLE_OAI_METADATA'] == 'true'
 
   # These before_action filters apply the hydra access controls
   before_action :enforce_show_permissions, only: :show

@@ -2,13 +2,13 @@
 
 class SolrDocument
   include Blacklight::Solr::Document
+  include BlacklightOaiProvider::SolrDocument
   include Blacklight::Gallery::OpenseadragonSolrDocument
 
   # Adds Hyrax behaviors to the SolrDocument.
   include Hyrax::SolrDocumentBehavior
 
   # self.unique_key = 'id'
-
   # Email uses the semantic field mappings below to generate the body of an email.
   SolrDocument.use_extension(Blacklight::Document::Email)
 
@@ -74,4 +74,19 @@ class SolrDocument
   attribute :library_of_congress_classification, Solr::Array, solr_name('library_of_congress_classification')
   attribute :alt_title, Solr::Array, solr_name('alt_title')
   attribute :alternative_journal_title, Solr::Array, solr_name('alternative_journal_title')
+
+  field_semantics.merge!(
+    title: 'title_tesim',
+    creator: 'creator_search_tesim',
+    subject: 'keyword_tesim',
+    description: 'abstract_tesim',
+    publisher: 'publisher_tesim',
+    contributor: ['contributor_list_tesim', 'editor_list_tesim'],
+    date: 'date_published_tesim',
+    identifier: 'identifier_tesim',
+    language: 'language_tesim',
+    relation: 'nesting_collection__pathnames_ssim',
+    rights: 'rights_statement_tesim',
+    type: 'human_readable_type_tesim'
+  )
 end

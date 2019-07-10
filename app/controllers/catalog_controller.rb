@@ -1,6 +1,7 @@
 class CatalogController < ApplicationController
   include Hydra::Catalog
   include Hydra::Controller::ControllerBehavior
+  include BlacklightOaiProvider::Controller if ENV['ENABLE_OAI_METADATA'] == 'true'
 
   # These before_action filters apply the hydra access controls
   before_action :enforce_show_permissions, only: :show
@@ -194,7 +195,6 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("official_link", :stored_searchable)
     config.add_show_field solr_name("rights_holder", :stored_searchable)
     config.add_show_field solr_name("dewey", :stored_searchable)
-    # config.add_show_field solr_name("creator_search", :stored_searchable)
     config.add_show_field solr_name("library_of_congress_classification", :stored_searchable)
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
@@ -431,6 +431,18 @@ class CatalogController < ApplicationController
     #config.add_sort_field "#{modified_field} desc", label: "date modified \u25BC"
     #config.add_sort_field "#{modified_field} asc", label: "date modified \u25B2"
 
+    config.oai = {
+      provider: {
+        repository_name: Settings.oai.name,
+        repository_url: Settings.oai.url,
+      },
+      document: {
+        limit: 25, # number of records returned with each request, default: 15
+        set_fields: [ # ability to define ListSets, optional, default: nil
+          { label: 'collection', solr_field: 'isPartOf_ssim' }
+        ]
+      }
+    }
     # If there are more than this many search results, no spelling ("did you
     # mean") suggestion is offered.
     config.spell_max = 5

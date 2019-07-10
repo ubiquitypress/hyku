@@ -8,7 +8,7 @@ class FileSet < ActiveFedora::Base
 
   before_destroy :remove_rendering_relationship
   before_save :set_account_cname
-  before_update :fetch_file_sets_and_create_work_expiry_service
+  before_update :fetch_file_sets_and_create_work_expiry_service, :parent_save_to_update_file_visibility_facet
 
   # Hyku has its own FileSetIndexer: app/indexers/file_set_indexer.rb
   # It overrides Hyrax to inject IIIF behavior.
@@ -27,7 +27,6 @@ class FileSet < ActiveFedora::Base
     def set_account_cname
       if self.account_cname.blank?
         object ||=  Account.where("tenant ilike ?", "%#{Apartment::Tenant.current}%").where("data @> ?", {is_parent: 'false'}.to_json ).first
-        puts "labo #{object.inspect}"
         self.account_cname = object.cname
       end
     end
@@ -54,4 +53,7 @@ class FileSet < ActiveFedora::Base
       end
     end
 
+    def parent_save_to_update_file_visibility_facet
+      self && self.parent && self.parent.save if self.visibility_changed?
+    end
 end

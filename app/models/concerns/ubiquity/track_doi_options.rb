@@ -19,26 +19,16 @@ module Ubiquity
     private
 
     def clean_doi
-      new_doi = Addressable::URI.parse(self.doi.strip)
-      new_doi_path = prepend_protocol.try(:path)
-      if new_doi_path.slice(0) == "/"
-        new_doi_path.slice!(0)
-        self.doi = new_doi_path
-      else
-        self.doi = new_doi_path
-      end
+      refined_url = remove_unwanted_characters_from_doi
+      doi = Addressable::URI.parse(refined_url)
+      self.doi = doi.path
     end
 
-    def prepend_protocol
-     doi = Addressable::URI.parse(self.doi.strip)
-     doi_path = doi.path
-     if doi.scheme  == nil
-       new_doi = doi_path.split('/').count < 3 ? doi_path : 'https://' + doi_path
-       full_doi = Addressable::URI.parse(new_doi)
-     else
-       doi
-     end
-    end
+   def remove_unwanted_characters_from_doi
+     url_ary = self.doi.strip.split('/')
+     url_ary.shift(2) if ['https', 'https:', 'http', 'http:'].include?(url_ary.first)
+     url_ary.map{ |e| e.gsub(/[^a-z0-9A-Z._-]/, '') }.join('/')
+   end
 
     def set_disable_draft_doi
       if self.doi_options == "Do not mint DOI"

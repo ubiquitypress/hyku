@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  
+  concern :oai_provider, BlacklightOaiProvider::Routes.new
 
   namespace :ubiquity do
     resources :external_services
@@ -68,6 +70,8 @@ Rails.application.routes.draw do
   end
 
   resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do
+    concerns :oai_provider
+
     concerns :searchable
   end
 

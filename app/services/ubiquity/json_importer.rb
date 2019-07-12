@@ -30,17 +30,16 @@ module Ubiquity
       @domain = data['domain'] || data[:domain]
       @tenant_domain = @tenant + '.' + @domain
       @data_hash = HashWithIndifferentAccess.new(data)
+      puts "@data_hash values #{@data_hash.inspect}"
       @file = @data_hash[:file]
-      @ubiquity_model_class = @data_hash["type"].constantize
+      @ubiquity_model_class = @data_hash.with_indifferent_access["type"].try(:constantize) || model_instance.class
       @work_instance = model_instance
     end
 
     def run
       AccountElevator.switch!("#{@tenant_domain}")
       email = Hyrax.config.batch_user_key
-
       @user = User.where(email: @work_instance.depositor).first ||  User.find_or_create_by(email: email) { |user|  user.password = 'abcdefgh'; user.password_confirmation = 'abcdefgh'}
-
       @attributes_hash['depositor'] = @user.email unless @work_instance.depositor
       $stdout.puts "Started parsing the json data"
 
@@ -53,7 +52,7 @@ module Ubiquity
       @attributes_hash['account_cname'] = @tenant_domain
       @attributes_hash['date_modified'] = Hyrax::TimeService.time_in_utc
       @attributes_hash['date_uploaded'] = Hyrax::TimeService.time_in_utc unless @work_instance.date_uploaded.present?
-
+      set_default_work_visibility(@data_hash[:visibility])
       #save the work
       create_or_update_work
       add_state_to_work
@@ -84,7 +83,7 @@ module Ubiquity
     def create_or_update_work
       if @work_instance.new_record?
         @work_instance.attributes = attributes_hash
-        puts "new-work #{@work_instance.inspect}"
+        puts "creating a new-work #{@work_instance.inspect}"
         @work_instance.save!
       else
         puts "updating-work with #{attributes_hash.inspect}"
@@ -94,7 +93,8 @@ module Ubiquity
 
     def model_instance
       AccountElevator.switch!("#{@tenant_domain}")
-      if work = ubiquity_model_class.where(id: @data_id).first
+      work = ActiveFedora::Base.find(@data_id)
+      if work.present?
         work
       else
         new_work
@@ -119,20 +119,20 @@ module Ubiquity
       end
     end
 
-    def set_default_work_visibility(key)
-      if (['open', 'restricted'].include? @data_hash[:visibility])
-        puts "setting visibility from hash - #{@data_hash[:visibility]}"
-        @attributes_hash['visibility'] = @data_hash[:visibility]
+    def set_default_work_visibility(value)
+      if ['open', 'restricted'].include?(value)
+        puts "setting visibility from hash - #{value.inspect}"
+        @attributes_hash['visibility'] = value
       else
-        puts "setting visibility to private the json importer's default  #{@data_hash[:visibility]}"
-        if (key == "file_only_import" && key != 'true')
+        puts "setting visibility to private in json importer"
+        #if (key == "file_only_import" && key != 'true')
          @attributes_hash['visibility'] = (Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE) unless @work_instance.visibility.present?
-        end
+        #end
       end
     end
 
     def  populate_array_field(key, val, index)
-      set_default_work_visibility(key) if index == 0
+      #set_default_work_visibility(key) if index == 0
 
       if ( (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key) && (@work_instance.send(key).class == ActiveTriples::Relation) )
         create_or_skip_work_metadata('array', key)

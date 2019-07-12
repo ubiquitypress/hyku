@@ -21,19 +21,13 @@ module Ubiquity
     def clean_doi
       refined_url = remove_unwanted_characters_from_doi
       doi = Addressable::URI.parse(refined_url)
-      doi_path = doi.path
-      if ['_', '-', '.'].include?(doi_path.slice(doi_path.length-1))
-        doi_path.slice!(doi_path.length-1)
-        self.doi = doi_path
-      else
-        self.doi = doi_path
-      end
+      self.doi = doi.path
     end
 
    def remove_unwanted_characters_from_doi
      url_ary = self.doi.strip.split('/')
      url_ary.shift(2) if ['https', 'https:', 'http', 'http:'].include?(url_ary.first)
-     url_ary.map{ |e| e.gsub(/[^a-z0-9A-Z._-]/, '') }.join('/')
+     url_ary.join('/')
    end
 
     def set_disable_draft_doi

@@ -34,6 +34,7 @@ namespace :ubiquity_resave_records do
     model_class.each do |model|
       #We fetching an instance of the models and then getting the value in the creator field
       model.find_each do |model_instance|
+        puts "model_id in in re-saving record rake task: #{model} : #{model_instance.id}"
          #by calling save we trigger the before_save callback in app/models/ubiquity/concerns/multiple_modules.rb
           model_instance.save
           sleep 2
@@ -43,14 +44,14 @@ namespace :ubiquity_resave_records do
 
   task :update_specific_model, [:tenant_name, :model_name] => :environment do |task, args|
     tenant_name = args[:tenant_name]
-    puts "tenant_cname in file_availability rake task: #{tenant_name}"
+    puts "tenant_cname in update specific model rake task: #{tenant_name}"
     AccountElevator.switch!(tenant_name)
     model = args[:model_name]
     model_class = model.to_s.classify.constantize
-    puts "model_name  in file_availability rake task: #{model_class}"
+    puts "model_name  in update specific model rake task: #{model_class}"
 
     model_class.find_each do |model_instance|
-      puts "model_id in in file_availability rake task:   #{model_instance.id}"
+      puts "model_id in in update specific model rake task:  #{model_instance.id}"
        #by calling save we trigger the before_save callback in app/models/ubiquity/concerns/multiple_modules.rb
       model_instance.save
       sleep 2

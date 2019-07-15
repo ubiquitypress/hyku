@@ -52,7 +52,7 @@
     <label class="control-label multi_value optional" for="#{template}_creator_family_name">
       Creator family name</label>
     <%= text_field_tag  "#{template}[creator_group][][creator_family_name]", nil,
-                        class: "#{template}_creator_family_name creator_family_name form-control multi-text-field multi_value",
+                        class: "#{template}_creator_family_name creator_family_name ubiquity_creator_family_name form-control multi-text-field multi_value",
                         placeholder: 'Please enter the creator\'s last name/family name.',
                         name: "#{template}[creator_group][][creator_family_name]"
     %>
@@ -61,7 +61,7 @@
     <label class="control-label multi_value optional" for="#{template}_creator_given_name">
       Creator given name</label>
     <%= text_field_tag  "#{template}[creator_group][][creator_given_name]", nil,
-                        class: "#{template}_creator_given_name creator_given_name form-control multi-text-field multi_value",
+                        class: "#{template}_creator_given_name creator_given_name ubiquity_creator_given_name form-control multi-text-field multi_value",
                         placeholder: 'Please enter the creator\'s first name/given name.',
                         name: "#{template}[creator_group][][creator_given_name]"
     %>
@@ -87,78 +87,3 @@
   <br><br><br>
 
 </div>
-
-<script>
-$(document).on("turbolinks:load", function(){
-  $('.ubiquity_creator_orcid, .ubiquity_creator_isni').focusout(function(){
-    var check_for_name = ($('.ubiquity_creator_orcid').val() != '') || ($('.ubiquity_creator_isni').val() != '');
-    var drop_down_val = $('.ubiquity_creator_name_type').val();
-    var check_for_isni_value = $('.ubiquity_creator_isni').val();
-    var check_for_org_value = $('.ubiquity_creator_organisation_name_text_field').val();
-    if ((drop_down_val == 'Organisational') && (check_for_org_value == '') && (check_for_isni_value != '')) {
-      addOrganisationNameMandatory()
-    }
-    else if (check_for_name) {
-      var check_for_value = ($('.creator_family_name').val() != '') || ($('.creator_given_name').val() != '')
-      if (check_for_value == false){
-        addFieldsNamesMandatory()
-      }
-    }
-    else{
-      removeFieldsNamesFromMandatory()
-    }
-  })
-
-  $('.creator_family_name, .creator_given_name, .ubiquity_creator_organisation_name_text_field').focusout(function(){
-    if ($('.creator_given_name').val() != '') {
-      removeFieldsNamesFromMandatory()
-    }
-    else if ($('.creator_family_name').val() != '') {
-      removeFieldsNamesFromMandatory()
-    }
-    else if ($('.ubiquity_creator_organisation_name_text_field').val() != '') {
-      removeFieldsNamesFromMandatory()
-    }
-    else if (($('.ubiquity_creator_orcid').val() != '') || ($('.ubiquity_creator_isni').val() != '')) {
-      addFieldsNamesMandatory()
-    }
-  })
-
-  $('.ubiquity_creator_name_type').change(function(){
-    // When it changes the drop down value of the creater type
-    if(this.value == 'Personal') {
-      $('.ubiquity_creator_orcid').trigger('focusout');
-      $('.ubiquity_creator_isni').trigger('focusout');
-    }
-    else{
-      $('.ubiquity_creator_orcid').trigger('focusout');
-    }
-  });
-
-});
-
-function removeFieldsNamesFromMandatory() {
-  $('.creator_family_name').prop('required', false)
-  $('.creator_family_name').css('border-color', '#ccc')
-  $('.creator_given_name').prop('required', false)
-  $('.creator_given_name').css('border-color', '#ccc')
-  $('.ubiquity_creator_organisation_name_text_field').prop('required', false)
-  $('.ubiquity_creator_organisation_name_text_field').css('border-color', '#ccc')
-}
-
-function addFieldsNamesMandatory() {
-  $('.creator_family_name').prop('required', true)
-  $('.creator_family_name').css('border-color', 'red')
-  $('.creator_given_name').prop('required', true)
-  $('.creator_given_name').css('border-color', 'red')
-  $('.ubiquity_creator_organisation_name_text_field').prop('required', true)
-  $('.ubiquity_creator_organisation_name_text_field').css('border-color', 'red')
-}
-
-function addOrganisationNameMandatory(){
-  $('.ubiquity_creator_organisation_name_text_field').prop('required', true)
-  $('.ubiquity_creator_organisation_name_text_field').css('border-color', 'red')
-}
-
-
-</script>

@@ -19,7 +19,7 @@ module Ubiquity
 
     def transform_date_group(date)
       date_parts =  date.split('-')
-      
+
       year = "#{date_field}_year"
       month = "#{date_field}_month"
       day = "#{date_field}_day"

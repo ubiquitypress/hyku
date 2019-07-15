@@ -26,12 +26,12 @@ module Ubiquity
           #This means the script is idempotent, which for our use case means that you can re-run it several times without creating duplicates
           value = []
           if hash["#{key_field}_family_name"].present? ||  hash["#{key_field}_given_name"].present?
-            value << hash["#{key_field}_family_name"].strip
-            value << hash["#{key_field}_given_name"].strip
+            value << hash["#{key_field}_family_name"].try(:strip)
+            value << hash["#{key_field}_given_name"].try(:strip)
           elsif hash["#{key_field}_organization_name"].present?
-            value << hash["#{key_field}_organization_name"].strip
+            value << hash["#{key_field}_organization_name"].try(:strip)
           end
-          value_arr << value.reject(&:blank?).join(', ')
+          value_arr << value.compact.reject(&:blank?).join(', ')
         end
       end
       return value_arr.join(seperator) if seperator.present?

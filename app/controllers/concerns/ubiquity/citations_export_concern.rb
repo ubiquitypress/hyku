@@ -56,7 +56,7 @@ module Ubiquity
       def process_create_ary(work, rif_data_ary)
         creator_json_ary = work.try(:creator)
         return nil if creator_json_ary.blank?
-        creator_ary = Ubiquity::ParseJson.new(creator_json_ary.first).creator_for_rif_template
+        creator_ary = Ubiquity::ParseJson.new(creator_json_ary.first).fetch_value_based_on_key('creator', '; ')
         creator_ary.split('; ').each do |creator|
           rif_data_ary << "AU  - #{creator}"
         end
@@ -78,7 +78,7 @@ module Ubiquity
       def process_editor_ary(work, rif_data_ary)
         editor_json_ary = work.try(:editor)
         return nil if editor_json_ary.blank?
-        editor_ary = Ubiquity::ParseJson.new(editor_json_ary.first).editor_for_rif_template
+        editor_ary = Ubiquity::ParseJson.new(editor_json_ary.first).fetch_value_based_on_key('editor', '; ')
         editor_ary.split('; ').each do |editor|
           rif_data_ary << "ED  - #{editor}"
         end

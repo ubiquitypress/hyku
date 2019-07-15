@@ -18,62 +18,51 @@ module Ubiquity
 
     private
 
-    def clean_doi
-      new_doi = Addressable::URI.parse(self.doi.strip)
-      new_doi_path = prepend_protocol.try(:path)
-      if new_doi_path.slice(0) == "/"
-        new_doi_path.slice!(0)
-        self.doi = new_doi_path
-      else
-        self.doi = new_doi_path
+      def clean_doi
+        refined_url = remove_unwanted_characters_from_doi
+        doi_path = Addressable::URI.parse(refined_url).path
+        doi_path = doi_path.chop if [';', '.', '&'].include? doi[-1]
+        self.doi = doi_path
       end
-    end
 
-    def prepend_protocol
-     doi = Addressable::URI.parse(self.doi.strip)
-     doi_path = doi.path
-     if doi.scheme  == nil
-       new_doi = doi_path.split('/').count < 3 ? doi_path : 'https://' + doi_path
-       full_doi = Addressable::URI.parse(new_doi)
-     else
-       doi
-     end
-    end
-
-    def set_disable_draft_doi
-      if self.doi_options == "Do not mint DOI"
-        self.disable_draft_doi = 'true'
-      else
-        self.disable_draft_doi = 'false'
+      def remove_unwanted_characters_from_doi
+        url_ary = self.doi.strip.split('/')
+        url_ary.shift(2) if ['https', 'https:', 'http', 'http:'].include?(url_ary.first)
+        url_ary.join('/')
       end
-    end
 
-    def set_doi
-      if (self.doi_options == 'Mint DOI:Registered' || self.doi_options == 'Mint DOI:Findable') && self.visibility == 'open'
-        self.doi = self.draft_doi
-      end
-    end
-
-    def autocreate_draft_doi
-      if self.doi_options != "Do not mint DOI" && self.draft_doi.blank?
-        tenant_name = self.account_cname.split('.').first
-        tenant_json = ENV["TENANTS_SETTINGS"]
-        tenant_hash = JSON.parse(tenant_json) if is_valid_json?(tenant_json)
-        datacite_prefix = tenant_hash.dig(tenant_name, 'datacite_prefix')
-        if datacite_prefix.present?
-          doi_service = Ubiquity::DoiService.new(self.account_cname, datacite_prefix)
-          external_service_object = doi_service.suffix_generator
-          self.draft_doi = external_service_object.draft_doi
+      def set_disable_draft_doi
+        if self.doi_options == "Do not mint DOI"
+          self.disable_draft_doi = 'true'
+        else
+          self.disable_draft_doi = 'false'
         end
       end
-    end
 
-    def is_valid_json?(data)
-      !!JSON.parse(data)  if data.class == String
-      rescue JSON::ParserError
-        false
-    end
+      def set_doi
+        if (self.doi_options == 'Mint DOI:Registered' || self.doi_options == 'Mint DOI:Findable') && self.visibility == 'open'
+          self.doi = self.draft_doi
+        end
+      end
 
+      def autocreate_draft_doi
+        if self.doi_options != "Do not mint DOI" && self.draft_doi.blank?
+          tenant_name = self.account_cname.split('.').first
+          tenant_json = ENV["TENANTS_SETTINGS"]
+          tenant_hash = JSON.parse(tenant_json) if is_valid_json?(tenant_json)
+          datacite_prefix = tenant_hash.dig(tenant_name, 'datacite_prefix')
+          if datacite_prefix.present?
+            doi_service = Ubiquity::DoiService.new(self.account_cname, datacite_prefix)
+            external_service_object = doi_service.suffix_generator
+            self.draft_doi = external_service_object.draft_doi
+          end
+        end
+      end
 
+      def is_valid_json?(data)
+        !!JSON.parse(data)  if data.class == String
+        rescue JSON::ParserError
+          false
+      end
   end
 end

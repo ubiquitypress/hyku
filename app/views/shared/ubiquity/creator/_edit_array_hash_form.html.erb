@@ -21,7 +21,7 @@
 
   <p class="help-block">The person or group responsible for the work. Usually this is the author of the content.</p>
 
-  <label class="ubiquity_creator_isni control-label multi_value optional" for="#{template}_creator_isni">
+  <label class="control-label multi_value optional" for="#{template}_creator_isni">
     Creator ISNI</label>
 
   <%= text_field_tag "#{template}[creator_group][][creator_isni]", hash.dig("creator_isni"),
@@ -34,14 +34,14 @@
     Creator organisation name</label>
 
   <%= text_field_tag "#{template}[creator_group][][creator_organization_name]", hash.dig("creator_organization_name"),
-                      class: "ubiquity_creator_organization_name #{template}_creator_organization_name form-control multi-text-field multi_value",
+                      class: "ubiquity_creator_organization_name #{template}_creator_organization_name form-control multi-text-field multi_value ubiquity_creator_organisation_name_text_field",
                       placeholder: 'Please enter the organisation\'s name.',
                       name: "#{template}[creator_group][][creator_organization_name]"
   %>
 
   <span class="ubiquity_personal_fields">
 
-    <label class="ubiquity_creator_orcid control-label multi_value optional" for="#{template}_creator_orcid">
+    <label class="control-label multi_value optional" for="#{template}_creator_orcid">
       Creator ORCID</label>
 
     <%= text_field_tag "#{template}[creator_group][][creator_orcid]", hash.dig("creator_orcid"),
@@ -98,3 +98,78 @@
 </div>
 
 <% end %>
+<script>
+$(document).on("turbolinks:load", function(){
+  console.log('ednted the edit page ')
+  $('.ubiquity_creator_orcid, .ubiquity_creator_isni').focusout(function(){
+    var check_for_name = ($('.ubiquity_creator_orcid').val() != '') || ($('.ubiquity_creator_isni').val() != '');
+    var drop_down_val = $('.ubiquity_creator_name_type').val();
+    var check_for_isni_value = $('.ubiquity_creator_isni').val();
+    var check_for_org_value = $('.ubiquity_creator_organisation_name_text_field').val();
+    if ((drop_down_val == 'Organisational') && (check_for_org_value == '') && (check_for_isni_value != '')) {
+      addOrganisationNameMandatory()
+    }
+    else if (check_for_name) {
+      var check_for_value = ($('.creator_family_name').val() != '') || ($('.creator_given_name').val() != '')
+      if (check_for_value == false){
+        addFieldsNamesMandatory()
+      }
+    }
+    else{
+      removeFieldsNamesFromMandatory()
+    }
+  })
+
+  $('.creator_family_name, .creator_given_name, .ubiquity_creator_organisation_name_text_field').focusout(function(){
+    if (($('.creator_given_name').val() != '') && $('.creator_given_name').is(":visible")) {
+      removeFieldsNamesFromMandatory()
+    }
+    else if (($('.creator_family_name').val() != '') && $('.creator_family_name').is(":visible")) {
+      removeFieldsNamesFromMandatory()
+    }
+    else if (($('.ubiquity_creator_organisation_name_text_field').val() != '') && $('.ubiquity_creator_organisation_name_text_field').is(":visible")) {
+      removeFieldsNamesFromMandatory()
+    }
+    else if (($('.ubiquity_creator_orcid').val() != '') || ($('.ubiquity_creator_isni').val() != '')) {
+      addFieldsNamesMandatory()
+    }
+  })
+
+  $('.ubiquity_creator_name_type').change(function(){
+    // When it changes the drop down value of the creater type
+    if(this.value == 'Personal') {
+      $('.ubiquity_creator_orcid').trigger('focusout');
+      $('.ubiquity_creator_isni').trigger('focusout');
+    }
+    else{
+      $('.ubiquity_creator_orcid').trigger('focusout');
+    }
+  });
+
+});
+
+function removeFieldsNamesFromMandatory() {
+  $('.creator_family_name').prop('required', false)
+  $('.creator_family_name').css('border-color', '#ccc')
+  $('.creator_given_name').prop('required', false)
+  $('.creator_given_name').css('border-color', '#ccc')
+  $('.ubiquity_creator_organisation_name_text_field').prop('required', false)
+  $('.ubiquity_creator_organisation_name_text_field').css('border-color', '#ccc')
+}
+
+function addFieldsNamesMandatory() {
+  $('.creator_family_name').prop('required', true)
+  $('.creator_family_name').css('border-color', 'red')
+  $('.creator_given_name').prop('required', true)
+  $('.creator_given_name').css('border-color', 'red')
+  $('.ubiquity_creator_organisation_name_text_field').prop('required', true)
+  $('.ubiquity_creator_organisation_name_text_field').css('border-color', 'red')
+}
+
+function addOrganisationNameMandatory(){
+  $('.ubiquity_creator_organisation_name_text_field').prop('required', true)
+  $('.ubiquity_creator_organisation_name_text_field').css('border-color', 'red')
+}
+
+
+</script>

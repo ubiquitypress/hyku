@@ -21,7 +21,6 @@ module Ubiquity
       def clean_doi
         refined_url = remove_unwanted_characters_from_doi
         doi_path = Addressable::URI.parse(refined_url).path
-        doi_path = doi_path.chop if [';', '.', '&'].include? doi[-1]
         self.doi = doi_path
       end
 

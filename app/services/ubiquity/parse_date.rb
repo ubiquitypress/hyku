@@ -30,19 +30,31 @@ module Ubiquity
       end
     end
 
+    def self.transform_published_date_group(date_published_hash)
+      if date_published_hash.present?
+        date = ''
+        date_published_hash.each do |date_hash|
+          date << date_hash[:date_published_year] if date_hash[:date_published_year].present?
+          date << '-' + date_hash[:date_published_month] if date_hash[:date_published_month].present?
+          date << '-' + date_hash[:date_published_day] if date_hash[:date_published_day].present?
+        end
+        date
+      end
+    end
+
     private
 
     def transform_date_group(date)
       date_parts =  date.split('-')
-
       year = "#{date_field}_year"
       month = "#{date_field}_month"
       day = "#{date_field}_day"
-
-      #returns a hash in the form {"date_published_year"=>"2017", "date_published_month"=>"02", "date_published_day"=>"02"}
-      Hash[[ [year,  date_parts.first], [month,  date_parts[1]], [day,  date_parts.last]  ]]
-
+      if date_parts.count > 2
+        #returns a hash in the form {"date_published_year"=>"2017", "date_published_month"=>"02", "date_published_day"=>"02"}
+        Hash[[ [year,  date_parts.first], [month,  date_parts[1]], [day,  date_parts.last]  ]]
+      else
+        Hash[[ [year,  date_parts.first], [month,  date_parts[1]] ]]
+      end
     end
-
   end
 end

@@ -36,7 +36,9 @@ module Ubiquity
         date_published_hash.each do |date_hash|
           date << date_hash[:date_published_year] if date_hash[:date_published_year].present?
           date << '-' + date_hash[:date_published_month] if date_hash[:date_published_month].present?
-          date << '-' + date_hash[:date_published_day] if date_hash[:date_published_day].present?
+          if date_hash[:date_published_day].present? && date_hash[:date_published_month].present?
+            date << '-' + date_hash[:date_published_day]
+          end
         end
         date
       end

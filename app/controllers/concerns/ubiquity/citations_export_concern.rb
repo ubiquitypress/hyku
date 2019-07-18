@@ -87,7 +87,7 @@ module Ubiquity
       def resource_type_mapping
         {
           "JOUR" => ["Article default Journal article", "Article Book review", "Article Data paper", "Article Editorial", "Article Letter to the editor", "Collection Data paper", "Collection Journal article", "Collection Working paper"],
-          "SOUND" => ["Audio", "ExhibitionItem Audio-visual guide", "GenericWork Sound", "TimeBasedMedia Interview (radio, television)", "TimeBasedMedia Musical composition", "TimeBasedMedia Podcast", "Collection Sound"],
+          "SOUND" => ["Audio", "TimeBasedMedia Audio", "ExhibitionItem Audio-visual guide", "GenericWork Sound", "TimeBasedMedia Interview (radio, television)", "TimeBasedMedia Musical composition", "TimeBasedMedia Podcast", "Collection Sound"],
           "BOOK" => ["Book default Book", "Book", "Book Grey literature", "Book Working paper", "Collection Book"],
           "DATA" => ["Dataset default Dataset", "Dataset", "Dataset Numerical dataset", "Dataset Geographical dataset", "Collection Database", "Collection Dataset", "Collection Geographical dataset"],
           "THES" => ["Dissertation", "Masters Thesis", "GenericWork Dissertation", "ThesisOrDissertation Doctoral thesis", "ThesisOrDissertation Master's dissertation", "Collection Thesis (doctoral)"],

@@ -14,7 +14,7 @@
     Contributor ISNI</label>
 
   <%= text_field_tag "#{template}[contributor_group][][contributor_isni]", nil,
-                     class: "#{template}_contributor_group form-control multi-text-field multi_value",
+                     class: "#{template}_contributor_group form-control multi-text-field multi_value ubiquity_contributor_isni",
                      placeholder: 'Please enter the contributor\'s ISNI, e.g. 0000 1234 5678 9101.',
                      name: "#{template}[contributor_group][][contributor_isni]"
   %>
@@ -25,7 +25,7 @@
     Contributor organisation name</label>
 
   <%= text_field_tag "#{template}[contributor_group][][contributor_organization_name]", nil,
-                     class: "ubiquity_contributor_organization_name #{template}_contributor_organization_name form-control multi-text-field multi_value",
+                     class: "ubiquity_contributor_organization_name #{template}_contributor_organization_name form-control multi-text-field multi_value ubiquity_contributor_organisation_name_text_field",
                      placeholder: 'Please enter the organisation\'s name.',
                      name: "#{template}[contributor_group][][contributor_organization_name]"
   %>
@@ -36,7 +36,7 @@
       Contributor ORCID</label>
 
     <%= text_field_tag "#{template}[contributor_group][][contributor_orcid]", nil,
-                       class: "#{template}_contributor_group form-control multi-text-field multi_value",
+                       class: "#{template}_contributor_group form-control multi-text-field multi_value ubiquity_contributor_orcid",
                        placeholder: 'Please enter the contributor\'s ORCID, e.g. 0000-1234-5678-9101.',
                        name: "#{template}[contributor_group][][contributor_orcid]"
     %>
@@ -46,7 +46,7 @@
       Contributor family name</label>
 
     <%= text_field_tag "#{template}[contributor_group][][contributor_family_name]", nil,
-                       class: "#{template}_contributor_family_name form-control multi-text-field multi_value",
+                       class: "#{template}_contributor_family_name form-control multi-text-field multi_value ubiquity_contributor_family_name",
                        placeholder: 'Please enter the contributor\'s last name/family name.',
                        name: "#{template}[contributor_group][][contributor_family_name]"
     %>
@@ -56,7 +56,7 @@
       Contributor given name</label>
 
     <%= text_field_tag "#{template}[contributor_group][][contributor_given_name]", nil,
-                       class: "#{template}_contributor_given_name form-control multi-text-field multi_value",
+                       class: "#{template}_contributor_given_name form-control multi-text-field multi_value ubiquity_contributor_given_name",
                        placeholder: 'Please enter the contributor\'s first name/given name.',
                        name: "#{template}[contributor_group][][contributor_given_name]"
     %>
@@ -88,3 +88,87 @@
   <br/><br/><br/>
 
 </div>
+<script>
+$(document).on("turbolinks:load", function(){
+  $('.ubiquity_contributor_orcid, .ubiquity_contributor_isni').focusout(function(){
+    var check_for_name = ($('.ubiquity_contributor_orcid').val() != '') || ($('.ubiquity_contributor_isni').val() != '');
+    var drop_down_val = $('.ubiquity_contributor_name_type').val();
+    var check_for_isni_value = $('.ubiquity_contributor_isni').val();
+    var check_for_org_value = $('.ubiquity_contributor_organisation_name_text_field').val();
+    if ((drop_down_val == 'Organisational') && (check_for_org_value == '') && (check_for_isni_value != '')) {
+      addOrganisationNameMandatory();
+    }
+    else if (check_for_name) {
+      var check_for_value = ($('.ubiquity_contributor_family_name').val() != '') || ($('.ubiquity_contributor_given_name').val() != '');
+      if (check_for_value == false){
+        addFieldsNamesMandatory();
+      }
+    }
+    else{
+      removeFieldsNamesFromMandatory();
+    }
+  })
+
+  $('.ubiquity_contributor_family_name, .ubiquity_contributor_given_name, .ubiquity_contributor_organisation_name_text_field').focusout(function(){
+    if (($('.ubiquity_contributor_given_name').val() != '') && $('.ubiquity_contributor_given_name').is(":visible")) {
+      removeFieldsNamesFromMandatory();
+    }
+    else if (($('.ubiquity_contributor_family_name').val() != '') && $('.ubiquity_contributor_family_name').is(":visible")) {
+      removeFieldsNamesFromMandatory();
+    }
+    else if (($('.ubiquity_contributor_organisation_name_text_field').val() != '') && $('.ubiquity_contributor_organisation_name_text_field').is(":visible")) {
+      removeFieldsNamesFromMandatory();
+    }
+    else if (($('.ubiquity_contributor_orcid').val() != '') || ($('.ubiquity_contributor_isni').val() != '')) {
+      addFieldsNamesMandatory();
+    }
+  })
+
+  $('.ubiquity_contributor_name_type').change(function(){
+    // When it changes the drop down value of the creater type
+    $('.ubiquity_contributor_orcid').trigger('focusout');
+    if (this.value == 'Personal') {
+      var check_for_name = ($('.ubiquity_contributor_given_name').val() != '') || ($('.ubiquity_contributor_family_name').val() != '');
+      if ($('.ubiquity_contributor_isni').val() != '' && check_for_name == false) {
+        addFieldsNamesMandatory();
+      }
+      else{
+        removeFieldsNamesFromMandatory();
+      }
+    }
+    else{
+      var check_for_org_value = $('.ubiquity_contributor_organisation_name_text_field').val();
+      if ($('.ubiquity_contributor_isni').val() != '' && check_for_org_value == '') {
+        addFieldsNamesMandatory();
+      }
+      else{
+        removeFieldsNamesFromMandatory();
+      }
+    }
+  });
+
+});
+
+function removeFieldsNamesFromMandatory() {
+  $('.ubiquity_contributor_family_name').prop('required', false)
+  $('.ubiquity_contributor_family_name').css('border-color', '#ccc');
+  $('.ubiquity_contributor_given_name').prop('required', false);
+  $('.ubiquity_contributor_given_name').css('border-color', '#ccc');
+  $('.ubiquity_contributor_organisation_name_text_field').prop('required', false);
+  $('.ubiquity_contributor_organisation_name_text_field').css('border-color', '#ccc');
+}
+
+function addFieldsNamesMandatory() {
+  $('.ubiquity_contributor_family_name').prop('required', true);
+  $('.ubiquity_contributor_family_name').css('border-color', 'red');
+  $('.ubiquity_contributor_given_name').prop('required', true);
+  $('.ubiquity_contributor_given_name').css('border-color', 'red');
+  $('.ubiquity_contributor_organisation_name_text_field').prop('required', true);
+  $('.ubiquity_contributor_organisation_name_text_field').css('border-color', 'red');
+}
+
+function addOrganisationNameMandatory(){
+  $('.ubiquity_contributor_organisation_name_text_field').prop('required', true);
+  $('.ubiquity_contributor_organisation_name_text_field').css('border-color', 'red');
+}
+</script>

@@ -5,7 +5,7 @@
     // add linked fields
 
     $(document).on("turbolinks:load", function(){
-
+        var count = 1
         return $("body").on("click", ".add_editor", function(event){
 
             event.preventDefault();
@@ -74,23 +74,4 @@
 
      };
    });
-
-   $(document).on("turbolinks:load", function(){
-     $("body").on("click",".additional-fields", function(event){
-       $(".ubiquity_editor_name_type").each(function() {
-         _this = this;
-         if (this.value == 'Personal') {
-           $(this).siblings(".ubiquity_editor_organization_name").hide();
-           $(this).siblings(".ubiquity_personal_fields").show();
-         } else if(this.value == "Organisational") {
-          $(this).siblings(".ubiquity_personal_fields").hide();
-          $(this).siblings(".ubiquity_editor_organization_name").show();
-        } else {
-          $('.ubiquity_editor_name_type:last').val('Personal').change()
-        }
-       });
-
-    });
-   });
-
 </script>

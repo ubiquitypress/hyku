@@ -4,7 +4,7 @@
       <%= label_tag 'file_set[title][]', 'Title',  class: "string optional" %>
     </span>
     <%= text_field_tag 'file_set[title][]', curation_concern.title.first, class: 'form-control', required: true %><br>
-    <%= render "records/edit_fields/license", f: f %>
+    <%= render "records/edit_fields/license_file", f: f %>
   </fieldset>
 
   <div class="row">

@@ -8,7 +8,8 @@ class FileSet < ActiveFedora::Base
 
   before_destroy :remove_rendering_relationship
   before_save :set_account_cname
-  before_update :fetch_file_sets_and_create_work_expiry_service, :parent_save_to_update_file_visibility_facet
+  before_update :fetch_file_sets_and_create_work_expiry_service
+  after_save :parent_save_to_update_file_visibility_facet, on: [:update]
 
   # Hyku has its own FileSetIndexer: app/indexers/file_set_indexer.rb
   # It overrides Hyrax to inject IIIF behavior.

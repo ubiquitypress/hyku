@@ -56,7 +56,7 @@ module Ubiquity
       def parse_url(url)
         url = url.strip
         handle_client do
-          uri = URI.parse(url)
+          uri = Addressable::URI.convert_path(url)
           if (uri.scheme.present? &&  uri.host.present?)
             path_name = uri.path
             use_path(path_name)

@@ -18,9 +18,22 @@
              var hiddenInput = $(cloneUbiDiv).find('.ubiquity-contributor-score');
              hiddenInput.val(parseInt(lastInputCount) + 1)
             $(ubiquityContributorClass +  ':last').after(cloneUbiDiv);
-            $('.ubiquity_contributor_name_type:last').val('Personal').change()
+            $('.ubiquity_contributor_name_type:last').val('Personal').change();
+            removeDynamicallyAddedContributorClassNames();
+            applyValidatonRulesForField('contributor');
         });
     });
+
+    function removeDynamicallyAddedContributorClassNames (){
+      var contributor_fields = ["ubiquity_contributor_name_type", "ubiquity_contributor_isni", "ubiquity_contributor_organization_name", "ubiquity_contributor_orcid",
+                            "ubiquity_contributor_family_name", "ubiquity_contributor_given_name"];
+      $.each(contributor_fields, function(index, value){
+        removeClassStartingWith(value)
+      });
+      $.each(contributor_fields, function(index, value){
+        appendIndexToEachClasses(value);
+      })
+    }
 
     //remove linked fields
     $(document).on("turbolinks:load", function(){

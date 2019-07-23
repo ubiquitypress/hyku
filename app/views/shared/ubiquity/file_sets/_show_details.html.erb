@@ -11,17 +11,18 @@
   <dd itemprop="dateModified"><%= @presenter.date_modified %></dd>
   <dt>Fixity Check</dt>
   <dd><%= @presenter.fixity_check_status %></dd>
-  <dt>File Licence</dt><br>
-  <dd>
-    <% @presenter.license.each do |license|%>
-      <%= link_to license, license %>
-    <%end%>
   <dt>Characterization</dt>
   <dd>
     <% if @presenter.characterized? %>
       <%= render 'show_characterization_details' %>
     <% else %>
       not yet characterized
+    <% end %>
+  </dd>
+  <dt>File Licence</dt>
+  <dd>
+    <% @presenter.license.each do |license_links| %>
+      <%= link_to license_links, license_links %>
     <% end %>
   </dd>
 </dl>

@@ -5,9 +5,6 @@ terms:
   - id: British Museum
     term: British Museum
     active: true
-  - id: Royal Botanic Gardens, Kew
-    term: Royal Botanic Gardens, Kew
-    active: true
   - id: MOLA
     term: MOLA
     active: true
@@ -18,6 +15,9 @@ terms:
     active: false
   - id: National Museums Scotland
     term: National Museums Scotland
+    active: true
+  - id: Royal Botanic Gardens, Kew
+    term: Royal Botanic Gardens, Kew
     active: true
   - id: Tate
     term: Tate

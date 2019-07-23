@@ -1,5 +1,8 @@
 <!--  Hyku::ManifestEnabledWorkShowPresenter -->
 <!-- This whole file was add ubiquitypress to selectively display universalviewer-->
+<% file_size = presenter.representative_presenter.solr_document["file_size_lts"] %><br>
+<%= hidden_field_tag 'ubiquity-file-size', file_size %>
+
 <% if presenter.try(:representative_presenter).try(:image?) %>
   <% file_set_presenter = presenter.representative_presenter %>
   <!-- dont' displays universal viewer for files with archived format eg zip -->
@@ -15,3 +18,13 @@
 <% else %>
     <%= media_display presenter.try(:representative_presenter) %>
 <% end %>
+
+<script>
+  $(document).on("turbolinks:load", function(event){
+     var tenGigabyte = 10737418240
+     var fileSize = $("#ubiquity-file-size").val();
+     if (fileSize > tenGigabyte ){
+       return $('#file_download').hide();
+     }
+  });
+</script>

@@ -12,7 +12,10 @@
   <dt>Fixity Check</dt>
   <dd><%= @presenter.fixity_check_status %></dd>
   <dt>File Licence</dt><br>
-  <dd><a href=<%="#{@presenter.license}"%> target="_blank"> <%= @presenter.license%></a></dd>
+  <dd>
+    <% @presenter.license.each do |license|%>
+      <%= link_to license, license %>
+    <%end%>
   <dt>Characterization</dt>
   <dd>
     <% if @presenter.characterized? %>

@@ -152,25 +152,31 @@ function removeFieldsNamesFromMandatory(field, index) {
   $('.ubiquity_'+field+'_given_name_x'+index).css('border-color', '#ccc');
   $('.ubiquity_'+field+'_organization_name_x'+index).prop('required', false);
   $('.ubiquity_'+field+'_organization_name_x'+index).css('border-color', '#ccc');
-}
-
-function addFieldsNamesMandatory(field, index) {
-  $('.ubiquity_'+field+'_family_name_x'+index).prop('required', true);
-  $('.ubiquity_'+field+'_family_name_x'+index).css('border-color', 'red');
-  $('.ubiquity_'+field+'_given_name_x'+index).prop('required', true);
-  $('.ubiquity_'+field+'_given_name_x'+index).css('border-color', 'red');
-  $('.ubiquity_'+field+'_organization_name_x'+index).prop('required', true);
-  $('.ubiquity_'+field+'_organization_name_x'+index).css('border-color', 'red');
+  // Remove message near to the text field
+  $('.ubiquity_'+field+'_organization_name_x'+index).next('span.error').remove();
+  $('.ubiquity_'+field+'_given_name_x'+index).next('span.error').remove();
+  $('.ubiquity_'+field+'_family_name_x'+index).next('span.error').remove();
 }
 
 function addFieldsNamesMandatoryForPersonalFields(field, index){
+  // Family Name
   $('.ubiquity_'+field+'_family_name_x'+index).prop('required', true);
   $('.ubiquity_'+field+'_family_name_x'+index).css('border-color', 'red');
+  if ($('.ubiquity_'+field+'_family_name_x'+index).next('span.error').length == 0){
+    $('.ubiquity_'+field+'_family_name_x'+index).after('<span class="error">Please enter one of these fields.</span>');
+  }
+  // Given Name
   $('.ubiquity_'+field+'_given_name_x'+index).prop('required', true);
   $('.ubiquity_'+field+'_given_name_x'+index).css('border-color', 'red');
+  if ($('.ubiquity_'+field+'_given_name_x'+index).next('span.error').length == 0){
+    $('.ubiquity_'+field+'_given_name_x'+index).after('<span class="error">Please enter one of these fields.</span>');
+  }
 }
 
 function addOrganisationNameMandatory(field, index){
   $('.ubiquity_'+field+'_organization_name_x'+index).prop('required', true);
   $('.ubiquity_'+field+'_organization_name_x'+index).css('border-color', 'red');
+  if ($('.ubiquity_'+field+'_organization_name_x'+index).next('span.error').length == 0){
+    $('.ubiquity_'+field+'_organization_name_x'+index).after('<span class="error">Please enter the required field.</span>');
+  }
 }

@@ -1,27 +1,25 @@
-
-
 <script type="text/javascript">
 
     // add linked fields
 
     $(document).on("turbolinks:load", function(){
-        return $("body").on("click", ".add_contributor", function(event){
-            event.preventDefault();
-            var ubiquityContributorClass = $(this).attr('data-addUbiquityContributor');
-            cloneUbiDiv = $(this).parent('div' + ubiquityContributorClass + ':last').clone();
+      return $("body").on("click", ".add_contributor", function(event){
+        event.preventDefault();
+        var ubiquityContributorClass = $(this).attr('data-addUbiquityContributor');
+        cloneUbiDiv = $(this).parent('div' + ubiquityContributorClass + ':last').clone();
 
-            _this = this;
-             cloneUbiDiv.find('input').val('');
-             cloneUbiDiv.find('option').attr('selected', false);
-             //increment hidden_field counter after cloning
-             var lastInputCount = $('.ubiquity-contributor-score:last').val();
-             var hiddenInput = $(cloneUbiDiv).find('.ubiquity-contributor-score');
-             hiddenInput.val(parseInt(lastInputCount) + 1)
-            $(ubiquityContributorClass +  ':last').after(cloneUbiDiv);
-            $('.ubiquity_contributor_name_type:last').val('Personal').change();
-            removeDynamicallyAddedContributorClassNames();
-            applyValidatonRulesForField('contributor');
-        });
+        _this = this;
+        cloneUbiDiv.find('input').val('');
+        cloneUbiDiv.find('option').attr('selected', false);
+        //increment hidden_field counter after cloning
+        var lastInputCount = $('.ubiquity-contributor-score:last').val();
+        var hiddenInput = $(cloneUbiDiv).find('.ubiquity-contributor-score');
+        hiddenInput.val(parseInt(lastInputCount) + 1)
+        $(ubiquityContributorClass +  ':last').after(cloneUbiDiv);
+        $('.ubiquity_contributor_name_type:last').val('Personal').change();
+        removeDynamicallyAddedContributorClassNames();
+        applyValidationRulesForField('contributor');
+      });
     });
 
     function removeDynamicallyAddedContributorClassNames (){

@@ -6,7 +6,7 @@ $(document).on("turbolinks:load", function(){
     var spanFilterValue = $('.filter-human_readable_type_sim').find('span.filterValue');
     var spanFilterName = $('.filter-human_readable_type_sim').find('span.filterName');
     spanFilterValue.attr('title','Collections')
-    spanFilterName.html('')
+    spanFilterName.hide()
     spanFilterValue.html('Collections');
   }
 });

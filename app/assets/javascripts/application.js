@@ -23,7 +23,7 @@
 // Moved the Hyku JS *above* the Hyrax JS to resolve #1187 (following
 // a pattern found in ScholarSphere)
 //
-//= require ubiquity/search_page 
+//= require ubiquity/search_page
 //= require ubiquity/datatable-settings
 //= require hyku/groups/per_page
 //= require hyku/groups/add_member
@@ -33,6 +33,7 @@
 //= require ubiquity/external_services_modal
 //= require ubiquity/datacite
 //= require ubiquity/custom_required_fields
+//= require ubiquity/orcid_isni_validation
 //= require ubiquity/preselect_institution_by_tenant
 //= require ubiquity/title_check
 //= require jquery.flot.pie

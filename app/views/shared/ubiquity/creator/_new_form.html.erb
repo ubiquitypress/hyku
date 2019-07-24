@@ -7,13 +7,13 @@
       Creator name type</label>
 
     <%= select_tag "#{template}[creator_group][][creator_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s),
-     class: "ubiquity_creator_name_type"  %>
+     class: "ubiquity_creator_name_type", data: {field_name:'ubiquity_creator_name_type'}  %>
   <% else %>
     <label class="control-label multi_value optional" for="#{template}_creator_name_type">
       Creator name type <span class="label label-info required-tag">required</span></label>
 
     <%= select_tag "#{template}[creator_group][][creator_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s),
-        required: true, class: "ubiquity_creator_name_type"  %>
+        required: true, class: "ubiquity_creator_name_type", data: {field_name:'ubiquity_creator_name_type'}  %>
   <% end %>
 
   <p class="help-block">The person or group responsible for the work. Usually this is the author of the content.</p>
@@ -22,20 +22,23 @@
     Creator ISNI</label>
 
   <%= text_field_tag "#{template}[creator_group][][creator_isni]", nil,
-                     class: "#{template}_creator_group form-control multi-text-field multi_value",
+                     class: "#{template}_creator_group form-control multi-text-field multi_value ubiquity_creator_isni",
                      placeholder: 'Please enter the creator\'s ISNI, e.g. 0000 1234 5678 9101.',
-                     name: "#{template}[creator_group][][creator_isni]"
+                     name: "#{template}[creator_group][][creator_isni]",
+                     data: {field_name:'ubiquity_creator_isni'}
+
   %>
 
   <br/>
 
-  <label class="ubiquity_creator_organization_name control-label multi_value optional" for="generic_work_creator_organization_name">
+  <label class="control-label multi_value optional" for="generic_work_creator_organization_name">
     Creator organisation name</label>
 
   <%= text_field_tag  "#{template}[creator_group][][creator_organization_name]", nil,
-                      class: "ubiquity_creator_organization_name generic_work_creator_organization_name form-control multi-text-field multi_value",
+                      class: "generic_work_creator_organization_name form-control multi-text-field multi_value ubiquity_creator_organization_name",
                       placeholder: 'Please enter the organisation\'s name.',
-                      name: "#{template}[creator_group][][creator_organization_name]"
+                      name: "#{template}[creator_group][][creator_organization_name]",
+                      data: {field_name:'ubiquity_creator_organization_name'}
   %>
 
   <span class="ubiquity_personal_fields">
@@ -43,32 +46,35 @@
     <label class="control-label multi_value optional" for="#{template}_creator_orcid">
       Creator ORCID</label>
     <%= text_field_tag "#{template}[creator_group][][creator_orcid]", nil,
-                       class: "#{template}_creator_group creator_orcid form-control multi-text-field multi_value",
+                       class: "#{template}_creator_group creator_orcid form-control multi-text-field multi_value ubiquity_creator_orcid",
                        placeholder: 'Please enter the creator\'s ORCID, e.g. 0000-1234-5678-9101.',
-                       name: "#{template}[creator_group][][creator_orcid]"
+                       name: "#{template}[creator_group][][creator_orcid]",
+                       data: {field_name:'ubiquity_creator_orcid'}
     %>
     <br>
 
     <label class="control-label multi_value optional" for="#{template}_creator_family_name">
       Creator family name</label>
     <%= text_field_tag  "#{template}[creator_group][][creator_family_name]", nil,
-                        class: "#{template}_creator_family_name creator_family_name form-control multi-text-field multi_value",
+                        class: "#{template}_creator_family_name creator_family_name form-control multi-text-field multi_value ubiquity_creator_family_name",
                         placeholder: 'Please enter the creator\'s last name/family name.',
-                        name: "#{template}[creator_group][][creator_family_name]"
+                        name: "#{template}[creator_group][][creator_family_name]",
+                        data: {field_name:'ubiquity_creator_family_name'}
     %>
     <br>
 
     <label class="control-label multi_value optional" for="#{template}_creator_given_name">
       Creator given name</label>
     <%= text_field_tag  "#{template}[creator_group][][creator_given_name]", nil,
-                        class: "#{template}_creator_given_name creator_given_name form-control multi-text-field multi_value",
+                        class: "#{template}_creator_given_name creator_given_name form-control multi-text-field multi_value ubiquity_creator_given_name",
                         placeholder: 'Please enter the creator\'s first name/given name.',
-                        name: "#{template}[creator_group][][creator_given_name]"
+                        name: "#{template}[creator_group][][creator_given_name]",
+                        data: {field_name:'ubiquity_creator_given_name'}
     %>
 
     <br/>
     <p><label class="control-label multi_value optional" for="#{template}_creator_institutional_relationship">
-      Creator institutional relationship  </label></p>
+      Creator institutional relationship  </label></p> <span class='error'> </span>
     <%= select_tag "#{template}[creator_group][][creator_institutional_relationship][]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( ['Staff member', 'Research associate'], :to_s, :to_s),
        multiple: true, class: "form-control"  %>
 

@@ -3,23 +3,35 @@
     // add linked fields
 
     $(document).on("turbolinks:load", function(){
+      return $("body").on("click", ".add_creator", function(event){
+        event.preventDefault();
+        var ubiquityCreatorClass = $(this).attr('data-addUbiquityCreator');
+        cloneUbiDiv = $(this).parent('div' + ubiquityCreatorClass + ':last').clone();
 
-        return $("body").on("click", ".add_creator", function(event){
-            event.preventDefault();
-            var ubiquityCreatorClass = $(this).attr('data-addUbiquityCreator');
-            cloneUbiDiv = $(this).parent('div' + ubiquityCreatorClass + ':last').clone();
-
-           _this = this;
-            cloneUbiDiv.find('input').val('');
-            cloneUbiDiv.find('option').attr('selected', false);
-            //increment hidden_field counter after cloning
-            var lastInputCount = $('.ubiquity-creator-score:last').val();
-            var hiddenInput = $(cloneUbiDiv).find('.ubiquity-creator-score');
-            hiddenInput.val(parseInt(lastInputCount) + 1);
-            $(ubiquityCreatorClass +  ':last').after(cloneUbiDiv)
-            $('.ubiquity_creator_name_type:last').val('Personal').change()
-        });
+        _this = this;
+        cloneUbiDiv.find('input').val('');
+        cloneUbiDiv.find('option').attr('selected', false);
+        //increment hidden_field counter after cloning
+        var lastInputCount = $('.ubiquity-creator-score:last').val();
+        var hiddenInput = $(cloneUbiDiv).find('.ubiquity-creator-score');
+        hiddenInput.val(parseInt(lastInputCount) + 1);
+        $(ubiquityCreatorClass +  ':last').after(cloneUbiDiv)
+        $('.ubiquity_creator_name_type:last').val('Personal').change()
+        removeDynamicallyAddedCreatorClassNames();
+        applyValidationRulesForField('creator');
+      });
     });
+
+    function removeDynamicallyAddedCreatorClassNames (){
+      var creator_fields = ["ubiquity_creator_name_type", "ubiquity_creator_isni", "ubiquity_creator_organization_name", "ubiquity_creator_orcid",
+                            "ubiquity_creator_family_name", "ubiquity_creator_given_name"];
+      $.each(creator_fields, function(index, value){
+        removeClassStartingWith(value)
+      });
+      $.each(creator_fields, function(index, value){
+        appendIndexToEachClasses(value);
+      })
+    }
 
     //remove linked fields
     $(document).on("turbolinks:load", function(){

@@ -1,5 +1,9 @@
 <!--  Hyku::ManifestEnabledWorkShowPresenter -->
 <!-- This whole file was add ubiquitypress to selectively display universalviewer-->
+<% file_set_presenter = presenter.representative_presenter %><br>
+<% solr_document = presenter.representative_presenter.solr_document %><br>
+<% file_size = solr_document["file_size_lts"] %>
+
 <% if presenter.try(:representative_presenter).try(:image?) %>
   <% file_set_presenter = presenter.representative_presenter %>
   <!-- dont' displays universal viewer for files with archived format eg zip -->
@@ -13,5 +17,12 @@
     <div class="viewer-wrapper"><div class="uv viewer" data-uri="<%= main_app.polymorphic_path [main_app, :manifest, presenter] %>"></div></div>
   <% end %>
 <% else %>
+  <% if file_size < 10.gigabytes %>
     <%= media_display presenter.try(:representative_presenter) %>
-<% end %>
+  <%else%>
+    <div class="no-preview">
+      No preview available<br>
+      <%= load_file_from_file_set(file_set_presenter, file_size)%>
+    </div>
+  <%end%>
+<%end%>

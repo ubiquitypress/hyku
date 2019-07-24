@@ -1,140 +1,140 @@
 terms:
-    - id: https://creativecommons.org/licenses/by/4.0/
-      term: CC BY 4.0 Attribution
-      active: true
-    - id: https://creativecommons.org/licenses/by-nc/4.0/
-      term: CC BY-NC 4.0 Attribution-NonCommercial
-      active: true
-    - id: https://creativecommons.org/licenses/by-sa/4.0/
-      term: CC BY-SA 4.0 Attribution ShareAlike
-      active: true
-    - id: https://creativecommons.org/licenses/by-nd/4.0/
-      term: CC BY-ND 4.0 Attribution NoDerivs
-      active: true
-    - id: https://creativecommons.org/licenses/by-nc-sa/4.0/
-      term: CC BY-NC-SA 4.0 Attribution-NonCommercial-ShareAlike
-      active: true
-    - id: https://creativecommons.org/licenses/by-nc-nd/4.0/
-      term: CC BY-NC-ND 4.0 Attribution NonCommercial-NoDerivs
-      active: true
-    - id: https://creativecommons.org/publicdomain/mark/1.0/
-      term: CC0 Public Domain Mark 1.0
-      active: true
-    - id: http://creativecommons.org/publicdomain/mark/1.0/
-      term: CC0 Public Domain Mark 1.0
-      active: false
-    - id: http://creativecommons.org/publicdomain/zero/1.0/
-      term: CC0 1.0 Universal Public Domain
-      active: true
-    - id: https://opensource.org/licenses/MIT
-      term: MIT
-      active: true
-    - id: https://www.gnu.org/licenses/gpl-3.0.en.html
-      term: GNU General Public License v3.0
-      active: true
-    - id: https://www.apache.org/licenses/LICENSE-2.0
-      term: Apache License v2.0
-      active: true
-    - id: https://opendatacommons.org/licenses/odbl/1.0/
-      term: Open Database License (ODBL)
-      active: true
-    - id: https://www.mozilla.org/en-US/MPL/2.0/
-      term: Mozilla Public License (MPL)
-      active: true
-    - id: http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/
-      term: Open Government Licence (OGL)
-      active: true
+  - id: https://creativecommons.org/licenses/by/4.0/
+    term: CC BY 4.0 Attribution
+    active: true
+  - id: https://creativecommons.org/licenses/by-nc/4.0/
+    term: CC BY-NC 4.0 Attribution-NonCommercial
+    active: true
+  - id: https://creativecommons.org/licenses/by-sa/4.0/
+    term: CC BY-SA 4.0 Attribution ShareAlike
+    active: true
+  - id: https://creativecommons.org/licenses/by-nd/4.0/
+    term: CC BY-ND 4.0 Attribution NoDerivs
+    active: true
+  - id: https://creativecommons.org/licenses/by-nc-sa/4.0/
+    term: CC BY-NC-SA 4.0 Attribution-NonCommercial-ShareAlike
+    active: true
+  - id: https://creativecommons.org/licenses/by-nc-nd/4.0/
+    term: CC BY-NC-ND 4.0 Attribution NonCommercial-NoDerivs
+    active: true
+  - id: https://creativecommons.org/publicdomain/mark/1.0/
+    term: CC0 Public Domain Mark 1.0
+    active: true
+  - id: http://creativecommons.org/publicdomain/mark/1.0/
+    term: CC0 Public Domain Mark 1.0
+    active: false
+  - id: http://creativecommons.org/publicdomain/zero/1.0/
+    term: CC0 1.0 Universal Public Domain
+    active: true
+  - id: https://opensource.org/licenses/MIT
+    term: MIT
+    active: true
+  - id: https://www.gnu.org/licenses/gpl-3.0.en.html
+    term: GNU General Public License v3.0
+    active: true
+  - id: https://www.apache.org/licenses/LICENSE-2.0
+    term: Apache License v2.0
+    active: true
+  - id: https://opendatacommons.org/licenses/odbl/1.0/
+    term: Open Database License (ODBL)
+    active: true
+  - id: https://www.mozilla.org/en-US/MPL/2.0/
+    term: Mozilla Public License (MPL)
+    active: true
+  - id: http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/
+    term: Open Government Licence (OGL)
+    active: true
 #  Below options have to be kept as `active: false` (i.e. not to display/chose from)
 #  else any record already saved with one of them will throw an error
-    - id: http://creativecommons.org/licenses/by/3.0/us/
-      term: CC BY Attribution 3.0 United States
-      active: false
-    - id: http://creativecommons.org/licenses/by-sa/3.0/us/
-      term: CC BY-SA Attribution-ShareAlike 3.0 United States
-      active: false
-    - id: http://creativecommons.org/licenses/by-nc/3.0/us/
-      term: CC BY-NC Attribution-NonCommercial 3.0 United States
-      active: false
-    - id: http://creativecommons.org/licenses/by-nd/3.0/us/
-      term: CC BY-ND Attribution-NoDerivs 3.0 United States
-      active: false
-    - id: http://creativecommons.org/licenses/by-nc-nd/3.0/us/
-      term: CC BY-NC-ND Attribution-NonCommercial-NoDerivs 3.0 United States
-      active: false
-    - id: http://creativecommons.org/licenses/by-nc-sa/3.0/us/
-      term: CC BY-NC-SA Attribution-NonCommercial-ShareAlike 3.0 United States
-      active: false
-    - id: https://creativecommons.org/licenses/by/3.0/
-      term: CC BY Attribution 3.0 Unported
-      active: false
-    - id: https://creativecommons.org/licenses/by-sa/3.0/
-      term: CC BY-SA Attribution-ShareAlike 3.0 Unported
-      active: false
-    - id: https://creativecommons.org/licenses/by-nc/3.0/
-      term: CC BY-NC Attribution-NonCommercial 3.0 Unported
-      active: false
-    - id: https://creativecommons.org/licenses/by-nd/3.0/
-      term: CC BY-ND Attribution-NoDerivs 3.0 Unported
-      active: false
-    - id: https://creativecommons.org/licenses/by-nc-nd/3.0/
-      term: CC BY-NC-ND Attribution-NonCommercial-NoDerivs 3.0 Unported
-      active: false
-    - id: https://creativecommons.org/licenses/by-nc-sa/3.0/
-      term: CC BY-NC-SA Attribution-NonCommercial-ShareAlike 3.0 Unported
-      active: false
-    - id: https://creativecommons.org/licenses/by/2.0/
-      term: CC BY Attribution 2.0 Generic
-      active: false
-    - id: https://creativecommons.org/licenses/by-sa/2.0/
-      term: CC BY-SA Attribution-ShareAlike 2.0 Generic
-      active: false
-    - id: https://creativecommons.org/licenses/by-nc/2.0/
-      term: CC BY-NC Attribution-NonCommercial 2.0 Generic
-      active: false
-    - id: https://creativecommons.org/licenses/by-nd/2.0/
-      term: CC BY-ND Attribution-NoDerivs 2.0 Generic
-      active: false
-    - id: https://creativecommons.org/licenses/by-nc-nd/2.0/
-      term: CC BY-NC-ND Attribution-NonCommercial-NoDerivs 2.0 Generic
-      active: false
-    - id: https://creativecommons.org/licenses/by-nc-sa/2.0/
-      term: CC BY-NC-SA Attribution-NonCommercial-ShareAlike 2.0 Generic
-      active: false
-    - id: https://creativecommons.org/licenses/by/1.0/
-      term: CC BY Attribution 1.0 Generic
-      active: false
-    - id: https://creativecommons.org/licenses/by-sa/1.0/
-      term: CC BY-SA Attribution-ShareAlike 1.0 Generic
-      active: false
-    - id: https://creativecommons.org/licenses/by-nc/1.0/
-      term: CC BY-NC Attribution-NonCommercial 1.0 Generic
-      active: false
-    - id: https://creativecommons.org/licenses/by-nd/1.0/
-      term: CC BY-ND Attribution-NoDerivs 1.0 Generic
-      active: false
-    - id: https://creativecommons.org/licenses/by-nc-nd/1.0/
-      term: CC BY-NC-ND Attribution-NonCommercial-NoDerivs 1.0 Generic
-      active: false
-    - id: https://creativecommons.org/licenses/by-nc-sa/1.0/
-      term: CC BY-NC-SA Attribution-NonCommercial-ShareAlike 1.0 Generic
-      active: false
-    - id: https://www.gnu.org/licenses/old-licenses/gpl-1.0.html
-      term: GNU General Public License v1.0
-      active: false
-    - id: https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
-      term: GNU General Public License v2.0
-      active: false
-    - id: http://www.nationalarchives.gov.uk/doc/open-government-licence/version/1/
-      term: Open Government Licence (OGL) v1.0
-      active: false
-    - id: http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/
-      term: Open Government Licence (OGL) v2.0
-      active: false
-    - id: http://www.europeana.eu/portal/rights/rr-r.html
-      term: All rights reserved
-      active: false
+  - id: http://creativecommons.org/licenses/by/3.0/us/
+    term: CC BY Attribution 3.0 United States
+    active: false
+  - id: http://creativecommons.org/licenses/by-sa/3.0/us/
+    term: CC BY-SA Attribution-ShareAlike 3.0 United States
+    active: false
+  - id: http://creativecommons.org/licenses/by-nc/3.0/us/
+    term: CC BY-NC Attribution-NonCommercial 3.0 United States
+    active: false
+  - id: http://creativecommons.org/licenses/by-nd/3.0/us/
+    term: CC BY-ND Attribution-NoDerivs 3.0 United States
+    active: false
+  - id: http://creativecommons.org/licenses/by-nc-nd/3.0/us/
+    term: CC BY-NC-ND Attribution-NonCommercial-NoDerivs 3.0 United States
+    active: false
+  - id: http://creativecommons.org/licenses/by-nc-sa/3.0/us/
+    term: CC BY-NC-SA Attribution-NonCommercial-ShareAlike 3.0 United States
+    active: false
+  - id: https://creativecommons.org/licenses/by/3.0/
+    term: CC BY Attribution 3.0 Unported
+    active: false
+  - id: https://creativecommons.org/licenses/by-sa/3.0/
+    term: CC BY-SA Attribution-ShareAlike 3.0 Unported
+    active: false
+  - id: https://creativecommons.org/licenses/by-nc/3.0/
+    term: CC BY-NC Attribution-NonCommercial 3.0 Unported
+    active: false
+  - id: https://creativecommons.org/licenses/by-nd/3.0/
+    term: CC BY-ND Attribution-NoDerivs 3.0 Unported
+    active: false
+  - id: https://creativecommons.org/licenses/by-nc-nd/3.0/
+    term: CC BY-NC-ND Attribution-NonCommercial-NoDerivs 3.0 Unported
+    active: false
+  - id: https://creativecommons.org/licenses/by-nc-sa/3.0/
+    term: CC BY-NC-SA Attribution-NonCommercial-ShareAlike 3.0 Unported
+    active: false
+  - id: https://creativecommons.org/licenses/by/2.0/
+    term: CC BY Attribution 2.0 Generic
+    active: false
+  - id: https://creativecommons.org/licenses/by-sa/2.0/
+    term: CC BY-SA Attribution-ShareAlike 2.0 Generic
+    active: false
+  - id: https://creativecommons.org/licenses/by-nc/2.0/
+    term: CC BY-NC Attribution-NonCommercial 2.0 Generic
+    active: false
+  - id: https://creativecommons.org/licenses/by-nd/2.0/
+    term: CC BY-ND Attribution-NoDerivs 2.0 Generic
+    active: false
+  - id: https://creativecommons.org/licenses/by-nc-nd/2.0/
+    term: CC BY-NC-ND Attribution-NonCommercial-NoDerivs 2.0 Generic
+    active: false
+  - id: https://creativecommons.org/licenses/by-nc-sa/2.0/
+    term: CC BY-NC-SA Attribution-NonCommercial-ShareAlike 2.0 Generic
+    active: false
+  - id: https://creativecommons.org/licenses/by/1.0/
+    term: CC BY Attribution 1.0 Generic
+    active: false
+  - id: https://creativecommons.org/licenses/by-sa/1.0/
+    term: CC BY-SA Attribution-ShareAlike 1.0 Generic
+    active: false
+  - id: https://creativecommons.org/licenses/by-nc/1.0/
+    term: CC BY-NC Attribution-NonCommercial 1.0 Generic
+    active: false
+  - id: https://creativecommons.org/licenses/by-nd/1.0/
+    term: CC BY-ND Attribution-NoDerivs 1.0 Generic
+    active: false
+  - id: https://creativecommons.org/licenses/by-nc-nd/1.0/
+    term: CC BY-NC-ND Attribution-NonCommercial-NoDerivs 1.0 Generic
+    active: false
+  - id: https://creativecommons.org/licenses/by-nc-sa/1.0/
+    term: CC BY-NC-SA Attribution-NonCommercial-ShareAlike 1.0 Generic
+    active: false
+  - id: https://www.gnu.org/licenses/old-licenses/gpl-1.0.html
+    term: GNU General Public License v1.0
+    active: false
+  - id: https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
+    term: GNU General Public License v2.0
+    active: false
+  - id: http://www.nationalarchives.gov.uk/doc/open-government-licence/version/1/
+    term: Open Government Licence (OGL) v1.0
+    active: false
+  - id: http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/
+    term: Open Government Licence (OGL) v2.0
+    active: false
+  - id: http://www.europeana.eu/portal/rights/rr-r.html
+    term: All rights reserved
+    active: false
 #   Below was broken link but has to be kept (as `false`) to avoid `key not found: "term"` error
 #   It can be removed when no record references it anymore
-    - id: https://creativecommons.org/licenses/by/4.0/4
-      term: (CC BY 4.0 Attribution) broken link - please edit to re-select working "CC BY 4.0 Attribution" from drop-down list
-      active: false
+  - id: https://creativecommons.org/licenses/by/4.0/4
+    term: (CC BY 4.0 Attribution) broken link - please edit to re-select working "CC BY 4.0 Attribution" from drop-down list
+    active: false

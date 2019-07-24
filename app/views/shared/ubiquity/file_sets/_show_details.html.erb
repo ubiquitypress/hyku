@@ -1,0 +1,28 @@
+<!-- rendered from app/views/hyrax/file_sets/_show_details.html.erb -->
+<!-- Copied from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/file_sets/_show_details.html.erb -->
+<h2>File Details</h2>
+<dl class="dl-horizontal file-show-term file-show-details">
+  <dt>Depositor</dt>
+  <dd itemprop="accountablePerson" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><%= link_to_profile @presenter.depositor %></span></dd>
+  <dt>Date Uploaded</dt>
+  <dd itemprop="datePublished"><%= @presenter.date_uploaded %></dd>
+  <dt>Date Modified</dt>
+  <dd itemprop="dateModified"><%= @presenter.date_modified %></dd>
+  <dt>Fixity Check</dt>
+  <dd><%= @presenter.fixity_check_status %></dd>
+  <dt>Characterization</dt>
+  <dd>
+    <% if @presenter.characterized? %>
+      <%= render 'show_characterization_details' %>
+    <% else %>
+      not yet characterized
+    <% end %>
+  </dd>
+  <dt>File Licence</dt>
+  <dd>
+    <% master_license_hash = fetch_license_hash %>
+      <% @presenter.license.each do |license_links| %>
+        <%= link_to master_license_hash[license_links], license_links %><br>
+      <% end %>
+  </dd>
+</dl>

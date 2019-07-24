@@ -105,6 +105,17 @@ module Ubiquity
       end
     end
 
+    #This method is called in app/views/shared/ubiquity/file_sets/_show_details.html.erb and /home/antonio/hyku/hyku/app/views/shared/ubiquity/works/_member.html.erb
+    #to fetch create a hash of license and its terms to be loaded in the file details view and the member view
+    def fetch_license_hash
+      master_hash = {}
+      license_hash = YAML.load_file('config/authorities/licenses.yml')
+      license_hash["terms"].each do |ele|
+        master_hash[ele["id"]] = ele["term"]
+      end
+      master_hash
+    end
+
     private
 
       def get_file_size_in_bytes(id)

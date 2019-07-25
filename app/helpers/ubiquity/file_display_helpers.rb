@@ -116,6 +116,15 @@ module Ubiquity
       master_hash
     end
 
+    #this method is used in app/views/shared/ubiquity/file_sets/_restricted_media.html.erb to render the filesize in GB in the message value
+    #for the contac form when clicking the link contact us link from the top of the page
+    def return_file_size_in_gb(file_size)
+      file_size_in_mb = file_size/(1000 * 1000)
+      file_size_in_gb = (file_size_in_mb/1000)
+      download_size = file_size_in_gb.round(2)
+      download_size
+    end
+
     private
 
       def get_file_size_in_bytes(id)

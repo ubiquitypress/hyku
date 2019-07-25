@@ -17,12 +17,16 @@
     <div class="viewer-wrapper"><div class="uv viewer" data-uri="<%= main_app.polymorphic_path [main_app, :manifest, presenter] %>"></div></div>
   <% end %>
 <% else %>
-  <% if file_size < 10.gigabytes %>
-    <%= media_display presenter.try(:representative_presenter) %>
-  <%else%>
-    <div class="no-preview">
-      No preview available<br>
-      <%= load_file_from_file_set(file_set_presenter, file_size)%>
-    </div>
+  <% if file_size.present? %>
+    <% if file_size < ENV["FILE_SIZE_LIMIT"].to_i %>
+      <%= media_display presenter.try(:representative_presenter) %>
+    <%else%>
+      <div class="no-preview">
+        No preview available<br>
+        <% download_size = return_file_size_in_gb(file_size) %>
+        <% message_value = "I would like to access the very large data file (file size #{download_size} GB) held at #{manual_download_path(file_set_presenter.id)}" %>
+        <%= link_to('Contact us for download', hyrax.contact_form_index_path(message_value: message_value)) %>
+      </div>
+    <%end%>
   <%end%>
 <%end%>

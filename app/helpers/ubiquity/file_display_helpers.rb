@@ -49,12 +49,9 @@ module Ubiquity
           load_file_from_file_set(file_set_presenter, file_size_bytes)
         else
           if file_size_bytes < ENV["FILE_SIZE_LIMIT"].to_i
-            puts"MILANO#{file_size_bytes}"
             @file_set_s3_object ||= trigger_api_call_for_s3_url uuid
-            puts"NAPOLI#{@file_set_s3_object}"
             if @file_set_s3_object.file_url_hash[file_set_presenter.id].present?
               status = @file_set_s3_object.file_status_hash[file_set_presenter.id]
-              puts"DRIVE#{@file_set_s3_object}"
               if status == "UPLOAD_COMPLETED"
                 # link_to 'Download', @file_set_s3_object.file_url_hash[file_set_presenter.id].to_s
                 link_to 'Download', main_app.fail_uploads_download_file_path(uuid: uuid, fileset_id: file_set_presenter.id), method: 'post'

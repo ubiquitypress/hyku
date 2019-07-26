@@ -3,8 +3,10 @@
 // this code changes Collection to Collections so we get "Human readable type sim > Collections"
 $(document).on("turbolinks:load", function(){
   if($(".filter-human_readable_type_sim").is(':visible')){
-    var span = $('.filter-human_readable_type_sim').find('span.filterValue');
-    span.attr('title','Collections')
-    return span.html('Collections');
+    var spanFilterValue = $('.filter-human_readable_type_sim').find('span.filterValue');
+    var spanFilterName = $('.filter-human_readable_type_sim').find('span.filterName');
+    spanFilterValue.attr('title','Collections');
+    spanFilterName.hide();
+    spanFilterValue.html('Collections');
   }
 });

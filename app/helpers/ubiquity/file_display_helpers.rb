@@ -49,9 +49,12 @@ module Ubiquity
           load_file_from_file_set(file_set_presenter, file_size_bytes)
         else
           if file_size_bytes < ENV["FILE_SIZE_LIMIT"].to_i
+            puts"MILANO#{file_size_bytes}"
             @file_set_s3_object ||= trigger_api_call_for_s3_url uuid
+            puts"NAPOLI#{@file_set_s3_object}"
             if @file_set_s3_object.file_url_hash[file_set_presenter.id].present?
               status = @file_set_s3_object.file_status_hash[file_set_presenter.id]
+              puts"DRIVE#{@file_set_s3_object}"
               if status == "UPLOAD_COMPLETED"
                 # link_to 'Download', @file_set_s3_object.file_url_hash[file_set_presenter.id].to_s
                 link_to 'Download', main_app.fail_uploads_download_file_path(uuid: uuid, fileset_id: file_set_presenter.id), method: 'post'
@@ -150,9 +153,9 @@ module Ubiquity
         #  download_size,   file_path  are passed to message_value for display in contact form
         download_size = file_size_in_gb.round(2)
         file_path = manual_download_path(file_set_presenter.id)
-        return link_to('Download', hyrax.download_path(file_set_presenter), title: "Download #{file_set_presenter}", target: "_blank") if file_size_in_gb < ENV["FILE_SIZE_LIMIT"].to_f
+        return link_to('Download', hyrax.download_path(file_set_presenter), title: "Download #{file_set_presenter}", target: "_blank") if file_size_bytes < ENV["FILE_SIZE_LIMIT"].to_f
         message_value = "I would like to access the very large data file (file size #{download_size} GB) held at #{file_path}"
-        return link_to('Contact us for download', hyrax.contact_form_index_path(message_value: message_value)) if file_size_in_gb > ENV["FILE_SIZE_LIMIT"].to_f
+        return link_to('Contact us for download', hyrax.contact_form_index_path(message_value: message_value)) if file_size_bytes > ENV["FILE_SIZE_LIMIT"].to_f
       end
 
       def manual_download_path(id)

@@ -2,7 +2,7 @@
 <!-- This whole file was add ubiquitypress to selectively display universalviewer-->
 <% file_set_presenter = presenter.representative_presenter %><br>
 <% solr_document = presenter.representative_presenter.solr_document %><br>
-<% file_size = solr_document["file_size_lts"] %>
+<% file_size = solr_document["file_size_lts"].round(2) %>
 
 <% if presenter.try(:representative_presenter).try(:image?) %>
   <% file_set_presenter = presenter.representative_presenter %>
@@ -23,9 +23,7 @@
     <%else%>
       <div class="no-preview">
         No preview available<br>
-        <% download_size = return_file_size_in_gb(file_size) %>
-        <% message_value = "I would like to access the very large data file (file size #{download_size} GB) held at #{manual_download_path(file_set_presenter.id)}" %>
-        <%= link_to('Contact us for download', hyrax.contact_form_index_path(message_value: message_value)) %>
+        <%= load_file_from_file_set(file_set_presenter, file_size)%>
       </div>
     <%end%>
   <%end%>

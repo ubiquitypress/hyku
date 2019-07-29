@@ -56,6 +56,8 @@ module Ubiquity
     def merged_headers(csv_data_object)
       sorted_header = []
       all_keys = csv_data_object.flat_map(&:keys).uniq
+      #resort using ordering by suffix eg creator_isni_1 comes before creator_isni_2
+      all_keys = all_keys.sort_by{ |name| [name[/\d+/].to_i, name] }
       Ubiquity::CsvDataRemap::CSV_HEARDERS_ORDER.each {|k| all_keys.select {|e| sorted_header << e if e.start_with? k} }
       sorted_header.uniq
     end

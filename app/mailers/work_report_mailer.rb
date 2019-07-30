@@ -3,13 +3,13 @@ class WorkReportMailer < ApplicationMailer
 
   def send_report(email, current_cname, email_type)
     @cname = current_cname
-    @subject_content = fetch_subject_based_on(email_type)
+    @period = fetch_subject_based_on(email_type)
     @email_type = email_type
     date_period = fetch_date_by(email_type)
     @data = fetch_data(date_period)
     @summary_data = fetch_data('[* TO *]')
     @resource_type_hash = load_resource_type_yaml
-    mail(to: email, subject: @subject_content)
+    mail(to: email, subject: "Activity report for #{@cname} for #{@period}")
   end
 
   private
@@ -23,18 +23,16 @@ class WorkReportMailer < ApplicationMailer
           rows: 100_000_000
         }
       )
-      sorted_array = query_data.group_by { |e| e["human_readable_type_tesim"] }.sort.to_h.values.flatten
+      sorted_array = query_data.sort_by{|e| [e["human_readable_type_tesim"], e['resource_type_tesim']] }.group_by { |e| e["human_readable_type_tesim"] }.to_h.values.flatten
       generate_weekly_report(sorted_array)
     end
 
     def generate_weekly_report(sorted_array)
       final_hash = {}
       sorted_array.group_by { |e| e['resource_type_tesim'] }.each do |key, value|
-        work_with_file_count = 0
-        work_without_file_count = 0
+        work_with_file_count, work_without_file_count = 0, 0
         public_records, private_records, embargo, lease = 0,0,0,0
-        institute_records = 0
-        new_files_added = 0
+        institute_records, new_files_added = 0, 0
         sample_hash = {}
         value.each do |record_hash|
           sample_hash[:work_type] = record_hash['human_readable_type_tesim'].first
@@ -85,13 +83,11 @@ class WorkReportMailer < ApplicationMailer
     def fetch_subject_based_on(email_type)
       case email_type
       when 'weekly_email_list'
-        "Activity report for #{@cname} for #{Date.today - 7.days} to #{Date.today}"
+        "#{Date.today - 7.days} to #{Date.today}"
       when 'monthly_email_list'
-        "Activity report for #{@cname} for #{Date.today - 1.month} to #{Date.today}"
+        "#{Date.today - 1.month} to #{Date.today}"
       when 'yearly_email_list'
-        "Activity report for #{@cname} for #{Date.today - 1.year} to #{Date.today}"
+        "#{Date.today - 1.year} to #{Date.today}"
       end
     end
-
-
 end

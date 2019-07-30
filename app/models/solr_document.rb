@@ -81,12 +81,12 @@ class SolrDocument
     subject: 'keyword_tesim',
     description: 'abstract_tesim',
     publisher: 'publisher_tesim',
-    contributor: ['contributor_list_tesim', 'editor_list_tesim'],
+    contributor: ['contributor_list_tesim', 'editor_list_tesim', 'funder_tesim'],
     date: 'date_published_tesim',
-    identifier: 'identifier_tesim',
+    identifier: ['official_link_tesim', 'doi_tesim', 'all_orcid_isni_tesim'],
     language: 'language_tesim',
-    relation: 'nesting_collection__pathnames_ssim',
-    rights: 'rights_statement_tesim',
+    relation: 'journal_title_tesim',
+    rights: 'license_tesim',
     type: 'human_readable_type_tesim'
   )
 end

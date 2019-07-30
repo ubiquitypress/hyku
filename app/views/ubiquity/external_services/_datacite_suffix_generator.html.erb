@@ -1,6 +1,6 @@
 <% template = f.object.model.class.to_s.underscore %>
 
- <%= button_to "Create and save draft DOI", main_app.external_services_generate_doi_path, data: {'tenant-name' => current_account.cname, 'model-name' => template },
+ <%= button_to "Create and save draft DOI", main_app.external_services_generate_doi_path, data: {'tenant-name' => current_account.cname },
  id: "ubiquity-datacite-draft_doi", class: "btn btn-primary" %>
 
 
@@ -11,11 +11,10 @@
       $("#ubiquity-datacite-draft_doi").hide()
       event.preventDefault();
       var tenantName = $(this).attr('data-tenant-name');
-      var modelName = $(this).attr('data-model-name');
       $.ajax({
         url: '/external_services/generate_doi',
         type: "POST",
-        data: { external_service: {tenant_name: tenantName, work_model_name: modelName} },
+        data: { external_service: {tenant_name: tenantName} },
         success: function(result){
         $(".ubiquity-draft-doi").val(result.draft_doi);
         $("#draft_doi").html(result.draft_doi);

@@ -1,16 +1,16 @@
-<table border='1' cellspacing='0'>
+<table border='1' cellspacing='1'>
   <thead>
     <tr>
       <th>Work Type</th>
       <th>Resource Type</th>
       <th>Without Files</th>
       <th>With Files</th>
-      <th>New Files</th>
+      <th>Files</th>
       <th>Public</th>
+      <th>Institution</th>
       <th>Private</th>
       <th>Embargo</th>
       <th>Lease</th>
-      <th>Institution</th>
     </tr>
   </thead>
   <tbody>
@@ -39,22 +39,22 @@
         <td align='center'><%= value[:work_with_file_count] %></td>
         <td align='center'><%= value[:new_files_added] %></td>
         <td align='center'><%= value[:public_records] %></td>
+        <td align='center'><%= value[:institute_records] %></td>
         <td align='center'><%= value[:private_records] %></td>
         <td align='center'><%= value[:embargo] %></td>
         <td align='center'><%= value[:lease] %></td>
-        <td align='center'><%= value[:institute_records] %></td>
       </tr>
     <%end%>
     <tr>
-      <td colspan=2 align="right"> Total : </td>
+      <td colspan=2 align="right"> Total: </td>
       <td align='center'><%= total_n_works_without_files %></td>
       <td align='center' ><%= total_n_works_with_files %></td>
       <td align='center'><%= total_files %></td>
       <td align='center'><%= total_public %></td>
+      <td align='center'><%= total_institute %></td>
       <td align='center'><%= total_private %></td>
       <td align='center'><%= total_embargo %></td>
       <td align='center'><%= total_lease %></td>
-      <td align='center'><%= total_institute %></td>
     </tr>
   </tbody>
 </table>

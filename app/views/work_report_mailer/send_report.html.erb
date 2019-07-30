@@ -1,9 +1,9 @@
 <p>
-  Please find your monthly report based on <%= @cname%> from the period of <%= display_email_type_message(@email_type)%>.
+  <%= @subject_content %>
 </p>
 
-<h4>Newly Added Records </h4>
+<h4>Works Added in Reporting Period </h4>
 <%= render 'table_data', report_data: @data %>
 <br>
-<h4>Total Works in Repository to date</h4>
+<h4>Works Currently in Repository </h4>
 <%= render 'table_data', report_data: @summary_data %>

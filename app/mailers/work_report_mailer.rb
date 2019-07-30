@@ -3,12 +3,13 @@ class WorkReportMailer < ApplicationMailer
 
   def send_report(email, current_cname, email_type)
     @cname = current_cname
+    @subject_content = fetch_subject_based_on(email_type)
     @email_type = email_type
     date_period = fetch_date_by(email_type)
     @data = fetch_data(date_period)
     @summary_data = fetch_data('[* TO *]')
     @resource_type_hash = load_resource_type_yaml
-    mail(to: email, subject: email_type)
+    mail(to: email, subject: @subject_content)
   end
 
   private
@@ -80,5 +81,17 @@ class WorkReportMailer < ApplicationMailer
         '[* TO *]'
       end
     end
+
+    def fetch_subject_based_on(email_type)
+      case email_type
+      when 'weekly_email_list'
+        "Activity report for #{@cname} for #{Date.today - 7.days} to #{Date.today}"
+      when 'monthly_email_list'
+        "Activity report for #{@cname} for #{Date.today - 1.month} to #{Date.today}"
+      when 'yearly_email_list'
+        "Activity report for #{@cname} for #{Date.today - 1.year} to #{Date.today}"
+      end
+    end
+
 
 end

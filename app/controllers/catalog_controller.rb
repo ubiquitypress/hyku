@@ -433,11 +433,10 @@ class CatalogController < ApplicationController
     # config.add_sort_field "#{uploaded_field} asc", label: "date uploaded \u25B2"
     #config.add_sort_field "#{modified_field} desc", label: "date modified \u25BC"
     #config.add_sort_field "#{modified_field} asc", label: "date modified \u25B2"
-
     config.oai = {
       provider: {
         repository_name: Settings.oai.name,
-        repository_url: Settings.oai.url,
+        repository_url: CurrentScope.user_tenant_cname
       },
       document: {
         limit: 25, # number of records returned with each request, default: 15

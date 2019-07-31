@@ -18,26 +18,36 @@ module Ubiquity
       AccountElevator.switch!(tenant_name)
       ExternalService.create!(draft_doi: full_doi, api_type: 'datacite_indexer')
       rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid => e
-         puts "ExternalService creation failed with  #{e.inspect}"
-         @failed_attempts = nil
-         @failed_attempts = @failed_attempts.to_i + 1
-        retry if @failed_attempts < MAX_RETRIES
+      puts "ExternalService creation failed with  #{e.inspect}"
+      @failed_attempts = nil
+      @failed_attempts = @failed_attempts.to_i + 1
+      retry if @failed_attempts < MAX_RETRIES
+    end
+
+    def fetch_tenant_url
+      if @tenant_name.present?
+        if @tenant_name.split('.').include? 'localhost'
+          "http://#{@tenant_name}:3000"
+        else
+          "https://#{@tenant_name}"
+        end
       end
+    end
+
 
     private
-    def latest_suffix
-      last_record = fetch_last_record
-      if last_record.class == ExternalService
-        last_record.draft_doi.split('/').last.to_i
-      else
-        last_record
+      def latest_suffix
+        last_record = fetch_last_record
+        if last_record.class == ExternalService
+          last_record.draft_doi.split('/').last.to_i
+        else
+          last_record
+        end
       end
-    end
 
-    def fetch_last_record
-      AccountElevator.switch!(tenant_name)
-      ExternalService.where("draft_doi IS NOT NULL").last || 0
-    end
-
+      def fetch_last_record
+        AccountElevator.switch!(tenant_name)
+        ExternalService.where("draft_doi IS NOT NULL").last || 0
+      end
   end
 end

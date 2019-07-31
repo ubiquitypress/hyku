@@ -58,6 +58,8 @@ class ApplicationController < ActionController::Base
     def current_account
       @current_account ||= Account.from_request(request)
       @current_account ||= Account.single_tenant_default
+      CurrentScope.user_tenant_cname = @current_account.cname
+      @current_account
     end
 
     # Add context information to the lograge entries

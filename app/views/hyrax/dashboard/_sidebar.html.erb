@@ -77,6 +77,11 @@
       <span class="fa fa-download"></span> <span class="sidebar-action-text"><%= t('hyrax.admin.sidebar.export') %></span>
     <% end %>
 
+    <%= menu.nav_link(importer_link_based_on_environment) do %>
+      <span class="fa fa-upload"></span> <span class="sidebar-action-text"><%= t('hyrax.admin.sidebar.import') %></span>
+      <span class="fa fa-external-link"></span>
+    <% end %>
+
     <%= menu.nav_link(hyrax.embargoes_path) do %>
       <span class="fa fa-tasks"></span> <span class="sidebar-action-text"><%= t('hyrax.admin.sidebar.embargoes') %></span>
     <% end %>

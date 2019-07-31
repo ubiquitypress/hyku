@@ -7,6 +7,7 @@ class SharedIndexer < Hyrax::WorkIndexer
       solr_doc[Solrizer.solr_name('contributor_list', :stored_searchable)] = Ubiquity::ParseJson.new(object.contributor.first).fetch_value_based_on_key('contributor')
       solr_doc['date_published_si'] = Ubiquity::ParseDate.return_date_part(object.date_published, 'year')
       solr_doc[Solrizer.solr_name('all_orcid_isni', :stored_searchable)] = Ubiquity::FetchAllOrcidIsni.new(object).fetch_data
+      solr_doc[Solrizer.solr_name('tenant_cname', :stored_searchable)] = Ubiquity::DoiService.new(CurrentScope.user_tenant_cname, '').fetch_tenant_url
     end
   end
 end

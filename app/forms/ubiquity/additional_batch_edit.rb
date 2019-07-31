@@ -4,9 +4,9 @@
     #to do :version, not to be added until investigation is done as to why it is throwing an error
     module AdditionalBatchEdit
 
-      new_terms = [:institution]
+      new_terms = [:institution, :date_published, :place_of_publication, :issn, :eissn, :isbn]
      Hyrax::Forms::BatchEditForm.terms += new_terms
-      Hyrax::Forms::BatchEditForm.terms -= [:creator, :contributor]
+      Hyrax::Forms::BatchEditForm.terms -= [:creator, :contributor, :subject, :identifier, :location, :date_created]
 
 #   # override this method if you need to initialize more complex RDF assertions (b-nodes)
 #    # @return [Hash<String, Array>] the list of unique values per field
@@ -54,4 +54,3 @@
 #    end
 #
 #  end
-

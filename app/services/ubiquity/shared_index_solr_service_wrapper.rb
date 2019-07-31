@@ -1,9 +1,9 @@
 module Ubiquity
   class SharedIndexSolrServiceWrapper
-    attr_accessor :solr_document, :action_type, :tenant_cname, :file_sets
+    attr_accessor :data, :action_type, :tenant_cname, :file_sets
 
-    def initialize(solr_document, action_type, tenant_cname, file_sets = nil)
-      @solr_document = solr_document
+    def initialize(data, action_type, tenant_cname, file_sets = nil)
+      @data = data
       @action_type = action_type
       @file_sets = file_sets
       @tenant_cname = tenant_cname
@@ -19,16 +19,12 @@ module Ubiquity
       end
     end
 
-    def self.deindex_work(solr_document, parent_cname)
-      new(solr_document, 'remove', parent_cname).update
-    end
-
     private
 
     def add_record
       service = ActiveFedora::SolrService
       #softCommit first commits to memory then to disk
-      service.add(solr_document, softCommit: true)
+      service.add(data, softCommit: true)
       service.commit
     end
 
@@ -44,15 +40,22 @@ module Ubiquity
     end
 
     def remove_record
-      #get rsolr connection
+      puts "executing add_record method in Ubiquity:: SharedIndexSolrServiceWrapper with  - #{data.inspect}"
+      AccountElevator.switch!(tenant_cname)
       service = ActiveFedora::SolrService.instance.conn
-
-      if solr_document.class == Hash
-        service.delete_by_id(solr_document[:id])
-      else
-        ids = solr_document.map { |hash| hash[:id] }
+      if data.class == Hash
+        puts "hash data for removal #{data.inspect}"
+        #solr_conn.delete_by_id(data['id'])
+        service.delete_by_id(data.with_indifferent_access['id'])
+      elsif data.class == Array
+        puts "array of data for removal from shared-search #{data.inspect}"
+        #ids = data.map { |hash| hash.with_indifferent_access['id'] }
+        ids = data.map { |id| id if id.class == String}.compact
         #an rsolr method
-        service.delete_by_id(ids)
+         service.delete_by_id(ids)
+      else
+        puts "string id for removal from shared-search #{data.inspect}"
+        service.delete_by_id(data)
       end
       service.commit
     end

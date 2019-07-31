@@ -7,7 +7,7 @@
     Editor name type</label>
 
   <%= select_tag "#{template}[editor_group][][editor_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, "Personal"),
-   class:  'ubiquity_editor_name_type' %>
+   class:  'ubiquity_editor_name_type', data: {field_name:'ubiquity_editor_name_type'} %>
 
   <p class="help-block">The editors that produced this item, in priority order. To add multiple editors, repeat this property.</p>
 
@@ -15,18 +15,20 @@
     Editor ISNI</label>
 
   <%= text_field_tag "#{template}[editor_group][][editor_isni]", nil,
-                     class: "#{template}_editor_group form-control multi-text-field multi_value",
+                     class: "#{template}_editor_group form-control multi-text-field multi_value ubiquity_editor_isni",
                      placeholder: 'Please enter the editor\'s ISNI, e.g. 0000 1234 5678 9101.',
-                     name: "#{template}[editor_group][][editor_isni]"
+                     name: "#{template}[editor_group][][editor_isni]",
+                     data: {field_name:'ubiquity_editor_isni'}
   %>
   <br/>
-  <label class="ubiquity_editor_organization_name control-label multi_value optional" for="#{template}_editor_organization_name">
+  <label class="control-label multi_value optional" for="#{template}_editor_organization_name">
     Editor organisation name</label>
 
   <%= text_field_tag  "#{template}[editor_group][][editor_organization_name]", nil,
-                      class: "ubiquity_editor_organization_name #{template}_editor_organization_name form-control multi-text-field multi_value",
+                      class: "#{template}_editor_organization_name form-control multi-text-field multi_value ubiquity_editor_organization_name",
                       placeholder: 'Please enter the organisation\'s name.',
-                      name: "#{template}[editor_group][][editor_organization_name]"
+                      name: "#{template}[editor_group][][editor_organization_name]",
+                      data: {field_name:'ubiquity_editor_organization_name'}
   %>
 
   <span class="ubiquity_personal_fields">
@@ -34,27 +36,30 @@
     <label class="control-label multi_value optional" for="#{template}_editor_orcid">
       Editor ORCID</label>
     <%= text_field_tag "#{template}[editor_group][][editor_orcid]", nil,
-                       class: "#{template}_editor_group form-control multi-text-field multi_value",
+                       class: "#{template}_editor_group form-control multi-text-field multi_value ubiquity_editor_orcid",
                        placeholder: 'Please enter the editor\'s ORCID, e.g. 0000-1234-5678-9101.',
-                       name: "#{template}[editor_group][][editor_orcid]"
+                       name: "#{template}[editor_group][][editor_orcid]",
+                       data: {field_name:'ubiquity_editor_orcid'}
     %>
     <br/>
 
     <label class="control-label multi_value optional" for="#{template}_editor_family_name">
       Editor family name</label>
     <%= text_field_tag  "#{template}[editor_group][][editor_family_name]", nil,
-                        class: "#{template}_editor_family_name form-control multi-text-field multi_value",
+                        class: "#{template}_editor_family_name form-control multi-text-field multi_value ubiquity_editor_family_name",
                         placeholder: 'Please enter the editor\'s last name/family name.',
-                        name: "#{template}[editor_group][][editor_family_name]"
+                        name: "#{template}[editor_group][][editor_family_name]",
+                        data: {field_name:'ubiquity_editor_family_name'}
      %>
     <br/>
 
     <label class="control-label multi_value optional" for="#{template}_editor_given_name">
       Editor given name</label>
     <%= text_field_tag "#{template}[editor_group][][editor_given_name]", nil,
-                       class: "#{template}_editor_given_name form-control multi-text-field multi_value",
+                       class: "#{template}_editor_given_name form-control multi-text-field multi_value ubiquity_editor_given_name",
                        placeholder: 'Please enter the editor\'s first name/given name.',
-                       name: "#{template}[editor_group][][editor_given_name]"
+                       name: "#{template}[editor_group][][editor_given_name]",
+                       data: {field_name:'ubiquity_editor_given_name'}
     %>
 
     <br/>

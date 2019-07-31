@@ -1,0 +1,7 @@
+<% license_service = Hyrax::LicenseService.new %>
+<%= f.input :license, as: :multi_value_select,
+    collection: license_service.select_active_options,
+    include_blank: true,
+    hint: 'Licensing and distribution information governing access to the file. Select from the provided drop-down list.',
+    item_helper: license_service.method(:include_current_value),
+    input_html: { class: 'form-control ubiquity-license' } %>

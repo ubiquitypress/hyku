@@ -1,26 +1,37 @@
-
-
 <script type="text/javascript">
 
     // add linked fields
 
     $(document).on("turbolinks:load", function(){
-        return $("body").on("click", ".add_contributor", function(event){
-            event.preventDefault();
-            var ubiquityContributorClass = $(this).attr('data-addUbiquityContributor');
-            cloneUbiDiv = $(this).parent('div' + ubiquityContributorClass + ':last').clone();
+      return $("body").on("click", ".add_contributor", function(event){
+        event.preventDefault();
+        var ubiquityContributorClass = $(this).attr('data-addUbiquityContributor');
+        cloneUbiDiv = $(this).parent('div' + ubiquityContributorClass + ':last').clone();
 
-            _this = this;
-             cloneUbiDiv.find('input').val('');
-             cloneUbiDiv.find('option').attr('selected', false);
-             //increment hidden_field counter after cloning
-             var lastInputCount = $('.ubiquity-contributor-score:last').val();
-             var hiddenInput = $(cloneUbiDiv).find('.ubiquity-contributor-score');
-             hiddenInput.val(parseInt(lastInputCount) + 1)
-            $(ubiquityContributorClass +  ':last').after(cloneUbiDiv);
-            $('.ubiquity_contributor_name_type:last').val('Personal').change()
-        });
+        _this = this;
+        cloneUbiDiv.find('input').val('');
+        cloneUbiDiv.find('option').attr('selected', false);
+        //increment hidden_field counter after cloning
+        var lastInputCount = $('.ubiquity-contributor-score:last').val();
+        var hiddenInput = $(cloneUbiDiv).find('.ubiquity-contributor-score');
+        hiddenInput.val(parseInt(lastInputCount) + 1)
+        $(ubiquityContributorClass +  ':last').after(cloneUbiDiv);
+        $('.ubiquity_contributor_name_type:last').val('Personal').change();
+        removeDynamicallyAddedContributorClassNames();
+        applyValidationRulesForField('contributor');
+      });
     });
+
+    function removeDynamicallyAddedContributorClassNames (){
+      var contributor_fields = ["ubiquity_contributor_name_type", "ubiquity_contributor_isni", "ubiquity_contributor_organization_name", "ubiquity_contributor_orcid",
+                            "ubiquity_contributor_family_name", "ubiquity_contributor_given_name"];
+      $.each(contributor_fields, function(index, value){
+        removeClassStartingWith(value)
+      });
+      $.each(contributor_fields, function(index, value){
+        appendIndexToEachClasses(value);
+      })
+    }
 
     //remove linked fields
     $(document).on("turbolinks:load", function(){
@@ -72,23 +83,4 @@
 
       };
     });
-
-    $(document).on("turbolinks:load", function(){
-      $("body").on("click",".additional-fields", function(event){
-        $(".ubiquity_contributor_name_type").each(function() {
-          _this = this;
-          if (this.value == 'Personal') {
-            $(this).siblings(".ubiquity_contributor_organization_name").hide();
-            $(this).siblings(".ubiquity_personal_fields").show();
-          } else if(this.value == "Organisational") {
-           $(this).siblings(".ubiquity_personal_fields").hide();
-           $(this).siblings(".ubiquity_contributor_organization_name").show();
-         } else {
-           $('.ubiquity_contributor_name_type:last').val('Personal').change()
-         }
-        });
-
-     });
-    });
-
 </script>

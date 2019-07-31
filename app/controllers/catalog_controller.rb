@@ -1,6 +1,7 @@
 class CatalogController < ApplicationController
   include Hydra::Catalog
   include Hydra::Controller::ControllerBehavior
+  include BlacklightOaiProvider::Controller if ENV['ENABLE_OAI_METADATA'] == 'true'
 
   # These before_action filters apply the hydra access controls
   before_action :enforce_show_permissions, only: :show
@@ -68,7 +69,7 @@ class CatalogController < ApplicationController
     # config.add_facet_field solr_name("publisher", :facetable), limit: 5
     # config.add_facet_field solr_name("file_format", :facetable), limit: 5
 
-    #config.add_facet_field solr_name('file_availability', :facetable), limit: 5, label: 'File Availability'
+    config.add_facet_field solr_name('file_availability', :facetable), limit: 5, label: 'File Availability'
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
@@ -194,7 +195,6 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("official_link", :stored_searchable)
     config.add_show_field solr_name("rights_holder", :stored_searchable)
     config.add_show_field solr_name("dewey", :stored_searchable)
-    # config.add_show_field solr_name("creator_search", :stored_searchable)
     config.add_show_field solr_name("library_of_congress_classification", :stored_searchable)
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
@@ -423,14 +423,29 @@ class CatalogController < ApplicationController
     # except in the relevancy case).
     # label is key, solr field is value
     config.add_sort_field "score desc, #{uploaded_field} desc", label: "relevance"
-    config.add_sort_field "#{uploaded_field} desc", label: "date uploaded \u25BC"
-    config.add_sort_field "#{uploaded_field} asc", label: "date uploaded \u25B2"
+    config.add_sort_field "date_published_si desc, #{uploaded_field} desc", label: "date published \u25BC"
+    config.add_sort_field "date_published_si asc, #{uploaded_field} desc", label: "date published \u25B2"
+
     #
     #Commented out by UbiquityPress to remove them from the sort options in search result page
     #
+    # config.add_sort_field "#{uploaded_field} desc", label: "date uploaded \u25BC"
+    # config.add_sort_field "#{uploaded_field} asc", label: "date uploaded \u25B2"
     #config.add_sort_field "#{modified_field} desc", label: "date modified \u25BC"
     #config.add_sort_field "#{modified_field} asc", label: "date modified \u25B2"
 
+    config.oai = {
+      provider: {
+        repository_name: Settings.oai.name,
+        repository_url: Settings.oai.url,
+      },
+      document: {
+        limit: 25, # number of records returned with each request, default: 15
+        set_fields: [ # ability to define ListSets, optional, default: nil
+          { label: 'collection', solr_field: 'isPartOf_ssim' }
+        ]
+      }
+    }
     # If there are more than this many search results, no spelling ("did you
     # mean") suggestion is offered.
     config.spell_max = 5

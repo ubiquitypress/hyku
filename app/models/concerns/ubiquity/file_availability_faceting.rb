@@ -22,24 +22,31 @@ module Ubiquity
 
     def set_file_availability_for_faceting
       if ('open'.in? get_work_filesets_visibility)  && self.official_link.present? && (doi_option_value_check? == true)
+
         self.file_availability = ['File available from this repository']
 
-      elsif ('open'.in? get_work_filesets_visibility) && !self.official_link.present? && (doi_option_value_check? == false)
+      elsif ('open'.in? get_work_filesets_visibility) && self.official_link.blank?  && (doi_option_value_check? == false)
+
         self.file_availability = ['File available from this repository']
 
       elsif ('open'.in? get_work_filesets_visibility) && self.official_link.present? && (doi_option_value_check? == false)
+
         multiple_values
 
       elsif (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] } || get_work_filesets_visibility.blank? ) && self.official_link.present? && (doi_option_value_check? == false)
+
         self.file_availability =  ["External link (access may be restricted)"]
 
       elsif (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] } || get_work_filesets_visibility.blank?) && !self.official_link.present? && (doi_option_value_check? == true)
+
         self.file_availability = ['File not available']
 
       elsif (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] } || get_work_filesets_visibility.blank?) && self.official_link.present? && (doi_option_value_check? == true)
+
         self.file_availability = ['File not available']
 
       elsif (get_work_filesets_visibility.any? {|status| status.in? ['authenticated', 'restricted'] } || get_work_filesets_visibility.blank?) && !self.official_link.present? && (doi_option_value_check? == false)
+        
         self.file_availability = ['File not available']
       end
     end

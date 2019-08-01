@@ -1,0 +1,60 @@
+<table border='1' cellspacing='1'>
+  <thead>
+    <tr>
+      <th>Work Type</th>
+      <th>Resource Type</th>
+      <th>Without Files</th>
+      <th>With Files</th>
+      <th>Files</th>
+      <th>Public</th>
+      <th>Institution</th>
+      <th>Private</th>
+      <th>Embargo</th>
+      <th>Lease</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% total_n_works_with_files = 0 %>
+    <% total_n_works_without_files = 0 %>
+    <% total_files = 0%>
+    <% total_public = 0%>
+    <% total_private = 0%>
+    <% total_embargo = 0%>
+    <% total_lease = 0%>
+    <% total_institute = 0%>
+    <% report_data.each do |key, value| %>
+      <% total_n_works_with_files += value[:work_with_file_count] %>
+      <% total_n_works_without_files += value[:work_without_file_count] %>
+      <% total_files += value[:new_files_added] %>
+      <% total_public += value[:public_records] %>
+      <% total_private += value[:private_records] %>
+      <% total_embargo += value[:embargo] %>
+      <% total_lease += value[:lease] %>
+      <% total_institute += value[:institute_records] %>
+
+      <tr>
+        <td><%= display_work_type(value[:work_type]) %></td>
+        <td><%= @resource_type_hash[value[:resource_type]] %></td>
+        <td align='center'><%= value[:work_without_file_count] %></td>
+        <td align='center'><%= value[:work_with_file_count] %></td>
+        <td align='center'><%= value[:new_files_added] %></td>
+        <td align='center'><%= value[:public_records] %></td>
+        <td align='center'><%= value[:institute_records] %></td>
+        <td align='center'><%= value[:private_records] %></td>
+        <td align='center'><%= value[:embargo] %></td>
+        <td align='center'><%= value[:lease] %></td>
+      </tr>
+    <%end%>
+    <tr>
+      <td colspan=2 align="right"> Total: </td>
+      <td align='center'><%= total_n_works_without_files %></td>
+      <td align='center' ><%= total_n_works_with_files %></td>
+      <td align='center'><%= total_files %></td>
+      <td align='center'><%= total_public %></td>
+      <td align='center'><%= total_institute %></td>
+      <td align='center'><%= total_private %></td>
+      <td align='center'><%= total_embargo %></td>
+      <td align='center'><%= total_lease %></td>
+    </tr>
+  </tbody>
+</table>

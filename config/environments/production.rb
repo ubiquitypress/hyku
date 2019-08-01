@@ -28,6 +28,13 @@ Rails.application.configure do
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
 
+  if ENV['ENABLE_MAILER_PREVIEWS'] == 'true'
+    config.action_mailer.show_previews = true
+
+    # If you're using RSpec make sure to add the link changing where the previews path is.
+    config.action_mailer.preview_path ||= defined?(Rails.root) ? "#{Rails.root}/spec/mailers/previews" : nil
+  end
+
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.

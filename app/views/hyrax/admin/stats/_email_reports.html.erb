@@ -3,19 +3,50 @@
   <h3>Weekly email reports list</h3>
   <div>
     <ul>
-      <li><%= current_account.settings["weekly_email_list"].try(:to_sentence) %></li>
+      <li>
+        <%= current_account.settings["weekly_email_list"].try(:to_sentence) %>
+        <%= link_to 'Send Mail', main_app.send_mail_report_admin_exports_path(email_type:'weekly_email_list'), class: 'btn btn-sm btn-primary send_email_report_link', remote:true%>
+      </li>
     </ul>
   </div>
   <h3>Monthly email reports list</h3>
   <div>
     <ul>
-      <li><%= current_account.settings["monthly_email_list"].try(:to_sentence) %></li>
+      <li>
+        <%= current_account.settings["monthly_email_list"].try(:to_sentence) %>
+        <%= link_to 'Send Mail', main_app.send_mail_report_admin_exports_path(email_type:'monthly_email_list'), class: 'btn btn-sm btn-primary send_email_report_link', remote:true%>
+      </li>
     </ul>
   </div>
   <h3>Yearly email reports list</h3>
   <div>
     <ul>
-      <li><%= current_account.settings["yearly_email_list"].try(:to_sentence) %></li>
+      <li>
+        <%= current_account.settings["yearly_email_list"].try(:to_sentence) %>
+        <%= link_to 'Send Mail', main_app.send_mail_report_admin_exports_path(email_type:'yearly_email_list'), class: 'btn btn-sm btn-primary send_email_report_link', remote:true%>
+      </li>
     </ul>
   </div>
 </div>
+<div id="email_report_modal" class="modal fade modal-year-validation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body" >
+          <p id ='modal_message'> The report will be send over the email shortly. Please check your mail after some time.</p>
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('.send_email_report_link').bind('ajax:complete', function() {
+    $('#email_report_modal').modal()
+  });
+
+</script>

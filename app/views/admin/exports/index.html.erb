@@ -1,13 +1,17 @@
 <% content_for :page_header do %>
 
   <h1><span class=""></span> Export data from <%= current_account.cname %> Repository</h1>
-<% end %>
+
+  <h4>After exporting the CSV it can be round-tripped via the <%= link_to('Importer', importer_link_based_on_environment) %>
+    <span class="fa fa-external-link"></span>(requires separate login to the repository), as long as the 'id' column is included for all rows which need to be updated
+  </h4>
+<% end %><br>
 
   <div class="panel panel-default tabs">
     <!-- Nav tabs -->
     <ul id="exportCsvTabs" class="nav nav-tabs" role="tablist">
       <li role="presentation" class="active"><a href="#export-database" aria-controls="export-database" role="tab" data-toggle="tab">Export CSV for whole database</a></li>
-      <li role="presentation"><a href="#export-model-metadata" aria-controls="export-model-metadata" role="tab" data-toggle="tab">Download the CSV for individual work types</a></li>
+      <li role="presentation"><a href="#export-model-metadata" aria-controls="export-model-metadata" role="tab" data-toggle="tab">Export CSV for individual work types</a></li>
       </ul>
 
     <!-- Tab panes -->
@@ -15,7 +19,7 @@
       <div role="tabpanel" class="tab-pane active" id="export-database">
         <div class="panel panel-default labels">
           <div class="panel-body">
-            <h2>Download the CSV Metadata for all work types in this repository's Database</h2>
+            <h2>Click the link below to export/download CSV of all works in the repository</h2>
 
             <h5 class="ubiquity-db-exporter-message" data-type='database' style="color:red;font-weight: 900;">  </h5>
 

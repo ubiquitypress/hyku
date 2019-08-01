@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  
+
   concern :oai_provider, BlacklightOaiProvider::Routes.new
 
   namespace :ubiquity do
@@ -93,10 +93,11 @@ Rails.application.routes.draw do
         get :export_database
         get :export_remap_model
         get :export_model
+        get :send_mail_report
       end
-  end
+    end
 
-   resource :account, only: [:edit, :update]
+    resource :account, only: [:edit, :update]
     resources :users, only: [:destroy]
     resources :groups do
       member do

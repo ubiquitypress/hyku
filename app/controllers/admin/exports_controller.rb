@@ -29,6 +29,17 @@ module Admin
       end
     end
 
+    def send_mail_report
+      emails = process_email
+      emails.each do |email|
+        WorkReportMailer.send_report(email.strip, current_account.cname, params[:email_type]).deliver_later
+      end
+      redirect_to hyrax.admin_stats_path(anchor: 'email_reports')
+    end
 
+    private
+      def process_email
+        current_account.settings[params[:email_type]].first.split(';')
+      end
   end
 end

@@ -11,7 +11,7 @@ module Ubiquity
       final_data = []
       ['contributor', 'creator', 'editor'].each do |json_data_var|
         json_data = instance_variable_get("@#{json_data_var}")
-        next if json_data.nil?
+        next if json_data.blank?
         JSON.parse(json_data.first).each do |record_hash|
           a = []
           a << "#{json_data_var.capitalize} ORCID : " + record_hash["#{json_data_var}_orcid"].try(:strip) if record_hash["#{json_data_var}_orcid"].present?

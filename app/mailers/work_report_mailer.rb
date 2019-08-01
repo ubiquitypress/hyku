@@ -23,7 +23,7 @@ class WorkReportMailer < ApplicationMailer
           rows: 100_000_000
         }
       )
-      sorted_array = query_data.sort_by{|e| [e["human_readable_type_tesim"], e['resource_type_tesim']] }.group_by { |e| e["human_readable_type_tesim"] }.to_h.values.flatten
+      sorted_array = query_data.sort_by{ |e| [e["human_readable_type_tesim"]] }.group_by { |e| e["human_readable_type_tesim"] }.to_h.values.flatten
       Ubiquity::FetchMailerReportData.new(sorted_array).generate_report
     end
 

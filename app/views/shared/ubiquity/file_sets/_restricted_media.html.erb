@@ -1,23 +1,26 @@
 <!--  Hyku::ManifestEnabledWorkShowPresenter -->
 <!-- This whole file was add ubiquitypress to selectively display universalviewer-->
 <% file_set_presenter = presenter.representative_presenter %><br>
-<% solr_document = presenter.representative_presenter.solr_document %><br>
 
 <% if presenter.try(:representative_presenter).try(:image?) %>
-  <% file_set_presenter = presenter.representative_presenter %>
+  a<% file_set_presenter = presenter.representative_presenter %>
   <!-- dont' displays universal viewer for files with archived format eg zip -->
   <% if zipped_types.include? check_file_extension(file_set_presenter.label) %>
-  <!-- here the universalviewer displays only for current_user or an admin user -->
+b  <!-- here the universalviewer displays only for current_user or an admin user -->
   <% elsif check_file_is_restricted?(file_set_presenter) && presenter.representative_presenter.image? && (not zipped_types.include? check_file_extension(file_set_presenter.label)) %>
-    <%= UniversalViewer.script_tag %>
-    <div class="viewer-wrapper"><div class="uv viewer" data-uri="<%= main_app.polymorphic_path [main_app, :manifest, presenter] %>"></div></div>
+  c  <%= UniversalViewer.script_tag %>
+     <div class="viewer-wrapper"><div class="uv viewer" data-uri="<%= main_app.polymorphic_path [main_app, :manifest, presenter] %>"></div></div>
   <% elsif (  (not file_set_presenter.lease_expiration_date.present?) && (not file_set_presenter.embargo_release_date.present?) && ( file_set_presenter.solr_document['visibility_ssi'] == "open") ) %>
-    <%= UniversalViewer.script_tag %>
-    <div class="viewer-wrapper"><div class="uv viewer" data-uri="<%= main_app.polymorphic_path [main_app, :manifest, presenter] %>"></div></div>
+  d  <%= UniversalViewer.script_tag %>
+     <div class="viewer-wrapper"><div class="uv viewer" data-uri="<%= main_app.polymorphic_path [main_app, :manifest, presenter] %>"></div></div>
   <% end %>
 <% else %>
-  <%=media_display presenter.try(:representative_presenter) %>
-  <%= display_file_download_link_or_contact_form(file_set_presenter) %>
+  <% if file_set_presenter.solr_document['visibility_ssi'] == "restricted" && ( not check_file_is_restricted?(file_set_presenter) )%>
+  h
+  <% else %>
+e  <%= media_display presenter.try(:representative_presenter) %>
+   <%= display_file_download_link_or_contact_form(file_set_presenter)  %>
+  <% end %>
 <%end%>
 
 <script>

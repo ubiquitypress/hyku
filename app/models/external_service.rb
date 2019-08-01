@@ -1,4 +1,6 @@
 class ExternalService < ApplicationRecord
+  #using rails 5 attribute API https://api.rubyonrails.org/classes/ActiveRecord/Attributes/ClassMethods.html
+  attribute :work_model_name, :string
   #property column is an array
   store_accessor :property
   #data column is a hash & the hash keys are :api_type, :status_code, :request_type

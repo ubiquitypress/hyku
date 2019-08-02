@@ -31,9 +31,7 @@
       </li>
     <% end %>
 
-    <% if can?(:download, file_set.id) &&
-    ((not file_set.lease_expiration_date.present?) && (file_set.embargo_release_date.present?))
-     %>
+    <% if can?(:download, file_set.id) %>
       <li role="menuitem" tabindex="-1">
         <%= display_file_download_link_or_contact_form(file_set) %>
       </li>

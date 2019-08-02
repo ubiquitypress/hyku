@@ -42,6 +42,10 @@ class ApplicationController < ActionController::Base
     end
 
     def set_account_specific_connections!
+      #ensures superadmin can log in and shared-search is still wprking
+      #users that can login as admin from the root page ie shared-search page are only in
+      #postgresql schema or namespace called public hence we are doing tenant reset
+      Apartment::Tenant.reset if (request.path ==  "/admin" || session[:ubiquity_super] == 'ubiquity_super')
       current_account.switch! if current_account
     end
 

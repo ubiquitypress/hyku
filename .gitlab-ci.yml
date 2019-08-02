@@ -1,12 +1,9 @@
-image: upress/gitlab-base:23
+image: us.gcr.io/tools-203611/gitlab-base:24
 
 services:
-  - docker:dind
   - postgres
 
 variables:
-  DOCKER_HOST: tcp://127.0.0.1:2375
-  DOCKER_DRIVER: overlay2
   POSTGRES_DB: postgres
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: "postgres"
@@ -19,7 +16,7 @@ stages:
 version:
   stage: version
   script:
-    - echo "export VERSION=$(git describe --tags --abbrev=0)" > variables
+    - echo "export VERSION=$(git describe --tags --abbrev=0)" > $CI_PROJECT_DIR/variables
   artifacts:
     paths:
     - variables
@@ -28,23 +25,24 @@ version:
 
 build-push-clean:
   stage: 📦 docker
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
   before_script:
-    - echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
-    - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
-    - docker login -u _json_key --password-stdin https://eu.gcr.io < ${HOME}/gcloud-service-key.json
+    - source $CI_PROJECT_DIR/variables
   script:
-    - source variables
-    - docker build --build-arg DISABLE_TENANT_SETTINGS='true' -t $IMAGE_NAME -f Dockerfile .
-    - docker tag $IMAGE_NAME "eu.gcr.io/$GCLOUD_PROJECT_ID/$IMAGE_NAME:$VERSION"
-    - docker push "eu.gcr.io/$GCLOUD_PROJECT_ID/$IMAGE_NAME:$VERSION"
-    - docker rmi "eu.gcr.io/$GCLOUD_PROJECT_ID/$IMAGE_NAME:$VERSION" 
+    - /kaniko/executor
+      --build-arg DISABLE_TENANT_SETTINGS='true'
+      --context $CI_PROJECT_DIR
+      --dockerfile $CI_PROJECT_DIR/Dockerfile
+      --destination "eu.gcr.io/$GCLOUD_PROJECT_ID/$IMAGE_NAME:$VERSION"
   only:
     - tags
 
 helm:
   stage: helm
   script:
-    - source variables
+    - source $CI_PROJECT_DIR/variables
     - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/ubiquitypress/kubernetes kubernetes
     - helm init --client-only --skip-refresh
     - helm plugin install https://github.com/hypnoglow/helm-s3.git

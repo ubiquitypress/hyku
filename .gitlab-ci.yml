@@ -49,6 +49,6 @@ helm:
     - helm repo add ubiquity s3://service-helm/charts
     - python3 kubernetes/ci/update_chart.py $IMAGE_NAME $IMAGE_NAME
     - helm package kubernetes/$IMAGE_NAME/helm/$IMAGE_NAME
-    - helm s3 push --force /ubiquitypress/$IMAGE_NAME/$IMAGE_NAME-$VERSION.tgz ubiquity
+    - helm s3 push --force /builds/ubiquitypress/$IMAGE_NAME/$IMAGE_NAME-$VERSION.tgz ubiquity
   only:
     - tags

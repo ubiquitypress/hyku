@@ -13,6 +13,6 @@
   <%# this line has been commented out to remove the translation menu form shared layer pages %>
   <%# <%= render 'shared/locale_picker' if available_translations.size > 1 %>
   <% if user_signed_in? %>
-    <li><%= link_to t("hyrax.toolbar.profile.logout"), main_app.destroy_user_session_path %></li>
+     <li>  <%= render "ubiquity/superadmin_sessions/superadmin_logout_link" %>  </li>
   <% end %>
 </ul>

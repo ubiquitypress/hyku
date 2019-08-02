@@ -55,6 +55,13 @@ Rails.application.routes.draw do
   root 'hyrax/homepage#index'
 
   devise_for :users, controllers: { invitations: 'hyku/invitations', registrations: 'hyku/registrations' }
+
+  devise_scope :user do
+     get 'admin', to: 'ubiquity/superadmin_sessions#new', as: 'new_superadmin_sessions'
+     post 'admin', to: 'ubiquity/superadmin_sessions#create', as: 'superadmin_sessions'
+     get '/admin/signout', to: 'ubiquity/superadmin_sessions#destroy', as:  'destroy_superadmin_session'
+  end
+
   mount Qa::Engine => '/authorities'
 
   mount Blacklight::Engine => '/'

@@ -186,7 +186,7 @@ module Ubiquity
       if (data.present? && data.class == Array)
         new_data = data.map do |hash|
           ['contributor_orcid', 'contributor_isni', 'creator_orcid', 'creator_isni', 'editor_isni', 'editor_orcid'].each do|ele|
-            hash[ele] = hash[ele].strip.chomp('/').split('/').last.gsub(/[^a-z-0-9]/, '') if hash[ele].present?
+            hash[ele] = hash[ele].strip.chomp('/').split('/').last.gsub(/[^a-z0-9X-]/, '') if hash[ele].present?
           end
           hash.reject { |_k, v| v.nil? || v.to_s.empty? || v == "NaN" }
         end

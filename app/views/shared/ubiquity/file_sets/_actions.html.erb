@@ -1,6 +1,7 @@
 <!-- Copied from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/file_sets/_actions.html.erb -->
 <!-- rendered in https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/base/_actions.html.erb-->
 <% if current_user %>
+
   <div class="btn-group">
 
     <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button" id="dropdownMenu_<%= file_set.id %>" aria-haspopup="true">
@@ -30,9 +31,7 @@
       </li>
     <% end %>
 
-    <% if can?(:download, file_set.id) &&
-    ((not file_set.lease_expiration_date.present?) && (not file_set.embargo_release_date.present?))
-     %>
+    <% if can?(:download, file_set.id) %>
       <li role="menuitem" tabindex="-1">
         <%= display_file_download_link_or_contact_form(file_set) %>
       </li>

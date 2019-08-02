@@ -14,12 +14,12 @@ module Ubiquity
         next if json_data.blank?
         JSON.parse(json_data.first).each do |record_hash|
           a = []
-          a << "#{json_data_var.capitalize} ORCID : " + record_hash["#{json_data_var}_orcid"].try(:strip) if record_hash["#{json_data_var}_orcid"].present?
-          a << "#{json_data_var.capitalize} ISNI : " + record_hash["#{json_data_var}_isni"].try(:strip) if record_hash["#{json_data_var}_isni"].present?
+          a << "#{json_data_var.capitalize} ORCID: " + record_hash["#{json_data_var}_orcid"].try(:strip) if record_hash["#{json_data_var}_orcid"].present?
+          a << "#{json_data_var.capitalize} ISNI: " + record_hash["#{json_data_var}_isni"].try(:strip) if record_hash["#{json_data_var}_isni"].present?
           final_data << a.join(', ')
         end
       end
-      final_data.compact
+      final_data.reject(&:blank?).compact
     end
   end
 end

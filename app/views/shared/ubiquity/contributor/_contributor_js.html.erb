@@ -54,12 +54,12 @@
     $(document).on("turbolinks:load", function(){
       return $("body").on("change",".ubiquity_contributor_name_type", function(event){
         if (event.target.value == 'Personal') {
-          $(this).siblings(".ubiquity_contributor_organization_name").hide();
+          $(this).siblings(".ubiquity_contributor_organization_name, .ubiquity_contributor_organization_name_label").hide();
           $(this).siblings(".ubiquity_personal_fields").show();
         } else {
 
          $(this).siblings(".ubiquity_personal_fields").hide();
-         $(this).siblings(".ubiquity_contributor_organization_name").show();
+         $(this).siblings(".ubiquity_contributor_organization_name, .ubiquity_contributor_organization_name_label").show();
         }
        });
     });
@@ -70,11 +70,11 @@
          _this = this;
           if (this.value == 'Personal') {
 
-            $(this).siblings(".ubiquity_contributor_organization_name").hide();
+            $(this).siblings(".ubiquity_contributor_organization_name, .ubiquity_contributor_organization_name_label").hide();
             $(this).siblings(".ubiquity_personal_fields").show();
           } else if(this.value == "Organisational") {
            $(this).siblings(".ubiquity_personal_fields").hide();
-           $(this).siblings(".ubiquity_contributor_organization_name").show();
+           $(this).siblings(".ubiquity_contributor_organization_name, .ubiquity_contributor_organization_name_label").show();
          } else {
            $('.ubiquity_contributor_name_type:last').val('Personal').change()
          }

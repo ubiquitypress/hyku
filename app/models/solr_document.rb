@@ -83,7 +83,7 @@ class SolrDocument
     publisher: 'publisher_tesim',
     contributor: ['contributor_list_tesim', 'editor_list_tesim', 'funder_tesim'],
     date: 'date_published_tesim',
-    identifier: ['official_link_oai_tesim', 'doi_oai_tesim', 'all_orcid_isni_tesim', 'tenant_cname_tesim'],
+    identifier: ['official_link_oai_tesim', 'doi_oai_tesim', 'all_orcid_isni_tesim', 'work_tenant_url_tesim'],
     language: 'language_tesim',
     relation: 'journal_title_tesim',
     rights: 'license_tesim',

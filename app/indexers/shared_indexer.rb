@@ -7,7 +7,7 @@ class SharedIndexer < Hyrax::WorkIndexer
       solr_doc[Solrizer.solr_name('contributor_list', :stored_searchable)] = Ubiquity::ParseJson.new(object.contributor.first).fetch_value_based_on_key('contributor')
       solr_doc['date_published_si'] = Ubiquity::ParseDate.return_date_part(object.date_published, 'year')
       solr_doc[Solrizer.solr_name('all_orcid_isni', :stored_searchable)] = Ubiquity::FetchAllOrcidIsni.new(object).fetch_data
-      solr_doc[Solrizer.solr_name('tenant_cname', :stored_searchable)] = Ubiquity::DoiService.new({ 'tenant_name' => CurrentScope.user_tenant_cname }, '').fetch_tenant_url
+      solr_doc[Solrizer.solr_name('work_tenant_url', :stored_searchable)] = Ubiquity::FetchTenantUrl.new(object).process_url
       # Following values were showing in OAI when the value is blank, Added a new field to display if the valuse is present
       solr_doc[Solrizer.solr_name('abstract_oai', :stored_searchable)] = object.abstract.presence
       solr_doc[Solrizer.solr_name('official_link_oai', :stored_searchable)] = object.official_link.presence

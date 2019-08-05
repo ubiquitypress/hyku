@@ -113,9 +113,11 @@ module Ubiquity
         field_key = institutional_relationship.keys.first.split('_').first
         array_institutional_relationship.each do |item|
           #remove empty space between words
-          join_words = item.downcase.gsub(' ', '')
-          key_name = "#{field_key}_#{join_words}_#{index + 1}"
-          @unordered_hash[key_name] = 'true'
+          if item.present?
+            join_words = item.downcase.gsub(' ', '')
+            key_name = "#{field_key}_#{join_words}_#{index + 1}"
+            @unordered_hash[key_name] = 'true'
+          end
         end
       end
     end

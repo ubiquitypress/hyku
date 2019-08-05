@@ -10,7 +10,7 @@ module Ubiquity
                      ]
 
     CSV_HEARDERS_ORDER = %w(id date_uploaded date_modified file visibility  embargo_end_date  visibility_after_embargo lease_end_date visibility_after_lease collection
-                        work_type resource_type title  creator contributor abstract date_published material_media duration institution organisational_unit project_name
+                        work_type resource_type title alternative_title creator contributor abstract date_published material_media duration institution organisational_unit project_name
                         funder funder_project_reference event_title event_date event_location series_name book_title editor journal_title volume edition version
                         issue pagination article_number publisher place_of_publication isbn issn eissn current_he_institution date_accepted date_submitted official_url
                         related_url related_exhibition related_exhibition_date language license rights_statement rights_holder doi qualification_name qualification_level
@@ -70,8 +70,10 @@ module Ubiquity
     end
 
     def remap_array_fields(key, value)
+        list_of_array_used_as_single_felds = ['title', 'volume', 'version', 'alt_title']
         value.each_with_index do |item, index|
-          key_name = ("#{key}_#{index + 1}")
+          key_name = ("#{key}_#{index + 1}")  if list_of_array_used_as_single_felds.exclude?(key)
+          key_name = key if list_of_array_used_as_single_felds.include?(key)
           puts "#{key_name} - #{value} -#{item.inspect}"
 
           @unordered_hash[key_name] = item
@@ -110,8 +112,9 @@ module Ubiquity
         array_institutional_relationship =  institutional_relationship.values.flatten
         field_key = institutional_relationship.keys.first.split('_').first
         array_institutional_relationship.each do |item|
-          concate_item = item.split(' ').join('_')
-          key_name = "#{field_key}_#{concate_item}_#{index + 1}"
+          #remove empty space between words
+          join_words = item.downcase.gsub(' ', '')
+          key_name = "#{field_key}_#{join_words}_#{index + 1}"
           @unordered_hash[key_name] = 'true'
         end
       end
@@ -136,8 +139,8 @@ module Ubiquity
       {
        'official_link' => 'official_url', 'refereed' => 'peer_reviewed',
         'article_num' => 'article_number', 'fndr_project_ref' => 'funder_project_reference',
-        'add_info' => 'additional_information', 'file' => 'file_url', 'org_unit' => 'organisation_unit',
-        'media' => 'material_media'
+        'add_info' => 'additional_information', 'file' => 'file_url', 'org_unit' => 'organisational_unit',
+        'media' => 'material_media', 'alt_title' => 'alternative_title'
       }
     end
 

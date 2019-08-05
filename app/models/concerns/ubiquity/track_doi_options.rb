@@ -46,10 +46,10 @@ module Ubiquity
 
       def autocreate_draft_doi
         if self.doi_options != "Do not mint DOI" && self.draft_doi.blank?
-          tenant_name = self.account_cname.split('.').first
+          tenant_name = self.account_cname.split('.').first if self.account_cname.present?
           tenant_json = ENV["TENANTS_SETTINGS"]
           tenant_hash = JSON.parse(tenant_json) if is_valid_json?(tenant_json)
-          datacite_prefix = tenant_hash.dig(tenant_name, 'datacite_prefix')
+          datacite_prefix = tenant_hash.dig(tenant_name, 'datacite_prefix') if tenant_name.present?
           if datacite_prefix.present?
             doi_service = Ubiquity::DoiService.new({'tenant_name' => self.account_cname}, datacite_prefix)
             external_service_object = doi_service.suffix_generator

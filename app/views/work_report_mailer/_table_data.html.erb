@@ -1,4 +1,4 @@
-<table border='1' cellspacing='1'>
+<table border='1' cellspacing='0'>
   <thead>
     <tr>
       <th>Work Type</th>
@@ -33,28 +33,28 @@
       <% total_institute += value[:institute_records] %>
 
       <tr>
-        <td><%= display_work_type(value[:work_type]) %></td>
-        <td><%= @resource_type_hash[value[:resource_type]] %></td>
-        <td align='center'><%= value[:work_without_file_count] %></td>
-        <td align='center'><%= value[:work_with_file_count] %></td>
-        <td align='center'><%= value[:new_files_added] %></td>
-        <td align='center'><%= value[:public_records] %></td>
-        <td align='center'><%= value[:institute_records] %></td>
-        <td align='center'><%= value[:private_records] %></td>
-        <td align='center'><%= value[:embargo] %></td>
-        <td align='center'><%= value[:lease] %></td>
+        <td style='padding:2px;'><%= display_work_type(value[:work_type]) %></td>
+        <td style='padding:2px;'><%= @resource_type_hash[value[:resource_type]] %></td>
+        <td style='padding:2px;' align='center'><%= value[:work_without_file_count] %></td>
+        <td style='padding:2px;' align='center'><%= value[:work_with_file_count] %></td>
+        <td style='padding:2px;' align='center'><%= value[:new_files_added] %></td>
+        <td style='padding:2px;' align='center'><%= value[:public_records] %></td>
+        <td style='padding:2px;' align='center'><%= value[:institute_records] %></td>
+        <td style='padding:2px;' align='center'><%= value[:private_records] %></td>
+        <td style='padding:2px;' align='center'><%= value[:embargo] %></td>
+        <td style='padding:2px;' align='center'><%= value[:lease] %></td>
       </tr>
     <%end%>
     <tr>
-      <td colspan=2 align="right"> Total: </td>
-      <td align='center'><%= total_n_works_without_files %></td>
-      <td align='center' ><%= total_n_works_with_files %></td>
-      <td align='center'><%= total_files %></td>
-      <td align='center'><%= total_public %></td>
-      <td align='center'><%= total_institute %></td>
-      <td align='center'><%= total_private %></td>
-      <td align='center'><%= total_embargo %></td>
-      <td align='center'><%= total_lease %></td>
+      <td style='padding:2px;' colspan=2 align="right"> Total: </td>
+      <td style='padding:2px;' align='center'><%= total_n_works_without_files %></td>
+      <td style='padding:2px;' align='center' ><%= total_n_works_with_files %></td>
+      <td style='padding:2px;' align='center'><%= total_files %></td>
+      <td style='padding:2px;' align='center'><%= total_public %></td>
+      <td style='padding:2px;' align='center'><%= total_institute %></td>
+      <td style='padding:2px;' align='center'><%= total_private %></td>
+      <td style='padding:2px;' align='center'><%= total_embargo %></td>
+      <td style='padding:2px;' align='center'><%= total_lease %></td>
     </tr>
   </tbody>
 </table>

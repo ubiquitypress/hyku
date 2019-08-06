@@ -49,6 +49,7 @@ module Hyku
       Hyrax::ContactFormController.prepend(::Ubiquity::ContactFormControllerOverride)
       Hyrax::UploadsController.prepend(::Ubiquity::UploadsControllerOverride)
       Hyrax::BatchEditsController.prepend(::Ubiquity::BatchEditUpdateControllerOverride)
+      CatalogController.prepend(::Ubiquity::OaiExtension)
       # Loading module to initiateCall back for the Hyrax::UploadedFile model for file_status attribute
       Hyrax::UploadedFile.include(::Ubiquity::FileUploadCallback)
       Hyrax::Actors::FileSetActor.prepend(::Ubiquity::FileSetVersionUpdateContent)

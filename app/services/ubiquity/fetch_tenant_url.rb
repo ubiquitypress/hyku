@@ -8,7 +8,7 @@ module Ubiquity
     end
 
     def process_url
-      retunr nil if @account_cname.nil?
+      return nil if @account_cname.nil?
       work_type = @work_type.downcase.pluralize
       if @account_cname.split('.').include? 'localhost'
         "http://#{@account_cname}:3000/concern/#{work_type}/#{@id}"

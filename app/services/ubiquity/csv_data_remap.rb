@@ -6,7 +6,7 @@ module Ubiquity
                      "label", "relative_path", "import_url", "based_near", "identifier",  "access_control_id",
                      "representative_id", "thumbnail_id", "admin_set_id", "embargo_id", "lease_id",
                       "bibliographic_citation", "state",  "creator_search", "doi_options", "draft_doi",
-                      "disable_draft_doi", "version_number", "series_name", 'depositor', 'file_availability'
+                      "disable_draft_doi", "version_number", 'depositor', 'file_availability'
                      ]
 
     CSV_HEARDERS_ORDER = %w(id date_uploaded date_modified file visibility  embargo_end_date  visibility_after_embargo lease_end_date visibility_after_lease collection

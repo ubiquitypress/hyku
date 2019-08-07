@@ -11,7 +11,7 @@ module Ubiquity
 
     CSV_HEARDERS_ORDER = %w(id date_uploaded date_modified file visibility  embargo_end_date  visibility_after_embargo lease_end_date visibility_after_lease collection
                         work_type resource_type title alternative_title creator contributor abstract date_published material_media duration institution organisational_unit project_name
-                        funder funder_project_reference event_title event_date event_location series_name book_title editor journal_title volume edition version
+                        funder funder_project_reference event_title event_date event_location series_name book_title editor journal_title alternative_journal_title volume edition version
                         issue pagination article_number publisher place_of_publication isbn issn eissn current_he_institution date_accepted date_submitted official_url
                         related_url related_exhibition related_exhibition_date language license rights_statement rights_holder doi qualification_name qualification_level
                         alternate_identifier related_identifier peer_reviewed keyword dewey library_of_congress_classification additional_information)

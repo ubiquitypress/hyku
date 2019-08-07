@@ -13,8 +13,9 @@ module Ubiquity
         end
         response.documents
       else
-        if @controller.fetch(selector).first.documents.first.public?
-          @controller.fetch(selector).first.documents.first
+        record = @controller.fetch(selector).first.documents.first
+        if record.public? && record['workflow_state_name_ssim'].first != 'pending_review'
+          record
         end
       end
     end
@@ -26,7 +27,7 @@ module Ubiquity
           "#{solr_timestamp}:[#{solr_date(options[:from])} TO #{solr_date(options[:until]).gsub('Z', '.999Z')}]"
         )
       end
-      query.append_filter_query('read_access_group_ssim: public') # Fetching only public records
+      query.append_filter_query('read_access_group_ssim:public') # Fetching only public records
       query
     end
   end

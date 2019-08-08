@@ -1,3 +1,6 @@
+# Overriding the oai config to display the request url in the OAI template
+# Overriding the oai_config method
+# projectblacklight/blacklight_oai_provider/blob/master/app/controllers/concerns/blacklight_oai_provider/controller.rb#L29
 module Ubiquity
   module OaiExtension
     extend ActiveSupport::Concern

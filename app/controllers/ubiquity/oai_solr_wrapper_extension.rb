@@ -1,5 +1,11 @@
+# Overriding OaiSolrWrapperExtension for filtering OAI records which is public
+# Overriding *find* method in the OAI provider gem
+# projectblacklight/blacklight_oai_provider/blob/master/lib/blacklight_oai_provider/solr_document_wrapper.rb#L33-L46
+# Overriding *confition(options)* method in the OAI provider gem
+# projectblacklight/blacklight_oai_provider/blob/master/lib/blacklight_oai_provider/solr_document_wrapper.rb#L69-L80
+
 module Ubiquity
-  module SolrWrapperExtension
+  module OaiSolrWrapperExtension
     extend ActiveSupport::Concern
 
     def find(selector, options = {})
@@ -14,7 +20,7 @@ module Ubiquity
         response.documents
       else
         record = @controller.fetch(selector).first.documents.first
-        if record.public? && record['workflow_state_name_ssim'].first != 'pending_review'
+        if record.public? && record['workflow_state_name_ssim'].try(:first) != 'pending_review'
           record
         end
       end

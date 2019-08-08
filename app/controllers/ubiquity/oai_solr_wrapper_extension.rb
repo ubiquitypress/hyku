@@ -1,5 +1,7 @@
+# Overriding OaiSolrWrapperExtension for filtering OAI records which is public
+
 module Ubiquity
-  module SolrWrapperExtension
+  module OaiSolrWrapperExtension
     extend ActiveSupport::Concern
 
     def find(selector, options = {})

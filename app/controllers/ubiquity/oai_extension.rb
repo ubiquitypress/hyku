@@ -1,3 +1,4 @@
+# Overring the oai config to display the request url in the OAI template
 module Ubiquity
   module OaiExtension
     extend ActiveSupport::Concern

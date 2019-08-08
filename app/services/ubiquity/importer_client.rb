@@ -4,7 +4,7 @@ module Ubiquity
     # Called in show page and the file details page of the evert works created by user
     include HTTParty
     format :json
-    base_uri 'https://importer.repo-test.ubiquity.press'
+    base_uri ENV['S3_API_WRAPPER_URL']
 
     attr_accessor :file_url_hash, :file_status_hash
 

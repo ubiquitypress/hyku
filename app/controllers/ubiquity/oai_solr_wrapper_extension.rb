@@ -1,4 +1,8 @@
 # Overriding OaiSolrWrapperExtension for filtering OAI records which is public
+# Overriding *find* method in the OAI provider gem
+# projectblacklight/blacklight_oai_provider/blob/master/lib/blacklight_oai_provider/solr_document_wrapper.rb#L33-L46
+# Overriding *confition(options)* method in the OAI provider gem
+# projectblacklight/blacklight_oai_provider/blob/master/lib/blacklight_oai_provider/solr_document_wrapper.rb#L69-L80
 
 module Ubiquity
   module OaiSolrWrapperExtension

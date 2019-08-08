@@ -11,11 +11,10 @@ module Ubiquity
     def process_url
       return nil if @account_cname.nil?
       work_type = @work_type.tableize
-      concern_url = @is_collection ? 'dashboard' : 'concern'
       if @account_cname.split('.').include? 'localhost'
-        "http://#{@account_cname}:3000/#{concern_url}/#{work_type}/#{@id}"
+        @is_collection ? "http://#{@account_cname}:3000/#{work_type}/#{@id}" : "http://#{@account_cname}:3000/concern/#{work_type}/#{@id}"
       else
-        "https://#{@account_cname}/#{concern_url}/#{work_type}/#{@id}"
+        @is_collection ? "https://#{@account_cname}/#{work_type}/#{@id}" : "https://#{@account_cname}/concern/#{work_type}/#{@id}"
       end
     end
   end

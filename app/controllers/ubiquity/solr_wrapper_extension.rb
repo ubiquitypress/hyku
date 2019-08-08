@@ -14,7 +14,7 @@ module Ubiquity
         response.documents
       else
         record = @controller.fetch(selector).first.documents.first
-        if record.public? && record['workflow_state_name_ssim'].first != 'pending_review'
+        if record.public? && record['workflow_state_name_ssim'].try(:first) != 'pending_review'
           record
         end
       end

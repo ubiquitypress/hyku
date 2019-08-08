@@ -7,9 +7,9 @@ class CollectionIndexer < Hyrax::CollectionIndexer
   self.thumbnail_path_service = IIIFCollectionThumbnailPathService
 
   # Uncomment this block if you want to add custom indexing behavior:
-  # def generate_solr_document
-  #  super.tap do |solr_doc|
-  #    solr_doc['my_custom_field_ssim'] = object.my_custom_property
-  #  end
-  # end
+  def generate_solr_document
+    super.tap do |solr_doc|
+      solr_doc[Solrizer.solr_name('work_tenant_url', :stored_searchable)] = Ubiquity::FetchTenantUrl.new(object).process_url
+    end
+  end
 end

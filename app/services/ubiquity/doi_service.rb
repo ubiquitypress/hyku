@@ -34,16 +34,6 @@ module Ubiquity
       retry if @failed_attempts < MAX_RETRIES
     end
 
-    def fetch_tenant_url
-      if @tenant_name.present?
-        if @tenant_name.split('.').include? 'localhost'
-          "http://#{@tenant_name}:3000"
-        else
-          "https://#{@tenant_name}"
-        end
-      end
-    end
-
     private
       def latest_suffix_from_external_service_object
         last_record = fetch_last_record
@@ -68,6 +58,6 @@ module Ubiquity
       def query_work_for_draft_doi(suffix)
         puts"Inside query for draft_doi"
         ActiveFedora::Base.where("draft_doi_tesim:#{suffix}").last
-      end      
+      end
   end
 end

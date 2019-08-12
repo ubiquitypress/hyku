@@ -5,6 +5,19 @@ module Ubiquity
       @sorted_array = sorted_array
     end
 
+    def self.fetch_data(date_range)
+      query_data = ActiveFedora::SolrService.query(
+        "system_create_dtsi: #{date_range}",
+        {
+          fl: ['resource_type_tesim, human_readable_type_tesim, file_set_ids_ssim, hasEmbargo_ssim, hasLease_ssim, visibility_ssi, lease_history_ssim, embargo_history_ssim'],
+          fq: ['{!terms f=has_model_ssim}Article,Book,BookContribution,ConferenceItem,Dataset,ExhibitionItem,Image,Report,ThesisOrDissertation,TimeBasedMedia,GenericWork'],
+          rows: 100_000_000
+        }
+      )
+      sorted_array = query_data.sort_by{ |e| [e["human_readable_type_tesim"]] }.group_by { |e| e["human_readable_type_tesim"] }.to_h.values.flatten
+      new(sorted_array).generate_report
+    end
+
     def generate_report
       final_hash = {}
       @sorted_array.group_by { |e| e['resource_type_tesim'] }.each do |key, value|
@@ -39,5 +52,6 @@ module Ubiquity
       end
       final_hash
     end
+
   end
 end

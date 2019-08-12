@@ -2,7 +2,11 @@
 class WorkReportMailerPreview < ActionMailer::Preview
 
   def send_report
-    WorkReportMailer.send_report('ashikajith@gmail.com', 'ashik.localhost', 'weekly_email_list').deliver_now
+    email = ENV['SMTP_USERNAME']
+    tenant = ENV['DEVELOPER_PREVIEW_EMAIL_HOST_NAME']
+    if email.present? && tenant.present?
+      WorkReportMailer.send_report(email, tenant, 'weekly_email_list')
+    end
   end
 
 end

@@ -8,8 +8,26 @@ module Ubiquity
       belongs_to :parent, class_name: "Account", inverse_of: :parent, foreign_key: "parent_id", optional: true
 
       store_accessor :data, :is_parent
-      store_accessor :settings, :contact_email, :weekly_email_list, :monthly_email_list, :yearly_email_list
+      store_accessor :settings, :contact_email, :weekly_email_list, :monthly_email_list, :yearly_email_list,
+                     :index_record_to_shared_search
+
+      after_initialize :set_index_to_shared_search_for_live_sites, :set_index_to_shared_search_for_demo_sites
+
     end
-    
+
+    private
+
+    def set_index_to_shared_search_for_live_sites
+      if cname.present? && !cname.include?('demo')
+        self.settings['index_record_to_shared_search'] = 'true' if settings['index_record_to_shared_search'].blank?
+      end
+    end
+
+    def set_index_to_shared_search_for_demo_sites
+      if cname.present? && 'demo'.in?(self.cname)
+        self.settings['index_record_to_shared_search'] = 'false' if settings['index_record_to_shared_search'].blank?
+      end
+    end
+
   end
 end

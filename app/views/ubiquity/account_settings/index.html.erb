@@ -12,7 +12,13 @@
     <tbody>
       <tr>
         <td><b>Contact email:</b> <%= @account && @account.settings && @account.settings["contact_email"] %></td> <br>
-        <td><%= link_to "Edit email & mailing lists", edit_admin_account_setting_path(@account), class: "btn btn-xs btn-default" %></td>
+        <td><%# link_to "Edit email & mailing lists", edit_admin_account_setting_path(@account), class: "btn btn-xs btn-default" %></td>
       </tr>
+      <tr>
+       <td><b>Index records to shared search:</b> <%= @account && @account.settings && @account.settings["index_record_to_shared_search"]  %> </td> <br>
+     </tr>
+     <tr>
+     <td><%= link_to "Edit your account settings", edit_admin_account_setting_path(@account), class: "btn btn-xs btn-default" %></td>
+   </tr>
     </tbody>
 </table>

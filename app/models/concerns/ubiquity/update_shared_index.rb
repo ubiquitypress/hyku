@@ -22,7 +22,8 @@ module Ubiquity
     private
 
     def add_record_to_index
-      if parent_tenant.present? && !self.account_cname.include?('demo')
+      if parent_tenant.present? && check_if_indexing_to_shared_is_enabled?
+        puts "adding self.id to shared-search index"
         AccountElevator.switch!(self.account_cname)
         Ubiquity::SharedIndexSolrServiceWrapper.new(self.to_solr, 'add', parent_tenant, get_file_sets).update
         #if you switch the tenant back to the one that owns the work, you will get a blacklight error rendering show
@@ -31,7 +32,7 @@ module Ubiquity
     end
 
     def remove_record_from_index
-      if parent_tenant.present? && !self.account_cname.include?('demo')
+      if parent_tenant.present? && check_if_indexing_to_shared_is_enabled?
           puts "removing self.id from shared-search index"
           Ubiquity::SharedIndexSolrServiceWrapper.new(self.id, 'remove', parent_tenant).update
           AccountElevator.switch!(self.account_cname)
@@ -39,11 +40,22 @@ module Ubiquity
     end
 
     def parent_tenant
-      account = Account.where(cname: self.account_cname).first
+      account = get_tenant
       if account.present? && account.parent.present?
         parent = account.parent
         parent.cname
       end
+    end
+
+    def check_if_indexing_to_shared_is_enabled?
+      account = get_tenant
+      value = account.settings["index_record_to_shared_search"]
+      #this turns 'true' to true and 'false' to flase
+      ActiveModel::Type::Boolean.new.cast(value)
+    end
+
+    def get_tenant
+      Account.where(cname: self.account_cname).first
     end
 
     def get_file_sets
@@ -61,7 +73,7 @@ module Ubiquity
     end
 
     def remove_file_sets_in_work_from_index
-      if get_fileset_ids.present? && parent_tenant.present?
+      if get_fileset_ids.present? && parent_tenant.present? && check_if_indexing_to_shared_is_enabled?
         puts "removing work fileset_ids to shared-search #{self.class} - title is #{self.try(:title)} - with id #{self.id}"
         Ubiquity::SharedIndexSolrServiceWrapper.new(get_fileset_ids, 'remove', parent_tenant).update
         AccountElevator.switch!(self.account_cname)

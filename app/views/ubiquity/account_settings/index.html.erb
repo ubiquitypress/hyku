@@ -5,20 +5,34 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Account Email</th>
-        <th>Actions</th>
+      <th><h3><b>Editable Fields</b></h3></th>
+      <th><h3><b>Actions</b></h3></th>
     </tr>
   </thead>
     <tbody>
       <tr>
-        <td><b>Contact email:</b> <%= @account && @account.settings && @account.settings["contact_email"] %></td> <br>
-        <td><%# link_to "Edit email & mailing lists", edit_admin_account_setting_path(@account), class: "btn btn-xs btn-default" %></td>
+        <td id= "link-email"><b>Contact email:</b> <%= @account && @account.settings && @account.settings["contact_email"] %></td> <br>
+        <td><%=link_to "Edit email ", edit_admin_account_setting_path(id: @account, partial_name: 'contact_email'), class: "btn btn-xs btn-default", remote: true %></td>
       </tr>
       <tr>
-       <td><b>Index records to shared search:</b> <%= @account && @account.settings && @account.settings["index_record_to_shared_search"]  %> </td> <br>
+        <td id= "link-weekly-email"><b>Weekly email list:</b> <%= @account && @account.settings && @account.settings["weekly_email_list"].try(:to_sentence) %></td> <br>
+        <td><%=link_to "Edit weekly email list", edit_admin_account_setting_path(id: @account, partial_name: 'weekly_email_list'), class: "btn btn-xs btn-default", remote: true %></td>
+      </tr>
+      <tr>
+        <td><b>Monthly email list:</b> <%= @account && @account.settings && @account.settings["monthly_email_list"].try(:to_sentence) %></td> <br>
+        <td><%=link_to "Edit monthly email list", edit_admin_account_setting_path(@account), class: "btn btn-xs btn-default" %></td>
+      </tr>
+      <tr>
+        <td><b>Yearly email list:</b> <%= @account && @account.settings && @account.settings["yearly_email_list"].try(:to_sentence) %></td> <br>
+        <td><%=link_to "Edit yearly email list", edit_admin_account_setting_path(@account), class: "btn btn-xs btn-default" %></td>
+      </tr>
+      <tr>
+        <td><b>Index records to shared search:</b> <%= @account && @account.settings && @account.settings["index_record_to_shared_search"]  %> </td>
+        <td><%=link_to "Edit indexing options ", edit_admin_account_setting_path(@account), class: "btn btn-xs btn-default" %></td>
      </tr>
      <tr>
-     <td><%= link_to "Edit your account settings", edit_admin_account_setting_path(@account), class: "btn btn-xs btn-default" %></td>
-   </tr>
+       <td><b>Access all fields:</b></td>
+       <td><%=link_to "Edit all fields ", edit_admin_account_setting_path(@account), class: "btn btn-xs btn-default" %></td>
+    </tr>
     </tbody>
 </table>

@@ -1,7 +1,12 @@
+<!-- This partial is shared by the three field (weekly_email, monthly_email, yearly_email) called form each individual filed partial
+-weekly_email_list.htm.erb
+-monthly_email_list.htm.erb
+-yearly_email_list.htm.erb
+-->
 <div class="row">
   <div class="col-md-12">
     <div class="panel panel-default account-form">
-      <%= form_for(@account, url: update_single_admin_account_setting_path(@account), :html => { class: 'form control' }) do |f| %>
+        <%= form_for(account, url: update_single_admin_account_setting_path(account), :html => { class: 'form control' }) do |f| %>
         <div class="panel-body">
           <% if @account.errors.any? %>
             <div id="error_explanation">
@@ -15,17 +20,16 @@
           <% end %>
 
           <div class="form-group">
-            <%= f.fields_for :settings do |ff| %>
-              <b><%= ff.label 'Index record to shared search' %></b><br>
-              <p>True: newly added/edited works will appear in Shared Search</p>
-              <p>False: newly added works will NOT appear in Shared Search</p>
-              <%= ff.select :index_record_to_shared_search, options_for_select(['true', 'false'], @account.settings['index_record_to_shared_search']), {class: 'form-control', prompt: "Select one"} %>            <% end %>
-          </div>
-        </div>
-        <div class="panel-footer">
+            <%=f.fields_for :settings do |ff| %>
+              <%= ff.label :email %><br>
+              <%= ff.text_field field_name.to_sym, :value => @account.send(field_name.to_sym),
+               name: "#{f.object_name}[settings][#{html_name_element}][]", class: 'form-control' %><br>
+            <% end %>
+         </div>
+         <div class="panel-footer">
           <%= f.submit class: 'btn btn-primary pull-right' %>
-        </div>
-      <% end %>
+         </div>
+       <% end %>
     </div>
 
   </div>

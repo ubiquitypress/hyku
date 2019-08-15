@@ -2,7 +2,7 @@
 <div class="row">
   <div class="col-md-12">
     <div class="panel panel-default account-form">
-        <%= form_for(@account, url: update_single_admin_account_setting_path(@account), :html => { class: 'form control' }) do |f| %>
+        <%= form_for(account, url: update_single_admin_account_setting_path(account), :html => { class: 'form control' }) do |f| %>
         <div class="panel-body">
           <% if @account.errors.any? %>
             <div id="error_explanation">
@@ -26,6 +26,5 @@
          </div>
        <% end %>
     </div>
-
   </div>
 </div>

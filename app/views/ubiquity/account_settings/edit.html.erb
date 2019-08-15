@@ -35,10 +35,6 @@
               <%= ff.label :yearly_email_list %><br>
               <%= ff.text_field :yearly_email_list, :value => current_account.settings["yearly_email_list"], name: "#{f.object_name}[settings][yearly_email_list][]", class: 'form-control' %><br>
 
-              <b><%= ff.label 'Index record to shared search' %></b><br>
-             <p>True: newly added/edited works will appear in Shared Search</p>
-             <p>False: newly added works will NOT appear in Shared Search</p>
-             <%= ff.select :index_record_to_shared_search, options_for_select(['true', 'false'], @account.settings['index_record_to_shared_search']), {class: 'form-control', prompt: "Select one"} %>
             <% end %>
           </div>
 

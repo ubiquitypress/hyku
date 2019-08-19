@@ -27,7 +27,12 @@ module Ubiquity
       def remove_unwanted_characters_from_doi
         url_ary = self.doi.strip.split('/')
         url_ary.shift(2) if ['https', 'https:', 'http', 'http:'].include?(url_ary.first)
-        url_ary.join('/')
+        domain_path = url_ary.join('/')
+        if domain_path.include? 'doi'
+           domain_path
+        else
+           ("doi.org/" + domain_path)
+        end
       end
 
       def set_disable_draft_doi

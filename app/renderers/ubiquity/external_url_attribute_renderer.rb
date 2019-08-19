@@ -15,7 +15,8 @@ class ExternalUrlAttributeRenderer < Hyrax::Renderers::AttributeRenderer
       markup << "<li#{html_attributes(attributes)}>"
       sorted_arr = value.sort_by(&:downcase)
       links = sorted_arr.map do |url|
-        auto_link(url, html: { target: '_blank' })
+        complete_url = "https://" + url
+        auto_link(complete_url, html: { target: '_blank' })
       end
       markup << links.join('<br/>')
       markup << %(</li></ul></td></tr>)

@@ -7,6 +7,7 @@ services:
       - db:/var/lib/postgresql/data
     networks:
       internal:
+        ipv4_address: 172.18.0.7
 
   web:
     build:
@@ -30,6 +31,7 @@ services:
       - credentials-dev.env
     networks:
       internal:
+          ipv4_address: 172.18.0.10
 
   lb:
     image: dockercloud/haproxy:1.5.3
@@ -46,4 +48,5 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       internal:
-      external:
+          ipv4_address: 172.18.0.11
+      #external:

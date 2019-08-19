@@ -535,6 +535,7 @@ ActiveRecord::Schema.define(version: 20190604123004) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "file_status", default: 0
+    t.index ["file", "user_id", "file_status"], name: "index_uploaded_files_on_file_and_user_id_and_file_status"
     t.index ["file_set_uri"], name: "index_uploaded_files_on_file_set_uri"
     t.index ["user_id"], name: "index_uploaded_files_on_user_id"
   end

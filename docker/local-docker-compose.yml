@@ -1,0 +1,126 @@
+version: '2'
+
+volumes:
+  fcrepo:
+  solr:
+  db:
+  redis:
+  zk1:
+  zk2:
+  zk3:
+  zkconf:
+  web:
+
+networks:
+  external:
+  internal:
+
+services:
+  zoo1:
+    image: zookeeper
+    restart: always
+    environment:
+      - ZOO_MY_ID=1
+      - ZOO_SERVERS=server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+    expose:
+      - 2181
+      - 2888
+      - 3888
+    volumes:
+      - zk1:/data
+      - zkconf:/conf
+    networks:
+      internal:
+       ipv4_address: 172.18.0.3
+       aliases:
+         - zookeeper_cluster
+
+  zoo2:
+    image: zookeeper
+    restart: always
+    environment:
+      - ZOO_MY_ID=2
+      - ZOO_SERVERS=server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+    expose:
+      - 2181
+      - 2888
+      - 3888
+    volumes:
+      - zk2:/data
+      - zkconf:/conf
+    networks:
+      internal:
+       ipv4_address: 172.18.0.2
+       aliases:
+         - zookeeper_cluster
+
+  zoo3:
+    image: zookeeper
+    restart: always
+    environment:
+      - ZOO_MY_ID=3
+      - ZOO_SERVERS=server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+    expose:
+      - 2181
+      - 2888
+      - 3888
+    volumes:
+      - zk3:/data
+      - zkconf:/conf
+    networks:
+      internal:
+        ipv4_address: 172.18.0.4
+        aliases:
+         - zookeeper_cluster
+
+  solr:
+    image: upress/solr-hyku:latest
+    command: solr -c -f -z zookeeper_cluster:2181
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
+    ports:
+      - '8983:8983'
+    volumes:
+      - .:/web
+      - solr:/opt/solr/server/solr
+    networks:
+      internal:
+          ipv4_address: 172.18.0.9
+
+  fcrepo:
+    image: cbeer/fcrepo4:4.7
+    ports:
+      - '8986:8080'
+    volumes:
+      - fcrepo:/data
+    environment:
+      - JAVA_OPTS=${JAVA_OPTS} -Dfcrepo.modeshape.configuration="classpath:/config/file-simple/repository.json" -Dfcrepo.object.directory="/data/objects" -Dfcrepo.binary.directory="/data/binaries"
+    networks:
+      internal:
+          ipv4_address: 172.18.0.8
+
+  redis:
+    image: redis:3
+    command: redis-server
+    volumes:
+      - redis:/data
+    networks:
+      internal:
+          ipv4_address: 172.18.0.5
+
+  memcache:
+    image: memcached
+    networks:
+      internal:
+          ipv4_address: 172.18.0.6
+
+
+networks:
+  internal:
+    driver: bridge
+    ipam:
+      config:
+      - subnet:    172.18.0.0/16
+        gateway:   172.18.0.1

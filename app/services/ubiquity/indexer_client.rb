@@ -34,7 +34,7 @@ module Ubiquity
     def handle_client
       begin
         yield
-      rescue HTTParty::Error  => e
+      rescue HTTParty::Error, Errno::ECONNREFUSED, SocketError, Timeout::Error  => e
         puts "Nothing pushed to indexer #{e.inspect}"
         UbiquityPostToIndexerJob.perform_later(work_uuid, draft_doi, tenant_name)
       rescue ActiveFedora::RecordNotSaved, ActiveFedora::RecordInvalid  => e

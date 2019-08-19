@@ -17,6 +17,10 @@ development:
 test:
   <<: *default
   database: hyku_test
+  username: <%= ENV['POSTGRES_USERNAME'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  host: <%= ENV['POSTGRES_HOSTNAME'] %>
+  port: <%= ENV['POSTGRES_PORT'] %>
 
 production:
   <<: *default

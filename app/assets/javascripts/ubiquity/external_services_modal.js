@@ -35,7 +35,7 @@
   }
 
   $(document).on("turbolinks:load", function(event){
-    $('#with_files_submit').on('click', function(e) {
+    $('.doi_option_list').change('click', function(e) {
       messagesSwitcher();
       var visibility = $('.set-access-controls ul.visibility li.radio input:checked').val();
       if (visibility === undefined){
@@ -46,12 +46,11 @@
       var doiOptionsCheck = (doiOptions == "Mint DOI:Registered" || doiOptions == "Mint DOI:Findable")
       $("#doi-options-modal").on("click", "#modal_button_save", function() {
         $('#doi-options-modal').modal('hide');
-        $('.simple_form').submit();
       });
       //conditions to be met to show modal window
       if (visibilityCheck && doiOptionsCheck) {
+        $('#date_year').prop('required', true);
         $('#doi-options-modal').modal('show');
-        e.preventDefault();
       }
     });
   });

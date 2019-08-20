@@ -7,7 +7,7 @@ services:
       - db:/var/lib/postgresql/data
     networks:
       internal:
-
+        ipv4_address: 172.20.0.9
   web:
     build:
       context: ../.

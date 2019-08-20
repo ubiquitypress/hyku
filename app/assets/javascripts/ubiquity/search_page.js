@@ -9,4 +9,10 @@ $(document).on("turbolinks:load", function(){
     spanFilterName.hide();
     spanFilterValue.html('Collections');
   }
+
+ //clear all search filters fails by linking to the wrong page
+ // we are adding this query parameter &search_field=all_fields
+  if($("#appliedParams .pull-right").is(':visible')){
+    return  $(this).find("a").attr('href', '/catalog?locale=en&q=&search_field=all_fields')
+  }
 });

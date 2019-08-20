@@ -48,6 +48,9 @@
 <%= presenter.attribute_to_html(:license, render_as: :alphabetical_sort_license, html_dl: true, label: "Licence") %>
 <%= presenter.attribute_to_html(:rights_statement, render_as: :alphabetical_sort_rights_statement) %>
 <%= presenter.attribute_to_html(:rights_holder, render_as: :alphabetical_sort) %>
+<!-- if you change the label DOI below you must change the if condition in
+ app/renderers/ubiquity/external_url_attribute_renderer.rb to reflect the newly re-named label
+-->
 <%= presenter.attribute_to_html(:doi, label: "DOI", render_as: :external_url) %>
 <%= presenter.attribute_to_html(:qualification_name, render_as: :string) %>
 <%= presenter.attribute_to_html(:qualification_level, render_as: :string) %>

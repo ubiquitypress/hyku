@@ -29,9 +29,19 @@
     <%= render 'items', presenter: @presenter %>
     <%= render 'when_no_file', presenter: @presenter %>
     <%= render 'workflow_actions_widget', presenter: @presenter %>
+    <%# render 'relationships', presenter: @presenter %>
     <%# TODO: we may consider adding these partials in the future %>
     <%#= render 'sharing_with', presenter: @presenter %>
     <%#= render 'user_activity', presenter: @presenter %>
   </div>
 </div>
 <br>
+
+<!-- the script below it is used to remove the "workflow-affix" class from the approval form
+     so the widget doesn't appear on the footer
+-->
+<script>
+  $(document).on("turbolinks:load", function(event){
+    $(".workflow-affix").removeClass( "workflow-affix" )
+  });
+</script>

@@ -1,0 +1,30 @@
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default account-form">
+        <%= form_for(account, url: update_single_admin_account_setting_path(account), :html => { class: 'form control' }) do |f| %>
+        <div class="panel-body">
+          <% if @account.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@account.errors.count, "error") %> prohibited this account from being saved:</h2>
+              <ul>
+                <% @account.errors.messages.each do |key, messages| %>
+                  <li><%= key %> &quot;<%= @account.errors.details[key].first[:value] %>&quot; <%= messages.join(' and ') %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="form-group">
+            <%=f.fields_for :settings do |ff| %>
+              <%= ff.label :email %><br>
+              <%= ff.text_field :contact_email, :value => @account.contact_email, class: 'form-control', id: 'contact_email' %><br>
+            <% end %>
+         </div>
+         <div class="panel-footer">
+          <%= f.submit class: 'btn btn-primary pull-right' %>
+         </div>
+       <% end %>
+    </div>
+  </div>
+</div>

@@ -6,11 +6,13 @@
 # rake "ubiquity_resave_records:update_specific_model[sandbox.repo-test.ubiquity.press,  generic_work]"
 #
 # rake ubiquity_resave_records:all_exempt_collections['sandbox.repo-test.ubiquity.press']
+# rake 'ubiquity_resave_records:where_metatdata_field_not_empty[library.localhost, editor_tesim]'
 
-
+#run with
+# rake ubiquity_resave_records:all['sandbox.repo-test.ubiquity.press']
 namespace :ubiquity_resave_records do
-  desc "Update data by resaving records for existing works"
 
+  desc "Update data by resaving records for existing works"
   task :all, [:name] => :environment do |task, tenant|
 
     #These are the names of the existing work type in UbiquityPress's Hyku
@@ -26,6 +28,9 @@ namespace :ubiquity_resave_records do
     end
   end
 
+#run with
+#rake ubiquity_resave_records:all_exempt_collections['sandbox.repo-test.ubiquity.press']
+ desc "Update data by resaving records except collection for existing works"
   task :all_exempt_collections, [:name] => :environment do |task, tenant|
 
     #These are the names of the existing work type in UbiquityPress's Hyku
@@ -42,6 +47,9 @@ namespace :ubiquity_resave_records do
     end
   end
 
+  #run with
+  #rake "ubiquity_resave_records:update_specific_model[sandbox.repo-test.ubiquity.press,  generic_work]"
+  desc "Update data by resaving records for a specific work type"
   task :update_specific_model, [:tenant_name, :model_name] => :environment do |task, args|
     tenant_name = args[:tenant_name]
     puts "tenant_cname in update specific model rake task: #{tenant_name}"
@@ -57,5 +65,28 @@ namespace :ubiquity_resave_records do
       sleep 2
     end
   end
+
+#run with
+# rake 'ubiquity_resave_records:where_metatdata_field_not_empty[library.localhost, editor_tesim]'
+#
+ desc "Update data by resaving records for existing works where the goven field is not empty"
+  task :where_metatdata_field_not_empty,  [:tenant_name, :solr_field_name] => :environment do |task, args|
+    tenant_name = args[:tenant_name]
+    puts "tenant_cname in update specific model rake task: #{tenant_name}"
+    AccountElevator.switch!(tenant_name)
+    field_name = args[:solr_field_name]
+    #fetch all records where this field is not empty
+    records = ActiveFedora::Base.where("#{field_name}:[* TO *]")
+
+    puts "#{records.size } records found where #{field_name} is not empty"
+
+    records.each do |model_instance|
+      puts "updating #{field_name} in where_metatdata_field_not_empty rake task for: #{model_instance.class}  #{model_instance.id}"
+       #by calling save we trigger the before_save callback in app/models/ubiquity/concerns/multiple_modules.rb
+      model_instance.save
+      sleep 2
+    end
+  end
+
 
 end

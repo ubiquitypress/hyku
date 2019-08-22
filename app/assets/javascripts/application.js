@@ -24,6 +24,7 @@
 // a pattern found in ScholarSphere)
 //
 //= require ubiquity/search_page
+//= require ubiquity/work_page
 //= require ubiquity/datatable-settings
 //= require hyku/groups/per_page
 //= require hyku/groups/add_member

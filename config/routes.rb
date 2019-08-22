@@ -36,8 +36,13 @@ Rails.application.routes.draw do
   post '/external_services/generate_doi', to: 'ubiquity/external_services#generate_doi', as: 'external_services_generate_doi'
 
   scope :module => "ubiquity" do
-    resources :account_settings, path: "/admin/account_settings", controller: 'account_settings', as: 'admin_account_settings'
+    resources :account_settings, path: "/admin/account_settings", controller: 'account_settings', as: 'admin_account_settings' do
+      member do
+        patch :update_single
+      end
+    end
   end
+
 
   # Fail Uploads Controller route
   get '/fail_uploads/delete_file' => 'ubiquity/fail_uploads#delete_file'

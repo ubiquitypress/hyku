@@ -217,7 +217,7 @@ class CatalogController < ApplicationController
       all_names = config.show_fields.values.map(&:field).join(" ")
       title_name = solr_name("title", :stored_searchable)
       field.solr_parameters = {
-        qf: "#{all_names} file_format_tesim all_text_timv alt_title_tesim^4.15",
+        qf: "#{all_names} file_format_tesim all_text_timv alt_title_tesim^4.15 editor_tesim",
         pf: title_name.to_s
       }
     end
@@ -245,6 +245,15 @@ class CatalogController < ApplicationController
     config.add_search_field('creator') do |field|
       field.solr_parameters = { "spellcheck.dictionary": "creator" }
       solr_name = solr_name("creator", :stored_searchable)
+      field.solr_local_parameters = {
+        qf: solr_name,
+        pf: solr_name
+      }
+    end
+
+    config.add_search_field('editor') do |field|
+      field.solr_parameters = { "spellcheck.dictionary": "editor" }
+      solr_name = solr_name("editor", :stored_searchable)
       field.solr_local_parameters = {
         qf: solr_name,
         pf: solr_name

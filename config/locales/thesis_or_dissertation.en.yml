@@ -5,4 +5,7 @@ en:
     select_type:
       thesis_or_dissertation:
         name:               "Thesis Or Dissertation"
-        description:        "Document which presents the author's research and findings, submitted in support of his candidature for a degree or professional qualification."
+        description:        "Document which presents the author's research and findings, submitted in support of their candidature for a degree or professional qualification."
+
+
+                             

@@ -5,7 +5,7 @@ en:
     select_type:
       generic_work:
         name:               "Generic Work"
-        description:        "General purpose work type. Select this if the more specific work types below are not suited to the work you want to add."
+        description:        "General purpose work type. Select this if the more specific work types above are not suited to the work you want to add."
   simple_form:
     hints:
       generic_work:

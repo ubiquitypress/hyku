@@ -33,7 +33,7 @@ terms:
   term: DPT
   active: true
 - id: DrPH
-  term: DPT
+  term: DrPH
   active: true
 - id: DSc
   term: DSc
@@ -54,7 +54,7 @@ terms:
   term: MA
   active: true
 - id: MD
-  term: MA
+  term: MD
   active: true
 - id: MBA
   term: MBA

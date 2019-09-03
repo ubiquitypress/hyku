@@ -22,15 +22,18 @@
                         data: {field_name:'ubiquity_contributor_isni'}
     %>
     <br/>
-    <label class="ubiquity_contributor_organization_name_label control-label multi_value optional" for="#{template}_contributor_organization_name">
+    <span class="ubiquity_organization_fields">
+      <label class="ubiquity_contributor_organization_name_label control-label multi_value optional" for="#{template}_contributor_organization_name">
       Contributor organisation name</label>
-    <%= text_field_tag  "#{template}[contributor_group][][contributor_organization_name]", hash.dig("contributor_organization_name"),
+       <%= text_field_tag  "#{template}[contributor_group][][contributor_organization_name]", hash.dig("contributor_organization_name"),
                         class: "#{template}_contributor_organization_name form-control multi-text-field multi_value ubiquity_contributor_organization_name",
                         placeholder: 'Please enter the organisation\'s name.',
                         name: "#{template}[contributor_group][][contributor_organization_name]",
                         data: {field_name:'ubiquity_contributor_organization_name'}
-    %>
+       %>
 
+    </span>
+   <br/>
     <span class="ubiquity_personal_fields">
 
       <label class="control-label multi_value optional" for="#{template}_contributor_orcid">

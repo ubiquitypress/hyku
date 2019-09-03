@@ -22,6 +22,7 @@
                        data: {field_name:'ubiquity_editor_isni'}
     %>
     <br/>
+  <span class="ubiquity_organization_fields">
 
     <label class="ubiquity_editor_organization_name_label control-label multi_value optional" for="#{template}_editor_organization_name">
       Editor organisation name</label>
@@ -31,8 +32,10 @@
                         name: "#{template}[editor_group][][editor_organization_name]",
                         data: {field_name:'ubiquity_editor_organization_name'}
     %>
-
-    <span class="ubiquity_personal_fields">
+    <span style="color:blue;" class="error">Please complete this field.</span>
+  </span>
+  <br>
+  <span class="ubiquity_personal_fields">
 
       <label class="control-label multi_value optional" for="#{template}_editor_orcid">
         Editor ORCID</label>

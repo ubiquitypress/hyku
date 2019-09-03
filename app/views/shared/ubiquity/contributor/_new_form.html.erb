@@ -22,7 +22,7 @@
   %>
 
   <br/>
-
+<span class="ubiquity_organization_fields">
   <label class="ubiquity_contributor_organization_name_label control-label multi_value optional" for="#{template}_contributor_organization_name">
     Contributor organisation name</label>
 
@@ -33,7 +33,9 @@
                      data: {field_name:'ubiquity_contributor_organization_name'}
   %>
 
-  <span class="ubiquity_personal_fields">
+</span>
+<br/>
+<span class="ubiquity_personal_fields">
 
     <label class="control-label multi_value optional" for="#{template}_contributor_orcid">
       Contributor ORCID</label>
@@ -66,7 +68,6 @@
                        name: "#{template}[contributor_group][][contributor_given_name]",
                        data: {field_name:'ubiquity_contributor_given_name'}
     %>
-
     <br/>
     <label class="control-label multi_value optional" for="#{template}_contributor_institutional_relationship">
       Contributor institutional relationship  </label>

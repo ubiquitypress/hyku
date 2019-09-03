@@ -21,6 +21,8 @@
                      data: {field_name:'ubiquity_editor_isni'}
   %>
   <br/>
+  <span class="ubiquity_organization_fields">
+
   <label class="ubiquity_editor_organization_name_label control-label multi_value optional" for="#{template}_editor_organization_name">
     Editor organisation name</label>
 
@@ -30,7 +32,8 @@
                       name: "#{template}[editor_group][][editor_organization_name]",
                       data: {field_name:'ubiquity_editor_organization_name'}
   %>
-
+</span>
+<br/>
   <span class="ubiquity_personal_fields">
 
     <label class="control-label multi_value optional" for="#{template}_editor_orcid">
@@ -61,7 +64,6 @@
                        name: "#{template}[editor_group][][editor_given_name]",
                        data: {field_name:'ubiquity_editor_given_name'}
     %>
-
     <br/>
     <p><label class="control-label multi_value optional" for="#{template}_editor_institutional_relationship">
       Editor institutional relationship  </label></p>

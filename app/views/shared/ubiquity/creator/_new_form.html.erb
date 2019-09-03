@@ -30,6 +30,7 @@
   %>
 
   <br/>
+  <span class="ubiquity_organization_fields">
 
   <label class="ubiquity_creator_organization_name_label control-label multi_value optional" for="generic_work_creator_organization_name">
     Creator organisation name</label>
@@ -40,7 +41,10 @@
                       name: "#{template}[creator_group][][creator_organization_name]",
                       data: {field_name:'ubiquity_creator_organization_name'}
   %>
+  <span style="color:red;" class="error">Please complete this field.</span>
 
+  </span>
+<br/>
   <span class="ubiquity_personal_fields">
 
     <label class="control-label multi_value optional" for="#{template}_creator_orcid">
@@ -61,6 +65,8 @@
                         name: "#{template}[creator_group][][creator_family_name]",
                         data: {field_name:'ubiquity_creator_family_name'}
     %>
+    <span style="color:red;" class="error">Please enter one of these fields.</span>
+
     <br>
 
     <label class="control-label multi_value optional" for="#{template}_creator_given_name">
@@ -71,12 +77,13 @@
                         name: "#{template}[creator_group][][creator_given_name]",
                         data: {field_name:'ubiquity_creator_given_name'}
     %>
+    <span style="color:red;" class="error">Please enter one of these fields.</span>
 
     <br/>
     <p><label class="control-label multi_value optional" for="#{template}_creator_institutional_relationship">
       Creator institutional relationship  </label></p> <span class='error'> </span>
     <%= select_tag "#{template}[creator_group][][creator_institutional_relationship][]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( ['Staff member', 'Research associate'], :to_s, :to_s),
-       multiple: true, class: "form-control"  %>
+       multiple: true, class: "form-control ubiquity_creator_institutional_relationship"  %>
 
   </span>  <!-- closes ubiquity_personal_fields -->
 

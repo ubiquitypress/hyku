@@ -30,6 +30,8 @@
                         data: {field_name:'ubiquity_creator_isni'}
     %>
     <br/>
+    <span class="ubiquity_organization_fields">
+
     <label class="ubiquity_creator_organization_name_label control-label multi_value optional" for="#{template}_creator_organization_name">
       Creator organisation name</label>
 
@@ -39,7 +41,10 @@
                         name: "#{template}[creator_group][][creator_organization_name]",
                         data: {field_name:'ubiquity_creator_organization_name'}
     %>
+    <span style="color:red;" class="error">Please complete this field.</span>
 
+  </span>
+  <br/>
     <span class="ubiquity_personal_fields">
 
       <label class="control-label multi_value optional" for="#{template}_creator_orcid">
@@ -63,6 +68,7 @@
                         data: {field_name:'ubiquity_creator_family_name'}
 
       %>
+      <span style="color:red;" class="error">Please enter one of these fields.</span>
       <br>
 
       <label class="control-label multi_value optional" for="#{template}_creator_given_name">
@@ -75,7 +81,7 @@
                         data: {field_name:'ubiquity_creator_given_name'}
 
       %>
-
+      <span style="color:red;" class="error">Please enter one of these fields.</span>
       <br/>
       <p><label class="control-label multi_value optional" for="#{template}_creator_institutional_relationship">
         Creator institutional relationship  </label> </p>

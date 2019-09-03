@@ -2,8 +2,7 @@ $(document).on("turbolinks:load", function(){
   // Fetching Text Fileds across multiple fields
   var editor_fields = ["ubiquity_editor_name_type", "ubiquity_editor_isni", "ubiquity_editor_organization_name", "ubiquity_editor_orcid",
                         "ubiquity_editor_family_name", "ubiquity_editor_given_name"];
-  var creator_fields = ["ubiquity_creator_name_type", "ubiquity_creator_isni", "ubiquity_creator_organization_name", "ubiquity_creator_orcid",
-                        "ubiquity_creator_family_name", "ubiquity_creator_given_name"];
+
   var contributor_fields = ["ubiquity_contributor_name_type", "ubiquity_contributor_isni", "ubiquity_contributor_organization_name", "ubiquity_contributor_orcid",
                         "ubiquity_contributor_family_name", "ubiquity_contributor_given_name"];
 
@@ -12,16 +11,11 @@ $(document).on("turbolinks:load", function(){
     appendIndexToEachClasses(value);
   });
 
-  $.each(creator_fields, function(_index, value){
-    appendIndexToEachClasses(value);
-  });
-
   $.each(contributor_fields, function(_index, value){
     appendIndexToEachClasses(value);
   });
 
   // This will trigger the validation based on the type of field (Creator, Editor and Contributor)
-  applyValidationRulesForField('creator');
   applyValidationRulesForField('contributor');
   applyValidationRulesForField('editor');
   // triggerValidationIfValueIsPresent(); //Keeping it for future based on feedback from client

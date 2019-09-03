@@ -54,9 +54,18 @@
     $(document).on("turbolinks:load", function(){
       return $("body").on("change",".ubiquity_contributor_name_type", function(event){
         if (event.target.value == 'Personal') {
+          $(this).siblings(".ubiquity_organization_fields:last").find(".ubiquity_contributor_organization_name:last").val('')
+          $(this).siblings(".ubiquity_organization_fields:last").hide();
+
           $(this).siblings(".ubiquity_contributor_organization_name, .ubiquity_contributor_organization_name_label").hide();
           $(this).siblings(".ubiquity_personal_fields").show();
         } else {
+
+          $(this).siblings(".ubiquity_organization_fields:last").show();
+          $(this).siblings(".ubiquity_personal_fields").find(".ubiquity_contributor_family_name:last").val('');
+          $(this).siblings(".ubiquity_personal_fields").find(".ubiquity_contributor_given_name:last").val('');
+          $(this).siblings(".ubiquity_personal_fields").find(".ubiquity_contributor_orcid:last").val('');
+          $(this).siblings(".ubiquity_personal_fields").find(".ubiquity_contributor_institutional_relationship:last").val('');
 
          $(this).siblings(".ubiquity_personal_fields").hide();
          $(this).siblings(".ubiquity_contributor_organization_name, .ubiquity_contributor_organization_name_label").show();
@@ -70,9 +79,20 @@
          _this = this;
           if (this.value == 'Personal') {
 
+            $(this).siblings(".ubiquity_organization_fields:last").find(".ubiquity_contributor_organization_name:last").val('')
+            $(this).siblings(".ubiquity_organization_fields:last").hide();
+
             $(this).siblings(".ubiquity_contributor_organization_name, .ubiquity_contributor_organization_name_label").hide();
             $(this).siblings(".ubiquity_personal_fields").show();
           } else if(this.value == "Organisational") {
+
+            $(this).siblings(".ubiquity_organization_fields:last").show();
+            $(this).siblings(".ubiquity_personal_fields").find(".ubiquity_contributor_family_name:last").val('');
+            $(this).siblings(".ubiquity_personal_fields").find(".ubiquity_contributor_given_name:last").val('');
+            $(this).siblings(".ubiquity_personal_fields").find(".ubiquity_contributor_orcid:last").val('');
+            $(this).siblings(".ubiquity_personal_fields").find(".ubiquity_contributor_institutional_relationship:last").val('');
+          
+
            $(this).siblings(".ubiquity_personal_fields").hide();
            $(this).siblings(".ubiquity_contributor_organization_name, .ubiquity_contributor_organization_name_label").show();
          } else {

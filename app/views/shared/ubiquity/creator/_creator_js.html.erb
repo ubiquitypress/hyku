@@ -1,37 +1,29 @@
 <script type="text/javascript">
 
     // add linked fields
-
     $(document).on("turbolinks:load", function(){
-      return $("body").on("click", ".add_creator", function(event){
-        event.preventDefault();
-        var ubiquityCreatorClass = $(this).attr('data-addUbiquityCreator');
-        cloneUbiDiv = $(this).parent('div' + ubiquityCreatorClass + ':last').clone();
 
-        _this = this;
-        cloneUbiDiv.find('input').val('');
-        cloneUbiDiv.find('option').attr('selected', false);
-        //increment hidden_field counter after cloning
-        var lastInputCount = $('.ubiquity-creator-score:last').val();
-        var hiddenInput = $(cloneUbiDiv).find('.ubiquity-creator-score');
-        hiddenInput.val(parseInt(lastInputCount) + 1);
-        $(ubiquityCreatorClass +  ':last').after(cloneUbiDiv)
-        $('.ubiquity_creator_name_type:last').val('Personal').change()
-        removeDynamicallyAddedCreatorClassNames();
-        applyValidationRulesForField('creator');
-      });
+        return $("body").on("click", ".add_creator", function(event){
+            event.preventDefault();
+            var ubiquityCreatorClass = $(this).attr('data-addUbiquityCreator');
+            cloneUbiDiv = $(this).parent('div' + ubiquityCreatorClass + ':last').clone();
+
+           _this = this;
+            cloneUbiDiv.find('input').val('');
+            cloneUbiDiv.find('option').attr('selected', false);
+
+            //adding required fields to creator_given_name and creator_family_name
+            cloneUbiDiv.find(".ubiquity_creator_family_name").prop('required', true).next("span.error").show();
+            cloneUbiDiv.find(".ubiquity_creator_given_name").prop('required', true).next("span.error").show();
+
+            //increment hidden_field counter after cloning
+            var lastInputCount = $('.ubiquity-creator-score:last').val();
+            var hiddenInput = $(cloneUbiDiv).find('.ubiquity-creator-score');
+            hiddenInput.val(parseInt(lastInputCount) + 1);
+            $(ubiquityCreatorClass +  ':last').after(cloneUbiDiv)
+            $('.ubiquity_creator_name_type:last').val('Personal').change()
+        });
     });
-
-    function removeDynamicallyAddedCreatorClassNames (){
-      var creator_fields = ["ubiquity_creator_name_type", "ubiquity_creator_isni", "ubiquity_creator_organization_name", "ubiquity_creator_orcid",
-                            "ubiquity_creator_family_name", "ubiquity_creator_given_name"];
-      $.each(creator_fields, function(index, value){
-        removeClassStartingWith(value)
-      });
-      $.each(creator_fields, function(index, value){
-        appendIndexToEachClasses(value);
-      })
-    }
 
     //remove linked fields
     $(document).on("turbolinks:load", function(){
@@ -53,12 +45,20 @@
    $(document).on("turbolinks:load", function(){
      return $("body").on("change",".ubiquity_creator_name_type", function(event){
        if (event.target.value == 'Personal') {
-         $(this).siblings(".ubiquity_creator_organization_name, .ubiquity_creator_organization_name_label").hide();
+          var _this = $(this);
+          hideCreatorOrganization(_this);
          $(this).siblings(".ubiquity_personal_fields").show();
+         _this =  $(this).siblings(".ubiquity_personal_fields")
+         creatorAddOrRemoveRequiredAndMessage(_this)
+
        } else {
 
+        var _this = $(this);
+        hideCreatorPersonal(_this);
         $(this).siblings(".ubiquity_personal_fields").hide();
-        $(this).siblings(".ubiquity_creator_organization_name, .ubiquity_creator_organization_name_label").show();
+        $(this).siblings(".ubiquity_organization_fields").show();
+        var _this = $(this).siblings('.ubiquity_organization_fields:last');
+        creatorOrganizationAddOrRemoveRequiredAndMessage(_this);
        }
       });
    });
@@ -66,14 +66,18 @@
    $(document).on("turbolinks:load", function(){
      if($(".ubiquity_creator_name_type").is(':visible')){
       $(".ubiquity_creator_name_type").each(function() {
-        _this = this;
-         if (this.value == 'Personal') {
 
-           $(this).siblings(".ubiquity_creator_organization_name, .ubiquity_creator_organization_name_label").hide();
+         if (this.value == 'Personal') {
+           _this = $(this).siblings(".ubiquity_personal_fields:last");
+           creatorAddOrRemoveRequiredAndMessage(_this);
+           $(this).siblings(".ubiquity_organization_fields").hide();
            $(this).siblings(".ubiquity_personal_fields").show();
+
          } else if(this.value == "Organisational") {
           $(this).siblings(".ubiquity_personal_fields").hide();
-          $(this).siblings(".ubiquity_creator_organization_name, .ubiquity_creator_organization_name_label").show();
+          var _this = $(this).siblings('.ubiquity_organization_fields:last');
+          creatorOrganizationAddOrRemoveRequiredAndMessage(_this);
+
         } else{
           $('.ubiquity_creator_name_type:last').val('Personal').change()
         }
@@ -82,5 +86,64 @@
 
      };
    });
+
+   $(document).on("turbolinks:load", function(){
+     return $("body").on("blur", ".ubiquity_creator_organization_name", function (event) {
+        event.preventDefault();
+        var _this = $(this).parent('.ubiquity_organization_fields:last');
+        creatorOrganizationAddOrRemoveRequiredAndMessage(_this);
+
+      });
+  });
+
+   $(document).on("turbolinks:load", function(){
+     return $("body").on("blur", ".ubiquity_creator_family_name, .ubiquity_creator_given_name", function (event) {
+        event.preventDefault();
+        _this = $(this).parent('.ubiquity_personal_fields:last');
+        creatorAddOrRemoveRequiredAndMessage(_this);
+      });
+  });
+
+
+  function creatorAddOrRemoveRequiredAndMessage(self){
+    var givenName = self.find('.ubiquity_creator_given_name:last');
+    var familyName = self.find('.ubiquity_creator_family_name:last');
+    var input1Value = givenName.val();
+    var input1Value = input1Value ||  familyName.val();
+
+    if (input1Value) {
+      givenName.removeAttr('required').next("span.error").hide();
+      familyName.removeAttr('required').next("span.error").hide();
+    } else {
+      givenName.prop('required', true).next("span.error").show();
+      familyName.prop('required', true).next("span.error").show();
+  }
+
+  }
+
+  function creatorOrganizationAddOrRemoveRequiredAndMessage(self){
+    var orgName = self.find('.ubiquity_creator_organization_name:last').val();
+    if (orgName) {
+      self.find(".ubiquity_creator_organization_name:last").removeAttr('required').next("span.error").hide();
+
+    } else {
+      self.find(".ubiquity_creator_organization_name:last").prop('required', true).next("span.error").show();
+
+    }
+
+  }
+
+  function hideCreatorOrganization(self){
+    self.siblings(".ubiquity_organization_fields").find(".ubiquity_creator_organization_name:last").val('')
+    self.siblings(".ubiquity_organization_fields").find(".ubiquity_creator_organization_name:last").removeAttr('required').next("span.error").hide();
+    self.siblings(".ubiquity_organization_fields").hide();
+  }
+
+  function hideCreatorPersonal(self){
+    self.siblings(".ubiquity_personal_fields").find(".ubiquity_creator_family_name:last").val('');
+    self.siblings(".ubiquity_personal_fields").find(".ubiquity_creator_given_name:last").val('');
+    self.siblings(".ubiquity_personal_fields").find(".ubiquity_creator_orcid:last").val('');
+    self.siblings(".ubiquity_personal_fields").find(".ubiquity_creator_institutional_relationship:last").val('');
+  }
 
 </script>

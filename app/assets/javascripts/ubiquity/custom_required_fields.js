@@ -34,12 +34,6 @@ $(document).on("turbolinks:load", function(){
     }
   });
 
-    var pathName = window.location.pathname
-  // Setting the defaut admin set value for the Administrative Set
-    if (pathName.includes("new")){
-      $('.ubiquity-admin-set').val('admin_set/default');
-    }
-  //$('.ubiquity-admin-set').val('admin_set/default');
 });
 
 // This method appends the 'Required' tag in the label of the corresponding field

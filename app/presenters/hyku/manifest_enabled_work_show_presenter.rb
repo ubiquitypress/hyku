@@ -92,8 +92,14 @@ module Hyku
       solr_document['date_submitted_tesim']
     end
 
+    def check_file_licence_count
+      work_id = solr_document['id']
+      work = ActiveFedora::Base.find(work_id)
+      work.file_sets.map {|file_set| file_set.license.count}.sum
+    end
+
    #Added because there was no way to acces file_set_presenter from a  collection page or the search page.
-   #represengter_presenter which returns a file_set_presenter is nil in those places too
+   #representative_presenter which returns a file_set_presenter is nil in those places too
     def thumbnail_presenter
       return nil if thumbnail_id.blank?
       @thumbnail_presenter ||=

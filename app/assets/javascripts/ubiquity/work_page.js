@@ -4,3 +4,13 @@
 $(document).on("turbolinks:load", function(){
   $(".workflow-affix").removeClass( "workflow-affix" )
 })
+
+$(document).on("turbolinks:load", function() {
+  var pathName = window.location.pathname;
+
+  if (pathName.includes("new")  ) {
+    $('.ubiquity-admin-set').val('admin_set/default');
+    $('.set-access-controls ul.visibility li.radio input').prop("disabled", false);
+  }
+
+})

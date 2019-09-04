@@ -2,13 +2,17 @@
  https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/base/_items.html.erb
  and added to shared/ubiquity/works/item
 -->
+<% license_count = @presenter.check_file_licence_count > 0 ? true : false %>
+
 <% if presenter.member_presenters.present? %>
   <table class="table table-striped related-files">
     <thead>
       <tr>
         <th><%= t('.thumbnail') %></th>
         <th><%= t('.title') %></th>
-        <th><%= t('.licence') %></th>
+        <% if license_count %>
+          <th><%= t('.licence') %></th>
+        <% end %>
         <th><%= t('.date_uploaded') %></th>
         <th><%= t('.visibility') %></th>
         <th> File Size </th>

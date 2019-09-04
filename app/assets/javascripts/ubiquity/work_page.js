@@ -3,6 +3,9 @@
 
 $(document).on("turbolinks:load", function(){
   $(".workflow-affix").removeClass( "workflow-affix" )
+  //Hide these sharing  buttons
+  $('a[title="Google+"]').hide()
+  $('a[title="Tumblr"]').hide()
 })
 
 $(document).on("turbolinks:load", function() {
@@ -11,7 +14,7 @@ $(document).on("turbolinks:load", function() {
   if (pathName.includes("new")  ) {
     $('.ubiquity-admin-set').val('admin_set/default');
     $('.set-access-controls ul.visibility li.radio input').prop("disabled", false);
-    //sets default radio button selection to restricted or private. 
+    //sets default radio button selection to restricted or private.
     $('.set-access-controls ul.visibility li.radio input').last().prop("checked", true);
   }
 

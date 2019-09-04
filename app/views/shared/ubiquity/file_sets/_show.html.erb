@@ -25,7 +25,9 @@
 
       <%# TODO: render 'show_descriptions' See https://github.com/samvera/hyrax/issues/1481 %>
       <%= render 'show_details' %>
-      <%= render 'hyrax/users/activity_log', events: presenter.events %>
+      <% if current_user %>
+        <%= render 'hyrax/users/activity_log', events: presenter.events %>
+      <% end %>
     </div><!-- /columns second -->
   </div> <!-- /.row -->
 </div><!-- /.container-fluid -->

@@ -1,3 +1,5 @@
+<% presenter = Hyku::ManifestEnabledWorkShowPresenter.new(document, current_ability) %>
+
 <tr id="document_<%= document.id %>">
   <td>
     <label for="batch_document_<%= document.id %>" class="sr-only"><%=t("hyrax.dashboard.my.sr.batch_checkbox")%></label>
@@ -7,7 +9,7 @@
   <td>
     <div class='media'>
 
-      <%= render 'shared/ubiquity/thumbnail', document: document, presenter:  Hyku::ManifestEnabledWorkShowPresenter.new(document, current_ability) %>
+      <%= render 'shared/ubiquity/thumbnail', document: document, presenter:  presenter %>
 
       <div class='media-body'>
         <div class='media-heading'>
@@ -33,6 +35,6 @@
   <td><%= render_visibility_link document %></td>
 
   <td>
-    <%= render 'work_action_menu', document: document %>
+    <%= render 'work_action_menu', document: document, presenter: presenter %>
   </td>
 </tr>

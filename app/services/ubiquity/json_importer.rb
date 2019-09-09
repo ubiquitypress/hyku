@@ -53,6 +53,7 @@ module Ubiquity
       @attributes_hash['date_modified'] = Hyrax::TimeService.time_in_utc
       @attributes_hash['date_uploaded'] = Hyrax::TimeService.time_in_utc unless @work_instance.date_uploaded.present?
       set_default_work_visibility(@data_hash[:visibility])
+      set_admin_set(@data_hash[:admin_set_id])
       #save the work
       create_or_update_work
       add_state_to_work
@@ -124,16 +125,22 @@ module Ubiquity
         puts "setting visibility from hash - #{value.inspect}"
         @attributes_hash['visibility'] = value
       else
-        puts "setting visibility to private in json importer"
-        #if (key == "file_only_import" && key != 'true')
+         puts "setting visibility to private in json importer"
          @attributes_hash['visibility'] = (Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE) unless @work_instance.visibility.present?
-        #end
+      end
+    end
+
+    def set_admin_set(value)
+      if value.present?
+        puts "setting admin_set to - #{value.inspect}"
+        @attributes_hash['admin_set_id'] = value
+      else
+        puts "setting adminset to admin_set/default "
+         @attributes_hash['admin_set_id'] = "admin_set/default" unless @work_instance.admin_set_id.present?
       end
     end
 
     def  populate_array_field(key, val, index)
-      #set_default_work_visibility(key) if index == 0
-
       if ( (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key) && (@work_instance.send(key).class == ActiveTriples::Relation) )
         create_or_skip_work_metadata('array', key)
       end

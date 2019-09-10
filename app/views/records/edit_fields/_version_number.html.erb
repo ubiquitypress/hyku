@@ -1,5 +1,7 @@
 <% my_model_name = f.object.model.class.to_s.underscore %>
 <label class="control-label" for="<%= my_model_name %>_version_number">Version number</label>
+<p class="help-block">The version number of the resource. Suggested practice: track major_version.minor_version.
+                        If there are major changes then you must mint a new identifier e.g. DOI.</p>
 <%= text_field_tag "#{my_model_name}[version_number][]", f.object.model.version_number.first, id: "#{my_model_name}_version_number",
   class: "form-control ubiquity-version-number" %>
 <br>

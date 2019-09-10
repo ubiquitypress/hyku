@@ -122,10 +122,6 @@ terms:
     term: Blog post
   - id: GenericWork Cartographic material
     term: Cartographic material
-  - id: GenericWork Dissertation
-    term: Dissertation
-  - id: GenericWork Exhibition
-    term: Exhibition
   - id: GenericWork Interactive resource
     term: Interactive resource
   - id: GenericWork Learning object
@@ -134,14 +130,6 @@ terms:
     term: Musical notation
   - id: GenericWork Patent
     term: Patent
-  - id: GenericWork Software
-    term: Software
-  - id: GenericWork Sound
-    term: Sound
-  - id: GenericWork Technical documentation
-    term: Technical documentation
-  - id: GenericWork Thesis (doctoral)
-    term: Thesis (doctoral)
   - id: GenericWork Website
     term: Website
   - id: GenericWork Workflow

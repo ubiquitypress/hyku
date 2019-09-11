@@ -23,7 +23,7 @@ $(document).on("turbolinks:load", function(){
 
 // Currently not using but keeping it in future to trigger validation for existing records
 function triggerValidationIfValueIsPresent(){
-  var value_check_fields = ['ubiquity_editor_isni', 'ubiquity_creator_isni', 'ubiquity_contributor_isni'];
+  var value_check_fields = ['ubiquity_editor_isni', 'ubiquity_contributor_isni'];
   $.each(value_check_fields, function(_index, field_element){
     triggerValidation(field_element);
   });

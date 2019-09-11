@@ -152,8 +152,8 @@ self.siblings(".ubiquity_organization_fields").hide();
 }
 
 function hideCreatorPersonal(self){
-self.siblings(".ubiquity_personal_fields").find(".ubiquity_creator_family_name:last").val('');
-self.siblings(".ubiquity_personal_fields").find(".ubiquity_creator_given_name:last").val('');
+self.siblings(".ubiquity_personal_fields").find(".ubiquity_creator_family_name:last").val('').removeAttr('required').next("span.error");
+self.siblings(".ubiquity_personal_fields").find(".ubiquity_creator_given_name:last").val('').removeAttr('required').next("span.error");
 self.siblings(".ubiquity_personal_fields").find(".ubiquity_creator_orcid:last").val('');
 self.siblings(".ubiquity_personal_fields").find(".ubiquity_creator_institutional_relationship:last").val('');
 }

@@ -41,12 +41,14 @@ module Ubiquity
 
     #called in app/views/shared/ubiquity/file_sets/_show.html.erb and called in app/views/shared/ubiquity/file_sets/_actions.html.erb
     def display_file_download_link_or_contact_form(file_set_presenter)
-      if file_set_presenter.id.present?
-        file_size_bytes = get_file_size_in_bytes(file_set_presenter.id)
-        return "Download temporarily unavailable" if file_size_bytes.zero?
-        uuid = params[:parent_id] || params[:id]
-        if file_size_bytes < ENV["FILE_SIZE_LIMIT"].to_i
-          @file_set_s3_object ||= trigger_api_call_for_s3_url uuid
+      uuid = params[:parent_id] || params[:id]
+      @file_set_s3_object ||= trigger_api_call_for_s3_url uuid
+      
+      if @file_set_s3_object || file_set_presenter.id.present?
+        file_size_bytes = get_file_size_in_bytes(file_set_presenter.try(:id) )
+        return "Download temporarily unavailable" if (file_size_bytes.zero? && @file_set_s3_object.blank?)
+        if @file_set_s3_object || file_size_bytes < ENV["FILE_SIZE_LIMIT"].to_i
+
           if @file_set_s3_object.file_url_hash[file_set_presenter.id].present?
             status = @file_set_s3_object.file_status_hash[file_set_presenter.id]
             if status == "UPLOAD_COMPLETED"
@@ -119,11 +121,13 @@ module Ubiquity
     private
 
       def get_file_size_in_bytes(id)
-        file_set = get_file(id)
-        pdcm_file_object = file_set.original_file
-        # the pdcm file size is in bytes
-        return 0 if !pdcm_file_object.present?
-        return (pdcm_file_object.try(:size).try(:to_f) )
+        if id.present?
+          file_set = get_file(id)
+          pdcm_file_object = file_set.original_file
+          # the pdcm file size is in bytes
+          return 0 if !pdcm_file_object.present?
+          return (pdcm_file_object.try(:size).try(:to_f) )
+        end
       end
 
       def get_file(id)
@@ -164,6 +168,7 @@ module Ubiquity
         end
       end
 
+      #uuid is the id of the work that has the file_set
       def trigger_api_call_for_s3_url uuid
         Ubiquity::ImporterClient.get_s3_url uuid
       end

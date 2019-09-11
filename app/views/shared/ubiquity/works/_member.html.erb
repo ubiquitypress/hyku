@@ -1,5 +1,6 @@
 <!-- copied from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/base/_member.html.erb -->
 <!--instance of Hyku::FileSetPresenter -->
+<% license_count = @presenter.check_file_licence_count > 0 ? true : false %>
 
 <tr class="<%= dom_class(member) %> attributes">
   <td class="thumbnail">
@@ -7,12 +8,14 @@
     <%= render_file_or_icon(member).html_safe %>
  </td>
   <td class="attribute filename"><%= link_to(member.title.first, contextual_path(member, @presenter)) %></td>
-  <td class="attribute file_licence">
-    <% master_license_hash = fetch_license_hash %>
-    <% member.try(:license).each do |license_links| %>
-      <%= link_to master_license_hash[license_links], license_links, target: :_blank %><br>
-    <% end %>
-  </td>
+  <% if license_count %>
+    <td class="attribute file_licence">
+      <% master_license_hash = fetch_license_hash %>
+      <% member.try(:license).each do |license_links| %>
+        <%= link_to master_license_hash[license_links], license_links, target: :_blank %><br>
+      <% end %>
+    </td>
+  <% end %>
 
   <td class="attribute date_uploaded"><%= member.try(:date_uploaded) %></td>
   <td class="attribute permission">

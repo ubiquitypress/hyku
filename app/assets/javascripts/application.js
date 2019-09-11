@@ -28,6 +28,9 @@
 //= require ubiquity/datatable-settings
 //= require hyku/groups/per_page
 //= require hyku/groups/add_member
+//= require ubiquity/creator
+//= require ubiquity/contributor
+//= require ubiquity/editor
 
 //= require hyrax
 //= require hyku/groups/uploader

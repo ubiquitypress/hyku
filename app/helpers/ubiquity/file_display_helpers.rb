@@ -116,7 +116,7 @@ module Ubiquity
       def get_file_size_in_bytes(id)
         if id.present?
           @file_set ||= get_file(id)
-          pdcm_file_object = file_set.original_file
+          pdcm_file_object = @file_set.original_file
           # the pdcm file size is in bytes
           return 0 if !pdcm_file_object.present?
           return (pdcm_file_object.try(:size).try(:to_f) )

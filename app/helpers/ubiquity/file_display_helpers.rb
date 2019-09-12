@@ -41,29 +41,22 @@ module Ubiquity
 
     #called in app/views/shared/ubiquity/file_sets/_show.html.erb and called in app/views/shared/ubiquity/file_sets/_actions.html.erb
     def display_file_download_link_or_contact_form(file_set_presenter)
+      tenant_account = file_set_presenter && file_set_presenter.solr_document["account_cname_tesim"].try(:first)
+      is_localhost = tenant_account.include?('localhost')
       uuid = params[:parent_id] || params[:id]
+      #uuid is the id of the work that the file belongs to
       @file_set_s3_object ||= trigger_api_call_for_s3_url uuid
-      
-      if @file_set_s3_object || file_set_presenter.id.present?
-        file_size_bytes = get_file_size_in_bytes(file_set_presenter.try(:id) )
-        return "Download temporarily unavailable" if (file_size_bytes.zero? && @file_set_s3_object.blank?)
-        if @file_set_s3_object || file_size_bytes < ENV["FILE_SIZE_LIMIT"].to_i
+      #checks if the file_set id is in the hash returned by querying the repo importer
+      status = @file_set_s3_object.file_status_hash[file_set_presenter.try(:id)]
 
-          if @file_set_s3_object.file_url_hash[file_set_presenter.id].present?
-            status = @file_set_s3_object.file_status_hash[file_set_presenter.id]
-            if status == "UPLOAD_COMPLETED"
-              # link_to 'Download', @file_set_s3_object.file_url_hash[file_set_presenter.id].to_s
-              link_to 'Download', main_app.fail_uploads_download_file_path(uuid: uuid, fileset_id: file_set_presenter.id), method: 'post'
-            else
-              "<a style='text-decoration:none;' href='#' onclick='return false;'>Upload In-Progress</a>".html_safe
-            end
-          else
-            fetch_link_based_on_environment(file_set_presenter, file_size_bytes)
-          end
-        else
-          load_file_from_file_set(file_set_presenter, file_size_bytes)
-        end
+      return "Download temporarily unavailable" if (status.blank? && is_localhost == false )
+
+      if @file_set_s3_object.file_url_hash[file_set_presenter.id].present?
+        use_s3_file_link(status, uuid, file_set_presenter)
+      else
+        fetch_link_based_on_environment(file_set_presenter)
       end
+
     end
 
     #receives a file_set when called from views/hyrax/base/_representative_media.html.erb
@@ -122,7 +115,7 @@ module Ubiquity
 
       def get_file_size_in_bytes(id)
         if id.present?
-          file_set = get_file(id)
+          @file_set ||= get_file(id)
           pdcm_file_object = file_set.original_file
           # the pdcm file size is in bytes
           return 0 if !pdcm_file_object.present?
@@ -134,17 +127,28 @@ module Ubiquity
         FileSet.find(id)
       end
 
-      def fetch_link_based_on_environment(file_set_presenter, file_size_bytes)
+      def use_s3_file_link(status, uuid, file_set_presenter)
+        if status == "UPLOAD_COMPLETED"
+          # link_to 'Download', @file_set_s3_object.file_url_hash[file_set_presenter.id].to_s
+          link_to 'Download', main_app.fail_uploads_download_file_path(uuid: uuid, fileset_id: file_set_presenter.id), method: 'post'
+        else
+          "<a style='text-decoration:none;' href='#' onclick='return false;'>Upload In-Progress</a>".html_safe
+        end
+      end
+
+      def fetch_link_based_on_environment(file_set_presenter)
         file = get_file(file_set_presenter.id)
         tenant = file.parent.account_cname
+        file_size_bytes = get_file_size_in_bytes(file_set_presenter.try(:id) )
         if tenant.present? && (tenant.split('.').include? 'localhost')
-          load_file_from_file_set(file_set_presenter, file_size_bytes)
+          load_file_from_file_set(file_set_presenter)
         else
           "<a style='text-decoration:none;' href='#' onclick='return false;'>Download Temporarily Unavailable</a>".html_safe
         end
       end
 
-      def load_file_from_file_set(file_set_presenter, file_size_bytes)
+      def load_file_from_file_set(file_set_presenter)
+        file_size_bytes = get_file_size_in_bytes(file_set_presenter.try(:id) )
         file_size_in_mb = file_size_bytes/(1000 * 1000)
         file_size_in_gb = (file_size_in_mb/1000)
         #  download_size,   file_path  are passed to message_value for display in contact form

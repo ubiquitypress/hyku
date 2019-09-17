@@ -20,7 +20,7 @@ RSpec.describe Ubiquity::DataciteClient do
   context 'fetch_record_from_datacite' do
     describe '#fetch_record with full url' do
       it 'returns a  HTTParty::Response' do
-        stub_request_client1(datacite_client_1, json_data)
+        stub_request_datacite_client1(datacite_client_1, json_data)
         response_object =  datacite_client_1.fetch_record_from_datacite
         fetch_record_expectations(response_object, json_data)
       end
@@ -28,7 +28,7 @@ RSpec.describe Ubiquity::DataciteClient do
 
      describe '#fetch_record with url path' do
         it 'returns a  HTTParty::Response' do
-          stub_request_client2(datacite_client_2, json_data)
+          stub_request_datacite_client2(datacite_client_2, json_data)
           response_object =  datacite_client_2.fetch_record_from_datacite
           fetch_record_expectations(response_object, json_data)
         end

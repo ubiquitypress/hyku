@@ -2,7 +2,7 @@ module Ubiquity
   class DataciteResponse
     attr_accessor :api_response, :error
     attr_reader :raw_http_response, :attributes
-    # parsed_response_hash is httparty response body
+
     def initialize(response_hash: nil, result: nil, error: nil)
       @api_response = response_hash
       @raw_http_response = result
@@ -11,7 +11,7 @@ module Ubiquity
     end
 
     def title
-      attributes['title']
+      attributes['titles'][0]['title']
     end
 
     def date_published_year
@@ -19,7 +19,7 @@ module Ubiquity
     end
 
     def abstract
-      attributes['description']
+      attributes['descriptions'][0]['description']
     end
 
     def version
@@ -27,8 +27,8 @@ module Ubiquity
     end
 
     def license
-      if attributes.dig('license').present?
-        url_array = attributes.dig('license').split('/')
+      if attributes.dig("rightsList").present?
+        url_array = attributes.dig("rightsList").last["rightsUri"].split('/')
         url_collection = Hyrax::LicenseService.new.select_active_options.map(&:last)
         url_array.pop if url_array.last == 'legalcode'
         url_array.shift(2) # Removing the http, https and // part in the url
@@ -39,21 +39,34 @@ module Ubiquity
     end
 
     def doi
-      attributes.dig('identifier')
+      attributes.dig('doi')
+    end
+
+    def publisher
+      attributes.dig('publisher')
     end
 
     def creator
-      creator_group = attributes.dig('author')
-      if (creator_group.first.keys.include? "given") || (creator_group.first.keys.include? "family")
-        creator_with_seperated_names(creator_group)
+      creator_group = attributes.dig('creators')
+      if creator_group.first.keys.to_set.intersect? ["nameType", :nameType].to_set
+        json_with_personal_name_type('creator', creator_group)
       else
-        creator_without_seperated_names(creator_group)
+        json_with_organisation_name_type('creator', creator_group)
+      end
+    end
+
+    def contributor
+      contributor_group = attributes.dig('contributors')
+      if contributor_group.first.keys.to_set.intersect? ["nameType", :nameType].to_set
+        json_with_personal_name_type('contributor', contributor_group)
+      else
+        json_with_organisation_name_type('contributor', contributor_group)
       end
     end
 
     # [{"relation-type-id"=>"Documents", "related-identifier"=>"https://doi.org/10.5438/0013"}, {"relation-type-id"=>"IsNewVersionOf", "related-identifier"=>"https://doi.org/10.5438/0010"}]
     def related_identifier
-      related_group = attributes['related-identifiers']
+      related_group = attributes['relatedIdentifiers']
       related_group.map do |hash|
         {
           "relation_type" =>  hash["relation-type-id"],
@@ -72,42 +85,39 @@ module Ubiquity
           "title": title, "published_year": date_published_year,
           "abstract": abstract, "version": version,
           "creator_group": creator, "license": license,
-          "doi": doi
+          "doi": doi, "contributor_group": contributor,
+          "publisher": publisher
         }
       end
     end
 
-    private
+  private
 
-      def creator_without_seperated_names(data)
-        new_group = data.map {|hash| hash['literal']}
-        new_creator_group = []
-        new_group.each_with_index do |data, index|
-          new_data = data.split
-          creator_given_name = new_data.shift
-          creator_family_name = new_data.join(' ')
-          creator_position = index
-          creator_name_type = 'Personal'
-          hash = {'creator_given_name' =>  creator_given_name, 'creator_family_name' => creator_family_name,
-                  'creator_position' => creator_position, 'creator_name_type' => creator_name_type
-                  }
-            new_creator_group << hash
-        end
-        new_creator_group
-      end
+  def json_with_personal_name_type(field_name, data)
+    new_value_group = []
+    data.each_with_index do |hash, index|
+      hash = {
+        "#{field_name}_given_name" =>  hash["givenName"],
+        "#{field_name}_family_name" => hash["familyName"],
+        "#{field_name}_name_type" => 'Personal',
+        "#{field_name}_position" => index
+      }
+      new_value_group << hash
+    end
+    new_value_group
+  end
 
-      def creator_with_seperated_names(data)
-        new_creator_group = []
+  def json_with_organisation_name_type(field_name, data)
+        new_value_group = []
         data.each_with_index do |hash, index|
           hash = {
-            "creator_given_name" =>  hash["given"],
-            "creator_family_name" => hash["family"],
-            "creator_name_type" => 'Personal',
-            "creator_position" => index
-          }
-          new_creator_group << hash
+                   "#{field_name}_organization_name" =>  hash["name"],
+                   "#{field_name}_name_type" => 'Organisational',
+                   "#{field_name}_position" => index
+                  }
+          new_value_group << hash
         end
-        new_creator_group
-      end
+        new_value_group
+    end
   end
 end

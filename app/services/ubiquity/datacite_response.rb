@@ -45,7 +45,7 @@ module Ubiquity
     def official_url
       identifiers_array = attributes.dig('identifiers')
       result = identifiers_array.map do |hash|
-        hash['identifier'] if hash.has_value?('URL')
+        hash['identifier'] if hash.has_value?('URL') || hash['identifier'] if hash.has_value?('DOI')
       end
       result.compact.first
     end

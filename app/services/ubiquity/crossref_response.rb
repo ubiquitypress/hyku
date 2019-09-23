@@ -103,6 +103,9 @@ module Ubiquity
       attributes['publisher']
     end
 
+    def official_url
+      attributes['URL']
+    end
 
     def creator_with_seperated_names(data)
       new_creator_group = []
@@ -137,7 +140,8 @@ module Ubiquity
           issn: issn, eissn: eissn, journal_title: journal_title,
           abstract: abstract, version: version, isbn: isbn,
           creator_group: creator, doi: doi, keyword: keyword, license: license,
-          publisher: publisher, volume: volume, pagination: pagination, issue: issue
+          publisher: publisher, volume: volume, pagination: pagination, issue: issue,
+          official_url: official_url
         }
       end
     end

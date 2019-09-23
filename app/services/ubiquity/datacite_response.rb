@@ -42,25 +42,37 @@ module Ubiquity
       attributes.dig('doi')
     end
 
+    def official_url
+      identifiers_array = attributes.dig('identifiers')
+      result = identifiers_array.map do |hash|
+        hash['identifier'] if hash.has_value?('URL')
+      end
+      result.compact.first
+    end
+
     def publisher
       attributes.dig('publisher')
     end
 
     def creator
       creator_group = attributes.dig('creators')
-      if creator_group.first.keys.to_set.intersect? ["nameType", :nameType].to_set
-        json_with_personal_name_type('creator', creator_group)
-      else
-        json_with_organisation_name_type('creator', creator_group)
+      if creator_group.present?
+        if creator_group.first.keys.to_set.intersect? ["nameType", :nameType].to_set
+          json_with_personal_name_type('creator', creator_group)
+        else
+          json_with_organisation_name_type('creator', creator_group)
+        end
       end
     end
 
     def contributor
       contributor_group = attributes.dig('contributors')
-      if contributor_group.first.keys.to_set.intersect? ["nameType", :nameType].to_set
-        json_with_personal_name_type('contributor', contributor_group)
-      else
-        json_with_organisation_name_type('contributor', contributor_group)
+      if contributor_group.present?
+        if contributor_group.first.keys.to_set.intersect? ["nameType", :nameType].to_set
+          json_with_personal_name_type('contributor', contributor_group)
+        else
+          json_with_organisation_name_type('contributor', contributor_group)
+        end
       end
     end
 
@@ -86,7 +98,7 @@ module Ubiquity
           "abstract": abstract, "version": version,
           "creator_group": creator, "license": license,
           "doi": doi, "contributor_group": contributor,
-          "publisher": publisher
+          "publisher": publisher, "official_url": official_url
         }
       end
     end

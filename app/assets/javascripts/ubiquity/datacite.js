@@ -33,6 +33,10 @@ function fetchDataciteData(url) {
           field_array.push('DOI')
           $('.ubiquity-doi').val(result.data.doi)
         }
+        if($('.ubiquity-official-link').length != 0 && result.data.official_url != null) {
+          field_array.push('Official URL')
+          $('.ubiquity-official-link').val(result.data.official_url)
+        }
         //populate dropdown
         if($('.ubiquity-date-published-year').length != 0 && result.data.published_year != null) {
           field_array.push('Published Year')

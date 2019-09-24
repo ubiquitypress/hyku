@@ -239,6 +239,9 @@ function addOrganizationalValues(fieldName, key, value) {
 }
 
 function getValidOrcid(orcidPath) {
-  var orcidArray = orcidPath.split("/")
-  return validOrcid  = orcidArray.slice(-1)[0]
+  if (orcidPath != null) {
+    var orcidArray = orcidPath.split("/")
+    var validOrcid  = orcidArray.slice(-1)[0]
+  }
+  return validOrcid
 }

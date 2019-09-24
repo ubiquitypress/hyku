@@ -111,6 +111,7 @@ module Ubiquity
       hash = {
         "#{field_name}_given_name" =>  hash["givenName"],
         "#{field_name}_family_name" => hash["familyName"],
+        "#{field_name}_orcid" => hash["nameIdentifiers"][0]['nameIdentifier'],
         "#{field_name}_name_type" => 'Personal',
         "#{field_name}_position" => index
       }

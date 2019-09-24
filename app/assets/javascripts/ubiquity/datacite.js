@@ -189,7 +189,7 @@ function addPersonalValues(fieldName, key, value) {
     var div = parent.children(".ubiquity_personal_fields:last")
     div.children(familyName).val(value[fieldName + '_family_name'])
     div.children(givenName2).val(value[fieldName + '_given_name'])
-    div.children(orcid).val(value[fieldName + '_orcid'])
+    div.children(orcid).val(getValidOrcid(value[fieldName + '_orcid']))
     div.children(position).val(value[fieldName + '_position'])
     parent.children(nameType).val('Personal').change()
   }else {
@@ -202,7 +202,7 @@ function addPersonalValues(fieldName, key, value) {
     parent.after(parentClone)
     parentClone.find(familyName).val(value[fieldName + '_family_name'])
     parentClone.find(givenName).val(value[fieldName + '_given_name'])
-    parentClone.find(orcid).val(value[fieldName + '_orcid'])
+    div.children(orcid).val(getValidOrcid(value[fieldName + '_orcid']))
     parentClone.find(position).val(value[fieldName + '_position'])
     parentClone.find(nameType).val('Personal').change()
   }
@@ -236,4 +236,9 @@ function addOrganizationalValues(fieldName, key, value) {
     parentClone.find(position).val(value[fieldName + '_position'])
     parentClone.find(nameType).val('Organisational').change()
   }
+}
+
+function getValidOrcid(orcidPath) {
+  var orcidArray = orcidPath.split("/")
+  return validOrcid  = orcidArray.slice(-1)[0]
 }

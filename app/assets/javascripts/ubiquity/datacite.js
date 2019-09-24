@@ -66,6 +66,10 @@ function fetchDataciteData(url) {
           field_array.push('Licence')
           $('.ubiquity-license').val(result.data.license);
         }
+        if($('.ubiquity-funder').length != 0 && result.data.funder != null) {
+          field_array.push('Funder')
+          $('.ubiquity-funder').val(result.data.funder);
+        }
         if($('.ubiquity-issn').length != 0 && result.data.issn != null) {
           field_array.push('ISSN')
           $('.ubiquity-issn').val(result.data.issn);

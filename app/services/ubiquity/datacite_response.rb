@@ -26,6 +26,12 @@ module Ubiquity
       attributes.dig('version')
     end
 
+    def funder
+      if attributes.dig('fundingReferences').present?
+        attributes.dig('fundingReferences').first["funderName"]
+      end
+    end
+
     def license
       if attributes.dig("rightsList").present?
         url_array = attributes.dig("rightsList").last["rightsUri"].split('/')
@@ -98,7 +104,8 @@ module Ubiquity
           "abstract": abstract, "version": version,
           "creator_group": creator, "license": license,
           "doi": doi, "contributor_group": contributor,
-          "publisher": publisher, "official_url": official_url
+          "publisher": publisher, "official_url": official_url,
+          "funder": funder
         }
       end
     end

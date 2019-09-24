@@ -3,7 +3,7 @@
 <p class="help-block">Use full name e.g. Arts and Humanities Research Council</p>
 <%= select_tag "#{template}[funder][]",
       options_from_collection_for_select(FunderService.new.select_active_options.flatten.uniq!, :to_s, :to_s, f.object.model.funder.to_a),
-        class: "ubiquity-autocomplete", include_blank: true, multiple: true, data: {placeholder: "start typing a funder for autocompletion"}
+        class: "ubiquity-autocomplete ubiquity-funder", include_blank: true, multiple: true, data: {placeholder: "start typing a funder for autocompletion"}
 %>
 
 <br/><br/>

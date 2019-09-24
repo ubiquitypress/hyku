@@ -11,6 +11,9 @@ terms:
 - id : Engineering and Physical Sciences Research Council (EPSRC)
   term: Engineering and Physical Sciences Research Council (EPSRC)
   active: true
+  id : European Commission
+  term: European Commission
+  active: true
 - id: Innovate UK
   term: Innovate UK
   active: true
@@ -55,7 +58,7 @@ terms:
   active: true
 - id: The Arcadia Charitable Trust
   term: The Arcadia Charitable Trust
-  active: true 
+  active: true
 - id: Paul Hamlyn Foundation
   term: Paul Hamlyn Foundation
   active: true

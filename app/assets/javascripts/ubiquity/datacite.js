@@ -62,9 +62,13 @@ function fetchDataciteData(url) {
           field_array.push('Pagination')
           $('.ubiquity-pagination').val(result.data.pagination);
         }
-        if($('.ubiquity-license').length != 0 && result.data.license != null) {
+        if($('.ubiquity-license').length != 0 && result.data.license != null && result.data.license.active == undefined) {
           field_array.push('Licence')
-          $('.ubiquity-license').val(result.data.license);
+          $('.ubiquity-license').val(result.data.license)
+        } else if ($('.ubiquity-license').length != 0 && result.data.license.active == false && result.data.license.license != null ) {
+          field_array.push('Licence')
+          $(".ubiquity-license").append(new Option(result.data.license.label, result.data.license.license))
+          $('.ubiquity-license').val(result.data.license.license)
         }
         if($('.ubiquity-funder').length != 0 && result.data.funder != null) {
           field_array.push('Funder')

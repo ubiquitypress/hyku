@@ -35,12 +35,15 @@ module Ubiquity
     def license
       if attributes.dig("rightsList").present?
         url_array = attributes.dig("rightsList").last["rightsUri"].split('/')
-        url_collection = Hyrax::LicenseService.new.select_active_options.map(&:last)
+        url_active_collection = Hyrax::LicenseService.new.select_active_options.map(&:last)
+        url_all_collection = Hyrax::LicenseService.new.select_all_options.map(&:last)
+        url_inactive_collection = url_all_collection - url_active_collection
         url_array.pop if url_array.last == 'legalcode'
         url_array.shift(2) # Removing the http, https and // part in the url
         regex_url_str = "(?:http|https)://" + url_array.map { |ele| "(#{ele})" }.join('/')
         regex_url_exp = Regexp.new regex_url_str
-        url_collection.select { |e| e.match regex_url_exp }.first
+        license_result = url_active_collection.select { |e| e.match regex_url_exp }.first
+        return_license(license_result, url_inactive_collection, regex_url_exp)
       end
     end
 
@@ -111,6 +114,22 @@ module Ubiquity
     end
 
   private
+
+  def return_license(license_result, url_inactive_collection, regex_url_exp)
+    if license_result != nil
+      license_result
+    else
+      object = {}
+      label = attributes.dig("rightsList").last["rights"].split(':')[1]
+      license_result = url_inactive_collection.select { |e| e.match regex_url_exp }.first
+      object = {
+        "license": license_result,
+        "active": false,
+        "label": label
+      }
+      object
+    end
+  end
 
   def json_with_personal_name_type(field_name, data)
     new_value_group = []

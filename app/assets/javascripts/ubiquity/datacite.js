@@ -172,15 +172,19 @@ function addValues(key, value) {
 
 function populateCreatorValues(creatorArray){
   $.each(creatorArray, function(key, value){
-    addOrganizationalValues('creator', key, value);
-    addPersonalValues('creator', key, value);
+    if (creatorArray[0].creator_name_type == "Organisational") {
+      addOrganizationalValues('creator', key, value);
+    }
+      addPersonalValues('creator', key, value);
   })
 }
 
 function populateContributorValues(contributorArray){
   $.each(contributorArray, function(key, value){
-    addPersonalValues('contributor', key, value);
-    addOrganizationalValues('contributor', key, value);
+    if (contributorArray[0].contributor_name_type == "Personal") {
+      addPersonalValues('contributor', key, value);
+    }
+      addOrganizationalValues('contributor', key, value);
   })
 }
 

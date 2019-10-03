@@ -104,6 +104,7 @@ function fetchDataciteData(url) {
         }
         if ($(".ubiquity-meta-contributor").length != 0 && result.data.contributor_group != null) {
           field_array.push('Contributor')
+          console.log("CONT_GROUP", result.data.contributor_group)
           populateContributorValues(result.data.contributor_group);
         }
         if ($(".ubiquity-keyword").length != 0 && result.data.keyword != null) {
@@ -178,8 +179,8 @@ function populateCreatorValues(creatorArray){
 
 function populateContributorValues(contributorArray){
   $.each(contributorArray, function(key, value){
-    addOrganizationalValues('contributor', key, value);
     addPersonalValues('contributor', key, value);
+    addOrganizationalValues('contributor', key, value);
   })
 }
 
@@ -190,7 +191,6 @@ function addPersonalValues(fieldName, key, value) {
   var orcid = '.' + fieldName + '_orcid:last'
   var position = '.' + fieldName + '_position:last'
   var nameType = '.' + 'ubiquity_' + fieldName + '_name_type:last'
-
   if (key === 0) {
     var newParent = '.ubiquity-meta-' + fieldName
     var parent = $(newParent);
@@ -222,12 +222,11 @@ function addOrganizationalValues(fieldName, key, value) {
   var isni = '.ubiquity_' + fieldName + '_isni:last'
   var position = '.' + fieldName + '_position:last'
   var nameType = '.' + 'ubiquity_' + fieldName + '_name_type:last'
-
   if (key === 0) {
     var newParent = '.ubiquity-meta-' + fieldName
     var parent = $(newParent);
     var div = parent.children(".ubiquity_organization_fields:last")
-    div.children(name2).val(value[fieldName + '_organization_name'])
+    div.children(name).val(value[fieldName + '_organization_name'])
     div.children(isni).val(value[fieldName + '_isni'])
     div.children(position).val(value[fieldName + '_position'])
     parent.children(nameType).val('Organisational').change()

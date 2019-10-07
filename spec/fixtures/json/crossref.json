@@ -1,0 +1,634 @@
+{
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+        "indexed": {
+            "date-parts": [
+                [
+                    2019,
+                    9,
+                    6
+                ]
+            ],
+            "date-time": "2019-09-06T18:41:03Z",
+            "timestamp": 1567795263065
+        },
+        "reference-count": 36,
+        "publisher": "Springer Science and Business Media LLC",
+        "issue": "3",
+        "license": [
+            {
+                "URL": "http://www.springer.com/tdm",
+                "start": {
+                    "date-parts": [
+                        [
+                            2019,
+                            2,
+                            13
+                        ]
+                    ],
+                    "date-time": "2019-02-13T00:00:00Z",
+                    "timestamp": 1550016000000
+                },
+                "delay-in-days": 0,
+                "content-version": "tdm"
+            }
+        ],
+        "funder": [
+            {
+                "name": "Fundamental Research Funds for the Central Universities and Jiangsu province ?Collaborative Innovation Center for Food Safety and Quality Control? industry development program,",
+                "award": [
+                    "JUSRP 51501"
+                ]
+            }
+        ],
+        "content-domain": {
+            "domain": [
+                "link.springer.com"
+            ],
+            "crossmark-restriction": false
+        },
+        "short-container-title": [
+            "J Food Sci Technol"
+        ],
+        "published-print": {
+            "date-parts": [
+                [
+                    2019,
+                    3
+                ]
+            ]
+        },
+        "DOI": "10.1007/s13197-019-03605-z",
+        "type": "journal-article",
+        "created": {
+            "date-parts": [
+                [
+                    2019,
+                    2,
+                    13
+                ]
+            ],
+            "date-time": "2019-02-13T17:05:20Z",
+            "timestamp": 1550077520000
+        },
+        "page": "1328-1336",
+        "update-policy": "http://dx.doi.org/10.1007/springer_crossmark_policy",
+        "source": "Crossref",
+        "is-referenced-by-count": 0,
+        "title": [
+            "Preparation of Doum fruit (Hyphaene thebaica) dietary fiber supplemented biscuits: influence on dough characteristics, biscuits quality, nutritional profile and antioxidant properties"
+        ],
+        "prefix": "10.1007",
+        "volume": "56",
+        "author": [
+            {
+                "given": "Waleed",
+                "family": "Aboshora",
+                "sequence": "first",
+                "affiliation": []
+            },
+            {
+                "given": "Jiahao",
+                "family": "Yu",
+                "sequence": "additional",
+                "affiliation": []
+            },
+            {
+                "given": "Khamis Ali",
+                "family": "Omar",
+                "sequence": "additional",
+                "affiliation": []
+            },
+            {
+                "given": "Yinghao",
+                "family": "Li",
+                "sequence": "additional",
+                "affiliation": []
+            },
+            {
+                "given": "Hinawi A. M.",
+                "family": "Hassanin",
+                "sequence": "additional",
+                "affiliation": []
+            },
+            {
+                "given": "Willard Burton",
+                "family": "Navicha",
+                "sequence": "additional",
+                "affiliation": []
+            },
+            {
+                "given": "Lianfu",
+                "family": "Zhang",
+                "sequence": "additional",
+                "affiliation": []
+            }
+        ],
+        "member": "297",
+        "published-online": {
+            "date-parts": [
+                [
+                    2019,
+                    2,
+                    13
+                ]
+            ]
+        },
+        "reference": [
+            {
+                "key": "3605_CR1",
+                "author": "AACC",
+                "year": "2000",
+                "edition": "10",
+                "unstructured": "AACC (2000) Approved methods of the American Association of Cereal Chemists. Approved methods committee, vol 1, 10th edn. American Association of Cereal Chemists (AACC) International, St. Paul",
+                "volume-title": "Approved methods of the American Association of Cereal Chemists. Approved methods committee"
+            },
+            {
+                "key": "3605_CR2",
+                "doi-asserted-by": "publisher",
+                "first-page": "180",
+                "DOI": "10.12691/jfnr-2-4-8",
+                "volume": "2",
+                "author": "W Aboshora",
+                "year": "2014",
+                "unstructured": "Aboshora W, Lianfu Z, Dahir M, Gasmalla MA, Musa A, Omer E, Thapa M (2014a) Physicochemical, nutritional and functional properties of the epicarp, flesh and pitted sample of doum fruit (Hyphaene Thebaica). J Food Nutr Res 2:180–186",
+                "journal-title": "J Food Nutr Res"
+            },
+            {
+                "key": "3605_CR3",
+                "doi-asserted-by": "publisher",
+                "first-page": "2057",
+                "DOI": "10.4314/tjpr.v13i12.16",
+                "volume": "13",
+                "author": "W Aboshora",
+                "year": "2014",
+                "unstructured": "Aboshora W, Lianfu Z, Dahir M, Qingran M, Qingrui S, Jing L, Al-Haj NQM, Ammar A (2014b) Effect of extraction method and solvent power on polyphenol and flavonoid levels in Hyphaene thebaica L mart (Arecaceae)(Doum) fruit, and its antioxidant and antibacterial activities. Trop J Pharm Res 13:2057–2063",
+                "journal-title": "Trop J Pharm Res"
+            },
+            {
+                "key": "3605_CR4",
+                "doi-asserted-by": "publisher",
+                "first-page": "591",
+                "DOI": "10.1007/s13197-015-2063-1",
+                "volume": "53",
+                "author": "W Aboshora",
+                "year": "2016",
+                "unstructured": "Aboshora W, Lianfu Z, Dahir M, Qingran M, Musa A, Gasmalla MA, Omar KA (2016) Influence of doum (Hyphaene thebaica L.) flour addition on dough mixing properties, bread quality and antioxidant potential. J Food Sci Technol 53:591–600",
+                "journal-title": "J Food Sci Technol"
+            },
+            {
+                "key": "3605_CR5",
+                "doi-asserted-by": "publisher",
+                "first-page": "414",
+                "DOI": "10.1016/j.lwt.2012.09.002",
+                "volume": "50",
+                "author": "J Ahmed",
+                "year": "2013",
+                "unstructured": "Ahmed J, Almusallam A, Al-Hooti SN (2013) Isolation and characterization of insoluble date (Phoenix dactylifera L.) fibers. LWT Food Sci Technol 50:414–419",
+                "journal-title": "LWT Food Sci Technol"
+            },
+            {
+                "key": "3605_CR6",
+                "doi-asserted-by": "publisher",
+                "first-page": "319",
+                "DOI": "10.1016/j.jcs.2007.10.001",
+                "volume": "48",
+                "author": "C Ajila",
+                "year": "2008",
+                "unstructured": "Ajila C, Leelavathi K, Rao UP (2008) Improvement of dietary fiber content and antioxidant properties in soft dough biscuits with the incorporation of mango peel powder. J Cereal Sci 48:319–326",
+                "journal-title": "J Cereal Sci"
+            },
+            {
+                "key": "3605_CR7",
+                "doi-asserted-by": "publisher",
+                "first-page": "61",
+                "DOI": "10.1016/j.jfoodeng.2006.05.003",
+                "volume": "80",
+                "author": "M Anil",
+                "year": "2007",
+                "unstructured": "Anil M (2007) Using of hazelnut testa as a source of dietary fiber in bread making. J Food Eng 80:61–67",
+                "journal-title": "J Food Eng"
+            },
+            {
+                "key": "3605_CR8",
+                "author": "AOAC",
+                "year": "1992",
+                "unstructured": "AOAC (1992) Official methods of analyses. Official methods of analyses (Method NO. 991.43), Washington, DC",
+                "volume-title": "Official methods of analyses"
+            },
+            {
+                "key": "3605_CR9",
+                "author": "AOAC",
+                "year": "2000",
+                "edition": "17",
+                "unstructured": "AOAC (2000) Official methods of analysis, 17th edn. Association of Official Analytical Chemists, Washington, DC",
+                "volume-title": "Official methods of analysis"
+            },
+            {
+                "key": "3605_CR10",
+                "doi-asserted-by": "publisher",
+                "first-page": "223",
+                "DOI": "10.1079/PNS2002203",
+                "volume": "62",
+                "author": "MF Chaplin",
+                "year": "2003",
+                "unstructured": "Chaplin MF (2003) Fibre and water binding. Proc Nutr Soc 62:223–227",
+                "journal-title": "Proc Nutr Soc"
+            },
+            {
+                "key": "3605_CR11",
+                "doi-asserted-by": "publisher",
+                "first-page": "6742",
+                "DOI": "10.1007/s13197-015-1709-3",
+                "volume": "52",
+                "author": "M Choudhury",
+                "year": "2015",
+                "unstructured": "Choudhury M, Badwaik LS, Borah PK, Sit N, Deka SC (2015) Influence of bamboo shoot powder fortification on physico-chemical, textural and organoleptic characteristics of biscuits. J Food Sci Technol 52:6742–6748",
+                "journal-title": "J Food Sci Technol"
+            },
+            {
+                "key": "3605_CR12",
+                "doi-asserted-by": "publisher",
+                "first-page": "649",
+                "DOI": "10.1080/10408390500511862",
+                "volume": "46",
+                "author": "CL Dikeman",
+                "year": "2006",
+                "unstructured": "Dikeman CL, Fahey GC Jr (2006) Viscosity as related to dietary fiber: a review. Crit Rev Food Sci Nutr 46:649–663",
+                "journal-title": "Crit Rev Food Sci Nutr"
+            },
+            {
+                "key": "3605_CR13",
+                "first-page": "502",
+                "volume": "38",
+                "author": "A Gandhi",
+                "year": "2001",
+                "unstructured": "Gandhi A, Kotwaliwale N, Kawalkar J, Srivastav D, Parihar V, Nadh PR (2001) Effect of incorporation of defatted soyflour on the quality of sweet biscuits. J Food Sci Technol 38:502–503",
+                "journal-title": "J Food Sci Technol"
+            },
+            {
+                "key": "3605_CR14",
+                "doi-asserted-by": "publisher",
+                "first-page": "317",
+                "DOI": "10.1016/j.foodchem.2005.05.077",
+                "volume": "98",
+                "author": "B Hsu",
+                "year": "2006",
+                "unstructured": "Hsu B, Coupar IM, Ng K (2006) Antioxidant activity of hot water extract from the fruit of the Doum palm, Hyphaene thebaica. Food Chem 98:317–328",
+                "journal-title": "Food Chem"
+            },
+            {
+                "key": "3605_CR15",
+                "author": "ISO",
+                "year": "2007",
+                "unstructured": "ISO (2007) International Organization for Standardization (Ginebra). International Standard ISO 8589: Sensory analysis: general guidance for the design of test rooms. ISO, Ginebra",
+                "volume-title": "International Organization for Standardization (Ginebra). International Standard ISO 8589: Sensory analysis: general guidance for the design of test rooms"
+            },
+            {
+                "key": "3605_CR16",
+                "doi-asserted-by": "publisher",
+                "first-page": "561",
+                "DOI": "10.1016/j.foodchem.2007.11.012",
+                "volume": "108",
+                "author": "M Izydorczyk",
+                "year": "2008",
+                "unstructured": "Izydorczyk M, Chornick T, Paulley F, Edwards N, Dexter J (2008) Physicochemical properties of hull-less barley fibre-rich fractions varying in particle size and their potential as functional ingredients in two-layer flat bread. Food Chem 108:561–570",
+                "journal-title": "Food Chem"
+            },
+            {
+                "key": "3605_CR17",
+                "doi-asserted-by": "publisher",
+                "first-page": "6334",
+                "DOI": "10.1007/s13197-015-1773-8",
+                "volume": "52",
+                "author": "U Jan",
+                "year": "2015",
+                "unstructured": "Jan U et al (2015) Characterization of cookies made from wheat flour blended with buckwheat flour and effect on antioxidant properties. J Food Sci Technol 52:6334–6344",
+                "journal-title": "J Food Sci Technol"
+            },
+            {
+                "key": "3605_CR18",
+                "doi-asserted-by": "publisher",
+                "first-page": "227",
+                "DOI": "10.1016/j.jfoodeng.2011.02.023",
+                "volume": "105",
+                "author": "C Jia",
+                "year": "2011",
+                "unstructured": "Jia C, Huang W, Abdel-Samie MA-S, Huang G, Huang G (2011) Dough rheological, Mixolab mixing, and nutritional characteristics of almond cookies with and without xylanase. J Food Eng 105:227–232",
+                "journal-title": "J Food Eng"
+            },
+            {
+                "key": "3605_CR19",
+                "first-page": "187",
+                "volume": "30",
+                "author": "K Leelavathi",
+                "year": "1993",
+                "unstructured": "Leelavathi K, Haridas Rao P (1993) Development of high fibre biscuits using wheat bran. J Food Sci Technol 30:187–190",
+                "journal-title": "J Food Sci Technol"
+            },
+            {
+                "key": "3605_CR20",
+                "doi-asserted-by": "publisher",
+                "first-page": "954",
+                "DOI": "10.1007/s13197-016-2383-9",
+                "volume": "54",
+                "author": "RP Rathod",
+                "year": "2017",
+                "unstructured": "Rathod RP, Annapure US (2017) Antioxidant activity and polyphenolic compound stability of lentil-orange peel powder blend in an extrusion process. J Food Sci Technol 54:954–963",
+                "journal-title": "J Food Sci Technol"
+            },
+            {
+                "key": "3605_CR21",
+                "doi-asserted-by": "publisher",
+                "first-page": "697",
+                "DOI": "10.1016/j.lwt.2004.02.015",
+                "volume": "37",
+                "author": "A Sangnark",
+                "year": "2004",
+                "unstructured": "Sangnark A, Noomhorm A (2004) Effect of dietary fiber from sugarcane bagasse and sucrose ester on dough and bread properties. LWT Food Sci Technol 37:697–704",
+                "journal-title": "LWT Food Sci Technol"
+            },
+            {
+                "key": "3605_CR22",
+                "doi-asserted-by": "publisher",
+                "first-page": "4278",
+                "DOI": "10.1007/s13197-016-2423-5",
+                "volume": "53",
+                "author": "M Shafi",
+                "year": "2016",
+                "unstructured": "Shafi M, Baba WN, Masoodi FA, Bazaz R (2016) Wheat-water chestnut flour blends: effect of baking on antioxidant properties of cookies. J Food Sci Technol 53:4278–4288",
+                "journal-title": "J Food Sci Technol"
+            },
+            {
+                "key": "3605_CR23",
+                "doi-asserted-by": "publisher",
+                "first-page": "2482",
+                "DOI": "10.1007/s13197-016-2234-8",
+                "volume": "53",
+                "author": "S Sharma",
+                "year": "2016",
+                "unstructured": "Sharma S, Singh N, Katyal M (2016) Effect of gelatinized-retrograded and extruded starches on characteristics of cookies, muffins and noodles. J Food Sci Technol 53:2482–2491",
+                "journal-title": "J Food Sci Technol"
+            },
+            {
+                "key": "3605_CR24",
+                "doi-asserted-by": "publisher",
+                "first-page": "1190",
+                "DOI": "10.1111/ijfs.12764",
+                "volume": "50",
+                "author": "JP Singh",
+                "year": "2015",
+                "unstructured": "Singh JP, Kaur A, Shevkani K, Singh N (2015) Influence of jambolan (Syzygium cumini) and xanthan gum incorporation on the physicochemical, antioxidant and sensory properties of gluten-free eggless rice muffins. Int J Food Sci Technol 50:1190–1197",
+                "journal-title": "Int J Food Sci Technol"
+            },
+            {
+                "key": "3605_CR25",
+                "doi-asserted-by": "publisher",
+                "first-page": "4056",
+                "DOI": "10.1007/s13197-016-2412-8",
+                "volume": "53",
+                "author": "JP Singh",
+                "year": "2016",
+                "unstructured": "Singh JP, Kaur A, Shevkani K, Singh N (2016a) Composition, bioactive compounds and antioxidant activity of common Indian fruits and vegetables. J Food Sci Technol 53:4056–4066",
+                "journal-title": "J Food Sci Technol"
+            },
+            {
+                "key": "3605_CR26",
+                "doi-asserted-by": "publisher",
+                "first-page": "911",
+                "DOI": "10.1111/ijfs.13051",
+                "volume": "51",
+                "author": "JP Singh",
+                "year": "2016",
+                "unstructured": "Singh JP, Kaur A, Shevkani K, Singh N, Singh B (2016b) Physicochemical characterisation of corn extrudates prepared with varying levels of beetroot (Beta vulgaris) at different extrusion temperatures. Int J Food Sci Technol 51:911–919",
+                "journal-title": "Int J Food Sci Technol"
+            },
+            {
+                "key": "3605_CR27",
+                "doi-asserted-by": "publisher",
+                "first-page": "1269",
+                "DOI": "10.1007/s13197-015-2103-x",
+                "volume": "53",
+                "author": "JP Singh",
+                "year": "2016",
+                "unstructured": "Singh JP, Kaur A, Singh N (2016c) Development of eggless gluten-free rice muffins utilizing black carrot dietary fibre concentrate and xanthan gum. J Food Sci Technol 53:1269–1278",
+                "journal-title": "J Food Sci Technol"
+            },
+            {
+                "key": "3605_CR28",
+                "first-page": "38",
+                "volume": "1",
+                "author": "Y Srivastava",
+                "year": "2010",
+                "unstructured": "Srivastava Y, Semwal AD, Sharma GK, Bawa AS (2010) Effect of virgin coconut meal (VCM) on the textural, thermal and physico chemical properties of biscuits. Food Nutr Sci 1:38–44",
+                "journal-title": "Food Nutr Sci"
+            },
+            {
+                "key": "3605_CR29",
+                "doi-asserted-by": "publisher",
+                "first-page": "686",
+                "DOI": "10.1016/j.foodchem.2006.12.016",
+                "volume": "104",
+                "author": "M Sudha",
+                "year": "2007",
+                "unstructured": "Sudha M, Baskaran V, Leelavathi K (2007a) Apple pomace as a source of dietary fiber and polyphenols and its effect on the rheological characteristics and cake making. Food Chem 104:686–692",
+                "journal-title": "Food Chem"
+            },
+            {
+                "key": "3605_CR30",
+                "doi-asserted-by": "publisher",
+                "first-page": "1365",
+                "DOI": "10.1016/j.foodchem.2005.12.013",
+                "volume": "100",
+                "author": "M Sudha",
+                "year": "2007",
+                "unstructured": "Sudha M, Vetrimani R, Leelavathi K (2007b) Influence of fibre from different cereals on the rheological characteristics of wheat flour dough and on biscuit quality. Food Chem 100:1365–1370",
+                "journal-title": "Food Chem"
+            },
+            {
+                "key": "3605_CR31",
+                "doi-asserted-by": "publisher",
+                "first-page": "1126",
+                "DOI": "10.1007/s13197-017-2545-4",
+                "volume": "54",
+                "author": "S Takeungwongtrakul",
+                "year": "2017",
+                "unstructured": "Takeungwongtrakul S, Benjakul S (2017) Biscuits fortified with micro-encapsulated shrimp oil: characteristics and storage stability. J Food Sci Technol 54:1126–1136",
+                "journal-title": "J Food Sci Technol"
+            },
+            {
+                "key": "3605_CR32",
+                "doi-asserted-by": "publisher",
+                "first-page": "730",
+                "DOI": "10.1016/j.jfoodeng.2011.11.013",
+                "volume": "109",
+                "author": "G Wu",
+                "year": "2012",
+                "unstructured": "Wu G, Zhang M, Y Wang, Mothibe KJ, W Chen (2012) Production of silver carp bone powder using superfine grinding technology: suitable production parameters and its properties. J Food Eng 109:730–735",
+                "journal-title": "J Food Eng"
+            },
+            {
+                "key": "3605_CR33",
+                "doi-asserted-by": "publisher",
+                "first-page": "370",
+                "DOI": "10.3390/antiox2040370",
+                "volume": "2",
+                "author": "L Yu",
+                "year": "2013",
+                "unstructured": "Yu L, Nanguet A-L (2013) Comparison of antioxidant properties of refined and whole wheat flour and bread. Antioxidants 2:370–383",
+                "journal-title": "Antioxidants"
+            },
+            {
+                "key": "3605_CR34",
+                "doi-asserted-by": "publisher",
+                "first-page": "594",
+                "DOI": "10.1016/j.lwt.2014.04.020",
+                "volume": "58",
+                "author": "M Zhang",
+                "year": "2014",
+                "unstructured": "Zhang M, Wang F, Liu R, Tang X, Zhang Q, Zhang Z (2014) Effects of superfine grinding on physicochemical and antioxidant properties of Lycium barbarum polysaccharides. LWT Food Sci Technol 58:594–601",
+                "journal-title": "LWT Food Sci Technol"
+            },
+            {
+                "key": "3605_CR35",
+                "doi-asserted-by": "publisher",
+                "first-page": "943",
+                "DOI": "10.1016/j.foodres.2010.01.005",
+                "volume": "43",
+                "author": "K Zhu",
+                "year": "2010",
+                "unstructured": "Zhu K, Huang S, Peng W, Qian H, Zhou H (2010) Effect of ultrafine grinding on hydration and antioxidant properties of wheat bran dietary fiber. Food Res Int 43:943–948",
+                "journal-title": "Food Res Int"
+            },
+            {
+                "key": "3605_CR36",
+                "doi-asserted-by": "publisher",
+                "first-page": "43",
+                "DOI": "10.1016/j.jcs.2015.06.006",
+                "volume": "65",
+                "author": "F Zhu",
+                "year": "2015",
+                "unstructured": "Zhu F, Du B, Xu B (2015) Superfine grinding improves functional properties and antioxidant capacities of bran dietary fibre from Qingke (hull-less barley) grown in Qinghai-Tibet Plateau, China. J Cereal Sci 65:43–47",
+                "journal-title": "J Cereal Sci"
+            }
+        ],
+        "container-title": [
+            "Journal of Food Science and Technology"
+        ],
+        "original-title": [],
+        "language": "en",
+        "link": [
+            {
+                "URL": "http://link.springer.com/article/10.1007/s13197-019-03605-z/fulltext.html",
+                "content-type": "text/html",
+                "content-version": "vor",
+                "intended-application": "text-mining"
+            },
+            {
+                "URL": "http://link.springer.com/content/pdf/10.1007/s13197-019-03605-z.pdf",
+                "content-type": "application/pdf",
+                "content-version": "vor",
+                "intended-application": "text-mining"
+            },
+            {
+                "URL": "http://link.springer.com/content/pdf/10.1007/s13197-019-03605-z.pdf",
+                "content-type": "application/pdf",
+                "content-version": "vor",
+                "intended-application": "similarity-checking"
+            }
+        ],
+        "deposited": {
+            "date-parts": [
+                [
+                    2019,
+                    9,
+                    6
+                ]
+            ],
+            "date-time": "2019-09-06T18:17:31Z",
+            "timestamp": 1567793851000
+        },
+        "score": 1,
+        "subtitle": [],
+        "short-title": [],
+        "issued": {
+            "date-parts": [
+                [
+                    2019,
+                    2,
+                    13
+                ]
+            ]
+        },
+        "references-count": 36,
+        "journal-issue": {
+            "published-print": {
+                "date-parts": [
+                    [
+                        2019,
+                        3
+                    ]
+                ]
+            },
+            "issue": "3"
+        },
+        "alternative-id": [
+            "3605"
+        ],
+        "URL": "http://dx.doi.org/10.1007/s13197-019-03605-z",
+        "relation": {
+            "cites": []
+        },
+        "ISSN": [
+            "0022-1155",
+            "0975-8402"
+        ],
+        "issn-type": [
+            {
+                "value": "0022-1155",
+                "type": "print"
+            },
+            {
+                "value": "0975-8402",
+                "type": "electronic"
+            }
+        ],
+        "subject": [
+            "Food Science"
+        ],
+        "assertion": [
+            {
+                "value": "21 January 2019",
+                "order": 1,
+                "name": "revised",
+                "label": "Revised",
+                "group": {
+                    "name": "ArticleHistory",
+                    "label": "Article History"
+                }
+            },
+            {
+                "value": "24 January 2019",
+                "order": 2,
+                "name": "accepted",
+                "label": "Accepted",
+                "group": {
+                    "name": "ArticleHistory",
+                    "label": "Article History"
+                }
+            },
+            {
+                "value": "13 February 2019",
+                "order": 3,
+                "name": "first_online",
+                "label": "First Online",
+                "group": {
+                    "name": "ArticleHistory",
+                    "label": "Article History"
+                }
+            }
+        ]
+    }
+}

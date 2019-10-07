@@ -19,7 +19,9 @@ module Ubiquity
     end
 
     def abstract
-      attributes['descriptions'][0]['description']
+      if attributes['descriptions'][0]['description'].present?
+        attributes['descriptions'][0]['description']
+      end
     end
 
     def version
@@ -88,13 +90,17 @@ module Ubiquity
     # [{"relation-type-id"=>"Documents", "related-identifier"=>"https://doi.org/10.5438/0013"}, {"relation-type-id"=>"IsNewVersionOf", "related-identifier"=>"https://doi.org/10.5438/0010"}]
     def related_identifier
       related_group = attributes['relatedIdentifiers']
-      related_group.map do |hash|
-        {
-          "relation_type" =>  hash["relation-type-id"],
-          "related_identifier" => hash["related-identifier"],
-          "related_identifier_type" => 'DOI'
-        }
-      end
+      if related_group.present?
+        related_group.map do |hash|
+          {
+            "relation_type" =>  hash["relation-type-id"],
+            "related_identifier" => hash["related-identifier"],
+            "related_identifier_type" => 'DOI'
+          }
+         end
+       else
+         []
+       end
     end
 
     def data

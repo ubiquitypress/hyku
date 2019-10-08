@@ -135,14 +135,15 @@ module MultipleMetadataFieldsHelper
     end
   end
 
-  private
-
+  #leave it as a public method because it used in other files
   # return false if json == String
   def valid_json?(data)
     !!JSON.parse(data)  if data.class == String
     rescue JSON::ParserError
       false
   end
+
+  private
 
   def sort_hash(array_of_hash, key)
     #return array_of_hash if array_of_hash.class != Array

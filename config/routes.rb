@@ -48,6 +48,27 @@ Rails.application.routes.draw do
   get '/fail_uploads/delete_file' => 'ubiquity/fail_uploads#delete_file'
   post '/fail_uploads/download_file' => 'ubiquity/fail_uploads#download_file'
 
+  namespace :api do
+    namespace :v1 do
+       resources :tenant, defaults: {format: :json} do
+
+         resources :work, defaults: {format: :json} do
+           member do
+             get :manifest
+           end
+
+           resources :files, defaults: {format: :json}, only: [:index]
+         end
+
+         resources :highlights, defaults: {format: :json}, only: [:index]
+
+         resources :collection, defaults: {format: :json}
+       end
+
+       resources :errors, only: [:index], defaults: {format: :json} 
+     end
+   end
+
   # Citation download format
   post '/citation_exports/export_to_rif' => 'ubiquity/citation_exports#export_to_rif'
 

@@ -1,5 +1,6 @@
 
 json.uuid    single_collection.id
+json.type   'collection'
 json.related_url    single_collection.try(:related_url)
 json.title    single_collection.title.try(:first)
 json.resource_type    single_collection.resource_type.try(:first)

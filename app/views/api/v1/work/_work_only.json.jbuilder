@@ -1,5 +1,6 @@
 
   json.related_url    work.try(:related_url)
+  json.type 'work'
   json.work_type    work.try(:has_model).try(:first)
   json.title    work.title.try(:first)
   json.alternative_title    work.try(:alternative_title)

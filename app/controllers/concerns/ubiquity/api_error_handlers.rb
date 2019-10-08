@@ -21,13 +21,13 @@ module Ubiquity
     def render_error(exception)
       if exception.class == ActiveFedora::ObjectNotFoundError
         message =  exception.to_s.gsub('ActiveFedora::Base', 'record')
-        error_object = Ubiquity::ApiError::NotFound.new(status: '500', code: 'not_found', message: message)
+        error_object = Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: message)
       end
       if exception.class == RSolr::Error::Http
         message = "Please check the request path #{request.path} & ensure you add per_page if you" \
         "send back just #{request.fullpath}. That is do not send only ?page=number given"
 
-        error_object = Ubiquity::ApiError::NotFound.new(status: '400', code: 'Bad Request', message: message)
+        error_object = Ubiquity::ApiError::NotFound.new(status: 400, code: 'Bad Request', message: message)
       end
       render json: error_object.error_hash
     end
@@ -40,7 +40,7 @@ module Ubiquity
 
     def other_errors(exception)
       message = "This request #{request.original_fullpath} threw an error #{exception}, please check it and try again"
-      error_object = Ubiquity::ApiError::NotFound.new(status: '500', code: 'Server Error', message: message)
+      error_object = Ubiquity::ApiError::NotFound.new(status: 500, code: 'Server Error', message: message)
       render json: error_object.error_hash
     end
 

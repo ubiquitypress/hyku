@@ -1,10 +1,10 @@
-
+  json.uuid    work.id
   json.related_url    work.try(:related_url)
   json.type 'work'
   json.work_type    work.try(:has_model).try(:first)
   json.title    work.title.try(:first)
   json.alternative_title    work.try(:alternative_title)
-  json.resource_type    work.resource_type.try(:first)
+  json.resource_type    work.resource_type.first.try(:split).try(:first)
   creator = work.creator.try(:first)
   if valid_json?(creator)
     json.creator JSON.parse(creator)
@@ -20,7 +20,7 @@
     json.editor JSON.parse(editor)
   end
 
-  json.abstract    work.abstract.try(:first)
+  json.abstract    work.try(:abstract)
   json.date_published    work.date_published
   json.institution    work.institution
   json.organisational_unit    work.org_unit

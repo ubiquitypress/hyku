@@ -35,8 +35,8 @@ class API::V1::WorkController < ActionController::Base
   end
 
   def fetch_all_works
-    @total_count = [ActiveFedora::Base.where(models_to_search).offset(offset).count]
-    return @works = ActiveFedora::Base.where(models_to_search).order('system_create_dtsi desc').offset(offset).limit(limit) if limit != 0
+    @total_count = ActiveFedora::Base.where(models_to_search).count
+    return @works = ActiveFedora::Base.where(models_to_search).order('system_create_dtsi desc').offset(offset).limit(limit) if limit != 0 && offset < @total_count
      @works = ActiveFedora::Base.where(models_to_search).order('system_create_dtsi desc')
      fresh_when(etag: @works,
                 last_modified: ActiveFedora::Base.where(models_to_search).order('system_modified_dtsi desc').last.date_modified.to_time,
@@ -46,8 +46,8 @@ class API::V1::WorkController < ActionController::Base
 
   def filter_by_resource_type
     klass =  params[:type].camelize.constantize
-    @total_count = [klass.order('system_create_dtsi desc').count]
-    return  @works = klass.order('system_create_dtsi desc').offset(offset).limit(limit) if limit != 0 && offset < @total_count.first
+    @total_count = klass.order('system_create_dtsi desc').count
+    return  @works = klass.order('system_create_dtsi desc').offset(offset).limit(limit) if limit != 0 && offset < @total_count
     @works = klass.order('system_create_dtsi desc')
     fresh_when(etag: @works,
                last_modified: ActiveFedora::Base.where("has_model_ssim:#{params[:type].camelize}").order('system_modified_dtsi desc').last.date_modified.to_time,
@@ -55,14 +55,14 @@ class API::V1::WorkController < ActionController::Base
   end
 
   def filter_by_metadata
-    extracted_params = request.query_parameters.except(*['per_page', 'page']) 
+    extracted_params = request.query_parameters.except(*['per_page', 'page'])
     metadata_field = extracted_params.keys.first.try(:to_sym)
     value = extracted_params[metadata_field]
 
     if metadata_field.present? && [:availability].include?(metadata_field)
       query_by_availability(metadata_field, value)
     elsif [:collection_uuid].include? metadata_field
-      query_by_collection(value)
+      query_by_collection(metadata_field, value)
     elsif metadata_field.present?
       query_by_metadata(metadata_field, value)
     else
@@ -71,31 +71,33 @@ class API::V1::WorkController < ActionController::Base
   end
 
   def query_by_availability(metadata_field, value)
-    @total_count =  [ActiveFedora::Base.where("#{map_search_keys[metadata_field]}:#{map_search_values[value.to_sym]}").count]
-    if limit != 0  && offset < @total_count.first
+    @total_count =  ActiveFedora::Base.where("#{map_search_keys[metadata_field]}:#{map_search_values[value.to_sym]}").count
+    if limit != 0  && offset < @total_count
       @works = ActiveFedora::Base.where("#{map_search_keys[metadata_field]}:#{map_search_values[value.to_sym]}").offset(offset).limit(limit)
     else
       @works = ActiveFedora::Base.where("#{map_search_keys[metadata_field]}:#{map_search_values[value.to_sym]}")
     end
-    raise Ubiquity::ApiError::NotFound.new(status: '500', code: 'not_found', message: 'nothing')  if @works.blank?
+    raise Ubiquity::ApiError::NotFound.new(status: '404', code: 'not_found', message: "No record was found for #{metadata_field} with value of #{value}")  if @works.blank?
     add_caching("#{map_search_keys[metadata_field]}:#{map_search_values[value.to_sym]}")
   end
 
   def query_by_collection(metadata_field, value)
     collection = Collection.find(value)
-    @works = collection.member_objects
-    raise Ubiquity::ApiError::NotFound.new(status: '500', code: 'not_found', message: 'nothing')  if @works.blank?
-
+    @total_count = collection.try(:member_objects).try(:count)
+    @works = collection.try(:member_objects)
+    raise Ubiquity::ApiError::NotFound.new(status: '404', code: 'not_found', message: "Collection with id #{value} has no works")  if @works.blank?
+    #collection.member_objects returns the most recently modified  work first
+    fresh_when(etag: @works, last_modified: [@works.first.date_modified.to_time, collection.try(:date_modified).try(:to_time)].compact.max, public: true)
   end
 
   def query_by_metadata(metadata_field, value)
-    @total_count = [ActiveFedora::Base.where("#{map_search_keys[metadata_field]}:#{value}").count]
-    if limit != 0 && offset < @total_count.first
+    @total_count = ActiveFedora::Base.where("#{map_search_keys[metadata_field]}:#{value}").count
+    if limit != 0 && offset < @total_count
       @works = ActiveFedora::Base.where("#{map_search_keys[metadata_field]}:#{value}").offset(offset).limit(limit)
     else
       @works = ActiveFedora::Base.where("#{map_search_keys[metadata_field]}:#{value}")
     end
-    raise Ubiquity::ApiError::NotFound.new(status: '500', code: 'not_found', message: 'nothing')  if @works.blank?
+    raise Ubiquity::ApiError::NotFound.new(status: '404', code: 'not_found', message: "No record was found for #{metadata_field} with value of #{value}")  if @works.blank?
     add_caching("#{map_search_keys[metadata_field]}:#{value}")
   end
 

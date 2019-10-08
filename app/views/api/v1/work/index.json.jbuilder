@@ -1,6 +1,6 @@
 
-json.array! @total_count do |count|
-  json.total_count_for_pagination count
-end
+json.total @total_count
 
-json.partial! 'api/v1/work/work_only', collection: @works, as: :work
+json.items do
+  json.partial! 'api/v1/work/work_only', collection: @works, as: :work, cached: true
+end

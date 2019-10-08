@@ -1,6 +1,6 @@
 
-json.array! @total_count do |count|
-  json.total_count_for_pagination count
-end
+json.total @total_count
 
-json.partial! 'collection', collection: @collections, as: :single_collection
+json.items do
+  json.partial! 'collection', collection: @collections, as: :single_collection, cached: true
+end

@@ -24,8 +24,8 @@ class API::V1::CollectionController < ActionController::Base
   end
 
   def get_all_collections
-    @total_count = [Collection.count]
-    return  Collection.order('system_create_dtsi desc').offset(offset).limit(limit) if limit != 0 && offset < @total_count.first
+    @total_count = Collection.try(:count)
+    return  Collection.order('system_create_dtsi desc').offset(offset).limit(limit) if limit != 0 && offset < @total_count
     Collection.order('system_create_dtsi desc')
   end
 

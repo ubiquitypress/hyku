@@ -8,7 +8,7 @@ class API::V1::HighlightsController < ActionController::Base
     @collections = get_collections
     @featured_works = get_featured_works
     @recent_documents =  get_recent_documents
-    last_modified = [@collections.last.try(:date_modified).try(:to_time), @featured_works.last.try(:date_modified).try(:to_time), @recent_documents.last.try(:date_modified).try(:to_time)].compact.max
+    last_modified = [@collections.first.to_solr["system_modified_dtsi"].try(:to_time), @featured_works.last.try(:date_modified).try(:to_time), @recent_documents.last.try(:date_modified).try(:to_time)].compact.max
     fresh_when(etag: [@collections, @featured_works, @recent_documents],
                  last_modified: last_modified,
                   public: true)

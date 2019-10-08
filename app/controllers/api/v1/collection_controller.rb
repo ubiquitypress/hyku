@@ -7,13 +7,13 @@ class API::V1::CollectionController < ActionController::Base
   def index
     @collections = get_all_collections
     fresh_when(etag: @collections,
-                 last_modified: Collection.order('system_modified_dtsi desc').last.date_modified.try(:to_time),
+                 last_modified: @collections.first.to_solr["system_modified_dtsi"].try(:to_time),
                   public: true)
   end
 
   def show
-    if stale?(etag: @collection, last_modified: @collection.date_modified.try(:to_time), public: true)
-      @collection
+    if @collection.present?
+      fresh_when(etag: @collection, last_modified: @collection.to_solr["system_modified_dtsi"].try(:to_time), public: true)
     end
   end
 

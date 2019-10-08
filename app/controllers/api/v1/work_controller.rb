@@ -87,7 +87,7 @@ class API::V1::WorkController < ActionController::Base
     @works = collection.try(:member_objects)
     raise Ubiquity::ApiError::NotFound.new(status: '404', code: 'not_found', message: "Collection with id #{value} has no works")  if @works.blank?
     #collection.member_objects returns the most recently modified  work first
-    fresh_when(etag: @works, last_modified: [@works.first.date_modified.to_time, collection.try(:date_modified).try(:to_time)].compact.max, public: true)
+    fresh_when(etag: @works, last_modified: [@works.first.date_modified.to_time, collection.to_solr["system_modified_dtsi"].try(:to_time)].compact.max, public: true)
   end
 
   def query_by_metadata(metadata_field, value)

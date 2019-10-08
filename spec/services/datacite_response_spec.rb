@@ -57,6 +57,14 @@ context 'check values in response hash' do
       end
     end
 
+    describe '#funder' do
+      it 'returns the property funder' do
+         funder_from_response = @response_object.funder
+         funder_from_json_data = nil if @json_object["data"]["attributes"].dig('fundingReferences') == []
+         expect(funder_from_response).to eq nil
+      end
+    end
+
     describe '#creator' do
       it 'returns the property creator' do
          creator_name_from_response = @response_object.creator[0]["creator_given_name"]
@@ -83,7 +91,7 @@ context 'check values in response hash' do
     describe '#related_identifier' do
       it 'returns the property related_identifier' do
         identifier_from_response = @response_object.related_identifier
-        identifier_from_json_data = @json_object["data"]["attributes"]['relatedIdentifiers']
+        identifier_from_json_data = nil if @json_object["data"]["attributes"]['relatedIdentifiers'] == []
         expect(identifier_from_response).to eq identifier_from_json_data
       end
     end

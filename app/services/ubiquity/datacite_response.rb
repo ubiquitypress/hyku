@@ -98,8 +98,6 @@ module Ubiquity
             "related_identifier_type" => 'DOI'
           }
          end
-       else
-         []
        end
     end
 

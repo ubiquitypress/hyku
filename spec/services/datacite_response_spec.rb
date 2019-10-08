@@ -92,6 +92,15 @@ context 'check values in response hash' do
       end
     end
 
+    describe '#contributor' do
+      it 'returns the property contributor' do
+         contributor_name_from_response = @response_object.contributor
+         contributor_name_from_response = [] if contributor_name_from_response == nil
+         contributor_name_from_json_data =  @json_object["data"]["attributes"]['contributors']
+         expect(contributor_name_from_response).to eq contributor_name_from_json_data
+      end
+    end
+
     describe '#license' do
       it 'returns the property license' do
          license_from_response = @response_object.license[:license]

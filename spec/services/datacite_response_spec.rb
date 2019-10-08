@@ -1,7 +1,7 @@
 RSpec.describe Ubiquity::DataciteResponse do
   include DataCiteCrossrefClientHelpers
 
-  let (:json_data) {File.read(Rails.root.join("spec/fixtures/json/datacite.json")) }
+  let (:json_data) {File.read(Rails.root.join("spec/fixtures/json/datacite2.json")) }
   let (:full_datacite_url) { 'https://dx.doi.org/10.15123%2FPUB.7627' }
   let (:datacite_client_1)  {Ubiquity::DataciteClient.new(full_datacite_url)}
   let (:crossref_client_1)  {Ubiquity::DataciteClient.new(full_datacite_url)}
@@ -51,18 +51,18 @@ context 'check values in response hash' do
 
     describe '#doi' do
       it 'returns the property doi identifier' do
-         doi_from_response = @response_object.doi
-         doi_from_json_data =  @json_object["data"]["attributes"].dig('identifier').split('/')[3..-1].join('/')
+         doi_from_response = @response_object.doi["doi"]
+         doi_from_json_data =  @json_object["data"]["attributes"].dig('identifier')
          expect(doi_from_response).to eq doi_from_json_data
       end
     end
 
     describe '#creator' do
       it 'returns the property creator' do
-         creator_name_from_response = @data_hash['author'][0]['given']
-         creator_name_from_json_data =  @json_object["data"]["attributes"].dig('author')[0]['given']
-         creator_family_name_from_response = @data_hash['author'][0]['family']
-         creator_family_name_from_json_data =  @json_object["data"]["attributes"].dig('author')[0]['family']
+         creator_name_from_response = @response_object.creator[0]["creator_given_name"]
+         creator_name_from_json_data =  @json_object["data"]["attributes"].dig('creators')[0]['givenName']
+         creator_family_name_from_response = @response_object.creator[0]["creator_family_name"]
+         creator_family_name_from_json_data =  @json_object["data"]["attributes"].dig('creators')[0]['familyName']
          expect(creator_name_from_response).to eq creator_name_from_json_data
          expect(creator_family_name_from_response).to eq creator_family_name_from_json_data
       end
@@ -70,9 +70,9 @@ context 'check values in response hash' do
 
     describe '#license' do
       it 'returns the property license' do
-         license_from_response = @response_object.license
+         license_from_response = @response_object.license[:license]
          if license_from_response.present?
-           license_from_json_data = @json_object["data"]["attributes"].dig('license')
+           license_from_json_data = @json_object["data"]["attributes"]["rightsList"].last["rightsUri"]
          else
            license_from_json_data = nil
          end
@@ -83,7 +83,7 @@ context 'check values in response hash' do
     describe '#related_identifier' do
       it 'returns the property related_identifier' do
         identifier_from_response = @response_object.related_identifier
-        identifier_from_json_data = @json_object["data"]["attributes"]['related-identifiers']
+        identifier_from_json_data = @json_object["data"]["attributes"]['relatedIdentifiers']
         expect(identifier_from_response).to eq identifier_from_json_data
       end
     end

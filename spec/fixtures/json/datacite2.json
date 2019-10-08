@@ -1,0 +1,139 @@
+{
+    "data": {
+        "id": "10.15123/pub.7627",
+        "type": "dois",
+        "attributes": {
+            "doi": "10.15123/pub.7627",
+            "prefix": "10.15123",
+            "suffix": "pub.7627",
+            "identifiers": [
+                {
+                    "identifier": "https://doi.org/10.15123/pub.7627",
+                    "identifierType": "DOI"
+                }
+            ],
+            "creators": [
+                {
+                    "name": "Hawkins, Matthew",
+                    "nameType": "Personal",
+                    "givenName": "Matthew",
+                    "familyName": "Hawkins",
+                    "affiliation": []
+                }
+            ],
+            "titles": [
+                {
+                    "lang": "en",
+                    "title": "The Concept of Affective Tonality, and the Role of the Senses in Producing a Cinematic Narrative"
+                }
+            ],
+            "publisher": "The University of East London",
+            "container": {},
+            "publicationYear": 2016,
+            "subjects": [],
+            "contributors": [],
+            "dates": [
+                {
+                    "date": "2016",
+                    "dateType": "Issued"
+                }
+            ],
+            "language": null,
+            "types": {
+                "ris": "RPRT",
+                "bibtex": "article",
+                "citeproc": "article-journal",
+                "schemaOrg": "ScholarlyArticle",
+                "resourceType": "Thesis",
+                "resourceTypeGeneral": "Text"
+            },
+            "relatedIdentifiers": [],
+            "sizes": [],
+            "formats": [],
+            "version": null,
+            "rightsList": [
+                {
+                    "rights": "Creative Commons: Attribution-Noncommercial-No Derivative Works 3.0",
+                    "rightsUri": "http://creativecommons.org/licenses/by-nc-nd/3.0/"
+                }
+            ],
+            "descriptions": [
+                {
+                    "lang": "en",
+                    "description": "The practice based research project presented in this thesis\r\ndraws upon theoretical research in affect studies and film-\u00adphilosophy.\r\nThe aim of the thesis is to reconsider the pre-\u00adproduction and production\r\nprocess of narrative cinema and involve the rich and varied research\r\ninto the area of affect and the body in the field of film studies that is\r\ncurrently being used to analyse the reception and meaning making\r\nprocess used as the foundation for producing a series of narrative films\r\nthat privilege affect over traditional storytelling structures.\r\nFour films were made as part of an investigation into affective\r\nfilm practice. These films accompany the written exegesis and serve as\r\na testing ground for concepts developed in the written component of the\r\nthesis. Each piece of practice is formally and conceptually more\r\ncomplex than the last. The fourth and final film serves as an example\r\nfor the cinema of affective tonality and as such constitutes the central,\r\nvisual argument.\r\nThe theoretical research and experimental moving-\u00adimage\r\npractice result in the outlining of five conditions for the production of a\r\ncinema of affective tonality, which are combined with a taxonomy of\r\naffect developed by the author of the thesis. The taxonomy and\r\nguidelines offer filmmakers and researchers -\u00ad engaged in moving-\u00adimage\r\npractice and visual methods -\u00ad a proposition to construct cinema through\r\naffect rather than linguistics and ideology of film grammar.",
+                    "descriptionType": "Abstract"
+                }
+            ],
+            "geoLocations": [],
+            "fundingReferences": [],
+            "xml": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHJlc291cmNlIHhtbG5zPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtNCIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vZGF0YWNpdGUub3JnL3NjaGVtYS9rZXJuZWwtNCBodHRwOi8vc2NoZW1hLmRhdGFjaXRlLm9yZy9tZXRhL2tlcm5lbC00L21ldGFkYXRhLnhzZCI+CiAgPGlkZW50aWZpZXIgaWRlbnRpZmllclR5cGU9IkRPSSI+MTAuMTUxMjMvUFVCLjc2Mjc8L2lkZW50aWZpZXI+CiAgPHJlc291cmNlVHlwZSByZXNvdXJjZVR5cGVHZW5lcmFsPSJUZXh0Ij5UaGVzaXM8L3Jlc291cmNlVHlwZT4KICA8Y3JlYXRvcnM+CiAgICA8Y3JlYXRvcj4KICAgICAgPGNyZWF0b3JOYW1lPkhhd2tpbnMsIE1hdHRoZXc8L2NyZWF0b3JOYW1lPgogICAgICA8Z2l2ZW5OYW1lPk1hdHRoZXc8L2dpdmVuTmFtZT4KICAgICAgPGZhbWlseU5hbWU+SGF3a2luczwvZmFtaWx5TmFtZT4KICAgIDwvY3JlYXRvcj4KICA8L2NyZWF0b3JzPgogIDx0aXRsZXM+CiAgICA8dGl0bGUgeG1sOmxhbmc9ImVuIj5UaGUgQ29uY2VwdCBvZiBBZmZlY3RpdmUgVG9uYWxpdHksIGFuZCB0aGUgUm9sZSBvZiB0aGUgU2Vuc2VzIGluIFByb2R1Y2luZyBhIENpbmVtYXRpYyBOYXJyYXRpdmU8L3RpdGxlPgogIDwvdGl0bGVzPgogIDxkZXNjcmlwdGlvbnM+CiAgICA8ZGVzY3JpcHRpb24geG1sOmxhbmc9ImVuIiBkZXNjcmlwdGlvblR5cGU9IkFic3RyYWN0Ij5UaGUgcHJhY3RpY2UgYmFzZWQgcmVzZWFyY2ggcHJvamVjdCBwcmVzZW50ZWQgaW4gdGhpcyB0aGVzaXMmIzEzOwpkcmF3cyB1cG9uIHRoZW9yZXRpY2FsIHJlc2VhcmNoIGluIGFmZmVjdCBzdHVkaWVzIGFuZCBmaWxtLcKtcGhpbG9zb3BoeS4mIzEzOwpUaGUgYWltIG9mIHRoZSB0aGVzaXMgaXMgdG8gcmVjb25zaWRlciB0aGUgcHJlLcKtcHJvZHVjdGlvbiBhbmQgcHJvZHVjdGlvbiYjMTM7CnByb2Nlc3Mgb2YgbmFycmF0aXZlIGNpbmVtYSBhbmQgaW52b2x2ZSB0aGUgcmljaCBhbmQgdmFyaWVkIHJlc2VhcmNoJiMxMzsKaW50byB0aGUgYXJlYSBvZiBhZmZlY3QgYW5kIHRoZSBib2R5IGluIHRoZSBmaWVsZCBvZiBmaWxtIHN0dWRpZXMgdGhhdCBpcyYjMTM7CmN1cnJlbnRseSBiZWluZyB1c2VkIHRvIGFuYWx5c2UgdGhlIHJlY2VwdGlvbiBhbmQgbWVhbmluZyBtYWtpbmcmIzEzOwpwcm9jZXNzIHVzZWQgYXMgdGhlIGZvdW5kYXRpb24gZm9yIHByb2R1Y2luZyBhIHNlcmllcyBvZiBuYXJyYXRpdmUgZmlsbXMmIzEzOwp0aGF0IHByaXZpbGVnZSBhZmZlY3Qgb3ZlciB0cmFkaXRpb25hbCBzdG9yeXRlbGxpbmcgc3RydWN0dXJlcy4mIzEzOwpGb3VyIGZpbG1zIHdlcmUgbWFkZSBhcyBwYXJ0IG9mIGFuIGludmVzdGlnYXRpb24gaW50byBhZmZlY3RpdmUmIzEzOwpmaWxtIHByYWN0aWNlLiBUaGVzZSBmaWxtcyBhY2NvbXBhbnkgdGhlIHdyaXR0ZW4gZXhlZ2VzaXMgYW5kIHNlcnZlIGFzJiMxMzsKYSB0ZXN0aW5nIGdyb3VuZCBmb3IgY29uY2VwdHMgZGV2ZWxvcGVkIGluIHRoZSB3cml0dGVuIGNvbXBvbmVudCBvZiB0aGUmIzEzOwp0aGVzaXMuIEVhY2ggcGllY2Ugb2YgcHJhY3RpY2UgaXMgZm9ybWFsbHkgYW5kIGNvbmNlcHR1YWxseSBtb3JlJiMxMzsKY29tcGxleCB0aGFuIHRoZSBsYXN0LiBUaGUgZm91cnRoIGFuZCBmaW5hbCBmaWxtIHNlcnZlcyBhcyBhbiBleGFtcGxlJiMxMzsKZm9yIHRoZSBjaW5lbWEgb2YgYWZmZWN0aXZlIHRvbmFsaXR5IGFuZCBhcyBzdWNoIGNvbnN0aXR1dGVzIHRoZSBjZW50cmFsLCYjMTM7CnZpc3VhbCBhcmd1bWVudC4mIzEzOwpUaGUgdGhlb3JldGljYWwgcmVzZWFyY2ggYW5kIGV4cGVyaW1lbnRhbCBtb3Zpbmctwq1pbWFnZSYjMTM7CnByYWN0aWNlIHJlc3VsdCBpbiB0aGUgb3V0bGluaW5nIG9mIGZpdmUgY29uZGl0aW9ucyBmb3IgdGhlIHByb2R1Y3Rpb24gb2YgYSYjMTM7CmNpbmVtYSBvZiBhZmZlY3RpdmUgdG9uYWxpdHksIHdoaWNoIGFyZSBjb21iaW5lZCB3aXRoIGEgdGF4b25vbXkgb2YmIzEzOwphZmZlY3QgZGV2ZWxvcGVkIGJ5IHRoZSBhdXRob3Igb2YgdGhlIHRoZXNpcy4gVGhlIHRheG9ub215IGFuZCYjMTM7Cmd1aWRlbGluZXMgb2ZmZXIgZmlsbW1ha2VycyBhbmQgcmVzZWFyY2hlcnMgLcKtIGVuZ2FnZWQgaW4gbW92aW5nLcKtaW1hZ2UmIzEzOwpwcmFjdGljZSBhbmQgdmlzdWFsIG1ldGhvZHMgLcKtIGEgcHJvcG9zaXRpb24gdG8gY29uc3RydWN0IGNpbmVtYSB0aHJvdWdoJiMxMzsKYWZmZWN0IHJhdGhlciB0aGFuIGxpbmd1aXN0aWNzIGFuZCBpZGVvbG9neSBvZiBmaWxtIGdyYW1tYXIuPC9kZXNjcmlwdGlvbj4KICA8L2Rlc2NyaXB0aW9ucz4KICA8cHVibGljYXRpb25ZZWFyPjIwMTY8L3B1YmxpY2F0aW9uWWVhcj4KICA8cHVibGlzaGVyPlRoZSBVbml2ZXJzaXR5IG9mIEVhc3QgTG9uZG9uPC9wdWJsaXNoZXI+CiAgPHJpZ2h0c0xpc3Q+CiAgICA8cmlnaHRzIHJpZ2h0c1VSST0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbGljZW5zZXMvYnktbmMtbmQvMy4wLyI+Q3JlYXRpdmUgQ29tbW9uczogQXR0cmlidXRpb24tTm9uY29tbWVyY2lhbC1ObyBEZXJpdmF0aXZlIFdvcmtzIDMuMDwvcmlnaHRzPgogIDwvcmlnaHRzTGlzdD4KPC9yZXNvdXJjZT4=",
+            "url": "http://roar.uel.ac.uk/id/eprint/7627",
+            "contentUrl": null,
+            "metadataVersion": 0,
+            "schemaVersion": null,
+            "source": "mds",
+            "isActive": true,
+            "state": "findable",
+            "reason": null,
+            "created": "2018-10-22T13:12:01.000Z",
+            "registered": "2018-10-22T13:12:01.000Z",
+            "published": "2016",
+            "updated": "2019-09-27T07:02:35.000Z"
+        },
+        "relationships": {
+            "client": {
+                "data": {
+                    "id": "bl.uel",
+                    "type": "clients"
+                }
+            },
+            "media": {
+                "data": {
+                    "id": "10.15123/pub.7627",
+                    "type": "media"
+                }
+            }
+        }
+    },
+    "included": [
+        {
+            "id": "bl.uel",
+            "type": "clients",
+            "attributes": {
+                "name": "University of East London",
+                "symbol": "BL.UEL",
+                "year": 2014,
+                "contactEmail": "T.Shaw@uel.ac.uk",
+                "alternateName": "Data University of East London",
+                "description": "Data.uel is the new research data repository for UEL. Researchers at UEL can deposit their research data here, and link it to their publications in ROAR.\r\nThis is still a new service and we are very excited about the possibilities for the future. There may be further changes to data.uel going forwards.",
+                "language": [
+                    "en"
+                ],
+                "clientType": "repository",
+                "domains": "uel.ac.uk",
+                "issn": [],
+                "url": "https://data.uel.ac.uk/",
+                "created": "2014-05-01T08:55:17.000Z",
+                "updated": "2019-08-02T19:32:48.000Z",
+                "isActive": true,
+                "hasPassword": true
+            },
+            "relationships": {
+                "provider": {
+                    "data": {
+                        "id": "bl",
+                        "type": "providers"
+                    }
+                },
+                "prefixes": {
+                    "data": [
+                        {
+                            "id": "10.15123",
+                            "type": "prefixes"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

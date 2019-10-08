@@ -73,6 +73,14 @@ context 'check values in response hash' do
       end
     end
 
+    describe '#publisher' do
+      it 'returns the property publisher' do
+         official_url_from_response = @response_object.publisher
+         official_url_from_json_data = @json_object["data"]["attributes"]["publisher"]
+         expect(official_url_from_response).to eq official_url_from_json_data
+      end
+    end
+
     describe '#creator' do
       it 'returns the property creator' do
          creator_name_from_response = @response_object.creator[0]["creator_given_name"]

@@ -9,13 +9,13 @@ class API::V1::TenantController < ActionController::Base
     else
       @tenants ||= get_all_tenants
     end
-    if stale?(etag: @tenants, last_modified:   @tenants.maximum(:updated_at), public: true)
+    if stale?(last_modified: @tenants.maximum(:updated_at), public: true)
       render json: {total: @tenants.count,  items: @tenants}
     end
   end
 
   def show
-    if stale?(etag: @tenant, last_modified: @tenant.updated_at, public: true)
+    if stale?(last_modified: @tenant.updated_at, public: true)
       render json: @tenant
     end
   end
@@ -37,16 +37,16 @@ class API::V1::TenantController < ActionController::Base
 
   def get_all_tenants_with_cname
     if params[:cname].present?
-      return Account.where("cname ILIKE ?", "%#{params[:cname]}%") if params[:per_page].blank?
-      Account.where("cname ILIKE ?", "%#{params[:cname]}%").limit(params[:per_page].to_i)
+      return Account.where("cname ILIKE ?", "%#{params[:cname]}%").where.not(parent_id: nil) if params[:per_page].blank?
+      Account.where("cname ILIKE ?", "%#{params[:cname]}%").where.not(parent_id: nil).limit(params[:per_page].to_i)
     end
   end
 
   def get_all_tenants
     if params[:per_page].present?
-      Account.order('id asc').limit(params[:per_page].to_i)
+      Account.order('id asc').where.not(parent_id: nil).limit(params[:per_page].to_i)
     else
-      Account.order('id asc')
+      Account.order('id asc').where.not(parent_id: nil)
     end
   end
 

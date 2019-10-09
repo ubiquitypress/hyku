@@ -6,14 +6,13 @@ class API::V1::CollectionController < ActionController::Base
 
   def index
     @collections = get_all_collections
-    fresh_when(etag: @collections,
-                 last_modified: @collections.first.to_solr["system_modified_dtsi"].try(:to_time),
+    fresh_when(last_modified: @collections.first.to_solr["system_modified_dtsi"].try(:to_time),
                   public: true)
   end
 
   def show
     if @collection.present?
-      fresh_when(etag: @collection, last_modified: @collection.to_solr["system_modified_dtsi"].try(:to_time), public: true)
+      fresh_when(last_modified: @collection.to_solr["system_modified_dtsi"].try(:to_time), public: true)
     end
   end
 

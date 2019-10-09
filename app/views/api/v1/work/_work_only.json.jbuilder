@@ -69,5 +69,13 @@
   json.qualification    work.try(:qualification)
   json.alternative_journal_title    work.try(:alternative_journal_title)
 
+  if work.thumbnail.present?
+    img_path = CGI.escape(ActiveFedora::File.uri_to_id(work.thumbnail.original_file.versions.all.last.uri))
+    image_link = image_url("#{img_path}/full/150,120/0/default.jpg")
+    json.thumbnail_url   image_link
+  else
+    json.thumbnail_url  ''
+  end
+
   json.files work.work_filesets_summary_for_api
   json.collections work.member_of_collections_for_api

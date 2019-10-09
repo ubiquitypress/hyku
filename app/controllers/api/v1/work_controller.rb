@@ -3,7 +3,7 @@ class API::V1::WorkController < ActionController::Base
   include Ubiquity::ApiControllerUtilityMethods
   include Ubiquity::ApiErrorHandlers
 
-  before_action :get_fedora_work, only: [:show]
+  before_action :get_fedora_work, only: [:show, :manifest]
 
   def index
     if request.query_parameters.blank? || request.query_parameters.keys.to_set == ["per_page", "page"].to_set || request.query_parameters.keys == ["per_page"]
@@ -22,6 +22,7 @@ class API::V1::WorkController < ActionController::Base
   def manifest
     work_class = ActiveFedora::Base.find(params[:id]).class.to_s.pluralize
     controller_in_use = "Hyrax::#{work_class}Controller".camelize.constantize.new
+    request.env["HTTP_HOST"]  = @fedora_work.account_cname
     controller_in_use.request = request
     controller_in_use.response = response
     record = controller_in_use.manifest
@@ -38,8 +39,7 @@ class API::V1::WorkController < ActionController::Base
     @total_count = ActiveFedora::Base.where(models_to_search).count
     return @works = ActiveFedora::Base.where(models_to_search).order('system_create_dtsi desc').offset(offset).limit(limit) if limit != 0 && offset < @total_count
      @works = ActiveFedora::Base.where(models_to_search).order('system_create_dtsi desc')
-     fresh_when(etag: @works,
-                last_modified: ActiveFedora::Base.where(models_to_search).order('system_modified_dtsi desc').last.date_modified.to_time,
+     fresh_when(last_modified: ActiveFedora::Base.where(models_to_search).order('system_modified_dtsi desc').last.date_modified.to_time,
                  public: true)
 
   end
@@ -49,8 +49,7 @@ class API::V1::WorkController < ActionController::Base
     @total_count = klass.order('system_create_dtsi desc').count
     return  @works = klass.order('system_create_dtsi desc').offset(offset).limit(limit) if limit != 0 && offset < @total_count
     @works = klass.order('system_create_dtsi desc')
-    fresh_when(etag: @works,
-               last_modified: ActiveFedora::Base.where("has_model_ssim:#{params[:type].camelize}").order('system_modified_dtsi desc').last.date_modified.to_time,
+    fresh_when(last_modified: ActiveFedora::Base.where("has_model_ssim:#{params[:type].camelize}").order('system_modified_dtsi desc').last.date_modified.to_time,
                 public: true)
   end
 
@@ -87,7 +86,7 @@ class API::V1::WorkController < ActionController::Base
     @works = collection.try(:member_objects)
     raise Ubiquity::ApiError::NotFound.new(status: '404', code: 'not_found', message: "Collection with id #{value} has no works")  if @works.blank?
     #collection.member_objects returns the most recently modified  work first
-    fresh_when(etag: @works, last_modified: [@works.first.date_modified.to_time, collection.to_solr["system_modified_dtsi"].try(:to_time)].compact.max, public: true)
+    fresh_when(last_modified: [@works.first.date_modified.to_time, collection.to_solr["system_modified_dtsi"].try(:to_time)].compact.max, public: true)
   end
 
   def query_by_metadata(metadata_field, value)
@@ -104,8 +103,7 @@ class API::V1::WorkController < ActionController::Base
   def add_caching(search_query)
     record = ActiveFedora::Base.where(search_query)
     if record.present?
-      fresh_when(etag: @works,
-               last_modified: record.order('system_modified_dtsi desc').last.date_modified.to_time,
+      fresh_when(last_modified: record.order('system_modified_dtsi desc').last.date_modified.to_time,
                 public: true)
     end
   end

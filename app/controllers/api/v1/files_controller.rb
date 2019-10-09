@@ -10,8 +10,7 @@ class API::V1::FilesController < ActionController::Base
       work['response']['docs'] = files_doc
       @files = work
     else
-      work['response']['docs'] = {message: 'No files found'}
-      @files = work
+      raise Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: "Work with id of #{params[:work_id]} has no files attached to it")
     end
   end
 

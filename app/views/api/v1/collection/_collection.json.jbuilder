@@ -26,6 +26,14 @@ json.publisher   single_collection.publisher
 json.visbility    single_collection.visibility
 
 
+if single_collection.thumbnail.present?
+  img_path = CGI.escape(ActiveFedora::File.uri_to_id(single_collection.thumbnail.original_file.versions.all.last.uri))
+  image_link = image_url("#{img_path}/full/150,120/0/default.jpg")
+  json.thumbnail_url   image_link
+else
+  json.thumbnail_url  ''
+end
+
 json.works do
   json.partial! 'api/v1/work/work_only', collection: single_collection.member_objects, as: :work
 end

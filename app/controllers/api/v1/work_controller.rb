@@ -22,7 +22,10 @@ class API::V1::WorkController < ActionController::Base
   def manifest
     work_class = ActiveFedora::Base.find(params[:id]).class.to_s.pluralize
     controller_in_use = "Hyrax::#{work_class}Controller".camelize.constantize.new
+    puts "CANCUN_BEFORE #{request.env["HTTP_HOST"]}"
     request.env["HTTP_HOST"]  = @fedora_work.account_cname
+    puts "CANCUN_AFTER #{request.env["HTTP_HOST"]}"
+    puts "MIAMI #{@fedora_work.account_cname}"
     controller_in_use.request = request
     controller_in_use.response = response
     record = controller_in_use.manifest

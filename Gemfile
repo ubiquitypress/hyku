@@ -111,6 +111,7 @@ group :aws do
 end
 
 gem 'sidekiq'
+#added by ubiquitypress
 gem "sidekiq-cron", "~> 1.0.4"
 
 gem 'secure_headers'
@@ -118,4 +119,8 @@ gem 'secure_headers'
 gem 'sentry-raven'
 
 gem 'mini_magick', '~> 4.8.0'
+#added by ubiquitypress
 gem 'httparty', '~> 0.16.3'
+#aded by ubiquitypress for caching
+# Will install several other gems like redis-rack, redis-actionpack, redis-activesupport, redis-store, redis-store
+gem 'redis-rails'

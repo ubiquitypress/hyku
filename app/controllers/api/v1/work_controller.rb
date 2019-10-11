@@ -36,21 +36,40 @@ class API::V1::WorkController < ActionController::Base
   end
 
   def fetch_all_works
+    @fetch_all_works_jbuilder_cache_name = 'fetch_all_works_jbuilder'
     @total_count = ActiveFedora::Base.where(models_to_search).count
-    return @works = ActiveFedora::Base.where(models_to_search).order('system_create_dtsi desc').offset(offset).limit(limit) if limit != 0 && offset < @total_count
-     @works = ActiveFedora::Base.where(models_to_search).order('system_create_dtsi desc')
-     fresh_when(last_modified: ActiveFedora::Base.where(models_to_search).order('system_modified_dtsi desc').last.date_modified.to_time,
-                 public: true)
+    @last_modified = ActiveFedora::Base.where(models_to_search).order('system_modified_dtsi desc').last.date_modified.to_time
+
+    json  = Rails.cache.fetch('fetch_all_work', expires_in: 3.minutes) do
+      @works = ActiveFedora::Base.where(models_to_search).order('system_create_dtsi desc').offset(offset).limit(limit) if limit != 0 && offset < @total_count
+      @works = ActiveFedora::Base.where(models_to_search).order('system_create_dtsi desc') if params[:per_page].blank?
+
+      render_to_string(:template => 'api/v1/work/index.json.jbuilder', locals: {works: @works, total_count: @total_count, cache_name: @fetch_all_work_jbuilder_cache_name })
+
+    end
+    if stale?(last_modified: @last_modified, public: true)
+      render json: json
+    end
 
   end
 
   def filter_by_resource_type
+    @filter_by_resource_type_jbuilder_cache_name = 'filter_by_resource_type_jbuilder'
     klass =  params[:type].camelize.constantize
     @total_count = klass.order('system_create_dtsi desc').count
-    return  @works = klass.order('system_create_dtsi desc').offset(offset).limit(limit) if limit != 0 && offset < @total_count
-    @works = klass.order('system_create_dtsi desc')
-    fresh_when(last_modified: ActiveFedora::Base.where("has_model_ssim:#{params[:type].camelize}").order('system_modified_dtsi desc').last.date_modified.to_time,
-                public: true)
+    @last_modified = ActiveFedora::Base.where("has_model_ssim:#{params[:type].camelize}").order('system_modified_dtsi desc').last.date_modified.to_time
+
+    json  = Rails.cache.fetch('filter_by_resource_type_jbuilder', expires_in: 3.minutes) do
+
+      @works = klass.order('system_create_dtsi desc').offset(offset).limit(limit) if limit != 0 && offset < @total_count
+      @works = klass.order('system_create_dtsi desc')  if params[:per_page].blank?
+      render_to_string(:template => 'api/v1/work/index.json.jbuilder', locals: {works: @works, total_count: @total_count, cache_name: @filter_by_resource_type_jbuilder_cache_name })
+    end
+
+
+    if stale?(last_modified: @last_modified, public: true)
+        render json: json
+    end
   end
 
   def filter_by_metadata
@@ -81,12 +100,21 @@ class API::V1::WorkController < ActionController::Base
   end
 
   def query_by_collection(metadata_field, value)
-    collection = Collection.find(value)
+    @query_by_collection_jbuilder_cache_name = 'query_by_collection_jbuilder'
     @total_count = collection.try(:member_objects).try(:count)
-    @works = collection.try(:member_objects)
+    collection = Collection.find(value)
+    last_modified = [collection.member_objects.try(:first).try(:date_modified).try(:to_time), collection.to_solr["system_modified_dtsi"].try(:to_time)].compact.max
+
+    json  = Rails.cache.fetch('query_by_collectio_jbuilder', expires_in: 3.minutes) do
+      @works = collection.try(:member_objects)
+      render_to_string(:template => 'api/v1/work/index.json.jbuilder', locals: {works: @works, total_count: @total_count, cache_name: @query_by_collection_jbuilder_cache_name })
+    end
+
     raise Ubiquity::ApiError::NotFound.new(status: '404', code: 'not_found', message: "Collection with id #{value} has no works")  if @works.blank?
     #collection.member_objects returns the most recently modified  work first
-    fresh_when(last_modified: [@works.first.date_modified.to_time, collection.to_solr["system_modified_dtsi"].try(:to_time)].compact.max, public: true)
+    if stale?(last_modified: @last_modified, public: true)
+        render json: json
+    end
   end
 
   def query_by_metadata(metadata_field, value)

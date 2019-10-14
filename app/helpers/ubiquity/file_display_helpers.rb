@@ -43,12 +43,11 @@ module Ubiquity
     def display_file_download_link_or_contact_form(file_set_presenter)
       tenant_account = file_set_presenter && file_set_presenter.solr_document["account_cname_tesim"].try(:first)
       is_localhost = tenant_account.include?('localhost')
-      uuid = params[:parent_id] || params[:id]
-      #uuid is the id of the work that the file belongs to
-      @file_set_s3_object ||= trigger_api_call_for_s3_url uuid
+      file_uuid = file_set_presenter.id
+      #file_uuid is the id of the file or file_sets id
+      @file_set_s3_object ||= trigger_api_call_for_s3_url file_uuid
       #checks if the file_set id is in the hash returned by querying the repo importer
       status = @file_set_s3_object.file_status_hash[file_set_presenter.try(:id)]
-
       return "Download temporarily unavailable" if (status.blank? && is_localhost == false )
 
       if @file_set_s3_object.file_url_hash[file_set_presenter.id].present?

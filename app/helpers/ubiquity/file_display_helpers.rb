@@ -51,7 +51,7 @@ module Ubiquity
       return "Download temporarily unavailable" if (status.blank? && is_localhost == false )
 
       if @file_set_s3_object.file_url_hash[file_set_presenter.id].present?
-        use_s3_file_link(status, uuid, file_set_presenter)
+        use_s3_file_link(status, file_uuid, file_set_presenter)
       else
         fetch_link_based_on_environment(file_set_presenter)
       end

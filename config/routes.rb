@@ -46,7 +46,8 @@ Rails.application.routes.draw do
 
   # Fail Uploads Controller route
   get '/fail_uploads/delete_file' => 'ubiquity/fail_uploads#delete_file'
-  post '/fail_uploads/download_file' => 'ubiquity/fail_uploads#download_file'
+  #post '/fail_uploads/download_file' => 'ubiquity/fail_uploads#download_file'
+  match  '/fail_uploads/download_file' => 'ubiquity/fail_uploads#download_file' , via: [:get, :post]  
 
   namespace :api do
     namespace :v1 do
@@ -65,7 +66,7 @@ Rails.application.routes.draw do
          resources :collection, defaults: {format: :json}
        end
 
-       resources :errors, only: [:index], defaults: {format: :json} 
+       resources :errors, only: [:index], defaults: {format: :json}
      end
    end
 

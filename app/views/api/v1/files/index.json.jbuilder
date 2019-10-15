@@ -9,5 +9,7 @@ json.array! @files['response']['docs'] do |work|
   json.date_uploaded  work['date_uploaded_dtsi']
   json.visibility  work['visibility_ssi']
   json.size   work['file_size_lts']
-  json.download_link ('https://' + work['account_cname_tesim'].first + '/' + 'downloads' + '/' + work[:id])
+  json.download_link ('https://' + work['account_cname_tesim'].first + '/' + 'fail_uploads' + '/' + 'download_file' + '/' + work[:id])
+  #json.download_link ('https://' + work['account_cname_tesim'].first + '/' + 'downloads' + '/' + work[:id])
+
 end

@@ -8,7 +8,7 @@ module Ubiquity
 
     attr_accessor :file_url_hash, :file_status_hash
 
-    def initialize(response)
+    def initialize(response = nil)
       if response
         @file_status_hash = Hash[response.parsed_response['uuid'], response.parsed_response['status']]
         @file_url_hash = Hash[response.parsed_response['uuid'], response.parsed_response['providers'].try(:fetch, 'S3Storage', '').try(:fetch, 'link')]
@@ -26,5 +26,23 @@ module Ubiquity
         new(nil)
       end
     end
+
+    def post_to_importer(fileset_uuid, tenant_uuid)
+      body = {fileset_uuid: fileset_uuid, tenant_uuid: tenant_uuid}.to_json
+      handle_client do
+        response = self.class.post("/api/file/", body: body)
+      end
+    end
+
+    private
+
+    def handle_client
+      begin
+        yield
+      rescue HTTParty::Error, Errno::ECONNREFUSED, SocketError, Timeout::Error  => e
+        puts "Nothing posted to importer #{e.inspect}"
+      end
+    end
+
   end
 end

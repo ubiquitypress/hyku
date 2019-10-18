@@ -11,6 +11,7 @@ class FileSet < ActiveFedora::Base
   before_save :set_account_cname
   before_update :fetch_file_sets_and_create_work_expiry_service
   after_save :parent_save_to_update_file_visibility_facet, on: [:update]
+  after_save :post_to_importer, on: [:create]
 
   # Hyku has its own FileSetIndexer: app/indexers/file_set_indexer.rb
   # It overrides Hyrax to inject IIIF behavior.
@@ -28,8 +29,8 @@ class FileSet < ActiveFedora::Base
 
     def set_account_cname
       if self.account_cname.blank?
-        object ||=  Account.where("tenant ilike ?", "%#{Apartment::Tenant.current}%").where("data @> ?", {is_parent: 'false'}.to_json ).first
-        self.account_cname = object.cname
+        account_query
+        self.account_cname = account_query.cname
       end
     end
 
@@ -57,5 +58,14 @@ class FileSet < ActiveFedora::Base
 
     def parent_save_to_update_file_visibility_facet
       self && self.parent && self.parent.save if self.visibility_changed?
+    end
+
+    def post_to_importer
+      account_query
+      UbiquityPostFileToImporterJob.perform_later(self.id, account_query.tenant)
+    end
+
+    def account_query
+       @object ||= Account.where("tenant ilike ?", "%#{Apartment::Tenant.current}%").first
     end
 end

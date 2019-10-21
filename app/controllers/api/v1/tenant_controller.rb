@@ -9,15 +9,18 @@ class API::V1::TenantController < ActionController::Base
     else
       @tenants ||= get_all_tenants
     end
-    if stale?(last_modified: @tenants.maximum(:updated_at), public: true)
-      render json: {total: @tenants.count,  items: @tenants}
-    end
+    #if stale?(last_modified: @tenants.maximum(:updated_at), public: true)
+      #render json: {total: @tenants.count,  items: @tenants}
+    #end
   end
 
   def show
-    if stale?(last_modified: @tenant.updated_at, public: true)
-      render json: @tenant
-    end
+    AccountElevator.switch!(@tenant.cname)
+    @site = @tenant.get_site
+    @content_block = @tenant.get_content_block
+    #if stale?(last_modified: @tenant.updated_at, public: true)
+      #render json: @tenant
+    #end
   end
 
   private

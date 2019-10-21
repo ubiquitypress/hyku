@@ -1,2 +1,2 @@
 
-json.partial! 'work_only',  work: @fedora_work 
+json.partial! 'work',  work: @work 

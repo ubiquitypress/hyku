@@ -6,8 +6,7 @@ class ConferenceItem < ActiveFedora::Base
   include Ubiquity::EditorMetadataModelConcern
   include Ubiquity::UpdateSharedIndex
   include Ubiquity::FileAvailabilityFaceting
-  include Ubiquity::ApiUtilityMethods
-
+  
   self.indexer = ConferenceItemIndexer
   # Change this to restrict which works can be added as a child.
   # self.valid_child_concerns = []

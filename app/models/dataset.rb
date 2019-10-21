@@ -7,7 +7,6 @@ class Dataset < ActiveFedora::Base
   include Ubiquity::AllModelsVirtualFields
   include Ubiquity::UpdateSharedIndex
   include Ubiquity::FileAvailabilityFaceting
-  include Ubiquity::ApiUtilityMethods
 
   self.indexer = DatasetIndexer
   # Change this to restrict which works can be added as a child.

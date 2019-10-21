@@ -16,6 +16,14 @@ module Ubiquity
       'has_model_ssim:Article OR has_model_ssim:Book OR has_model_ssim:BookContribution OR has_model_ssim:ConferenceItem OR has_model_ssim: Dataset OR  has_model_ssim:ExhibitionItem OR has_model_ssim:Image OR has_model_ssim:Report OR  has_model_ssim:ThesisOrDissertation OR has_model_ssim:TimeBasedMedia OR has_model_ssim:GenericWork'
     end
 
+    def model_list
+       'Article,Book,BookContribution,ConferenceItem,Dataset,ExhibitionItem,Image,Report,ThesisOrDissertation,TimeBasedMedia,GenericWork,Collection'
+    end
+
+    def facet_list
+      ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim", "institution_sim"]
+    end
+
     def switch_tenant
       find_parent
       tenant_name = @tenant.cname
@@ -39,8 +47,12 @@ module Ubiquity
       page = params[:page].to_i || 1
     end
 
+    def default_limit_for_hightlights
+       6
+    end
+
     def default_limit
-       5
+       100
     end
 
   end

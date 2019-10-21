@@ -1,6 +1,7 @@
 #/home/edward/dev-2/hyku/app/views/api/v1/work/_work.json.jbuilder
 
 json.uuid    work['id']
+json.type 'work'
 json.related_url    work['related_url_tesim']
 json.work_type    work['has_model_ssim'].try(:first)
 json.title    work['title_tesim'].try(:first)

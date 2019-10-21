@@ -3,7 +3,7 @@ class API::V1::WorkController < ActionController::Base
   include Ubiquity::ApiControllerUtilityMethods
   include Ubiquity::ApiErrorHandlers
 
-  before_action :get_fedora_work, only: [:show, :manifest]
+  before_action :fetch_work, only: [:show, :manifest]
 
   def index
     if request.query_parameters.blank? || request.query_parameters.keys.to_set == ["per_page", "page"].to_set || request.query_parameters.keys == ["per_page"]
@@ -16,13 +16,13 @@ class API::V1::WorkController < ActionController::Base
   end
 
   def show
-    fresh_when(etag: @fedora_work, last_modified: @fedora_work.date_modified, public: true)
+    #fresh_when(etag: @fedora_work, last_modified: @fedora_work.date_modified, public: true)
   end
 
   def manifest
-    work_class = ActiveFedora::Base.find(params[:id]).class.to_s.pluralize
+    work_class = @work['has_model_ssim']
     controller_in_use = "Hyrax::#{work_class}Controller".camelize.constantize.new
-    request.env["HTTP_HOST"]  = @fedora_work.account_cname
+    request.env["HTTP_HOST"]  = @work['account_cname_tesim']
     controller_in_use.request = request
     controller_in_use.response = response
     record = controller_in_use.manifest
@@ -31,101 +31,68 @@ class API::V1::WorkController < ActionController::Base
 
   private
 
-  def get_fedora_work
-    @fedora_work = ActiveFedora::Base.find(params[:id])
+  def fetch_work
+    work = CatalogController.new.repository.search(q: params[:id],  "sort" => "score desc, system_create_dtsi desc",
+    "facet.field "=> ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim", "institution_sim",
+    "language_sim", "file_availability_sim"])
+
+    @work = work['response']['docs'].first
   end
 
   def fetch_all_works
-    @fetch_all_works_jbuilder_cache_name = 'fetch_all_works_jbuilder'
-    @total_count = ActiveFedora::Base.where(models_to_search).count
-    @last_modified = ActiveFedora::Base.where(models_to_search).order('system_modified_dtsi desc').last.date_modified.to_time
+    total_record = CatalogController.new.repository.search(q: "id:*", fq: models_to_search , rows: 0)
+    total_count = total_record['response']['numFound']
 
-    json  = Rails.cache.fetch('fetch_all_work', expires_in: 3.minutes) do
-      @works = ActiveFedora::Base.where(models_to_search).order('system_create_dtsi desc').offset(offset).limit(limit) if limit != 0 && offset < @total_count
-      @works = ActiveFedora::Base.where(models_to_search).order('system_create_dtsi desc') if params[:per_page].blank?
+    return @works = CatalogController.new.repository.search(q: '', fq: models_to_search, "sort" => "score desc, system_create_dtsi desc",
+    "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim", "institution_sim",
+    "language_sim", "file_availability_sim"], rows: limit, start: offset) if params[:per_page].present? && offset < total_count
 
-      render_to_string(:template => 'api/v1/work/index.json.jbuilder', locals: {works: @works, total_count: @total_count, cache_name: @fetch_all_work_jbuilder_cache_name })
+    @limit = default_limit
 
-    end
-    if stale?(last_modified: @last_modified, public: true)
-      render json: json
-    end
-
+    @works = CatalogController.new.repository.search(q: '', fq: models_to_search, "sort" => "score desc, system_create_dtsi desc",
+    "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim", "institution_sim",
+    "language_sim", "file_availability_sim"], rows: limit) if params[:per_page].blank? || offset > total_count
   end
 
   def filter_by_resource_type
-    @filter_by_resource_type_jbuilder_cache_name = 'filter_by_resource_type_jbuilder'
-    klass =  params[:type].camelize.constantize
-    @total_count = klass.order('system_create_dtsi desc').count
-    @last_modified = ActiveFedora::Base.where("has_model_ssim:#{params[:type].camelize}").order('system_modified_dtsi desc').last.date_modified.to_time
+    total_record = CatalogController.new.repository.search(q: "id:*", fq: "has_model_ssim:#{params[:type].camelize.constantize}" , rows: 0)
+    total_count = total_record['response']['numFound']
+    return @works = CatalogController.new.repository.search(q: "id:*", fq: "has_model_ssim:#{params[:type].camelize.constantize}", rows: limit, start: offset ) if params[:per_page].present? && offset < total_count
 
-    json  = Rails.cache.fetch('filter_by_resource_type_jbuilder', expires_in: 3.minutes) do
+    @limit = default_limit
 
-      @works = klass.order('system_create_dtsi desc').offset(offset).limit(limit) if limit != 0 && offset < @total_count
-      @works = klass.order('system_create_dtsi desc')  if params[:per_page].blank?
-      render_to_string(:template => 'api/v1/work/index.json.jbuilder', locals: {works: @works, total_count: @total_count, cache_name: @filter_by_resource_type_jbuilder_cache_name })
-    end
-
-
-    if stale?(last_modified: @last_modified, public: true)
-        render json: json
-    end
+    @works = CatalogController.new.repository.search(q: "id:*", fq: "has_model_ssim:#{params[:type].camelize.constantize}", rows: limit ) if params[:per_page].blank? || offset > total_count
   end
 
   def filter_by_metadata
     extracted_params = request.query_parameters.except(*['per_page', 'page'])
     metadata_field = extracted_params.keys.first.try(:to_sym)
+
     value = extracted_params[metadata_field]
 
-    if metadata_field.present? && [:availability].include?(metadata_field)
-      query_by_availability(metadata_field, value)
-    elsif [:collection_uuid].include? metadata_field
-      query_by_collection(metadata_field, value)
-    elsif metadata_field.present?
-      query_by_metadata(metadata_field, value)
-    else
-      raise Ubiquity::ApiError::BadRequest.new(status: 400, code: 'Bad Request', message: "Please check the request path #{request.path} & ensure you add per_page if you send back just #{request.original_fullpath}. That is do not send only ?page=number given" )
-    end
-  end
+    if [:availability].include? metadata_field
 
-  def query_by_availability(metadata_field, value)
-    @total_count =  ActiveFedora::Base.where("#{map_search_keys[metadata_field]}:#{map_search_values[value.to_sym]}").count
-    if limit != 0  && offset < @total_count
-      @works = ActiveFedora::Base.where("#{map_search_keys[metadata_field]}:#{map_search_values[value.to_sym]}").offset(offset).limit(limit)
-    else
-      @works = ActiveFedora::Base.where("#{map_search_keys[metadata_field]}:#{map_search_values[value.to_sym]}")
-    end
-    raise Ubiquity::ApiError::NotFound.new(status: '404', code: 'not_found', message: "No record was found for #{metadata_field} with value of #{value}")  if @works.blank?
-    add_caching("#{map_search_keys[metadata_field]}:#{map_search_values[value.to_sym]}")
-  end
+     total_record = CatalogController.new.repository.search(q: "id:*", fq: ["{!term f=file_availability_sim}#{map_search_values[value.to_sym]}", "{!terms f=has_model_ssim}#{model_list}"], rows: 0)
+     total_count = total_record['response']['numFound']
 
-  def query_by_collection(metadata_field, value)
-    @query_by_collection_jbuilder_cache_name = 'query_by_collection_jbuilder'
-    @total_count = collection.try(:member_objects).try(:count)
-    collection = Collection.find(value)
-    last_modified = [collection.member_objects.try(:first).try(:date_modified).try(:to_time), collection.to_solr["system_modified_dtsi"].try(:to_time)].compact.max
+     return @works =  CatalogController.new.repository.search(:q=>"", fq: ["{!term f=file_availability_sim}#{map_search_values[value.to_sym]}", "{!terms f=has_model_ssim}#{model_list}"], rows: limit, start: offset) if params[:per_page].present? && offset < total_count
 
-    json  = Rails.cache.fetch('query_by_collectio_jbuilder', expires_in: 3.minutes) do
-      @works = collection.try(:member_objects)
-      render_to_string(:template => 'api/v1/work/index.json.jbuilder', locals: {works: @works, total_count: @total_count, cache_name: @query_by_collection_jbuilder_cache_name })
-    end
+     @limit = default_limit
 
-    raise Ubiquity::ApiError::NotFound.new(status: '404', code: 'not_found', message: "Collection with id #{value} has no works")  if @works.blank?
-    #collection.member_objects returns the most recently modified  work first
-    if stale?(last_modified: @last_modified, public: true)
-        render json: json
-    end
-  end
+     @works =  CatalogController.new.repository.search(:q=>"", rows: limit, fq: ["{!term f=file_availability_sim}#{map_search_values[value.to_sym]}", "{!terms f=has_model_ssim}#{model_list}"])  if params[:per_page].blank? || offset > total_count
 
-  def query_by_metadata(metadata_field, value)
-    @total_count = ActiveFedora::Base.where("#{map_search_keys[metadata_field]}:#{value}").count
-    if limit != 0 && offset < @total_count
-      @works = ActiveFedora::Base.where("#{map_search_keys[metadata_field]}:#{value}").offset(offset).limit(limit)
-    else
-      @works = ActiveFedora::Base.where("#{map_search_keys[metadata_field]}:#{value}")
-    end
-    raise Ubiquity::ApiError::NotFound.new(status: '404', code: 'not_found', message: "No record was found for #{metadata_field} with value of #{value}")  if @works.blank?
-    add_caching("#{map_search_keys[metadata_field]}:#{value}")
+   else
+
+     total_record = CatalogController.new.repository.search(q:  "#{map_search_keys[metadata_field]}:#{value}", rows: 0)
+     total_count = total_record['response']['numFound']
+
+     return @works =  CatalogController.new.repository.search(q: "#{map_search_keys[metadata_field]}:#{value}", rows: limit, start: offset) if params[:per_page].present? && offset < total_count
+     @limit = default_limit
+
+     @works =  CatalogController.new.repository.search(q: "#{map_search_keys[metadata_field]}:#{value}", rows: limit) if params[:per_page].blank? || offset > total_count
+
+   end
+
   end
 
   def add_caching(search_query)
@@ -140,18 +107,17 @@ class API::V1::WorkController < ActionController::Base
       {
         creator: 'creator_tesim',
         keyword: 'keyword_sim',
-        collection_uuid: 'id',
-        collection_name: 'member_of_collections_ssim',
+        collection_uuid: 'member_of_collection_ids_ssim',
         language: 'language_sim',
-        availability: 'file_availability_tesim'
+        availability: 'file_availability_sim'
       }
   end
 
   def map_search_values
     {
-       not_available: 'File+not+available',
-       available: 'File+available+from+this+repository',
-       external_link: 'External+link+access+may+be+restricted'
+       not_available: 'File not available',
+       available: 'File available from this repository',
+       external_link:  'External link (access may be restricted)'
     }
   end
 

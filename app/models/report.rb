@@ -8,7 +8,6 @@ class Report < ActiveFedora::Base
   include Ubiquity::EditorMetadataModelConcern
   include Ubiquity::UpdateSharedIndex
   include Ubiquity::FileAvailabilityFaceting
-  include Ubiquity::ApiUtilityMethods
 
   self.indexer = ReportIndexer
   # Change this to restrict which works can be added as a child.

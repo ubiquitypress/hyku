@@ -5,7 +5,6 @@ class FileSet < ActiveFedora::Base
   include Ubiquity::WorkAndCollectionMetadata
   include ::Hyrax::FileSetBehavior
   include Ubiquity::UpdateSharedIndex
-  include Ubiquity::ApiUtilityMethods
 
   before_destroy :remove_rendering_relationship
   before_save :set_account_cname

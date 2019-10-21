@@ -10,7 +10,6 @@ class ExhibitionItem < ActiveFedora::Base
   include Ubiquity::VersionMetadataModelConcern
   include Ubiquity::UpdateSharedIndex
   include Ubiquity::FileAvailabilityFaceting
-  include Ubiquity::ApiUtilityMethods
 
   self.indexer = ExhibitionItemIndexer
   # Change this to restrict which works can be added as a child.

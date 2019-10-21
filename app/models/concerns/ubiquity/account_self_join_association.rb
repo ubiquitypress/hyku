@@ -15,6 +15,14 @@ module Ubiquity
 
     end
 
+    def get_site
+      Site.instance
+    end
+
+    def get_content_block
+      ContentBlock.all
+    end
+
     private
 
     def set_index_to_shared_search_for_live_sites

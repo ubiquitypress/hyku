@@ -1,7 +1,7 @@
 RSpec.describe Ubiquity::DataciteResponse do
   include DataCiteCrossrefClientHelpers
 
-  let (:json_data) {File.read(Rails.root.join("spec/fixtures/json/datacite2.json")) }
+  let (:json_data) {File.read(Rails.root.join("spec/fixtures/json/datacite_v2.json")) }
   let (:full_datacite_url) { 'https://dx.doi.org/10.15123%2FPUB.7627' }
   let (:datacite_client_1)  {Ubiquity::DataciteClient.new(full_datacite_url)}
   let (:crossref_client_1)  {Ubiquity::DataciteClient.new(full_datacite_url)}

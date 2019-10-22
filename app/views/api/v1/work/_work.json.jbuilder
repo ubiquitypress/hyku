@@ -5,8 +5,8 @@ json.type 'work'
 json.related_url    work['related_url_tesim']
 json.work_type    work['has_model_ssim'].try(:first)
 json.title    work['title_tesim'].try(:first)
-json.alternative_title    work['alternative_title_tesim']
-json.resource_type    work['resource_type_sim'].try(:first)
+json.alternative_title    work['alt_title_tesim']
+json.resource_type    work['resource_type_tesim'].try(:first)
 json.visibility    work['visibility_ssi']
 creator = work['creator_tesim'].try(:first)
 if valid_json?(creator)
@@ -98,7 +98,6 @@ json.qualification_levale    work['qualification_level_tesim']
 json.alternative_journal_title    work['alternative_journal_title_tesim']
 
 json.article_number     work['article_num_tesim']
-json.alternative_alternative    work['alt_title_tesim']
 json.place_of_publication     work['place_of_publication_tesim']
 json.funder_project_reference    work['fndr_project_ref_tesim']
 json.official_url     work['official_link_tesim']

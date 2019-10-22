@@ -10,7 +10,7 @@ class FileSet < ActiveFedora::Base
   before_save :set_account_cname
   before_update :fetch_file_sets_and_create_work_expiry_service
   after_save :parent_save_to_update_file_visibility_facet, on: [:update]
-  after_save :post_to_importer, on: [:create]
+  after_save :post_to_importer, on: [:create], unless: :is_localhost?
 
   # Hyku has its own FileSetIndexer: app/indexers/file_set_indexer.rb
   # It overrides Hyrax to inject IIIF behavior.
@@ -22,6 +22,11 @@ class FileSet < ActiveFedora::Base
 
   def _account_cname
     parent.try(:account_cname)
+  end
+
+  def is_localhost?
+    cname = self.account_cname
+    cname.include? "localhost"
   end
 
   private

@@ -34,10 +34,42 @@ json.date_accepted    work['date_accepted_tesim']
 json.date_submitted    work['date_submitted_tesim']
 json.official_url    work['official_url_tesim']
 json.language    work['language_tesim']
-json.license    work['license_for_api_tesim']
-json.rights_statement    work['rights_statements_for_api_tesim']
+
+license_array = work['license_tesim']
+license_hash = Hyrax::LicenseService.new.select_all_options.to_h
+if license_array.present?
+  json.license do
+    json.array! license_array do |item|
+      if license_hash.values.include?(item)
+        json.name  license_hash.key(item)
+        json.link  item
+      end
+    end
+  end
+else
+  json.license   nil
+end
+
+rights_statement_array = work['rights_statement_tesim']
+rights_statement_hash = Hyrax::RightsStatementService.new.select_all_options.to_h
+if rights_statement_array.present?
+  json.rights_statement do
+    json.array! rights_statement_array do |item|
+      if rights_statement_hash.values.include?(item)
+        json.name  rights_statement_hash.key(item)
+        json.link item
+      end
+    end
+  end
+else
+  json.rights_statement   nil
+end
+
+
 json.rights_holder    work['rights_holder_tesim']
 json.doi    work['doi_tesim']
+
+
 
 alternate_identifier = work['alternate_identifier_tesim'].try(:first)
 if valid_json?(alternate_identifier)
@@ -51,7 +83,11 @@ if valid_json?(alternate_identifier)
   end
 end
 
-json.peer_reviewed    work['peer_reviewed_tesim']
+
+peer_reviewed = work['refereed_tesim']
+if peer_reviewed.present?
+  json.peer_reviewed  true
+end
 json.keywords    work['keyword_tesim']
 json.dewey    work['dewey_tesim']
 json.library_of_congress_classification    work['library_of_congress_classification_tesim']
@@ -76,7 +112,7 @@ json.download_link    ('https://' + work['account_cname_tesim'].first + '/' + 'd
 json.version    work['version_tesim']
 json.duration    work['duration_tesim']
 json.pagination    work['pagination_tesim']
-json.series_name    work['series_name']
+json.series_name    work['series_name_tesim']
 json.issue    work['issue_tesim']
 json.volume    work['volume_tesim']
 json.material_media    work['media_tesim']
@@ -94,7 +130,7 @@ json.issn    work['issn_tesim']
 json.isbn    work['isbn_tesim']
 json.current_he_institution    work['current_he_institution_tesim']
 json.qualification_name    work['qualification_name_tesim']
-json.qualification_levale    work['qualification_level_tesim']
+json.qualification_level    work['qualification_level_tesim']
 json.alternative_journal_title    work['alternative_journal_title_tesim']
 
 json.article_number     work['article_num_tesim']

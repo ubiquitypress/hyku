@@ -31,5 +31,18 @@ module Ubiquity
         [ ]
       end
     end
+
+    def self.query_for_file_licence(file_id)
+      if file_id.present?
+        child_files = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{file_id}"])
+        puts"JACKI #{child_files['response']['docs']}"
+        child_files['response']['docs'].map do |doc|
+          {uuid: doc['id'], licence: doc['license_tesim']}
+        end
+      else
+        [ ]
+      end
+    end
+
   end
 end

@@ -5,11 +5,19 @@ json.array! @files['response']['docs'] do |work|
   json.name    work['title_tesim'].first
   json.mimetype   work['mime_type_ssi']
 
-  get_file_licence =  Ubiquity::ApiUtils.query_for_file_licence(work[:id])
-  if get_file_licence.present?
-    json.file_licence  get_file_licence
+  license_array = work['license_tesim']
+  license_hash = Hyrax::LicenseService.new.select_all_options.to_h
+  if license_array.present?
+    json.license do
+      json.array! license_array do |item|
+        if license_hash.values.include?(item)
+          json.name  license_hash.key(item)
+          json.link  item
+        end
+      end
+    end
   else
-    json.file_licence nil
+    json.license   nil
   end
 
   json.thumbnail_url   ('https://' + work['account_cname_tesim'].first + work['thumbnail_path_ss'])

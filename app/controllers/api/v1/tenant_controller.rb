@@ -18,9 +18,13 @@ class API::V1::TenantController < ActionController::Base
     AccountElevator.switch!(@tenant.cname)
     @site = @tenant.get_site
     @content_block = @tenant.get_content_block
-    #if stale?(last_modified: @tenant.updated_at, public: true)
-      #render json: @tenant
-    #end
+=begin
+    if stale?(last_modified: set_last_modified, public: true)
+      json_record = render_to_string(template: 'api/v1/tenant/show', locals: {tenant: @tenant})
+      render json: json_record
+    end
+=end
+    fresh_when(last_modified: set_last_modified, public: true)
   end
 
   private
@@ -60,6 +64,14 @@ class API::V1::TenantController < ActionController::Base
              code: 'not_found'
            }
     render json: {error: error}
+  end
+
+  def set_last_modified
+    site = Site.instance.updated_at
+    content = ContentBlock.order('updated_at ASC').last.updated_at
+    account = Account.order(updated_at: :asc).last.updated_at
+    combined_updated_at = [site, content, account].compact
+    combined_updated_at.max
   end
 
 end

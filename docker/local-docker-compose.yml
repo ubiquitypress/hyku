@@ -110,6 +110,15 @@ services:
       internal:
           ipv4_address: 172.18.0.5
 
+  redis-cache:
+    image: redis:5
+    command: redis-server --maxmemory 5mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis:/data
+    networks:
+      internal:
+          ipv4_address: 172.18.0.12
+
   memcache:
     image: memcached
     networks:

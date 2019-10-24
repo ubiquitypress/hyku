@@ -60,7 +60,9 @@ Rails.application.configure do
   config.log_tags = [ :request_id ]
 
   # Use a different cache store in production.
-  # config.cache_store = :mem_cache_store
+  #config.cache_store = :mem_cache_store
+  config.cache_store = :redis_store, "redis://#{ENV['REDIS_CACHE_HOST']}:#{ENV['REDIS_CACHE_PORT']}/0/hyku-cache"
+
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
   require 'active_job/queue_adapters/better_active_elastic_job_adapter'

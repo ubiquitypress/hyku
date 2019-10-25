@@ -20,9 +20,9 @@ class API::V1::WorkController < ActionController::Base
   end
 
   def manifest
-    work_class = @work['has_model_ssim']
+    work_class = @work['has_model_ssim'].first.pluralize
     controller_in_use = "Hyrax::#{work_class}Controller".camelize.constantize.new
-    request.env["HTTP_HOST"]  = @work['account_cname_tesim']
+    request.env["HTTP_HOST"]  = @work['account_cname_tesim'].first
     controller_in_use.request = request
     controller_in_use.response = response
     record = controller_in_use.manifest

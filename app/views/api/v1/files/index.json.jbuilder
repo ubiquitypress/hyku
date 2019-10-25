@@ -4,7 +4,22 @@ json.array! @files['response']['docs'] do |work|
   json.type    'file_set'
   json.name    work['title_tesim'].first
   json.mimetype   work['mime_type_ssi']
-  json.license   work['license_for_api_tesim']
+
+  license_array = work['license_tesim']
+  license_hash = Hyrax::LicenseService.new.select_all_options.to_h
+  if license_array.present?
+    json.license do
+      json.array! license_array do |item|
+        if license_hash.values.include?(item)
+          json.name  license_hash.key(item)
+          json.link  item
+        end
+      end
+    end
+  else
+    json.license   nil
+  end
+
   json.thumbnail_url   ('https://' + work['account_cname_tesim'].first + work['thumbnail_path_ss'])
   json.date_uploaded  work['date_uploaded_dtsi']
   json.visibility  work['visibility_ssi']

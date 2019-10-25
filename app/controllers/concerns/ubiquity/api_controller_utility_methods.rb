@@ -44,7 +44,11 @@ module Ubiquity
     end
 
     def page
-      page = params[:page].to_i || 1
+      page = params[:page] || 1
+      #calling  to_i incase params[:page] is a string
+      #calling in the first line will means we will never return 1 since calling to_i on nil returns zero
+      #
+      page.to_i
     end
 
     def default_limit_for_hightlights
@@ -53,6 +57,47 @@ module Ubiquity
 
     def default_limit
        100
+    end
+
+    def get_records_cache_key(data, last_updated_child = nil)
+      timestamp = set_cache_last_modified_time_stamp(data, last_updated_child)
+      "multiple/#{data['response']['docs'].first['account_cname_tesim'].first}/#{timestamp}/#{data['response']['numFound']}"
+    end
+
+    def get_records_with_pagination_cache_key(data, last_updated_child = nil)
+      timestamp = set_cache_last_modified_time_stamp(data, last_updated_child)
+      "multiple/#{data['response']['docs'].first['account_cname_tesim'].first}/page-#{page}/per_page-#{limit}/#{timestamp}/#{data['response']['numFound']}"
+    end
+
+    def add_filter_by_class_type_cache_key(data, last_updated_child = nil)
+      timestamp = set_cache_last_modified_time_stamp(data, last_updated_child)
+      "multiple/#{data['response']['docs'].first['account_cname_tesim'].first}/#{data['response']['docs'].first['has_model_ssim'].first.underscore}/#{timestamp}/#{data['response']['numFound']}"
+    end
+
+    def add_filter_by_class_type_with_pagination_cache_key(data, last_updated_child = nil)
+      timestamp = set_cache_last_modified_time_stamp(data, last_updated_child)
+      "multiple/#{data['response']['docs'].first['account_cname_tesim'].first}/#{data['response']['docs'].first['has_model_ssim'].first.underscore}/page-#{page}/per_page-#{limit}/#{timestamp}/#{data['response']['numFound']}"
+    end
+
+    def add_filter_by_metadata_field_cache_key(data, metadata_key=nil, last_updated_child = nil)
+      timestamp = set_cache_last_modified_time_stamp(data, last_updated_child)
+      "multiple/#{data['response']['docs'].first['account_cname_tesim'].first}/#{metadata_key}/#{timestamp}/#{data['response']['numFound']}"
+    end
+
+    def add_filter_by_metadata_field_with_pagination_cache_key(data, metadata_key=nil, last_updated_child = nil)
+      timestamp = set_cache_last_modified_time_stamp(data, last_updated_child)
+      "multiple/#{data['response']['docs'].first['account_cname_tesim'].first}/#{metadata_key}/page-#{page}/per_page-#{limit}/#{timestamp}/#{data['response']['numFound']}"
+    end
+
+    def set_cache_last_modified_time_stamp(parent_record, child_record)
+      data_updated_time = parent_record['response']['docs'].first['system_modified_dtsi']
+      last_child_updated_at = child_record && child_record['response']['docs']
+      if last_child_updated_at.present?
+        child_timestamp = last_child_updated_at.first['system_modified_dtsi']
+      else
+        child_timestamp = nil
+      end
+       [data_updated_time, child_timestamp].compact.max
     end
 
   end

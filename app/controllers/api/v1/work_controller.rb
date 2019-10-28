@@ -16,7 +16,8 @@ class API::V1::WorkController < ActionController::Base
   end
 
   def show
-    fresh_when(etag: @fedora_work, last_modified: @fedora_work.date_modified, public: true)
+    time_stamp = Time.parse(@work['system_modified_dtsi'])
+    fresh_when(last_modified: time_stamp, public: true)
   end
 
   def manifest
@@ -35,7 +36,6 @@ class API::V1::WorkController < ActionController::Base
     work = CatalogController.new.repository.search(q: params[:id],  "sort" => "score desc, system_create_dtsi desc",
     "facet.field "=> ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim", "institution_sim",
     "language_sim", "file_availability_sim"])
-
     @work = work['response']['docs'].first
   end
 

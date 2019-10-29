@@ -5,7 +5,7 @@
 <a id="logo" class="navbar-brand" href="<%= hyrax.root_path %>" data-no-turbolink="true">
   <span class="glyphicon glyphicon-globe" role="img" aria-label="<%= application_name %>" aria-hidden="true"></span>
   <% if ENV["BL_TENANTS"].split(',').include? ubiquity_url_parser(request.original_url) %>
-    Shared Research Repository
+    <!-- Shared Research Repository -->
   <% else %>
     <span class="institution_name"><%= application_name %></span>
   <% end %>

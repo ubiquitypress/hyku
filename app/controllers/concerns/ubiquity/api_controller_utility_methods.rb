@@ -17,11 +17,15 @@ module Ubiquity
     end
 
     def model_list
-       'Article,Book,BookContribution,ConferenceItem,Dataset,ExhibitionItem,Image,Report,ThesisOrDissertation,TimeBasedMedia,GenericWork,Collection'
+      "Article,Book,BookContribution,ConferenceItem,Dataset,ExhibitionItem,Image,Report,ThesisOrDissertation,TimeBasedMedia,GenericWork,Collection"
     end
 
     def facet_list
       ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim", "institution_sim"]
+    end
+
+    def solr_query_fields
+      "title_tesim alt_title_tesim description_tesim keyword_tesim journal_title_tesim alternative_journal_title_tesim subject_tesim creator_tesim version_tesim related_exhibition_tesim related_exhibition_venue_tesim media_tesim duration_tesim event_title_tesim event_date_tesim event_location_tesim abstract_tesim book_title_tesim series_name_tesim edition_tesim contributor_tesim publisher_tesim place_of_publication_tesim date_published_tesim based_near_label_tesim language_tesim date_uploaded_tesim date_modified_tesim date_created_tesim rights_statement_tesim license_tesim resource_type_tesim format_tesim identifier_tesim doi_tesim qualification_name_tesim qualification_level_tesim isbn_tesim issn_tesim eissn_tesim current_he_institution_tesim extent_tesim institution_tesim org_unit_tesim refereed_tesim funder_tesim fndr_project_ref_tesim add_info_tesim date_accepted_tesim issue_tesim volume_tesim pagination_tesim article_num_tesim project_name_tesim official_link_tesim rights_holder_tesim dewey_tesim library_of_congress_classification_tesim file_format_tesim all_text_timv alt_title_tesim^4.15 editor_tesim"
     end
 
     def switch_tenant
@@ -34,7 +38,7 @@ module Ubiquity
     def offset
       #run this if the page number is greater than 1 other return per_page
       return limit * ([page, 1].max - 1) if page > 1
-      limit
+      0
     end
 
    #per_page is used alongside page to calculate offset

@@ -3,10 +3,9 @@ class API::V1::SearchController <  ActionController::Base
   include Ubiquity::ApiErrorHandlers
 
   before_action :set_search_default, only: [:index]
-  before_action :set_offset, only: [:index]
-
+  
   def index
-     reset_tenants_for_shared_search
+    reset_tenants_for_shared_search
     if params[:f].present?
       search_by_multiple_terms
     elsif params[:q].present? &&  params[:f].blank?
@@ -20,10 +19,10 @@ class API::V1::SearchController <  ActionController::Base
 
   def query_all
     response = CatalogController.new.repository.search(
-       q: '', fq: models_to_search,
+       q: '', fq: models_to_search, "qf" => solr_query_fields,
       "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
-      "institution_sim", "language_sim", "file_availability_sim"],  "sort"=>"score desc, system_create_dtsi desc",
-       rows: limit, start: @start
+      "institution_sim", "language_sim", "file_availability_sim"],  "sort" => "score desc, system_create_dtsi desc",
+       rows: limit, start: offset
        )
 
        @works = response
@@ -38,10 +37,10 @@ class API::V1::SearchController <  ActionController::Base
 
   def filter_by_single_query_term
     response = CatalogController.new.repository.search(
-       q: params[:q],
+       q: params[:q], "qf" => solr_query_fields,
       "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
-      "institution_sim", "language_sim", "file_availability_sim"],  "sort"=>"score desc, system_create_dtsi desc",
-       rows: limit, start: @start
+      "institution_sim", "language_sim", "file_availability_sim"],  "sort" => "score desc, system_create_dtsi desc",
+       rows: limit, start: offset
        )
 
        @works = response
@@ -57,10 +56,10 @@ class API::V1::SearchController <  ActionController::Base
     end
 
     response = CatalogController.new.repository.search(
-       q: '', fq: @fq,
+       q: '', fq: @fq, "qf" => solr_query_fields,
       "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
-      "institution_sim", "language_sim", "file_availability_sim"],  "sort"=>"score desc, system_create_dtsi desc",
-       rows: limit, start: @start
+      "institution_sim", "language_sim", "file_availability_sim"],  "sort" => "score desc, system_create_dtsi desc",
+       rows: limit, start: offset
        )
 
     @works = response
@@ -72,21 +71,9 @@ class API::V1::SearchController <  ActionController::Base
     end
   end
 
-  def models_to_search
-    'has_model_ssim:Article OR has_model_ssim:Book OR has_model_ssim:BookContribution OR has_model_ssim:ConferenceItem OR has_model_ssim: Dataset OR  has_model_ssim:ExhibitionItem OR has_model_ssim:Image OR has_model_ssim:Report OR  has_model_ssim:ThesisOrDissertation OR has_model_ssim:TimeBasedMedia OR has_model_ssim:GenericWork'
-  end
-
   def set_search_default
     if params[:per_page].blank?
       @limit = 10
-    end
-  end
-
-  def set_offset
-    if params[:page].blank?
-      @start = 0
-    else
-    @start = offset
     end
   end
 

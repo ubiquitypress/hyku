@@ -5,7 +5,6 @@ class API::V1::TenantController < ActionController::Base
   def index
     if params[:name]
       @tenants ||= get_tenant_by_name
-      puts "masa #{set_last_modified}"
       fresh_when(last_modified: set_last_modified, public: true)
     end
   end

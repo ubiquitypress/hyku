@@ -1,0 +1,10 @@
+<!-- copied over from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/homepage/_announcement.html.erb -->
+<% if all_tenant_settings_keys.include? ubiquity_url_parser(request.original_url) %>
+
+<% else %>
+  <% if display_content_block? @announcement_text %>
+  <div id="announcement" class="row">
+    <%= displayable_content_block @announcement_text, class: 'row', id: 'announcement' %>
+  </div>
+  <% end %>
+<% end %>

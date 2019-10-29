@@ -100,6 +100,13 @@ module ApplicationHelper
     end
   end
 
+  def all_tenant_settings_keys
+    json_data = ENV['TENANTS_SETTINGS']
+    if verify_valid_json?(json_data)
+      JSON.parse(json_data).keys
+    end
+  end
+
   def feature_list
     feature_json = ENV['FEATURE_ENABLED']
     if feature_json.present? && verify_valid_json?(feature_json)

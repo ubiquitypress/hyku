@@ -30,7 +30,7 @@
   </div>
 </div><!-- /#content-wrapper -->
 
-<% if request.original_url == 'https://oar.bl.uk/' %>
+<% if all_tenant_settings_keys.include? ubiquity_url_parser(request.original_url) %>
 
 <% else %>
   <%= render 'shared/footer' %>

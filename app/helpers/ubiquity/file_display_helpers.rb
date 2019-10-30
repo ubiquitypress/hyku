@@ -42,7 +42,7 @@ module Ubiquity
     #called in app/views/shared/ubiquity/file_sets/_show.html.erb and called in app/views/shared/ubiquity/file_sets/_actions.html.erb
     def display_file_download_link_or_contact_form(file_set_presenter)
       tenant_account = file_set_presenter && file_set_presenter.solr_document["account_cname_tesim"].try(:first)
-      is_localhost = tenant_account.include?('localhost')
+      is_localhost = tenant_account && tenant_account.include?('localhost')
       file_uuid = file_set_presenter.id
       #file_uuid is the id of the file or file_sets id
       @file_set_s3_object ||= trigger_api_call_for_s3_url file_uuid

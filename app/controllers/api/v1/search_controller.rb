@@ -3,7 +3,7 @@ class API::V1::SearchController <  ActionController::Base
   include Ubiquity::ApiErrorHandlers
 
   before_action :set_search_default, only: [:index]
-  
+
   def index
     reset_tenants_for_shared_search
     if params[:f].present?
@@ -18,14 +18,16 @@ class API::V1::SearchController <  ActionController::Base
   private
 
   def query_all
+    fq = [ models_to_search, "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)"]
     response = CatalogController.new.repository.search(
-       q: '', fq: models_to_search, "qf" => solr_query_fields,
+       q: '', fq: fq, "qf" => solr_query_fields,
       "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
       "institution_sim", "language_sim", "file_availability_sim"],  "sort" => "score desc, system_create_dtsi desc",
        rows: limit, start: offset
        )
 
        @works = response
+       raise Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: "It seems there are no records for this repository") if response['response']['numFound'] == 0
   end
 
   def get_query_params
@@ -36,19 +38,22 @@ class API::V1::SearchController <  ActionController::Base
 
 
   def filter_by_single_query_term
+    fq = [models_to_search, "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)"]
     response = CatalogController.new.repository.search(
-       q: params[:q], "qf" => solr_query_fields,
+       q: params[:q], fq: fq, "qf" => solr_query_fields,
       "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
       "institution_sim", "language_sim", "file_availability_sim"],  "sort" => "score desc, system_create_dtsi desc",
        rows: limit, start: offset
        )
 
        @works = response
+       raise Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: "No record found for query_term: #{params[:q]}") if response['response']['numFound'] == 0
+
   end
 
   def search_by_multiple_terms
-    q = params[:q] || ''
-    @fq = []
+    query_term = params[:q] || ''
+    @fq = [models_to_search, "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)"]
     hash = params[:f]
 
     hash.to_unsafe_h.map do |key, value|
@@ -56,13 +61,15 @@ class API::V1::SearchController <  ActionController::Base
     end
 
     response = CatalogController.new.repository.search(
-       q: '', fq: @fq, "qf" => solr_query_fields,
+       q: query_term, fq: @fq, "qf" => solr_query_fields,
       "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
       "institution_sim", "language_sim", "file_availability_sim"],  "sort" => "score desc, system_create_dtsi desc",
        rows: limit, start: offset
        )
 
     @works = response
+    raise Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: "No record found for query_term: #{query_term} and filters containing #{params[:f]}") if response['response']['numFound'] == 0
+
   end
 
   def create_solr_filter_params(key, hash)

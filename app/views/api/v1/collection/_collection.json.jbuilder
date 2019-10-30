@@ -29,7 +29,7 @@ json.rights_statements_for_api_tesim    single_collection['rights_statements_for
 json.language    single_collection['language_tesim']
 json.publisher   single_collection['publisher_tesim']
 json.thumbnail_url    ('https://' + single_collection['account_cname_tesim'].first + single_collection['thumbnail_path_ss'])
-json.visbility    single_collection['visibility_ssi']
+json.visibility    single_collection['visibility_ssi']
 
 works = Ubiquity::ApiUtils.query_for_colection_works(single_collection['id'])
 

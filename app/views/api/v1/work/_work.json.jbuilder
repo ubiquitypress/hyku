@@ -23,6 +23,7 @@ if valid_json?(editor)
   json.editor JSON.parse(editor)
 end
 
+json.cname work['account_cname_tesim'].first
 json.abstract    work['abstract_tesim'].try(:first)
 json.date_published    work['date_published_tesim']
 json.institution    work['institution_tesim']

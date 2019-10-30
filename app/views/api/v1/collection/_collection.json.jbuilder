@@ -5,6 +5,7 @@ json.related_url    single_collection['related_url_tesim']
 json.title    single_collection['title_tesim'].try(:first)
 json.resource_type    single_collection['resource_type_sim'].try(:first)
 json.date_created    single_collection['date_created_tesim']
+json.cname single_collection['account_cname_tesim'].first
 
 creator = single_collection['creator_tesim'].try(:first)
 if valid_json?(creator)

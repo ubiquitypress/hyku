@@ -3,61 +3,53 @@ class API::V1::SearchController <  ActionController::Base
   include Ubiquity::ApiErrorHandlers
 
   before_action :set_search_default, only: [:index]
+  before_action :set_default_facet_limit, only: [:facet]
 
   def index
     reset_tenants_for_shared_search
-    if params[:f].present?
-      search_by_multiple_terms
-    elsif params[:q].present? &&  params[:f].blank?
-      filter_by_single_query_term
+    search_by_multiple_terms
+  end
+
+  def facet
+    reset_tenants_for_shared_search
+    query_term = params[:q] || ''
+    facet_name = params[:id]
+
+    # this will create a hash key like this "f.creator_search_sim.facet.offset"
+    #this ley is equivalent of start key which tells solr how many records to skip
+    facet_offset_key = "f" + "." + facet_name + ".facet.offset"
+
+    #{creates a hash key }"f.creator_search_sim.facet.limit"
+    #this is similar to row key in non facet solr queries and tell solr how many facet count record to return
+    facet_limit_key = "f" + "." + facet_name +  ".facet.limit"
+
+    #This populates @fq passed as solr fq ie filter query
+    if params[:f]
+      params[:f].to_unsafe_h.map { |key, value| create_solr_filter_params(key, value) }
     else
-      query_all
+      set_solr_filter_query
     end
+
+    solr_params = {"qt"=>"search", q: query_term, "facet.field" => facet_name, "facet.query"=>[], "facet.pivot"=>[], "fq"=> @fq,
+       "hl.fl"=>[], "rows"=>0, "qf" =>  solr_query_fields, "pf"=>"title_tesim", "facet"=>true,
+        facet_limit_key => limit, facet_offset_key => facet_offset_limit, "sort"=>"score desc, system_create_dtsi desc" }
+
+    response =  CatalogController.new.repository.search(solr_params)
+    facet_count_list =  response['facet_counts']["facet_fields"][facet_name]
+    render json: Hash[*facet_count_list]
+
   end
 
   private
 
-  def query_all
-    fq = [ models_to_search, "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)"]
-    response = CatalogController.new.repository.search(
-       q: '', fq: fq, "qf" => solr_query_fields,
-      "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
-      "institution_sim", "language_sim", "file_availability_sim"],  "sort" => "score desc, system_create_dtsi desc",
-       rows: limit, start: offset
-       )
-
-       @works = response
-       raise Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: "It seems there are no records for this repository") if response['response']['numFound'] == 0
-  end
-
-  def get_query_params
-    extracted_params = request.query_parameters.except(*['per_page', 'page'])
-    metadata_field = extracted_params.keys.first.try(:to_sym)
-    value = extracted_params[metadata_field]
-  end
-
-
-  def filter_by_single_query_term
-    fq = [models_to_search, "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)"]
-    response = CatalogController.new.repository.search(
-       q: params[:q], fq: fq, "qf" => solr_query_fields,
-      "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
-      "institution_sim", "language_sim", "file_availability_sim"],  "sort" => "score desc, system_create_dtsi desc",
-       rows: limit, start: offset
-       )
-
-       @works = response
-       raise Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: "No record found for query_term: #{params[:q]}") if response['response']['numFound'] == 0
-
-  end
-
   def search_by_multiple_terms
     query_term = params[:q] || ''
-    @fq = [models_to_search, "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)"]
-    hash = params[:f]
 
-    hash.to_unsafe_h.map do |key, value|
-      create_solr_filter_params(key, value)
+    #This populates @fq passed as solr fq ie filter query
+    if params[:f]
+      params[:f].to_unsafe_h.map { |key, value| create_solr_filter_params(key, value) }
+    else
+      set_solr_filter_query
     end
 
     response = CatalogController.new.repository.search(
@@ -74,7 +66,7 @@ class API::V1::SearchController <  ActionController::Base
 
   def create_solr_filter_params(key, hash)
     hash.each do |item|
-       @fq << "{!term f=#{key} }#{item}"
+       set_solr_filter_query << "{!term f=#{key} }#{item}"
     end
   end
 
@@ -84,10 +76,30 @@ class API::V1::SearchController <  ActionController::Base
     end
   end
 
+  def set_default_facet_limit
+    if params[:per_page].blank?
+      @limit = 20
+    end
+  end
+
   def reset_tenants_for_shared_search
     if params[:shared_search].present?
       #Apartment::Tenant.reset
       AccountElevator.switch!(@tenant.try(:parent).try(:cname) )
+    end
+  end
+
+  def set_solr_filter_query
+    @fq = [models_to_search, "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)"]
+  end
+
+  #facets to skip, same as solr start paramter
+  def facet_offset_limit
+    if params[:per_page].present? || params[:page].present?
+      facet_page = ([params[:page].to_i, 1].max - 1)
+      limit * page
+    else
+      0
     end
   end
 

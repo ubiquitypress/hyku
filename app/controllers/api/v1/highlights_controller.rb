@@ -73,9 +73,9 @@ class API::V1::HighlightsController < ActionController::Base
   end
 
   def set_last_modified_date
-    collection_records = get_collections.presence && get_collections['response']['docs'].try(:last).dig('system_modified_dtsi')
-    featured_records = get_featured_works.presence && get_featured_works['response']['docs'].try(:last).dig('system_modified_dtsi')
-    recent_records = get_recent_documents.presence && get_recent_documents['response']['docs'].try(:last).dig('system_modified_dtsi')
+    collection_records = get_collections.presence && get_collections['response']['docs'].try(:first).dig('system_modified_dtsi')
+    featured_records = get_featured_works.presence && get_featured_works['response']['docs'].try(:first).dig('system_modified_dtsi')
+    recent_records = get_recent_documents.presence && get_recent_documents['response']['docs'].try(:first).dig('system_modified_dtsi')
     dates_array = [collection_records, featured_records, recent_records].compact.max
   end
 

@@ -59,6 +59,8 @@ Rails.application.routes.draw do
            end
 
            resources :files, defaults: {format: :json}, only: [:index]
+           resource :featured_works, only: [:create, :destroy]
+
          end
 
          resources :highlights, defaults: {format: :json}, only: [:index]
@@ -68,7 +70,7 @@ Rails.application.routes.draw do
 
        end
 
-       get '/tenant/:tenant_id/search/facet/:id',  to: 'search#facet', as: 'tenant_search_facet', defaults: {format: :json} 
+       get '/tenant/:tenant_id/search/facet/:id',  to: 'search#facet', as: 'tenant_search_facet', defaults: {format: :json}
 
        resources :errors, only: [:index], defaults: {format: :json}
      end

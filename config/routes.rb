@@ -65,7 +65,10 @@ Rails.application.routes.draw do
 
          resources :collection, defaults: {format: :json}
          resources :search, defaults: {format: :json}
+
        end
+
+       get '/tenant/:tenant_id/search/facet/:id',  to: 'search#facet', as: 'tenant_search_facet', defaults: {format: :json} 
 
        resources :errors, only: [:index], defaults: {format: :json}
      end

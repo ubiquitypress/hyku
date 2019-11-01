@@ -12,9 +12,11 @@ class API::V1::ContactFormController < ActionController::Base
      @contact_form.headers = headers
      if @contact_form.spam?
        render json: {code: 422,  status: :spam_not_sent}
-     else
+     elsif @contact_form.valid?
        Hyrax::ContactMailer.contact(@contact_form, @tenant).deliver_now
        render json: {code: 201,  status: :created}
+     else
+       render json: "Your contact form is missing one of the following compulsory fields :name, :category, :email, :subject, :message"
      end
   end
 

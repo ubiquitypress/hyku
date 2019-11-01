@@ -9,8 +9,8 @@ module Ubiquity
       end
     end
 
-    def self.query_for_parent_collections(collection_ids)
-      if collection_ids.present?
+    def self.query_for_parent_collections(collection_ids, skip_run = nil)
+      if collection_ids.present? && skip_run == 'true'
         parent_collections = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{collection_ids.join(',')}"])
         parent_collections['response']['docs'].map do |doc|
           {uuid: doc['id'], title: doc['title_tesim'].try(:first)}
@@ -20,8 +20,8 @@ module Ubiquity
       end
     end
 
-    def self.query_for_files(file_ids)
-      if file_ids.present?
+    def self.query_for_files(file_ids, skip_run = nil)
+      if file_ids.present? && skip_run == 'true'
         child_files = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{file_ids.join(',')}"])
         child_files  #['response']['docs']
         file_count = child_files['response']['numFound']

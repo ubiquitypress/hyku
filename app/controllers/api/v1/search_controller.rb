@@ -90,7 +90,7 @@ class API::V1::SearchController <  ActionController::Base
   end
 
   def set_solr_filter_query
-    @fq = [models_to_search, "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true"]
+    @fq = [models_to_search, "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", "", "-suppressed_bsi:true"]
   end
 
   #facets to skip, same as solr start paramter

@@ -48,17 +48,17 @@ class API::V1::HighlightsController < ActionController::Base
   end
 
   def get_featured_works
-    featured_works = FeaturedWorkList.new.featured_works
-    ids = featured_works.map(&:work_id)
+    @featured = FeaturedWorkList.new.featured_works
+    ids = @featured.map(&:work_id)
     joined_ids =  ids.present? ? ids.join(',') : nil
     record = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{joined_ids}"], rows: 1, "sort" => "score desc, system_modified_dtsi desc")
 
     file_ids = record && record['response']['docs'].presence && record['response']['docs'].first["file_set_ids_ssim"]
     new_file_ids = file_ids.present? ? file_ids.join(',') : nil
     last_updated_child = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{new_file_ids}"],  rows: 1, "sort" => "score desc, system_modified_dtsi desc")
-
+    recently_updated = recency_between_files_and_featured_work(last_updated_child)
     if record.dig('response','docs').try(:present?)
-      set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, last_updated_child)
+      set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, recently_updated)
       Rails.cache.fetch(set_cache_key) do
         data = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{ids.join(',')}"], rows: limit)
         #Re-order to the solr response to match the order that was work was featured in
@@ -67,7 +67,17 @@ class API::V1::HighlightsController < ActionController::Base
         data
       end
     end
+  end
 
+  def recency_between_files_and_featured_work(last_updated_child)
+    latest_featured = @featured.try(:max)
+    latest_file_from_work = last_updated_child['response']['docs'].presence && last_updated_child['response']['docs'].first['system_modified_dtsi']
+    latest_from_time_stamp = [latest_featured.to_s, latest_file_from_work.to_s].max
+    if latest_from_time_stamp == latest_featured
+      @featured
+    else
+       last_updated_child
+    end
   end
 
   def set_limit
@@ -78,9 +88,14 @@ class API::V1::HighlightsController < ActionController::Base
 
   def set_last_modified_date
     collection_records = get_collections.presence && get_collections['response']['docs'].try(:first).dig('system_modified_dtsi')
-    featured_records = get_featured_works.presence && get_featured_works['response']['docs'].map{|h| h['system_modified_dtsi']}.try(:max) 
+    featured_records = get_featured_works.presence && get_featured_works['response']['docs'].map{|h| h['system_modified_dtsi']}.try(:max)
     recent_records = get_recent_documents.presence && get_recent_documents['response']['docs'].try(:first).dig('system_modified_dtsi')
-    dates_array = [collection_records, featured_records, recent_records].compact.max
+    featured_works = recent_updated_featured_works_time_stamp
+    dates_array = [collection_records, featured_records, recent_records, featured_works].compact.max
+  end
+
+  def recent_updated_featured_works_time_stamp
+    @featured && @featured.map{|record| record.updated_at}.try(:max).try(:to_time).try(:utc).try(:iso8601)
   end
 
 end

@@ -99,13 +99,21 @@ module Ubiquity
 
     def set_cache_last_modified_time_stamp(parent_record, child_record)
       data_updated_time = parent_record['response']['docs'].first['system_modified_dtsi']
-      last_child_updated_at = child_record && child_record['response']['docs']
+      last_child_updated_at = get_last_child_updated_at(child_record) #child_record && child_record.dig('response', 'docs')
       if last_child_updated_at.present?
         child_timestamp = last_child_updated_at.first['system_modified_dtsi']
       else
         child_timestamp = nil
       end
        [data_updated_time, child_timestamp].compact.max
+    end
+
+    def get_last_child_updated_at(child_record)
+      if child_record.class == ActiveRecord
+        child_record.updated_at.utc.try(:iso8601)
+      elsif child_record.class == Blacklight::Solr::Response
+        child_record.dig('response', 'docs')
+      end
     end
 
   end

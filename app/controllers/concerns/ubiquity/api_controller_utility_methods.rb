@@ -34,6 +34,10 @@ module Ubiquity
       AccountElevator.switch!(tenant_name)
     end
 
+    def sort
+      params[:sort] || "score desc, system_create_dtsi desc"
+    end
+
     #equivalent of activefedora offset or blacklight start
     def offset
       #run this if the page number is greater than 1 other return per_page

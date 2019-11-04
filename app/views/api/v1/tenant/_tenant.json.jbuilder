@@ -13,3 +13,4 @@ json.data  tenant.data
 site = tenant.get_site
 json.site  tenant.get_site.attributes.merge("banner_images": {"url": url_for("#{tenant.cname}#{site.banner_image}")})
 json.content_block  tenant.get_content_block
+json.google_tag_manager_id parse_tenant_settings_json(tenant.try(:name)).dig('GTM_ID')

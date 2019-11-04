@@ -2,7 +2,7 @@ class API::V1::HighlightsController < ActionController::Base
 
   #defines :limit, :default_limit, :models_to_search, :switche_tenant
   include Ubiquity::ApiControllerUtilityMethods
-  include Ubiquity::ApiErrorHandlers
+  #include Ubiquity::ApiErrorHandlers
   before_action :set_limit
 
   def index
@@ -60,7 +60,12 @@ class API::V1::HighlightsController < ActionController::Base
     if record.dig('response','docs').try(:present?)
       set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, last_updated_child)
       Rails.cache.fetch(set_cache_key) do
-        CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{ids.join(',')}"], rows: limit)
+        data = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{ids.join(',')}"], rows: limit)
+        #Re-order to the solr response to match the order that was work was featured in
+        puts "lawal #{data['response']['docs']}"
+        ordered_values = data['response']['docs'].group_by {|hash| hash['id']}.values_at(*ids).flatten
+        data['response']['docs'] = ordered_values
+        data
       end
     end
 
@@ -74,7 +79,7 @@ class API::V1::HighlightsController < ActionController::Base
 
   def set_last_modified_date
     collection_records = get_collections.presence && get_collections['response']['docs'].try(:first).dig('system_modified_dtsi')
-    featured_records = get_featured_works.presence && get_featured_works['response']['docs'].try(:first).dig('system_modified_dtsi')
+    featured_records = get_featured_works.presence && get_featured_works['response']['docs'].map{|h| h['system_modified_dtsi']}.try(:max) #try(:first).dig('system_modified_dtsi')
     recent_records = get_recent_documents.presence && get_recent_documents['response']['docs'].try(:first).dig('system_modified_dtsi')
     dates_array = [collection_records, featured_records, recent_records].compact.max
   end

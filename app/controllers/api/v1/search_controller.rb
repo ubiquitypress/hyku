@@ -32,7 +32,7 @@ class API::V1::SearchController <  ActionController::Base
 
     solr_params = {"qt"=>"search", q: query_term, "facet.field" => facet_name, "facet.query"=>[], "facet.pivot"=>[], "fq"=> @fq,
        "hl.fl"=>[], "rows"=>0, "qf" =>  solr_query_fields, "pf"=>"title_tesim", "facet"=>true,
-        facet_limit_key => limit, facet_offset_key => facet_offset_limit, "sort"=>"score desc, system_create_dtsi desc" }
+        facet_limit_key => limit, facet_offset_key => facet_offset_limit, "sort"=> sort }
 
     response =  CatalogController.new.repository.search(solr_params)
     facet_count_list =  response['facet_counts']["facet_fields"][facet_name]
@@ -51,11 +51,11 @@ class API::V1::SearchController <  ActionController::Base
     else
       set_solr_filter_query
     end
-
+    #"score desc, system_create_dtsi desc"
     response = CatalogController.new.repository.search(
        q: query_term, fq: @fq, "qf" => solr_query_fields,
       "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
-      "institution_sim", "language_sim", "file_availability_sim"],  "sort" => "score desc, system_create_dtsi desc",
+      "institution_sim", "language_sim", "file_availability_sim"],  "sort" => sort,
        rows: limit, start: offset
        )
 

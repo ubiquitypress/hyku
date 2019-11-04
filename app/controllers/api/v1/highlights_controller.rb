@@ -62,7 +62,6 @@ class API::V1::HighlightsController < ActionController::Base
       Rails.cache.fetch(set_cache_key) do
         data = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{ids.join(',')}"], rows: limit)
         #Re-order to the solr response to match the order that was work was featured in
-        puts "lawal #{data['response']['docs']}"
         ordered_values = data['response']['docs'].group_by {|hash| hash['id']}.values_at(*ids).flatten
         data['response']['docs'] = ordered_values
         data

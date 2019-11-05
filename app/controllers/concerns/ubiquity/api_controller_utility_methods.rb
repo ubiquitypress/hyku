@@ -67,34 +67,29 @@ module Ubiquity
        100
     end
 
-    def get_records_cache_key(data, last_updated_child = nil)
-      timestamp = set_cache_last_modified_time_stamp(data, last_updated_child)
-      "multiple/#{data['response']['docs'].first['account_cname_tesim'].first}/#{timestamp}/#{data['response']['numFound']}"
-    end
-
     def get_records_with_pagination_cache_key(data, last_updated_child = nil)
-      timestamp = set_cache_last_modified_time_stamp(data, last_updated_child)
-      "multiple/#{data['response']['docs'].first['account_cname_tesim'].first}/page-#{page}/per_page-#{limit}/#{timestamp}/#{data['response']['numFound']}"
-    end
-
-    def add_filter_by_class_type_cache_key(data, last_updated_child = nil)
-      timestamp = set_cache_last_modified_time_stamp(data, last_updated_child)
-      "multiple/#{data['response']['docs'].first['account_cname_tesim'].first}/#{data['response']['docs'].first['has_model_ssim'].first.underscore}/#{timestamp}/#{data['response']['numFound']}"
+        build_cache_key(data, last_updated_child)
     end
 
     def add_filter_by_class_type_with_pagination_cache_key(data, last_updated_child = nil)
-      timestamp = set_cache_last_modified_time_stamp(data, last_updated_child)
-      "multiple/#{data['response']['docs'].first['account_cname_tesim'].first}/#{data['response']['docs'].first['has_model_ssim'].first.underscore}/page-#{page}/per_page-#{limit}/#{timestamp}/#{data['response']['numFound']}"
-    end
-
-    def add_filter_by_metadata_field_cache_key(data, metadata_key=nil, last_updated_child = nil)
-      timestamp = set_cache_last_modified_time_stamp(data, last_updated_child)
-      "multiple/#{data['response']['docs'].first['account_cname_tesim'].first}/#{metadata_key}/#{timestamp}/#{data['response']['numFound']}"
+       build_cache_key(data, last_updated_child, add_model_name = true )
     end
 
     def add_filter_by_metadata_field_with_pagination_cache_key(data, metadata_key=nil, last_updated_child = nil)
+      build_cache_key(data, last_updated_child, metadata_key)
+    end
+
+    private
+
+    def  build_cache_key(data, last_updated_child, metadata_key = nil, add_model_name = nil)
       timestamp = set_cache_last_modified_time_stamp(data, last_updated_child)
-      "multiple/#{data['response']['docs'].first['account_cname_tesim'].first}/#{metadata_key}/page-#{page}/per_page-#{limit}/#{timestamp}/#{data['response']['numFound']}"
+      cname = data['response']['docs'].first['account_cname_tesim'].first
+      model_name = data['response']['docs'].first['has_model_ssim'].first.underscore
+      record_count = data['response']['numFound']
+
+      return "multiple/#{cname}/#{model_name}/page-#{page}/per_page-#{limit}/#{timestamp}/#{record_count}" if add_model_name.present?
+      return "multiple/#{cname}/page-#{page}/per_page-#{limit}/#{timestamp}/#{record_count}" if add_model_name.blank? && metadata_key.blank?
+      return "multiple/#{cname}/#{metadata_key}/page-#{page}/per_page-#{limit}/#{timestamp}/#{record_count}" if metadata_key.present?
     end
 
     def set_cache_last_modified_time_stamp(parent_record, child_record)

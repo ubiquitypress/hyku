@@ -48,7 +48,7 @@ module Ubiquity
         file = get_work.thumbnail
         file_path =  Hyrax::DerivativePath.derivative_path_for_reference(file, 'thumbnail')
         file_content = File.read(file_path)
-        Base64.encode64(file_content).gsub(/\n/, '')
+        Base64.strict_encode64(file_content)
       else
         nil
       end

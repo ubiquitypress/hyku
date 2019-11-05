@@ -35,5 +35,12 @@ json.visibility    single_collection['visibility_ssi']
 works = Ubiquity::ApiUtils.query_for_colection_works(single_collection['id'])
 
 json.works do
-  json.partial! 'api/v1/work/work', collection: works, as: :work
+  if @skip_run == 'true'
+    json.partial! 'api/v1/work/work', collection: works, as: :work
+  else 
+    nil
+  end
 end
+
+image_as_string = Ubiquity::ApiUtils.fetch_and_covert_thumbnail_to_base64_string(single_collection, @skip_run)
+json.thumbnail_base64_string image_as_string

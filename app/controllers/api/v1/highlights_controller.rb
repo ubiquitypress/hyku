@@ -64,6 +64,7 @@ class API::V1::HighlightsController < ActionController::Base
         #Re-order to the solr response to match the order that was work was featured in
         ordered_values = data['response']['docs'].group_by {|hash| hash['id']}.values_at(*ids).flatten
         data['response']['docs'] = ordered_values
+        data
       end
     end
   end

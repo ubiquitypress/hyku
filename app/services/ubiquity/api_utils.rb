@@ -44,9 +44,11 @@ module Ubiquity
       cname = record['account_cname_tesim'].first
       AccountElevator.switch!(cname)
       get_work = ActiveFedora::Base.find(record['id'])
-      if get_work && get_work.thumbnail.present? && get_work.thumbnail.original_file.present?
-        read_file = get_work.thumbnail.original_file.content
-        Base64.encode64(read_file)
+      if get_work && get_work.visibility == 'open' && get_work.thumbnail.present? &&  get_work.thumbnail.visibility == 'open'
+        file = get_work.thumbnail
+        file_path =  Hyrax::DerivativePath.derivative_path_for_reference(file, 'thumbnail')
+        file_content = File.read(file_path)
+        Base64.strict_encode64(file_content)
       else
         nil
       end

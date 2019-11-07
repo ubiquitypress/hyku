@@ -6,6 +6,10 @@ class API::V1::SearchController <  ActionController::Base
   before_action :set_default_facet_limit, only: [:facet]
 
   def index
+    puts "lami #{params[:f].keys}"
+    puts "dadi  #{params[:f].slice("human_readable_type_sim")}"
+    puts "dila #{params[:f]}"
+
     reset_tenants_for_shared_search
     search_by_multiple_terms
   end

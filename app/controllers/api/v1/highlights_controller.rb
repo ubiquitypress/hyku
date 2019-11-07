@@ -60,11 +60,7 @@ class API::V1::HighlightsController < ActionController::Base
     if record.dig('response','docs').try(:present?)
       set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, recently_updated)
       Rails.cache.fetch(set_cache_key) do
-        data = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{ids.join(',')}"], rows: limit)
-        #Re-order to the solr response to match the order that was work was featured in
-        ordered_values = data['response']['docs'].group_by {|hash| hash['id']}.values_at(*ids).flatten
-        data['response']['docs'] = ordered_values
-        data
+        CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{ids.join(',')}"], rows: limit)
       end
     end
   end
@@ -90,12 +86,7 @@ class API::V1::HighlightsController < ActionController::Base
     collection_records = get_collections.presence && get_collections['response']['docs'].try(:first).dig('system_modified_dtsi')
     featured_records = get_featured_works.presence && get_featured_works['response']['docs'].map{|h| h['system_modified_dtsi']}.try(:max)
     recent_records = get_recent_documents.presence && get_recent_documents['response']['docs'].try(:first).dig('system_modified_dtsi')
-    featured_works = recent_updated_featured_works_time_stamp
-    dates_array = [collection_records, featured_records, recent_records, featured_works].compact.max
-  end
-
-  def recent_updated_featured_works_time_stamp
-    @featured && @featured.map{|record| record.updated_at}.try(:max).try(:to_time).try(:utc).try(:iso8601)
+    dates_array = [collection_records, featured_records, recent_records].compact.max
   end
 
 end

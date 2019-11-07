@@ -52,6 +52,9 @@ module Ubiquity
       else
         nil
       end
+     rescue Errno::ENOENT, StandardError => e
+       puts "file-path--missing-error reading a thumbnail file. #{e.inspect}"
+       nil
     end
 
   end

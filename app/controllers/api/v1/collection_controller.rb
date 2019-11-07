@@ -1,6 +1,6 @@
 class API::V1::CollectionController < ActionController::Base
   include Ubiquity::ApiControllerUtilityMethods
-  include Ubiquity::ApiErrorHandlers
+  #include Ubiquity::ApiErrorHandlers
 
   before_action :fetch_collection, only: [:show]
 

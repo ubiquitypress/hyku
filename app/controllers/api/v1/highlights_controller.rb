@@ -38,11 +38,11 @@ class API::V1::HighlightsController < ActionController::Base
     total_count = record['response']['numFound']
     file_ids = record && record['response']['docs'].presence && record['response']['docs'].first["file_set_ids_ssim"]
     new_file_ids = file_ids.present? ? file_ids.join(',') : nil
-    last_updated_child = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{new_file_ids}"],  rows: 1, "sort" => "score desc, system_modified_dtsi desc")
+    last_updated_child = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{new_file_ids}"] ,  rows: 1, "sort" => "score desc, system_modified_dtsi desc")
     if record.dig('response','docs').try(:present?)
       set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, last_updated_child)
       Rails.cache.fetch(set_cache_key) do
-        CatalogController.new.repository.search(:q=>"id:*", sort: 'system_create_dtsi desc', rows: limit, fq: models_to_search)
+        CatalogController.new.repository.search(:q=>"id:*", sort: 'system_create_dtsi desc', rows: limit, fq: visibility_check)
       end
     end
   end

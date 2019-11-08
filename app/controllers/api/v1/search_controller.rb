@@ -4,6 +4,7 @@ class API::V1::SearchController <  ActionController::Base
 
   before_action :set_search_default, only: [:index]
   before_action :set_default_facet_limit, only: [:facet]
+  before_action :set_solr_filter_query, only: [:index]
 
   def index
     reset_tenants_for_shared_search
@@ -25,8 +26,6 @@ class API::V1::SearchController <  ActionController::Base
     #This populates @fq passed as solr fq ie filter query
     if params[:f]
       params[:f].to_unsafe_h.map { |key, value| create_solr_filter_params(key, value) }
-    else
-      set_solr_filter_query
     end
 
     solr_params = {"qt"=>"search", q: build_query_with_term, "facet.field" => facet_name, "facet.query"=>[], "facet.pivot"=>[], "fq"=> @fq,
@@ -42,14 +41,11 @@ class API::V1::SearchController <  ActionController::Base
   private
 
   def search_by_multiple_terms
-
     #This populates @fq passed as solr fq ie filter query
     if params[:f]
       params[:f].to_unsafe_h.map { |key, value| create_solr_filter_params(key, value) }
-    else
-      set_solr_filter_query
     end
-    #"score desc, system_create_dtsi desc"
+    #default sort uses "score desc, system_create_dtsi desc"
     response = CatalogController.new.repository.search(
        q: build_query_with_term, fq: @fq, "qf" => solr_query_fields,
       "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
@@ -64,7 +60,7 @@ class API::V1::SearchController <  ActionController::Base
 
   def create_solr_filter_params(key, hash)
     hash.each do |item|
-       set_solr_filter_query << "{!term f=#{key}}#{item}"
+       @fq << "{!term f=#{key}}#{item}"
     end
   end
 

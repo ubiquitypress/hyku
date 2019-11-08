@@ -112,7 +112,11 @@ module Ubiquity
     end
 
     def visibility_check
-      [models_to_search, "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", "", "-suppressed_bsi:true"]
+      [models_to_search].concat(filter_using_visibility)
+    end
+
+    def filter_using_visibility
+      ["({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", "", "-suppressed_bsi:true"]
     end
 
   end

@@ -12,7 +12,6 @@ class API::V1::SearchController <  ActionController::Base
 
   def facet
     reset_tenants_for_shared_search
-    query_term = params[:q] || ''
     facet_name = params[:id]
 
     # this will create a hash key like this "f.creator_search_sim.facet.offset"
@@ -30,7 +29,7 @@ class API::V1::SearchController <  ActionController::Base
       set_solr_filter_query
     end
 
-    solr_params = {"qt"=>"search", q: query_term, "facet.field" => facet_name, "facet.query"=>[], "facet.pivot"=>[], "fq"=> @fq,
+    solr_params = {"qt"=>"search", q: build_query_with_term, "facet.field" => facet_name, "facet.query"=>[], "facet.pivot"=>[], "fq"=> @fq,
        "hl.fl"=>[], "rows"=>0, "qf" =>  solr_query_fields, "pf"=>"title_tesim", "facet"=>true,
         facet_limit_key => limit, facet_offset_key => facet_offset_limit, "sort"=> sort }
 
@@ -43,7 +42,6 @@ class API::V1::SearchController <  ActionController::Base
   private
 
   def search_by_multiple_terms
-    query_term = params[:q] || ''
 
     #This populates @fq passed as solr fq ie filter query
     if params[:f]
@@ -53,7 +51,7 @@ class API::V1::SearchController <  ActionController::Base
     end
     #"score desc, system_create_dtsi desc"
     response = CatalogController.new.repository.search(
-       q: query_term, fq: @fq, "qf" => solr_query_fields,
+       q: build_query_with_term, fq: @fq, "qf" => solr_query_fields,
       "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
       "institution_sim", "language_sim", "file_availability_sim"],  "sort" => sort,
        rows: limit, start: offset
@@ -66,8 +64,25 @@ class API::V1::SearchController <  ActionController::Base
 
   def create_solr_filter_params(key, hash)
     hash.each do |item|
-       set_solr_filter_query << "{!term f=#{key} }#{item}"
+       set_solr_filter_query << "{!term f=#{key}}#{item}"
     end
+  end
+
+  def build_query_with_term
+    term = params[:q]
+    if term.present?
+    "{!lucene}_query_:\"{!dismax v=#{term}}\" _query_:\"{!join from=id to=file_set_ids_ssim}{!dismax v=#{term}}\""
+    else
+      ""
+    end
+  end
+
+  def set_solr_filter_query
+    @fq = [search_models, "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", "", "-suppressed_bsi:true"]
+  end
+
+  def search_models
+     "{!terms f=has_model_ssim}Article,Book,BookContribution,ConferenceItem,Dataset,ExhibitionItem,Image,Report,ThesisOrDissertation,TimeBasedMedia,GenericWork,Collection"
   end
 
   def set_search_default
@@ -87,10 +102,6 @@ class API::V1::SearchController <  ActionController::Base
       #Apartment::Tenant.reset
       AccountElevator.switch!(@tenant.try(:parent).try(:cname) )
     end
-  end
-
-  def set_solr_filter_query
-    @fq = [models_to_search, "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", "", "-suppressed_bsi:true"]
   end
 
   #facets to skip, same as solr start paramter

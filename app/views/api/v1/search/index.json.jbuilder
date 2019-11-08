@@ -2,7 +2,11 @@ json.total @works['response']['numFound']
 
 json.items do
   json.array! @works['response']['docs']  do |work|
-    json.partial! 'api/v1/work/work', work: work
+    if work['has_model_ssim'] == 'Collection'
+      json.partial! 'api/v1/collection/collection', work: work
+    else
+      json.partial! 'api/v1/work/work', work: work
+    end
   end
 end
 

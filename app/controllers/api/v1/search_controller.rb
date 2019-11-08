@@ -54,7 +54,7 @@ class API::V1::SearchController <  ActionController::Base
        )
 
     @works = response
-    raise Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: "No record found for query_term: #{query_term} and filters containing #{params[:f]}") if response['response']['numFound'] == 0
+    raise Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: "No record found for query_term: #{params[:q]} and filters containing #{params[:f]}") if response['response']['numFound'] == 0
 
   end
 

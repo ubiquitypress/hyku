@@ -9,15 +9,16 @@ class API::V1::CollectionController < ActionController::Base
   end
 
   def show
-    @skip_run = 'true'
-    last_modified = Time.parse(@collection["system_modified_dtsi"])
-    #fresh_when(last_modified: last_modified, public: true)
+
   end
 
   private
 
   def fetch_collection
-    collection =  CatalogController.new.repository.search(q: "id:#{params[:id]}")
+    @skip_run = 'true'
+    collection =   Rails.cache.fetch("single/collection/#{@tenant.cname}/#{params[:id]}") do
+      CatalogController.new.repository.search(q: "id:#{params[:id]}")
+    end
     @collection  = collection['response']["docs"].first
     if @collection.present?
       @collection

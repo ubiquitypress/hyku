@@ -2,7 +2,9 @@ module Ubiquity
   class ApiUtils
     def self.query_for_collection_works(collection_id)
       if collection_id
-        works = CatalogController.new.repository.search(q: "member_of_collection_ids_ssim:#{collection_id}", rows: 200,  "sort" => "score desc, system_modified_dtsi desc")
+        works = CatalogController.new.repository.search(q: "member_of_collection_ids_ssim:#{collection_id}", rows: 200,  "sort" => "score desc, system_modified_dtsi desc",
+          fq: ["({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", "", "-suppressed_bsi:true"]
+        )
         works['response']['docs']
       else
         [ ]
@@ -11,7 +13,10 @@ module Ubiquity
 
     def self.query_for_parent_collections(collection_ids, skip_run = nil)
       if collection_ids.present? && skip_run == 'true'
-        parent_collections = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{collection_ids.join(',')}"])
+        parent_collections = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{collection_ids.join(',')}",
+          "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", "", "-suppressed_bsi:true"
+
+          ])
         parent_collections['response']['docs'].map do |doc|
           {uuid: doc['id'], title: doc['title_tesim'].try(:first)}
         end
@@ -22,7 +27,9 @@ module Ubiquity
 
     def self.query_for_files(file_ids, skip_run = nil)
       if file_ids.present? && skip_run == 'true'
-        child_files = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{file_ids.join(',')}"], rows: 200,  "sort" => "score desc, system_modified_dtsi desc")
+        child_files = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{file_ids.join(',')}",
+          "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", "", "-suppressed_bsi:true"
+          ], rows: 200,  "sort" => "score desc, system_modified_dtsi desc")
         child_files  #['response']['docs']
         file_count = child_files['response']['numFound']
         summary = child_files['response']['docs'].group_by {|hash| hash['visibility_ssi']}.transform_values(&:count)

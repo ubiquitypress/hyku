@@ -26,3 +26,8 @@ if recent.present?
 else
   json.recent_works nil
 end
+
+
+json.featured_order do
+  json.array! @featured
+end

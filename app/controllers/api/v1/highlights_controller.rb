@@ -6,6 +6,7 @@ class API::V1::HighlightsController < ActionController::Base
   before_action :set_limit
 
   def index
+    @skip_run = 'false'
     @collections = get_collections || []
     @featured_works = get_featured_works || []
     @recent_documents =  get_recent_documents || []

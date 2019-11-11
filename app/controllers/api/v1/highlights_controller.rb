@@ -2,7 +2,7 @@ class API::V1::HighlightsController < ActionController::Base
 
   #defines :limit, :default_limit, :models_to_search, :switche_tenant
   include Ubiquity::ApiControllerUtilityMethods
-  #include Ubiquity::ApiErrorHandlers
+  include Ubiquity::ApiErrorHandlers
   before_action :set_limit
 
   def index

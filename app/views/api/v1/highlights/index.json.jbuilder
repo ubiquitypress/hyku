@@ -2,7 +2,7 @@
 collection_list = @collections.presence && @collections['response']['docs']
 if collection_list.present?
   json.explore_collections do
-    json.partial! 'api/v1/collection/collection', collection: @collections['response']['docs'], locals: {skip_run: @skip_run}, as: :single_collection
+    json.partial! 'api/v1/collection/collection', collection: @collections['response']['docs'], as: :single_collection
   end
 else
   json.explore_collections  nil

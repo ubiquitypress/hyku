@@ -33,7 +33,6 @@ module Ubiquity
     end
 
     def self.fetch_and_covert_thumbnail_to_base64_string(record, skip_run = nil)
-      puts "bafi #{skip_run.inspect}"
       if skip_run == 'true' && record['thumbnail_path_ss'].present?
         get_thumbnail_from_fedora(record)
       end

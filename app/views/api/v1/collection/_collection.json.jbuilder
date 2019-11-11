@@ -35,7 +35,7 @@ json.visibility    single_collection['visibility_ssi']
 works = Ubiquity::ApiUtils.query_for_collection_works(single_collection['id'])
 
 json.works do
-  if @skip_run
+  if @skip_run == 'false'
     json.partial! 'api/v1/work/work', collection: works, as: :work, skip_run: 'false' #, fedora_thumbnail: nil
   else
     nil

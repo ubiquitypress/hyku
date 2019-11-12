@@ -32,7 +32,7 @@ json.publisher   single_collection['publisher_tesim']
 json.thumbnail_url    ('https://' + single_collection['account_cname_tesim'].first + single_collection['thumbnail_path_ss'])
 json.visibility    single_collection['visibility_ssi']
 
-works = Ubiquity::ApiUtils.query_for_collection_works(single_collection['id'])
+works = Ubiquity::ApiUtils.query_for_collection_works(single_collection)
 
 json.works do
   if  @skip_run == 'true'

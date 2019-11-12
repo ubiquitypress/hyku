@@ -28,14 +28,17 @@ module Ubiquity
 
     def fedora_cache_key
       cache_type = record.class == Collection ? 'fedora/collection' : 'fedora/work'
-      "single/#{cache_type}/#{self.account_cname_tesim}/#{self.id}"
+      @fedora_cache = "single/#{cache_type}/#{self.account_cname_tesim}/#{self.id}"
+      @thumbnail_cache = "single/#{cache_type}-thumbnail/#{self.account_cname_tesim}/#{self.id}"
     end
 
     def flush_single_cache
-      Rails.cache.delete(fedora_cache_key)
-      Rails.cache.delete(single_work_cache_key)
-      Rails.cache.delete(single_collection_cache_key)
-    end
+     fedora_cache_key
+     Rails.cache.delete(@fedora_cache)
+     Rails.cache.delete(@thumbnail_cache)
+     Rails.cache.delete(single_work_cache_key)
+     Rails.cache.delete(single_collection_cache_key)
+   end
 
   end
 end

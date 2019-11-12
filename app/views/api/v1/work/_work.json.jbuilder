@@ -146,7 +146,7 @@ json.related_exhibition     work['related_exhibition_tesim']
 json.related_exhibition_date    work['related_exhibition_date_tesim']
 json.related_exhibition_venue     work['related_exhibition_venue_tesim']
 
-get_files =  Ubiquity::ApiUtils.query_for_files(work["file_set_ids_ssim"],  @skip_run)
+get_files =  Ubiquity::ApiUtils.query_for_files(work,  @skip_run)
 
 if get_files.present?
   json.files get_files
@@ -154,7 +154,7 @@ else
   json.files  nil
 end
 
-get_collections =   Ubiquity::ApiUtils.query_for_parent_collections(work["member_of_collection_ids_ssim"],  @skip_run)
+get_collections =   Ubiquity::ApiUtils.query_for_parent_collections(work,  @skip_run)
 
 if get_collections.present?
   json.collections do

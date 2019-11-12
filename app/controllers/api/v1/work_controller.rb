@@ -1,7 +1,7 @@
 class API::V1::WorkController < ActionController::Base
   #defines :limit, :default_limit, :models_to_search, :switche_tenant
   include Ubiquity::ApiControllerUtilityMethods
-  #include Ubiquity::ApiErrorHandlers
+  include Ubiquity::ApiErrorHandlers
 
   before_action :fetch_work, only: [:show, :manifest]
 

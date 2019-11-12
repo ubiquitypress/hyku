@@ -1,7 +1,7 @@
 class API::V1::WorkController < ActionController::Base
   #defines :limit, :default_limit, :models_to_search, :switche_tenant
   include Ubiquity::ApiControllerUtilityMethods
-  include Ubiquity::ApiErrorHandlers
+  #include Ubiquity::ApiErrorHandlers
 
   before_action :fetch_work, only: [:show, :manifest]
 
@@ -40,18 +40,11 @@ class API::V1::WorkController < ActionController::Base
     work = work.presence && work['response']['docs'].first
     if work.present?
       @work = work
+      json = render_to_string(:partial => 'api/v1/work/work.json.jbuilder', locals: {work: @work})
+      render json: json
     else
       raise Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: "There is no record with id: #{params[:id]}")
     end
-
-    # @work_json = Rails.cache.fetch("single/work/#{@tenant.cname}/#{params[:id]}") do
-    #   work = CatalogController.new.repository.search(q: "id:#{params[:id]}")
-    #   @work = work['response']['docs'].first
-    #   fedora_work = ActiveFedora::Base.find(params['id'])
-    #   @fedora_work_thumbnail = fedora_work.thumbnail if fedora_work.visibility == 'open' && fedora_work.thumbnail.present?
-    #   render_to_string(:partial => "api/v1/work/work.json.jbuilder", locals: {work: @work, fedora_thumbnail: @fedora_work_thumbnail, skip_run: @skip_run})
-    # end
-
   end
 
   def fetch_all_works

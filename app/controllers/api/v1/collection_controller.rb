@@ -40,7 +40,7 @@ class API::V1::CollectionController < ActionController::Base
     if record.dig('response','docs').try(:present?)
       set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, last_updated_child)
       collections_json  = Rails.cache.fetch(set_cache_key) do
-        @collections = CatalogController.new.repository.search(q: '', fq: "has_model_ssim:Collection",
+        @collections = CatalogController.new.repository.search(q: '', fq: ["has_model_ssim:Collection", "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)"],
                         "sort"=>"score desc, system_create_dtsi desc",  rows: limit, start: offset)
         render_to_string(:template => 'api/v1/collection/index.json.jbuilder', locals: {collections: @collections})
       end

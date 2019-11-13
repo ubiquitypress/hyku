@@ -42,5 +42,5 @@ json.works do
   end
 end
 
-image_as_string = Ubiquity::ApiUtils.fetch_and_covert_thumbnail_to_base64_string(single_collection, @skip_run)
+image_as_string = Ubiquity::ApiUtils.fetch_and_covert_thumbnail_to_base64_string(single_collection)
 json.thumbnail_base64_string image_as_string

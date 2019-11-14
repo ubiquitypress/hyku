@@ -1,12 +1,15 @@
 <!-- copied from https://github.com/samvera/hyrax/blob/master/app/views/_logo.html.erb
   to conditionally change Hyku label for BL
 -->
+<% if all_tenant_settings_keys.include? ubiquity_url_parser(request.original_url) %>
 
-<a id="logo" class="navbar-brand" href="<%= hyrax.root_path %>" data-no-turbolink="true">
-  <span class="glyphicon glyphicon-globe" role="img" aria-label="<%= application_name %>" aria-hidden="true"></span>
-  <% if ENV["BL_TENANTS"].split(',').include? ubiquity_url_parser(request.original_url) %>
-    Shared Research Repository
-  <% else %>
-    <span class="institution_name"><%= application_name %></span>
-  <% end %>
-</a>
+<% else %>
+  <a id="logo" class="navbar-brand" href="<%= hyrax.root_path %>" data-no-turbolink="true">
+    <span class="glyphicon glyphicon-globe" role="img" aria-label="<%= application_name %>" aria-hidden="true"></span>
+    <% if ENV["BL_TENANTS"].split(',').include? ubiquity_url_parser(request.original_url) %>
+      Shared Research Repository 
+    <% else %>
+      <span class="institution_name"><%= application_name %></span>
+    <% end %>
+  </a>
+<% end %>

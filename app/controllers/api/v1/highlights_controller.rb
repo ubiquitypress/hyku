@@ -28,8 +28,9 @@ class API::V1::HighlightsController < ActionController::Base
 
     if record.dig('response','docs').try(:present?)
       set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, last_updated_child)
+      fq = ['has_model_ssim:Collection', "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)"]
       collections_json  = Rails.cache.fetch(set_cache_key) do
-        CatalogController.new.repository.search(q: 'id:*', fq: 'has_model_ssim:Collection', rows: limit, sort: 'system_created_dtsi desc')
+        CatalogController.new.repository.search(q: 'id:*', fq: fq, rows: limit, sort: 'system_created_dtsi desc')
       end
     end
   end

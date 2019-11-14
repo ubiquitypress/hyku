@@ -1,6 +1,6 @@
 class API::V1::SearchController <  ActionController::Base
   include Ubiquity::ApiControllerUtilityMethods
-  include Ubiquity::ApiErrorHandlers
+  #include Ubiquity::ApiErrorHandlers
 
   before_action :set_search_default, only: [:index]
   before_action :set_default_facet_limit, only: [:facet]
@@ -13,29 +13,19 @@ class API::V1::SearchController <  ActionController::Base
 
   def facet
     reset_tenants_for_shared_search
-    facet_name = params[:id]
-
-    # this will create a hash key like this "f.creator_search_sim.facet.offset"
-    #this ley is equivalent of start key which tells solr how many records to skip
-    facet_offset_key = "f" + "." + facet_name + ".facet.offset"
-
-    #{creates a hash key }"f.creator_search_sim.facet.limit"
-    #this is similar to row key in non facet solr queries and tell solr how many facet count record to return
-    facet_limit_key = "f" + "." + facet_name +  ".facet.limit"
 
     #This populates @fq passed as solr fq ie filter query
     if params[:f]
       params[:f].to_unsafe_h.map { |key, value| create_solr_filter_params(key, value) }
     end
 
-    solr_params = {"qt"=>"search", q: build_query_with_term, "facet.field" => facet_name, "facet.query"=>[], "facet.pivot"=>[], "fq"=> @fq,
-       "hl.fl"=>[], "rows"=>0, "qf" =>  solr_query_fields, "pf"=>"title_tesim", "facet"=>true,
-        facet_limit_key => limit, facet_offset_key => facet_offset_limit, "sort"=> sort }
-
-    response =  CatalogController.new.repository.search(solr_params)
-    facet_count_list =  response['facet_counts']["facet_fields"][facet_name]
-    render json: Hash[*facet_count_list]
-
+    if params[:id] != 'all'
+      data = fetch_facet_by_name
+      render json: data
+    elsif params[:id] == 'all'
+      data = fetch_all_facet
+      render json: data
+    end
   end
 
   private
@@ -109,5 +99,50 @@ class API::V1::SearchController <  ActionController::Base
       0
     end
   end
+
+  def fetch_facet_by_name
+    facet_name = params[:id]
+
+    # this will create a hash key like this "f.creator_search_sim.facet.offset"
+    #this ley is equivalent of start key which tells solr how many records to skip
+    facet_offset_key = "f" + "." + facet_name + ".facet.offset"
+
+    #{creates a hash key }"f.creator_search_sim.facet.limit"
+    #this is similar to row key in non facet solr queries and tell solr how many facet count record to return
+    facet_limit_key = "f" + "." + facet_name +  ".facet.limit"
+
+    solr_params = {"qt"=>"search", q: build_query_with_term, "facet.field" => facet_name, "facet.query"=>[], "facet.pivot"=>[], "fq"=> @fq,
+    "hl.fl"=>[], "rows"=>0, "qf" =>  solr_query_fields, "pf"=>"title_tesim", "facet"=>true,
+     facet_limit_key => limit, facet_offset_key => facet_offset_limit, "sort"=> sort }
+
+     page_num = params[:page] || 0
+     per_page_num = params[:per_page] || 0
+     record = Rails.cache.fetch("facet/#{@tenant.cname}/#{params[:id]}/#{page_num}/#{per_page_num}", expires_in: 30.minutes) do
+       response = CatalogController.new.repository.search(solr_params)
+       facet_count_list =  response['facet_counts']["facet_fields"][facet_name]
+       Hash[*facet_count_list]
+     end
+  end
+
+  def fetch_all_facet
+    solr_params = {"qt"=>"search", q: build_query_with_term,
+      "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim", "institution_sim", "language_sim", "file_availability_sim"],
+       "facet.query"=>[], "facet.pivot"=>[], "fq"=> @fq,
+     "hl.fl"=>[], "rows"=>0, "qf" =>  solr_query_fields, "pf"=>"title_tesim", "facet"=>true, "sort"=> sort ,
+     "f.resource_type_sim.facet.limit" => 1000, "f.creator_search_sim.facet.limit" => 1000, "f.keyword_sim.facet.limit" => 1000, "f.member_of_collections_ssim.facet.limit" => 1000,
+     "f.institution_sim.facet.limit" => 1000, "f.language_sim.facet.limit" => 1000, "f.file_availability_sim.facet.limit" => 1000
+    }
+
+    record = Rails.cache.fetch("facet/#{@tenant.cname}/all", expires_in: 30.minutes) do
+       response = CatalogController.new.repository.search(solr_params)
+       facet_count_list =  response['facet_counts']["facet_fields"]
+       ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim", "institution_sim", "language_sim",  "file_availability_sim"].map do |key|
+         {key => Hash[*facet_count_list[key] ] }
+       end
+    end
+
+  end
+
+
 
 end

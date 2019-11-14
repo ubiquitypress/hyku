@@ -4,7 +4,7 @@ class API::V1::SearchController <  ActionController::Base
 
   before_action :set_search_default, only: [:index]
   before_action :set_default_facet_limit, only: [:facet]
-  before_action :set_solr_filter_query, only: [:index]
+  before_action :set_solr_filter_query, only: [:index, :facet]
 
   def index
     reset_tenants_for_shared_search
@@ -129,8 +129,8 @@ class API::V1::SearchController <  ActionController::Base
       "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim", "institution_sim", "language_sim", "file_availability_sim"],
        "facet.query"=>[], "facet.pivot"=>[], "fq"=> @fq,
      "hl.fl"=>[], "rows"=>0, "qf" =>  solr_query_fields, "pf"=>"title_tesim", "facet"=>true, "sort"=> sort ,
-     "f.resource_type_sim.facet.limit" => 1000, "f.creator_search_sim.facet.limit" => 1000, "f.keyword_sim.facet.limit" => 1000, "f.member_of_collections_ssim.facet.limit" => 1000,
-     "f.institution_sim.facet.limit" => 1000, "f.language_sim.facet.limit" => 1000, "f.file_availability_sim.facet.limit" => 1000
+     "f.resource_type_sim.facet.limit" => 10000, "f.creator_search_sim.facet.limit" => 10000, "f.keyword_sim.facet.limit" => 10000, "f.member_of_collections_ssim.facet.limit" => 10000,
+     "f.institution_sim.facet.limit" => 10000, "f.language_sim.facet.limit" => 10000, "f.file_availability_sim.facet.limit" => 10000
     }
 
     record = Rails.cache.fetch("facet/#{@tenant.cname}/all", expires_in: 30.minutes) do

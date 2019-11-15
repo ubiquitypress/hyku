@@ -16,6 +16,7 @@ class API::V1::WorkController < ActionController::Base
   end
 
   def show
+    puts "DUCK #{request.ip}" 
     json = render_to_string(:partial => 'api/v1/work/work.json.jbuilder', locals: {work: @work})
       render json: json
   end

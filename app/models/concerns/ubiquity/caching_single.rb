@@ -27,9 +27,9 @@ module Ubiquity
     end
 
     def fedora_cache_key
-      cache_type = record.class == Collection ? 'fedora/collection' : 'fedora/work'
-      @fedora_cache = "single/#{cache_type}/#{self.account_cname_tesim}/#{self.id}"
-      @thumbnail_cache = "single/#{cache_type}-thumbnail/#{self.account_cname_tesim}/#{self.id}"
+      cache_type = self.class == Collection ? 'fedora/collection' : 'fedora/work'
+      @fedora_cache = "single/#{cache_type}/#{self.account_cname}/#{self.id}"
+      @thumbnail_cache = "single/#{cache_type}-thumbnail/#{self.account_cname}/#{self.id}"
     end
 
     def flush_single_cache

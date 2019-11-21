@@ -60,7 +60,6 @@ module Hyku
       Hyrax::FileSetPresenter.class_eval {delegate :visibility, to: :solr_document}
       #added to allow the headers to be set in api/v1/contact_form
       Hyrax::ContactForm.class_eval {attr_accessor :headers}
-      Ubiquity::AllModelsVirtualFields.module_eval {include ::Ubiquity::CachingSingle}
     end
 
     config.before_initialize do

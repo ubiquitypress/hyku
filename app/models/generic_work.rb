@@ -8,7 +8,8 @@ class GenericWork < ActiveFedora::Base
   include Ubiquity::VersionMetadataModelConcern
   include Ubiquity::UpdateSharedIndex
   include Ubiquity::FileAvailabilityFaceting
-  
+  include ::Ubiquity::CachingSingle
+
   validates :title, presence: { message: 'Your work must have a title.' }
 
   # This indexer uses IIIF thumbnails:

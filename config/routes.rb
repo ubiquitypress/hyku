@@ -77,7 +77,7 @@ Rails.application.routes.draw do
    end
 
   # Citation download format
-  post '/citation_exports/export_to_rif' => 'ubiquity/citation_exports#export_to_rif'
+  match '/citation_exports/export_to_rif' => 'ubiquity/citation_exports#export_to_rif', via: [:get, :post]
 
   mount BrowseEverything::Engine => '/browse'
   resource :site, only: [:update] do

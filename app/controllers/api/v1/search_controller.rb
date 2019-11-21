@@ -1,6 +1,6 @@
 class API::V1::SearchController <  ActionController::Base
   include Ubiquity::ApiControllerUtilityMethods
-  #include Ubiquity::ApiErrorHandlers
+  include Ubiquity::ApiErrorHandlers
 
   before_action :set_search_default, only: [:index]
   before_action :set_default_facet_limit, only: [:facet]

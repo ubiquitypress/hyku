@@ -17,6 +17,9 @@ module Hyku
     # configuring Nginx on Elastic Beanstalk is a pain.
     config.middleware.use Rack::Deflater
 
+    #added by ubiquitypress
+    config.middleware.use Rack::Attack
+
     # The locale is set by a query parameter, so if it's not found render 404
     config.action_dispatch.rescue_responses.merge!(
       "I18n::InvalidLocale" => :not_found

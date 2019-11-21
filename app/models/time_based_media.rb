@@ -10,6 +10,7 @@ class TimeBasedMedia < ActiveFedora::Base
   include Ubiquity::VersionMetadataModelConcern
   include Ubiquity::UpdateSharedIndex
   include Ubiquity::FileAvailabilityFaceting
+  include ::Ubiquity::CachingSingle
 
   self.indexer = TimeBasedMediaIndexer
   # Change this to restrict which works can be added as a child.

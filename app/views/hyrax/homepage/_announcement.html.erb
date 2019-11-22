@@ -1,5 +1,5 @@
 <!-- copied over from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/homepage/_announcement.html.erb -->
-<% if all_tenant_settings_keys.include? ubiquity_url_parser(request.original_url) %>
+<% if ENV['BLANK_PAGES'] == 'true' %>
 
 <% else %>
   <% if display_content_block? @announcement_text %>

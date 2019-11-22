@@ -1,6 +1,6 @@
 <!-- From hyrax/app/views/_controls.html.erb -->
 
-<% if all_tenant_settings_keys.include? ubiquity_url_parser(request.original_url) %>
+<% if ENV['BLANK_PAGES'] == 'true' %>
 
 <% else %>
   <nav class="navbar navbar-default navbar-static-top" role="navigation">

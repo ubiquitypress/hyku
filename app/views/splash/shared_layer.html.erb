@@ -1,12 +1,12 @@
-<% if all_tenant_settings_keys.include? ubiquity_url_parser(request.original_url) %>
+<% if ENV['BLANK_PAGES'] == 'true' %>
 
 <% else %>
-  <%= render 'ubiquity/shared_search/search_form' %>
-  <%= render partial: 'catalog/search_form' %> <br/>
 
+  <%= render partial: 'catalog/search_form' %> <br/>
   <% if ENV["BL_TENANTS"].split(',').include? ubiquity_url_parser(request.original_url)%>
     <%= render 'bl_shared_layer' %>
   <% else %>
     <%= render 'new_index' %>
   <% end %>
+  
 <% end %>

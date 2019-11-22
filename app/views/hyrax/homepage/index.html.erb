@@ -1,7 +1,7 @@
 <!-- copied over from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/homepage/index.html.erb -->
 <!-- Changed share button text to 'Add new work', show this button for onlky logged in users -->
 
-<% if all_tenant_settings_keys.include? ubiquity_url_parser(request.original_url) %>
+<% if ENV['BLANK_PAGES'] == 'true' %>
 
 <% else %>
   <% provide :page_title, application_name %>

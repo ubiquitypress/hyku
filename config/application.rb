@@ -60,6 +60,7 @@ module Hyku
       Hyrax::FileSetPresenter.class_eval {delegate :visibility, to: :solr_document}
       #added to allow the headers to be set in api/v1/contact_form
       Hyrax::ContactForm.class_eval {attr_accessor :headers}
+      Hyrax::SelectTypeListPresenter.prepend(::Ubiquity::SelectTypeListPresenterOverride)
     end
 
     config.before_initialize do

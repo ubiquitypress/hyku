@@ -1,6 +1,7 @@
 module Ubiquity
   module AllFormsSharedBehaviour
     extend ActiveSupport::Concern
+    include(::Ubiquity::HyraxWorkFormOverride)
 
     included do
       attr_accessor :contributor_group, :contributor_name_type, :contributor_type, :contributor_given_name,

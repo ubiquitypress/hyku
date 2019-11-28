@@ -4,7 +4,7 @@ module Ubiquity
      extend ActiveSupport::Concern
       def authorized_models
         return [] unless @current_user
-        json_data = ENV['TENANTS_SETTINGS']
+        json_data = ENV['TENANTS_WORK_SETTINGS']
         if json_data.present?
           settings_hash = JSON.parse(json_data)
           account = Account.find_by(tenant: Apartment::Tenant.current)

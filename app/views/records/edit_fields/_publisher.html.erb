@@ -3,5 +3,5 @@
 <label class="control-label" for="<%= my_model_name %>_publisher">Publisher</label>
 <p class='help-block'> <%= t('simple_form.hints.defaults.publisher') %></p>
 <%= text_field_tag "#{my_model_name}[publisher][]", f.object.model.publisher.first, id: "#{my_model_name}_publisher",
-  class: "form-control ubiquity-publisher" %>
+  class: "form-control ubiquity-publisher", required: f.object.required?(key)  %>
 <br>

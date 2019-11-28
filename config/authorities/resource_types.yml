@@ -248,3 +248,5 @@ terms:
     term: Working paper
   - id: Collection Other
     term: Other
+  - id: BookChapter default Book chapter
+    term: Book chapter

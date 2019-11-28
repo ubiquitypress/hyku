@@ -18,6 +18,8 @@ Hyrax.config do |config|
   # Injected via `rails g hyrax:work TimeBasedMedia`
   config.register_curation_concern :time_based_media
   config.register_curation_concern :generic_work
+  # Injected via `rails g hyrax:work BookChapter`
+  config.register_curation_concern :book_chapter
 
 
 

@@ -1,7 +1,3 @@
-<%#= f.input :publisher,  input_html: { class: 'ubiquity-publisher form-control' }, required: f.object.required?(key) %>
 <% my_model_name = f.object.model.class.to_s.underscore %>
-<label class="control-label" for="<%= my_model_name %>_publisher">Publisher</label>
-<p class='help-block'> <%= t('simple_form.hints.defaults.publisher') %></p>
-<%= text_field_tag "#{my_model_name}[publisher][]", f.object.model.publisher.first, id: "#{my_model_name}_publisher",
-  class: "form-control ubiquity-publisher", required: f.object.required?(key)  %>
+<%= f.input :publisher,  input_html: { class: 'ubiquity-publisher form-control' }, required: f.object.required?(key) %>
 <br>

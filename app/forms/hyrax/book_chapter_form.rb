@@ -9,8 +9,8 @@ module Hyrax
     self.remove_required_from_primary += %i[org_unit pagination publisher]
 
     self.terms = %i[title alt_title resource_type creator institution contributor abstract
-                     date_published book_title pagination volume publisher issn rights_holder license
-                     org_unit doi keyword refereed add_info
+                     date_published book_title pagination volume publisher issn additional_links rights_holder license
+                     org_unit doi subject keyword refereed add_info
                     ]
   end
 end

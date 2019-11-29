@@ -6,3 +6,12 @@ en:
       book_chapter:
         name:               "Book Chapter"
         description:        "Book chapter works"
+  simple_form:
+    hints:
+      book_chapter:
+        publisher:
+      defaults:
+        publisher:
+    labels:
+      defaults:
+        org_unit: Department

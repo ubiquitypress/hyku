@@ -20,6 +20,10 @@
 
     <p class="help-block">The person or group responsible for the work. Usually this is the author of the content.</p>
 
+    <% if current_account.cname.include?('tony') %>
+        <%= render 'shared/ubiquity/creator/creator_field_form_pacific', template: template %>
+    <% else %>
+
     <label class="control-label multi_value optional" for="#{template}_creator_isni">
       Creator ISNI</label>
 
@@ -89,10 +93,12 @@
           multiple: true, class: "form-control"
           %>
 
+      <br/>
+
     </span> <!-- closes ubiquity_personal_fields -->
 
-
     <br>
+  <% end %>
 
     <%= hidden_field_tag "#{template}[creator_group][][creator_position]", index, class: 'ubiquity-creator-score'  %>
 

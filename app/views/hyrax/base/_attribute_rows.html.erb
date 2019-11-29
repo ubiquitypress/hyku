@@ -25,6 +25,7 @@
   <%= render "shared/ubiquity/editor/show", presenter: presenter %>
 <% end %>
 
+<%= presenter.attribute_to_html(:additional_links, render_as: :string) %>
 <%= presenter.attribute_to_html(:journal_title, render_as: :string) %>
 <%= presenter.attribute_to_html(:alternative_journal_title, render_as: :string) %>
 <%= presenter.attribute_to_html(:volume, render_as: :string) %>

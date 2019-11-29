@@ -91,6 +91,10 @@ module Ubiquity
         index.as :stored_searchable
       end
 
+      property :additional_links, predicate: ::RDF::Vocab::SCHEMA.significantLinks, multiple: false do |index|
+        index.as :stored_searchable
+      end
+
     end
   end
 end

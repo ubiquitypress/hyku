@@ -196,6 +196,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("rights_holder", :stored_searchable)
     config.add_show_field solr_name("dewey", :stored_searchable)
     config.add_show_field solr_name("library_of_congress_classification", :stored_searchable)
+    config.add_show_field solr_name("additional_links", :stored_searchable)
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
     #

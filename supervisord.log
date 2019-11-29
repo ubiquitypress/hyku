@@ -994,3 +994,46 @@
 2019-06-17 19:03:03,976 INFO reaped unknown pid 19739
 2019-06-17 19:31:59,459 INFO reaped unknown pid 19742
 2019-06-17 19:32:39,575 INFO reaped unknown pid 20725
+2019-11-29 09:19:56,275 CRIT Set uid to user 0
+2019-11-29 09:19:56,275 WARN For [program:rails], AUTO logging used for stderr_logfile without rollover, set maxbytes > 0 to avoid filling up filesystem unintentionally
+2019-11-29 09:19:56,285 INFO supervisord started with pid 1
+2019-11-29 09:19:57,287 INFO spawned: 'rails' with pid 8
+2019-11-29 09:19:58,300 INFO success: rails entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-11-29 09:20:05,497 WARN received SIGTERM indicating exit request
+2019-11-29 09:20:05,497 INFO waiting for rails to die
+2019-11-29 09:20:05,519 INFO stopped: rails (terminated by SIGTERM)
+2019-11-29 09:20:26,996 CRIT Set uid to user 0
+2019-11-29 09:20:26,996 WARN For [program:rails], AUTO logging used for stderr_logfile without rollover, set maxbytes > 0 to avoid filling up filesystem unintentionally
+2019-11-29 09:20:27,002 INFO supervisord started with pid 1
+2019-11-29 09:20:28,004 INFO spawned: 'rails' with pid 8
+2019-11-29 09:20:29,005 INFO success: rails entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-11-29 09:20:49,312 INFO exited: rails (exit status 1; not expected)
+2019-11-29 09:20:50,317 INFO spawned: 'rails' with pid 13
+2019-11-29 09:20:51,319 INFO success: rails entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-11-29 09:21:02,026 INFO exited: rails (exit status 1; not expected)
+2019-11-29 09:21:03,030 INFO spawned: 'rails' with pid 18
+2019-11-29 09:21:04,032 INFO success: rails entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-11-29 09:21:14,248 INFO exited: rails (exit status 1; not expected)
+2019-11-29 09:21:15,252 INFO spawned: 'rails' with pid 23
+2019-11-29 09:21:16,254 INFO success: rails entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-11-29 09:21:26,365 INFO exited: rails (exit status 1; not expected)
+2019-11-29 09:21:27,369 INFO spawned: 'rails' with pid 28
+2019-11-29 09:21:28,371 INFO success: rails entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-11-29 09:21:38,807 INFO exited: rails (exit status 1; not expected)
+2019-11-29 09:21:39,809 INFO spawned: 'rails' with pid 38
+2019-11-29 09:21:40,811 INFO success: rails entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-11-29 09:21:52,179 INFO exited: rails (exit status 1; not expected)
+2019-11-29 09:21:53,182 INFO spawned: 'rails' with pid 51
+2019-11-29 09:21:54,183 INFO success: rails entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-11-29 09:22:04,623 INFO exited: rails (exit status 1; not expected)
+2019-11-29 09:22:05,627 INFO spawned: 'rails' with pid 58
+2019-11-29 09:22:06,630 INFO success: rails entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-11-29 09:22:16,720 INFO exited: rails (exit status 1; not expected)
+2019-11-29 09:22:17,725 INFO spawned: 'rails' with pid 63
+2019-11-29 09:22:18,728 INFO success: rails entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-11-29 09:22:29,916 INFO exited: rails (exit status 1; not expected)
+2019-11-29 09:22:30,920 INFO spawned: 'rails' with pid 68
+2019-11-29 09:22:31,923 INFO success: rails entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2019-11-29 09:22:43,108 INFO exited: rails (exit status 1; not expected)
+2019-11-29 09:22:44,112 INFO spawned: 'rails' with pid 73
+2019-11-29 09:22:45,115 INFO success: rails entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)

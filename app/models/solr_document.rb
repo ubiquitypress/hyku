@@ -74,6 +74,7 @@ class SolrDocument
   attribute :library_of_congress_classification, Solr::Array, solr_name('library_of_congress_classification')
   attribute :alt_title, Solr::Array, solr_name('alt_title')
   attribute :alternative_journal_title, Solr::Array, solr_name('alternative_journal_title')
+  attribute :additional_links, Solr::Array, solr_name('additional_links')
 
   field_semantics.merge!(
     title: 'title_tesim',

@@ -8,10 +8,9 @@ en:
         description:        "Book chapter works"
   simple_form:
     hints:
-      book_chapter:
-        publisher:
       defaults:
-        publisher:
+        alt_title: Alternative title.
     labels:
       defaults:
         org_unit: Department
+        license:  License

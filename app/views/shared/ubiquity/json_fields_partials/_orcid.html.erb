@@ -1,0 +1,8 @@
+<label class="control-label multi_value optional" for="#{template}_#{metadata_field}_orcid">
+  <%= "#{metadata_field}".capitalize %> ORCID</label>
+<%= text_field_tag "#{template}[#{metadata_field}_group][][#{metadata_field}_orcid]",  hash.dig("#{metadata_field}_orcid"),
+                   class: "#{template}_#{metadata_field}_group #{metadata_field}_orcid form-control multi-text-field multi_value ubiquity_#{metadata_field}_orcid",
+                   placeholder: "Please enter the #{metadata_field}\'s ORCID, e.g. 0000-1234-5678-9101.",
+                   name: "#{template}[#{metadata_field}_group][][#{metadata_field}_orcid]",
+                   data: {field_name:"ubiquity_#{metadata_field}_orcid"}
+%>

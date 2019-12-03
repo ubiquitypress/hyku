@@ -2,7 +2,7 @@
 #  `rails generate hyrax:work BookChapter`
 module Hyrax
   module Actors
-    class BookChapterActor < BookContributionActor
+    class BookChapterActor < ::Hyrax::Actors::UbiquitySharedActor
     end
   end
 end

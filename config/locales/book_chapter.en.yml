@@ -9,7 +9,8 @@ en:
   simple_form:
     hints:
       defaults:
-        alt_title: Alternative title.
+        alt_title: Enter the alternative title for the item, such as a translated or abbreviated form of the title.
+        resource_type: Select the type of your submission.
     labels:
       defaults:
         org_unit: Department

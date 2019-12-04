@@ -20,6 +20,8 @@ Hyrax.config do |config|
   config.register_curation_concern :generic_work
   # Injected via `rails g hyrax:work BookChapter`
   config.register_curation_concern :book_chapter
+  # Injected via `rails g hyrax:work Media`
+  config.register_curation_concern :media
 
 
 

@@ -250,3 +250,9 @@ terms:
     term: Other
   - id: BookChapter default Book chapter
     term: Book chapter
+  - id: Media default Media
+    term: Media
+  - id: Media Audio
+    term: Audio
+  - id: Media Video
+    term: Video

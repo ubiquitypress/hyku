@@ -1,0 +1,8 @@
+it:
+  hyrax:
+    icons:
+      media:     'fa fa-file-text-o'
+    select_type:
+      media:
+        name:               "Media"
+        description:        "Media opere"

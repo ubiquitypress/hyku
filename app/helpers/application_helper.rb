@@ -8,6 +8,7 @@ module ApplicationHelper
   include Ubiquity::FileDisplayHelpers
   include Ubiquity::SharedSearchHelper
   include Ubiquity::WorkShowActionsHelper
+  include Ubiquity::SettingsHelper
 
   def check_has_editor_fields?(presenter)
     ["Book", "BookContribution", "ConferenceItem", "Report", "GenericWork"].include? presenter
@@ -125,7 +126,7 @@ module ApplicationHelper
 
   def get_tenant_work_settings
       json_data = ENV['TENANTS_WORK_SETTINGS']
-      work_settings_hash = JSON.parse(json_data)    
+      work_settings_hash = JSON.parse(json_data)
   end
 
 end

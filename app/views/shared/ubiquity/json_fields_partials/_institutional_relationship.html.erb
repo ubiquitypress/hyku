@@ -1,5 +1,7 @@
-<% dropdown_list = tenant_work_settings["institutional_relationship"].split(',') %>
-<% label_name = tenant_work_settings['metadata_labels']["institutional_relationship"].presence || "#{metadata_field.capitalize} institutional relationship"  %>
+<% dropdown_list = tenant_work_settings.presence && tenant_work_settings["institutional_relationship"].split(',') %>
+<!-- replace dropdown_list with a default when nil -->
+<% dropdown_list = dropdown_list || ["Staff member", "Research associate"] %>
+<% label_name = tenant_work_settings.presence && tenant_work_settings['metadata_labels']["institutional_relationship"].presence || "#{metadata_field.capitalize} institutional relationship"  %>
 <% property_hash = extract_required_json_property_hash(tenant_work_settings, "required_json_property") %>
 
 

@@ -6,9 +6,8 @@
 <% array_of_hash = get_model( f.object.creator, template, 'creator', 'creator_position') %>
 <% array_of_hash = array_of_hash ||  [{}] %>
 
-<% account_local_name =  ubiquity_url_parser(request.original_url) %>
-<% tenant_work_settings = get_tenant_work_settings[account_local_name] %>
-<% creator_list = tenant_work_settings['creator_fields'].split(',')%>
+<%= tenant_work_settings = return_tenant_work_settings %>
+<% creator_list = list_of_json_properties('creator') %>
 
 <% array_of_hash.each_with_index do |hash, index| %>
   <div class="ubiquity-meta-creator" >

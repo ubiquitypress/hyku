@@ -256,3 +256,9 @@ terms:
     term: Audio
   - id: Media Video
     term: Video
+  - id: Presentation Research Poster
+    term: Research Poster
+  - id: Presentation Panel
+    term: Panel
+  - id: Presentation Paper Presentation
+    term: Paper Presentation

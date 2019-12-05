@@ -22,6 +22,8 @@ Hyrax.config do |config|
   config.register_curation_concern :book_chapter
   # Injected via `rails g hyrax:work Media`
   config.register_curation_concern :media
+  # Injected via `rails g hyrax:work Presentation`
+  config.register_curation_concern :presentation
 
 
 

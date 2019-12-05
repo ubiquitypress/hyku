@@ -9,8 +9,6 @@ module Ubiquity
           settings_hash = JSON.parse(json_data)
           account = Account.find_by(tenant: Apartment::Tenant.current)
           host_name = account.cname.presence && account.cname.split('.').first
-          #@authorized_models = settings_hash[host_name]['registered_curation_concern_types'].split(',')
-          #@authorized_models.map{|model| model.constantize}
           check_work_settingsinclude_tenant_name(settings_hash, host_name)
         else
           # the line below is copied from Hyrax https://github.com/samvera/hyrax/blob/v2.0.2/app/presenters/hyrax/select_type_list_presenter.rb

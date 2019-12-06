@@ -6,9 +6,10 @@
 <% array_of_hash = get_model( f.object.contributor, template, 'contributor', 'contributor_position') %>
 <% array_of_hash = array_of_hash ||  [{}] %>
 
-<% account_local_name =  ubiquity_url_parser(request.original_url) %>
-<% tenant_work_settings = get_tenant_work_settings[account_local_name] %>
-<% contributor_list = tenant_work_settings['contributor_fields'].split(',')%>
+<% tenant_work_settings = return_tenant_work_settings %>
+
+<% contributor_list = list_of_json_properties('contributor') %>
+
 
 <% array_of_hash.each_with_index do |hash, index| %>
   <div class="ubiquity-meta-contributor" >

@@ -12,7 +12,7 @@ module Ubiquity
       settings_hash = JSON.parse(json_data)
       host_name = account_cname.split('.').first
       host_hash = settings_hash[host_name]
-      unwanted_fields_hash = host_hash['work_unwanted_fields']
+      unwanted_fields_hash = host_hash.presence && host_hash['work_unwanted_fields']
       selected_work = self.class.to_s.gsub("Hyrax::", '').gsub('Form', '').underscore
       if unwanted_fields_hash.present? && unwanted_fields_hash.keys.include?(selected_work)
         array_of_fields = unwanted_fields_hash[selected_work].split(',')

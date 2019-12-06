@@ -1,4 +1,4 @@
-<% label_name = tenant_work_settings['metadata_labels']["family_name"].presence || "#{metadata_field.capitalize} family name"  %>
+<% label_name = tenant_work_settings.presence && tenant_work_settings['metadata_labels']["family_name"].presence || "#{metadata_field.capitalize} family name"  %>
 
 
 <label class="control-label multi_value optional" for="#{template}_#{metadata_field}_family_name">

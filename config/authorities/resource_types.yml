@@ -262,3 +262,17 @@ terms:
     term: Panel
   - id: Presentation Paper Presentation
     term: Paper Presentation
+  - id: Uncategorized default Uncategorized
+    term: Uncategorized
+  - id: Uncategorized
+    term: Application
+  - id: Uncategorized
+    term: Grant
+  - id: Uncategorized
+    term: J_Correspondence_Transcription
+  - id: Uncategorized
+    term: O_Address_Transcription
+  - id: Uncategorized
+    term: Strategy
+  - id: Uncategorized
+    term: T_Writings_Transcription    

@@ -1,0 +1,76 @@
+terms:
+ - id: Optometry (OD)
+   term: Optometry (OD)
+   active: true
+ - id: Vision Science (MS)
+   term: Vision Science (MS)
+   active: true
+ - id: Vision Science (PhD)
+   term: Vision Science (PhD)
+   active: true
+ - id: Visual Function in Learning (MEd)
+   term: Visual Function in Learning (MEd)
+   active: true
+ - id: Applied Psychology (MA))
+   term: Applied Psychology (MA)
+   active: true
+ - id: Clinical Psychology (PhD)
+   term: Clinical Psychology (PhD)
+   active: true
+ - id: Clinical Psychology (PsyD)
+   term: Clinical Psychology (PsyD)
+   active: true
+ - id: Physician Assistant Studies (MS)
+   term: Physician Assistant Studies (MS)
+   active: true
+ - id: Occupational Therapy (OTD)
+   term: Occupational Therapy (OTD)
+   active: true
+ - id: Physical Therapy (DPT)
+   term: Physical Therapy (DPT)
+   active: true
+ - id: Athletic Training (MS)
+   term: Athletic Training (MS)
+   active: true
+ - id: Dental Hygiene (BS)
+   term: Dental Hygiene (BS)
+   active: true
+ - id: Education & Leadership (PhD)
+   term: Education & Leadership (PhD)
+   active: true
+ - id: Healthcare Administration (MHA)
+   term: Healthcare Administration (MHA)
+   active: true
+ - id: Audiology (AuD))
+   term: Audiology (AuD)
+   active: true
+ - id: Pharmacy (PharmD)
+   term: Pharmacy (PharmD)
+   active: true
+ - id: Master of Arts in Teaching (MAT)
+   term: Master of Arts in Teaching (MAT)
+   active: true
+ - id: Master of Arts in Education (MAEd)
+   term: Master of Arts in Education (MAEd)
+   active: true
+ - id: Master of Education (MEd)
+   term: Master of Education (MEd)
+   active: true
+ - id: Visual Function in Learning (MEd)
+   term: Visual Function in Learning (MEd)
+   active: true
+ - id: Speech-Language Pathology (MS)
+   term: Speech-Language Pathology (MS)
+   active: true
+ - id: Master of Business Administration (MBA)
+   term: Master of Business Administration (MBA)
+   active: true
+ - id: Master of Fine Arts in Writing (MFA)
+   term: Master of Fine Arts in Writing (MFA)
+   active: true
+ - id: Master of Social Work (MS)
+   term: Master of Social Work (MS)
+   active: true
+ - id: Bachelor's Degree
+   term: Bachelor's Degree
+   active: true

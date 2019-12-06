@@ -275,4 +275,10 @@ terms:
   - id: Uncategorized
     term: Strategy
   - id: Uncategorized
-    term: T_Writings_Transcription    
+    term: T_Writings_Transcription
+  - id: TextWork
+    term: Text
+  - id: TextWork
+    term: Handbook
+  - id: TextWork
+    term: Report

@@ -26,6 +26,8 @@ Hyrax.config do |config|
   config.register_curation_concern :presentation
   # Injected via `rails g hyrax:work Uncategorized`
   config.register_curation_concern :uncategorized
+  # Injected via `rails g hyrax:work TextWork`
+  config.register_curation_concern :text_work
 
 
 

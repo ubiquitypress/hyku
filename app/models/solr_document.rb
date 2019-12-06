@@ -75,6 +75,9 @@ class SolrDocument
   attribute :alt_title, Solr::Array, solr_name('alt_title')
   attribute :alternative_journal_title, Solr::Array, solr_name('alternative_journal_title')
   attribute :additional_links, Solr::Array, solr_name('additional_links')
+  attribute :degree, Solr::Array, solr_name('degree')
+  attribute :irb_number, Solr::Array, solr_name('irb_number')
+  attribute :irb_status, Solr::Array, solr_name('irb_status')
 
   field_semantics.merge!(
     title: 'title_tesim',

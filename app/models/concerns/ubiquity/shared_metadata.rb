@@ -95,6 +95,19 @@ module Ubiquity
         index.as :stored_searchable
       end
 
+      property :degree, predicate: ::RDF::Vocab::SCHEMA.evidenceLevel, multiple: false do |index|
+        index.as :stored_searchable, :facetable
+      end
+
+      property :irb_number, predicate: ::RDF::Vocab::BIBO.identifier, multiple: false do |index|
+        index.as :stored_searchable, :facetable
+      end
+
+      property :irb_status, predicate: ::RDF::Vocab::BF2.Status, multiple: false do |index|
+        index.as :stored_searchable, :facetable
+      end
+
+
     end
   end
 end

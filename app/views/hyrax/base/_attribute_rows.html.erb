@@ -26,6 +26,9 @@
 <% end %>
 
 <%= presenter.attribute_to_html(:additional_links, render_as: :string) %>
+<%= presenter.attribute_to_html(:degree, render_as: :alphabetical_sort) %>
+<%= presenter.attribute_to_html(:irb_status, render_as: :alphabetical_sort) %>
+<%= presenter.attribute_to_html(:irb_number, render_as: :alphabetical_sort) %>
 <%= presenter.attribute_to_html(:journal_title, render_as: :string) %>
 <%= presenter.attribute_to_html(:alternative_journal_title, render_as: :string) %>
 <%= presenter.attribute_to_html(:volume, render_as: :string) %>

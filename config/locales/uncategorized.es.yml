@@ -1,0 +1,10 @@
+es:
+  hyrax:
+    icons:
+      uncategorized:     'fa fa-file-text-o'
+    select_type:
+      uncategorized:
+        # TODO: translate `human_name` into Spanish
+        name:               "Uncategorized"
+        # TODO: translate `human_name` into Spanish
+        description:        "Uncategorized trabajos"

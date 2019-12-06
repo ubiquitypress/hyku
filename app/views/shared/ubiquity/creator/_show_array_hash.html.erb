@@ -5,7 +5,7 @@
       <% array_of_hash.each do |hash| %>
         <li class="attribute creator">
           <span itemprop="creator" style="float:left">
-            <% order_ary = ['creator_family_name', 'creator_middle_name', 'creator_given_name', 'creator_suffix', 'creator_role', 'creator_organization_name']%>
+            <% order_ary = ['creator_family_name', 'creator_middle_name', 'creator_given_name', 'creator_suffix', 'creator_role', 'creator_organization_name', 'creator_biogrphy']%>
             <%= display_data_with_comma_separated(hash, order_ary)%>
            </span>
            <span itemprop="creator">

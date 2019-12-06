@@ -78,6 +78,8 @@ class SolrDocument
   attribute :degree, Solr::Array, solr_name('degree')
   attribute :irb_number, Solr::Array, solr_name('irb_number')
   attribute :irb_status, Solr::Array, solr_name('irb_status')
+  attribute :source, Solr::Array, solr_name('source')
+
 
   field_semantics.merge!(
     title: 'title_tesim',

@@ -1,0 +1,10 @@
+zh:
+  hyrax:
+    icons:
+      news_clipping:     'fa fa-file-text-o'
+    select_type:
+      news_clipping:
+        # TODO: translate `human_name` into Chinese
+        name:               "News Clipping"
+        # TODO: translate `human_name` into Chinese
+        description:        "News clipping 作品"

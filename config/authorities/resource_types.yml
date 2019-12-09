@@ -282,3 +282,5 @@ terms:
     term: Handbook
   - id: TextWork
     term: Report
+  - id: NewsClipping
+    term: Intellectual Freedom News

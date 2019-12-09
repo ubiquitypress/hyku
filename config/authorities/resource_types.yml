@@ -284,3 +284,15 @@ terms:
     term: Report
   - id: NewsClipping
     term: Intellectual Freedom News
+  - id: ArticleWork  Research Article
+    term: Research Article
+  - id: ArticleWork Editorial/Commentary
+    term: Editorial/Commentary
+  - id: ArticleWork Essay
+    term: Essay
+  - id: ArticleWork Letter
+    term: Letter
+  - id: ArticleWork Review Article
+    term: Review Article
+  - id: ArticleWork  Creative Work
+    term: Creative Work

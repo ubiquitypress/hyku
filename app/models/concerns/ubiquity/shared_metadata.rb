@@ -107,6 +107,25 @@ module Ubiquity
         index.as :stored_searchable, :facetable
       end
 
+      property :location, predicate: ::RDF::Vocab::BF2.physicalLocation , multiple: false do |index|
+        index.as :stored_searchable, :facetable
+      end
+
+      property :outcome, predicate: ::RDF::Vocab::SCHEMA.resultComment, multiple: false do |index|
+        index.as :stored_searchable
+      end
+
+      property :partecipant, predicate: ::RDF::Vocab::BF2.Person, multiple: false do |index|
+        index.as :stored_searchable, :facetable
+      end
+
+      property :reading_level, predicate: ::RDF::Vocab::SCHEMA.proficiencyLevel, multiple: false do |index|
+        index.as :stored_searchable
+      end
+
+      property :challenged, predicate: ::RDF::Vocab::SCHEMA.quest, multiple: false do |index|
+        index.as :stored_searchable
+      end
 
     end
   end

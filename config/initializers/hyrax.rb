@@ -28,6 +28,8 @@ Hyrax.config do |config|
   config.register_curation_concern :uncategorized
   # Injected via `rails g hyrax:work TextWork`
   config.register_curation_concern :text_work
+  # Injected via `rails g hyrax:work NewsClipping`
+  config.register_curation_concern :news_clipping
 
 
 

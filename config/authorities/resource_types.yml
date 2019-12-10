@@ -284,3 +284,5 @@ terms:
     term: Report
   - id: NewsClipping
     term: Intellectual Freedom News
+  - id: ImageWork Image
+    term: Image

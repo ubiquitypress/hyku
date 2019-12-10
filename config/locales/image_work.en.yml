@@ -1,0 +1,8 @@
+en:
+  hyrax:
+    icons:
+      image_work:     'fa fa-file-text-o'
+    select_type:
+      image_work:
+        name:               "Image Work"
+        description:        "Image work works"

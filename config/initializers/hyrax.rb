@@ -43,6 +43,7 @@ Hyrax.config do |config|
 
 
 
+
   # Email recipient of messages sent via the contact form
   config.contact_email = Settings.contact_email
 

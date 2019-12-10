@@ -30,6 +30,8 @@ Hyrax.config do |config|
   config.register_curation_concern :text_work
   # Injected via `rails g hyrax:work NewsClipping`
   config.register_curation_concern :news_clipping
+  # Injected via `rails g hyrax:work ThesisOrDissertationWork`
+  config.register_curation_concern :thesis_or_dissertation_work
 
 
 

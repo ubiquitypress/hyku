@@ -284,3 +284,10 @@ terms:
     term: Report
   - id: NewsClipping
     term: Intellectual Freedom News
+  - id: ThesisOrDissertationWork
+    term: Thesis
+  - id: ThesisOrDissertationWork
+    term: Capstone
+  - id: ThesisOrDissertationWork
+    term: Dissertation
+  

@@ -296,3 +296,13 @@ terms:
     term: Review Article
   - id: ArticleWork  Creative Work
     term: Creative Work
+  - id: BookWork Book Site Review
+    term: Book Site Review
+  - id: ImageWork Image
+    term: Image
+  - id: ThesisOrDissertationWork
+    term: Thesis
+  - id: ThesisOrDissertationWork
+    term: Capstone
+  - id: ThesisOrDissertationWork
+    term: Dissertation

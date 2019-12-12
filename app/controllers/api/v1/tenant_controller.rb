@@ -51,7 +51,8 @@ class API::V1::TenantController < ActionController::Base
 
   def set_last_modified
     site = Site.instance.updated_at
-    content = ContentBlock.order('updated_at ASC').last.updated_at
+    get_content_block = ContentBlock.order('updated_at ASC')
+    content = get_content_block.presence && get_content_block.last.updated_at
     #account = Account.order(updated_at: :asc).last.updated_at
     account = @tenant.try(:updated_at) || @tenants.try(:first).try(:updated_at)
     combined_updated_at = [site, content, account].compact

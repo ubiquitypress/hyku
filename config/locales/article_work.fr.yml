@@ -1,0 +1,8 @@
+fr:
+  hyrax:
+    icons:
+      article_work:     'fa fa-file-text-o'
+    select_type:
+      article_work:
+        name:               "Article Work"
+        description:        "Article work œuvres"

@@ -11,11 +11,11 @@ module Ubiquity
       AccountElevator.switch!("#{@tenant_domain}")
       #create_file
       create_file_from_array
+
       #Note that @hyrax_uploaded_file.first.file returns Hyrax::UploadedFileUploader object
       #Also @hyrax_uploaded_file.first.file.file returns a CarrierWave::SanitizedFile object
       #and @hyrax_uploaded_file.first.file.file.filename returns the the filename in carrierwave
       #
-
       #pass both to AttachFilesToWorkJob
       if @file.class == String && @work_instance.present? && @hyrax_uploaded_file.present?
         $stdout.puts "Attaching files to work"
@@ -46,12 +46,10 @@ module Ubiquity
     end
 
     def create_multiple_files_from_array_of_hash(file_array)
-      #@hyrax_uploaded_file_hash = {}
       file_array.each do |hash|
         uploaded_file = create_file(hash["path"])
         @hyrax_uploaded_file << {hash["visibility"] => uploaded_file} if uploaded_file.present?
       end
-
       @hyrax_uploaded_file.reject! {|h| h.values.first == nil}
       avoid_duplicates_when_file_title_exist_in_work
     end
@@ -90,7 +88,7 @@ module Ubiquity
       if data.class == StringIO
         create_tempfile_from_stringio(file_url)
       elsif data.class == Tempfile
-        #this a  tempfile
+        #this is a  tempfile
          data
       end
     rescue OpenURI::HTTPError => e
@@ -111,16 +109,9 @@ module Ubiquity
       puts "creating hyrax_uploaded_file this happens before adding the files to the work"
       AccountElevator.switch!("#{@tenant_domain}")
       fetch_or_create_file ||= Hyrax::UploadedFile.where(file: file_name).first  || Hyrax::UploadedFile.create(file: file_io, user: @user)
-      #@hyrax_uploaded_file << fetch_or_create_file
     end
 
     private
-
-    def check_work_has_existing_file_title
-      if @work_instance != Collection && @work_instance.try(:file_sets).try(:present?)
-        @work_instance.file_sets.map { |file_set| file_set.title.first }
-      end
-    end
 
     def avoid_duplicates_when_file_title_exist_in_work
       if @file.class == String
@@ -128,10 +119,18 @@ module Ubiquity
         return  @hyrax_uploaded_file.clear if  @hyrax_uploaded_file.first.file.file.filename == new_files_titles
         @hyrax_uploaded_file
       elsif @file.class == Array
-        new_files_titles = check_if_file_titles_are_new
-        hyrax_uploaded_objects = @hyrax_uploaded_file.map { |hash| hash.values.first}
+        remove_nil_hash_from_array
+      end
+    end
+
+    def remove_nil_hash_from_array
+      new_files_titles = check_if_file_titles_are_new
+      hyrax_uploaded_objects = @hyrax_uploaded_file.map { |hash| hash.values.first}
+      if new_files_titles.present?
         hyrax_uploads = hyrax_uploaded_objects.map {|carrierwave_object| carrierwave_object if new_files_titles.include?(carrierwave_object.file.file.filename)}
-        @hyrax_uploaded_file.reject! {|hash|not hyrax_uploads.include?(hash.values.first) }
+        @hyrax_uploaded_file.reject! {|hash| not hyrax_uploads.include?(hash.values.first) }
+      else
+        @hyrax_uploaded_file
       end
     end
 
@@ -144,9 +143,16 @@ module Ubiquity
         hyrax_uploaded_objects = @hyrax_uploaded_file.map { |hash| hash.values.first}
         imported_files_titles = hyrax_uploaded_objects.map {|carrierwave_object| carrierwave_object.file.file.filename}
         (check_work_has_existing_file_title - imported_files_titles) | (imported_files_titles - check_work_has_existing_file_title)
+      else
+        []
       end
     end
 
+    def check_work_has_existing_file_title
+      if @work_instance != Collection && @work_instance.try(:file_sets).try(:present?)
+        @work_instance.file_sets.map { |file_set| file_set.title.first }
+      end
+    end
 
   end
 end

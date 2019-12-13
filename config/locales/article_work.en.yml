@@ -1,0 +1,8 @@
+en:
+  hyrax:
+    icons:
+      article_work:     'fa fa-file-text-o'
+    select_type:
+      article_work:
+        name:               "Article Work"
+        description:        "A short, scholarly work, usually published in a journal."

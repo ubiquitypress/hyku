@@ -248,8 +248,9 @@ terms:
     term: Working paper
   - id: Collection Other
     term: Other
+
   - id: BookChapter default Book chapter
-    term: Book chapter
+    term: Book Chapter
   - id: Media default Media
     term: Media
   - id: Media Audio
@@ -264,23 +265,49 @@ terms:
     term: Paper Presentation
   - id: Uncategorized default Uncategorized
     term: Uncategorized
-  - id: Uncategorized
+  - id: Uncategorized Application
     term: Application
-  - id: Uncategorized
+  - id: Uncategorized Grant
     term: Grant
-  - id: Uncategorized
+  - id: Uncategorized J_Correspondence_Transcription
     term: J_Correspondence_Transcription
-  - id: Uncategorized
+  - id: Uncategorized O_Address_Transcription
     term: O_Address_Transcription
-  - id: Uncategorized
+  - id: Uncategorized Strategy
     term: Strategy
-  - id: Uncategorized
+  - id: Uncategorized T_Writings_Transcription
     term: T_Writings_Transcription
-  - id: TextWork
+  - id: Uncategorized Survey
+    term: Survey
+  - id: TextWork  default Text
     term: Text
-  - id: TextWork
+  - id: TextWork Handbook
     term: Handbook
-  - id: TextWork
+  - id: TextWork Report
     term: Report
-  - id: NewsClipping
+  - id: NewsClipping Intellectual Freedom News
     term: Intellectual Freedom News
+  - id: ArticleWork default Article
+    term: Article
+  - id: ArticleWork  Research Article
+    term: Research Article
+  - id: ArticleWork Editorial/Commentary
+    term: Editorial/Commentary
+  - id: ArticleWork Essay
+    term: Essay
+  - id: ArticleWork Letter
+    term: Letter
+  - id: ArticleWork Review Article
+    term: Review Article
+  - id: ArticleWork  Creative Work
+    term: Creative Work
+  - id: BookWork Book
+    term: Book
+  - id: ImageWork Image
+    term: Image
+  - id: ThesisOrDissertationWork default Thesis
+    term: Thesis
+  - id: ThesisOrDissertationWork Capstone
+    term: Capstone
+  - id: ThesisOrDissertationWork Dissertation
+    term: Dissertation

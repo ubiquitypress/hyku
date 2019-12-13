@@ -5,7 +5,7 @@ en:
     select_type:
       book_chapter:
         name:               "Book Chapter"
-        description:        "Book chapter works"
+        description:        "A separately-authored chapter or section in a book."
   simple_form:
     hints:
       defaults:

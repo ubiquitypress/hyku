@@ -81,7 +81,7 @@ class SolrDocument
   attribute :source, Solr::Array, solr_name('source')
   attribute :location, Solr::Array, solr_name('location')
   attribute :outcome, Solr::Array, solr_name('outcome')
-  attribute :partecipant, Solr::Array, solr_name('partecipant')
+  attribute :participant, Solr::Array, solr_name('participant')
   attribute :reading_level, Solr::Array, solr_name('reading_level')
   attribute :challenged, Solr::Array, solr_name('challenged')
 

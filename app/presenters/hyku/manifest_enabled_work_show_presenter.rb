@@ -9,7 +9,7 @@ module Hyku
              :event_title, :event_date, :event_location, :book_title, :editor,
              :alternate_identifier, :related_identifier, :media, :duration, :related_exhibition, :related_exhibition_venue, :related_exhibition_date,
              :dewey, :library_of_congress_classification, :alt_title, :challenged, :current_he_institution, :reading_level,
-             :location, :additional_links, :degree, :source, :location, :irb_number, :irb_status, :outcome, :partecipant, :qualification_name, :qualification_level,
+             :location, :additional_links, :degree, :source, :location, :irb_number, :irb_status, :outcome, :participant, :qualification_name, :qualification_level,
              to: :solr_document
 
     def manifest_url

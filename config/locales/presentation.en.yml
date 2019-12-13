@@ -5,4 +5,4 @@ en:
     select_type:
       presentation:
         name:               "Presentation"
-        description:        "Presentation works"
+        description:        "A poster, slides, or other tools used in a speech or talk."

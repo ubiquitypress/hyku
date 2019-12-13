@@ -5,4 +5,4 @@ en:
     select_type:
       book_work:
         name:               "Book Work"
-        description:        "Book work works"
+        description:        "A written text published in printed or electronic form."

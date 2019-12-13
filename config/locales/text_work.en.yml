@@ -5,4 +5,4 @@ en:
     select_type:
       text_work:
         name:               "Text Work"
-        description:        "Text work works"
+        description:        "A written work."

@@ -203,7 +203,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("source", :stored_searchable)
     config.add_show_field solr_name("location", :stored_searchable)
     config.add_show_field solr_name("outcome", :stored_searchable)
-    config.add_show_field solr_name("partecipant", :stored_searchable)
+    config.add_show_field solr_name("participant", :stored_searchable)
     config.add_show_field solr_name("reading_level", :stored_searchable)
     config.add_show_field solr_name("challenged", :stored_searchable)
 

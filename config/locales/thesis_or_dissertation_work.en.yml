@@ -5,4 +5,4 @@ en:
     select_type:
       thesis_or_dissertation_work:
         name:               "Thesis Or Dissertation Work"
-        description:        "Thesis or dissertation work works"
+        description:        "A research document submitted to support candidature for a degree."

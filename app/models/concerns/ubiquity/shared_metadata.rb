@@ -115,7 +115,7 @@ module Ubiquity
         index.as :stored_searchable
       end
 
-      property :partecipant, predicate: ::RDF::Vocab::BF2.Person, multiple: false do |index|
+      property :participant, predicate: ::RDF::Vocab::BF2.Person, multiple: false do |index|
         index.as :stored_searchable, :facetable
       end
 

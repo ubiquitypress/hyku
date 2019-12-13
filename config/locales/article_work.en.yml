@@ -5,4 +5,4 @@ en:
     select_type:
       article_work:
         name:               "Article Work"
-        description:        "Article work works"
+        description:        "A short, scholarly work, usually published in a journal."

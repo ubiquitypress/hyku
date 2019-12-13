@@ -5,4 +5,4 @@ en:
     select_type:
       media:
         name:               "Media"
-        description:        "Media works"
+        description:        "A multimedia output such as a video or audio recording."

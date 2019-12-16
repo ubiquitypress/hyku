@@ -127,6 +127,10 @@ module Ubiquity
         index.as :stored_searchable
       end
 
+      property :photo_caption, predicate: ::RDF::Vocab::SCHEMA.caption, multiple: false do |index|
+        index.as :stored_searchable
+      end
+
     end
   end
 end

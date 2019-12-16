@@ -131,6 +131,8 @@ json.challenged   work['challenged_tesim'].try(:first)
 json.reading_level  work['reading_level_tesim'].try(:first)
 json.degree   work['degree_tesim'].try(:first)
 json.subject   work['subject_tesim']
+json.photo_caption  work['photo_caption_tesim'].try(:first)
+
 
 event = work['event_tesim'].try(:first)
 if valid_json?(event)

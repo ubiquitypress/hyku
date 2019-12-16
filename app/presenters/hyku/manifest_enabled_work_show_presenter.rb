@@ -7,7 +7,7 @@ module Hyku
              :journal_title, :alternative_journal_title, :issue, :volume, :pagination, :article_num, :project_name, :rights_holder,
              :official_link, :place_of_publication, :series_name, :edition, :abstract, :version,
              :event_title, :event_date, :event_location, :book_title, :editor,
-             :alternate_identifier, :related_identifier, :media, :duration, :related_exhibition, :related_exhibition_venue, :related_exhibition_date,
+             :alternate_identifier, :related_identifier, :media, :duration, :photo_caption, :related_exhibition, :related_exhibition_venue, :related_exhibition_date,
              :dewey, :library_of_congress_classification, :alt_title, :challenged, :current_he_institution, :reading_level,
              :location, :additional_links, :degree, :source, :location, :irb_number, :irb_status, :outcome, :participant, :qualification_name, :qualification_level,
              to: :solr_document

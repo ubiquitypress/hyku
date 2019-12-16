@@ -1,5 +1,5 @@
 <% account_local_name =  ubiquity_url_parser(request.original_url) %>
-<% tenant_work_settings = get_tenant_work_settings[account_local_name] %>
+<% tenant_work_settings = get_tenant_work_settings %>
 <% license_service = Hyrax::LicenseService.new %>
 
 <% licence_list = extract_licence_list(tenant_work_settings, "licence_list" ) %>

@@ -125,8 +125,10 @@ module ApplicationHelper
   end
 
   def get_tenant_work_settings
-      json_data = ENV['TENANTS_WORK_SETTINGS']
-      work_settings_hash = JSON.parse(json_data)
+    json_data = ENV['TENANTS_WORK_SETTINGS']
+      if json_data.present? && json_data.class == String
+      JSON.parse(json_data)
+    end 
   end
 
 end

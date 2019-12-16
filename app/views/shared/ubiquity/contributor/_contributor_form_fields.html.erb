@@ -6,7 +6,7 @@
 <% array_of_hash = get_model( f.object.contributor, template, 'contributor', 'contributor_position') %>
 <% array_of_hash = array_of_hash ||  [{}] %>
 
-<% tenant_work_settings = return_tenant_work_settings %>
+<% tenant_work_settings = get_tenant_work_settings %>
 
 <% contributor_list = list_of_json_properties('contributor') %>
 

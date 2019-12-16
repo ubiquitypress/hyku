@@ -85,6 +85,8 @@ class SolrDocument
   attribute :reading_level, Solr::Array, solr_name('reading_level')
   attribute :challenged, Solr::Array, solr_name('challenged')
   attribute :photo_caption, Solr::Array, solr_name('photo_caption')
+  attribute :photo_description, Solr::Array, solr_name('photo_description')
+
 
 
 

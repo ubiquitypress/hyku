@@ -207,6 +207,8 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("reading_level", :stored_searchable)
     config.add_show_field solr_name("challenged", :stored_searchable)
     config.add_show_field solr_name("photo_caption", :stored_searchable)
+    config.add_show_field solr_name("photo_description", :stored_searchable)
+
 
 
 

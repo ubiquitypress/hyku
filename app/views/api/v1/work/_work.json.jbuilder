@@ -132,6 +132,8 @@ json.reading_level  work['reading_level_tesim'].try(:first)
 json.degree   work['degree_tesim'].try(:first)
 json.subject   work['subject_tesim']
 json.photo_caption  work['photo_caption_tesim'].try(:first)
+json.photo_description  work['photo_description_tesim'].try(:first)
+
 
 
 event = work['event_tesim'].try(:first)

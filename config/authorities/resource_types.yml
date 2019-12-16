@@ -37,6 +37,7 @@ terms:
     term: Poster
   - id: Presentation
     term: Presentation
+    active: false
   - id: Project
     term: Project
   - id: Report
@@ -102,7 +103,7 @@ terms:
     term: Software
   - id: Dataset Database
     term: Database
-  - id: ExhibitionItem Exhibition
+  - id: ExhibitionItem default Exhibition
     term: Exhibition
   - id: ExhibitionItem catalogue
     term: Exhibition catalogue
@@ -144,7 +145,7 @@ terms:
     term: Doctoral thesis
   - id: ThesisOrDissertation Master's dissertation
     term: Master's dissertation
-  - id:  TimeBasedMedia Audio
+  - id:  TimeBasedMedia default Audio
     term: Audio
   - id:  TimeBasedMedia Animation
     term: Animation
@@ -257,6 +258,8 @@ terms:
     term: Audio
   - id: Media Video
     term: Video
+  - id: Presentation default Presentation
+    term: Presentation
   - id: Presentation Research Poster
     term: Research Poster
   - id: Presentation Panel

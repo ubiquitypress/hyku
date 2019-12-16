@@ -103,7 +103,7 @@ terms:
     term: Software
   - id: Dataset Database
     term: Database
-  - id: ExhibitionItem Exhibition
+  - id: ExhibitionItem default Exhibition
     term: Exhibition
   - id: ExhibitionItem catalogue
     term: Exhibition catalogue
@@ -145,7 +145,7 @@ terms:
     term: Doctoral thesis
   - id: ThesisOrDissertation Master's dissertation
     term: Master's dissertation
-  - id:  TimeBasedMedia Audio
+  - id:  TimeBasedMedia default Audio
     term: Audio
   - id:  TimeBasedMedia Animation
     term: Animation

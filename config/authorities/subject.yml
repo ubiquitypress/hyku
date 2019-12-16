@@ -32,9 +32,6 @@ terms:
  - id: Languages/Linguistics
    term: Languages/Linguistics
    active: true
- - id: History
-   term: History
-   active: true
  - id: Literature
    term: Literature
    active: true

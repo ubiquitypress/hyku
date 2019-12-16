@@ -282,7 +282,7 @@ terms:
     term: T_Writings_Transcription
   - id: Uncategorized Survey
     term: Survey
-  - id: TextWork  default Text
+  - id: TextWork default Text
     term: Text
   - id: TextWork Handbook
     term: Handbook
@@ -292,7 +292,7 @@ terms:
     term: Intellectual Freedom News
   - id: ArticleWork default Article
     term: Article
-  - id: ArticleWork  Research Article
+  - id: ArticleWork Research Article
     term: Research Article
   - id: ArticleWork Editorial/Commentary
     term: Editorial/Commentary
@@ -302,7 +302,7 @@ terms:
     term: Letter
   - id: ArticleWork Review Article
     term: Review Article
-  - id: ArticleWork  Creative Work
+  - id: ArticleWork Creative Work
     term: Creative Work
   - id: BookWork Book
     term: Book

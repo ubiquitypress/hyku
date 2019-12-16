@@ -31,7 +31,7 @@ module Ubiquity
       @tenant_domain = @tenant + '.' + @domain
       @data_hash = HashWithIndifferentAccess.new(data)
       $stdout.puts "@data_hash values #{@data_hash.inspect}"
-      @file = @data_hash[:file]
+      @file = @data_hash[:file] || @data_hash['file'] || @data_hash[:files] || @data_hash['files']
       @ubiquity_model_class = @data_hash.with_indifferent_access["type"].try(:constantize) || model_instance.class
       @work_instance = model_instance
     end

@@ -12,7 +12,8 @@ module Hyrax
     self.remove_required_from_primary += %i[]
 
     self.terms += %i[title alt_title resource_type creator contributor abstract
-                     date_published challenged location outcome participant reading_level pagination additional_links
+                     date_published challenged location outcome participant reading_level
+                     photo_caption photo_description pagination additional_links
                      rights_holder license doi subject keyword add_info
                     ]
 

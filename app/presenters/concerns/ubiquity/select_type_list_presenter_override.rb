@@ -18,9 +18,8 @@ module Ubiquity
 
       private
 
-      def check_work_settingsinclude_tenant_name(settings_hash) #, host_name)
+      def check_work_settingsinclude_tenant_name(settings_hash)
         if settings_hash.present?
-          #tenant_work_settings_hash = settings_hash[host_name]
           return_custom_work_list(tenant_work_settings_hash)
         end
       end

@@ -75,7 +75,7 @@ module Ubiquity
     private
 
     def add_work_to_collection
-      if @collection.present? && @work_instance.class != Collection
+      if @collection_id.present? && @work_instance.class != Collection
         collection = ActiveFedora::Base.find(@collection_id)
         collection.add_member_objects([@work_instance.id])
         collection.save

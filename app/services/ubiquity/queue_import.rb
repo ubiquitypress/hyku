@@ -341,12 +341,13 @@ BC = {
 
 
       Ro =  {
+            'collection_id': "6fa2e621-72d4-46aa-abdb-4d98fb583d7f",
             "doi": "10.0000/1234",
             "isbn": "",
             "issn": "ISSN",
             "eissn": "",
             "issue": "Issue",
-            "title": "Title import 2",
+            "title": "Title import 2 ed", 
             "volume": "Volume",
             "keyword": "Keyword1||Keyword2",
             "license": "https://creativecommons.org/licenses/by/4.0/",

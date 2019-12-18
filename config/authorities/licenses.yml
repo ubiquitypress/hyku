@@ -133,6 +133,28 @@ terms:
   - id: http://www.europeana.eu/portal/rights/rr-r.html
     term: All rights reserved
     active: false
+  - id: http://creativecommons.org/licenses/by-nc-nd/3.0/
+    term: CC BY-NC-ND Attribution-NonCommercial-NoDerivs 3.0
+    active: false
+  - id: http://creativecommons.org/licenses/by-nc-sa/3.0/
+    term: CC BY-NC-SA Attribution-NonCommercial-ShareAlike 3.0
+    active: false
+  - id: http://creativecommons.org/licenses/by-nc/3.0/
+    term: CC BY-NC Attribution-NonCommercial 3.0
+    active: false
+  - id: http://creativecommons.org/licenses/by-nd/3.0/
+    term: CC BY-ND Attribution-NoDerivs 3.0
+    active: false
+  - id: http://creativecommons.org/licenses/by-sa/3.0/
+    term: CC BY-SA Attribution-ShareAlike 3.0
+    active: false
+  - id: http://creativecommons.org/licenses/by/3.0/
+    term: CC BY Attribution 3.0
+    active: false
+  - id: http://creativecommons.org/licenses/publicdomain/
+    term: Copyright-Only Dedication (based on United States law) or Public Domain Certification
+    active: false  
+
 #   Below was broken link but has to be kept (as `false`) to avoid `key not found: "term"` error
 #   It can be removed when no record references it anymore
   - id: https://creativecommons.org/licenses/by/4.0/4

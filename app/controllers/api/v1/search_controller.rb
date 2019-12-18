@@ -32,20 +32,29 @@ class API::V1::SearchController <  ActionController::Base
 
   def search_by_multiple_terms
     #This populates @fq passed as solr fq ie filter query
-    if params[:f]
+    if params[:f].present?
       params[:f].to_unsafe_h.map { |key, value| create_solr_filter_params(key, value) }
     end
     #default sort uses "score desc, system_create_dtsi desc"
-    response = CatalogController.new.repository.search(
-       q: build_query_with_term, fq: @fq, "qf" => solr_query_fields,
-      "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
-      "institution_sim", "language_sim", "file_availability_sim"],  "sort" => sort,
-       rows: limit, start: offset
-       )
+    response = CatalogController.new.repository.search(create_solr_params)
 
     @works = response
     raise Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: "No record found for query_term: #{params[:q]} and filters containing #{params[:f]}") if response['response']['numFound'] == 0
 
+  end
+
+  def create_solr_params
+    if params[:q].present? 
+      { q: build_query_with_term, fq: @fq, "qf" => solr_query_fields,
+      "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
+      "institution_sim", "language_sim", "file_availability_sim"],  "sort" => sort,
+       rows: limit, start: offset, "defType" => "lucene"}
+    elsif params[:q].blank?
+      { 'q' => '', 'fq' =>  @fq, "qf" => solr_query_fields, "qt" => "search",
+      "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
+      "institution_sim", "language_sim", "file_availability_sim"],  "sort" => sort,
+       'rows' => limit, 'start' => offset}
+    end
   end
 
   def create_solr_filter_params(key, hash)
@@ -68,7 +77,7 @@ class API::V1::SearchController <  ActionController::Base
   end
 
   def search_models
-     "{!terms f=has_model_ssim}Article,Book,BookContribution,ConferenceItem,Dataset,ExhibitionItem,Image,Report,ThesisOrDissertation,TimeBasedMedia,GenericWork,Collection"
+     "{!terms f=has_model_ssim}Article,Book,BookContribution,ConferenceItem,Dataset,ExhibitionItem,Image,Report,ThesisOrDissertation,TimeBasedMedia,GenericWork,BookChapter,Media,Presentation,Uncategorized,TextWork,NewsClipping,ArticleWork,BookWork,ImageWork,ThesisOrDissertationWork,Collection"
   end
 
   def set_search_default

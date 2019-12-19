@@ -133,7 +133,7 @@ json.degree   work['degree_tesim'].try(:first)
 json.subject   work['subject_tesim']
 json.photo_caption  work['photo_caption_tesim'].try(:first)
 json.photo_description  work['photo_description_tesim'].try(:first)
-
+json.buy_book  work['buy_book_tesim']
 
 
 event = work['event_tesim'].try(:first)

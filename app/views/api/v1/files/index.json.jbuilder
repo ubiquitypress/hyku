@@ -2,7 +2,8 @@
 json.array! @files['response']['docs'] do |work|
   json.uuid   work[:id]
   json.type    'file_set'
-  json.name    work['title_tesim'].first
+  json.name    work['title_tesim'].try(:first)
+  json.description work['description_tesim'].try(:first)
   json.mimetype   work['mime_type_ssi']
 
   license_array = work['license_tesim']

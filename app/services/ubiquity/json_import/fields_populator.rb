@@ -25,7 +25,7 @@ module Ubiquity
     end
 
     def populate_single_fields  #(key, val)
-      if ( (@work_instance.send(key).class != ActiveTriples::Relation) && (val.class == String) && (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key))
+      if ( (@work_instance.send(key).class != ActiveTriples::Relation) && (val.class == String  || val.class == NilClass) && (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key))
         create_or_skip_work_metadata('string', key)
       end
       @work_instance
@@ -51,7 +51,6 @@ module Ubiquity
       end
       @work_instance
     end
-
 
   end
 end

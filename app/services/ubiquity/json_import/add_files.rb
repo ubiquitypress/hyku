@@ -48,7 +48,8 @@ module Ubiquity
     def create_multiple_files_from_array_of_hash(file_array)
       file_array.each do |hash|
         uploaded_file = create_file(hash["path"])
-        @hyrax_uploaded_file << {hash["visibility"] => uploaded_file} if uploaded_file.present?
+        hash["path"] = uploaded_file if uploaded_file.present?
+        @hyrax_uploaded_file << hash if uploaded_file.present?
       end
       @hyrax_uploaded_file.reject! {|h| h.values.first == nil}
       avoid_duplicates_when_file_title_exist_in_work
@@ -125,12 +126,12 @@ module Ubiquity
 
     def remove_nil_hash_from_array
       new_files_titles = check_if_file_titles_are_new
-      hyrax_uploaded_objects = @hyrax_uploaded_file.map { |hash| hash.values.first}
+      hyrax_uploaded_objects = @hyrax_uploaded_file.map { |hash| hash['path']}
       if new_files_titles.present?
         hyrax_uploads = hyrax_uploaded_objects.map {|carrierwave_object| carrierwave_object if new_files_titles.include?(carrierwave_object.file.file.filename)}
-        @hyrax_uploaded_file.reject! {|hash| not hyrax_uploads.include?(hash.values.first) }
+        @hyrax_uploaded_file.reject! {|hash| not hyrax_uploads.include?(hash['path']) }
       else
-        @hyrax_uploaded_file
+        @hyrax_uploaded_file.clear
       end
     end
 

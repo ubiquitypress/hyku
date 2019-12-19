@@ -10,20 +10,29 @@ class AttachFilesToWorkViaJsonImporterJob < AttachFilesToWorkJob
   #
   def perform(work, uploaded_files, **work_attributes)
     #validate_files!(uploaded_files)
-    validate_files!(uploaded_files.map {|h| h.values}.flatten)
+    #added by me first implementation
+    hyrax_uploaded_file_objects = uploaded_files.map {|h| h[:path]}
+    validate_files!(hyrax_uploaded_file_objects)
     user = User.find_by_user_key(work.depositor) # BUG? file depositor ignored
     work_permissions = work.permissions.map(&:to_hash)
     metadata = visibility_attributes(work_attributes)
+
     uploaded_files.each do |uploaded_file|
       actor = Hyrax::Actors::FileSetActor.new(FileSet.create, user)
       actor.create_metadata(metadata)
       #actor.create_content(uploaded_file)
-      actor.create_content(uploaded_file.values.first)
+      #actor.create_content(uploaded_file.values.first)
+      actor.create_content(uploaded_file.with_indifferent_access['path'])
+
+      file_description = uploaded_file.with_indifferent_access['description']
+      actor.file_set.description = [file_description] if file_description.present?
+
       actor.attach_to_work(work)
       actor.file_set.permissions_attributes = work_permissions
       #visibility must be set after attach_to_work is called otherwise
-      #the work's visibility will override the visibility of the file in the json  
-      actor.file_set.visibility = uploaded_file.keys.first
+      #the work's visibility will override the visibility of the file in the json
+      actor.file_set.visibility = uploaded_file.with_indifferent_access['visibility']
+
       uploaded_file.update(file_set_uri: actor.file_set.uri)
     end
   end

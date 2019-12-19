@@ -135,6 +135,10 @@ module Ubiquity
         index.as :stored_searchable
       end
 
+      property :buy_book, predicate: ::RDF::Vocab::SCHEMA.BuyAction, multiple: true do |index|
+        index.as :stored_searchable
+      end
+
     end
   end
 end

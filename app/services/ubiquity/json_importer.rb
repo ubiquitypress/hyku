@@ -6,7 +6,7 @@
 
 #To run from rails console
 #create a json or use the constants set as a examples in queue_import.#!/usr/bin/env ruby -wKU
-# data = sample
+# data = sample json
 #Ubiquity::JsonImporter.new(data).run
 #
 module Ubiquity
@@ -18,7 +18,7 @@ module Ubiquity
     #attributes_hash
     #this is where we temporarily store the parsed imported data before save
 
-    attr_accessor :attributes_hash, :work, :hash_for_import
+    attr_accessor :attributes_hash, :work_instance, :hash_for_import, :data_hash
 
     def initialize(data)
       @attributes_hash = {}
@@ -45,14 +45,10 @@ module Ubiquity
 
       hash_from_work_and_submitted_data.each_with_index do |(key, val), index|
         #index needed to to ensure set_default_work_visibility is called once inside populate_array_field
-        ##populate_array_field(key, val, index)
-        ##populate_json_field(key, val)
-        ##populate_single_fields(key, val)
+        #
         Ubiquity::JsonImport::FieldsPopulator.new(@work_instance,@data_hash, @attributes_hash, key, val, index).populate_array_field
         Ubiquity::JsonImport::FieldsPopulator.new(@work_instance,@data_hash, @attributes_hash, key, val, index).populate_json_field
         Ubiquity::JsonImport::FieldsPopulator.new(@work_instance,@data_hash, @attributes_hash, key, val, index).populate_single_fields
-
-
       end
       @attributes_hash['account_cname'] = @tenant_domain
       @attributes_hash['date_modified'] = Hyrax::TimeService.time_in_utc
@@ -68,7 +64,6 @@ module Ubiquity
       add_work_to_collection
 
       @work_instance
-      @work = @work_instance
       self
     end
 

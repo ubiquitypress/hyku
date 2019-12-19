@@ -341,24 +341,23 @@ BC = {
 
 
       Ro =  {
-            'collection_id': "6fa2e621-72d4-46aa-abdb-4d98fb583d7f",
-            "doi": "10.0000/1234",
+            "doi": "20.0000/9034",
             "isbn": "",
-            "issn": "ISSN",
+            "issn": "abc",
             "eissn": "",
-            "issue": "Issue",
-            "title": "Title import 2 ed", 
+            "issue": "11",
+            "title": "file describer",
             "volume": "Volume",
-            "keyword": "Keyword1||Keyword2",
+            "keyword": "yep||nope",
             "license": "https://creativecommons.org/licenses/by/4.0/",
             "version": "",
-            "abstract": "Abstract",
-            "publisher": "Publisher",
+            "abstract": "Asko",
+            "publisher": "harper collins",
             "type": "ArticleWork",
             "book_title": "",
-            "pagination": "Pagination",
+            "pagination": "2",
             "visibility": "open",
-            "journal_title": "Journal Title",
+            "journal_title": "none yet",
             "refereed": "Peer-reviewed",
             "resource_type": "ArticleWork Research Article",
             "rights_holder": "Rights holder",
@@ -391,13 +390,14 @@ BC = {
                     "contributor_position": "0"
                 }
             ],
-            "id": "63a7919d-d8bb-496a-aa69-3c58530e1e2x",
+            "id": "81a7919d-d8bb-496a-aa69-3c58530e1eyx",
             "domain": "localhost",
             "tenant": "university-demo",
             "files": [
                 {
                     "path": '/data/tmp/derivatives/b5/e3/92/cd/-5/d6/0-/41/4a/-a/46/7-/d8/70/5c/1e/6b/4a-thumbnail.jpeg',
-                    "visibility": "restricted"
+                    "visibility": "restricted",
+                    "description": "file has a description"
                 },
                 {
                     "path": "/data/tmp/uploads/d42d8a77-f42d-463d-bbeb-9a49f0e7df25/hyrax/uploaded_file/file/10/rock-hyrax.jpg",
@@ -405,3 +405,118 @@ BC = {
                 }
             ]
         }
+
+
+Y = {
+    "issue": "",
+    "title": "Excursion to Oregon Coast [Optional] 2",
+    "volume": "",
+    "keyword": "",
+    "license": "",
+    "version": "",
+    "abstract": "",
+    "publisher": "",
+    "type": "Presentation",
+    #{}"collection_id": "0bbfcbe6-7555-49cc-a6ac-9cb9a12f8fcf",
+    "journal_title": "CGE & GSS Program Interdisciplinary Conference",
+    "refereed": "",
+    "resource_type": "Presentation default Presentation",
+    "rights_holder": "",
+    "date_published": "2013-10-20",
+    "add_info": "<p><em>This excursion includes</em>:</p> <ul> <li>A drive through the beautiful Oregon Coast Range;</li> <li>Lunch in Lincoln City at <a href=\"http://www.moschowder.com/lincoln-city.php\" target=\"_blank\">Mo's Restaurant</a>; and</li> <li>An afternoon in <a href=\"http://www.el.com/to/newport/\" target=\"_blank\">Newport</a>, where we will visit a working port, beautiful Nye's Beach, and the <a href=\"http://www.yaquinalights.org/\" target=\"_blank\">Yaquina Lighthouse</a>.</li> </ul> <p><a href=\"http://www.flickr.com/photos/kightp/4677587720/\" title=\"Yaquina Head Lighthouse by kightp, on Flickr\"><img src=\"http://farm2.staticflickr.com/1291/4677587720_9231fe8045_n.jpg\" /></a></p>",
+    "creator": [
+        {
+            "creator_family_name": "[unknown]",
+            "creator_given_name": "[unknown]",
+            "creator_name_type": "Personal",
+            "creator_position": "0"
+        }
+    ],
+    "id": "bb36da48-6f75-41f4-87fe-3e71c1713659",
+    "domain": "localhost",
+    "tenant": "university-demo"
+}
+
+D = {
+    "doi": "10.0000/1234",
+    "isbn": "",
+    "issn": "ISSN",
+    "eissn": "",
+    "issue": "Issue",
+    "title": "Title (pre) 3",
+    "source": "Source",
+    "volume": "Volume",
+    "keyword": "Keyword1||Keyword2",
+    "license": "https://creativecommons.org/licenses/by/4.0/||https://creativecommons.org/licenses/by-nc/4.0/",
+    "outcome": "no",
+    "subject": "Archaeology||Business||fun",
+    "version": "",
+    "abstract": "Abstract",
+    "location": "ny",
+    "publisher": "Publisher1||Publisher2",
+    "type": "ArticleWork",   
+    "book_title": "",
+    "challenged": "yes",
+    "irb_number": "12345",
+    "irb_status": "IRB review/approval required and obtained",
+    "pagination": "Pagination",
+    "visibility": "open",
+    "participant": "",
+    "migration_id": "test1",
+    "journal_title": "Journal Title 1",
+    "refereed": "Peer-reviewed 1",
+    "photo_caption": "wait for it",
+    "reading_level": "",
+    "resource_type": "ArticleWork Research Article",
+    "rights_holder": "Rights holder1||Rights holder2",
+    "date_published": "2019-12-12",
+    "additional_links": "Additional link",
+    "photo_description": "none",
+    "place_of_publication": "wait",
+    "add_info": "Additional information 1",
+    "creator": [
+        {
+            "creator_family_name": "Lastname",
+            "creator_given_name": "Firstname",
+            "creator_institutional_relationship": [
+                "Pacific University"
+            ],
+            "creator_middle_name": "Middlename",
+            "creator_name_type": "Personal",
+            "creator_role": [
+                "Faculty"
+            ],
+            "creator_suffix": "Suffix",
+            "creator_position": "0"
+        },
+        {
+            "creator_name_type": "Organizational",
+            "creator_organization_name": "Organization name",
+            "creator_position": "1"
+        }
+    ],
+    "contributor": [
+        {
+            "contributor_name_type": "Personal",
+            "contributor_family_name": "Lastname",
+            "contributor_given_name": "Firstname",
+            "contributor_type": "Advisor",
+            "contributor_position": "0"
+        }
+    ],
+    "id": "z2c4fd5e-a36d-461a-afb4-f91c9644de3p",
+    "domain": "localhost",
+    "tenant": "university-demo",
+    "files": [
+        {
+            "path": '/data/tmp/derivatives/b5/e3/92/cd/-5/d6/0-/41/4a/-a/46/7-/d8/70/5c/1e/6b/4a-thumbnail.jpeg',
+            "visibility": "restricted",
+            "description": "description for file 2"
+        },
+        {
+            "path": "/data/tmp/uploads/d42d8a77-f42d-463d-bbeb-9a49f0e7df25/hyrax/uploaded_file/file/10/rock-hyrax.jpg",
+            "visibility": "open",
+            "description": "description for file 1"
+        }
+    ]
+}

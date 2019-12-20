@@ -69,7 +69,6 @@
         <%= render 'shared/ubiquity/json_fields_partials/given_name', template: template, tenant_work_settings: tenant_work_settings,
          metadata_field: "creator", hash: hash %>
       <% end %>
-
       <br/>
 
       <br>
@@ -80,7 +79,7 @@
 
       <% if creator_list.include?('creator_institutional_relationship')%>
         <%= render 'shared/ubiquity/json_fields_partials/institutional_relationship', template: template, tenant_work_settings: tenant_work_settings,
-        metadata_field: "creator", hash: hash %>
+        metadata_field: "creator", hash: hash, f: f %>
       <% end %>
       <br>
 

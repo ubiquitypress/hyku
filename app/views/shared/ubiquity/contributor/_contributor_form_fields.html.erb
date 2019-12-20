@@ -81,7 +81,7 @@
 
       <% if contributor_list.include?('contributor_institutional_relationship')%>
         <%= render 'shared/ubiquity/json_fields_partials/institutional_relationship', template: template, tenant_work_settings: tenant_work_settings,
-         metadata_field: "contributor", hash: hash  %>
+         metadata_field: "contributor", hash: hash, f:f  %>
       <% end %>
       <br>
 

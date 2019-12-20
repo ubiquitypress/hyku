@@ -6,7 +6,6 @@ class API::V1::HighlightsController < ActionController::Base
   before_action :set_limit
 
   def index
-    puts "SHOES #{request.ip}"
     #@highlight_skip_run = 'false'
     @collections = get_collections || []
     @featured_works = get_featured_works || []

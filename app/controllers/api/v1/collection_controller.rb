@@ -17,7 +17,7 @@ class API::V1::CollectionController < ActionController::Base
   def fetch_collection
     @skip_run = 'true'
     collection =   Rails.cache.fetch("single/collection/#{@tenant.cname}/#{params[:id]}") do
-      CatalogController.new.repository.search(q: "id:#{params[:id]}")
+      CatalogController.new.repository.search(q: "id:#{params[:id]}", fq: ["has_model_ssim:Collection"].concat(filter_using_visibility) )
     end
     @collection  = collection['response']["docs"].first
     if @collection.present?
@@ -25,7 +25,7 @@ class API::V1::CollectionController < ActionController::Base
       json = render_to_string(:partial => 'api/v1/collection/collection.json.jbuilder', locals: {single_collection: @collection})
       render json: json
     else
-      raise Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: "There is no record with id: #{params[:id]}")
+      raise Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: "This is either a private collection or there is no record with id: #{params[:id]}")
     end
   end
 

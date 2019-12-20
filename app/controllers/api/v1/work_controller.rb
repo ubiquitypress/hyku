@@ -16,7 +16,6 @@ class API::V1::WorkController < ActionController::Base
   end
 
   def show
-    puts "DUCK #{request.ip}" 
     json = render_to_string(:partial => 'api/v1/work/work.json.jbuilder', locals: {work: @work})
       render json: json
   end
@@ -36,15 +35,13 @@ class API::V1::WorkController < ActionController::Base
   def fetch_work
     @skip_run = 'true'
     work =  Rails.cache.fetch("single/work/#{@tenant.cname}/#{params[:id]}") do
-      CatalogController.new.repository.search(q: params[:id],  "sort" => "score desc, system_create_dtsi desc",
-    "facet.field "=> ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim", "institution_sim",
-    "language_sim", "file_availability_sim"])
+      CatalogController.new.repository.search(q: "id:#{params[:id]}", fq: visibility_check)
     end
     work = work.presence && work['response']['docs'].first
     if work.present?
       @work = work
     else
-      raise Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: "There is no record with id: #{params[:id]}")
+      raise Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: "This is either a private work or there is no record with id: #{params[:id]}")
     end
   end
 

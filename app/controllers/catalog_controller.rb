@@ -196,6 +196,27 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("rights_holder", :stored_searchable)
     config.add_show_field solr_name("dewey", :stored_searchable)
     config.add_show_field solr_name("library_of_congress_classification", :stored_searchable)
+    config.add_show_field solr_name("additional_links", :stored_searchable)
+    config.add_show_field solr_name("degree", :stored_searchable)
+    config.add_show_field solr_name("irb_status", :stored_searchable)
+    config.add_show_field solr_name("irb_number", :stored_searchable)
+    config.add_show_field solr_name("source", :stored_searchable)
+    config.add_show_field solr_name("location", :stored_searchable)
+    config.add_show_field solr_name("outcome", :stored_searchable)
+    config.add_show_field solr_name("participant", :stored_searchable)
+    config.add_show_field solr_name("reading_level", :stored_searchable)
+    config.add_show_field solr_name("challenged", :stored_searchable)
+    config.add_show_field solr_name("photo_caption", :stored_searchable)
+    config.add_show_field solr_name("photo_description", :stored_searchable)
+
+
+
+
+
+
+
+
+
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
     #

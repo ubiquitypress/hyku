@@ -1,16 +1,17 @@
 module Ubiquity
   module AllFormsSharedBehaviour
     extend ActiveSupport::Concern
+    include(::Ubiquity::HyraxWorkFormOverride)
 
     included do
       attr_accessor :contributor_group, :contributor_name_type, :contributor_type, :contributor_given_name,
                     :contributor_family_name, :contributor_orcid, :contributor_isni,
                     :contributor_position, :contributor_organization_name,
-                    :contributor_institutional_relationship
+                    :contributor_institutional_relationship, :contributor_suffix, :contributor_middle_name
 
       attr_accessor :creator_group, :creator_name_type, :creator_organization_name, :creator_given_name,
                     :creator_family_name, :creator_orcid, :creator_isni,
-                    :creator_position, :creator_institutional_relationship
+                    :creator_position, :creator_biography, :creator_institutional_relationship, :creator_suffix, :creator_role, :creator_middle_name
 
       attr_accessor :alternate_identifier_group, :related_identifier_group,
                     :date_published_group, :date_accepted_group, :date_submitted_group,
@@ -50,12 +51,12 @@ module Ubiquity
         super.tap do |permitted_params|
           permitted_params << {contributor_group: [:contributor_organization_name, :contributor_given_name,
             :contributor_family_name, :contributor_name_type, :contributor_orcid, :contributor_isni,
-            :contributor_position, :contributor_type, :contributor_institutional_relationship => []
+            :contributor_position, :contributor_type, :contributor_suffix, :contributor_middle_name, :contributor_institutional_relationship => []
           ]}
 
           permitted_params << {creator_group: [:creator_organization_name, :creator_given_name,
             :creator_family_name, :creator_name_type, :creator_orcid, :creator_isni,
-            :creator_position, :creator_institutional_relationship => []
+            :creator_position, :creator_biogrphy, :creator_suffix, :creator_middle_name, :creator_role => [], :creator_institutional_relationship => []
           ]}
 
           permitted_params << { alternate_identifier_group: %i[alternate_identifier alternate_identifier_type] }
@@ -79,5 +80,9 @@ module Ubiquity
     def title
       super.first || ""
     end
+
+    def publisher
+     super.first || ""
+   end
   end
 end

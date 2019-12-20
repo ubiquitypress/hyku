@@ -1,0 +1,8 @@
+en:
+  hyrax:
+    icons:
+      presentation:     'fa fa-file-text-o'
+    select_type:
+      presentation:
+        name:               "Presentation"
+        description:        "A poster, slides, or other tools used in a speech or talk."

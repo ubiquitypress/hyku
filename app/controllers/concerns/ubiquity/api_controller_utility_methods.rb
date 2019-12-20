@@ -13,11 +13,13 @@ module Ubiquity
     end
 
     def models_to_search
-      'has_model_ssim:Article OR has_model_ssim:Book OR has_model_ssim:BookContribution OR has_model_ssim:ConferenceItem OR has_model_ssim: Dataset OR  has_model_ssim:ExhibitionItem OR has_model_ssim:Image OR has_model_ssim:Report OR  has_model_ssim:ThesisOrDissertation OR has_model_ssim:TimeBasedMedia OR has_model_ssim:GenericWork'
+      'has_model_ssim:Article OR has_model_ssim:Book OR has_model_ssim:BookContribution OR has_model_ssim:ConferenceItem OR has_model_ssim:Dataset OR has_model_ssim:ExhibitionItem OR       has_model_ssim:Image OR has_model_ssim:Report OR has_model_ssim:ThesisOrDissertation OR has_model_ssim:TimeBasedMedia OR has_model_ssim:GenericWork OR has_model_ssim:BookChapter OR
+       has_model_ssim:Media OR has_model_ssim:Presentation OR has_model_ssim:Uncategorized OR has_model_ssim:TextWork OR has_model_ssim:NewsClipping OR has_model_ssim:ArticleWork OR
+      has_model_ssim:BookWork OR has_model_ssim:ImageWork OR has_model_ssim:ThesisOrDissertationWork'
     end
 
     def model_list
-      "Article,Book,BookContribution,ConferenceItem,Dataset,ExhibitionItem,Image,Report,ThesisOrDissertation,TimeBasedMedia,GenericWork,Collection"
+      "Article,Book,BookContribution,ConferenceItem,Dataset,ExhibitionItem,Image,Report,ThesisOrDissertation,TimeBasedMedia,GenericWork,BookChapter,Media,Presentation,Uncategorized,TextWork,NewsClipping,ArticleWork,BookWork,ImageWork,ThesisOrDissertationWork,Collection"
     end
 
     def facet_list

@@ -1,0 +1,10 @@
+es:
+  hyrax:
+    icons:
+      presentation:     'fa fa-file-text-o'
+    select_type:
+      presentation:
+        # TODO: translate `human_name` into Spanish
+        name:               "Presentation"
+        # TODO: translate `human_name` into Spanish
+        description:        "Presentation trabajos"

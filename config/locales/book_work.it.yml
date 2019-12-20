@@ -1,0 +1,8 @@
+it:
+  hyrax:
+    icons:
+      book_work:     'fa fa-file-text-o'
+    select_type:
+      book_work:
+        name:               "Book Work"
+        description:        "Book work opere"

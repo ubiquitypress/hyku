@@ -1,0 +1,17 @@
+
+<% if property_hash && property_hash.keys.include?(template) && property_hash[template].include?("#{metadata_field}_institutional_relationship") %>
+
+  <span class="label label-info required-tag">required</span>
+  <%= select_tag "#{template}[#{metadata_field}_group][][#{metadata_field}_institutional_relationship][]",
+   content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( dropdown_list,
+    :to_s, :to_s,  hash.dig("#{metadata_field}_institutional_relationship")),
+     multiple: true, class: "form-control ubiquity_#{metadata_field}_institutional_relationship", required: true %>
+
+<% else %>
+
+  <%= select_tag "#{template}[#{metadata_field}_group][][#{metadata_field}_institutional_relationship][]",
+  content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( dropdown_list,
+   :to_s, :to_s,  hash.dig("#{metadata_field}_institutional_relationship")),
+    multiple: true, class: "form-control ubiquity_#{metadata_field}_institutional_relationship"  %>
+
+<% end %>

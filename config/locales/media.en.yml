@@ -1,0 +1,8 @@
+en:
+  hyrax:
+    icons:
+      media:     'fa fa-file-text-o'
+    select_type:
+      media:
+        name:               "Media"
+        description:        "A multimedia output such as a video or audio recording."

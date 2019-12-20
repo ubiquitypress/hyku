@@ -1,0 +1,12 @@
+<% template = f.object.model.class.to_s.underscore %>
+<% degree_service = DegreeService.new %>
+
+
+<br>
+<label class="control-label multi_value optional" for="#{template}_Degree">Degree</label>
+<p class="help-block">Enter your terminal degree.</p>
+<%= select_tag "#{template}[degree]",
+      options_from_collection_for_select(degree_service.select_active_options.flatten.uniq!, :to_s, :to_s, f.object.model.degree),
+        class: "ubiquity-autocomplete", include_blank: true, data: {placeholder: ""}
+%>
+<br><br>

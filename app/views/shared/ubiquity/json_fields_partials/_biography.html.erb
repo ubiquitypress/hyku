@@ -1,0 +1,9 @@
+<label class="control-label multi_value optional" for="#{template}_#{metadata_field}_biography">
+  Biography</label>
+<%= text_field_tag  "#{template}[#{metadata_field}_group][][#{metadata_field}_biography]",  hash.dig("#{metadata_field}_biography"),
+                    class: "#{template}_#{metadata_field}_biography #{metadata_field}_biography form-control multi-text-field multi_value ubiquity_#{metadata_field}_biography",
+                    placeholder: '',
+                    name: "#{template}[#{metadata_field}_group][][#{metadata_field}_biography]",
+                    data: {field_name:"ubiquity_#{metadata_field}_biography"}
+%>
+<br>

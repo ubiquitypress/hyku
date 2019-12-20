@@ -18,6 +18,29 @@ Hyrax.config do |config|
   # Injected via `rails g hyrax:work TimeBasedMedia`
   config.register_curation_concern :time_based_media
   config.register_curation_concern :generic_work
+  # Injected via `rails g hyrax:work BookChapter`
+  config.register_curation_concern :book_chapter
+  # Injected via `rails g hyrax:work Media`
+  config.register_curation_concern :media
+  # Injected via `rails g hyrax:work Presentation`
+  config.register_curation_concern :presentation
+  # Injected via `rails g hyrax:work Uncategorized`
+  config.register_curation_concern :uncategorized
+  # Injected via `rails g hyrax:work TextWork`
+  config.register_curation_concern :text_work
+  # Injected via `rails g hyrax:work NewsClipping`
+  config.register_curation_concern :news_clipping
+  # Injected via `rails g hyrax:work ArticleWork`
+  config.register_curation_concern :article_work
+  # Injected via `rails g hyrax:work BookWork`
+  config.register_curation_concern :book_work
+  # Injected via `rails g hyrax:work ImageWork`
+  config.register_curation_concern :image_work
+  # Injected via `rails g hyrax:work ThesisOrDissertationWork`
+  config.register_curation_concern :thesis_or_dissertation_work
+
+
+
 
 
 

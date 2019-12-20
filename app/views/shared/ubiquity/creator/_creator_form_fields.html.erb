@@ -1,0 +1,112 @@
+<!-- rendered from  app/shared/ubiquity/creator/new_form.html.erb -->
+<!-- rendered from  app/shared/ubiquity/creator/edit_form.html.erb -->
+
+
+<% template = f.object.model.class.to_s.underscore %>
+<% array_of_hash = get_model( f.object.creator, template, 'creator', 'creator_position') %>
+<% array_of_hash = array_of_hash ||  [{}] %>
+
+<% tenant_work_settings =  get_tenant_work_settings  %>
+
+<% creator_list = list_of_json_properties('creator') %>
+
+<% array_of_hash.each_with_index do |hash, index| %>
+  <div class="ubiquity-meta-creator" >
+    <% if template == 'collection' %>
+      <label class="control-label multi_value optional" for="#{template}_creator_name_type">
+        Creator name type</label>
+
+      <%= select_tag "#{template}[creator_group][][creator_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("creator_name_type")),
+                      class: 'ubiquity_creator_name_type', data: {field_name:'ubiquity_creator_name_type'} %>
+
+    <% else %>
+      <label class="control-label multi_value optional" for="#{template}_creator_name_type">
+        Creator name type <span class="label label-info required-tag">required</span></label>
+
+      <%= select_tag "#{template}[creator_group][][creator_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("creator_name_type")),
+                    required: true, class: 'ubiquity_creator_name_type', data: {field_name:'ubiquity_creator_name_type'} %>
+    <% end %>
+
+    <p class="help-block">The person or group responsible for the work. Usually this is the author of the content.</p>
+
+    <% if creator_list.include?('creator_isni')%>
+      <%= render 'shared/ubiquity/json_fields_partials/isni', template: template, metadata_field: "creator", hash: hash %>
+    <% end %>
+
+    <span class="ubiquity_organization_fields">
+
+    <label class="ubiquity_creator_organization_name_label control-label multi_value optional" for="#{template}_creator_organization_name">
+      Creator organisation name</label>
+
+    <%= text_field_tag "#{template}[creator_group][][creator_organization_name]", hash.dig("creator_organization_name"),
+                        class: "#{template}_creator_organization_name form-control multi-text-field multi_value ubiquity_creator_organization_name",
+                        placeholder: 'Please enter the organisation\'s name.',
+                        name: "#{template}[creator_group][][creator_organization_name]",
+                        data: {field_name:'ubiquity_creator_organization_name'}
+    %>
+    <span style="color:red;" class="error">Please complete this field.</span>
+
+  </span>
+  <br/>
+    <span class="ubiquity_personal_fields">
+
+      <% if creator_list.include?('creator_orcid')%>
+        <%= render 'shared/ubiquity/json_fields_partials/orcid', template: template, metadata_field: "creator", hash: hash %>
+      <% end %>
+      <br>
+
+      <% if creator_list.include?('creator_family_name')%>
+        <%= render 'shared/ubiquity/json_fields_partials/family_name', template: template, tenant_work_settings: tenant_work_settings,
+         metadata_field: "creator", hash: hash %>
+      <% end %>
+
+      <br>
+      <% if creator_list.include?('creator_middle_name')%>
+        <%= render 'shared/ubiquity/json_fields_partials/middle_name', template: template, metadata_field: "creator", hash: hash %>
+      <% end %>
+      <br>
+      <% if creator_list.include?('creator_given_name')%>
+        <%= render 'shared/ubiquity/json_fields_partials/given_name', template: template, tenant_work_settings: tenant_work_settings,
+         metadata_field: "creator", hash: hash %>
+      <% end %>
+      <br/>
+
+      <br>
+      <% if creator_list.include?('creator_suffix')%>
+        <%= render 'shared/ubiquity/json_fields_partials/suffix', template: template, metadata_field: "creator", hash: hash %>
+      <% end %>
+      <br>
+
+      <% if creator_list.include?('creator_institutional_relationship')%>
+        <%= render 'shared/ubiquity/json_fields_partials/institutional_relationship', template: template, tenant_work_settings: tenant_work_settings,
+        metadata_field: "creator", hash: hash, f: f %>
+      <% end %>
+      <br>
+
+      <% if creator_list.include?('creator_biography')%>
+        <%= render 'shared/ubiquity/json_fields_partials/biography', template: template, tenant_work_settings: tenant_work_settings,
+        metadata_field: "creator", hash: hash %>
+      <% end %>
+      <br>
+
+      <% if creator_list.include?('creator_role')%>
+        <%= render 'shared/ubiquity/json_fields_partials/role', template: template, metadata_field: "creator", hash: hash %>
+      <% end %>
+
+    </span> <!-- closes ubiquity_personal_fields -->
+
+    <br>
+
+    <%= hidden_field_tag "#{template}[creator_group][][creator_position]", index, class: 'ubiquity-creator-score'  %>
+
+    <a href="#" style="color:red;"  class=" remove_creator form-group " data-removeUbiquityCreator=".ubiquity-meta-creator">
+      <span class="glyphicon glyphicon-remove"></span>
+      <span class="controls-remove-text">Remove</span>
+    </a>
+    |
+    <a href="#" class=" add_creator" data-addUbiquityCreator=".ubiquity-meta-creator">Add another </a>
+
+    <br><br><br>
+
+  </div>
+<% end %>

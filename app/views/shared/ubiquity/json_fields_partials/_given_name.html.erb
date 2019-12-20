@@ -1,0 +1,16 @@
+<% label_name = tenant_work_settings.presence && tenant_work_settings['metadata_labels']["given_name"].presence || "#{metadata_field.capitalize} given name"  %>
+
+
+<label class="control-label multi_value optional" for="#{template}_#{metadata_field}_given_name">
+  <%= label_name %> </label>
+
+<%= text_field_tag "#{template}[#{metadata_field}_group][][#{metadata_field}_given_name]", hash.dig("#{metadata_field}_given_name"),
+                  class: "#{template}_#{metadata_field}_group form-control  multi-text-field  multi_value ubiquity_#{metadata_field}_given_name",
+                  placeholder: "Please enter the #{metadata_field}\'s first name/given name.",
+                  name: "#{template}[#{metadata_field}_group][][#{metadata_field}_given_name]",
+                  data: {field_name:"ubiquity_#{metadata_field}_given_name"}
+
+%>
+<% if metadata_field == 'creator' %>
+  <span style="color:red;" class="error">Please enter one of these fields.</span>
+<% end %>

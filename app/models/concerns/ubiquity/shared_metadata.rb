@@ -91,6 +91,54 @@ module Ubiquity
         index.as :stored_searchable
       end
 
+      property :additional_links, predicate: ::RDF::Vocab::SCHEMA.significantLinks, multiple: false do |index|
+        index.as :stored_searchable
+      end
+
+      property :degree, predicate: ::RDF::Vocab::SCHEMA.evidenceLevel, multiple: false do |index|
+        index.as :stored_searchable, :facetable
+      end
+
+      property :irb_number, predicate: ::RDF::Vocab::BIBO.identifier, multiple: false do |index|
+        index.as :stored_searchable, :facetable
+      end
+
+      property :irb_status, predicate: ::RDF::Vocab::BF2.Status, multiple: false do |index|
+        index.as :stored_searchable, :facetable
+      end
+
+      property :location, predicate: ::RDF::Vocab::BF2.physicalLocation , multiple: false do |index|
+        index.as :stored_searchable, :facetable
+      end
+
+      property :outcome, predicate: ::RDF::Vocab::SCHEMA.resultComment, multiple: false do |index|
+        index.as :stored_searchable
+      end
+
+      property :participant, predicate: ::RDF::Vocab::BF2.Person, multiple: false do |index|
+        index.as :stored_searchable, :facetable
+      end
+
+      property :reading_level, predicate: ::RDF::Vocab::SCHEMA.proficiencyLevel, multiple: false do |index|
+        index.as :stored_searchable
+      end
+
+      property :challenged, predicate: ::RDF::Vocab::SCHEMA.quest, multiple: false do |index|
+        index.as :stored_searchable
+      end
+
+      property :photo_caption, predicate: ::RDF::Vocab::SCHEMA.caption, multiple: false do |index|
+        index.as :stored_searchable
+      end
+
+      property :photo_description, predicate: ::RDF::Vocab::SCHEMA.photo, multiple: false do |index|
+        index.as :stored_searchable
+      end
+
+      property :buy_book, predicate: ::RDF::Vocab::SCHEMA.BuyAction, multiple: true do |index|
+        index.as :stored_searchable
+      end
+
     end
   end
 end

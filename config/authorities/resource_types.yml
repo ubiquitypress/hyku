@@ -37,6 +37,7 @@ terms:
     term: Poster
   - id: Presentation
     term: Presentation
+    active: false
   - id: Project
     term: Project
   - id: Report
@@ -102,7 +103,7 @@ terms:
     term: Software
   - id: Dataset Database
     term: Database
-  - id: ExhibitionItem Exhibition
+  - id: ExhibitionItem default Exhibition
     term: Exhibition
   - id: ExhibitionItem catalogue
     term: Exhibition catalogue
@@ -144,7 +145,7 @@ terms:
     term: Doctoral thesis
   - id: ThesisOrDissertation Master's dissertation
     term: Master's dissertation
-  - id:  TimeBasedMedia Audio
+  - id:  TimeBasedMedia default Audio
     term: Audio
   - id:  TimeBasedMedia Animation
     term: Animation
@@ -248,3 +249,68 @@ terms:
     term: Working paper
   - id: Collection Other
     term: Other
+
+  - id: BookChapter default Book chapter
+    term: Book Chapter
+  - id: Media default Media
+    term: Media
+  - id: Media Audio
+    term: Audio
+  - id: Media Video
+    term: Video
+  - id: Presentation default Presentation
+    term: Presentation
+  - id: Presentation Research Poster
+    term: Research Poster
+  - id: Presentation Panel
+    term: Panel
+  - id: Presentation Paper Presentation
+    term: Paper Presentation
+  - id: Uncategorized default Uncategorized
+    term: Uncategorized
+  - id: Uncategorized Application
+    term: Application
+  - id: Uncategorized Grant
+    term: Grant
+  - id: Uncategorized J_Correspondence_Transcription
+    term: J_Correspondence_Transcription
+  - id: Uncategorized O_Address_Transcription
+    term: O_Address_Transcription
+  - id: Uncategorized Strategy
+    term: Strategy
+  - id: Uncategorized T_Writings_Transcription
+    term: T_Writings_Transcription
+  - id: Uncategorized Survey
+    term: Survey
+  - id: TextWork default Text
+    term: Text
+  - id: TextWork Handbook
+    term: Handbook
+  - id: TextWork Report
+    term: Report
+  - id: NewsClipping Intellectual Freedom News
+    term: Intellectual Freedom News
+  - id: ArticleWork default Article
+    term: Article
+  - id: ArticleWork Research Article
+    term: Research Article
+  - id: ArticleWork Editorial/Commentary
+    term: Editorial/Commentary
+  - id: ArticleWork Essay
+    term: Essay
+  - id: ArticleWork Letter
+    term: Letter
+  - id: ArticleWork Review Article
+    term: Review Article
+  - id: ArticleWork Creative Work
+    term: Creative Work
+  - id: BookWork Book
+    term: Book
+  - id: ImageWork Image
+    term: Image
+  - id: ThesisOrDissertationWork default Thesis
+    term: Thesis
+  - id: ThesisOrDissertationWork Capstone
+    term: Capstone
+  - id: ThesisOrDissertationWork Dissertation
+    term: Dissertation

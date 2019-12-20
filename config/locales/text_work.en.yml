@@ -1,0 +1,8 @@
+en:
+  hyrax:
+    icons:
+      text_work:     'fa fa-file-text-o'
+    select_type:
+      text_work:
+        name:               "Text Work"
+        description:        "A written work."

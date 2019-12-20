@@ -1,0 +1,10 @@
+es:
+  hyrax:
+    icons:
+      news_clipping:     'fa fa-file-text-o'
+    select_type:
+      news_clipping:
+        # TODO: translate `human_name` into Spanish
+        name:               "News Clipping"
+        # TODO: translate `human_name` into Spanish
+        description:        "News clipping trabajos"

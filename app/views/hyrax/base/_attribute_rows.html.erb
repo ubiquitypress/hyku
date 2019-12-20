@@ -24,7 +24,18 @@
 <% if check_has_editor_fields?(presenter.model_name.to_s) %>
   <%= render "shared/ubiquity/editor/show", presenter: presenter %>
 <% end %>
-
+<%= presenter.attribute_to_html(:photo_description, render_as: :string) %>
+<%= presenter.attribute_to_html(:photo_caption, render_as: :string) %>
+<%= presenter.attribute_to_html(:challenged, render_as: :string) %>
+<%= presenter.attribute_to_html(:reading_level, render_as: :string) %>
+<%= presenter.attribute_to_html(:participant, render_as: :string) %>
+<%= presenter.attribute_to_html(:outcome, render_as: :string) %>
+<%= presenter.attribute_to_html(:location, render_as: :string) %>
+<%= presenter.attribute_to_html(:source, render_as: :string) %>
+<%= presenter.attribute_to_html(:additional_links, render_as: :string) %>
+<%= presenter.attribute_to_html(:degree, render_as: :string) %>
+<%= presenter.attribute_to_html(:irb_status, render_as: :string) %>
+<%= presenter.attribute_to_html(:irb_number, render_as: :string) %>
 <%= presenter.attribute_to_html(:journal_title, render_as: :string) %>
 <%= presenter.attribute_to_html(:alternative_journal_title, render_as: :string) %>
 <%= presenter.attribute_to_html(:volume, render_as: :string) %>

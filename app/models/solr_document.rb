@@ -74,6 +74,24 @@ class SolrDocument
   attribute :library_of_congress_classification, Solr::Array, solr_name('library_of_congress_classification')
   attribute :alt_title, Solr::Array, solr_name('alt_title')
   attribute :alternative_journal_title, Solr::Array, solr_name('alternative_journal_title')
+  attribute :additional_links, Solr::Array, solr_name('additional_links')
+  attribute :degree, Solr::Array, solr_name('degree')
+  attribute :irb_number, Solr::Array, solr_name('irb_number')
+  attribute :irb_status, Solr::Array, solr_name('irb_status')
+  attribute :source, Solr::Array, solr_name('source')
+  attribute :location, Solr::Array, solr_name('location')
+  attribute :outcome, Solr::Array, solr_name('outcome')
+  attribute :participant, Solr::Array, solr_name('participant')
+  attribute :reading_level, Solr::Array, solr_name('reading_level')
+  attribute :challenged, Solr::Array, solr_name('challenged')
+  attribute :photo_caption, Solr::Array, solr_name('photo_caption')
+  attribute :photo_description, Solr::Array, solr_name('photo_description')
+
+
+
+
+
+
 
   field_semantics.merge!(
     title: 'title_tesim',

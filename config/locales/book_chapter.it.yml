@@ -1,0 +1,8 @@
+it:
+  hyrax:
+    icons:
+      book_chapter:     'fa fa-file-text-o'
+    select_type:
+      book_chapter:
+        name:               "Book Chapter"
+        description:        "Book chapter opere"

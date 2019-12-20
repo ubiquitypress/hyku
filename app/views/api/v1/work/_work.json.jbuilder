@@ -120,6 +120,22 @@ json.volume    work['volume_tesim']
 json.material_media    work['media_tesim']
 json.edition    work['edition_tesim']
 
+json.additional_links work['additional_links_tesim'].try(:first)
+json.source work['source_tesim']
+json.location work['location_tesim'].try(:first)
+json.irb_number work['irb_number_tesim'].try(:first)
+json.irb_status   work['irb_status_tesim'].try(:first)
+json.outcome  work['outcome_tesim'].try(:first)
+json.participant  work['participant_tesim'].try(:first)
+json.challenged   work['challenged_tesim'].try(:first)
+json.reading_level  work['reading_level_tesim'].try(:first)
+json.degree   work['degree_tesim'].try(:first)
+json.subject   work['subject_tesim']
+json.photo_caption  work['photo_caption_tesim'].try(:first)
+json.photo_description  work['photo_description_tesim'].try(:first)
+json.buy_book  work['buy_book_tesim']
+
+
 event = work['event_tesim'].try(:first)
 if valid_json?(event)
   json.event JSON.parse(event)

@@ -1,0 +1,8 @@
+en:
+  hyrax:
+    icons:
+      thesis_or_dissertation_work:     'fa fa-file-text-o'
+    select_type:
+      thesis_or_dissertation_work:
+        name:               "Thesis Or Dissertation"
+        description:        "A research document submitted to support candidature for a degree."

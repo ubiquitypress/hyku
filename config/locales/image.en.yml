@@ -5,7 +5,7 @@ en:
     select_type:
       image:
         name:               "Image"
-        description:        "Single or multi-page image works."
+        description:        "A visual representation of the external form of a person, thing, or idea."
   simple_form:
     hints:
       defaults:

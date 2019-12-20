@@ -1,0 +1,8 @@
+it:
+  hyrax:
+    icons:
+      news_clipping:     'fa fa-file-text-o'
+    select_type:
+      news_clipping:
+        name:               "News Clipping"
+        description:        "News clipping opere"

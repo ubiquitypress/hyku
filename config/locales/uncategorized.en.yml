@@ -1,0 +1,8 @@
+en:
+  hyrax:
+    icons:
+      uncategorized:     'fa fa-file-text-o'
+    select_type:
+      uncategorized:
+        name:               "Uncategorized"
+        description:        "Anything."

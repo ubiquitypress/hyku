@@ -1,0 +1,7 @@
+<p><label class="control-label multi_value optional" for="#{template}_#{metadata_field}_role">
+  Role  </label></p> <span class='error'> </span>
+
+<%= select_tag "#{template}[#{metadata_field}_group][][#{metadata_field}_role][]",
+ content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select(['Faculty', 'Staff', 'Student', 'Other'],
+  :to_s, :to_s, hash.dig("#{metadata_field}_role")),
+   multiple: true, class: "form-control ubiquity_#{metadata_field}_role"  %>

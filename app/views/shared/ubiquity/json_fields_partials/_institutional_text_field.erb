@@ -1,0 +1,21 @@
+
+<% if property_hash && property_hash.keys.include?(template) && property_hash[template].include?("#{metadata_field}_institutional_relationship") %>
+
+  <span class="label label-info required-tag">required</span>
+  <%= text_field_tag  "#{template}[#{metadata_field}_group][][#{metadata_field}_institutional_relationship]",  hash.dig("#{metadata_field}_institutional_relationship"),
+                      class: "#{template}_#{metadata_field}_group form-control multi-text-field multi_value ubiquity_#{metadata_field}_institutional_relationship",
+                      placeholder: '',
+                      name: "#{template}[#{metadata_field}_group][][#{metadata_field}_institutional_relationship][]",
+                      data: {field_name:"ubiquity_#{metadata_field}_institutional_relationship"}
+  %>
+
+<% else %>
+
+  <%= text_field_tag  "#{template}[#{metadata_field}_group][][#{metadata_field}_institutional_relationship]",  hash.dig("#{metadata_field}_institutional_relationship"),
+                    class: "#{template}_#{metadata_field}_group form-control multi-text-field multi_value ubiquity_#{metadata_field}_institutional_relationship",
+                    placeholder: '',
+                    name: "#{template}[#{metadata_field}_group][][#{metadata_field}_institutional_relationship][]",
+                    data: {field_name:"ubiquity_#{metadata_field}_institutional_relationship"}
+  %>
+
+<% end %>

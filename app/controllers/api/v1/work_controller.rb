@@ -35,13 +35,13 @@ class API::V1::WorkController < ActionController::Base
   def fetch_work
     @skip_run = 'true'
     work =  Rails.cache.fetch("single/work/#{@tenant.cname}/#{params[:id]}") do
-      CatalogController.new.repository.search(q: "id:#{params[:id]}")
+      CatalogController.new.repository.search(q: "id:#{params[:id]}", fq: visibility_check)
     end
     work = work.presence && work['response']['docs'].first
     if work.present?
       @work = work
     else
-      raise Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: "There is no record with id: #{params[:id]}")
+      raise Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: "This is either a private work or there is no record with id: #{params[:id]}")
     end
   end
 

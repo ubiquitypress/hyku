@@ -443,7 +443,7 @@ D = {
     "issn": "ISSN",
     "eissn": "",
     "issue": "Issue",
-    "title": "Title (pre) 3",
+    "title": "Title (pre) work 3",
     "source": "Source",
     "volume": "Volume",
     "keyword": "Keyword1||Keyword2",
@@ -454,7 +454,7 @@ D = {
     "abstract": "Abstract",
     "location": "ny",
     "publisher": "Publisher1||Publisher2",
-    "type": "ArticleWork",   
+    "type": "ArticleWork",
     "book_title": "",
     "challenged": "yes",
     "irb_number": "12345",
@@ -504,7 +504,7 @@ D = {
             "contributor_position": "0"
         }
     ],
-    "id": "z2c4fd5e-a36d-461a-afb4-f91c9644de3p",
+    "id": "u2c4fd5e-a36d-561a-afb4-f91c9644de3t",
     "domain": "localhost",
     "tenant": "university-demo",
     "files": [

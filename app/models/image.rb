@@ -11,6 +11,7 @@ class Image < ActiveFedora::Base
   include Ubiquity::UpdateSharedIndex
   include Ubiquity::FileAvailabilityFaceting
   include ::Ubiquity::CachingSingle
+  include ::Ubiquity::WorkTypeValidator
 
   property :extent, predicate: ::RDF::Vocab::DC.extent, multiple: true do |index|
     index.as :stored_searchable

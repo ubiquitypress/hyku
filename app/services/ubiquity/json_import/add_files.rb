@@ -116,36 +116,28 @@ module Ubiquity
 
     def avoid_duplicates_when_file_title_exist_in_work
       if @file.class == String
-        new_files_titles = check_if_file_titles_are_new
-        return  @hyrax_uploaded_file.clear if  @hyrax_uploaded_file.first.file.file.filename == new_files_titles
-        @hyrax_uploaded_file
+        ensure_single_file_is_not_duplicate
       elsif @file.class == Array
-        remove_nil_hash_from_array
+        remove_duplicate_hash_from_array
       end
     end
 
-    def remove_nil_hash_from_array
-      new_files_titles = check_if_file_titles_are_new
-      hyrax_uploaded_objects = @hyrax_uploaded_file.map { |hash| hash['path']}
-      if new_files_titles.present?
-        hyrax_uploads = hyrax_uploaded_objects.map {|carrierwave_object| carrierwave_object if new_files_titles.include?(carrierwave_object.file.file.filename)}
-        @hyrax_uploaded_file.reject! {|hash| not hyrax_uploads.include?(hash['path']) }
-      else
-        @hyrax_uploaded_file.clear
-      end
-    end
-
-    def check_if_file_titles_are_new
-      if @file.present? && @file.class == String && check_work_has_existing_file_title.present?
+    def ensure_single_file_is_not_duplicate
+      if  check_work_has_existing_file_title.present?
         imported_files_titles = [@hyrax_uploaded_file.first.file.file.filename]
-        #get the union and the difference to get the file titles that are new
-        (check_work_has_existing_file_title - imported_files_titles) | (imported_files_titles - check_work_has_existing_file_title)
-      elsif @file.present? && @file.class == Array && check_work_has_existing_file_title.present?
-        hyrax_uploaded_objects = @hyrax_uploaded_file.map { |hash| hash.values.first}
-        imported_files_titles = hyrax_uploaded_objects.map {|carrierwave_object| carrierwave_object.file.file.filename}
-        (check_work_has_existing_file_title - imported_files_titles) | (imported_files_titles - check_work_has_existing_file_title)
+        is_file_title_same = (imported_files_titles.first == check_work_has_existing_file_title.first)
+        return  @hyrax_uploaded_file.clear if is_file_title_same
+        @hyrax_uploaded_file
       else
-        []
+        @hyrax_uploaded_file
+      end
+    end
+
+    def remove_duplicate_hash_from_array
+      if  check_work_has_existing_file_title.present?
+        @hyrax_uploaded_file.reject! {|h| check_work_has_existing_file_title.include? h['path'].file.file.filename}
+      else
+        @hyrax_uploaded_file
       end
     end
 

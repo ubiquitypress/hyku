@@ -10,7 +10,7 @@ module Hyrax
     self.required_fields += %i[org_unit]
     self.remove_required_from_primary += %i[org_unit]
 
-    self.terms += %i[title alt_title resource_type creator contributor abstract date_published pagination issue
+    self.terms += %i[title alt_title resource_type creator contributor abstract date_published pagination issue page_display_order_number
                      volume journal_title publisher issn source additional_links
                      rights_holder license org_unit doi subject keyword refereed
                      irb_status irb_number add_info

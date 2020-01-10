@@ -133,7 +133,7 @@ module Ubiquity
     end
 
     def set_default_work_visibility(value)
-      if ['open', 'restricted'].include?(value)
+      if ['open', 'restricted',  "authenticated", "embargo", "lease"].include?(value)
         puts "setting visibility from hash - #{value.inspect}"
         @work_instance.visibility = value
       else

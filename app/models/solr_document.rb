@@ -86,11 +86,7 @@ class SolrDocument
   attribute :challenged, Solr::Array, solr_name('challenged')
   attribute :photo_caption, Solr::Array, solr_name('photo_caption')
   attribute :photo_description, Solr::Array, solr_name('photo_description')
-
-
-
-
-
+  attribute :page_display_order_number, Solr::Array, solr_name('page_display_order_number')
 
 
   field_semantics.merge!(

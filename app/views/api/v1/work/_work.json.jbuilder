@@ -136,7 +136,7 @@ json.photo_caption  work['photo_caption_tesim'].try(:first)
 json.photo_description  work['photo_description_tesim'].try(:first)
 json.buy_book  work['buy_book_tesim']
 json.migration_id work["migration_id_tesim"].try(:first)
-
+json.page_display_order_number work["page_display_order_number_tesim"].try(:first)
 
 event = work['event_tesim'].try(:first)
 if valid_json?(event)

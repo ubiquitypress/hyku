@@ -532,3 +532,58 @@ D = {
       }
     ]
 }
+
+V = {
+    "type": "Book",
+    "title": "Test work 2: Open, with 4 files: 2 open, 1 institution, 1 private",
+    "source": "",
+    "volume": "",
+    "keyword": "keyword1||keyword2||keyword3||keyword4||keyword5",
+    "license": "",
+    "subject": "Testing",
+    "abstract": "",
+    "add_info": "",
+    "org_unit": "",
+    "visibility": "open",
+    "migration_id": "test1",
+    "journal_title": "",
+    "resource_type": "BookChapter default Book chapter",
+    "rights_holder": "",
+    "date_published": "2020-01-10",
+    "creator": [
+        {
+            "creator_family_name": "Mowlam",
+            "creator_given_name": "Tom",
+            "creator_institutional_relationship": [
+                "Other"
+            ],
+            "creator_name_type": "Personal",
+            "creator_position": "0"
+        }
+    ],
+    "id": "5f310e75-13a8-4a28-a18d-07f97d86f7ed",
+    "domain": "localhost",
+    "tenant": "university-demo",
+    "files": [
+          {
+            "path": '/data/tmp/derivatives/b5/e3/92/cd/-5/d6/0-/41/4a/-a/46/7-/d8/70/5c/1e/6b/4a-thumbnail.jpeg',
+            "description": "description for file 2",
+            "visibility": "restricted"
+        },
+        {
+            "path": "/data/tmp/uploads/d42d8a77-f42d-463d-bbeb-9a49f0e7df25/hyrax/uploaded_file/file/10/rock-hyrax.jpg",
+            "description": "description for file 1",
+            "visibility": "authenticated",
+            "embargo_release_date": '2020-01-16',
+            "visibility_during_embargo": 'restricted',
+            "visibility_after_embargo": 'open'
+        },
+        {
+         "path": "https://techcrunch.com/wp-content/uploads/2016/10/gettyimages-548328327.jpg?w=1390&crop=1",
+         "visibility": "restricted",
+         "visibility_during_lease": 'open',
+         "visibility_after_lease": 'authenticated',
+         "lease_expiration_date": '2020-01-16'
+       }
+    ]
+}

@@ -55,14 +55,12 @@ module Ubiquity
       @attributes_hash['date_uploaded'] = Hyrax::TimeService.time_in_utc unless @work_instance.date_uploaded.present?
       set_default_work_visibility(@data_hash[:visibility])
       set_admin_set(@data_hash[:admin_set_id])
+      add_work_to_collection
       #save the work
       create_or_update_work
       add_state_to_work
       $stdout.puts "work was successfully created"
-
       attach_files
-      add_work_to_collection
-
       @work_instance
       self
     end
@@ -72,8 +70,7 @@ module Ubiquity
     def add_work_to_collection
       if @collection_id.present? && @work_instance.class != Collection
         collection = ActiveFedora::Base.find(@collection_id)
-        collection.add_member_objects([@work_instance.id])
-        collection.save
+        @work_instance.member_of_collections << collection
       end
       rescue ActiveFedora::ObjectNotFoundError
         $stdout.puts "collection with id #{@collection_id} does not exist"

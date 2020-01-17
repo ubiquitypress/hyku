@@ -21,8 +21,8 @@ module Ubiquity
 
    def self.query_for_parent_collections(work, skip_run = nil)
      member_of_collection_ids = work["member_of_collection_ids_ssim"] || []
-     collection_id_in_works = work["collection_id_tesim"]
-     combined_collection_ids = member_of_collection_ids |  collection_id_in_works
+     collection_id_in_works = work["collection_id_tesim"] || []
+     combined_collection_ids = member_of_collection_ids | collection_id_in_works
      if work.present? && combined_collection_ids.present?  &&  skip_run == 'true'
 
        cache_key = "parent_collection/#{work['account_cname_tesim'].first}/#{work['id']}/#{combined_collection_ids.try(:size).to_i}/#{work['system_modified_dtsi']}"

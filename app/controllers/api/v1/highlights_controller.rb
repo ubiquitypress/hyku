@@ -24,8 +24,14 @@ class API::V1::HighlightsController < ActionController::Base
   def get_collections
     record = CatalogController.new.repository.search(q: "id:*", fq: "has_model_ssim:Collection" , rows: 1, "sort" => "score desc, system_modified_dtsi desc")
     collection_id = record.dig('response','docs').presence && record.dig('response','docs').first['id']
-    last_updated_child  = CatalogController.new.repository.search(q: "member_of_collection_ids_ssim:#{collection_id}", rows: 1, "sort" => "score desc, system_modified_dtsi desc")
-
+    #last_updated_child  = CatalogController.new.repository.search(q: "member_of_collection_ids_ssim:#{collection_id}", rows: 1, "sort" => "score desc, system_modified_dtsi desc")
+    using_works_in_collecton  = CatalogController.new.repository.search(q: "member_of_collection_ids_ssim:#{collection_id}", rows: 1, "sort" => "score desc, system_modified_dtsi desc")
+    using_collection_ids_in_works  = CatalogController.new.repository.search(q: "collection_id_sim:#{collection_id}", rows: 1, "sort" => "score desc, system_modified_dtsi desc")
+    combined_record =  using_works_in_collecton['response']['docs'] | using_collection_ids_in_works['response']['docs']
+    using_collection_ids_in_works['response']['docs'] = combined_record
+    using_collection_ids_in_works['response']['numFound'] = combined_record.size
+    last_updated_child  = using_collection_ids_in_works
+    
     if record.dig('response','docs').try(:present?)
       set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, last_updated_child)
       fq = ['has_model_ssim:Collection', "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)"]

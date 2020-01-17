@@ -86,6 +86,9 @@ module Ubiquity
       property :migration_id, predicate: ::RDF::Vocab::Bibframe.Identifier, multiple: false  do |index|
         index.as :stored_searchable, :facetable
       end
+      property :collection_id, predicate: ::RDF::Vocab::BF2.identifies do |index|
+        index.as :stored_searchable, :facetable
+      end
 
     end
 

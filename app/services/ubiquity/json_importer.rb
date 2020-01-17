@@ -24,7 +24,8 @@ module Ubiquity
       @attributes_hash = {}
       @data = data
       $stdout.puts "Log Json data loaded #{@data}"
-      @collection_id = data.delete('collection_id') || data.delete(:collection_id)
+      #@collection_id = data.delete('collection_id') || data.delete(:collection_id)
+      @collection_id = data['collection_id'] || data[:collection_id]
       @data_id  = data.delete('id') || data.delete(:id)
       @tenant = data['tenant'] || data[:tenant]
       @domain = data['domain'] || data[:domain]
@@ -71,8 +72,9 @@ module Ubiquity
     def add_work_to_collection
       if @collection_id.present? && @work_instance.class != Collection
         collection = ActiveFedora::Base.find(@collection_id)
-        @work_instance.member_of_collections << collection
-        @work_instance.save!
+        #move the line below to a background job
+        #@work_instance.member_of_collections << collection
+        #@work_instance.save!
       end
       rescue ActiveFedora::ObjectNotFoundError
         $stdout.puts "collection with id #{@collection_id} does not exist"

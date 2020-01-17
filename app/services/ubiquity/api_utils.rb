@@ -5,9 +5,13 @@ module Ubiquity
      if collection.present?
        cache_key = "child_works/#{collection['account_cname_tesim'].first}/#{collection['id']}/#{collection['system_modified_dtsi']}"
        works = Rails.cache.fetch(cache_key) do
-         CatalogController.new.repository.search(q: "member_of_collection_ids_ssim:#{collection['id']}", rows: 200,  "sort" => "score desc, system_modified_dtsi desc",
-         fq: ["({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", "", "-suppressed_bsi:true"]
-         )
+         using_works_in_collecton = fetch_works_in_collection_member_objects(collection)
+         using_collection_ids_in_works= fetch_work_using_collection_ids_stored_in_work_metadatafield(collection)
+
+         combined_record =  using_works_in_collecton['response']['docs'] | using_collection_ids_in_works['response']['docs']
+         using_collection_ids_in_works['response']['docs'] = combined_record
+         using_collection_ids_in_works['response']['numFound'] = combined_record.size
+         using_collection_ids_in_works
       end
        works['response']['docs']
      else
@@ -16,10 +20,15 @@ module Ubiquity
    end
 
    def self.query_for_parent_collections(work, skip_run = nil)
-     if work.present? && work["member_of_collection_ids_ssim"].present? &&  skip_run == 'true'
-       cache_key = "parent_collection/#{work['account_cname_tesim'].first}/#{work['id']}/#{work["member_of_collection_ids_ssim"].try(:size).to_i}/#{work['system_modified_dtsi']}"
+     member_of_collection_ids = work["member_of_collection_ids_ssim"] || []
+     collection_id_in_works = work["collection_id_tesim"]
+     combined_collection_ids = member_of_collection_ids |  collection_id_in_works
+     if work.present? && combined_collection_ids.present?  &&  skip_run == 'true'
+
+       cache_key = "parent_collection/#{work['account_cname_tesim'].first}/#{work['id']}/#{combined_collection_ids.try(:size).to_i}/#{work['system_modified_dtsi']}"
+
        parent_collections = Rails.cache.fetch(cache_key) do
-            collection_ids = work["member_of_collection_ids_ssim"].presence
+            collection_ids = combined_collection_ids
             collections_list = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{collection_ids.join(',')}",
             "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", "", "-suppressed_bsi:true"
             ])
@@ -90,6 +99,18 @@ module Ubiquity
        else
          nil
        end
+    end
+
+    def self.fetch_works_in_collection_member_objects(collection)
+      CatalogController.new.repository.search(q: "member_of_collection_ids_ssim:#{collection['id']}", rows: 200,  "sort" => "score desc, system_modified_dtsi desc",
+      fq: ["({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", "", "-suppressed_bsi:true"]
+      )
+    end
+
+    def self.fetch_work_using_collection_ids_stored_in_work_metadatafield(collection)
+      CatalogController.new.repository.search(q: "collection_id_sim:#{collection['id']}", rows: 200,  "sort" => "score desc, system_modified_dtsi desc",
+      fq: ["({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", "", "-suppressed_bsi:true"]
+      )
     end
 
   end

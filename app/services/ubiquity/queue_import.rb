@@ -534,6 +534,7 @@ D = {
 }
 
 V = {
+    "collection_id": "68a1c0f4-ce27-45b9-8ba4-e2dc989d40c8",
     "type": "Book",
     "title": "Test work 2: Open, with 4 files: 2 open, 1 institution, 1 private",
     "source": "",
@@ -561,7 +562,7 @@ V = {
             "creator_position": "0"
         }
     ],
-    "id": "5f310e75-13a8-4a28-a18d-07f97d86f7ed",
+    "id": "if310e75-13a8-4a28-a18d-07f97d86f7e5",
     "domain": "localhost",
     "tenant": "university-demo",
     "files": [

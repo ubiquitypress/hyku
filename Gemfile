@@ -30,7 +30,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'active-fedora', '>= 11.1.4'
 
 #added by ubiquitypress
-gem 'chosen-rails'
+gem 'chosen-rails', '~> 1.8.7'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -82,7 +82,7 @@ gem 'blacklight_oai_provider', '~> 6.0'
 gem 'hyrax', '2.0.2'
 gem 'rsolr', '~> 2.0'
 
-gem 'devise'
+gem 'devise', '~> 4.3.0'
 gem 'devise-guests', '~> 0.3'
 gem 'devise-i18n'
 gem 'devise_invitable', '~> 1.6'
@@ -110,7 +110,7 @@ group :aws do
   gem 'active_elastic_job', '~> 2.0'
 end
 
-gem 'sidekiq'
+gem 'sidekiq', '~> 5.0.3'
 #added by ubiquitypress
 gem "sidekiq-cron", "~> 1.0.4"
 
@@ -123,4 +123,5 @@ gem 'mini_magick', '~> 4.8.0'
 gem 'httparty', '~> 0.16.3'
 #aded by ubiquitypress for caching
 # Will install several other gems like redis-rack, redis-actionpack, redis-activesupport, redis-store, redis-store
-gem 'redis-rails'
+gem 'redis-rails', '~> 5.0.2'
+gem "rack-attack", '~> 6.2.1'

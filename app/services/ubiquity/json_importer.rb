@@ -71,7 +71,7 @@ module Ubiquity
 
     def add_work_to_collection
       if @collection_id.present? && @work_instance.class != Collection
-        AddCollectionAndWorkFedoraRelationship.perform_later(@work_instance.id, @collection_id, @work_instance.account_cname)
+        #AddCollectionAndWorkFedoraRelationship.perform_later(@work_instance.id, @collection_id, @work_instance.account_cname)
       end
       rescue ActiveFedora::ObjectNotFoundError
         $stdout.puts "collection with id #{@collection_id} does not exist"

@@ -5,7 +5,7 @@ module Ubiquity
     # also see BasicMetadataDecorator
     included do
       property :volume, predicate: ::RDF::Vocab::BIBO.volume do |index|
-        index.as :stored_searchable
+        index.as :stored_searchable,  :facetable
       end
       property :pagination, predicate: ::RDF::Vocab::BIBO.numPages, multiple: false do |index|
         index.as :stored_searchable
@@ -41,7 +41,7 @@ module Ubiquity
         index.as :stored_searchable, :facetable
       end
       property :issue, predicate: ::RDF::Vocab::Bibframe.term(:Serial), multiple: false do |index|
-        index.as :stored_searchable
+        index.as :stored_searchable, :facetable
       end
       property :article_num, predicate: ::RDF::Vocab::BIBO.number, multiple: false do |index|
         index.as :stored_searchable

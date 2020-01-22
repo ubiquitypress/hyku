@@ -70,7 +70,10 @@ class CatalogController < ApplicationController
     # config.add_facet_field solr_name("file_format", :facetable), limit: 5
 
     config.add_facet_field solr_name('file_availability', :facetable), limit: 5, label: 'File Availability'
-    config.add_facet_field solr_name('collection_id', :facetable), limit: 5, label: 'collection_id'
+    config.add_facet_field solr_name('collection_id', :facetable), limit: 5, label: 'Collection_id'
+    config.add_facet_field solr_name('volume', :facetable), limit: 5, label: 'Volume'
+    config.add_facet_field solr_name('issue', :facetable), limit: 5, label: 'Issue'
+
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
@@ -127,8 +130,8 @@ class CatalogController < ApplicationController
     # config.add_index_field solr_name("fndr_project_ref", :stored_searchable), label: "Funder project reference"
     # config.add_index_field solr_name("add_info", :stored_searchable), label: "Additional information"
     # config.add_index_field solr_name("date_accepted", :stored_searchable), label: "Date Accepted"
-    # config.add_index_field solr_name("issue", :stored_searchable), label: "Issue"
-    # config.add_index_field solr_name("volume", :stored_searchable), label: "Volume"
+     config.add_index_field solr_name("issue", :stored_searchable), label: "Issue"
+     config.add_index_field solr_name("volume", :stored_searchable), label: "Volume"
     # config.add_index_field solr_name("pagination", :stored_searchable), label: "Pagination"
     # config.add_index_field solr_name("article_num", :stored_searchable), label: "Article number"
     # config.add_index_field solr_name("project_name", :stored_searchable), label: "Project Name"

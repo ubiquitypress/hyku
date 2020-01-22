@@ -153,8 +153,10 @@ terms:
     active: false
   - id: http://creativecommons.org/licenses/publicdomain/
     term: Copyright-Only Dedication (based on United States law) or Public Domain Certification
-    active: false  
-
+    active: false
+  - id: https://commons.pacificu.edu/rights
+    term: Default
+    active: true
 #   Below was broken link but has to be kept (as `false`) to avoid `key not found: "term"` error
 #   It can be removed when no record references it anymore
   - id: https://creativecommons.org/licenses/by/4.0/4

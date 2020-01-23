@@ -1,6 +1,7 @@
 module Ubiquity
   class ApiUtils
 
+    #   #collection is a solr_document or  a hash
     def self.query_for_collection_works(collection)
      if collection.present?
        cache_key = "child_works/#{collection['account_cname_tesim'].first}/#{collection['id']}/#{collection['system_modified_dtsi']}"
@@ -17,6 +18,40 @@ module Ubiquity
      else
        [ ]
      end
+   end
+
+   #collection is a solr_document or  a hash
+   def self.group_collection_works_by_volumes(collection)
+     if collection.present?
+       id = collection.with_indifferent_access['id']
+       cache_key = "works_by_volumes/#{collection['account_cname_tesim'].first}/#{id}/#{collection['system_modified_dtsi']}"
+       #works = Rails.cache.fetch(cache_key) do
+         response = CatalogController.new.repository.search({ q: '', fl: 'issue_tesim, volume_tesim, title_tesim, id', fq: ['has_model_ssim:ArticleWork', "{!terms f=collection_id_sim}#{id}"],
+           'group.field': "volume_tesim", 'group.query': "issue_tesim:[* TO *]", 'group.facet': true, group: true, rows: 3000, 'group.limit': 3000})
+
+         response_volume_grouping = response["grouped"]['volume_tesim']['groups']
+         remap_response_by_volumes(response_volume_grouping)
+       #end
+     end
+   end
+
+   def self.remap_response_by_volumes(response_data)
+     response_array = []
+     response_hash = {label: '', children: [] }
+
+     response_data.each do |h|
+       h['doclist']['docs'].each do |ch|
+         response_hash[:label] = "Volume #{h['groupValue']}"
+         response_hash[:children] << {label:  "Issue #{ch['issue_tesim'].try(:first)}",
+                                      data: {issue: "#{ch['issue_tesim'].try(:first)}", volume: "#{ch['volume_tesim'].try(:first)}"}
+                                    }
+
+         response_hash[:children].uniq!
+
+         response_array << response_hash
+       end
+     end
+     response_array.uniq!
    end
 
    def self.query_for_parent_collections(work, skip_run = nil)

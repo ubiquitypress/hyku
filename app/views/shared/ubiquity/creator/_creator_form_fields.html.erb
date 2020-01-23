@@ -90,7 +90,8 @@
       <br>
 
       <% if creator_list.include?('creator_role')%>
-        <%= render 'shared/ubiquity/json_fields_partials/role', template: template, metadata_field: "creator", hash: hash %>
+        <%= render 'shared/ubiquity/json_fields_partials/role', template: template,
+        tenant_work_settings: tenant_work_settings, metadata_field: "creator", hash: hash %>
       <% end %>
 
     </span> <!-- closes ubiquity_personal_fields -->

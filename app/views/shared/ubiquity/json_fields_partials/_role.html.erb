@@ -1,7 +1,24 @@
-<p><label class="control-label multi_value optional" for="#{template}_#{metadata_field}_role">
-  Role  </label></p> <span class='error'> </span>
+<!-- called from
+ https://github.com/ubiquitypress/hyku/blob/pacific-test/app/views/shared/ubiquity/contributor/_contributor_form_fields.html.erb
+ https://github.com/ubiquitypress/hyku/blob/pacific-test/app/views/shared/ubiquity/creator/_creator_form_fields.html.erb
+-->
+<% dropdown_options = set_role_dropdown_options(metadata_field, tenant_work_settings) %>
+<% default_contribution_selection = hash.dig("#{metadata_field}_type") || 'Advisor' %>
 
-<%= select_tag "#{template}[#{metadata_field}_group][][#{metadata_field}_role][]",
- content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select(['Faculty', 'Staff', 'Student', 'Other'],
-  :to_s, :to_s, hash.dig("#{metadata_field}_role")),
-   multiple: true, class: "form-control ubiquity_#{metadata_field}_role"  %>
+<% if metadata_field == "creator" %>
+  <p><label class="control-label multi_value optional" for=<%= "#{template}_#{metadata_field}_role" %> >
+    <%= "#{metadata_field}".capitalize %> Role  </label></p> <span class='error'> </span>
+
+   <%= select_tag "#{template}[#{metadata_field}_group][][#{metadata_field}_role][]",
+     content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select(dropdown_options,
+     :to_s, :to_s, hash.dig("#{metadata_field}_role")),
+     multiple: true, class: "form-control ubiquity_#{metadata_field}_role"  %>
+
+<% else %>
+   <p> <label class="control-label multi_value optional" for=<%= "#{template}_#{metadata_field}_type" %> >
+  <%= "#{metadata_field}".capitalize %> Role</label> </p>
+   <%= select_tag "#{template}[#{metadata_field}_group][][#{metadata_field}_type]",
+                    content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select(dropdown_options,
+                    :to_s, :to_s, default_contribution_selection)
+    %>
+<% end %>

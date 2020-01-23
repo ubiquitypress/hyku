@@ -71,6 +71,9 @@
 <%= presenter.attribute_to_html(:dewey, render_as: :string) %>
 <%= presenter.attribute_to_html(:library_of_congress_classification, render_as: :faceted, label: "Library of Congress Classification") %>
 <%= presenter.attribute_to_html(:add_info, label: "Additional Information", render_as: :string) %>
+<%= presenter.attribute_to_html(:is_included_in, label: "Is Included In", render_as: :string) %>
+
+
 <%#= presenter.attribute_to_html(:date_submitted) %>
 <%#= presenter.attribute_to_html(:refereed) %>
 <%#= presenter.attribute_to_html(:creator_search) %>

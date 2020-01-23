@@ -11,7 +11,7 @@ module Hyrax
     self.remove_required_from_primary += %i[org_unit]
 
     self.terms += %i[title alt_title resource_type creator contributor abstract date_published
-                    publisher additional_links
+                    is_included_in publisher additional_links
                     rights_holder license org_unit doi subject keyword add_info
                   ]
 

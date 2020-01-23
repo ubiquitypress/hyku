@@ -13,7 +13,7 @@ module Hyrax
 
     self.terms += %i[title alt_title resource_type creator contributor abstract
                      date_published challenged location outcome participant reading_level
-                     photo_caption photo_description pagination additional_links
+                     photo_caption photo_description pagination is_included_in additional_links
                      rights_holder license doi subject keyword add_info
                     ]
 

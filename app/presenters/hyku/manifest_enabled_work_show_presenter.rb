@@ -4,8 +4,8 @@ module Hyku
 
     delegate :extent, :rendering_ids, :isni, :institution, :org_unit, :refereed, :doi, :isbn, :issn, :eissn,
              :funder, :fndr_project_ref, :add_info,
-             :journal_title, :alternative_journal_title, :issue, :page_display_order_number, :volume, :pagination, :article_num, :project_name, :rights_holder,
-             :official_link, :place_of_publication, :series_name, :edition, :abstract, :version,
+             :journal_title, :alternative_journal_title, :issue, :page_display_order_number, :volume, :pagination, :is_included_in,
+             :article_num, :project_name, :rights_holder, :official_link, :place_of_publication, :series_name, :edition, :abstract, :version,
              :event_title, :event_date, :event_location, :book_title, :editor,
              :alternate_identifier, :related_identifier, :media, :duration, :photo_description, :photo_caption, :related_exhibition, :related_exhibition_venue, :related_exhibition_date,
              :dewey, :library_of_congress_classification, :alt_title, :challenged, :current_he_institution, :reading_level,

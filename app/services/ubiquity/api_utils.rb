@@ -1,6 +1,7 @@
 module Ubiquity
   class ApiUtils
 
+    #   #collection is a solr_document or  a hash
     def self.query_for_collection_works(collection)
      if collection.present?
        cache_key = "child_works/#{collection['account_cname_tesim'].first}/#{collection['id']}/#{collection['system_modified_dtsi']}"
@@ -16,6 +17,24 @@ module Ubiquity
        works['response']['docs']
      else
        [ ]
+     end
+   end
+
+   #collection is a solr_document or  a hash
+   def self.group_collection_works_by_volumes(collection, options = {})
+     group_limit = options['group_limit'] || 3000
+     field = options['group_parent_field']
+     child_group = options['group_child_field'] || "issue_tesim"
+     if collection.present?
+       id = collection.with_indifferent_access['id']
+       cache_key = "works_by_volumes/#{collection['account_cname_tesim'].first}/#{id}/#{collection['system_modified_dtsi']}/#{field}/#{group_limit}"
+       works = Rails.cache.fetch(cache_key) do
+          response = CatalogController.new.repository.search({ q: '', fl: 'issue_tesim, volume_tesim, title_tesim, id', fq: ['has_model_ssim:ArticleWork', "{!terms f=collection_id_sim}#{id}"],
+            'group.field': field, 'group.query': "#{child_group}:[* TO *]", 'group.facet': true, group: true, rows: 3000, 'group.limit': group_limit })
+
+         response_volume_grouping = response["grouped"]['volume_tesim']['groups']
+         remap_response_by_volumes(response_volume_grouping)
+       end
      end
    end
 
@@ -61,15 +80,15 @@ module Ubiquity
      end
    end
 
-  def self.fetch_and_covert_thumbnail_to_base64_string(record, skip_run = nil)
-    if skip_run == 'true' && record['thumbnail_path_ss'].present?
-      get_thumbnail_from_fedora(record)
-    end
-  end
+   def self.fetch_and_covert_thumbnail_to_base64_string(record, skip_run = nil)
+     if skip_run == 'true' && record['thumbnail_path_ss'].present?
+       get_thumbnail_from_fedora(record)
+     end
+   end
 
-     private
+    private
 
-     def self.get_thumbnail_from_fedora(record)
+    def self.get_thumbnail_from_fedora(record)
        cname = record['account_cname_tesim'].first
        AccountElevator.switch!(cname)
        cache_type = record.fetch('has_model_ssim').try(:first) == 'Collection' ? 'fedora/collection' : 'fedora/work'
@@ -88,13 +107,12 @@ module Ubiquity
      rescue Errno::ENOENT, StandardError => e
        puts "file-path--missing-error reading a thumbnail file. #{e.inspect}"
        nil
-     end
+    end
 
     def self.get_work_from_fedora(record, cache_type)
        if record.fetch('account_cname_tesim').present?
           Rails.cache.fetch("single/#{cache_type}/#{record.fetch('account_cname_tesim').first}/#{record['id']}") do
              ActiveFedora::Base.find(record['id'])
-
           end
        else
          nil
@@ -111,6 +129,23 @@ module Ubiquity
       CatalogController.new.repository.search(q: "collection_id_sim:#{collection['id']}", rows: 200,  "sort" => "score desc, system_modified_dtsi desc",
       fq: ["({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", "", "-suppressed_bsi:true"]
       )
+    end
+
+    def self.remap_response_by_volumes(response_data)
+      response_array = []
+      response_hash = {label: '', children: [] }
+      response_data.each do |h|
+        h['doclist']['docs'].each do |ch|
+          response_hash[:label] = "Volume #{h['groupValue']}"
+          response_hash[:children] << {label:  "Issue #{ch['issue_tesim'].try(:first)}",
+                                       data: {issue: "#{ch['issue_tesim'].try(:first)}", volume: "#{ch['volume_tesim'].try(:first)}"}
+                                     }
+
+          response_hash[:children].uniq!
+          response_array << response_hash
+        end
+      end
+      response_array.uniq!
     end
 
   end

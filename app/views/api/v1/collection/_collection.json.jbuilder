@@ -42,5 +42,13 @@ json.works do
   end
 end
 
+if @grouping_hash['group_parent_field'].present?
+  data_array = Ubiquity::ApiUtils.group_collection_works_by_volumes(single_collection, @grouping_hash)
+  json.volumes data_array
+else
+  json.volumes nil
+end
+
+
 image_as_string = Ubiquity::ApiUtils.fetch_and_covert_thumbnail_to_base64_string(single_collection, @skip_run)
 json.thumbnail_base64_string image_as_string

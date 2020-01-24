@@ -14,8 +14,13 @@ class API::V1::CollectionController < ActionController::Base
 
   private
 
+  def api_params
+    params.permit(:group_parent_field, :group_child_field, :group_limit, :tenant_id, :id )
+  end
+
   def fetch_collection
     @skip_run = 'true'
+    @grouping_hash = api_params
     collection =   Rails.cache.fetch("single/collection/#{@tenant.cname}/#{params[:id]}") do
       CatalogController.new.repository.search(q: "id:#{params[:id]}", fq: ["has_model_ssim:Collection"].concat(filter_using_visibility) )
     end

@@ -133,3 +133,16 @@ terms:
  - id : Other
    term: Other
    active:  true
+#added for pacific
+ - id: Advisor
+   term: Advisor
+   active: true
+ - id: Partner Organization
+   term: Partner Organization
+   active: true
+ - id: Contributor
+   term: Contributor
+   active: true
+ - id: Editor
+   term: Editor
+   active: true 

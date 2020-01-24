@@ -86,7 +86,8 @@
       <br>
 
       <% if contributor_list.include?('contributor_role')%>
-        <%= render 'shared/ubiquity/json_fields_partials/role', template: template, metadata_field: "contributor", hash: hash %>
+        <%= render 'shared/ubiquity/json_fields_partials/role', template: template, tenant_work_settings: tenant_work_settings,
+              metadata_field: "contributor", hash: hash %>
       <% end %>
 
     </span> <!-- closes ubiquity_personal_fields -->

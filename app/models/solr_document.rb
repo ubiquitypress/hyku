@@ -87,7 +87,7 @@ class SolrDocument
   attribute :photo_caption, Solr::Array, solr_name('photo_caption')
   attribute :photo_description, Solr::Array, solr_name('photo_description')
   attribute :page_display_order_number, Solr::Array, solr_name('page_display_order_number')
-
+  attribute :is_included_in, Solr::Array, solr_name('is_included_in')
 
   field_semantics.merge!(
     title: 'title_tesim',

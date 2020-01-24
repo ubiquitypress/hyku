@@ -8,8 +8,8 @@ terms:
  - id: IRB deteremined project was non-HSR
    term: IRB deteremined project was non-HSR
    active: true
- - id: Author self-determined (if permitted by institution) project was non-HSR
-   term: Author self-determined (if permitted by institution) project was non-HSR
+ - id: Author self-determined (if permitted by institution) project was non-HSR)
+   term: Author self-determined (if permitted by institution) project was non-HSR)
    active: true
  - id: Not applicable (no data gathered from or about humans
    term: Not applicable (no data gathered from or about humans

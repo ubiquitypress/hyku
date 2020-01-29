@@ -42,7 +42,7 @@ json.works do
   end
 end
 
-if @grouping_hash['group_parent_field'].present?
+if @skip_run == 'true' && @grouping_hash && @grouping_hash['group_parent_field'].present?
   data_array = Ubiquity::ApiUtils.group_collection_works_by_volumes(single_collection, @grouping_hash)
   json.volumes data_array
 else

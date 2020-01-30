@@ -130,7 +130,7 @@ terms:
   - id: http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/
     term: Open Government Licence (OGL) v2.0
     active: false
-  - id: http://www.europeana.eu/portal/rights/rr-r.html
+  - id: https://rightsstatements.org/page/InC/1.0/
     term: All rights reserved
     active: false
   - id: http://creativecommons.org/licenses/by-nc-nd/3.0/

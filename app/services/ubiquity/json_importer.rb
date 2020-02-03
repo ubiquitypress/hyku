@@ -56,6 +56,10 @@ module Ubiquity
       @attributes_hash['date_uploaded'] = Hyrax::TimeService.time_in_utc unless @work_instance.date_uploaded.present?
       set_default_work_visibility(@data_hash[:visibility])
       set_admin_set(@data_hash[:admin_set_id])
+      #apply embargo to work
+      @work_instance.apply_embargo(@data_hash["embargo_release_date"], @data_hash["visibility_during_embargo"], @data_hash["visibility_after_embargo"])
+      #apply lease to work
+      @work_instance.apply_lease(@data_hash["embargo_release_date"], @data_hash["visibility_during_lease"], @data_hash["visibility_after_lease"])
       #save the work
       create_or_update_work
       #add collection to work and redave the work

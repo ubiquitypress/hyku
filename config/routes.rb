@@ -73,6 +73,10 @@ Rails.application.routes.draw do
        get '/tenant/:tenant_id/search/facet/:id',  to: 'search#facet', as: 'tenant_search_facet', defaults: {format: :json}
 
        resources :errors, only: [:index], defaults: {format: :json}
+
+       post 'tenant/:tenant_id/users/login', to: 'sessions#create', as:  'user_login', defaults: {format: :json}
+       get 'tenant/:tenant_id/users/log_out', to: 'sessions#destroy', as: 'user_log_out', defaults: {format: :json}
+
      end
    end
 

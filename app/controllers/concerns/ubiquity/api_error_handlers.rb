@@ -1,3 +1,4 @@
+require 'jwt'
 module Ubiquity
   module ApiErrorHandlers
     extend ActiveSupport::Concern
@@ -14,6 +15,10 @@ module Ubiquity
       rescue_from Ubiquity::ApiError do |exception|
          render_custom_error(exception)
       end
+
+      rescue_from ::JWT::ExpiredSignature, with: :expired_session
+      rescue_from ::JWT::DecodeError, ::JWT::VerificationError, with: :invalid_token
+
     end
 
     private
@@ -33,7 +38,6 @@ module Ubiquity
     end
 
     def render_custom_error(message)
-      #redirect_to api_v1_errors_path(errors: message.error_hash)
       render json: message.error_hash
     end
 
@@ -41,6 +45,18 @@ module Ubiquity
     def other_errors(exception)
       message = "This request #{request.original_fullpath} threw an error #{exception}, please check it and try again"
       error_object = Ubiquity::ApiError::NotFound.new(status: 500, code: 'Server Error', message: message)
+      render json: error_object.error_hash
+    end
+
+    def expired_session
+      message = 'Expired session, please login again'
+      error_object = Ubiquity::ApiError::NotFound.new(status: 401, code: 'Unathorized', message: message)
+      render json: error_object.error_hash
+    end
+
+    def invalid_token
+      message = 'Invalid token'
+      error_object = Ubiquity::ApiError::NotFound.new(status: 401, code: 'Unathorized', message: message)
       render json: error_object.error_hash
     end
 

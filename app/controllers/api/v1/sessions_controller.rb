@@ -16,6 +16,17 @@ class API::V1::SessionsController < API::V1::ApiBaseController
     head :ok
   end
 
+  def refresh
+    if current_user.present?
+      token = payload(current_user)
+      render json: current_user.slice(:email).merge(token: token)
+    else
+      message = 'This is not a valid token, inorder to refresh you must send back a valid token or you must re-log in'
+      error_object = Ubiquity::ApiError::NotFound.new(status: 401, code: 'Invalid credentials', message: message)
+      render json: error_object.error_hash
+    end
+  end
+
   private
 
   def session_params

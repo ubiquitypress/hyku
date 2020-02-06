@@ -6,7 +6,7 @@ module Ubiquity
 
     #payload eg {user: 3}
     def self.encode(payload)
-      payload.merge!(exp: (Time.now + 8.hours).to_i) if payload[:exp].nil?
+      payload.merge!(exp: (Time.now + 1.hours).to_i) if payload[:exp].nil?
       JWT.encode(payload, SEKRET)
     end
 

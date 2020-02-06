@@ -76,7 +76,8 @@ Rails.application.routes.draw do
 
        post 'tenant/:tenant_id/users/login', to: 'sessions#create', as:  'user_login', defaults: {format: :json}
        get 'tenant/:tenant_id/users/log_out', to: 'sessions#destroy', as: 'user_log_out', defaults: {format: :json}
-       
+       post 'tenant/:tenant_id/users/refresh', to: 'sessions#refresh', as:  'user_refresh', defaults: {format: :json}
+
      end
    end
 

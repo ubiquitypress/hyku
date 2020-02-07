@@ -124,3 +124,4 @@ gem 'httparty', '~> 0.16.3'
 #aded by ubiquitypress for caching
 # Will install several other gems like redis-rack, redis-actionpack, redis-activesupport, redis-store, redis-store
 gem 'redis-rails'
+gem 'rack-cors', '~> 1.1.1'

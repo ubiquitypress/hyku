@@ -9,11 +9,13 @@ module Ubiquity
     private
 
     def find_parent
+      puts "atewe #{filter_strong_params[:tenant_id].inspect}"
       @tenant = Account.find_by(tenant: params[:tenant_id])
     end
 
     def models_to_search
-      'has_model_ssim:Article OR has_model_ssim:Book OR has_model_ssim:BookContribution OR has_model_ssim:ConferenceItem OR has_model_ssim:Dataset OR has_model_ssim:ExhibitionItem OR       has_model_ssim:Image OR has_model_ssim:Report OR has_model_ssim:ThesisOrDissertation OR has_model_ssim:TimeBasedMedia OR has_model_ssim:GenericWork OR has_model_ssim:BookChapter OR
+      'has_model_ssim:Article OR has_model_ssim:Book OR has_model_ssim:BookContribution OR has_model_ssim:ConferenceItem OR has_model_ssim:Dataset OR has_model_ssim:ExhibitionItem OR
+       has_model_ssim:Image OR has_model_ssim:Report OR has_model_ssim:ThesisOrDissertation OR has_model_ssim:TimeBasedMedia OR has_model_ssim:GenericWork OR has_model_ssim:BookChapter OR
        has_model_ssim:Media OR has_model_ssim:Presentation OR has_model_ssim:Uncategorized OR has_model_ssim:TextWork OR has_model_ssim:NewsClipping OR has_model_ssim:ArticleWork OR
       has_model_ssim:BookWork OR has_model_ssim:ImageWork OR has_model_ssim:ThesisOrDissertationWork'
     end
@@ -83,6 +85,10 @@ module Ubiquity
 
     private
 
+    def filter_strong_params
+      params.permit(:tenant_id, :id,  :per_page, :page, :q, :type)
+    end
+
     def  build_cache_key(data, last_updated_child, metadata_key = nil, add_model_name = nil)
       timestamp = set_cache_last_modified_time_stamp(data, last_updated_child)
       cname = data['response']['docs'].first['account_cname_tesim'].first
@@ -113,12 +119,19 @@ module Ubiquity
       end
     end
 
-    def visibility_check
-      [models_to_search].concat(filter_using_visibility)
+    def visibility_check(user = nil)
+      [models_to_search].concat(filter_using_visibility(user))
     end
 
-    def filter_using_visibility
-      ["({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", "", "-suppressed_bsi:true"]
+    def filter_using_visibility(user = nil)
+      current_ability = Ability.new(user)
+      if user && current_ability.admin?
+        ["-suppressed_bsi:true"]
+      elsif user && user.user_key.present?
+        ["-suppressed_bsi:true", "_query_:\"{!raw f=depositor_ssim}#{user.user_key}\""]
+      elsif user.nil?
+        ["({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", ""]
+      end
     end
 
   end

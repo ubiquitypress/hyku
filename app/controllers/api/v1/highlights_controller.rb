@@ -1,12 +1,9 @@
-class API::V1::HighlightsController < ActionController::Base
-
+class API::V1::HighlightsController <  API::V1::ApiBaseController
   #defines :limit, :default_limit, :models_to_search, :switche_tenant
   include Ubiquity::ApiControllerUtilityMethods
-  include Ubiquity::ApiErrorHandlers
   before_action :set_limit
 
   def index
-    #@highlight_skip_run = 'false'
     @collections = get_collections || []
     @featured_works = get_featured_works || []
     @recent_documents =  get_recent_documents || []
@@ -31,10 +28,10 @@ class API::V1::HighlightsController < ActionController::Base
     using_collection_ids_in_works['response']['docs'] = combined_record
     using_collection_ids_in_works['response']['numFound'] = combined_record.size
     last_updated_child  = using_collection_ids_in_works
-    
+
     if record.dig('response','docs').try(:present?)
       set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, last_updated_child)
-      fq = ['has_model_ssim:Collection', "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)"]
+      fq = ['has_model_ssim:Collection'].concat(filter_using_visibility(current_user) )
       collections_json  = Rails.cache.fetch(set_cache_key) do
         CatalogController.new.repository.search(q: 'id:*', fq: fq, rows: limit, sort: 'system_created_dtsi desc')
       end
@@ -50,7 +47,7 @@ class API::V1::HighlightsController < ActionController::Base
     if record.dig('response','docs').try(:present?)
       set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, last_updated_child)
       Rails.cache.fetch(set_cache_key) do
-        CatalogController.new.repository.search(:q=>"id:*", sort: 'system_create_dtsi desc', rows: limit, fq: visibility_check)
+        CatalogController.new.repository.search(:q=>"id:*", sort: 'system_create_dtsi desc', rows: limit, fq: visibility_check(current_user))
       end
     end
   end
@@ -65,10 +62,11 @@ class API::V1::HighlightsController < ActionController::Base
     new_file_ids = file_ids.present? ? file_ids.join(',') : nil
     last_updated_child = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{new_file_ids}"],  rows: 1, "sort" => "score desc, system_modified_dtsi desc")
     recently_updated = recency_between_files_and_featured_work(last_updated_child)
+    fq = ["{!terms f=id}#{ids.join(',')}"].concat(visibility_check(current_user))
     if record.dig('response','docs').try(:present?)
       set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, recently_updated)
       Rails.cache.fetch(set_cache_key) do
-        data = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{ids.join(',')}"], rows: limit)
+        data = CatalogController.new.repository.search(q: "", fq: fq, rows: limit)
       end
     end
   end
@@ -85,7 +83,7 @@ class API::V1::HighlightsController < ActionController::Base
   end
 
   def set_limit
-    if params[:per_page].blank?
+    if filter_strong_params[:per_page].blank?
       @limit = default_limit_for_hightlights
     end
   end

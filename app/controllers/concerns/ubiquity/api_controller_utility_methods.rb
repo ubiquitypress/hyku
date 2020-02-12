@@ -9,7 +9,6 @@ module Ubiquity
     private
 
     def find_parent
-      puts "atewe #{filter_strong_params[:tenant_id].inspect}"
       @tenant = Account.find_by(tenant: params[:tenant_id])
     end
 

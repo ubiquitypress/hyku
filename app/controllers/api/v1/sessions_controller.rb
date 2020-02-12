@@ -4,7 +4,15 @@ class API::V1::SessionsController < API::V1::ApiBaseController
     user = User.find_for_database_authentication(email: session_params[:email])
     if user && user.valid_password?(session_params[:password])
       token = payload(user)
-      render json: user.slice(:email).merge(token: token)
+      expire = session_params[:expire].try(:hour).try(:from_now) || 1.hour.from_now
+      response.set_cookie(
+        :jwt,
+          {
+            value: token, expires: expire, path: '/',
+            domain: ('.' + request.host), secure: true, httponly: true
+        }
+      )
+      render json: user.slice(:email)
     else
       message = 'Please check that email or password is not wrong'
       error_object = Ubiquity::ApiError::NotFound.new(status: 401, code: 'Invalid credentials', message: message)

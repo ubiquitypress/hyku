@@ -1,9 +1,11 @@
 class API::V1::ApiBaseController < ActionController::Base
+
   include Ubiquity::ApiErrorHandlers
 
   before_action :switch_tenant
   before_action :get_auth_token
   before_action :authenticate_user_from_token
+  before_action :allow_access_credentials_in_cors
 
   helper_method :current_user, :current_account
 
@@ -29,12 +31,10 @@ class API::V1::ApiBaseController < ActionController::Base
   end
 
   def get_auth_token
-    auth_header = request.headers['Authorization']
+    auth_header = request.headers['Authorization'] || cookies[:jwt]
     if auth_header.present?
-      authenticate_or_request_with_http_token do |token, options|
-        jwt = Ubiquity::Api::JwtGenerator.decode(token).try(:with_indifferent_access)
-        @token_id = jwt['id']
-      end
+      jwt = Ubiquity::Api::JwtGenerator.decode(auth_header).try(:with_indifferent_access)
+      @token_id = jwt['id']
     end
   end
 
@@ -49,6 +49,11 @@ class API::V1::ApiBaseController < ActionController::Base
       tenant_name = @tenant.cname
       AccountElevator.switch!(tenant_name)
     end
+  end
+
+  def allow_access_credentials_in_cors
+    response.set_header('Access-Control-Allow-Credentials', true)
+    domain = request.scheme + '//' + request.host
   end
 
 end

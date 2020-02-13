@@ -31,7 +31,7 @@ class API::V1::ApiBaseController < ActionController::Base
   end
 
   def get_auth_token
-    auth_header = request.headers['Authorization'] || cookies[:jwt]
+    auth_header = cookies[:jwt]
     if auth_header.present?
       jwt = Ubiquity::Api::JwtGenerator.decode(auth_header).try(:with_indifferent_access)
       @token_id = jwt['id']

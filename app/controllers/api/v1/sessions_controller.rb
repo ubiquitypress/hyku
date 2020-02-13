@@ -21,7 +21,9 @@ class API::V1::SessionsController < API::V1::ApiBaseController
   end
 
   def destroy
-    head :ok
+    domain = ('.' + request.host)
+    cookies.delete(:jwt, domain: domain)
+    render json: {message: "Successfully logged out"}, status: 200
   end
 
   def refresh

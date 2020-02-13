@@ -6,7 +6,7 @@ class API::V1::FilesController < ActionController::Base
   def index
     file_ids = @work && @work['response']['docs'].first["file_set_ids_ssim"]
     if file_ids.present?
-      @files = CatalogController.new.repository.search(q: '', fq: ["{!terms f=id}#{file_ids.join(',')}"])
+      @files = CatalogController.new.repository.search(q: '', fq: ["{!terms f=id}#{file_ids.join(',')}"], rows: 100, "sort" => "score desc, system_modified_dtsi desc")
     else
       raise Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: "Work with id of #{params[:work_id]} has no files attached to it")
     end

@@ -66,9 +66,7 @@ module Ubiquity
        cache_key = "work_files/#{work['account_cname_tesim'].first}/#{work['id']}/#{work["file_set_ids_ssim"].try(:size).to_i}/#{work['system_modified_dtsi']}"
        child_files = Rails.cache.fetch(cache_key) do
          file_ids = work['file_set_ids_ssim'].join(',')
-         work_files = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{file_ids}",
-         "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", "", "-suppressed_bsi:true"
-         ], rows: 200,  "sort" => "score desc, system_modified_dtsi desc")
+         work_files = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{file_ids}"], rows: 100,  "sort" => "score desc, system_modified_dtsi desc")
           #child_files  #['response']['docs']
          file_count = work_files['response']['numFound']
          summary = work_files['response']['docs'].group_by {|hash| hash['visibility_ssi']}.transform_values(&:count)

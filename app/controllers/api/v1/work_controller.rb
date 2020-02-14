@@ -1,7 +1,7 @@
-class API::V1::WorkController < ActionController::Base
+class API::V1::WorkController < API::V1::ApiBaseController
   #defines :limit, :default_limit, :models_to_search, :switche_tenant
   include Ubiquity::ApiControllerUtilityMethods
-  include Ubiquity::ApiErrorHandlers
+  include Ubiquity::ApiCacheKeyGenerator
 
   before_action :fetch_work, only: [:show, :manifest]
 
@@ -34,8 +34,12 @@ class API::V1::WorkController < ActionController::Base
 
   def fetch_work
     @skip_run = 'true'
-    work =  Rails.cache.fetch("single/work/#{@tenant.cname}/#{params[:id]}") do
-      CatalogController.new.repository.search(q: "id:#{params[:id]}", fq: visibility_check)
+    if current_user.present?
+      #work =  Rails.cache.fetch("single/work/#{@tenant.cname}/#{params[:id]}") do
+      work = CatalogController.new.repository.search(q: "id:#{params[:id]}", fq: visibility_check(current_user))
+      #end
+    else
+      work = CatalogController.new.repository.search(q: "id:#{params[:id]}", fq: visibility_check)
     end
     work = work.presence && work['response']['docs'].first
     if work.present?
@@ -53,16 +57,22 @@ class API::V1::WorkController < ActionController::Base
     last_updated_child = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{new_file_ids}"],  rows: 1, "sort" => "score desc, system_modified_dtsi desc")
     @limit = default_limit if params[:per_page].blank?
 
-    if record.dig('response','docs').try(:present?)
+    if record.dig('response','docs').try(:present?) && current_user.present?
       #something similar to multiple/library.localhost/2019-10-21T14:02:35Z/53
       set_cache_key = get_records_with_pagination_cache_key(record, last_updated_child)
-      works_json  = Rails.cache.fetch(set_cache_key) do
-         @works = CatalogController.new.repository.search(q: '', fq: visibility_check, "sort" => "score desc, system_create_dtsi desc",
+      #works_json  = Rails.cache.fetch(set_cache_key) do
+         @works = CatalogController.new.repository.search(q: '', fq: visibility_check(current_user), "sort" => "score desc, system_create_dtsi desc",
          "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim", "institution_sim",
          "language_sim", "file_availability_sim"], rows: limit, start: offset)
-         render_to_string(:template => 'api/v1/work/index.json.jbuilder', locals: {works: @works })
-      end
-      render json: works_json
+         works_json = render_to_string(:template => 'api/v1/work/index.json.jbuilder', locals: {works: @works })
+         render json: works_json
+      #end
+    elsif record.dig('response','docs').try(:present?)
+      @works = CatalogController.new.repository.search(q: '', fq: visibility_check, "sort" => "score desc, system_create_dtsi desc",
+      "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim", "institution_sim",
+      "language_sim", "file_availability_sim"], rows: limit, start: offset)
+       works_json = render_to_string(:template => 'api/v1/work/index.json.jbuilder', locals: {works: @works })
+       render json: works_json
     else
       raise Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: "This tenant has no works")
     end
@@ -77,15 +87,24 @@ class API::V1::WorkController < ActionController::Base
     last_updated_child = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{new_file_ids}"],  rows: 1, "sort" => "score desc, system_modified_dtsi desc")
     @limit = default_limit if params[:per_page].blank?
 
-    if record.dig('response','docs').try(:present?)
+    if record.dig('response','docs').try(:present?) && current_user.present?
       #returns keys like multiple/library.localhost/article/page-0/per_page-2/2019-07-10T14:10:50Z/14
+      set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, last_updated_child)
+      fq = filter_using_visibility(current_user) << "has_model_ssim:#{params[:type].camelize.constantize}"
+
+      #works_json  = Rails.cache.fetch(set_cache_key) do
+        @works = CatalogController.new.repository.search(q: "id:*", fq: fq, rows: limit, start: offset )
+        works_json = render_to_string(:template => 'api/v1/work/index.json.jbuilder', locals: {works: @works})
+      #end
+      render json: works_json
+    elsif record.dig('response','docs').try(:present?)
       set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, last_updated_child)
       fq = filter_using_visibility << "has_model_ssim:#{params[:type].camelize.constantize}"
 
-      works_json  = Rails.cache.fetch(set_cache_key) do
+      #works_json  = Rails.cache.fetch(set_cache_key) do
         @works = CatalogController.new.repository.search(q: "id:*", fq: fq, rows: limit, start: offset )
-        render_to_string(:template => 'api/v1/work/index.json.jbuilder', locals: {works: @works})
-      end
+        works_json = render_to_string(:template => 'api/v1/work/index.json.jbuilder', locals: {works: @works})
+      #end
       render json: works_json
     else
       raise Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: "This tenant has no #{params[:type].pluralize}")
@@ -112,13 +131,21 @@ class API::V1::WorkController < ActionController::Base
     last_updated_child = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{new_file_ids}"],  rows: 1, "sort" => "score desc, system_modified_dtsi desc")
     @limit = default_limit if params[:per_page].blank?
 
-    if record.dig('response','docs').try(:present?)
+    if record.dig('response','docs').try(:present?) && current_user.present?
+      set_cache_key = add_filter_by_metadata_field_with_pagination_cache_key(record, metadata_field, last_updated_child)
+      fq = ["{!term f=file_availability_sim}#{map_search_values[value.to_sym]}", "{!terms f=has_model_ssim}#{model_list}"].concat(filter_using_visibility(current_user) )
+      #works_json  = Rails.cache.fetch(set_cache_key) do
+        @works =  CatalogController.new.repository.search(:q=>"", fq: fq, rows: limit, start: offset)
+        works_json = render_to_string(:template => 'api/v1/work/index.json.jbuilder', locals: {works: @works})
+      #end
+      render json: works_json
+    elsif record.dig('response','docs').try(:present?)
       set_cache_key = add_filter_by_metadata_field_with_pagination_cache_key(record, metadata_field, last_updated_child)
       fq = ["{!term f=file_availability_sim}#{map_search_values[value.to_sym]}", "{!terms f=has_model_ssim}#{model_list}"].concat(filter_using_visibility)
-      works_json  = Rails.cache.fetch(set_cache_key) do
+      #works_json  = Rails.cache.fetch(set_cache_key) do
         @works =  CatalogController.new.repository.search(:q=>"", fq: fq, rows: limit, start: offset)
-        render_to_string(:template => 'api/v1/work/index.json.jbuilder', locals: {works: @works})
-      end
+        works_json = render_to_string(:template => 'api/v1/work/index.json.jbuilder', locals: {works: @works})
+      #end
       render json: works_json
     else
       raise Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: "There are no results for this query")
@@ -133,13 +160,19 @@ class API::V1::WorkController < ActionController::Base
     last_updated_child = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{new_file_ids}"],  rows: 1, "sort" => "score desc, system_modified_dtsi desc")
     @limit = default_limit if params[:per_page].blank?
 
-    if record.dig('response','docs').try(:present?)
+    if record.dig('response','docs').try(:present?) && current_user.present?
       set_cache_key = add_filter_by_metadata_field_with_pagination_cache_key(record, metadata_field, last_updated_child)
-
-      works_json  = Rails.cache.fetch(set_cache_key) do
+      #works_json  = Rails.cache.fetch(set_cache_key) do
+        @works =  CatalogController.new.repository.search(q: "#{map_search_keys[metadata_field]}:#{value}", rows: limit, start: offset, fq: visibility_check(current_user) )
+        works_json = render_to_string(:template => 'api/v1/work/index.json.jbuilder', locals: {works: @works})
+      #end
+      render json: works_json
+    elsif record.dig('response','docs').try(:present?)
+      set_cache_key = add_filter_by_metadata_field_with_pagination_cache_key(record, metadata_field, last_updated_child)
+      #works_json  = Rails.cache.fetch(set_cache_key) do
         @works =  CatalogController.new.repository.search(q: "#{map_search_keys[metadata_field]}:#{value}", rows: limit, start: offset, fq: visibility_check)
-        render_to_string(:template => 'api/v1/work/index.json.jbuilder', locals: {works: @works})
-      end
+        works_json = render_to_string(:template => 'api/v1/work/index.json.jbuilder', locals: {works: @works})
+      #end
       render json: works_json
     else
       raise Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: "There are no results for this query")

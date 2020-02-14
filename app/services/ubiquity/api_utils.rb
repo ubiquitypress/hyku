@@ -2,19 +2,20 @@ module Ubiquity
   class ApiUtils
 
     #   #collection is a solr_document or  a hash
-    def self.query_for_collection_works(collection)
+    def self.query_for_collection_works(collection, user = nil)
      if collection.present?
        cache_key = "child_works/#{collection['account_cname_tesim'].first}/#{collection['id']}/#{collection['system_modified_dtsi']}"
-       works = Rails.cache.fetch(cache_key) do
-         using_works_in_collecton = fetch_works_in_collection_member_objects(collection)
-         using_collection_ids_in_works= fetch_work_using_collection_ids_stored_in_work_metadatafield(collection)
+       #works = Rails.cache.fetch(cache_key) do
+         using_works_in_collecton = fetch_works_in_collection_member_objects(collection, user)
+         using_collection_ids_in_works= fetch_work_using_collection_ids_stored_in_work_metadatafield(collection, user)
 
          combined_record =  using_works_in_collecton['response']['docs'] | using_collection_ids_in_works['response']['docs']
          using_collection_ids_in_works['response']['docs'] = combined_record
          using_collection_ids_in_works['response']['numFound'] = combined_record.size
          using_collection_ids_in_works
-      end
-       works['response']['docs']
+      #end
+       using_collection_ids_in_works['response']['docs']
+       #works['response']['docs']
      else
        [ ]
      end
@@ -28,13 +29,13 @@ module Ubiquity
      if collection.present?
        id = collection.with_indifferent_access['id']
        cache_key = "works_by_volumes/#{collection['account_cname_tesim'].first}/#{id}/#{collection['system_modified_dtsi']}/#{field}/#{group_limit}"
-       works = Rails.cache.fetch(cache_key) do
+       #works = Rails.cache.fetch(cache_key) do
           response = CatalogController.new.repository.search({ q: '', fl: 'issue_tesim, volume_tesim, title_tesim, id', fq: ['has_model_ssim:ArticleWork', "{!terms f=collection_id_sim}#{id}"],
             'group.field': field, 'group.query': "#{child_group}:[* TO *]", 'group.facet': true, group: true, rows: 3000, 'group.limit': group_limit })
 
          response_volume_grouping = response["grouped"]['volume_tesim']['groups']
          remap_response_by_volumes(response_volume_grouping)
-       end
+       #end
      end
    end
 
@@ -46,16 +47,15 @@ module Ubiquity
 
        cache_key = "parent_collection/#{work['account_cname_tesim'].first}/#{work['id']}/#{combined_collection_ids.try(:size).to_i}/#{work['system_modified_dtsi']}"
 
-       parent_collections = Rails.cache.fetch(cache_key) do
+       #parent_collections = Rails.cache.fetch(cache_key) do
             collection_ids = combined_collection_ids
-            collections_list = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{collection_ids.join(',')}",
-            "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", "", "-suppressed_bsi:true"
+            collections_list = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{collection_ids.join(',')}"
             ])
             collections_list['response']['docs'].map do |doc|
               {uuid: doc['id'], title: doc['title_tesim'].try(:first)}
             end
-       end
-       parent_collections
+       #end
+       #parent_collections
      else
        [ ]
      end
@@ -64,15 +64,15 @@ module Ubiquity
    def self.query_for_files(work, skip_run = nil)
      if work.present? && work['file_set_ids_ssim'].present? && skip_run == 'true'
        cache_key = "work_files/#{work['account_cname_tesim'].first}/#{work['id']}/#{work["file_set_ids_ssim"].try(:size).to_i}/#{work['system_modified_dtsi']}"
-       child_files = Rails.cache.fetch(cache_key) do
+       #child_files = Rails.cache.fetch(cache_key) do
          file_ids = work['file_set_ids_ssim'].join(',')
          work_files = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{file_ids}"], rows: 100,  "sort" => "score desc, system_modified_dtsi desc")
           #child_files  #['response']['docs']
          file_count = work_files['response']['numFound']
          summary = work_files['response']['docs'].group_by {|hash| hash['visibility_ssi']}.transform_values(&:count)
          summary.merge(total: file_count)
-       end
-       child_files
+       #end
+       #child_files
      else
        [ ]
      end
@@ -92,12 +92,12 @@ module Ubiquity
        cache_type = record.fetch('has_model_ssim').try(:first) == 'Collection' ? 'fedora/collection' : 'fedora/work'
        get_work = get_work_from_fedora(record, cache_type)
        if get_work && get_work.visibility == 'open' && get_work.thumbnail.present? && get_work.thumbnail.visibility == 'open'
-          thumbnail_string = Rails.cache.fetch("single/#{cache_type}-thumbnail/#{record.fetch('account_cname_tesim').first}/#{record['id']}") do
+          #thumbnail_string = Rails.cache.fetch("single/#{cache_type}-thumbnail/#{record.fetch('account_cname_tesim').first}/#{record['id']}") do
           file = get_work.thumbnail
           file_path =  Hyrax::DerivativePath.derivative_path_for_reference(file, 'thumbnail')
           file_content = File.read(file_path)
-          Base64.strict_encode64(file_content)
-      end
+          thumbnail_string = Base64.strict_encode64(file_content)
+         #end
       thumbnail_string
        else
          nil
@@ -109,24 +109,43 @@ module Ubiquity
 
     def self.get_work_from_fedora(record, cache_type)
        if record.fetch('account_cname_tesim').present?
-          Rails.cache.fetch("single/#{cache_type}/#{record.fetch('account_cname_tesim').first}/#{record['id']}") do
+          #Rails.cache.fetch("single/#{cache_type}/#{record.fetch('account_cname_tesim').first}/#{record['id']}") do
              ActiveFedora::Base.find(record['id'])
-          end
+          #end
        else
          nil
        end
     end
 
-    def self.fetch_works_in_collection_member_objects(collection)
-      CatalogController.new.repository.search(q: "member_of_collection_ids_ssim:#{collection['id']}", rows: 200,  "sort" => "score desc, system_modified_dtsi desc",
-      fq: ["({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", "", "-suppressed_bsi:true"]
-      )
+    def self.fetch_works_in_collection_member_objects(collection, user)
+      if user.present?
+        CatalogController.new.repository.search(q: "member_of_collection_ids_ssim:#{collection['id']}", rows: 200,  "sort" => "score desc, system_modified_dtsi desc",
+         fq: filter_visibility(user) )
+      else
+        CatalogController.new.repository.search(q: "member_of_collection_ids_ssim:#{collection['id']}", rows: 200,  "sort" => "score desc, system_modified_dtsi desc",
+         fq: filter_visibility )
+      end
     end
 
-    def self.fetch_work_using_collection_ids_stored_in_work_metadatafield(collection)
-      CatalogController.new.repository.search(q: "collection_id_sim:#{collection['id']}", rows: 200,  "sort" => "score desc, system_modified_dtsi desc",
-      fq: ["({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", "", "-suppressed_bsi:true"]
-      )
+    def self.fetch_work_using_collection_ids_stored_in_work_metadatafield(collection, user)
+      if user.present?
+        CatalogController.new.repository.search(q: "collection_id_sim:#{collection['id']}", rows: 200,  "sort" => "score desc, system_modified_dtsi desc",
+          fq: filter_visibility(user) )
+      else
+        CatalogController.new.repository.search(q: "collection_id_sim:#{collection['id']}", rows: 200,  "sort" => "score desc, system_modified_dtsi desc",
+          fq: filter_visibility )
+      end
+    end
+
+    def self.filter_visibility(user = nil)
+      current_ability = Ability.new(user)
+      if user && current_ability.admin?
+        ["-suppressed_bsi:true"]
+      elsif user && user.user_key.present?
+        ["-suppressed_bsi:true", "_query_:\"{!raw f=depositor_ssim}#{user.user_key}\""]
+      elsif user.nil?
+        ["({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", ""]
+      end
     end
 
     def self.remap_response_by_volumes(response_data)

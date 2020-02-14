@@ -1,6 +1,6 @@
-class API::V1::CollectionController < ActionController::Base
+class API::V1::CollectionController <   API::V1::ApiBaseController
   include Ubiquity::ApiControllerUtilityMethods
-  include Ubiquity::ApiErrorHandlers
+  include Ubiquity::ApiCacheKeyGenerator
 
   before_action :fetch_collection, only: [:show]
 
@@ -9,7 +9,6 @@ class API::V1::CollectionController < ActionController::Base
   end
 
   def show
-
   end
 
   private
@@ -21,8 +20,12 @@ class API::V1::CollectionController < ActionController::Base
   def fetch_collection
     @skip_run = 'true'
     @grouping_hash = api_params
-    collection =   Rails.cache.fetch("single/collection/#{@tenant.cname}/#{params[:id]}") do
-      CatalogController.new.repository.search(q: "id:#{params[:id]}", fq: ["has_model_ssim:Collection"].concat(filter_using_visibility) )
+    if current_user.present?
+      #collection =   Rails.cache.fetch("single/collection/#{@tenant.cname}/#{params[:id]}") do
+      collection = CatalogController.new.repository.search(q: "id:#{params[:id]}", fq: ["has_model_ssim:Collection"].concat(filter_using_visibility(current_user)) )
+      #end
+    else
+      collection =  CatalogController.new.repository.search(q: "id:#{params[:id]}", fq: ["has_model_ssim:Collection"].concat(filter_using_visibility) )
     end
     @collection  = collection['response']["docs"].first
     if @collection.present?
@@ -49,13 +52,18 @@ class API::V1::CollectionController < ActionController::Base
     total_count = record['response']['numFound']
     @limit = default_limit if params[:per_page].blank?
 
-    if record.dig('response','docs').try(:present?)
+    if record.dig('response','docs').try(:present?) && current_user.present?
       set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, last_updated_child)
-      collections_json  = Rails.cache.fetch(set_cache_key) do
-        @collections = CatalogController.new.repository.search(q: '', fq: ["has_model_ssim:Collection", "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)"],
+      #collections_json  = Rails.cache.fetch(set_cache_key) do
+        @collections = CatalogController.new.repository.search(q: '', fq: ["has_model_ssim:Collection"].concat(filter_using_visibility(current_user)),
                         "sort"=>"score desc, system_create_dtsi desc",  rows: limit, start: offset)
-        render_to_string(:template => 'api/v1/collection/index.json.jbuilder', locals: {collections: @collections})
-      end
+        collections_json = render_to_string(:template => 'api/v1/collection/index.json.jbuilder', locals: {collections: @collections})
+      #end
+      render json: collections_json
+    elsif record.dig('response','docs').try(:present?)
+      @collections = CatalogController.new.repository.search(q: '', fq: ["has_model_ssim:Collection"].concat(filter_using_visibility),
+                      "sort"=>"score desc, system_create_dtsi desc",  rows: limit, start: offset)
+      collections_json = render_to_string(:template => 'api/v1/collection/index.json.jbuilder', locals: {collections: @collections})
       render json: collections_json
     else
       raise Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: "This tenant has no collection")

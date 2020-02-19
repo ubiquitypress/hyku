@@ -141,8 +141,11 @@ module Ubiquity
       current_ability = Ability.new(user)
       if user && current_ability.admin?
         ["-suppressed_bsi:true"]
+
       elsif user && user.user_key.present?
-        ["-suppressed_bsi:true", "_query_:\"{!raw f=depositor_ssim}#{user.user_key}\""]
+        ["_query_:\"{!raw f=depositor_ssim}#{user.user_key}\"", "({!terms f=edit_access_group_ssim}public,registered) OR ({!terms f=discover_access_group_ssim}public,registered) OR ({!terms f=read_access_group_ssim}public,registered) OR
+           edit_access_person_ssim:#{user.user_key} OR discover_access_person_ssim:#{user.user_key} OR read_access_person_ssim:#{user.user_key}", "-suppressed_bsi:true", ""]
+
       elsif user.nil?
         ["({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", ""]
       end

@@ -26,7 +26,6 @@ module Ubiquity
     def solr_query_fields
       "title_tesim alt_title_tesim description_tesim keyword_tesim journal_title_tesim alternative_journal_title_tesim subject_tesim creator_tesim version_tesim related_exhibition_tesim related_exhibition_venue_tesim media_tesim duration_tesim event_title_tesim event_date_tesim event_location_tesim abstract_tesim book_title_tesim series_name_tesim edition_tesim contributor_tesim publisher_tesim place_of_publication_tesim date_published_tesim based_near_label_tesim language_tesim date_uploaded_tesim date_modified_tesim date_created_tesim rights_statement_tesim license_tesim resource_type_tesim format_tesim identifier_tesim doi_tesim qualification_name_tesim qualification_level_tesim isbn_tesim issn_tesim eissn_tesim current_he_institution_tesim extent_tesim institution_tesim org_unit_tesim refereed_tesim funder_tesim fndr_project_ref_tesim add_info_tesim date_accepted_tesim issue_tesim volume_tesim pagination_tesim article_num_tesim project_name_tesim official_link_tesim rights_holder_tesim dewey_tesim library_of_congress_classification_tesim file_format_tesim all_text_timv alt_title_tesim^4.15 editor_tesim"
     end
-
     def sort
       params[:sort] || "score desc, system_create_dtsi desc"
     end
@@ -65,17 +64,35 @@ module Ubiquity
     end
 
     def filter_using_visibility(user = nil)
-      current_ability = Ability.new(user)
-      if user && current_ability.admin?
+      allowed_ability(user)
+
+      if user && @current_ability.try(:admin?)
         ["-suppressed_bsi:true"]
 
       elsif user && user.user_key.present?
-        ["_query_:\"{!raw f=depositor_ssim}#{user.user_key}\"", "({!terms f=edit_access_group_ssim}public,registered) OR ({!terms f=discover_access_group_ssim}public,registered) OR ({!terms f=read_access_group_ssim}public,registered) OR
-           edit_access_person_ssim:#{user.user_key} OR discover_access_person_ssim:#{user.user_key} OR read_access_person_ssim:#{user.user_key}", "-suppressed_bsi:true", ""]
+        ["({!terms f=edit_access_group_ssim}public,registered) OR ({!terms f=discover_access_group_ssim}public,registered) OR ({!terms f=read_access_group_ssim}public,registered) OR edit_access_person_ssim:#{user.user_key} OR discover_access_person_ssim:#{user.user_key} OR read_access_person_ssim:#{user.user_key}", "-suppressed_bsi:true", ""]
 
       elsif user.nil?
         ["({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", ""]
       end
+    end
+
+    def filter_work_endpoint_using_visibility(user = nil)
+      allowed_ability(user)
+      if user && (@current_ability.try(:admin?) || user.user_key.present? )
+        filter = ["({!terms f=edit_access_group_ssim}public,registered) OR ({!terms f=discover_access_group_ssim}public,registered) OR ({!terms f=read_access_group_ssim}public,registered) OR edit_access_person_ssim:#{user.user_key} OR discover_access_person_ssim:#{user.user_key} OR read_access_person_ssim:#{user.user_key}"]
+      elsif user.nil?
+        filter = ["({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)"]
+      end
+      #filter.concat([models_to_search])
+    end
+
+    def works_visibility_check(user = nil)
+      [models_to_search].concat(filter_work_endpoint_using_visibility(user))
+    end
+
+    def allowed_ability(user)
+      @current_ability ||= Ability.new(user)
     end
 
   end

@@ -7,7 +7,7 @@ class API::V1::ApiBaseController < ActionController::Base
   before_action :authenticate_user_from_token
   before_action :allow_access_credentials_in_cors
 
-  helper_method :current_user, :current_account
+  helper_method :current_user, :current_account, :current_api_ability
 
   def current_user
     if @token_id.present?
@@ -23,6 +23,12 @@ class API::V1::ApiBaseController < ActionController::Base
   end
 
   private
+
+  def current_api_ability
+    if current_user.present?
+    @current_ability ||= Ability.new(current_user)
+    end
+  end
 
   def authenticate_user_from_token
     if current_user.present?

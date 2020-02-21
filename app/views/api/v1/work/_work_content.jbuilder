@@ -1,4 +1,3 @@
-#/home/edward/dev-2/hyku/app/views/api/v1/work/_work.json.jbuilder
 
 json.uuid    work['id']
 json.type 'work'
@@ -6,10 +5,10 @@ json.related_url    work['related_url_tesim']
 json.work_type    work['has_model_ssim'].try(:first)
 json.title    work['title_tesim'].try(:first)
 json.alternative_title    work['alt_title_tesim']
-json.resource_type    work['resource_type_tesim'].try(:first)
 json.visibility    work['visibility_ssi']
-json.workflow_status work["workflow_state_name_ssim"].try(:first)
+json.resource_type    work['resource_type_tesim'].try(:first)
 json.display  'full'
+json.workflow_status  work["workflow_state_name_ssim"].try(:first)
 creator = work['creator_tesim'].try(:first)
 if valid_json?(creator)
   json.creator JSON.parse(creator)
@@ -121,6 +120,25 @@ json.volume    work['volume_tesim']
 json.material_media    work['media_tesim']
 json.edition    work['edition_tesim']
 
+#fields added for pacific university repository
+json.additional_links work['additional_links_tesim'].try(:first)
+json.source work['source_tesim']
+json.location work['location_tesim'].try(:first)
+json.irb_number work['irb_number_tesim'].try(:first)
+json.irb_status   work['irb_status_tesim'].try(:first)
+json.outcome  work['outcome_tesim'].try(:first)
+json.participant  work['participant_tesim'].try(:first)
+json.challenged   work['challenged_tesim'].try(:first)
+json.reading_level  work['reading_level_tesim'].try(:first)
+json.degree   work['degree_tesim'].try(:first)
+json.subject   work['subject_tesim']
+json.photo_caption  work['photo_caption_tesim'].try(:first)
+json.photo_description  work['photo_description_tesim'].try(:first)
+json.buy_book  work['buy_book_tesim']
+json.migration_id work["migration_id_tesim"].try(:first)
+json.page_display_order_number work["page_display_order_number_tesim"].try(:first)
+json.is_included_in  work['is_included_in_tesim'].try(:first)
+
 event = work['event_tesim'].try(:first)
 if valid_json?(event)
   json.event JSON.parse(event)
@@ -146,3 +164,24 @@ json.event_date   work['event_date_tesim']
 json.related_exhibition     work['related_exhibition_tesim']
 json.related_exhibition_date    work['related_exhibition_date_tesim']
 json.related_exhibition_venue     work['related_exhibition_venue_tesim']
+
+get_files =  Ubiquity::ApiUtils.query_for_files(work,  @skip_run)
+
+if get_files.present?
+  json.files get_files
+else
+  json.files  nil
+end
+
+get_collections =   Ubiquity::ApiUtils.query_for_parent_collections(work,  @skip_run)
+
+if get_collections.present?
+  json.collections do
+    json.array! get_collections
+  end
+else
+  json.collections  nil
+end
+
+image_as_string =  Ubiquity::ApiUtils.fetch_and_covert_thumbnail_to_base64_string(work, @skip_run)
+json.thumbnail_base64_string image_as_string

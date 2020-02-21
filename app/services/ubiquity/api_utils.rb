@@ -143,7 +143,7 @@ module Ubiquity
         ["-suppressed_bsi:true"]
 
       elsif user && user.user_key.present?
-        ["_query_:\"{!raw f=depositor_ssim}#{user.user_key}\"", "({!terms f=edit_access_group_ssim}public,registered) OR ({!terms f=discover_access_group_ssim}public,registered) OR ({!terms f=read_access_group_ssim}public,registered) OR
+        ["({!terms f=edit_access_group_ssim}public,registered) OR ({!terms f=discover_access_group_ssim}public,registered) OR ({!terms f=read_access_group_ssim}public,registered) OR
            edit_access_person_ssim:#{user.user_key} OR discover_access_person_ssim:#{user.user_key} OR read_access_person_ssim:#{user.user_key}", "-suppressed_bsi:true", ""]
 
       elsif user.nil?

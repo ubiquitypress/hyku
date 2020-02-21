@@ -4,19 +4,10 @@ class API::V1::SessionsController < API::V1::ApiBaseController
     user = User.find_for_database_authentication(email: session_params[:email])
     if user && user.valid_password?(session_params[:password])
       token = payload(user)
-      expire = session_params[:expire].try(:hour).try(:from_now) || 1.hour.from_now
-      response.set_cookie(
-        :jwt,
-          {
-            value: token, expires: expire, path: '/',
-            domain: ('.' + request.host), secure: true, httponly: true
-        }
-      )
+      set_response_cookie(token)
       render json: user.slice(:email)
     else
-      message = 'Please check that email or password is not wrong'
-      error_object = Ubiquity::ApiError::NotFound.new(status: 401, code: 'Invalid credentials', message: message)
-      render json: error_object.error_hash
+      user_error
     end
   end
 
@@ -29,11 +20,10 @@ class API::V1::SessionsController < API::V1::ApiBaseController
   def refresh
     if current_user.present?
       token = payload(current_user)
-      render json: current_user.slice(:email).merge(token: token)
+      set_response_cookie(token)
+      render json: current_user.slice(:email)
     else
-      message = 'This is not a valid token, inorder to refresh you must send back a valid token or you must re-log in'
-      error_object = Ubiquity::ApiError::NotFound.new(status: 401, code: 'Invalid credentials', message: message)
-      render json: error_object.error_hash
+      user_error
     end
   end
 
@@ -50,6 +40,23 @@ class API::V1::SessionsController < API::V1::ApiBaseController
     else
       @auth_token = Ubiquity::Api::JwtGenerator.encode({id: user.id})
     end
+  end
+
+  def set_response_cookie(token)
+    expire = session_params[:expire].try(:hour).try(:from_now) || 1.hour.from_now
+    response.set_cookie(
+      :jwt,
+        {
+          value: token, expires: expire, path: '/',
+          domain: ('.' + request.host), secure: true, httponly: true
+      }
+    )
+  end
+
+  def user_error
+    message = 'This is not a valid token, inorder to refresh you must send back a valid token or you must re-log in'
+    error_object = Ubiquity::ApiError::NotFound.new(status: 401, code: 'Invalid credentials', message: message)
+    render json: error_object.error_hash
   end
 
 end

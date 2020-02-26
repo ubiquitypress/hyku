@@ -60,6 +60,8 @@ Rails.application.routes.draw do
 
            resources :files, defaults: {format: :json}, only: [:index]
            resource :featured_works, only: [:create, :destroy]
+           resource :reviews, only: [:create]
+
 
          end
 

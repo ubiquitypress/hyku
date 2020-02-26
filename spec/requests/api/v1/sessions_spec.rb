@@ -45,8 +45,6 @@ RSpec.describe API::V1::SessionsController, type: :request do
       post_request(user, 2)
       parse_response = JSON.parse(response.body)
       returned_cookie = response[ "Set-Cookie"]
-      puts "nona #{returned_cookie.inspect}"
-      puts "emmaa #{response[ "Set-Cookie"].inspect}"
       travel_to(Time.now + 4.minute) do
         headers =  {Cookie: "#{returned_cookie}", "ACCEPT" => "application/json"}
         get "/api/v1/tenant/#{account.id}/users/log_out", :headers => headers

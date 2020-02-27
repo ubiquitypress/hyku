@@ -3,7 +3,10 @@ class API::V1::ReviewsController < API::V1::ApiBaseController
   before_action :fetch_work
 
   def create
-    if  approval_object && approval_object.valid?  && approval_object.save
+    #if  approval_object && approval_object.valid?  && approval_object.save
+    object = ubiquity_api_work_flow_aproval_object
+    if object.present? && object.is_valid_for_saving? && object.save
+
       render json: { data: ubiquity_api_work_flow_aproval_object.comments_on_work_for_review,
                   workflow_status: ubiquity_api_work_flow_aproval_object.workflow_state_name}
     else
@@ -21,9 +24,9 @@ class API::V1::ReviewsController < API::V1::ApiBaseController
   end
 
   def fetch_work
-    if current_api_ability.can?(:review, :submissions)
+    #if current_api_ability.can?(:review, :submissions)
       @work ||= ActiveFedora::Base.find(get_permitted_params[:work_id])
-    end
+    #end
   end
 
   def ubiquity_api_work_flow_aproval_object

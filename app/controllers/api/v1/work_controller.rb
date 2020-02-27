@@ -17,8 +17,7 @@ class API::V1::WorkController < API::V1::ApiBaseController
 
   def show
     json = render_to_string(:partial => 'api/v1/work/work.json.jbuilder', locals: {work: @work})
-    puts "basin"
-      render json: json
+    render json: json
   end
 
   def manifest
@@ -36,11 +35,9 @@ class API::V1::WorkController < API::V1::ApiBaseController
   def fetch_work
     @skip_run = 'true'
     if current_user.present?
-      puts "bundi"
       work = CatalogController.new.repository.search(q: "id:#{params[:id]}", fq: works_visibility_check(current_user) )
 
     else
-      puts "jare #{works_visibility_check}"
       work = CatalogController.new.repository.search(q: "id:#{params[:id]}", fq: works_visibility_check)
     end
     work = work.presence && work['response']['docs'].first

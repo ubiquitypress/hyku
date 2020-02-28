@@ -29,7 +29,7 @@ RSpec.describe "API::V1::ReviewsController", type: :request do
              permission_template_id: @permission_template.id, agent_type: "user", agent_id: user_dep.email,
              access: "deposit"
             )
-     @permission_template_access_mgr = instance_double(Hyrax::PermissionTemplate_access,
+     @permission_template_access_mgr = instance_double(Hyrax::PermissionTemplateAccess,
                     permission_template_id: @permission_template.id, agent_type: "user", agent_id: user_mgr.email,
                     access: "manage"
                    )

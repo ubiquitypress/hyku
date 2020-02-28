@@ -5,7 +5,9 @@ class API::V1::SessionsController < API::V1::ApiBaseController
     if user && user.valid_password?(session_params[:password])
       token = payload(user)
       set_response_cookie(token)
-      render json: user.slice(:email)
+      participants = adminset_permissions(user)
+      user_type = user_roles(user)
+      render json: user.slice(:email).merge({participants: participants, type: user_type })
     else
       user_error
     end
@@ -57,6 +59,26 @@ class API::V1::SessionsController < API::V1::ApiBaseController
     message = 'This is not a valid token, inorder to refresh you must send back a valid token or you must re-log in'
     error_object = Ubiquity::ApiError::NotFound.new(status: 401, code: 'Invalid credentials', message: message)
     render json: error_object.error_hash
+  end
+
+  def adminset_permissions(user)
+    if user.present?
+      AdminSet.all.map do |admin_set|
+        permission_template_access = Hyrax::PermissionTemplateAccess.where(permission_template_id: admin_set.permission_template)
+        {
+          "#{admin_set.title.first}" => permission_template_access.find {
+            |participant_access| participant_access.try(:agent_id) == user.email
+           }.try(:access)
+        }
+      end
+    end
+  end
+
+  def user_roles(user)
+    if user.present?
+      roles = user.roles.map {|role| role.try(:name)}
+      roles - ["super_admin"]
+    end
   end
 
 end

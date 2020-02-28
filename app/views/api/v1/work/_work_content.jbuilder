@@ -1,4 +1,4 @@
-
+json.admin_set_name work[ "admin_set_tesim"].try(:first)
 json.uuid    work['id']
 json.type 'work'
 json.related_url    work['related_url_tesim']

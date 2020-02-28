@@ -1,5 +1,6 @@
 #/home/edward/dev-2/hyku/app/views/api/v1/work/_work.json.jbuilder
 
+json.admin_set_name work[ "admin_set_tesim"].try(:first)
 json.uuid    work['id']
 json.type 'work'
 json.related_url    work['related_url_tesim']
@@ -10,6 +11,7 @@ json.resource_type    work['resource_type_tesim'].try(:first)
 json.visibility    work['visibility_ssi']
 json.workflow_status work["workflow_state_name_ssim"].try(:first)
 json.display  'full'
+json.review_data  nil
 creator = work['creator_tesim'].try(:first)
 if valid_json?(creator)
   json.creator JSON.parse(creator)

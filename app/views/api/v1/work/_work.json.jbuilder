@@ -11,7 +11,7 @@ elsif (["pending_review", "changes_required"].include? work["workflow_state_name
 elsif (["pending_review", "changes_required"].include? work["workflow_state_name_ssim"].try(:first) ) && (current_user.try(:email) == work["depositor_tesim"].try(:first))
   json.partial! 'api/v1/work/work_limited_content', work: work
   json.review_data  nil
-elsif current_user.blank? && (["pending_review", "changes_required"].exclude?(work["workflow_state_name_ssim"].try(:first) ) )
+else 
   json.partial! 'api/v1/work/work_content', work: work
   json.review_data  nil
 end

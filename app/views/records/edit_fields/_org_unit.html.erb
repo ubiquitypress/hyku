@@ -1,0 +1,14 @@
+<% tenant_work_settings =  get_tenant_work_settings  %>
+<% label_name = tenant_work_settings.presence && tenant_work_settings['metadata_labels']["org_unit"].presence || "#{metadata_field.capitalize}"  %>
+
+<% my_model_name = f.object.model.class.to_s.underscore %>
+
+<label class="control-label multi_value optional" for="#{template}_#{metadata_field}">
+  <%= label_name %>
+  <span class="label label-info required-tag">required</span>
+</label>
+<p class="help-block">Enter your department, center, or group at Pacific.</p>
+<% #f.input :org_unit, as: :multi_value,  input_html: { class: 'ubiquity-keyword form-control', multiple: true }, required: f.object.required?(key) %>
+<%= text_field_tag "#{my_model_name}[org_unit][]", f.object.model.org_unit.first, id: "#{my_model_name}_org_unit",
+  class: "form-control text required form-control ubiquity-org-unit" , required: "required" %>
+<br>

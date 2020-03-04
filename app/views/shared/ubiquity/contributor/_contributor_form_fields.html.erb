@@ -7,9 +7,10 @@
 <% array_of_hash = array_of_hash ||  [{}] %>
 
 <% tenant_work_settings = get_tenant_work_settings %>
-
+<% required_toggle = tenant_work_settings['html_required'] && tenant_work_settings['html_required']['contributor'] %>
 <% contributor_list = list_of_json_properties('contributor') %>
-
+<% span_content = required_toggle.present? ? 'required' : ' ' %>
+<% span_content_css = required_toggle.present? ? 'label label-info required-tag' : ' ' %>
 
 <% array_of_hash.each_with_index do |hash, index| %>
   <div class="ubiquity-meta-contributor" >
@@ -22,10 +23,10 @@
 
     <% else %>
       <label class="control-label multi_value optional" for="#{template}_contributor_name_type">
-        Contributor name type <span class="label label-info required-tag">required</span></label>
+        Contributor name type <span class="<%= span_content_css%>"><%= span_content %></span></label>
 
       <%= select_tag "#{template}[contributor_group][][contributor_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("contributor_name_type")),
-                    required: true, class: 'ubiquity_contributor_name_type', data: {field_name:'ubiquity_contributor_name_type'} %>
+                    required: required_toggle , class: 'ubiquity_contributor_name_type', data: {field_name:'ubiquity_contributor_name_type'} %>
     <% end %>
 
     <p class="help-block">A person or group who played a secondary role in the work.</p>

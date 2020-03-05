@@ -8,7 +8,7 @@
   <span class="label label-info required-tag">required</span>
 </label>
 <p class="help-block">Enter your department, center, or group at Pacific.</p>
-<% #f.input :org_unit, as: :multi_value,  input_html: { class: 'ubiquity-keyword form-control', multiple: true }, required: f.object.required?(key) %>
+
 <%= text_field_tag "#{my_model_name}[org_unit][]", f.object.model.org_unit.first, id: "#{my_model_name}_org_unit",
   class: "form-control text required form-control ubiquity-org-unit" , required: "required" %>
 <br>

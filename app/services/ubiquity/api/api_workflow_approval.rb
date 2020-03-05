@@ -14,7 +14,7 @@ module Ubiquity
     end
 
     def is_valid_for_saving?
-      valid_action = ['approve', "pending_review", "changes_required", 'comment_only', 'request_change', 'request_review']
+      valid_action = ['approve', "pending_review", "changes_required", 'comment_only', 'request_changes', 'request_review']
       is_valid_action = valid_action.include?(approval_action)
       new_work = work.class != ActiveSupport::HashWithIndifferentAccess ? work : SolrDocument.new(work)
       is_valid_user = approval_action.present? && (user.can?(:review, :submissions) || user.can?(:edit, new_work))
@@ -29,10 +29,11 @@ module Ubiquity
        AccountElevator.switch!(account.cname)
        #work is ActiveSupport::HashWithIndifferentAccess when fetching a work via the api in views/api/v1/work/_work.json.jbuuldr,
        # we call these method to render comments for work under review
-       if work.class == ActiveSupport::HashWithIndifferentAccess
+
+       if work.present? && work.class == ActiveSupport::HashWithIndifferentAccess
          work_class = work["has_model_ssim"].try(:first).try(:constantize)
          @sipity_entity ||= Sipity::Entity.find_by(proxy_for_global_id:  "gid://hyku/#{work_class}/#{work['id']}")
-       else
+       elsif work.present?
          @sipity_entity ||= Sipity::Entity.find_by(proxy_for_global_id:  "gid://hyku/#{work.class}/#{work.id}")
        end
     end

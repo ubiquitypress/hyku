@@ -23,7 +23,9 @@ class API::V1::SessionsController < API::V1::ApiBaseController
     if current_user.present?
       token = payload(current_user)
       set_response_cookie(token)
-      render json: current_user.slice(:email)
+      participants = adminset_permissions(user)
+      user_type = user_roles(user)
+      render json: current_user.slice(:email).merge({participants: participants, type: user_type })
     else
       user_error
     end

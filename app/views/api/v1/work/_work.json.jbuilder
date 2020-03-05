@@ -8,10 +8,10 @@ elsif (["pending_review", "changes_required"].include? work["workflow_state_name
   json.partial! 'api/v1/work/work_limited_content', work: work
   json.review_data  review_data.comments_on_work_for_review
 
-elsif (["pending_review", "changes_required"].include? work["workflow_state_name_ssim"].try(:first) ) && (current_user.try(:email) == work["depositor_tesim"].try(:first))
+elsif (["pending_review", "changes_required"].include? work["workflow_state_name_ssim"].try(:first) ) 
   json.partial! 'api/v1/work/work_limited_content', work: work
   json.review_data  nil
-else 
+else
   json.partial! 'api/v1/work/work_content', work: work
   json.review_data  nil
 end

@@ -33,7 +33,7 @@ New_json =   {
  	"issn": "",
  	"eissn": "",
  	"issue": "",
- 	"title": "editable upload.",
+ 	"title": "single file upload.",
  	"edition": "",
  	"abstract": "This dataset includes metadata for books published or distributed in the UK since 1950.",
  	"funder": "",
@@ -41,7 +41,7 @@ New_json =   {
  	"keyword": "data-bl7||metadata||BNB||British National Bibliography||linked open data||N-Triples||NT||RDF/XML||books",
  	"license": "http://creativecommons.org/publicdomain/zero/1.0/",
  	"version": "",
- 	"type": "Dataset",
+ 	"type": "ArticleWork",
  	"book_title": "",
  	"language": "English",
  	"pagination": "",
@@ -91,10 +91,10 @@ New_json =   {
  	"alternate_identifier": "",
  	#"file": "589dce2b-3d88-4bac-953b-bdf710c6b6b6.png||https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Yellow-spotted_Rock_Hyrax.jpg/1200px-Yellow-spotted_Rock_Hyrax.jpg||https://media.mnn.com/assets/images/2015/11/elephants-rock-hyrax.jpg.1000x0_q80_crop-smart.jpg",
   "file": "https://www.incimages.com/uploaded_files/image/970x450/getty_883231284_200013331818843182490_335833.jpg",
-  "id": "80706a8e-882c-45d8-ad5d-ae898b98531f",
+  "id": "60706a8e-882c-45d8-ad5d-ae898b98535f",
   "visibility": "open",
  	"domain": "localhost",
- 	"tenant": "library",
+ 	"tenant": "university-demo",
   "file_only_import": 'false'
  }
 
@@ -443,7 +443,7 @@ D = {
     "issn": "ISSN",
     "eissn": "",
     "issue": "Issue",
-    "title": "Title (pre) work 3",
+    "title": "present me",
     "source": "Source",
     "volume": "Volume",
     "keyword": "Keyword1||Keyword2",
@@ -454,7 +454,7 @@ D = {
     "abstract": "Abstract",
     "location": "ny",
     "publisher": "Publisher1||Publisher2",
-    "type": "ArticleWork",
+    "type": "Presentation",
     "book_title": "",
     "challenged": "yes",
     "irb_number": "12345",
@@ -504,7 +504,7 @@ D = {
             "contributor_position": "0"
         }
     ],
-    "id": "u2c4fd5e-a36d-561a-afb4-f91c9644de3t",
+    "id": "8ic4fd5e-a36d-461a-afb4-f91c9644d17t",
     "domain": "localhost",
     "tenant": "university-demo",
     "files": [
@@ -517,6 +517,74 @@ D = {
             "path": "/data/tmp/uploads/d42d8a77-f42d-463d-bbeb-9a49f0e7df25/hyrax/uploaded_file/file/10/rock-hyrax.jpg",
             "visibility": "open",
             "description": "description for file 1"
+        },
+        {
+         "path": "https://www.incimages.com/uploaded_files/image/970x450/getty_883231284_200013331818843182490_335833.jpg",
+         "visibility": "open"
+       },
+       {
+        "path": "https://techcrunch.com/wp-content/uploads/2016/10/gettyimages-548328327.jpg?w=1390&crop=1",
+        "visibility": "restricted"
+      },
+      {
+        "path": "https://static.dezeen.com/uploads/2019/11/queens-library-hunters-point-architecture-steven-holl-new-york-city-usa_dezeen_2364_hero5.jpg",
+        "visibility": "open"
+      }
+    ]
+}
+
+V = {
+    "collection_id": "68a1c0f4-ce27-45b9-8ba4-e2dc989d40c8",
+    "type": "Book",
+    "title": "Test work 2: Open, with 4 files: 2 open, 1 institution, 1 private",
+    "source": "",
+    "volume": "",
+    "keyword": "keyword1||keyword2||keyword3||keyword4||keyword5",
+    "license": "",
+    "subject": "Testing",
+    "abstract": "",
+    "add_info": "",
+    "org_unit": "",
+    "visibility": "open",
+    "migration_id": "test1",
+    "journal_title": "",
+    "resource_type": "BookChapter default Book chapter",
+    "rights_holder": "",
+    "date_published": "2020-01-10",
+    "creator": [
+        {
+            "creator_family_name": "Mowlam",
+            "creator_given_name": "Tom",
+            "creator_institutional_relationship": [
+                "Other"
+            ],
+            "creator_name_type": "Personal",
+            "creator_position": "0"
         }
+    ],
+    "id": "if310e75-13a8-4a28-a18d-07f97d86f7e5",
+    "domain": "localhost",
+    "tenant": "university-demo",
+    "files": [
+          {
+            "path": '/data/tmp/derivatives/b5/e3/92/cd/-5/d6/0-/41/4a/-a/46/7-/d8/70/5c/1e/6b/4a-thumbnail.jpeg',
+            "description": "description for file 2",
+            "visibility": "restricted"
+        },
+        {
+            "path": "/data/tmp/uploads/d42d8a77-f42d-463d-bbeb-9a49f0e7df25/hyrax/uploaded_file/file/10/rock-hyrax.jpg",
+            "description": "description for file 1",
+            "visibility": "authenticated",
+            "embargo_release_date": '2020-01-16',
+            "visibility_during_embargo": 'restricted',
+            "visibility_after_embargo": 'open'
+        },
+        {
+         "path": "https://techcrunch.com/wp-content/uploads/2016/10/gettyimages-548328327.jpg?w=1390&crop=1",
+         "visibility": "restricted",
+         "visibility_during_lease": 'open',
+         "visibility_after_lease": 'authenticated',
+         "lease_expiration_date": '2020-01-16'
+       }
     ]
 }

@@ -29,7 +29,7 @@
                     required: required_toggle , class: 'ubiquity_contributor_name_type', data: {field_name:'ubiquity_contributor_name_type'} %>
     <% end %>
 
-    <p class="help-block">The person or group responsible for the work. Usually this is the author of the content.</p>
+    <p class="help-block">A person or group who played a secondary role in the work.</p>
 
     <% if contributor_list.include?('contributor_isni')%>
       <%= render 'shared/ubiquity/json_fields_partials/isni', template: template, metadata_field: "contributor", hash: hash %>

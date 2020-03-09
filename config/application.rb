@@ -62,6 +62,7 @@ module Hyku
       Hyrax::ContactForm.class_eval {attr_accessor :headers}
       Hyrax::SelectTypeListPresenter.prepend(::Ubiquity::SelectTypeListPresenterOverride)
       Hyrax::WorksControllerBehavior.prepend(::Ubiquity::WorksControllerBehaviorOverride)
+      User.include(::Ubiquity::EmailFormat)
     end
 
     config.before_initialize do

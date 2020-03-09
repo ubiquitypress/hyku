@@ -52,4 +52,18 @@ RSpec.describe User, type: :model do
       expect(subject.site_roles.pluck(:name)).to be_empty
     end
   end
+
+  context 'email format supplied' do
+    good_user =  FactoryGirl.build(:user)
+    bad_user =  FactoryGirl.build(:user, email: 'bad.email@gmail.com')
+
+    it 'returns the user as valid when the users email matches the format' do
+      expect(good_user.valid?).to be_truthy
+    end
+
+    it 'returns the user as invalid when the email does not match the format' do
+      expect(bad_user.valid?).to be_falsey
+    end
+  end
+
 end

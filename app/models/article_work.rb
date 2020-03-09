@@ -9,6 +9,7 @@ class ArticleWork < ActiveFedora::Base
   include Ubiquity::UpdateSharedIndex
   include Ubiquity::FileAvailabilityFaceting
   include ::Ubiquity::CachingSingle
+  include ::Ubiquity::WorkTypeValidator
 
   self.indexer = ArticleWorkIndexer
   # Change this to restrict which works can be added as a child.

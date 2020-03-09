@@ -1,11 +1,1 @@
-<% label_name = "DOI"  %>
-<% my_model_name = f.object.model.class.to_s.underscore %>
-
-<label class="control-label multi_value optional" for="#{template}_#{metadata_field}">
-  <%= label_name %>
-</label>
-<p class="help-block">If your item already has a DOI, enter it in format 10.21250/tcq</p>
-
-<%= text_field_tag "#{my_model_name}[doi][]",nil, id: "#{my_model_name}_doi",
-  class: "form-control text form-control ubiquity-org-unit"%>
-<br>
+<%= f.input :doi,  input_html: { class: 'ubiquity-doi form-control string optional' }, required: f.object.required?(key) %>

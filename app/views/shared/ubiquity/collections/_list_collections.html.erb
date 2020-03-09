@@ -17,16 +17,29 @@
          <span class="fa fa-file-o grey-zip-icon pull-left collection-icon-small"></span>
         <% else %>
           <span  class="collection-icon-small pull-left"><%= render_thumbnail_tag document, :style => 'width:18px' %></span>
-      <% end %>
+        <% end %>
       <% else %>
           <!-- this was the default in hyrax -->
           <span class="<%# Hyrax::ModelIcon.css_class_for(Collection) %> collection-icon-small pull-left"></span>
       <% end %>
       <div class="media-body">
         <div class="media-heading">
-          <%= link_to hyrax.dashboard_collection_path(id) do %>
+
+          <% redirect_url = redirect_work_url(document.id, request.original_url) %>
+          <% if document.id && redirect_url.present? %>
+
+            <%= link_to redirect_url, target: :_blank do %>
               <span class="sr-only"><%= t("hyrax.dashboard.my.sr.show_label") %> </span>
               <%= document.title_or_label %>
+            <% end %>
+
+          <% else %>
+
+            <%= link_to hyrax.dashboard_collection_path(id) do %>
+              <span class="sr-only"><%= t("hyrax.dashboard.my.sr.show_label") %> </span>
+              <%= document.title_or_label %>
+            <% end %>
+
           <% end %>
           <a href="#" class="small" title="Click for more details">
             <i id="expand_<%= id %>" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></i>

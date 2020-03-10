@@ -1,9 +1,9 @@
 <% tenant_work_settings =  get_tenant_work_settings  %>
-<% label_name = tenant_work_settings.presence && tenant_work_settings['metadata_labels']["org_unit"].presence || "#{metadata_field.capitalize}"  %>
+<% label_name = tenant_work_settings.presence && tenant_work_settings['metadata_labels']["org_unit"].presence || "organisational unit".capitalize  %>
 
 <% my_model_name = f.object.model.class.to_s.underscore %>
 
-<label class="control-label multi_value optional" for="#{template}_#{metadata_field}">
+<label class="control-label multi_value optional" for="#{template}_org_unit">
   <%= label_name %>
   <span class="label label-info required-tag">required</span>
 </label>

@@ -1,0 +1,10 @@
+<% label_name = "IRB Number"  %>
+<% my_model_name = f.object.model.class.to_s.underscore %>
+
+<label class="control-label" for="<%= my_model_name %>_IrbNumber">
+  <%= label_name %>
+</label>
+
+<%= text_field_tag "#{my_model_name}[irb_number]",nil, id: "#{my_model_name}_IrbNumber",
+  class: "ubiquity-IrbNumber form-control string optional"%>
+<br>

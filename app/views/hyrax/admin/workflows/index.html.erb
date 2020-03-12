@@ -35,7 +35,12 @@
                     <% @status_list.each do |document| %>
                       <tr>
                         <td>
-                          <%= link_to document, [main_app, document] %>
+                          <% redirect_url = redirect_work_url(document.id, request.original_url) %>
+                          <% if document.id && redirect_url.present? %>
+                            <%= link_to document.title.try(:first), redirect_url, id: "src_copy_link#{document.id}", target: :_blank %>
+                          <% else %>
+                            <%= link_to document, [main_app, document] %>
+                          <% end %>
                         </td>
                         <td>
                           <%= document.depositor %>
@@ -71,7 +76,11 @@
                     <% @published_list.each do |document| %>
                       <tr>
                         <td>
+                          <% redirect_url = redirect_work_url(document.id, request.original_url) %>
+                          <% if document.id && redirect_url.present? %>
+                            <%= link_to document.title.try(:first), redirect_url, id: "src_copy_link#{document.id}", target: :_blank %>
                           <%= link_to document, [main_app, document] %>
+                          <% end %>
                         </td>
                         <td>
                           <!-- added by UbiquityPress replacing  safe_join(document.creator, tag(:br)) -->

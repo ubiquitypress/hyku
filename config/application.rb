@@ -63,6 +63,7 @@ module Hyku
       Hyrax::SelectTypeListPresenter.prepend(::Ubiquity::SelectTypeListPresenterOverride)
       Hyrax::WorksControllerBehavior.prepend(::Ubiquity::WorksControllerBehaviorOverride)
       User.include(::Ubiquity::EmailFormat)
+      Hyrax::Dashboard::UserPresenter.prepend(::Ubiquity::UserPresenterOverride)
     end
 
     config.before_initialize do

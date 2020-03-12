@@ -1,5 +1,5 @@
 class API::V1::ApiBaseController < ActionController::Base
-
+  protect_from_forgery unless: -> { request.format.json? }
   include Ubiquity::ApiErrorHandlers
 
   before_action :switch_tenant

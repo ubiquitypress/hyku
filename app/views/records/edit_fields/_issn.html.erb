@@ -1,1 +1,5 @@
-<%= f.input :issn, input_html: { class: 'ubiquity-issn' }, required: f.object.required?(key) %>
+<% tenant_work_settings =  get_tenant_work_settings  %>
+
+<%= f.input :issn,
+            input_html: { class: 'ubiquity-issn' },
+            hint: tenant_work_settings['help_texts']['issn']%>

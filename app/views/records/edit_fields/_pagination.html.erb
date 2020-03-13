@@ -1,1 +1,5 @@
-<%= f.input :pagination,  input_html: { class: 'ubiquity-pagination' }, required: f.object.required?(key) %>
+<% tenant_work_settings =  get_tenant_work_settings  %>
+
+<%= f.input :pagination,
+            input_html: { class: 'ubiquity-pagination' },
+            hint: tenant_work_settings['help_texts']['pagination']%>

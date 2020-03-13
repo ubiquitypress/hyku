@@ -1,0 +1,6 @@
+<% tenant_work_settings =  get_tenant_work_settings  %>
+
+<%= f.input :add_info, as: :text,
+            input_html: { class: 'ubiquity-add_info' },
+            label: 'Additional Information',
+            hint: tenant_work_settings['help_texts']['additional information'] %>

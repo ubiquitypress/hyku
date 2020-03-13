@@ -7,7 +7,7 @@
   <%= label_name %>
   <span class="label label-info required-tag">required</span>
 </label>
-<p class="help-block">Enter your department, center, or group at Pacific.</p>
+<p class="help-block"><%= tenant_work_settings['help_texts']['org_unit'] %> </p>
 
 <%= text_field_tag "#{my_model_name}[org_unit][]", f.object.model.org_unit.first, id: "#{my_model_name}_org_unit",
   class: "form-control text required form-control ubiquity-org-unit" , required: "required" %>

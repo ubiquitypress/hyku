@@ -33,6 +33,14 @@ RSpec.describe API::V1::RegistrationsController, type: :request do
       expect(parsed_response["message"]).to include("email" => ["has already been taken"])
     end
 
-
+    it 'returns an error if using an email that is not of the correct format' do
+      post api_v1_user_signup_url(tenant_id: account.tenant), params: {
+        email: "test.test@test.com}",
+        password: 'Potato123!',
+        password_confirmation: 'Potato123!'
+      }
+      parsed_response = JSON.parse(response.body)
+      expect(parsed_response["message"]).to include("email" => ["Email must contain #{data['email_format']}"])
+    end
   end
 end

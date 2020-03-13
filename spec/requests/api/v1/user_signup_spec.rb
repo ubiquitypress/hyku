@@ -21,5 +21,18 @@ RSpec.describe API::V1::RegistrationsController, type: :request do
       expect(parsed_response['email']).to eq("test.test#{data['email_format']}")
     end
 
+    it 'returns an error if a user attempts to sign up with an already registered email' do
+      2.times do
+        post api_v1_user_signup_url(tenant_id: account.tenant), params: {
+          email: "test.test#{data['email_format']}",
+          password: 'Potato123!',
+          password_confirmation: 'Potato123!'
+        }
+      end
+      parsed_response = JSON.parse(response.body)
+      expect(parsed_response["message"]).to include("email" => ["has already been taken"])
+    end
+
+
   end
 end

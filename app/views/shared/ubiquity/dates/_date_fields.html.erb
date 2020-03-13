@@ -1,5 +1,5 @@
 
-<label class="control-label" for="date_#{date_type}"> Date  <%= "#{date_type}" %></label>
+<label class="control-label" for="date_#{date_type}"> Date  <%= "#{date_type}".capitalize %></label>
 <p class="help-block"><%= t("simple_form.hints.defaults.date_#{date_type}") %></p>
 
 
@@ -10,7 +10,3 @@
 
 <%= select_day(parse_date(f.object.model.send("date_#{date_type}"), 'day').to_i, { use_two_digit_numbers: true,
                                                         prompt: 'select day if available'},   {name:  "#{template}[date_#{date_type}_group][][date_#{date_type}_day]", :class => "form-control ubiquity-date-#{date_type}-day ubiquity-date-input"}) %>
-
-
-
-

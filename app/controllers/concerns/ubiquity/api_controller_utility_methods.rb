@@ -88,13 +88,10 @@ module Ubiquity
     def filter_work_endpoint_using_visibility(user = nil)
       allowed_ability(user)
       if user && @current_ability.try(:admin?)
-        ["-suppressed_bsi:false", "
-          ({!terms f=edit_access_group_ssim}public,registered) OR ({!terms f=discover_access_group_ssim}public,registered)
-            OR ({!terms f=read_access_group_ssim}public,registered) OR edit_access_person_ssim:#{user.user_key}
-            OR discover_access_person_ssim:#{user.user_key} OR read_access_person_ssim:#{user.user_key}
-            OR ({!terms f=workflow_state_name_ssim}pending_review) OR ({!terms f=workflow_state_name_ssim}changes_required)
-
-          "
+        #"-suppressed_bsi:false" returns private works
+        # suppressed_bsi:true  returns work under review
+        [
+           "(suppressed_bsi:true) OR (suppressed_bsi:false)"
         ]
 
       elsif user && user.user_key.present?

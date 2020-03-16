@@ -87,12 +87,27 @@ module Ubiquity
 
     def filter_work_endpoint_using_visibility(user = nil)
       allowed_ability(user)
-      if user && (@current_ability.try(:admin?) || user.user_key.present? )
-        filter = ["({!terms f=edit_access_group_ssim}public,registered) OR ({!terms f=discover_access_group_ssim}public,registered) OR ({!terms f=read_access_group_ssim}public,registered) OR edit_access_person_ssim:#{user.user_key} OR discover_access_person_ssim:#{user.user_key} OR read_access_person_ssim:#{user.user_key}"]
-      elsif user.nil?
-        filter = ["({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)"]
+      if user && @current_ability.try(:admin?)
+        ["-suppressed_bsi:false", "
+          ({!terms f=edit_access_group_ssim}public,registered) OR ({!terms f=discover_access_group_ssim}public,registered)
+            OR ({!terms f=read_access_group_ssim}public,registered) OR edit_access_person_ssim:#{user.user_key}
+            OR discover_access_person_ssim:#{user.user_key} OR read_access_person_ssim:#{user.user_key}
+            OR ({!terms f=workflow_state_name_ssim}pending_review) OR ({!terms f=workflow_state_name_ssim}changes_required)
+
+          "
+        ]
+
+      elsif user && user.user_key.present?
+        [ "({!terms f=edit_access_group_ssim}public,registered) OR ({!terms f=discover_access_group_ssim}public,registered)
+          OR ({!terms f=read_access_group_ssim}public,registered) OR edit_access_person_ssim:#{user.user_key}
+          OR discover_access_person_ssim:#{user.user_key} OR read_access_person_ssim:#{user.user_key}
+          OR ({!terms f=workflow_state_name_ssim}pending_review) OR ({!terms f=workflow_state_name_ssim}changes_required)
+          "]
+      else user.nil?
+        ["({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)
+          OR ({!terms f=workflow_state_name_ssim}pending_review) OR ({!terms f=workflow_state_name_ssim}changes_required)"
+        ]
       end
-      #filter.concat([models_to_search])
     end
 
     def works_visibility_check(user = nil)

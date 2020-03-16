@@ -13,10 +13,10 @@ class API::V1::SearchController < API::V1::ApiBaseController
 
   def facet
     reset_tenants_for_shared_search
-
     #This populates @fq passed as solr fq ie filter query
     if params[:f]
-      filter_strong_params[:f].to_h.map { |key, value| create_solr_filter_params(key, value) }
+      params[:f].to_unsafe_h.map { |key, value| create_solr_filter_params(key, value) }
+      # filter_strong_params[:f].to_h.map { |key, value| create_solr_filter_params(key, value) }
     end
 
     #it only have an id of :all when faceting eg api/v1/tenant_id/search/facet/all?q=review
@@ -34,7 +34,8 @@ class API::V1::SearchController < API::V1::ApiBaseController
   def search_by_multiple_terms
     #This populates @fq passed as solr fq ie filter query
     if params[:f].present?
-      filter_strong_params[:f].to_h.map { |key, value| create_solr_filter_params(key, value) }
+      params[:f].to_unsafe_h.map { |key, value| create_solr_filter_params(key, value) }
+      #filter_strong_params[:f].to_h.map { |key, value| create_solr_filter_params(key, value) }
     end
     #default sort uses "score desc, system_create_dtsi desc"
     response = CatalogController.new.repository.search(create_solr_params)
@@ -133,11 +134,9 @@ class API::V1::SearchController < API::V1::ApiBaseController
 
      search_type =  params[:shared_search].present? ? 'shared_search' : 'normal_search'
 
-     #record = Rails.cache.fetch("facet/#{@tenant.cname}/#{search_type}/#{params[:id]}/#{page}/#{facet_offset_limit}/#{build_query_with_term}/#{@fq}/#{sort}", expires_in: 30.minutes) do
-       response = CatalogController.new.repository.search(solr_params)
-       facet_count_list =  response['facet_counts']["facet_fields"][facet_name]
-       Hash[*facet_count_list]
-     #end
+     response = CatalogController.new.repository.search(solr_params)
+     facet_count_list =  response['facet_counts']["facet_fields"][facet_name]
+     Hash[*facet_count_list]
   end
 
   def fetch_all_facet
@@ -151,13 +150,11 @@ class API::V1::SearchController < API::V1::ApiBaseController
      "f.institution_sim.facet.limit" => 10000, "f.language_sim.facet.limit" => 10000, "f.file_availability_sim.facet.limit" => 10000
     }
 
-    #record = Rails.cache.fetch("facet/#{@tenant.cname}/#{search_type}/all/#{page}/#{facet_offset_limit}/#{build_query_with_term}/#{@fq}/#{sort}", expires_in: 30.minutes) do
-       response = CatalogController.new.repository.search(solr_params)
-       facet_count_list =  response['facet_counts']["facet_fields"]
-       ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim", "institution_sim", "language_sim",  "file_availability_sim"].map do |key|
-         {key => Hash[*facet_count_list[key] ] }
-       end
-    #end
+    response = CatalogController.new.repository.search(solr_params)
+      facet_count_list =  response['facet_counts']["facet_fields"]
+      ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim", "institution_sim", "language_sim",  "file_availability_sim"].map do |key|
+      {key => Hash[*facet_count_list[key] ] }
+    end
 
   end
 

@@ -35,9 +35,7 @@ class API::V1::WorkController < API::V1::ApiBaseController
   def fetch_work
     @skip_run = 'true'
     if current_user.present?
-
-      work = CatalogController.new.repository.search(q: "id:#{params[:id]}", fq: works_visibility_check(current_user), qf: solr_query_fields )
-
+      work = CatalogController.new.repository.search(q: "id:#{params[:id]}", fq: works_visibility_check(current_user), qf: solr_query_fields)
     else
       work = CatalogController.new.repository.search(q: "id:#{params[:id]}", fq: works_visibility_check, qf: solr_query_fields)
     end

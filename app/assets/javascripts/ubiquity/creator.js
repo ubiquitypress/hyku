@@ -148,14 +148,13 @@ if (orgName) {
 }
 
 function hideCreatorOrganization(self){
-  console.log("Hiding Org Fields")
   self.siblings(".ubiquity_organization_fields").find(".ubiquity_creator_organization_name:last").val('')
   self.siblings(".ubiquity_organization_fields").find(".ubiquity_creator_organization_name:last").removeAttr('required').next("span.error").hide();
   self.siblings(".ubiquity_organization_fields").hide();
 }
 
+
 function hideCreatorPersonal(self){
-  console.log("Hiding Creator Fields")
   self.siblings(".ubiquity_personal_fields").find(".ubiquity_creator_family_name:last").val('').removeAttr('required').next("span.error").hide();
   self.siblings(".ubiquity_personal_fields").find(".ubiquity_creator_given_name:last").val('').removeAttr('required').next("span.error").hide();
   self.siblings(".ubiquity_personal_fields").find(".ubiquity_creator_orcid:last").val('');

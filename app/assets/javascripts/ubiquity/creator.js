@@ -80,8 +80,9 @@ $(document).on("turbolinks:load", function(){
 });
 
 function displayFields(self){
+  var _this = $(self);
+
  if (self.value == 'Personal') {
-   var _this = $(self);
    hideCreatorOrganization(_this);
    $(self).siblings(".ubiquity_organization_fields").hide();
    _this = $(self).siblings(".ubiquity_personal_fields:last");
@@ -89,9 +90,10 @@ function displayFields(self){
    $(this).siblings(".ubiquity_personal_fields").show();
 
  } else if(self.value == "Organisational") {
-  $(this).siblings(".ubiquity_personal_fields").hide();
-  var _this = $(self).siblings('.ubiquity_organization_fields:last');
-  creatorOrganizationAddOrRemoveRequiredAndMessage(_this);
+    hideCreatorPersonal(_this);
+    $(this).siblings(".ubiquity_personal_fields").hide();
+    var _this = $(self).siblings('.ubiquity_organization_fields:last');
+    creatorOrganizationAddOrRemoveRequiredAndMessage(_this);
 
 } else{
   $('.ubiquity_creator_name_type:last').val('Personal').change()
@@ -146,14 +148,16 @@ if (orgName) {
 }
 
 function hideCreatorOrganization(self){
-self.siblings(".ubiquity_organization_fields").find(".ubiquity_creator_organization_name:last").val('')
-self.siblings(".ubiquity_organization_fields").find(".ubiquity_creator_organization_name:last").removeAttr('required').next("span.error").hide();
-self.siblings(".ubiquity_organization_fields").hide();
+  self.siblings(".ubiquity_organization_fields").find(".ubiquity_creator_organization_name:last").val('')
+  self.siblings(".ubiquity_organization_fields").find(".ubiquity_creator_organization_name:last").removeAttr('required').next("span.error").hide();
+  self.siblings(".ubiquity_organization_fields").hide();
 }
 
+
 function hideCreatorPersonal(self){
-self.siblings(".ubiquity_personal_fields").find(".ubiquity_creator_family_name:last").val('').removeAttr('required').next("span.error");
-self.siblings(".ubiquity_personal_fields").find(".ubiquity_creator_given_name:last").val('').removeAttr('required').next("span.error");
-self.siblings(".ubiquity_personal_fields").find(".ubiquity_creator_orcid:last").val('');
-self.siblings(".ubiquity_personal_fields").find(".ubiquity_creator_institutional_relationship:last").val('');
+  self.siblings(".ubiquity_personal_fields").find(".ubiquity_creator_family_name:last").val('').removeAttr('required').next("span.error").hide();
+  self.siblings(".ubiquity_personal_fields").find(".ubiquity_creator_given_name:last").val('').removeAttr('required').next("span.error").hide();
+  self.siblings(".ubiquity_personal_fields").find(".ubiquity_creator_orcid:last").val('');
+  self.siblings(".ubiquity_personal_fields").find(".ubiquity_creator_institutional_relationship:last").val('');
+  self.siblings(".ubiquity_personal_fields").hide();
 }

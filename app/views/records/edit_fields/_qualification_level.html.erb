@@ -1,5 +1,6 @@
 <% qualification_level_service = QualificationLevelService.new %>
-<% set_default = 'Doctoral' %>
+<% selected =  f.object[:qualification_level].empty? ? nil :  f.object[:qualification_level] %>
+<% set_default = selected || 'Doctoral' %>
 
 <% model = f.object.model.class.to_s.underscore %>
 

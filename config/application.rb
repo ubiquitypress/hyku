@@ -60,6 +60,9 @@ module Hyku
       Hyrax::FileSetPresenter.class_eval {delegate :visibility, to: :solr_document}
       #added to allow the headers to be set in api/v1/contact_form
       Hyrax::ContactForm.class_eval {attr_accessor :headers}
+      Hyrax::Dashboard::CollectionsController.prepend(::Ubiquity::CollectionsControllerOverride)
+      Hyrax::Dashboard::CollectionsController.prepend(::Ubiquity::CollectionsControllerBehaviourOverride)
+      Hyrax::CollectionsController.prepend(::Ubiquity::CollectionsControllerBehaviourOverride)
     end
 
     config.before_initialize do

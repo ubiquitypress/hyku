@@ -89,6 +89,9 @@ module Ubiquity
       property :collection_id, predicate: ::RDF::Vocab::BF2.identifies do |index|
         index.as :stored_searchable, :facetable
       end
+      property :collection_names, predicate: ::RDF::Vocab::DC11.term(:collect) do |index|
+        index.as :stored_searchable, :facetable
+      end
       property :is_included_in, predicate: ::RDF::Vocab::BF2.part, multiple: false do |index|
         index.as :stored_searchable
       end

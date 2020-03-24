@@ -19,13 +19,12 @@ module Ubiquity
 
     def set_response_cookie(token)
       expire = api_user_params[:expire].try(:hour).try(:from_now) || 1.hour.from_now
-      response.set_cookie(
-        :jwt,
-          {
-            value: token, expires: expire, path: '/',
-            domain: ('.' + request.host), secure: true, httponly: true
-        }
-      )
+
+      cookies[:jwt] = {
+        value: token, expires: expire, domain: ('.' + request.host),
+        path: '/', secure: true, httponly: true, same_site: :none
+      }
+
     end
 
     def adminset_permissions(user)

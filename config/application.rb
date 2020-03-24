@@ -64,6 +64,9 @@ module Hyku
       Hyrax::WorksControllerBehavior.prepend(::Ubiquity::WorksControllerBehaviorOverride)
       User.include(::Ubiquity::EmailFormat)
       Hyrax::Dashboard::UserPresenter.prepend(::Ubiquity::UserPresenterOverride)
+      Hyrax::Dashboard::CollectionsController.prepend(::Ubiquity::CollectionsControllerOverride)
+      Hyrax::Dashboard::CollectionsController.prepend(::Ubiquity::CollectionsControllerBehaviourOverride)
+      Hyrax::CollectionsController.prepend(::Ubiquity::CollectionsControllerBehaviourOverride)
     end
 
     config.before_initialize do

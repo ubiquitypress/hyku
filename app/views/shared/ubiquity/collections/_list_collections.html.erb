@@ -25,7 +25,7 @@
       <div class="media-body">
         <div class="media-heading">
 
-          <% redirect_url = redirect_work_url(document.id, request.original_url) %>
+          <% redirect_url = redirect_collection_url(document.id, request.original_url) %>
           <% if document.id && redirect_url.present? %>
 
             <%= link_to redirect_url, target: :_blank do %>

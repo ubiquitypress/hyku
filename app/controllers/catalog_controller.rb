@@ -71,6 +71,7 @@ class CatalogController < ApplicationController
 
     config.add_facet_field solr_name('file_availability', :facetable), limit: 5, label: 'File Availability'
     config.add_facet_field solr_name('collection_id', :facetable), limit: 5, label: 'Collection_id'
+    config.add_facet_field solr_name('collection_names', :facetable), limit: 5, label: 'Collection_names'
     config.add_facet_field solr_name('volume', :facetable), limit: 5, label: 'Volume'
     config.add_facet_field solr_name('issue', :facetable), limit: 5, label: 'Issue'
 

@@ -16,7 +16,7 @@ module Ubiquity
       if @account_cname.split('.').include? 'localhost'
         @is_collection ? "http://#{@account_cname}:3000/#{work_type}/#{@id}" : "http://#{@account_cname}:3000/concern/#{work_type}/#{@id}"
       else
-        @is_collection ? "https://#{@account_cname}/work/#{@id}" : "https://#{@account_cname}/concern/work/#{@id}"
+      @is_collection ? "https://#{@account_cname}/collection/#{@id}" : "https://#{@account_cname}/work/#{@id}"
       end
     end
   end

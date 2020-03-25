@@ -1,5 +1,5 @@
 
-<% if property_hash && property_hash.keys.include?(template) && property_hash[template].include?("#{metadata_field}_institutional_relationship") %>
+<% if !property_hash.blank? && property_hash && property_hash.keys.include?(template) && property_hash[template].include?("#{metadata_field}_institutional_relationship") %>
 
   <span class="label label-info required-tag">required</span>
   <%= text_field_tag  "#{template}[#{metadata_field}_group][][#{metadata_field}_institutional_relationship]",  hash.dig("#{metadata_field}_institutional_relationship"),

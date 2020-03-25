@@ -17,13 +17,6 @@ class API::V1::SessionsController < API::V1::ApiBaseController
   def destroy
     domain = ('.' + request.host)
     cookies.delete(:jwt, domain: domain)
-    response.set_cookie(
-        :jwt,
-          {
-            value: '', expires: 10000.hours.ago, path: '/', same_site: :none,
-            domain: domain, secure: true, httponly: true
-        }
-    )
     render json: {message: "Successfully logged out"}, status: 200
   end
 

@@ -15,10 +15,7 @@ module Ubiquity
 
       if @settings['sub_cname'].present?
         @settings['sub_cname'].each do |tenant, settings_hash|
-          puts "STARTING LOOP"
           @account_cname = @account_cname.gsub(settings_hash['api'], settings_hash['live']) if @account_cname == settings_hash['api'] && settings_hash['api'].present?
-          puts "Current Cname is: #{@account_cname}"
-          puts "Current api setting is #{settings_hash['api']}"
           break if @account_cname == settings_hash['live']
         end
       end

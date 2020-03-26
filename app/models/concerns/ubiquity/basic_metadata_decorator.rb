@@ -83,6 +83,12 @@ module Ubiquity
       property :file_availability, predicate: ::RDF::Vocab::SCHEMA.ItemAvailability do |index|
         index.as :stored_searchable, :facetable
       end
+      property :collection_id, predicate: ::RDF::Vocab::BF2.identifies do |index|
+        index.as :stored_searchable, :facetable
+      end
+      property :collection_names, predicate: ::RDF::Vocab::DC11.term(:collect) do |index|
+        index.as :stored_searchable, :facetable
+      end
 
     end
 

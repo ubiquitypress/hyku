@@ -34,22 +34,8 @@ module Ubiquity
      private
 
      def remove_collection_id_from_works
-       remove_member_objects_from_solr_only(self)
+       UbiquityRemoveChildRecordsJob.perform_now(self.id, self.title.try(:first), self.account_cname)
      end
-
-     def remove_member_objects_from_solr_only(collection)
-       works =  ActiveFedora::Base.where("collection_id_sim:#{collection.id}")
-       if works.present?
-         works.each do |work|
-           collection_id_array = work.collection_id.to_a - [collection.id]
-           collection_names_array = work.collection_names.to_a - [collection.title.try(:first)]
-           work.collection_id = collection_id_array
-           work.collection_names = collection_names_array
-           work.save!
-         end
-       end
-     end
-
 
   end
 end

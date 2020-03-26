@@ -2,24 +2,7 @@
 
 module Ubiquity
   module CollectionsControllerOverride
-    include ActiveSupport::Concern
-
-    def create
-       # Manual load and authorize necessary because Cancan will pass in all
-       # form attributes. When `permissions_attributes` are present the
-       # collection is saved without a value for `has_model.`
-       @collection = ::Collection.new
-       authorize! :create, @collection
-       @collection.attributes = collection_params.except(:members)
-       @collection.apply_depositor_metadata(current_user.user_key)
-       add_members_to_collection unless batch.empty?
-
-       if @collection.save
-         after_create
-       else
-         after_create_error
-       end
-     end
+    extend ActiveSupport::Concern
 
     private
 

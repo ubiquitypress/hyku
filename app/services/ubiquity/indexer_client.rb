@@ -1,7 +1,7 @@
 module Ubiquity
   class IndexerClient
     include HTTParty
-    base_uri "http://indexer.ubiquity.press"
+    base_uri "https://indexer.ubiquity.press"
     attr_reader :api_path, :headers, :resource_type, :work_uuid, :draft_doi, :tenant_name
 
     def initialize(uuid, draft_doi, tenant_name)
@@ -34,7 +34,7 @@ module Ubiquity
     def handle_client
       begin
         yield
-      rescue HTTParty::Error, Errno::ECONNREFUSED, SocketError, Timeout::Error  => e
+      rescue HTTParty::Error, Errno::ECONNREFUSED, Errno::ECONNRESET, SocketError, Timeout::Error  => e
         puts "Nothing pushed to indexer #{e.inspect}"
         UbiquityPostToIndexerJob.perform_later(work_uuid, draft_doi, tenant_name)
       rescue ActiveFedora::RecordNotSaved, ActiveFedora::RecordInvalid  => e

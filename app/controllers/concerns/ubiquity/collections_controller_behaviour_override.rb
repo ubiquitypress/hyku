@@ -1,5 +1,7 @@
 module Ubiquity
   module CollectionsControllerBehaviourOverride
+    extend ActiveSupport::Concern
+
     private
 
     # Queries Solr for members of the collection.

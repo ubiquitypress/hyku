@@ -13,8 +13,8 @@ module Ubiquity
       return nil if @account_cname.nil?
       work_type = @work_type.tableize
 
-      if @settings && @settings['sub_cname'].present?
-        @settings['sub_cname'].each do |tenant, settings_hash|
+      if @settings && @settings['per_account_settings'].present?
+        @settings['per_account_settings'].each do |tenant, settings_hash|
           @account_cname = @account_cname.gsub(settings_hash['api'], settings_hash['live']) if @account_cname == settings_hash['api'] && settings_hash['api'].present?
           break if @account_cname == settings_hash['live']
         end

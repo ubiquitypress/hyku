@@ -7,7 +7,8 @@
 #
 # rake ubiquity_resave_records:all_exempt_collections['sandbox.repo-test.ubiquity.press']
 # rake 'ubiquity_resave_records:where_metatdata_field_not_empty[library.localhost, editor_tesim]'
-
+#
+#rake ubiquity_resave_records:all_collections_work['sandbox.repo-test.ubiquity.press']
 #run with
 # rake ubiquity_resave_records:all['sandbox.repo-test.ubiquity.press']
 namespace :ubiquity_resave_records do
@@ -28,6 +29,30 @@ namespace :ubiquity_resave_records do
     end
   end
 
+  desc "Update data by resaving records for existing works"
+  task :all_collections_work, [:name] => :environment do |task, tenant|
+
+    #These are the names of the existing work type in UbiquityPress's Hyku
+    AccountElevator.switch!("#{tenant[:name]}")
+    begin
+      Collection.all.each do |collection|
+        #We fetching an instance of the models and then getting the value in the creator field
+        works = collection.member_objects
+        works.each_slice(150) do |batch|
+         #by calling save we trigger the before_save callback in app/models/ubiquity/concerns/multiple_modules.rb
+          batch.each do |work|
+            work.collection_id = [collection.id]
+            work.collection_names = [collection.title.try(:first)]
+            work.save(validate: false)
+            sleep 2
+          end
+        end
+      end
+    rescue ActiveFedora::AssociationTypeMismatch, ActiveFedora::RecordInvalid, Ldp::Gone, RSolr::Error::Http, RSolr::Error::ConnectionRefused  => e
+      puts "error saving #{e}"
+    end
+  end
+
 #run with
 #rake ubiquity_resave_records:all_exempt_collections['sandbox.repo-test.ubiquity.press']
  desc "Update data by resaving records except collection for existing works"
@@ -36,14 +61,18 @@ namespace :ubiquity_resave_records do
     #These are the names of the existing work type in UbiquityPress's Hyku
     model_class = [Article, Book, BookContribution, ConferenceItem, Dataset, ExhibitionItem, Image, Report, ThesisOrDissertation, TimeBasedMedia, GenericWork]
     AccountElevator.switch!("#{tenant[:name]}")
-    model_class.each do |model|
-      #We fetching an instance of the models and then getting the value in the creator field
-      model.find_each do |model_instance|
-        puts "model_id in in re-saving record rake task: #{model} : #{model_instance.id}"
+    begin
+      model_class.each do |model|
+        #We fetching an instance of the models and then getting the value in the creator field
+        model.find_each do |model_instance|
+          puts "model_id in in re-saving record rake task: #{model} : #{model_instance.id}"
          #by calling save we trigger the before_save callback in app/models/ubiquity/concerns/multiple_modules.rb
-          model_instance.save
+          model_instance.save(validate: false)
           sleep 2
+        end
       end
+    rescue ActiveFedora::AssociationTypeMismatch, ActiveFedora::RecordInvalid, Ldp::Gone, RSolr::Error::Http, RSolr::Error::ConnectionRefused  => e
+      puts "error saving #{e}"
     end
   end
 
@@ -61,7 +90,7 @@ namespace :ubiquity_resave_records do
     model_class.find_each do |model_instance|
       puts "model_id in in update specific model rake task:  #{model_instance.id}"
        #by calling save we trigger the before_save callback in app/models/ubiquity/concerns/multiple_modules.rb
-      model_instance.save
+      model_instance.save(validate: false)
       sleep 2
     end
   end
@@ -83,7 +112,7 @@ namespace :ubiquity_resave_records do
     records.each do |model_instance|
       puts "updating #{field_name} in where_metatdata_field_not_empty rake task for: #{model_instance.class}  #{model_instance.id}"
        #by calling save we trigger the before_save callback in app/models/ubiquity/concerns/multiple_modules.rb
-      model_instance.save
+      model_instance.save(validate: false)
       sleep 2
     end
   end

@@ -13,7 +13,7 @@ module Ubiquity
     end
 
     def query_for_work_using_collection_id
-      fetching_with_collection_id = repository.search(q: "collection_id_sim:#{collection['id']}")
+      fetching_with_collection_id = repository.search(q: "collection_id_sim:#{@collection.id}")
       if fetching_with_collection_id['response']['docs'].present?
         fetching_with_collection_id['response']['docs'].map {|h| SolrDocument.new(h, current_ability)}
       else

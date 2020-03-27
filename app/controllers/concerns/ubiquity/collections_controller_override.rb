@@ -9,7 +9,7 @@ module Ubiquity
     def add_members_to_collection(collection = nil)
       collection ||= @collection
 
-      if check_should_not_use_fedora_association.present?
+      if check_should_not_use_fedora_association == "true"
         #use by ubiquitypress to add collection id to works without using fedora association
         collection.add_member_objects_to_solr_only batch
       else
@@ -43,8 +43,11 @@ module Ubiquity
     end
 
     def check_should_not_use_fedora_association
-      tenant_work_settings_hash = Ubiquity::ParseTenantWorkSettings.new(request.original_url).tenant_work_settings_hash
-      tenant_work_settings_hash && tenant_work_settings_hash["turn_off_fedora_collection_work_association"]
+      subdomain =
+      settings_parser_class = Ubiquity::ParseTenantWorkSettings.new(request.original_url)
+      tenant_work_settings_hash = settings_parser_class.tenant_work_settings_hash
+      subdomain = settings_parser_class.get_tenant_subdomain
+      tenant_work_settings_hash && tenant_work_settings_hash["per_account_settings"] && tenant_work_settings_hash["per_account_settings"][subdomain] && tenant_work_settings_hash["per_account_settings"][subdomain]["turn_off_fedora_collection_work_association"]
     end
 
   end

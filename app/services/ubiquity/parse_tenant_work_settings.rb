@@ -10,7 +10,7 @@ module Ubiquity
     def initialize(value)
       set_url(value)
       if url.nil? && value.present?
-        @name = value
+        @name = value.split('.').first
       end
     end
 
@@ -48,10 +48,21 @@ module Ubiquity
       end
     end
 
+    def per_account_tenant_settings_hash
+      is_valid_json = Ubiquity::JsonValidator.valid_json?(per_account_tenant_settings_json)
+      if is_valid_json
+        JSON.parse(per_account_tenant_settings_json)
+      end
+    end
+
     private
 
     def tenant_work_settings_json
       settings = ENV['TENANTS_WORK_SETTINGS']
+    end
+
+    def per_account_tenant_settings_json
+      settings = ENV['TENANTS_SETTINGS']
     end
 
     def set_url(value)

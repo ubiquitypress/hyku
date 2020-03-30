@@ -12,7 +12,7 @@ module Ubiquity
       @id = object.try(:id)
       @work_type = object.try(:has_model).try(:first).to_s
       @is_collection = object.collection?
-      @settings = Ubiquity::ParseTenantWorkSettings.new(@account_cname) #tenant_work_settings_hash
+      @settings = Ubiquity::ParseTenantWorkSettings.new(@account_cname)
       @settings_hash = @settings.per_account_tenant_settings_hash
       @subdomain = @settings.get_tenant_subdomain
     end
@@ -21,16 +21,16 @@ module Ubiquity
       return nil if @account_cname.nil?
       work_type = @work_type.tableize
 
-      if @settings &&  @settings_hash.present? && @subdomain.present? && @settings_hash[@subdomain]['live'].present?
+      if @settings && @settings_hash.present? && @settings_hash[@subdomain].present? && @settings_hash[@subdomain]['live'].present?
         @account_cname = @settings_hash[@subdomain]['live']
       end
 
       if @account_cname.split('.').include? 'localhost'
         @is_collection ? "http://#{@account_cname}:3000/#{work_type}/#{@id}" : "http://#{@account_cname}:3000/concern/#{work_type}/#{@id}"
-      elsif @settings_hash[@subdomain]['live'].present?
+      elsif @settings_hash.present? && @settings_hash[@subdomain].present? && @settings_hash[@subdomain]['live'].present?
         @is_collection ? "https://#{@account_cname}/collection/#{@id}" : "https://#{@account_cname}/work/#{@id}"
       else
-        "https://#{@account_cname}/#{concern_url}/#{work_type}/#{@id}"
+        @is_collection ? "https://#{@account_cname}/#{work_type}/#{@id}" : "https://#{@account_cname}/concern/#{work_type}/#{@id}"
       end
     end
   end

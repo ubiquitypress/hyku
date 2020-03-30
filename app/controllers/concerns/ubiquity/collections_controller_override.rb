@@ -45,9 +45,10 @@ module Ubiquity
     def check_should_not_use_fedora_association
       subdomain =
       settings_parser_class = Ubiquity::ParseTenantWorkSettings.new(request.original_url)
-      tenant_work_settings_hash = settings_parser_class.tenant_work_settings_hash
+      tenant_work_settings_hash = settings_parser_class.per_account_tenant_settings_hash  
       subdomain = settings_parser_class.get_tenant_subdomain
-      tenant_work_settings_hash && tenant_work_settings_hash["per_account_settings"] && tenant_work_settings_hash["per_account_settings"][subdomain] && tenant_work_settings_hash["per_account_settings"][subdomain]["turn_off_fedora_collection_work_association"]
+      tenant_work_settings_hash && tenant_work_settings_hash[subdomain] && tenant_work_settings_hash[subdomain]["turn_off_fedora_collection_work_association"]
+
     end
 
   end

@@ -25,10 +25,12 @@ module Ubiquity
       @data = data
       $stdout.puts "Log Json data loaded #{@data}"
 
-      @data_id  = data.delete('id') || data.delete(:id)
       @tenant = data['tenant'] || data[:tenant]
       @domain = data['domain'] || data[:domain]
       @tenant_domain = @tenant + '.' + @domain
+      @collection_id = data['collection_id'] || data[:collection_id]
+      data.merge!({'collection_names' =>  add_work_to_collection.title.try(:first)}) if add_work_to_collection.try(:title).present?
+      @data_id  = data.delete('id') || data.delete(:id)
       @data_hash = HashWithIndifferentAccess.new(data)
       puts "@data_hash values #{@data_hash.inspect}"
       @file = @data_hash[:file]
@@ -66,6 +68,16 @@ module Ubiquity
     end
 
     private
+
+    def add_work_to_collection
+      AccountElevator.switch!("#{@tenant_domain}")
+      if @collection_id.present? && @work_instance.class != Collection
+        collection = ActiveFedora::Base.find(@collection_id)
+       #AddCollectionAndWorkFedoraRelationship.perform_later(@work_instance.id, @collection_id, @work_instance.account_cname)
+      end
+      rescue ActiveFedora::ObjectNotFoundError
+        $stdout.puts "collection with id #{@collection_id} does not exist"
+    end
 
     #determine what hash keys to use. For existing records using the attributes key and for new records use the keys from the imported json
     #
@@ -131,10 +143,10 @@ module Ubiquity
     end
 
     def set_admin_set(value)
-      if value.present?
+      if value.present? && @work_instance.class != Collection
         puts "setting admin_set to - #{value.inspect}"
         @attributes_hash['admin_set_id'] = value
-      else
+      elsif @work_instance.class != Collection
         puts "setting adminset to admin_set/default "
          @attributes_hash['admin_set_id'] = "admin_set/default" unless @work_instance.admin_set_id.present?
       end

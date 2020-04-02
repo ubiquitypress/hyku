@@ -13,7 +13,11 @@ module Ubiquity
     end
 
     def query_for_work_using_collection_id
-      fetching_with_collection_id = repository.search(q: "collection_id_sim:#{collection['id']}")
+      #Note that collection is Hyrax::CollectionPresenter object returned when collection is cliacked on the homepage
+      #while @collection is an of collection model returned when collection is clicked from the dashboard
+      collection_id = @collection.try(:id) || collection.try(:id)
+
+      fetching_with_collection_id = repository.search(q: "collection_id_sim:#{collection_id}")
       if fetching_with_collection_id['response']['docs'].present?
         fetching_with_collection_id['response']['docs'].map {|h| SolrDocument.new(h, current_ability)}
       else

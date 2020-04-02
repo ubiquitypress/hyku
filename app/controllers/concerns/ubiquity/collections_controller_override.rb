@@ -4,6 +4,19 @@ module Ubiquity
   module CollectionsControllerOverride
     extend ActiveSupport::Concern
 
+    def update
+      process_member_changes
+      #added by Ubiquity
+      old_collection_name =  @collection.title.first.freeze
+
+      if @collection.update(collection_params.except(:members))
+        Ubiquity::ManageCollectionChildRecords.update_work_collection_names_after_update(@collection.id, old_collection_name)
+        after_update
+      else
+        after_update_error
+      end
+    end
+    
     private
 
     def add_members_to_collection(collection = nil)

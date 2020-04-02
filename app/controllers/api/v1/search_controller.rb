@@ -61,12 +61,7 @@ class API::V1::SearchController < API::V1::ApiBaseController
 
   def create_solr_filter_params(key, hash)
     hash.each do |item|
-      if (key == "member_of_collections_ssim" || key == "collection_names_tesim" || key == "collection_names_sim")
-        #for now work around to query for a works in a collection both using fedora association and works based on collection id
-         @fq << "({!term f=member_of_collections_ssim}#{item}) OR ({!term f=collection_names_tesim}#{item}) "
-      else
-         @fq << "{!term f=#{key}}#{item}"
-      end
+      @fq << "{!term f=#{key}}#{item}"
     end
   end
 

@@ -4,11 +4,31 @@ module Ubiquity
   module CollectionsControllerOverride
     extend ActiveSupport::Concern
 
+    def update
+      process_member_changes
+      #added by Ubiquity
+      old_collection_name =  @collection.title.first.freeze
+
+      if @collection.update(collection_params.except(:members))
+        Ubiquity::ManageCollectionChildRecords.update_work_collection_names_after_update(@collection.id, old_collection_name)
+        after_update
+      else
+        after_update_error
+      end
+    end
+
     private
+
+    def process_member_changes
+      case params[:collection][:members]
+      when 'add' then add_members_to_collection
+      when 'remove' then remove_members_from_collection
+      when 'move' then move_members_between_collections
+      end
+    end
 
     def add_members_to_collection(collection = nil)
       collection ||= @collection
-
       if check_should_not_use_fedora_association == "true"
         #use by ubiquitypress to add collection id to works without using fedora association
         collection.add_member_objects_to_solr_only batch
@@ -45,10 +65,9 @@ module Ubiquity
     def check_should_not_use_fedora_association
       subdomain =
       settings_parser_class = Ubiquity::ParseTenantWorkSettings.new(request.original_url)
-      tenant_work_settings_hash = settings_parser_class.per_account_tenant_settings_hash  
+      tenant_work_settings_hash = settings_parser_class.per_account_tenant_settings_hash
       subdomain = settings_parser_class.get_tenant_subdomain
       tenant_work_settings_hash && tenant_work_settings_hash[subdomain] && tenant_work_settings_hash[subdomain]["turn_off_fedora_collection_work_association"]
-
     end
 
   end

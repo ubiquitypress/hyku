@@ -16,7 +16,8 @@ module Ubiquity
     def must_have_valid_email_format
       format = get_tenant_work_settings['email_format']
       if format.present?
-        errors.add(:email, "Email must contain #{format}") unless email.include? format
+        email_format = '@' + email.split('@')[-1]
+        errors.add(:email, "Email must contain #{format}") unless format.include? email_format
       end
     end
   end

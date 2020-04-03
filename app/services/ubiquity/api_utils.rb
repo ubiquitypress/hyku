@@ -19,7 +19,8 @@ module Ubiquity
      if work.present? && work["member_of_collection_ids_ssim"].present? &&  skip_run == 'true'
        cache_key = "parent_collection/#{work['account_cname_tesim'].first}/#{work['id']}/#{work["member_of_collection_ids_ssim"].try(:size).to_i}/#{work['system_modified_dtsi']}"
        parent_collections = Rails.cache.fetch(cache_key) do
-            collection_ids = work["member_of_collection_ids_ssim"].presence
+            collection_ids = (work["member_of_collection_ids_ssim"].presence | work["member_of_collection_id_sim"].presence).compact
+            puts "mercy #{collection_ids.inspect}"
             collections_list = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{collection_ids.join(',')}",
             "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", "", "-suppressed_bsi:true"
             ])

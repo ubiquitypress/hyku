@@ -10,13 +10,14 @@ module Ubiquity
       old_collection_name =  @collection.title.first.freeze
 
       if @collection.update(collection_params.except(:members))
-        Ubiquity::ManageCollectionChildRecords.update_work_collection_names_after_update(@collection.id, old_collection_name)
+        #added by Ubiquity
+        update_collection_names_in_works(old_collection_name)
         after_update
       else
         after_update_error
       end
     end
-    
+
     private
 
     def add_members_to_collection(collection = nil)
@@ -60,6 +61,14 @@ module Ubiquity
       tenant_work_settings_hash = settings_parser_class.per_account_tenant_settings_hash
       subdomain = settings_parser_class.get_tenant_subdomain
       tenant_work_settings_hash && tenant_work_settings_hash[subdomain] && tenant_work_settings_hash[subdomain]["turn_off_fedora_collection_work_association"]
+    end
+
+    private
+
+    def update_collection_names_in_works(old_collection_name)
+      if params["collection"]['title'].present? && (old_collection_name != params["collection"]['title'] )
+        UbiquityCollectionChildRecordsJob.perform_now(collection_id: @collection.id, collection_name: old_collection_name, tenant_name: @collection.account_cname, type: 'update')
+      end
     end
 
   end

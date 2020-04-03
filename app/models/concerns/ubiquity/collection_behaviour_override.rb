@@ -23,12 +23,7 @@ module Ubiquity
      end
      #use by ubiquitypress to add collection id to works without using fedora association
      def add_member_objects_to_solr_only(new_member_ids)
-       Array(new_member_ids).each do |member_id|
-         member = ActiveFedora::Base.find(member_id)
-         member.collection_id = ([self.id] | member.collection_id.to_a )
-         member.collection_names =  ([self.title.first] | member.collection_names.to_a)
-         member.save!
-       end
+        UbiquityCollectionChildRecordsJob.perform_later(collection_id: self.id, collection_name: self.title.try(:first), tenant_name: self.account_cname, work_id: new_member_ids, type: 'add')
      end
 
      private

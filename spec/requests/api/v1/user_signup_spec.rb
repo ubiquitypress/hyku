@@ -35,12 +35,20 @@ RSpec.describe API::V1::RegistrationsController, type: :request do
 
     it 'returns an error if using an email that is not of the correct format' do
       post api_v1_user_signup_url(tenant_id: account.tenant), params: {
-        email: "test.test@test.com}",
+        email: "test.test@test.com",
         password: 'Potato123!',
         password_confirmation: 'Potato123!'
       }
       parsed_response = JSON.parse(response.body)
       expect(parsed_response["message"]).to include("email" => ["Email must contain #{data['email_format']}"])
+    end
+
+    it 'sends an email when a user signs up' do
+      expect { post api_v1_user_signup_url(tenant_id: account.tenant), params: {
+        email: "test.test#{data['email_format']}",
+        password: 'Potato123!',
+        password_confirmation: 'Potato123!'
+      }}.to change{ Devise::Mailer.deliveries.count }.by(1)
     end
   end
 end

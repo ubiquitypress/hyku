@@ -3,7 +3,7 @@ module Ubiquity
     extend ActiveSupport::Concern
 
     included do
-      validate :must_have_valid_email_format
+      # validate :must_have_valid_email_format
     end
 
     def get_tenant_work_settings

@@ -3,7 +3,7 @@ class API::V1::SessionsController < API::V1::ApiBaseController
 
   def create
     user = User.find_for_database_authentication(email: api_user_params[:email])
-    if user && user.valid_password?(api_user_params[:password])
+    if user && user.valid_password?(api_user_params[:password]) && user.confirmed?
       token = payload(user)
       set_response_cookie(token)
       participants = adminset_permissions(user)
@@ -42,7 +42,7 @@ class API::V1::SessionsController < API::V1::ApiBaseController
   private
 
   def user_error
-    message = 'This is not a valid token, inorder to refresh you must send back a valid token or you must re-log in'
+    message = 'This is not a valid token, in order to refresh you must send back a valid token or you must re-log in'
     error_object = Ubiquity::ApiError::NotFound.new(status: 401, code: 'Invalid credentials', message: message)
     render json: error_object.error_hash
   end

@@ -3,7 +3,7 @@ module Ubiquity
     extend ActiveSupport::Concern
 
     included do
-      # validate :must_have_valid_email_format
+      validate :must_have_valid_email_format
     end
 
     def get_tenant_work_settings
@@ -16,7 +16,8 @@ module Ubiquity
     def must_have_valid_email_format
       format = get_tenant_work_settings['email_format']
       if format.present?
-        errors.add(:email, "Email must contain #{format}") unless email.include? format
+        email_format = '@' + email.split('@')[-1]
+        errors.add(:email, "Email must contain #{format}") unless format.include? email_format
       end
     end
   end

@@ -26,5 +26,17 @@ module Ubiquity
       $stdout.puts "collection with id #{collection.try(:id)} does not exist"
     end
 
+    def self.add_work_to_collection(new_member_ids, collection_id)
+      collection = ActiveFedora::Base.find(collection_id)
+      Array(new_member_ids).each do |member_id|
+        member = ActiveFedora::Base.find(member_id)
+        member.collection_id = ([collection.id] | member.collection_id.to_a )
+        member.collection_names =  ([collection.title.try(:first)] | member.collection_names.to_a)
+        member.save!
+      end
+      rescue ActiveFedora::ObjectNotFoundError
+      $stdout.puts "collection with id #{collection.try(:id)} does not exist"
+    end
+
   end
 end

@@ -12,11 +12,11 @@ module Ubiquity
       #remove the files in get_fileset_ids from shared_search index
       after_destroy :remove_file_sets_in_work_from_index
 
-      before_save :get_collection_child_records
-      before_destroy :get_collection_child_records
+      #before_save :get_collection_child_records
+      #before_destroy :get_collection_child_records
 
-      after_save :reindex_members_after_collection_update
-      after_destroy :reindex_members_to_remove_deleted_collection
+      #after_save :reindex_members_after_collection_update
+      #after_destroy :reindex_members_to_remove_deleted_collection
     end
 
     private

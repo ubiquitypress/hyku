@@ -1,7 +1,10 @@
 module Ubiquity
   module UserShowConcern
-    include ActiveSupport::Concern
+    extend ActiveSupport::Concern
 
-    before_action :ensure_admin!
+    included do
+      before_action :ensure_admin!
+    end
+    
   end
 end

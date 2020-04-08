@@ -39,7 +39,7 @@ class API::V1::SearchController <  ActionController::Base
     response = CatalogController.new.repository.search(
        q: build_query_with_term, fq: @fq, "qf" => solr_query_fields,
       "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
-      "institution_sim", "language_sim", "file_availability_sim"],  "sort" => sort,
+      "institution_sim", "language_sim", "file_availability_sim"],  "sort" => sort, "user_query" => params[:q],
        rows: limit, start: offset
        )
 
@@ -57,7 +57,7 @@ class API::V1::SearchController <  ActionController::Base
   def build_query_with_term
     term = params[:q]
     if term.present?
-    "{!lucene}_query_:\"{!dismax v=#{term}}\" _query_:\"{!join from=id to=file_set_ids_ssim}{!dismax v=#{term}}\""
+    "{!lucene}_query_:\"{!dismax v=$user_query}\" _query_:\"{!join from=id to=file_set_ids_ssim}{!dismax v=$user_query}\""
     else
       ""
     end
@@ -112,7 +112,7 @@ class API::V1::SearchController <  ActionController::Base
     facet_limit_key = "f" + "." + facet_name +  ".facet.limit"
 
     solr_params = {"qt"=>"search", q: build_query_with_term, "facet.field" => facet_name, "facet.query"=>[], "facet.pivot"=>[], "fq"=> @fq,
-    "hl.fl"=>[], "rows"=>0, "qf" =>  solr_query_fields, "pf"=>"title_tesim", "facet"=>true,
+    "hl.fl"=>[], "rows"=>0, "qf" =>  solr_query_fields, "pf"=>"title_tesim", "facet"=>true, "user_query" => params[:q],
      facet_limit_key => limit, facet_offset_key => facet_offset_limit, "sort"=> sort }
 
      search_type =  params[:shared_search].present? ? 'shared_search' : 'normal_search'
@@ -129,7 +129,7 @@ class API::V1::SearchController <  ActionController::Base
 
     solr_params = {"qt"=>"search", q: build_query_with_term,
       "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim", "collection_names_sim", "institution_sim", "language_sim", "file_availability_sim"],
-       "facet.query"=>[], "facet.pivot"=>[], "fq"=> @fq,
+       "facet.query"=>[], "facet.pivot"=>[], "fq"=> @fq, "user_query" => params[:q],
      "hl.fl"=>[], "rows"=>0, "qf" =>  solr_query_fields, "pf"=>"title_tesim", "facet"=>true, "sort"=> sort ,
      "f.resource_type_sim.facet.limit" => 10000, "f.creator_search_sim.facet.limit" => 10000, "f.keyword_sim.facet.limit" => 10000, "f.member_of_collections_ssim.facet.limit" => 10000,
      "f.institution_sim.facet.limit" => 10000, "f.language_sim.facet.limit" => 10000, "f.file_availability_sim.facet.limit" => 10000, "f.collection_names_sim.facet.limit" => 10000

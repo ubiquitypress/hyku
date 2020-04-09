@@ -29,7 +29,7 @@ module Ubiquity
           :visibility_after_embargo, :visibility_during_lease,
           :lease_expiration_date, :visibility_after_lease, :visibility,
           :thumbnail_id, :representative_id, :rendering_ids, :ordered_member_ids,
-          :member_of_collection_ids, :in_works_ids, :admin_set_id] 
+          :member_of_collection_ids, :in_works_ids, :admin_set_id]
       else
         terms - primary_terms -
           [:files, :visibility_during_embargo, :embargo_release_date,
@@ -38,6 +38,11 @@ module Ubiquity
            :thumbnail_id, :representative_id, :rendering_ids, :ordered_member_ids,
            :member_of_collection_ids, :in_works_ids, :admin_set_id]
       end
+    end
+
+    def public_collections_for_select
+      service = Hyrax::CollectionsService.new(@controller)
+      Hyrax::CollectionOptionsPresenter.new(service).select_options(:read)
     end
 
   end

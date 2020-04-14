@@ -68,6 +68,7 @@ module Hyku
       Hyrax::Dashboard::CollectionsController.prepend(::Ubiquity::CollectionsControllerBehaviourOverride)
       Hyrax::CollectionsController.prepend(::Ubiquity::CollectionsControllerBehaviourOverride)
       Hyrax::UsersController.include(::Ubiquity::UserShowConcern)
+      Hyrax::WorksControllerBehavior.include(::Ubiquity::WorksControllerBehaviourOverride)
     end
 
     config.before_initialize do

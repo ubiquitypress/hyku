@@ -14,6 +14,13 @@ module Ubiquity
       end
     end
 
+    def edit_redirect_code_switch
+      if tenant_work_settings_hash.present?
+        tenant_work_settings_hash["edit_code_switch"][get_tenant_subdomain]
+      end
+    end
+
+
     def get_tenant_subdomain
       if url.present? && url.host.present? && url.host.class == String
         url.host.split('.').first

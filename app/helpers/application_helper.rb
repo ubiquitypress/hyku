@@ -123,4 +123,11 @@ module ApplicationHelper
     @record =  Account.where(cname: request.host, data: {'is_parent': 'true'}).first
   end
 
+  def check_should_not_use_fedora_association
+    settings_parser_class = Ubiquity::ParseTenantWorkSettings.new(request.original_url)
+    tenant_work_settings_hash = settings_parser_class.per_account_tenant_settings_hash
+    subdomain = settings_parser_class.get_tenant_subdomain
+    tenant_work_settings_hash && tenant_work_settings_hash[subdomain] && tenant_work_settings_hash[subdomain]["turn_off_fedora_collection_work_association"]
+  end
+
 end

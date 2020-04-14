@@ -12,6 +12,9 @@ module Hyrax
         end
         env.curation_concern.attributes = new_attributes
         env.curation_concern.date_modified = TimeService.time_in_utc
+
+      rescue  ActiveFedora::UnknownAttributeError => e
+        puts "in ubiquity_shared_actor #{e.inspect}"
       end
 
       #We are ensuring json fields are saved and the search facet created, if the json  is coming via csv import or other source beside the UI

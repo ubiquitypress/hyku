@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   before_action :set_account_specific_connections!
 
   before_action :set_raven_context
-  after_action :redirect_back_to_previous_page
+  after_action :store_location
 
 
   #UbiquityPress is temporarily using redirect_to to replace raise ActionController::RoutingError, 'Not Found' in rescue_from block
@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
 
   private
 
-    def redirect_back_to_previous_page
+    def store_location
       if (request.path != "/users/sign_in" &&
        request.path != "/users/sign_up" &&
        request.path != "/users/password/new" &&

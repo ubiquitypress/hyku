@@ -33,20 +33,21 @@ class ApplicationController < ActionController::Base
     invalid_record(exception)
   end
 
+  def store_location
+    if (request.path != "/users/sign_in" &&
+     request.path != "/users/sign_up" &&
+     request.path != "/users/password/new" &&
+     request.path != "/users/password/edit" &&
+     request.path != "/users/confirmation" &&
+     request.path != "/users/sign_out" &&
+     !request.xhr?) # don't store ajax calls
+   store_location_for(:user, request.fullpath)
+  end
+end
+
 
   private
 
-    def store_location
-      if (request.path != "/users/sign_in" &&
-       request.path != "/users/sign_up" &&
-       request.path != "/users/password/new" &&
-       request.path != "/users/password/edit" &&
-       request.path != "/users/confirmation" &&
-       request.path != "/users/sign_out" &&
-       !request.xhr?) # don't store ajax calls
-     store_location_for(:user, request.fullpath)
-    end
-  end
 
     def require_active_account!
       return unless Settings.multitenancy.enabled

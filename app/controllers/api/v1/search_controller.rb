@@ -46,16 +46,15 @@ class API::V1::SearchController < API::V1::ApiBaseController
   end
 
   def create_solr_params
+    solr_params ={ 'q' => '', 'fq' =>  @fq, "qf" => solr_query_fields, "qt" => "search",
+    "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
+    "institution_sim", "language_sim", "file_availability_sim"],  "sort" => sort,
+     'rows' => limit, 'start' => offset}
+
     if params[:q].present?
-      { "q" => build_query_with_term, "fq" => @fq, "qf" => solr_query_fields,
-      "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
-      "institution_sim", "language_sim", "file_availability_sim"],  "sort" => sort,
-       rows: limit, start: offset, "defType" => "lucene", "user_query"=> filter_strong_params[:q], "qt" => "search"}
+      solr_params.merge!({"q" => build_query_with_term, "defType" => "lucene", "user_query"=> filter_strong_params[:q]})
     elsif params[:q].blank?
-      { 'q' => '', 'fq' =>  @fq, "qf" => solr_query_fields, "qt" => "search",
-      "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
-      "institution_sim", "language_sim", "file_availability_sim"],  "sort" => sort,
-       'rows' => limit, 'start' => offset}
+      solr_params
     end
   end
 
@@ -130,8 +129,12 @@ class API::V1::SearchController < API::V1::ApiBaseController
 
     solr_params = {"qt"=>"search", q: build_query_with_term, "facet.field" => facet_name, "facet.query"=>[], "facet.pivot"=>[], "fq"=> @fq,
     "hl.fl"=>[], "rows"=>0, "qf" =>  solr_query_fields, "pf"=>"title_tesim", "facet"=>true, facet_limit_key => limit,
-     facet_offset_key => facet_offset_limit, "sort"=> sort, "user_query"=> filter_strong_params[:q], "defType" => "lucene"
+     facet_offset_key => facet_offset_limit, "sort"=> sort
      }
+
+     if params[:q].present?
+       solr_params.merge!({"user_query"=> filter_strong_params[:q], "defType" => "lucene"})
+     end
 
      search_type =  params[:shared_search].present? ? 'shared_search' : 'normal_search'
 
@@ -142,14 +145,16 @@ class API::V1::SearchController < API::V1::ApiBaseController
 
   def fetch_all_facet
     search_type =  params[:shared_search].present? ? 'shared_search' : 'normal_search'
-
     solr_params = {"qt"=>"search", q: build_query_with_term,
       "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim", "collection_names_sim",  "institution_sim", "language_sim", "file_availability_sim"],
-       "facet.query"=>[], "facet.pivot"=>[], "fq"=> @fq, "user_query"=> filter_strong_params[:q], "defType" => "lucene",
-     "hl.fl"=>[], "rows"=>0, "qf" =>  solr_query_fields, "pf"=>"title_tesim", "facet"=>true, "sort"=> sort ,
-     "f.resource_type_sim.facet.limit" => 10000, "f.creator_search_sim.facet.limit" => 10000, "f.keyword_sim.facet.limit" => 10000, "f.member_of_collections_ssim.facet.limit" => 10000,
+      "facet.query"=>[], "facet.pivot"=>[], "fq"=> @fq,  "hl.fl"=>[], "rows"=>0, "qf" =>  solr_query_fields, "pf"=>"title_tesim", "facet"=>true, "sort"=> sort ,
+      "f.resource_type_sim.facet.limit" => 10000, "f.creator_search_sim.facet.limit" => 10000, "f.keyword_sim.facet.limit" => 10000, "f.member_of_collections_ssim.facet.limit" => 10000,
      "f.institution_sim.facet.limit" => 10000, "f.language_sim.facet.limit" => 10000, "f.file_availability_sim.facet.limit" => 10000, "f.collection_names_sim.facet.limit" => 10000
     }
+
+    if params[:q].present?
+      solr_params.merge!({"user_query"=> filter_strong_params[:q], "defType" => "lucene"})
+    end
 
     response = CatalogController.new.repository.search(solr_params)
       facet_count_list =  response['facet_counts']["facet_fields"]

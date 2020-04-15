@@ -33,16 +33,10 @@ class ApplicationController < ActionController::Base
     invalid_record(exception)
   end
 
-  def store_location
-    settings_parser_class = Ubiquity::ParseTenantWorkSettings.new(request.original_url)
-    if settings_parser_class.edit_redirect_code_switch
-      redirect_back_to_previous_page
-    end
-  end
 
   private
 
-    def redirect_back_to_previous_page
+    def store_location
       if (request.path != "/users/sign_in" &&
        request.path != "/users/sign_up" &&
        request.path != "/users/password/new" &&

@@ -35,13 +35,20 @@ class API::V1::SearchController <  ActionController::Base
     if params[:f]
       params[:f].to_unsafe_h.map { |key, value| create_solr_filter_params(key, value) }
     end
+
+    solr_params = {
+      q: build_query_with_term, fq: @fq, "qf" => solr_query_fields,
+     "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "collection_names_sim", "member_of_collections_ssim",
+     "institution_sim", "language_sim", "file_availability_sim"],  "sort" => sort,
+      rows: limit, start: offset
+    }
+
+    if params[:q].present?
+      solr_params.merge!({"user_query" => params[:q], "defType" => "lucene"})
+    end
+
     #default sort uses "score desc, system_create_dtsi desc"
-    response = CatalogController.new.repository.search(
-       q: build_query_with_term, fq: @fq, "qf" => solr_query_fields,
-      "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
-      "institution_sim", "language_sim", "file_availability_sim"],  "sort" => sort, "user_query" => params[:q],
-       rows: limit, start: offset
-       )
+    response = CatalogController.new.repository.search(solr_params)
 
     @works = response
     raise Ubiquity::ApiError::NotFound.new(status: 404, code: 'not_found', message: "No record found for query_term: #{params[:q]} and filters containing #{params[:f]}") if response['response']['numFound'] == 0
@@ -112,8 +119,12 @@ class API::V1::SearchController <  ActionController::Base
     facet_limit_key = "f" + "." + facet_name +  ".facet.limit"
 
     solr_params = {"qt"=>"search", q: build_query_with_term, "facet.field" => facet_name, "facet.query"=>[], "facet.pivot"=>[], "fq"=> @fq,
-    "hl.fl"=>[], "rows"=>0, "qf" =>  solr_query_fields, "pf"=>"title_tesim", "facet"=>true, "user_query" => params[:q],
+    "hl.fl"=>[], "rows"=>0, "qf" =>  solr_query_fields, "pf"=>"title_tesim", "facet"=>true,
      facet_limit_key => limit, facet_offset_key => facet_offset_limit, "sort"=> sort }
+
+     if params[:q]
+       solr_params.merge!({ "user_query" => params[:q], "defType" => "lucene"})
+     end
 
      search_type =  params[:shared_search].present? ? 'shared_search' : 'normal_search'
 
@@ -129,11 +140,15 @@ class API::V1::SearchController <  ActionController::Base
 
     solr_params = {"qt"=>"search", q: build_query_with_term,
       "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim", "collection_names_sim", "institution_sim", "language_sim", "file_availability_sim"],
-       "facet.query"=>[], "facet.pivot"=>[], "fq"=> @fq, "user_query" => params[:q],
+       "facet.query"=>[], "facet.pivot"=>[], "fq"=> @fq,
      "hl.fl"=>[], "rows"=>0, "qf" =>  solr_query_fields, "pf"=>"title_tesim", "facet"=>true, "sort"=> sort ,
      "f.resource_type_sim.facet.limit" => 10000, "f.creator_search_sim.facet.limit" => 10000, "f.keyword_sim.facet.limit" => 10000, "f.member_of_collections_ssim.facet.limit" => 10000,
      "f.institution_sim.facet.limit" => 10000, "f.language_sim.facet.limit" => 10000, "f.file_availability_sim.facet.limit" => 10000, "f.collection_names_sim.facet.limit" => 10000
     }
+
+    if params[:q]
+      solr_params.merge!({ "user_query" => params[:q], "defType" => "lucene"})
+    end
 
     record = Rails.cache.fetch("facet/#{@tenant.cname}/#{search_type}/all/#{page}/#{facet_offset_limit}/#{build_query_with_term}/#{@fq}/#{sort}", expires_in: 30.minutes) do
        response = CatalogController.new.repository.search(solr_params)
@@ -144,7 +159,5 @@ class API::V1::SearchController <  ActionController::Base
     end
 
   end
-
-
 
 end

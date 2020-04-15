@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   before_action :set_account_specific_connections!
 
   before_action :set_raven_context
-  after_action :store_location
+  after_action :redirect_back_to_previous_page
 
 
   #UbiquityPress is temporarily using redirect_to to replace raise ActionController::RoutingError, 'Not Found' in rescue_from block
@@ -33,12 +33,6 @@ class ApplicationController < ActionController::Base
     invalid_record(exception)
   end
 
-  def store_location
-    settings_parser_class = Ubiquity::ParseTenantWorkSettings.new(request.original_url)
-    if settings_parser_class.edit_redirect_code_switch
-      redirect_back_to_previous_page
-    end
-  end
 
   private
 

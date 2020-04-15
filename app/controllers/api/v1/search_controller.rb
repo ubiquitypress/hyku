@@ -46,16 +46,15 @@ class API::V1::SearchController < API::V1::ApiBaseController
   end
 
   def create_solr_params
+    solr_params ={ 'q' => '', 'fq' =>  @fq, "qf" => solr_query_fields, "qt" => "search",
+    "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
+    "institution_sim", "language_sim", "file_availability_sim"],  "sort" => sort,
+     'rows' => limit, 'start' => offset}
+
     if params[:q].present?
-      { "q" => build_query_with_term, "fq" => @fq, "qf" => solr_query_fields,
-      "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
-      "institution_sim", "language_sim", "file_availability_sim"],  "sort" => sort,
-       rows: limit, start: offset, "defType" => "lucene", "user_query"=> filter_strong_params[:q], "qt" => "search"}
+      solr_params.merge!({"q" => build_query_with_term, "defType" => "lucene", "user_query"=> filter_strong_params[:q]})
     elsif params[:q].blank?
-      { 'q' => '', 'fq' =>  @fq, "qf" => solr_query_fields, "qt" => "search",
-      "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
-      "institution_sim", "language_sim", "file_availability_sim"],  "sort" => sort,
-       'rows' => limit, 'start' => offset}
+      solr_params
     end
   end
 

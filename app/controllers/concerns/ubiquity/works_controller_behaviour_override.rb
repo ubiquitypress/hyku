@@ -8,6 +8,11 @@ module Ubiquity
 
     private
 
+    def build_form
+      curation_concern.account_cname = current_account.cname
+      @form = work_form_service.build(curation_concern, current_ability, self)
+    end
+
     def check_should_not_use_fedora_association
       settings_parser_class = Ubiquity::ParseTenantWorkSettings.new(request.original_url)
       tenant_work_settings_hash = settings_parser_class.per_account_tenant_settings_hash
@@ -30,6 +35,5 @@ module Ubiquity
         params
       end
     end
-
   end
 end

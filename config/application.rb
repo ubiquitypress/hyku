@@ -61,7 +61,6 @@ module Hyku
       #added to allow the headers to be set in api/v1/contact_form
       Hyrax::ContactForm.class_eval {attr_accessor :headers}
       Hyrax::SelectTypeListPresenter.prepend(::Ubiquity::SelectTypeListPresenterOverride)
-      Hyrax::WorksControllerBehavior.prepend(::Ubiquity::WorksControllerBehaviorOverride)
       User.include(::Ubiquity::EmailFormat)
       Hyrax::Dashboard::UserPresenter.prepend(::Ubiquity::UserPresenterOverride)
       Hyrax::Dashboard::CollectionsController.prepend(::Ubiquity::CollectionsControllerOverride)

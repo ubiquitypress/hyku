@@ -1,0 +1,31 @@
+<%# Called from hyku/app/views/hyrax/base/_form_relationships.html.erb %>
+<% if Flipflop.assign_admin_set? %>
+  <%# TODO: consider `Hyrax::AdminSetOptionsPresenter.select_options_for(controller: controller)` instead %>
+  <!-- include_blank: false, -->
+  <%= f.input :admin_set_id, as: :select,
+      collection: Hyrax::AdminSetOptionsPresenter.new(Hyrax::AdminSetService.new(controller)).select_options,
+       hint: 'Please you must select a an admin_set and ensure it has thesame name as the collection you are depositing into',
+      input_html: { class: 'form-control ubiquity-admin-set'} %>
+<% end %>
+
+<%# render 'form_in_works', f: f %>
+<%= render 'shared/ubiquity/works/form_member_of_collections', f: f %>
+
+<% if f.object.persisted? %>
+  <h2><%# t("hyrax.works.form.in_this_work") %></h2>
+  <%# render 'form_child_work_relationships', f: f %>
+<% end %>
+
+
+<%# Copied from hyrax/app/views/hyrax/base/_form_metadata.html.erb to remove the form instructions %>
+<div class="base-terms">
+  <% f.object.primary_terms.each do |term| %>
+    <%= render_edit_field_partial(term, f: f) %>
+  <% end %>
+</div>
+<div id="extended-terms">
+  <%= render 'form_media', f: f %>
+  <% f.object.secondary_terms.each do |term| %>
+    <%= render_edit_field_partial(term, f: f) %>
+  <% end %>
+</div>

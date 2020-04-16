@@ -1,8 +1,12 @@
 <!-- copied from https://github.com/samvera/hyrax/blob/master/app/views/_logo.html.erb
   to conditionally change Hyku label for BL
 -->
+<% to_be_removed_substituted_switch_off_for_live = check_for_setting_value_in_tenant_settings('hide_form_relationship_tab') %>
+<% url_path = check_for_setting_value_in_tenant_settings('live') %>
+<% path_to_use = (to_be_removed_substituted_switch_off_for_live.present? && url_path.present?) ? ("https://" + url_path).strip : hyrax.root_path  %>
+
 <% if ENV['SHOW_LOG_OUT'] == 'true' %>
-  <a id="logo" class="navbar-brand" href="<%= hyrax.root_path %>" data-no-turbolink="true">
+  <a id="logo" class="navbar-brand" href="<%= path_to_use %>" data-no-turbolink="true">
     <span class="glyphicon glyphicon-globe" role="img" aria-label="<%= application_name %>" aria-hidden="true"></span>
     <% if ENV["BL_TENANTS"].split(',').include? ubiquity_url_parser(request.original_url) %>
       Shared Research Repository

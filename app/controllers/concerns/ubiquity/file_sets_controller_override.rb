@@ -18,7 +18,7 @@ module Ubiquity
 
     def redirect?
       settings = get_work_settings
-      return true if settings.present? && settings['redirect_on_save'] == "true"
+      return true if settings.present? && settings['redirect_on'] == "true"
     end
 
     def after_update_response

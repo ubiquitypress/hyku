@@ -1,9 +1,9 @@
 <!-- copied from https://github.com/samvera/hyrax/blob/master/app/views/_logo.html.erb
   to conditionally change Hyku label for BL
 -->
-<% to_be_removed_substituted_switch_off_for_live = check_for_setting_value_in_tenant_settings('hide_form_relationship_tab') %>
+
 <% url_path = check_for_setting_value_in_tenant_settings('live') %>
-<% path_to_use = (to_be_removed_substituted_switch_off_for_live.present? && url_path.present?) ? ("https://" + url_path).strip : hyrax.root_path  %>
+<% path_to_use = url_path.present? ? ("https://" + url_path).strip : hyrax.root_path  %>
 
 <% if ENV['SHOW_LOG_OUT'] == 'true' %>
   <a id="logo" class="navbar-brand" href="<%= path_to_use %>" data-no-turbolink="true">

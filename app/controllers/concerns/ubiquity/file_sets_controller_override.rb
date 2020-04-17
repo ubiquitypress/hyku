@@ -4,13 +4,6 @@ module Ubiquity
 
     private
 
-    def get_live_url
-      settings_parser_class = Ubiquity::ParseTenantWorkSettings.new(request.original_url)
-      tenant_work_settings_hash = settings_parser_class.per_account_tenant_settings_hash
-      subdomain = settings_parser_class.get_tenant_subdomain
-      tenant_work_settings_hash[subdomain]['live']
-    end
-
     def get_work_settings
       settings_parser_class = Ubiquity::ParseTenantWorkSettings.new(request.original_url)
       settings_parser_class.tenant_work_settings_hash
@@ -22,6 +15,7 @@ module Ubiquity
     end
 
     def after_update_response
+      live_url = Ubiquity::FetchTenantUrl.new(curation_concern).process_url
       respond_to do |wants|
         wants.html do
           redirect_to "https://#{get_live_url}/work/#{curation_concern.parent_id}" and return if redirect?

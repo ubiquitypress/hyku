@@ -37,14 +37,6 @@ module Ubiquity
       end
     end
 
-
-    def get_live_url
-      settings_parser_class = Ubiquity::ParseTenantWorkSettings.new(request.original_url)
-      tenant_work_settings_hash = settings_parser_class.per_account_tenant_settings_hash
-      subdomain = settings_parser_class.get_tenant_subdomain
-      tenant_work_settings_hash[subdomain]['live']
-    end
-
     def get_work_settings
       settings_parser_class = Ubiquity::ParseTenantWorkSettings.new(request.original_url)
       settings_parser_class.tenant_work_settings_hash
@@ -57,13 +49,14 @@ module Ubiquity
 
 
     def after_create_response
+      live_url = Ubiquity::FetchTenantUrl.new(curation_concern).process_url
       respond_to do |wants|
         wants.html do
           # Calling `#t` in a controller context does not mark _html keys as html_safe
           flash[:notice] = view_context.t('hyrax.works.create.after_create_html', application_name: view_context.application_name)
           redirect_to [main_app, curation_concern]
         end
-        redirect_to "https://#{get_live_url}/work/#{curation_concern.id}" and return if redirect?
+        redirect_to live_url and return if redirect?
         wants.json { render :show, status: :created, location: polymorphic_path([main_app, curation_concern]) }
       end
     end

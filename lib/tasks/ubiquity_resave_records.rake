@@ -7,7 +7,7 @@
 #
 # rake ubiquity_resave_records:all_exempt_collections['sandbox.repo-test.ubiquity.press']
 # rake 'ubiquity_resave_records:where_metatdata_field_not_empty[library.localhost, editor_tesim]'
-
+#rake ubiquity_resave_records:all_collections_work['sandbox.repo-test.ubiquity.press']
 #run with
 # rake ubiquity_resave_records:all['sandbox.repo-test.ubiquity.press']
 namespace :ubiquity_resave_records do
@@ -25,6 +25,35 @@ namespace :ubiquity_resave_records do
           model_instance.save
           sleep 2
       end
+    end
+  end
+
+  desc "Update data by resaving records for existing works"
+    task :all_collections_work, [:name] => :environment do |task, tenant|
+      #These are the names of the existing work type in UbiquityPress's Hyku
+      AccountElevator.switch!("#{tenant[:name]}")
+      begin
+        Collection.all.lazy.each do |collection|
+          #We fetching an instance of the models and then getting the value in the creator field
+          works = collection.member_objects
+          works_to_resave = works.lazy.map {|w| w if w.collection_names.blank?}.force.compact
+          puts "tenant_name #{tenant[:name]}"
+          puts "colection_title #{collection.try(:title).try(:first)}"
+          puts "count works_to_resave #{works_to_resave.size}"
+
+          works_to_resave.each_slice(150) do |batch|
+           #by calling save we trigger the before_save callback in app/models/ubiquity/concerns/multiple_modules.rb
+            batch.lazy.each do |work|
+              puts "work #{work.try(:title).try(:first)}"
+              work.collection_id = [collection.id]
+              work.collection_names = [collection.title.try(:first)]
+              work.save(validate: false)
+              sleep 2
+            end
+          end
+        end
+      rescue ActiveFedora::AssociationTypeMismatch, ActiveFedora::RecordInvalid, Ldp::Gone, RSolr::Error::Http, RSolr::Error::ConnectionRefused  => e
+        puts "error saving #{e}"
     end
   end
 

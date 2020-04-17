@@ -9,7 +9,7 @@ module Ubiquity
     end
 
     def after_update_response
-      live_url = Ubiquity::FetchTenantUrl.new(curation_concern).process_url
+      live_url = Ubiquity::FetchTenantUrl.new(curation_concern.parent).process_url
       respond_to do |wants|
         wants.html do
           redirect_to live_url and return if redirect?

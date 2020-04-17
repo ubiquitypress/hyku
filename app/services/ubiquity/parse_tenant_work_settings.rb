@@ -61,6 +61,17 @@ module Ubiquity
        per_account_tenant_settings_hash && per_account_tenant_settings_hash[subdomain] && per_account_tenant_settings_hash[subdomain][settings_key]
      end
 
+     def get_settings_value_from_tenant_work_settings(settings_key)
+       work_settings_hash = tenant_work_settings_hash
+       work_settings_hash && work_settings_hash[settings_key]
+     end
+
+     private
+
+     def tenant_work_settings_json
+       settings = ENV['TENANTS_WORK_SETTINGS']
+     end
+
      private
 
      def tenant_work_settings_json
@@ -78,7 +89,6 @@ module Ubiquity
        else
          @url = nil
        end
-      end
-
+     end
   end
 end

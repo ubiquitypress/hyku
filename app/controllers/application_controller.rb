@@ -49,10 +49,8 @@ class ApplicationController < ActionController::Base
 
     # Overwriting the sign_out redirect path method
     def after_sign_out_path_for(resource_or_scope)
-      #using this because it is currently set to false for live and true for demo
-      to_be_removed_substituted_switch_off_for_live = helpers.check_for_setting_value_in_tenant_settings('hide_form_relationship_tab')
       url_path = helpers.check_for_setting_value_in_tenant_settings('live')
-      if to_be_removed_substituted_switch_off_for_live == true & url_path.present?
+      if url_path.present?
         ("https://" + url_path).strip
       else
         root_path

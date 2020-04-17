@@ -72,6 +72,12 @@ module Ubiquity
        settings = ENV['TENANTS_WORK_SETTINGS']
      end
 
+     private
+
+     def tenant_work_settings_json
+       settings = ENV['TENANTS_WORK_SETTINGS']
+     end
+
      def per_account_tenant_settings_json
        settings = ENV['TENANTS_SETTINGS']
      end
@@ -83,7 +89,6 @@ module Ubiquity
        else
          @url = nil
        end
-      end
-
+     end
   end
 end

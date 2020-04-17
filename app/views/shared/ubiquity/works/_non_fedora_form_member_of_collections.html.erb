@@ -5,7 +5,9 @@
            as: :select,
            collection: f.object.collections_for_select,
            selected: f.object.non_fedora_association_collection_id(params[:add_works_to_collection]),
-           input_html: { class: 'form-control', multiple: true } %>
+           hint: ' Please select a collection. Make sure the selected collection matches the name of the administrative set above',
+           label: 'Collection',
+           input_html: { class: 'form-control', multiple: true, prompt: 'pick' } %>
 
 <% elsif current_user.present?  & !current_ability.admin? %>
 
@@ -13,6 +15,8 @@
            as: :select,
            collection: f.object.public_collections_for_select,
            selected: f.object.non_fedora_association_collection_id(params[:add_works_to_collection]),
-           input_html: { class: 'form-control', multiple: true } %>
+           hint: ' Please select a collection. Make sure the selected collection matches the name of the administrative set above',
+           label: 'Collection',
+           input_html: { class: 'form-control', multiple: true, prompt: 'pick' } %>
 
 <% end %>

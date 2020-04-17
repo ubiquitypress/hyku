@@ -55,24 +55,35 @@ module Ubiquity
       end
      end
 
-    private
+     def get_settings_value_from_tenant_settings(settings_key)
+       tenant_work_settings_hash = per_account_tenant_settings_hash
+       subdomain = get_tenant_subdomain
+       per_account_tenant_settings_hash && per_account_tenant_settings_hash[subdomain] && per_account_tenant_settings_hash[subdomain][settings_key]
+     end
 
-    def tenant_work_settings_json
-      settings = ENV['TENANTS_WORK_SETTINGS']
-    end
+     def get_settings_value_from_tenant_work_settings(settings_key)
+       work_settings_hash = tenant_work_settings_hash
+       work_settings_hash && work_settings_hash[settings_key]
+     end
 
-    def per_account_tenant_settings_json
-      settings = ENV['TENANTS_SETTINGS']
-    end
+     private
 
-    def set_url(value)
-      parse_url = URI.parse(value)
-      if (parse_url.kind_of?(URI::HTTPS) || parse_url.kind_of?(URI::HTTP))
-        @url = parse_url
-      else
-        @url = nil
+     def tenant_work_settings_json
+       settings = ENV['TENANTS_WORK_SETTINGS']
+     end
+
+     def per_account_tenant_settings_json
+       settings = ENV['TENANTS_SETTINGS']
+     end
+
+     def set_url(value)
+       parse_url = URI.parse(value)
+       if (parse_url.kind_of?(URI::HTTPS) || parse_url.kind_of?(URI::HTTP))
+         @url = parse_url
+       else
+         @url = nil
+       end
       end
-    end
 
   end
 end

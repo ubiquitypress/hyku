@@ -4,21 +4,15 @@ module Ubiquity
 
     private
 
-    def get_work_settings
-      settings_parser_class = Ubiquity::ParseTenantWorkSettings.new(request.original_url)
-      settings_parser_class.tenant_work_settings_hash
-    end
-
     def redirect?
-      settings = get_work_settings
-      return true if settings.present? && settings['redirect_on'] == "true"
+      true if Ubiquity::ParseTenantWorkSettings.new(request.original_url).get_settings_value_from_tenant_work_settings('redirect_on')
     end
 
     def after_update_response
       live_url = Ubiquity::FetchTenantUrl.new(curation_concern).process_url
       respond_to do |wants|
         wants.html do
-          redirect_to "https://#{get_live_url}/work/#{curation_concern.parent_id}" and return if redirect?
+          redirect_to live_url and return if redirect?
           redirect_to [main_app, curation_concern], notice: "The file #{view_context.link_to(curation_concern, [main_app, curation_concern])} has been updated."
         end
         wants.json do

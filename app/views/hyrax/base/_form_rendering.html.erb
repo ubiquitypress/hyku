@@ -5,11 +5,13 @@
           Rendering
         </legend>
         <p>Select file(s) to be offered as as downloads for every image in Universal Viewer, for example a PDF of the whole <%= f.object.human_readable_type %>.</p>
-        <%= f.select :rendering_ids,
+        <% if f.object.model.try(:rendering_ids).present? %>
+          <%= f.select :rendering_ids,
                      f.object.select_files,
                      { include_blank: true },
                      { class: 'form-control', multiple: true } %>
+
+        <% end %>
       </fieldset>
     </div>
   </div>
-

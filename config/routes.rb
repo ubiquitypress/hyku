@@ -60,6 +60,8 @@ Rails.application.routes.draw do
 
            resources :files, defaults: {format: :json}, only: [:index]
            resource :featured_works, only: [:create, :destroy]
+           resource :reviews, only: [:create]
+
 
          end
 
@@ -77,6 +79,7 @@ Rails.application.routes.draw do
        post 'tenant/:tenant_id/users/login', to: 'sessions#create', as:  'user_login', defaults: {format: :json}
        get 'tenant/:tenant_id/users/log_out', to: 'sessions#destroy', as: 'user_log_out', defaults: {format: :json}
        post 'tenant/:tenant_id/users/refresh', to: 'sessions#refresh', as:  'user_refresh', defaults: {format: :json}
+       post 'tenant/:tenant_id/users/signup', to: 'registrations#create', as:  'user_signup', defaults: {format: :json}
 
      end
    end

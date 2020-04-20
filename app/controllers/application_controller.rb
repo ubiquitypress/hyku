@@ -22,6 +22,8 @@ class ApplicationController < ActionController::Base
   before_action :set_account_specific_connections!
 
   before_action :set_raven_context
+  after_action :store_location
+
 
   #UbiquityPress is temporarily using redirect_to to replace raise ActionController::RoutingError, 'Not Found' in rescue_from block
   rescue_from Apartment::TenantNotFound do
@@ -31,8 +33,29 @@ class ApplicationController < ActionController::Base
     invalid_record(exception)
   end
 
+  def store_location
+    if (request.path != "/users/sign_in" &&
+      request.path != "/users/sign_up" &&
+      request.path != "/users/password/new" &&
+      request.path != "/users/password/edit" &&
+      request.path != "/users/confirmation" &&
+      request.path != "/users/sign_out" &&
+      !request.xhr?) # don't store ajax calls
+      store_location_for(:user, request.fullpath)
+    end
+  end
+
   private
 
+    # Overwriting the sign_out redirect path method
+    def after_sign_out_path_for(resource_or_scope)
+      url_path = helpers.check_for_setting_value_in_tenant_settings('live')
+      if url_path.present?
+        ("https://" + url_path).strip
+      else
+        root_path
+      end
+    end
 
     def require_active_account!
       return unless Settings.multitenancy.enabled

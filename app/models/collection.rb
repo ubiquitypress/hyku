@@ -7,6 +7,9 @@ class Collection < ActiveFedora::Base
   include ::Ubiquity::CachingSingle
 
   include ::Hyrax::CollectionBehavior
+  #adds some method to that overrides hyrax collectionbehavior
+  include Ubiquity::CollectionBehaviourOverride
+
   # You can replace these metadata if they're not suitable
   include Hyrax::BasicMetadata
   self.indexer = CollectionIndexer

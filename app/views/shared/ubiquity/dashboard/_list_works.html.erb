@@ -1,0 +1,32 @@
+<%# Copied from Hyrax, this file may be remove once integrated with Hyrax v2.1 %>
+<%# https://github.com/samvera/hyrax/blob/v2.1.0/app/views/hyrax/dashboard/works/_list_works.html.erb %>
+
+
+<!-- used in views/hyrax/dashboard/works/_list_works.html.erb  -->
+<!-- used in views/hyrax/dashboards/collections/_list_works.html.erb -->
+<!-- used in shared/ubiquity/collections/_show_document_list_row.html.erb -->
+
+<div class='media-body'>
+  <div class='media-heading'>
+
+    <% redirect_url = redirect_work_url(document.id, request.original_url) %>
+
+    <% if document.id && redirect_url.present? %>
+      <%= link_to redirect_url, id: "src_copy_link#{document.id}", target: :_blank, class: 'document-title' do %>
+        <span class="sr-only">  <%= t("hyrax.dashboard.my.sr.show_label") %></span>
+        <%= document.title_or_label %>
+      <% end %>
+
+    <% else %>
+
+      <%= link_to [main_app, document], id: "src_copy_link#{document.id}", class: 'document-title' do %>
+        <span class="sr-only"> <%= t("hyrax.dashboard.my.sr.show_label") %></span>
+        <%= document.title_or_label %>
+      <% end %>
+
+    <% end %>
+    <br />
+    <%= render_collection_links(document) %>
+
+  </div>
+</div>

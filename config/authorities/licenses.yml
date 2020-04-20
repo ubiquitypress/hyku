@@ -20,9 +20,6 @@ terms:
   - id: https://creativecommons.org/publicdomain/mark/1.0/
     term: CC Public Domain Mark 1.0
     active: true
-  - id: http://creativecommons.org/publicdomain/mark/1.0/
-    term: CC Public Domain Mark 1.0
-    active: false
   - id: http://creativecommons.org/publicdomain/zero/1.0/
     term: CC0 1.0 Universal Public Domain
     active: true

@@ -13,17 +13,18 @@ class API::V1::SearchController < API::V1::ApiBaseController
 
   def facet
     reset_tenants_for_shared_search
-
     #This populates @fq passed as solr fq ie filter query
     if params[:f]
       params[:f].to_unsafe_h.map { |key, value| create_solr_filter_params(key, value) }
+      # filter_strong_params[:f].to_h.map { |key, value| create_solr_filter_params(key, value) }
     end
 
-    if params[:id] != 'all'
-      data = fetch_facet_by_name
-      render json: data
-    elsif params[:id] == 'all'
+    #it only have an id of :all when faceting eg api/v1/tenant_id/search/facet/all?q=review
+    if params[:id] == 'all'
       data = fetch_all_facet
+      render json: data
+    elsif params[:id] != 'all'
+      data = fetch_facet_by_name
       render json: data
     end
   end
@@ -34,6 +35,7 @@ class API::V1::SearchController < API::V1::ApiBaseController
     #This populates @fq passed as solr fq ie filter query
     if params[:f].present?
       params[:f].to_unsafe_h.map { |key, value| create_solr_filter_params(key, value) }
+      #filter_strong_params[:f].to_h.map { |key, value| create_solr_filter_params(key, value) }
     end
     #default sort uses "score desc, system_create_dtsi desc"
     response = CatalogController.new.repository.search(create_solr_params)
@@ -44,29 +46,28 @@ class API::V1::SearchController < API::V1::ApiBaseController
   end
 
   def create_solr_params
+    solr_params ={ 'q' => '', 'fq' =>  @fq, "qf" => solr_query_fields, "qt" => "search",
+    "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
+    "institution_sim", "language_sim", "file_availability_sim"],  "sort" => sort,
+     'rows' => limit, 'start' => offset}
+
     if params[:q].present?
-      { q: build_query_with_term, fq: @fq, "qf" => solr_query_fields,
-      "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
-      "institution_sim", "language_sim", "file_availability_sim"],  "sort" => sort,
-       rows: limit, start: offset, "defType" => "lucene"}
+      solr_params.merge!({"q" => build_query_with_term, "defType" => "lucene", "user_query"=> filter_strong_params[:q]})
     elsif params[:q].blank?
-      { 'q' => '', 'fq' =>  @fq, "qf" => solr_query_fields, "qt" => "search",
-      "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim",
-      "institution_sim", "language_sim", "file_availability_sim"],  "sort" => sort,
-       'rows' => limit, 'start' => offset}
+      solr_params
     end
   end
 
   def create_solr_filter_params(key, hash)
     hash.each do |item|
-       @fq << "{!term f=#{key}}#{item}"
+      @fq << "{!term f=#{key}}#{item}"
     end
   end
 
   def build_query_with_term
     term = params[:q]
     if term.present?
-    "{!lucene}_query_:\"{!dismax v=#{term}}\" _query_:\"{!join from=id to=file_set_ids_ssim}{!dismax v=#{term}}\""
+      "{!lucene}_query_:\"{!dismax v=$user_query}\" _query_:\"{!join from=id to=file_set_ids_ssim}{!dismax v=$user_query}\""
     else
       ""
     end
@@ -74,14 +75,17 @@ class API::V1::SearchController < API::V1::ApiBaseController
 
   def set_solr_filter_query
     if current_user.present?
-      @fq = [search_models].concat(filter_using_visibility(current_user))
+      @fq = search_models.concat(filter_using_visibility(current_user))
     else
-      @fq = [search_models].concat filter_using_visibility
+      @fq = search_models.concat filter_using_visibility
     end
   end
 
   def search_models
-     "{!terms f=has_model_ssim}Article,Book,BookContribution,ConferenceItem,Dataset,ExhibitionItem,Image,Report,ThesisOrDissertation,TimeBasedMedia,GenericWork,BookChapter,Media,Presentation,Uncategorized,TextWork,NewsClipping,ArticleWork,BookWork,ImageWork,ThesisOrDissertationWork,Collection"
+     [
+       "{!terms f=has_model_ssim}Article,Book,BookContribution,ConferenceItem,Dataset,ExhibitionItem,Image,Report,ThesisOrDissertation,TimeBasedMedia,GenericWork,BookChapter,Media,Presentation,Uncategorized,TextWork,NewsClipping,ArticleWork,BookWork,ImageWork,ThesisOrDissertationWork,Collection"
+     ]
+
   end
 
   def set_search_default
@@ -98,7 +102,6 @@ class API::V1::SearchController < API::V1::ApiBaseController
 
   def reset_tenants_for_shared_search
     if params[:shared_search].present?
-      #Apartment::Tenant.reset
       AccountElevator.switch!(@tenant.try(:parent).try(:cname) )
     end
   end
@@ -125,36 +128,39 @@ class API::V1::SearchController < API::V1::ApiBaseController
     facet_limit_key = "f" + "." + facet_name +  ".facet.limit"
 
     solr_params = {"qt"=>"search", q: build_query_with_term, "facet.field" => facet_name, "facet.query"=>[], "facet.pivot"=>[], "fq"=> @fq,
-    "hl.fl"=>[], "rows"=>0, "qf" =>  solr_query_fields, "pf"=>"title_tesim", "facet"=>true,
-     facet_limit_key => limit, facet_offset_key => facet_offset_limit, "sort"=> sort }
+    "hl.fl"=>[], "rows"=>0, "qf" =>  solr_query_fields, "pf"=>"title_tesim", "facet"=>true, facet_limit_key => limit,
+     facet_offset_key => facet_offset_limit, "sort"=> sort
+     }
+
+     if params[:q].present?
+       solr_params.merge!({"user_query"=> filter_strong_params[:q], "defType" => "lucene"})
+     end
 
      search_type =  params[:shared_search].present? ? 'shared_search' : 'normal_search'
 
-     #record = Rails.cache.fetch("facet/#{@tenant.cname}/#{search_type}/#{params[:id]}/#{page}/#{facet_offset_limit}/#{build_query_with_term}/#{@fq}/#{sort}", expires_in: 30.minutes) do
-       response = CatalogController.new.repository.search(solr_params)
-       facet_count_list =  response['facet_counts']["facet_fields"][facet_name]
-       Hash[*facet_count_list]
-     #end
+     response = CatalogController.new.repository.search(solr_params)
+     facet_count_list =  response['facet_counts']["facet_fields"][facet_name]
+     Hash[*facet_count_list]
   end
 
   def fetch_all_facet
     search_type =  params[:shared_search].present? ? 'shared_search' : 'normal_search'
-
     solr_params = {"qt"=>"search", q: build_query_with_term,
-      "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim", "institution_sim", "language_sim", "file_availability_sim"],
-       "facet.query"=>[], "facet.pivot"=>[], "fq"=> @fq,
-     "hl.fl"=>[], "rows"=>0, "qf" =>  solr_query_fields, "pf"=>"title_tesim", "facet"=>true, "sort"=> sort ,
-     "f.resource_type_sim.facet.limit" => 10000, "f.creator_search_sim.facet.limit" => 10000, "f.keyword_sim.facet.limit" => 10000, "f.member_of_collections_ssim.facet.limit" => 10000,
-     "f.institution_sim.facet.limit" => 10000, "f.language_sim.facet.limit" => 10000, "f.file_availability_sim.facet.limit" => 10000
+      "facet.field" => ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim", "collection_names_sim",  "institution_sim", "language_sim", "file_availability_sim"],
+      "facet.query"=>[], "facet.pivot"=>[], "fq"=> @fq,  "hl.fl"=>[], "rows"=>0, "qf" =>  solr_query_fields, "pf"=>"title_tesim", "facet"=>true, "sort"=> sort ,
+      "f.resource_type_sim.facet.limit" => 10000, "f.creator_search_sim.facet.limit" => 10000, "f.keyword_sim.facet.limit" => 10000, "f.member_of_collections_ssim.facet.limit" => 10000,
+     "f.institution_sim.facet.limit" => 10000, "f.language_sim.facet.limit" => 10000, "f.file_availability_sim.facet.limit" => 10000, "f.collection_names_sim.facet.limit" => 10000
     }
 
-    #record = Rails.cache.fetch("facet/#{@tenant.cname}/#{search_type}/all/#{page}/#{facet_offset_limit}/#{build_query_with_term}/#{@fq}/#{sort}", expires_in: 30.minutes) do
-       response = CatalogController.new.repository.search(solr_params)
-       facet_count_list =  response['facet_counts']["facet_fields"]
-       ["resource_type_sim", "creator_search_sim", "keyword_sim", "member_of_collections_ssim", "institution_sim", "language_sim",  "file_availability_sim"].map do |key|
-         {key => Hash[*facet_count_list[key] ] }
-       end
-    #end
+    if params[:q].present?
+      solr_params.merge!({"user_query"=> filter_strong_params[:q], "defType" => "lucene"})
+    end
+
+    response = CatalogController.new.repository.search(solr_params)
+      facet_count_list =  response['facet_counts']["facet_fields"]
+      ["resource_type_sim", "creator_search_sim", "keyword_sim", "collection_names_sim", "member_of_collections_ssim", "institution_sim", "language_sim",  "file_availability_sim"].map do |key|
+      {key => Hash[*facet_count_list[key] ] }
+    end
 
   end
 

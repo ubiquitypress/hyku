@@ -1,0 +1,13 @@
+<!-- Copied from Hyrax https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/base/_form_member_of_collections.html.erb -->
+<!-- rendered from app/views/shared/ubiquity/works/_form_relationships.html.erb-->
+
+<h2><%= t("hyrax.works.form.in_collections") %></h2>
+<div id="collection-widget">
+
+  <% if check_for_setting_value_in_tenant_settings("turn_off_fedora_collection_work_association") == 'true' %>
+    <%= render 'shared/ubiquity/works/non_fedora_form_member_of_collections', f: f %>
+  <% else %>
+    <%= render 'shared/ubiquity/works/fedora_form_member_of_collections', f: f %>
+  <% end %>
+
+</div>

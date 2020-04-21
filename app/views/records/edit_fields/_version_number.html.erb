@@ -1,8 +1,7 @@
 <% my_model_name = f.object.model.class.to_s.underscore %>
-<% tenant_work_settings = get_tenant_work_settings %>
 
 <label class="control-label" for="<%= my_model_name %>_version_number"><%= tenant_work_settings['metadata_labels']['version_number'] %></label>
-<p class="help-block"><%= tenant_work_settings['help_texts']['version_number'] %></p>
+<p class="help-block"><%= check_for_nested_value_in_tenant_settings('help_texts','version_number') %></p>
 <%= text_field_tag "#{my_model_name}[version_number][]", f.object.model.version_number.first, id: "#{my_model_name}_version_number",
   class: "form-control ubiquity-version-number" %>
 <br>

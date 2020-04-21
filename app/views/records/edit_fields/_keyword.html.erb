@@ -1,6 +1,4 @@
-<% tenant_work_settings =  get_tenant_work_settings  %>
-
 <%= f.input :keyword, as: :multi_value,
             input_html: { class: 'ubiquity-keyword form-control', multiple: true },
             required: f.object.required?(key),
-            hint: tenant_work_settings['help_texts']['keyword'] %>
+            hint: check_for_nested_value_in_tenant_settings('help_texts','keyword') %>

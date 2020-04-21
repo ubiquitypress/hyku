@@ -1,5 +1,3 @@
-<% tenant_work_settings =  get_tenant_work_settings  %>
-
 <%= f.input :issn,
             input_html: { class: 'ubiquity-issn' },
-            hint: tenant_work_settings['help_texts']['issn']%>
+            hint: check_for_nested_value_in_tenant_settings('help_texts','issn')%>

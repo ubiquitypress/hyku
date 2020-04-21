@@ -5,4 +5,4 @@ en:
     select_type:
       news_clipping:
         name:               "News Clipping"
-        description:        "News clipping works"
+        description:        "News clipping works."

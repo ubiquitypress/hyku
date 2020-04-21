@@ -1,6 +1,7 @@
 <% my_model_name = f.object.model.class.to_s.underscore %>
-<label class="control-label" for="<%= my_model_name %>_version_number">Version number</label>
-<p class="help-block">The version number of the resource. If there are major changes then you must mint a new identifier e.g. DOI.</p>
+
+<label class="control-label" for="<%= my_model_name %>_version_number"><%= check_for_nested_value_in_tenant_settings('metadata_labels','version_number')%></label>
+<p class="help-block"><%= check_for_nested_value_in_tenant_settings('help_texts','version_number') %></p>
 <%= text_field_tag "#{my_model_name}[version_number][]", f.object.model.version_number.first, id: "#{my_model_name}_version_number",
   class: "form-control ubiquity-version-number" %>
 <br>

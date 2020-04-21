@@ -23,7 +23,7 @@
 
     <% else %>
       <label class="control-label multi_value optional" for="#{template}_contributor_name_type">
-        Contributor name type <span class="<%= span_content_css%>"><%= span_content %></span></label>
+        Contributor Name Type <span class="<%= span_content_css%>"><%= span_content %></span></label>
 
       <%= select_tag "#{template}[contributor_group][][contributor_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("contributor_name_type")),
                     required: required_toggle , class: 'ubiquity_contributor_name_type', data: {field_name:'ubiquity_contributor_name_type'} %>

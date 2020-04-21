@@ -66,6 +66,11 @@ module Ubiquity
        work_settings_hash && work_settings_hash[settings_key]
      end
 
+     def get_nested_settings_value_from_tenant_work_settings(settings_key1, settings_key2)
+       work_settings_hash = tenant_work_settings_hash
+       work_settings_hash && work_settings_hash[settings_key1] && work_settings_hash[settings_key1][settings_key2]
+     end
+
      private
 
      def tenant_work_settings_json

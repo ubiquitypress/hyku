@@ -21,7 +21,7 @@
 
     <% else %>
       <label class="control-label multi_value optional" for="#{template}_creator_name_type">
-        Creator name type <span class="label label-info required-tag">required</span></label>
+        Creator Name Type <span class="label label-info required-tag">required</span></label>
 
       <%= select_tag "#{template}[creator_group][][creator_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("creator_name_type")),
                     required: true, class: 'ubiquity_creator_name_type', data: {field_name:'ubiquity_creator_name_type'} %>

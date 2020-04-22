@@ -14,7 +14,10 @@ module Ubiquity
                         funder funder_project_reference event_title event_date event_location series_name book_title editor journal_title alternative_journal_title volume edition version
                         issue pagination article_number publisher place_of_publication isbn issn eissn current_he_institution date_accepted date_submitted official_url
                         related_url related_exhibition related_exhibition_date language license rights_statement rights_holder doi qualification_name qualification_level
-                        alternate_identifier related_identifier peer_reviewed keyword dewey library_of_congress_classification additional_information)
+                        alternate_identifier related_identifier peer_reviewed keyword dewey library_of_congress_classification additional_information
+                        migration_id collection_id collection_names is_included_in degree irb_number irb_status location outcome participant reading_level
+                        challenged photo_caption photo_description buy_book page_display_order_number
+                       )
 
     def initialize(object=nil)
        if object.present?

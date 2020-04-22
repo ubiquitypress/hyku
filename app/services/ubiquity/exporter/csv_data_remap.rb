@@ -1,6 +1,6 @@
 module Ubiquity
 
-  class CsvDataRemap
+  class Exporter::CsvDataRemap
     attr_accessor :data, :ordered_data, :retained_object_attributes, :unordered_hash
     UN_NEEDED_KEYS = ["head", "tail","proxy_depositor", "on_behalf_of", "arkivo_checksum", "owner",
                      "label", "relative_path", "import_url", "based_near", "identifier",  "access_control_id",
@@ -51,7 +51,7 @@ module Ubiquity
 
     def rename_hash_keys_to_csv_keys(main_hash, hash_with_new_keys)
       common_keys = main_hash.keys & hash_with_new_keys.keys
-      common_keys.each {|term| main_hash[hash_with_new_keys[term]] = main_hash.delete(term) if hash_with_new_keys.keys.include?(term) && main_hash.keys.include?(term)}
+      common_keys.lazy.each {|term| main_hash[hash_with_new_keys[term]] = main_hash.delete(term) if hash_with_new_keys.keys.include?(term) && main_hash.keys.include?(term)}
       main_hash
     end
 

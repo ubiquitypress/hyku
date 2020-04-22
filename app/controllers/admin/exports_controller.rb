@@ -5,7 +5,7 @@ module Admin
     end
 
     def export_database
-      csv_generator = Ubiquity::CsvGenerator.new
+      csv_generator = Ubiquity::Exporter::CsvGenerator.new(request.original_url)
       data = csv_generator.export_database_as_remapped_data
       respond_to do |format|
         format.csv { send_data data, filename: "#{current_account.cname}_metadata.csv" }
@@ -15,15 +15,14 @@ module Admin
     def export_remap_model
       model = params['model']
       #example of exporting jist a single model class eg dataset
-      data = Ubiquity::CsvGenerator.new.export_remap_model(model)
+      data = Ubiquity::Exporter::CsvGenerator.new(request.original_url).export_remap_model(model)
       respond_to do |format|
         format.csv { send_data data, filename: "#{current_account.cname}_#{model}_metadata.csv" }
       end
     end
 
     def export_model
-      model = params['model']
-      data = Ubiquity::CsvGenerator.regular_export
+      data = Ubiquity::Exporter::CsvGenerator.new(request.original_url).regular_export
       respond_to do |format|
         format.csv {render plain: data, content_type: 'text/plain'}
       end
@@ -38,8 +37,14 @@ module Admin
     end
 
     private
-      def process_email
-        current_account.settings[params[:email_type]].first.split(';')
-      end
+
+    def allowed_params
+      params.permit(:model, :locale)
+    end
+
+    def process_email
+      current_account.settings[params[:email_type]].first.split(';')
+    end
+
   end
 end

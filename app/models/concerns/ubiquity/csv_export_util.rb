@@ -3,7 +3,7 @@ module Ubiquity
     extend ActiveSupport::Concern
 
     def csv_hash
-      Ubiquity::CsvDataRemap.new(self).unordered_hash
+      Ubiquity::Exporter::CsvDataRemap.new(self).unordered_hash
     end
 
     #mainly remapping array values to have pipe as as seperator
@@ -46,7 +46,7 @@ module Ubiquity
          all_keys = csv_exporter_object.flat_map(&:keys).uniq
          #resort using ordering by suffix eg creator_isni_1 comes before creator_isni_2
          all_keys = all_keys.sort_by{ |name| [name[/\d+/].to_i, name] }
-         Ubiquity::CsvDataRemap::CSV_HEARDERS_ORDER.each {|k| all_keys.select {|e| sorted_header << e if e.start_with? k} }
+         Ubiquity::Exporter::CsvDataRemap::CSV_HEARDERS_ORDER.each {|k| all_keys.select {|e| sorted_header << e if e.start_with? k} }
 
          puts "=== finished resorting csv headers from remappedmodels=="
 
@@ -55,9 +55,9 @@ module Ubiquity
 
        def csv_data
          puts "=== starting remapping models=="
-         data ||= all.map do |object|
+         data ||= all.lazy.map do |object|
            object.csv_hash
-         end
+         end.force
 
          puts "=== finished remapping models=="
 
@@ -72,7 +72,7 @@ module Ubiquity
 
           csv = CSV.generate(headers: true) do |csv|
             csv << sorted_header
-            csv_data.each do |hash|
+            csv_data.lazy.each do |hash|
               csv << hash.values_at(*sorted_header)
             end
           end

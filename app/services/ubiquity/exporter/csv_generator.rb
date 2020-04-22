@@ -6,12 +6,15 @@
 #Ubiquity::CsvGenerator.new.export_remap_model('Article')
 
 module Ubiquity
-  class CsvGenerator
-    DEFAULT_WORKS = [Article, Book, BookContribution, ConferenceItem, Dataset, ExhibitionItem, Image, Report, ThesisOrDissertation, TimeBasedMedia, GenericWork].freeze
-    attr_accessor :db_record_count, :model_record_count
+  class Exporter::CsvGenerator
+    attr_accessor :db_record_count, :model_record_count, :cname_or_original_url
+
+    def initialize(cname_or_original_url = nil)
+      @cname_or_original_url = cname_or_original_url
+    end
 
     #use with regular_export
-    def self.csv_header
+    def csv_header
       removed_keys = ["head", "tail","proxy_depositor", "on_behalf_of", "arkivo_checksum", "owner",  "version", "label", "relative_path", "import_url", "based_near", "identifier", "access_control_id", "representative_id", "thumbnail_id", "admin_set_id", "embargo_id", "lease_id", "bibliographic_citation", "state",  "creator_search"]
       dataset = Dataset.attribute_names - removed_keys
       conference_item = ConferenceItem.attribute_names - removed_keys
@@ -22,11 +25,13 @@ module Ubiquity
     end
 
    #use with csv_header
-    def self.regular_export
+    def regular_export
+      model_lists = Ubiquity::SharedMethods.tenant_work_list(cname_or_original_url)
+
       csv = CSV.generate(headers: true) do |csv|
         csv << csv_header
-        DEFAULT_WORKS.each do |klass|
-          klass.all.each do |object|
+        model_lists.each do |klass|
+          klass.all.lazy.each do |object|
             #get_csv_data comes from csv_export_util module
             csv << object.get_csv_data
           end
@@ -48,7 +53,7 @@ module Ubiquity
     end
 
     def gather_record
-      @all_data ||= Ubiquity::CsvData.new.fetch_all_record
+      @all_data ||= Ubiquity::Exporter::CsvData.new(cname_or_original_url).fetch_all_record
       @db_record_count ||= @all_data.all_records.length
       @all_data.all_records
     end
@@ -57,7 +62,7 @@ module Ubiquity
       sorted_header = []
       all_keys = csv_data_object.flat_map(&:keys).uniq
       all_keys = all_keys.sort_by{ |name| [name[/\d+/].to_i] }
-      Ubiquity::CsvDataRemap::CSV_HEARDERS_ORDER.each {|k| all_keys.select {|e| sorted_header << e if e.start_with? k} }
+      Ubiquity::Exporter::CsvDataRemap::CSV_HEARDERS_ORDER.each {|k| all_keys.select {|e| sorted_header << e if e.start_with? k} }
       sorted_header.uniq
     end
 

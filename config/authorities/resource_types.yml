@@ -290,7 +290,7 @@ terms:
     term: Report
   - id: NewsClipping Intellectual Freedom News
     term: Intellectual Freedom News
-  - id: ArticleWork default Article
+  - id: ArticleWork Default Article
     term: Article
   - id: ArticleWork Research Article
     term: Research Article

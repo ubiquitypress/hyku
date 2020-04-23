@@ -28,14 +28,17 @@ module Ubiquity
       @tenant = data['tenant'] || data[:tenant]
       @domain = data['domain'] || data[:domain]
       @tenant_domain = @tenant + '.' + @domain
-      @collection_id = data['collection_id'] || data[:collection_id]
-      data.merge!({'collection_names' =>  add_work_to_collection.title.try(:first)}) if add_work_to_collection.try(:title).present?
       @data_id  = data.delete('id') || data.delete(:id)
       @data_hash = HashWithIndifferentAccess.new(data)
       puts "@data_hash values #{@data_hash.inspect}"
       @file = @data_hash[:file]
       @ubiquity_model_class = @data_hash.with_indifferent_access["type"].try(:constantize) || model_instance.class
       @work_instance = model_instance
+      @collection_ids = (data['collection_id'] || data[:collection_id]).split('||').map(&:strip)
+      @data_hash[:collection_id] = @collection_ids
+      puts "DATA HASH COLLECTION ID IS #{@data_hash[:collection_id]}"
+      @data_hash[:collection_id].flatten
+      @data_hash.merge!({'collection_names' =>  merge_collection_names | model_instance.collection_names.to_a})
     end
 
     def run
@@ -69,14 +72,19 @@ module Ubiquity
 
     private
 
+    def merge_collection_names
+      collections = add_work_to_collection
+      collections.map {|col| col.title.first}.compact
+    end
+
     def add_work_to_collection
       AccountElevator.switch!("#{@tenant_domain}")
-      if @collection_id.present? && @work_instance.class != Collection
-        collection = ActiveFedora::Base.find(@collection_id)
-       #AddCollectionAndWorkFedoraRelationship.perform_later(@work_instance.id, @collection_id, @work_instance.account_cname)
+      if @collection_ids.present? && @work_instance.class != Collection
+        collections = ActiveFedora::Base.where("{!terms f=id}#{@collection_ids.join(',')}")
+       #AddCollectionAndWorkFedoraRelationship.perform_later(@work_instance.id, @collection_ids, @work_instance.account_cname)
       end
       rescue ActiveFedora::ObjectNotFoundError
-        $stdout.puts "collection with id #{@collection_id} does not exist"
+        $stdout.puts "collection with id #{id} does not exist"
     end
 
     #determine what hash keys to use. For existing records using the attributes key and for new records use the keys from the imported json
@@ -95,8 +103,8 @@ module Ubiquity
 
     def create_or_update_work
       if @work_instance.new_record?
+        attributes_hash['collection_id'].flatten!
         @work_instance.attributes = attributes_hash
-        puts "creating a new-work #{@work_instance.inspect}"
         @work_instance.save!
       else
         puts "updating-work with #{attributes_hash.inspect}"

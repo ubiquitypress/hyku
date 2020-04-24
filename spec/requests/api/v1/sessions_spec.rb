@@ -40,7 +40,7 @@ RSpec.describe API::V1::SessionsController, type: :request do
      returned_cookie = response.cookies.with_indifferent_access[:jwt]
 
      expect(parse_response['status']).to eq(401)
-     expect(parse_response['message']).to eq("This is not a valid token, in order to refresh you must send back a valid token or you must re-log in")
+     expect(parse_response['message']).to eq("Invalid email or password.")
      expect(returned_cookie).to be_falsey
     end
 
@@ -51,7 +51,7 @@ RSpec.describe API::V1::SessionsController, type: :request do
       returned_cookie = response.cookies.with_indifferent_access[:jwt]
       cookie_value = returned_cookie
       expect(parse_response['status']).to eq(401)
-      expect(parse_response['message']).to eq("This is not a valid token, in order to refresh you must send back a valid token or you must re-log in")
+      expect(parse_response['message']).to eq("Invalid email or password.")
       expect(returned_cookie).to be_falsey
     end
   end

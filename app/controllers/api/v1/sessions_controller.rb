@@ -42,7 +42,7 @@ class API::V1::SessionsController < API::V1::ApiBaseController
   private
 
   def user_error
-    message = 'This is not a valid token, in order to refresh you must send back a valid token or you must re-log in'
+    message = 'Invalid email or password.'
     error_object = Ubiquity::ApiError::NotFound.new(status: 401, code: 'Invalid credentials', message: message)
     render json: error_object.error_hash
   end

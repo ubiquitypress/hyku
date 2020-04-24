@@ -81,7 +81,7 @@ module Ubiquity
        #AddCollectionAndWorkFedoraRelationship.perform_later(@work_instance.id, @collection_ids, @work_instance.account_cname)
       end
       rescue ActiveFedora::ObjectNotFoundError
-        $stdout.puts "collection with id #{id} does not exist"
+        $stdout.puts "collection(s) with id(s) #{@collection_ids} does not exist"
     end
 
     #determine what hash keys to use. For existing records using the attributes key and for new records use the keys from the imported json

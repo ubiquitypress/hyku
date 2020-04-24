@@ -95,7 +95,7 @@ module Ubiquity
       else
         @hash_for_import = work_hash_with_indifference_access.slice(*@data.keys)
       end
-
+      puts "creating a new-work #{@work_instance.inspect}"
     end
 
     def create_or_update_work

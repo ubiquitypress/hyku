@@ -34,11 +34,8 @@ module Ubiquity
       @file = @data_hash[:file]
       @ubiquity_model_class = @data_hash.with_indifferent_access["type"].try(:constantize) || model_instance.class
       @work_instance = model_instance
-      @collection_ids = (data['collection_id'] || data[:collection_id]).split('||').map(&:strip)
-      @data_hash[:collection_id] = @collection_ids
-      puts "DATA HASH COLLECTION ID IS #{@data_hash[:collection_id]}"
-      @data_hash[:collection_id].flatten
-      @data_hash.merge!({'collection_names' =>  merge_collection_names | model_instance.collection_names.to_a})
+      @collection_ids = (data.delete('collection_id') || data.delete(:collection_id)).split('||').map(&:strip)
+      @attributes_hash.merge!({"collection_id" => @collection_ids, 'collection_names' =>  merge_collection_names | model_instance.collection_names.to_a})
     end
 
     def run
@@ -103,7 +100,6 @@ module Ubiquity
 
     def create_or_update_work
       if @work_instance.new_record?
-        attributes_hash['collection_id'].flatten!
         @work_instance.attributes = attributes_hash
         @work_instance.save!
       else

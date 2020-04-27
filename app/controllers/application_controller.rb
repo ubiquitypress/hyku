@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
     token = get_auth_token
 
     if shared_login.present? && token.present?
-      api_user = User.find_by(id: @token_id)  if @token_id.present?
+      api_user = User.find_by(id: token)
     end
     if token.present? && api_user.present?
       sign_in api_user, store: false
@@ -66,10 +66,10 @@ class ApplicationController < ActionController::Base
       auth_header = cookies[:jwt]
       if auth_header.present?
         jwt = Ubiquity::Api::JwtGenerator.decode(auth_header).try(:with_indifferent_access)
-        @token_id = jwt['id']
+        jwt['id']
       end
     end
-    
+
     # Overwriting the sign_out redirect path method
     def after_sign_out_path_for(resource_or_scope)
       url_path = helpers.check_for_setting_value_in_tenant_settings('live')

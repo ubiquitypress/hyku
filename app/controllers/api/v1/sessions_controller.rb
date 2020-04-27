@@ -15,6 +15,7 @@ class API::V1::SessionsController < API::V1::ApiBaseController
   end
 
   def destroy
+    sign_out(current_user)
     domain = ('.' + request.host)
     response.set_cookie(
         :jwt,

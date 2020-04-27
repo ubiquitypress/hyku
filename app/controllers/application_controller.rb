@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base
 
   before_action :require_active_account!, if: :multitenant?
   before_action :set_account_specific_connections!
+  before_action :authenticate_user_from_jwt_token!
 
   before_action :set_raven_context
   after_action :store_location
@@ -45,8 +46,30 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def authenticate_user_from_jwt_token!
+    settings_object = Ubiquity::ParseTenantWorkSettings.new(request.original_url)
+    shared_login = settings_object.get_settings_value_from_tenant_work_settings("shared_login")
+    token = get_auth_token
+
+    if shared_login.present? && token.present?
+      api_user = User.find_by(id: @token_id)  if @token_id.present?
+    end
+    if token.present? && api_user.present?
+      sign_in api_user, store: false
+      @current_user ||= api_user
+    end
+  end
+
   private
 
+    def get_auth_token
+      auth_header = cookies[:jwt]
+      if auth_header.present?
+        jwt = Ubiquity::Api::JwtGenerator.decode(auth_header).try(:with_indifferent_access)
+        @token_id = jwt['id']
+      end
+    end
+    
     # Overwriting the sign_out redirect path method
     def after_sign_out_path_for(resource_or_scope)
       url_path = helpers.check_for_setting_value_in_tenant_settings('live')

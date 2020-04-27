@@ -47,8 +47,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_user_from_jwt_token!
-    settings_object = Ubiquity::ParseTenantWorkSettings.new(request.original_url)
-    shared_login = settings_object.get_settings_value_from_tenant_work_settings("shared_login")
+    shared_login = helpers.check_for_setting_value_in_tenant_settings("shared_login")
     token = get_auth_token
 
     if shared_login.present? && token.present?

@@ -47,10 +47,9 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_user_from_jwt_token!
-    shared_login = helpers.check_for_setting_value_in_tenant_settings("shared_login")
     token = get_auth_token
 
-    if shared_login.present? && token.present?
+    if token.present?
       api_user = User.find_by(id: token)
     end
     if token.present? && api_user.present?

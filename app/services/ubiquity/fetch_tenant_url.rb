@@ -13,7 +13,7 @@ module Ubiquity
       @work_type = object.try(:has_model).try(:first).to_s
       @is_collection = object.collection?
       @settings = Ubiquity::ParseTenantWorkSettings.new(@account_cname)
-      @settings_hash = @settings.per_account_tenant_settings_hash
+      @settings_hash = @settings.tenant_settings_hash
       @subdomain = @settings.get_tenant_subdomain
     end
 

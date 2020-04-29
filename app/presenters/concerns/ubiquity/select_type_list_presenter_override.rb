@@ -20,12 +20,12 @@ module Ubiquity
 
       def check_work_settingsinclude_tenant_name(settings_hash)
         if settings_hash.present?
-          return_custom_work_list(tenant_work_settings_hash)
+          return_custom_work_list(tenant_settings_hash)
         end
       end
 
-      def return_custom_work_list(tenant_work_settings_hash)
-        work_list = tenant_work_settings_hash.presence && tenant_work_settings_hash["registered_curation_concern_types"]
+      def return_custom_work_list(tenant_settings_hash)
+        work_list = tenant_settings_hash.presence && tenant_settings_hash["registered_curation_concern_types"]
 
         work_list_array = work_list.presence && work_list.split(',')
         if work_list_array.present?

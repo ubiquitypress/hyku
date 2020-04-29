@@ -67,10 +67,6 @@ module Ubiquity
 
      private
 
-     def tenant_work_settings_json #Delete
-       settings = ENV['TENANTS_WORK_SETTINGS']
-     end
-
      def tenant_settings_json
        settings = ENV['TENANTS_SETTINGS']
      end

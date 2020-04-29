@@ -23,8 +23,8 @@ module Ubiquity
     end
 
     def redirection_settings_hash
-      if tenant_work_settings_hash.present?
-        tenant_work_settings_hash["redirect_show_link"]
+      if tenant_settings_hash.present?
+        tenant_settings_hash["redirect_show_link"]
       end
     end
 
@@ -41,49 +41,33 @@ module Ubiquity
       end
     end
 
-    def tenant_work_settings_hash
-      is_valid_json = Ubiquity::JsonValidator.valid_json?(tenant_work_settings_json)
+    def tenant_settings_hash
+      is_valid_json = Ubiquity::JsonValidator.valid_json?(tenant_settings_json)
       if is_valid_json
-        JSON.parse(tenant_work_settings_json)
-      end
-    end
-
-    def per_account_tenant_settings_hash
-      is_valid_json = Ubiquity::JsonValidator.valid_json?(per_account_tenant_settings_json)
-      if is_valid_json
-        JSON.parse(per_account_tenant_settings_json)
+        JSON.parse(tenant_settings_json)
       end
      end
 
-     def get_settings_value_from_tenant_settings(settings_key)
-       tenant_work_settings_hash = per_account_tenant_settings_hash
+     def get_per_account_settings_value_from_tenant_settings(settings_key)
+       tenant_settings_hash = tenant_settings_hash
        subdomain = get_tenant_subdomain
-       per_account_tenant_settings_hash && per_account_tenant_settings_hash[subdomain] && per_account_tenant_settings_hash[subdomain][settings_key]
+       tenant_settings_hash && tenant_settings_hash[subdomain] && tenant_settings_hash[subdomain][settings_key]
      end
 
      def get_settings_value_from_tenant_work_settings(settings_key)
-       work_settings_hash = tenant_work_settings_hash
+       work_settings_hash = tenant_settings_hash
        work_settings_hash && work_settings_hash[settings_key]
      end
 
-     def get_nested_settings_value_from_tenant_work_settings(settings_key1, settings_key2)
-       work_settings_hash = tenant_work_settings_hash
+     def get_nested_settings_value_from_tenant_settings(settings_key1, settings_key2)
+       work_settings_hash = tenant_settings_hash
        work_settings_hash && work_settings_hash[settings_key1] && work_settings_hash[settings_key1][settings_key2]
      end
 
-     private
-
-     def tenant_work_settings_json
-       settings = ENV['TENANTS_WORK_SETTINGS']
-     end
 
      private
 
-     def tenant_work_settings_json
-       settings = ENV['TENANTS_WORK_SETTINGS']
-     end
-
-     def per_account_tenant_settings_json
+     def tenant_settings_json
        settings = ENV['TENANTS_SETTINGS']
      end
 

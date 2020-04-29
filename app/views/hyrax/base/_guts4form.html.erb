@@ -1,7 +1,7 @@
 <!-- copied frm here and moved to the files below so we can remove relationship tab
    in adapted_guts4form and add its content to shared/ubiquity/_form_metatdat  -->
 
-<% if check_for_setting_value_in_tenant_settings('hide_form_relationship_tab') == true %>
+<% if check_for_per_account_value_in_tenant_settings('hide_form_relationship_tab') == true %>
   <%= render 'shared/ubiquity/works/adpated_guts4form', f: f %>
 <% else %>
   <%= render 'shared/ubiquity/works/guts4form', f: f %>

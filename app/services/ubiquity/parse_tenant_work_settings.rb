@@ -48,7 +48,7 @@ module Ubiquity
       end
      end
 
-     def get_settings_value_from_tenant_settings(settings_key)
+     def get_per_account_settings_value_from_tenant_settings(settings_key) # get_per_account_settings_value_from_tenant_settings
        tenant_settings_hash = tenant_settings_hash
        subdomain = get_tenant_subdomain
        tenant_settings_hash && tenant_settings_hash[subdomain] && tenant_settings_hash[subdomain][settings_key]
@@ -59,7 +59,7 @@ module Ubiquity
        work_settings_hash && work_settings_hash[settings_key]
      end
 
-     def get_nested_settings_value_from_tenant_work_settings(settings_key1, settings_key2)
+     def get_nested_settings_value_from_tenant_settings(settings_key1, settings_key2)
        work_settings_hash = tenant_settings_hash
        work_settings_hash && work_settings_hash[settings_key1] && work_settings_hash[settings_key1][settings_key2]
      end

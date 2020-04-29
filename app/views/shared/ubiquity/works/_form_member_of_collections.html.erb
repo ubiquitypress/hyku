@@ -4,7 +4,7 @@
 <h2><%= t("hyrax.works.form.in_collections") %></h2>
 <div id="collection-widget">
 
-  <% if check_for_setting_value_in_tenant_settings("turn_off_fedora_collection_work_association") == 'true' %>
+  <% if check_for_per_account_value_in_tenant_settings("turn_off_fedora_collection_work_association") == 'true' %>
     <%= render 'shared/ubiquity/works/non_fedora_form_member_of_collections', f: f %>
   <% else %>
     <%= render 'shared/ubiquity/works/fedora_form_member_of_collections', f: f %>

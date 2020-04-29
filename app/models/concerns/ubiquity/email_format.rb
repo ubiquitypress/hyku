@@ -6,7 +6,7 @@ module Ubiquity
       validate :must_have_valid_email_format
     end
 
-    def get_tenant_work_settings
+    def get_tenant_settings
       json_data = ENV['TENANTS_WORK_SETTINGS']
         if json_data.present? && json_data.class == String
         JSON.parse(json_data)
@@ -14,7 +14,7 @@ module Ubiquity
     end
 
     def must_have_valid_email_format
-      format = get_tenant_work_settings['email_format']
+      format = get_tenant_settings['email_format']
       if format.present?
         email_format = '@' + email.split('@')[-1]
         errors.add(:email, "Email must contain #{format}") unless format.include? email_format

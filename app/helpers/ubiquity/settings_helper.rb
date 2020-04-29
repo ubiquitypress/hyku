@@ -1,18 +1,9 @@
 module Ubiquity
   module SettingsHelper
 
-    def extract_required_json_property_hash(tenant_work_settings, hash_key)
-      required_json_property_hash = tenant_work_settings && tenant_work_settings[hash_key]
-      required_json_property_hash
-    end
-
-    def extract_licence_list(tenant_work_settings, licences )
-      tenant_work_settings.presence && tenant_work_settings[licences].presence && tenant_work_settings[licences]
-    end
-
     def list_of_json_properties(metadata_field)
-        tenant_work_settings =  get_tenant_work_settings
-      metadata_field_json_sub_keys =  tenant_work_settings && tenant_work_settings["#{metadata_field}_fields"]
+      tenant_settings = get_tenant_settings
+      metadata_field_json_sub_keys =  tenant_settings && tenant_settings["#{metadata_field}_fields"]
       if metadata_field_json_sub_keys.present?
         metadata_field_json_sub_keys.split(',')
       else
@@ -59,7 +50,6 @@ module Ubiquity
       Ubiquity::ParseTenantWorkSettings.new(request.original_url).get_settings_value_from_tenant_settings(settings_key)
     end
 
-
     def check_for_nested_value_in_tenant_settings(settings_key1,settings_key2)
       Ubiquity::ParseTenantWorkSettings.new(request.original_url).get_nested_settings_value_from_tenant_settings(settings_key1, settings_key2)
     end
@@ -67,9 +57,9 @@ module Ubiquity
     private
 
     def redirection_settings(original_url)
-      work_settings = get_tenant_work_settings
-      if  work_settings.present?
-        work_settings["redirect_show_link"]
+      settings = get_tenant_settings
+      if  settings.present?
+        settings["redirect_show_link"]
       end
     end
 

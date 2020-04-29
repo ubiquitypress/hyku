@@ -1,8 +1,7 @@
 <% account_local_name =  ubiquity_url_parser(request.original_url) %>
-<% tenant_work_settings = get_tenant_work_settings %>
 <% license_service = Hyrax::LicenseService.new %>
 
-<% licence_list = extract_licence_list(tenant_work_settings, "licence_list" ) %>
+<% licence_list = check_for_setting_value_in_tenant_settings('licence_list') %>
 
 <% licence_dropdown = licence_list || license_service.select_active_options %>
 

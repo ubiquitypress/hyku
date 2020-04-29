@@ -1,12 +1,12 @@
-<% dropdown_list = tenant_work_settings.presence && tenant_work_settings["institutional_relationship"] && tenant_work_settings["institutional_relationship"].split(',') %>
-<% label_name = tenant_work_settings.presence && tenant_work_settings['metadata_labels']["institutional_relationship"].presence || "#{metadata_field.capitalize} institutional relationship"  %>
-<% property_hash = extract_required_json_property_hash(tenant_work_settings, "required_json_property") %>
+<% dropdown_list = check_for_setting_value_in_tenant_settings('institutional_relationship').split(',') %>
+<% label_name =  check_for_nested_value_in_tenant_settings('metadata_labels', 'institutional_relationship') || "#{metadata_field.capitalize} institutional relationship"  %>
+<% property_hash = check_for_setting_value_in_tenant_settings("required_json_property") %>
 <% template = f.object.model.class.to_s.underscore %>
 
 <p><label class="control-label multi_value optional" for="#{template}_#{metadata_field}_institutional_relationship">
 <%= label_name %>  </label></p> <span class='error'> </span>
 
-<% if tenant_work_settings["institutional_relationship_picklist"] == "true"  %>
+<% if check_for_setting_value_in_tenant_settings("institutional_relationship_picklist") == "true"  %>
 
   <%= render 'shared/ubiquity/json_fields_partials/institutional_dropdown', property_hash: property_hash, template: template, metadata_field: metadata_field, dropdown_list: dropdown_list, hash: hash %>
 

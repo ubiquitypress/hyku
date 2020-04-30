@@ -1,11 +1,9 @@
-<% tenant_work_settings = get_tenant_work_settings %>
-
 <%- if controller_name != 'sessions' %>
   <%= link_to t(".sign_in"), new_session_path(resource_name) %>
 <% end -%>
 
 <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <%= tenant_work_settings['sign_up_link'] == 'true' ? (link_to t(".sign_up"), new_registration_path(resource_name)) : ' ' %><br />
+  <%= check_for_setting_value_in_tenant_settings('sign_up_link') == 'true' ? (link_to t(".sign_up"), new_registration_path(resource_name)) : ' ' %><br />
 <% end -%>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>

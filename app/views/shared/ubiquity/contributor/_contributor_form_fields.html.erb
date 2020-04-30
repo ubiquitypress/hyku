@@ -6,8 +6,7 @@
 <% array_of_hash = get_model( f.object.contributor, template, 'contributor', 'contributor_position') %>
 <% array_of_hash = array_of_hash ||  [{}] %>
 
-<% tenant_work_settings = get_tenant_work_settings %>
-<% required_toggle = tenant_work_settings['html_required'] && tenant_work_settings['html_required']['contributor'] %>
+<% required_toggle = check_for_nested_value_in_tenant_settings('html_required','contributor')%>
 <% contributor_list = list_of_json_properties('contributor') %>
 <% span_content = required_toggle.present? ? 'required' : ' ' %>
 <% span_content_css = required_toggle.present? ? 'label label-info required-tag' : ' ' %>
@@ -51,7 +50,7 @@
   </span>
   <br/>
     <span class="ubiquity_personal_fields">
-
+      <!--Look at all these files that take in tenant_work_Settings hash for next PR-->
       <% if contributor_list.include?('contributor_orcid')%>
         <%= render 'shared/ubiquity/json_fields_partials/orcid', template: template, metadata_field: "contributor", hash: hash %>
       <% end %>

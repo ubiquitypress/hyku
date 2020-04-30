@@ -1,5 +1,5 @@
 <% my_model_name = f.object.model.class.to_s.underscore %>
-<% tenant_work_settings =  get_tenant_work_settings  %>
+<% tenant_work_settings =  get_tenant_settings  %>
 
 <%= f.input :duration, as: :multi_value,
             input_html: { class: 'ubiquity-publisher form-control' },

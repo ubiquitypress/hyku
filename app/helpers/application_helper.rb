@@ -124,11 +124,11 @@ module ApplicationHelper
     @record =  Account.where(cname: request.host, data: {'is_parent': 'true'}).first
   end
 
-  def get_tenant_work_settings
-    json_data = ENV['TENANTS_WORK_SETTINGS']
+  def get_tenant_settings
+    json_data = ENV['TENANTS_SETTINGS']
       if json_data.present? && json_data.class == String
       JSON.parse(json_data)
-    end 
+    end
   end
 
 end

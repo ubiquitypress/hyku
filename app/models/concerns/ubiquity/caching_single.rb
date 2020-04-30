@@ -32,12 +32,28 @@ module Ubiquity
       @thumbnail_cache = "single/#{cache_type}-thumbnail/#{self.account_cname}/#{self.id}"
     end
 
+    def get_parent_collection_cache
+      if self.class != Collection
+        $redis_cache.keys("parent_collection/#{self.account_cname}/#{self.id}/*")
+      end
+    end
+
     def flush_single_cache
      fedora_cache_key
      Rails.cache.delete(@fedora_cache)
      Rails.cache.delete(@thumbnail_cache)
      Rails.cache.delete(single_work_cache_key)
      Rails.cache.delete(single_collection_cache_key)
+     burst_cache_key_containing_parent
+   end
+
+   def burst_cache_key_containing_parent
+     @parent_keys ||= get_parent_collection_cache
+     if  @parent_keys
+        @parent_keys.each do |key|
+         $redis_cache.del(build_cache_key)
+       end
+     end
    end
 
   end

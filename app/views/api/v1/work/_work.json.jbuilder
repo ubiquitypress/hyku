@@ -108,8 +108,8 @@ if valid_json?(related_identifier)
   end
 end
 
-json.thumbnail_url    ('https://' + work['account_cname_tesim'].first + work['thumbnail_path_ss'])
-json.download_link    ('https://' + work['account_cname_tesim'].first + '/' + 'downloads' + '/' + work[:id])
+json.thumbnail_url    ('https://' + work['account_cname_tesim'].first.to_s + work['thumbnail_path_ss'].to_s)
+json.download_link    ('https://' + work['account_cname_tesim'].first.to_s + '/' + 'downloads' + '/' + work[:id].to_s)
 
 json.version    work['version_tesim']
 json.duration    work['duration_tesim']

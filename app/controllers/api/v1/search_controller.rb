@@ -32,7 +32,7 @@ class API::V1::SearchController <  ActionController::Base
 
   def search_by_multiple_terms
     #This populates @fq passed as solr fq ie filter query
-    if params[:f]
+    if params[:f].present?
       params[:f].to_unsafe_h.map { |key, value| create_solr_filter_params(key, value) }
     end
 
@@ -122,7 +122,7 @@ class API::V1::SearchController <  ActionController::Base
     "hl.fl"=>[], "rows"=>0, "qf" =>  solr_query_fields, "pf"=>"title_tesim", "facet"=>true,
      facet_limit_key => limit, facet_offset_key => facet_offset_limit, "sort"=> sort }
 
-     if params[:q]
+     if params[:q].present?
        solr_params.merge!({ "user_query" => params[:q], "defType" => "lucene"})
      end
 
@@ -146,7 +146,7 @@ class API::V1::SearchController <  ActionController::Base
      "f.institution_sim.facet.limit" => 10000, "f.language_sim.facet.limit" => 10000, "f.file_availability_sim.facet.limit" => 10000, "f.collection_names_sim.facet.limit" => 10000
     }
 
-    if params[:q]
+    if params[:q].present?
       solr_params.merge!({ "user_query" => params[:q], "defType" => "lucene"})
     end
 

@@ -38,7 +38,7 @@ module Ubiquity
     end
 
     def redirect?
-      true if Ubiquity::ParseTenantWorkSettings.new(request.original_url).get_settings_value_from_tenant_work_settings('redirect_on') == 'true'
+      true if Ubiquity::ParseTenantWorkSettings.new(request.original_url).get_settings_value_from_tenant_settings('redirect_on') == 'true'
     end
 
 

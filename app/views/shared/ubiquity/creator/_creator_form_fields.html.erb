@@ -6,8 +6,6 @@
 <% array_of_hash = get_model( f.object.creator, template, 'creator', 'creator_position') %>
 <% array_of_hash = array_of_hash ||  [{}] %>
 
-<% tenant_work_settings =  get_tenant_settings  %>
-
 <% creator_list = list_of_json_properties('creator') %>
 
 <% array_of_hash.each_with_index do |hash, index| %>
@@ -56,8 +54,7 @@
       <br>
 
       <% if creator_list.include?('creator_family_name')%>
-        <%= render 'shared/ubiquity/json_fields_partials/family_name', template: template, tenant_work_settings: tenant_work_settings,
-         metadata_field: "creator", hash: hash %>
+        <%= render 'shared/ubiquity/json_fields_partials/family_name', template: template, metadata_field: "creator", hash: hash %>
       <% end %>
 
       <br>
@@ -66,8 +63,7 @@
       <% end %>
       <br>
       <% if creator_list.include?('creator_given_name')%>
-        <%= render 'shared/ubiquity/json_fields_partials/given_name', template: template, tenant_work_settings: tenant_work_settings,
-         metadata_field: "creator", hash: hash %>
+        <%= render 'shared/ubiquity/json_fields_partials/given_name', template: template, metadata_field: "creator", hash: hash %>
       <% end %>
       <br/>
 
@@ -78,20 +74,17 @@
       <br>
 
       <% if creator_list.include?('creator_institutional_relationship')%>
-        <%= render 'shared/ubiquity/json_fields_partials/institutional_relationship', template: template, tenant_work_settings: tenant_work_settings,
-        metadata_field: "creator", hash: hash, f: f %>
+        <%= render 'shared/ubiquity/json_fields_partials/institutional_relationship', template: template, metadata_field: "creator", hash: hash, f: f %>
       <% end %>
       <br>
 
       <% if creator_list.include?('creator_biography')%>
-        <%= render 'shared/ubiquity/json_fields_partials/biography', template: template, tenant_work_settings: tenant_work_settings,
-        metadata_field: "creator", hash: hash %>
+        <%= render 'shared/ubiquity/json_fields_partials/biography', template: template, metadata_field: "creator", hash: hash %>
       <% end %>
       <br>
 
       <% if creator_list.include?('creator_role')%>
-        <%= render 'shared/ubiquity/json_fields_partials/role', template: template,
-        tenant_work_settings: tenant_work_settings, metadata_field: "creator", hash: hash %>
+        <%= render 'shared/ubiquity/json_fields_partials/role', template: template, metadata_field: "creator", hash: hash %>
       <% end %>
 
     </span> <!-- closes ubiquity_personal_fields -->

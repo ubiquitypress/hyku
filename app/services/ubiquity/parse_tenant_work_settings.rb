@@ -49,7 +49,7 @@ module Ubiquity
      end
 
      def get_per_account_settings_value_from_tenant_settings(settings_key)
-       tenant_settings_hash = tenant_settings_hash
+       settings_hash = tenant_settings_hash
        subdomain = get_tenant_subdomain
        tenant_settings_hash && tenant_settings_hash[subdomain] && tenant_settings_hash[subdomain][settings_key]
      end

@@ -50,15 +50,14 @@
   </span>
   <br/>
     <span class="ubiquity_personal_fields">
-      <!--Look at all these files that take in tenant_work_Settings hash for next PR-->
+
       <% if contributor_list.include?('contributor_orcid')%>
         <%= render 'shared/ubiquity/json_fields_partials/orcid', template: template, metadata_field: "contributor", hash: hash %>
       <% end %>
       <br>
 
       <% if contributor_list.include?('contributor_family_name')%>
-        <%= render 'shared/ubiquity/json_fields_partials/family_name', template: template, tenant_work_settings: tenant_work_settings,
-         metadata_field: "contributor", hash: hash %>
+        <%= render 'shared/ubiquity/json_fields_partials/family_name', template: template, metadata_field: "contributor", hash: hash %>
       <% end %>
 
       <br>
@@ -68,8 +67,7 @@
       <br>
 
       <% if contributor_list.include?('contributor_given_name')%>
-        <%= render 'shared/ubiquity/json_fields_partials/given_name', template: template, tenant_work_settings: tenant_work_settings,
-         metadata_field: "contributor", hash: hash %>
+        <%= render 'shared/ubiquity/json_fields_partials/given_name', template: template, metadata_field: "contributor", hash: hash %>
       <% end %>
       <br/>
 
@@ -80,14 +78,12 @@
       <br>
 
       <% if contributor_list.include?('contributor_institutional_relationship')%>
-        <%= render 'shared/ubiquity/json_fields_partials/institutional_relationship', template: template, tenant_work_settings: tenant_work_settings,
-         metadata_field: "contributor", hash: hash, f:f  %>
+        <%= render 'shared/ubiquity/json_fields_partials/institutional_relationship', template: template, metadata_field: "contributor", hash: hash, f:f  %>
       <% end %>
       <br>
 
       <% if contributor_list.include?('contributor_role')%>
-        <%= render 'shared/ubiquity/json_fields_partials/role', template: template, tenant_work_settings: tenant_work_settings,
-              metadata_field: "contributor", hash: hash %>
+        <%= render 'shared/ubiquity/json_fields_partials/role', template: template, metadata_field: "contributor", hash: hash %>
       <% end %>
 
     </span> <!-- closes ubiquity_personal_fields -->

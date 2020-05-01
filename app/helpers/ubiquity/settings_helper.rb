@@ -15,9 +15,10 @@ module Ubiquity
 
     end
 
-    def set_role_dropdown_options(metadata_field, tenant_work_settings)
+    def set_role_dropdown_options(metadata_field)
+      tenant_settings = get_tenant_settings
       role_key = "#{metadata_field}_roles"
-      options_array = metadata_field.present? ? tenant_work_settings.try(:present?) && tenant_work_settings[role_key] : nil
+      options_array = metadata_field.present? ? tenant_settings.try(:present?) && tenant_settings[role_key] : nil
 
       if metadata_field == "creator"
         options_array || ['Faculty', 'Staff', 'Student', 'Other']

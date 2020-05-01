@@ -2,7 +2,7 @@
  https://github.com/ubiquitypress/hyku/blob/pacific-test/app/views/shared/ubiquity/contributor/_contributor_form_fields.html.erb
  https://github.com/ubiquitypress/hyku/blob/pacific-test/app/views/shared/ubiquity/creator/_creator_form_fields.html.erb
 -->
-<% dropdown_options = set_role_dropdown_options(metadata_field, tenant_work_settings) %>
+<% dropdown_options = set_role_dropdown_options(metadata_field) %>
 <% default_contribution_selection = hash.dig("#{metadata_field}_type") || 'Advisor' %>
 
 <% if metadata_field == "creator" %>

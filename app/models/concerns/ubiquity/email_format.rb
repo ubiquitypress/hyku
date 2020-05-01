@@ -7,7 +7,7 @@ module Ubiquity
     end
 
     def get_tenant_settings
-      json_data = ENV['TENANTS_WORK_SETTINGS']
+      json_data = ENV['TENANTS_SETTINGS']
         if json_data.present? && json_data.class == String
         JSON.parse(json_data)
       end
@@ -17,7 +17,7 @@ module Ubiquity
       format = get_tenant_settings['email_format']
       if format.present?
         email_format = '@' + email.split('@')[-1]
-        errors.add(:email, "Email must contain #{format}") unless format.include? email_format
+        errors.add(:email, "Email must contain #{format[0]}") unless format.include? email_format
       end
     end
   end

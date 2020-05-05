@@ -8,15 +8,14 @@ module Ubiquity
     end
 
     def not_needed_fields
-      json_data = ENV['TENANTS_WORK_SETTINGS']
-      settings_hash = JSON.parse(json_data) if json_data.present? && json_data.class == String
-      unwanted_fields_hash = settings_hash.presence && settings_hash['work_unwanted_fields']
-      selected_work = self.class.to_s.gsub("Hyrax::", '').gsub('Form', '').underscore
-      if unwanted_fields_hash.present? && unwanted_fields_hash.keys.include?(selected_work)
-        array_of_fields = unwanted_fields_hash[selected_work].split(',')
-        array_of_fields.map{|ele| ele.to_sym}
-      end
-    end
+          parser_class = Ubiquity::ParseTenantWorkSettings.new(current_account_name)
+          unwanted_fields_hash = parser_class.get_settings_value_from_tenant_settings('work_unwanted_fields')
+          selected_work = self.class.to_s.gsub("Hyrax::", '').gsub('Form', '').underscore
+          if unwanted_fields_hash.present? && unwanted_fields_hash.keys.include?(selected_work)
+            array_of_fields = unwanted_fields_hash[selected_work].split(',')
+            array_of_fields.map{|ele| ele.to_sym}
+          end
+        end
 
     def primary_terms
        terms - [:collection_id, :collection_names]
@@ -57,5 +56,8 @@ module Ubiquity
       (collection_id + Array.wrap(collection_ids)).uniq.compact
     end
 
+    def current_account_name
+      Account.find_by(tenant: Apartment::Tenant.current).name
+    end
   end
 end

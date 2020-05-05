@@ -6,7 +6,7 @@
 
         <div class="form-inputs">
             <%= f.input :display_name, required: true, wrapper: :inline %>
-            <%= f.input :email, required: true, autofocus: true, wrapper: :inline %>
+            <%= f.input :email, required: true, autofocus: true, wrapper: :inline, hint: check_for_per_account_value_in_tenant_settings('email_hint_text') || ' '%>
             <%= f.input :password, required: true, wrapper: :inline %>
             <%= f.input :password_confirmation, required: true, wrapper: :inline %>
         </div>

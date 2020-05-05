@@ -128,7 +128,7 @@ class API::V1::SearchController <  ActionController::Base
 
      search_type =  params[:shared_search].present? ? 'shared_search' : 'normal_search'
 
-     record = Rails.cache.fetch("facet/#{@tenant.cname}/#{search_type}/#{params[:id]}/#{page}/#{facet_offset_limit}/#{build_query_with_term}/#{@fq}/#{sort}", expires_in: 30.minutes) do
+     record = Rails.cache.fetch("facet/#{@tenant.cname}/#{search_type}/#{params[:id]}/#{page}/#{facet_offset_limit}/#{params[:q]}/#{params[:f]}/#{sort}", expires_in: 30.minutes) do
        response = CatalogController.new.repository.search(solr_params)
        facet_count_list =  response['facet_counts']["facet_fields"][facet_name]
        Hash[*facet_count_list]
@@ -150,7 +150,7 @@ class API::V1::SearchController <  ActionController::Base
       solr_params.merge!({ "user_query" => params[:q], "defType" => "lucene"})
     end
 
-    record = Rails.cache.fetch("facet/#{@tenant.cname}/#{search_type}/all/#{page}/#{facet_offset_limit}/#{build_query_with_term}/#{@fq}/#{sort}", expires_in: 30.minutes) do
+    record = Rails.cache.fetch("facet/#{@tenant.cname}/#{search_type}/all/#{page}/#{facet_offset_limit}/#{params[:q]}/#{params[:f]}/#{sort}", expires_in: 30.minutes) do
        response = CatalogController.new.repository.search(solr_params)
        facet_count_list =  response['facet_counts']["facet_fields"]
        ["resource_type_sim", "creator_search_sim", "keyword_sim", "collection_names_sim", "member_of_collections_ssim", "institution_sim", "language_sim",  "file_availability_sim"].map do |key|

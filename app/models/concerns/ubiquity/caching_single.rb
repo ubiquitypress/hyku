@@ -1,16 +1,28 @@
 module Ubiquity
   module CachingSingle
     extend ActiveSupport::Concern
-
     included do
       after_save :flush_single_cache
+      after_destroy :flush_single_cache
     end
 
-    def cache_key
-      if self.class != SolrDocument
-      return "#{self.class.model_name.cache_key}/new" if new_record?
-      return "#{self.class.model_name.cache_key}/#{id}-#{date_modified.utc.to_s(:nsec)}" if date_modified
-      "#{self.class.model_name.cache_key}/#{id}"
+    def flush_single_cache
+      fedora_cache_key
+      Rails.cache.delete(@fedora_cache)
+      Rails.cache.delete(@thumbnail_cache)
+      Rails.cache.delete(single_work_cache_key)
+      Rails.cache.delete(single_collection_cache_key)
+      burst_cache_key_containing_parent
+      clear_highlights_page_cache
+   end
+
+   private
+
+   def cache_key
+     if self.class != SolrDocument
+       return "#{self.class.model_name.cache_key}/new" if new_record?
+       return "#{self.class.model_name.cache_key}/#{id}-#{date_modified.utc.to_s(:nsec)}" if date_modified
+       "#{self.class.model_name.cache_key}/#{id}"
       end
     end
 
@@ -38,23 +50,27 @@ module Ubiquity
       end
     end
 
-    def flush_single_cache
-     fedora_cache_key
-     Rails.cache.delete(@fedora_cache)
-     Rails.cache.delete(@thumbnail_cache)
-     Rails.cache.delete(single_work_cache_key)
-     Rails.cache.delete(single_collection_cache_key)
-     burst_cache_key_containing_parent
-   end
+    def highlights_page_cache
+      $redis_cache.keys("multiple/highlights/#{self.account_cname}/*")
+    end
 
-   def burst_cache_key_containing_parent
-     @parent_keys ||= get_parent_collection_cache
-     if  @parent_keys
+    def burst_cache_key_containing_parent
+      @parent_keys ||= get_parent_collection_cache
+      if @parent_keys.present?
         @parent_keys.each do |key|
-         $redis_cache.del(build_cache_key)
+          $redis_cache.del(key)
+         end
        end
      end
-   end
+
+     def clear_highlights_page_cache
+       @highlights_keys ||= highlights_page_cache
+       if  @highlights_keys.present?
+         @highlights_keys.each do |key|
+           $redis_cache.del(key)
+         end
+       end
+     end
 
   end
 end

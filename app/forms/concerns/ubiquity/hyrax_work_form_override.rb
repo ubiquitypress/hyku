@@ -8,7 +8,7 @@ module Ubiquity
     end
 
     def not_needed_fields
-          parser_class = Ubiquity::ParseTenantWorkSettings.new(current_account_name)
+          parser_class = Ubiquity::ParseTenantWorkSettings.new(account_cname)
           unwanted_fields_hash = parser_class.get_settings_value_from_tenant_settings('work_unwanted_fields')
           selected_work = self.class.to_s.gsub("Hyrax::", '').gsub('Form', '').underscore
           if unwanted_fields_hash.present? && unwanted_fields_hash.keys.include?(selected_work)
@@ -54,10 +54,6 @@ module Ubiquity
     def non_fedora_association_collection_id(collection_ids)
       #@collection_is = collection_id || []
       (collection_id + Array.wrap(collection_ids)).uniq.compact
-    end
-
-    def current_account_name
-      Account.find_by(tenant: Apartment::Tenant.current).name
     end
   end
 end

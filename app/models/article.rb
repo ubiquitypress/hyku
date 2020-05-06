@@ -6,6 +6,7 @@ class Article < ActiveFedora::Base
   include Ubiquity::UpdateSharedIndex
   include Ubiquity::FileAvailabilityFaceting
   include ::Ubiquity::CachingSingle
+  include HasRendering
 
   self.indexer = ::ArticleIndexer
 

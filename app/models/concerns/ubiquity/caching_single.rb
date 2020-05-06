@@ -45,13 +45,9 @@ module Ubiquity
     end
 
     def get_parent_collection_cache
-      if self.class != Collection
+      if ENV['REDIS_CACHE_HOST'].present? && self.class != Collection
         $redis_cache.keys("parent_collection/#{self.account_cname}/#{self.id}/*")
       end
-    end
-
-    def highlights_page_cache
-      $redis_cache.keys("multiple/highlights/#{self.account_cname}/*")
     end
 
     def burst_cache_key_containing_parent
@@ -60,6 +56,12 @@ module Ubiquity
         @parent_keys.each do |key|
           $redis_cache.del(key)
          end
+       end
+     end
+
+     def highlights_page_cache
+       if ENV['REDIS_CACHE_HOST'].present?
+         $redis_cache.keys("multiple/highlights/#{self.account_cname}/*")
        end
      end
 

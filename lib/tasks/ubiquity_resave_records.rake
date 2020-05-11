@@ -2,6 +2,10 @@
 # Note the tenant name is supplied when running the rake task, for example
 # if the tenant name is 'sandbox.repo-test.ubiquity.press', you will pass it as shown below
 # rake ubiquity_resave_records:all['sandbox.repo-test.ubiquity.press']
+#pass a range eg
+# rake "ubiquity_resave_records:all[library.localhost, [NOW-2DAY/DAY TO NOW] ]"
+# rake "ubiquity_resave_records:all[library.localhost, [2020-05-11T00:00:00Z TO 2020-05-11T12:42:09Z] ]"
+#
 #for updatinga specific model note the surrounding string after the rake command
 # rake "ubiquity_resave_records:update_specific_model[sandbox.repo-test.ubiquity.press,  generic_work]"
 #
@@ -11,21 +15,32 @@
 #rake ubiquity_resave_records:reassign_work_out_of_fedora_collection_assoc['sandbox.repo-test.ubiquity.press']
 #run with
 # rake ubiquity_resave_records:all['sandbox.repo-test.ubiquity.press']
+
 namespace :ubiquity_resave_records do
 
   desc "Update data by resaving records for existing works"
-  task :all, [:name] => :environment do |task, tenant|
+  task :all, [:tenant, :date_range] => :environment do |task, args|
 
-    #These are the names of the existing work type in UbiquityPress's Hyku
-    model_class = [Collection, Article, Book, BookContribution, ConferenceItem, Dataset, ExhibitionItem, Image, Report, ThesisOrDissertation, TimeBasedMedia, GenericWork]
-    AccountElevator.switch!("#{tenant[:name]}")
+    AccountElevator.switch!("#{args[:tenant]}")
+    range = args[:date_range] || "[NOW-1DAY/DAY TO NOW]"
+    puts "rango #{range}"
+    model_class = get_work_list(args[:tenant])
+
     model_class.each do |model|
-      #We fetching an instance of the models and then getting the value in the creator field
-      model.find_each do |model_instance|
+      begin
+        #We fetching an instance of the models and then getting the value in the creator field
+        works = ActiveFedora::Base.where("NOT system_modified_dtsi:#{range} OR has_model_ssim:#{model}")
+        puts "#{model} has #{works.size} for resave"
+        works.each do |model_instance|
+
          #by calling save we trigger the before_save callback in app/models/ubiquity/concerns/multiple_modules.rb
-          model_instance.save
+          model_instance.save(validate: false)
           sleep 2
-      end
+        end
+     rescue ActiveFedora::AssociationTypeMismatch, ActiveFedora::RecordInvalid, Ldp::Gone, RSolr::Error::Http, RSolr::Error::ConnectionRefused  => e
+      puts "error saving #{e}"
+    end
+
     end
   end
 
@@ -122,6 +137,23 @@ namespace :ubiquity_resave_records do
       model_instance.save(validate: false)
       sleep 2
     end
+  end
+
+  def get_work_list(tenant_name)
+
+    if Ubiquity::ParseTenantWorkSettings.respond_to?(:get_per_account_settings_value_from_tenant_settings)
+      parser_class = Ubiquity::ParseTenantWorkSettings.new(tenant_name)
+      work_list = parser_class.get_per_account_settings_value_from_tenant_settings("work_type_list")
+      work_types_array = work_list.presence && work_list.split(',')
+      list = work_types_array.present? ? work_types_array.map {|i| i.classify.constantize} : Hyrax.config.curation_concerns
+      puts "using work_type_list from settings #{list}"
+      list
+    else
+      list =  Hyrax.config.curation_concerns
+      puts "using default work_type_list  #{list}"
+      list
+    end
+
   end
 
 

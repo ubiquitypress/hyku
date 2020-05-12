@@ -35,7 +35,7 @@ class API::V1::WorkController < ActionController::Base
   def fetch_work
     @skip_run = 'true'
     work =  Rails.cache.fetch("single/work/#{@tenant.cname}/#{params[:id]}") do
-      CatalogController.new.repository.search(q: "id:#{params[:id]}")
+      CatalogController.new.repository.search(q: "id:#{params[:id]}", fq: filter_using_visibility)
     end
     work = work.presence && work['response']['docs'].first
     if work.present?

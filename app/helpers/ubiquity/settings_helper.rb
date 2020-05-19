@@ -28,18 +28,16 @@ module Ubiquity
     end
 
     def redirect_work_url(id = nil, original_url = nil)
-      subdomain = ubiquity_url_parser(original_url)
       redirect_hash = redirection_settings(original_url)
-      if id.present? && redirect_hash.present? && redirect_hash[subdomain].present? && redirect_hash[subdomain]["url"].present?
-        "#{redirect_hash[subdomain]['url']}/work/#{id}"
+      if id.present? && redirect_hash.present? && redirect_hash['live'].present?
+        "https://#{redirect_hash['live']}/work/#{id}"
       end
     end
 
     def redirect_collection_url(id = nil, original_url = nil)
-      subdomain = ubiquity_url_parser(original_url)
       redirect_hash = redirection_settings(original_url)
-      if id.present? && redirect_hash.present? && redirect_hash[subdomain].present? && redirect_hash[subdomain]["url"].present?
-        "#{redirect_hash[subdomain]['url']}/collection/#{id}"
+      if id.present? && redirect_hash.present? && redirect_hash['live'].present?
+        "https://#{redirect_hash['live']}/collection/#{id}"
       end
     end
 
@@ -58,11 +56,11 @@ module Ubiquity
     private
 
     def redirection_settings(original_url)
+      subdomain = ubiquity_url_parser(original_url)
       settings = get_tenant_settings
       if  settings.present?
-        settings["redirect_show_link"]
+        settings[subdomain]
       end
     end
-
   end
 end

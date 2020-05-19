@@ -23,8 +23,9 @@ module Ubiquity
     end
 
     def redirection_settings_hash
+      subdomain = get_tenant_subdomain
       if tenant_settings_hash.present?
-        tenant_settings_hash["redirect_show_link"]
+        tenant_settings_hash[subdomain]["live"]
       end
     end
 
@@ -37,7 +38,7 @@ module Ubiquity
 
     def redirect_url
       if redirect_subdomain_url_hash.present?
-        redirect_subdomain_url_hash['url']
+        "https://#{redirect_subdomain_url_hash}"
       end
     end
 

@@ -8,8 +8,14 @@ module Ubiquity
     # Populates @response and @member_docs similar to Blacklight Catalog#index populating @response and @documents
     def query_collection_members
       params[:q] = params[:cq]
-      @response = repository.search(query_for_collection_members)
-      @member_docs = @response.documents | query_for_work_using_collection_id
+      if helpers.check_should_not_use_fedora_association(request.original_url) == "true"
+        @response = query_for_work_using_collection_id
+        @member_docs = @response.documents
+      else
+         @response = repository.search(query_for_collection_members)
+         @member_docs = @response.documents
+      end
+
     end
 
     def query_for_work_using_collection_id
@@ -19,7 +25,7 @@ module Ubiquity
 
       @fetching_with_collection_id ||= repository.search(q: "collection_id_sim:#{collection_id}", rows: 2500)
       if @fetching_with_collection_id['response']['docs'].present?
-        @fetching_with_collection_id['response']['docs'].map {|h| SolrDocument.new(h, current_ability)}
+        @fetching_with_collection_id   
       else
         []
       end

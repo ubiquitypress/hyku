@@ -1,5 +1,5 @@
 <% dropdown_list = check_for_setting('institutional_relationship').split(',') %>
-<% label_name =  check_for_nested_value_in_tenant_settings('metadata_labels', 'institutional_relationship') || "#{metadata_field.capitalize} institutional relationship"  %>
+<% label_name =  check_for_nested_setting('metadata_labels', 'institutional_relationship') || "#{metadata_field.capitalize} institutional relationship"  %>
 <% property_hash = check_for_setting("required_json_property") %>
 <% template = f.object.model.class.to_s.underscore %>
 

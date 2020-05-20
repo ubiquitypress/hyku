@@ -28,41 +28,51 @@ module Ubiquity
     end
 
     def redirect_work_url(id = nil, original_url = nil)
-      subdomain = ubiquity_url_parser(original_url)
       redirect_hash = redirection_settings(original_url)
-      if id.present? && redirect_hash.present? && redirect_hash[subdomain].present? && redirect_hash[subdomain]["url"].present?
-        "#{redirect_hash[subdomain]['url']}/work/#{id}"
+      if id.present? && redirect_hash.present? && redirect_hash['live'].present?
+        "https://#{redirect_hash['live']}/work/#{id}"
       end
     end
 
     def redirect_collection_url(id = nil, original_url = nil)
-      subdomain = ubiquity_url_parser(original_url)
       redirect_hash = redirection_settings(original_url)
-      if id.present? && redirect_hash.present? && redirect_hash[subdomain].present? && redirect_hash[subdomain]["url"].present?
-        "#{redirect_hash[subdomain]['url']}/collection/#{id}"
+      if id.present? && redirect_hash.present? && redirect_hash['live'].present?
+        "https://#{redirect_hash['live']}/collection/#{id}"
       end
     end
 
-    def check_for_per_account_value_in_tenant_settings(settings_key)
-      Ubiquity::ParseTenantWorkSettings.new(request.original_url).get_per_account_settings_value_from_tenant_settings(settings_key)
+    # THESE WILL BE GONE BY END OF THE WORK. I AM KEEPING THEM HERE SO THAT I KNOW WHAT METHODS TO REPLACE
+
+    # def check_for_per_account_value_in_tenant_settings(settings_key)
+    #   Ubiquity::ParseTenantWorkSettings.new(request.original_url).get_per_account_settings_value_from_tenant_settings(settings_key)
+    # end
+    #
+    # def check_for_setting_value_in_tenant_settings(settings_key)
+    #   Ubiquity::ParseTenantWorkSettings.new(request.original_url).get_settings_value_from_tenant_settings(settings_key)
+    # end
+    #
+    # def check_for_nested_value_in_tenant_settings(settings_key1,settings_key2)
+    #   Ubiquity::ParseTenantWorkSettings.new(request.original_url).get_nested_settings_value_from_tenant_settings(settings_key1, settings_key2)
+    # end
+
+    def check_for_setting(settings_key)
+      parser_class = Ubiquity::ParseTenantWorkSettings.new(request.original_url)
+      parser_class.get_per_account_settings_value_from_tenant_settings(settings_key) || parser_class.get_settings_value_from_tenant_settings(settings_key)
     end
 
-    def check_for_setting_value_in_tenant_settings(settings_key)
-      Ubiquity::ParseTenantWorkSettings.new(request.original_url).get_settings_value_from_tenant_settings(settings_key)
-    end
+    def check_for_nested_setting(settings_key1,settings_key2)
+      parser_class = Ubiquity::ParseTenantWorkSettings.new(request.original_url)
+      parser_class.get_per_account_nested_settings_value_from_tenant_settings(settings_key1,settings_key2) || get_nested_settings_value_from_tenant_settings(settings_key1, settings_key2)
 
-    def check_for_nested_value_in_tenant_settings(settings_key1,settings_key2)
-      Ubiquity::ParseTenantWorkSettings.new(request.original_url).get_nested_settings_value_from_tenant_settings(settings_key1, settings_key2)
-    end
 
     private
 
     def redirection_settings(original_url)
+      subdomain = ubiquity_url_parser(original_url)
       settings = get_tenant_settings
       if  settings.present?
-        settings["redirect_show_link"]
+        settings[subdomain]
       end
     end
-
   end
 end

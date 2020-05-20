@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_user_from_jwt_token!
-    shared_login = helpers.check_for_per_account_value_in_tenant_settings("shared_login")
+    shared_login = helpers.check_for_setting("shared_login")
     token = get_auth_token
 
     if shared_login.present? && token.present?
@@ -71,7 +71,7 @@ class ApplicationController < ActionController::Base
 
     # Overwriting the sign_out redirect path method
     def after_sign_out_path_for(resource_or_scope)
-      url_path = helpers.check_for_per_account_value_in_tenant_settings('live')
+      url_path = helpers.check_for_setting('live')
       if url_path.present?
         ("https://" + url_path).strip
       else

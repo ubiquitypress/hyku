@@ -43,7 +43,7 @@ module Ubiquity
 
 
     # THESE WILL BE GONE BY END OF THE WORK. I AM KEEPING THEM HERE SO THAT I KNOW WHAT METHODS TO REPLACE
-    # def check_for_per_account_value_in_tenant_settings(settings_key)
+    # def check_for_setting(settings_key)
     #   Ubiquity::ParseTenantWorkSettings.new(request.original_url).get_per_account_settings_value_from_tenant_settings(settings_key)
     # end
     #

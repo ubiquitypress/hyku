@@ -47,7 +47,7 @@ module Ubiquity
     #   Ubiquity::ParseTenantWorkSettings.new(request.original_url).get_per_account_settings_value_from_tenant_settings(settings_key)
     # end
     #
-    # def check_for_setting_value_in_tenant_settings(settings_key)
+    # def check_for_setting(settings_key)
     #   Ubiquity::ParseTenantWorkSettings.new(request.original_url).get_settings_value_from_tenant_settings(settings_key)
     # end
     #

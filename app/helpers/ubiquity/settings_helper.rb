@@ -41,8 +41,8 @@ module Ubiquity
       end
     end
 
-    # THESE WILL BE GONE BY END OF THE WORK. I AM KEEPING THEM HERE SO THAT I KNOW WHAT METHODS TO REPLACE
 
+    # THESE WILL BE GONE BY END OF THE WORK. I AM KEEPING THEM HERE SO THAT I KNOW WHAT METHODS TO REPLACE
     # def check_for_per_account_value_in_tenant_settings(settings_key)
     #   Ubiquity::ParseTenantWorkSettings.new(request.original_url).get_per_account_settings_value_from_tenant_settings(settings_key)
     # end
@@ -63,6 +63,7 @@ module Ubiquity
     def check_for_nested_setting(settings_key1,settings_key2)
       parser_class = Ubiquity::ParseTenantWorkSettings.new(request.original_url)
       parser_class.get_per_account_nested_settings_value_from_tenant_settings(settings_key1,settings_key2) || get_nested_settings_value_from_tenant_settings(settings_key1, settings_key2)
+    end
 
 
     private

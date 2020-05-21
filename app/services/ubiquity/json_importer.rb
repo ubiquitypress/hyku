@@ -24,7 +24,6 @@ module Ubiquity
       @attributes_hash = {}
       @data = data
       $stdout.puts "Log Json data loaded #{@data}"
-
       @tenant = data['tenant'] || data[:tenant]
       @domain = data['domain'] || data[:domain]
       @tenant_domain = @tenant + '.' + @domain
@@ -71,7 +70,7 @@ module Ubiquity
 
     def merge_collection_names
       collections = add_work_to_collection
-      collections.map {|col| col.title.first}.compact
+      collections.map {|col| col.title.first}.compact if collections
     end
 
     def add_work_to_collection

@@ -10,7 +10,9 @@ module Ubiquity
       params[:q] = params[:cq]
       if helpers.check_should_not_use_fedora_association(request.original_url) == "true"
         @response = query_for_work_using_collection_id
-        @member_docs = @response.documents
+        unless @response.empty?
+          @member_docs = @response.documents
+        end
       else
          @response = repository.search(query_for_collection_members)
          @member_docs = @response.documents
@@ -25,7 +27,7 @@ module Ubiquity
 
       @fetching_with_collection_id ||= repository.search(q: "collection_id_sim:#{collection_id}", rows: 2500)
       if @fetching_with_collection_id['response']['docs'].present?
-        @fetching_with_collection_id   
+        @fetching_with_collection_id
       else
         []
       end

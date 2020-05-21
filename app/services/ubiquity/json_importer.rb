@@ -78,6 +78,8 @@ module Ubiquity
       if @collection_ids.present? && @work_instance.class != Collection
         collections = ActiveFedora::Base.where("{!terms f=id}#{@collection_ids.join(',')}")
        #AddCollectionAndWorkFedoraRelationship.perform_later(@work_instance.id, @collection_ids, @work_instance.account_cname)
+      else
+        []
       end
       rescue ActiveFedora::ObjectNotFoundError
         $stdout.puts "collection(s) with id(s) #{@collection_ids} does not exist"

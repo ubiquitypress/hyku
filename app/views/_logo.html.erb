@@ -2,7 +2,7 @@
   to conditionally change Hyku label for BL
 -->
 
-<% url_path = check_for_per_account_value_in_tenant_settings('live') %>
+<% url_path = check_for_setting('live') %>
 <% path_to_use = url_path.present? ? ("https://" + url_path).strip : hyrax.root_path  %>
 
 <% if ENV['SHOW_LOG_OUT'] == 'true' %>

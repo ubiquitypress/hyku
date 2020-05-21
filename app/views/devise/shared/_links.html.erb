@@ -3,7 +3,7 @@
 <% end -%>
 
 <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <%= check_for_setting_value_in_tenant_settings('sign_up_link') == 'true' ? (link_to t(".sign_up"), new_registration_path(resource_name)) : ' ' %><br />
+  <%= check_for_setting('sign_up_link') == 'true' ? (link_to t(".sign_up"), new_registration_path(resource_name)) : ' ' %><br />
 <% end -%>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>

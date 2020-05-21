@@ -1,4 +1,4 @@
-<% label_name = check_for_nested_value_in_tenant_settings('metadata_labels','org_unit') || "organisational unit".capitalize  %>
+<% label_name = check_for_nested_setting('metadata_labels','org_unit') || "organisational unit".capitalize  %>
 
 <% my_model_name = f.object.model.class.to_s.underscore %>
 
@@ -6,7 +6,7 @@
   <%= label_name %>
   <span class="label label-info required-tag">required</span>
 </label>
-<p class="help-block"><%= check_for_nested_value_in_tenant_settings('help_texts','org_unit') %> </p>
+<p class="help-block"><%= check_for_nested_setting('help_texts','org_unit') %> </p>
 
 <%= text_field_tag "#{my_model_name}[org_unit][]", f.object.model.org_unit.first, id: "#{my_model_name}_org_unit",
   class: "form-control text required form-control ubiquity-org-unit" , required: "required" %>

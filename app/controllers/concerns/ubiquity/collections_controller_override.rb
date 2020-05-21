@@ -60,7 +60,7 @@ module Ubiquity
       settings_parser_class = Ubiquity::ParseTenantWorkSettings.new(request.original_url)
       settings_hash = settings_parser_class.tenant_settings_hash
       subdomain = settings_parser_class.get_tenant_subdomain
-      settings_hash && settings_hash[subdomain] && settings_hash[subdomain]["turn_off_fedora_collection_work_association"]
+      settings_hash && settings_hash[subdomain] && settings_hash[subdomain]["turn_off_fedora_collection_work_association"] || settings_hash["turn_off_fedora_collection_work_association"]
     end
 
     private

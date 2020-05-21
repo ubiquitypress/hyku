@@ -28,6 +28,5 @@ module Ubiquity
         @fetching_with_collection_id
       end
     end
-
   end
 end

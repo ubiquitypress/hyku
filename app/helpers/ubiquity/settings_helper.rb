@@ -62,7 +62,7 @@ module Ubiquity
 
     def check_for_nested_setting(settings_key1,settings_key2)
       parser_class = Ubiquity::ParseTenantWorkSettings.new(request.original_url)
-      parser_class.get_per_account_nested_settings_value_from_tenant_settings(settings_key1,settings_key2) || get_nested_settings_value_from_tenant_settings(settings_key1, settings_key2)
+      parser_class.get_per_account_nested_settings_value_from_tenant_settings(settings_key1,settings_key2) || parser_class.get_nested_settings_value_from_tenant_settings(settings_key1, settings_key2)
     end
 
 

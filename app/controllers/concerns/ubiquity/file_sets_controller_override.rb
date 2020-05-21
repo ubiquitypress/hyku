@@ -5,7 +5,8 @@ module Ubiquity
     private
 
     def redirect?
-      true if Ubiquity::ParseTenantWorkSettings.new(request.original_url).get_settings_value_from_tenant_settings('redirect_on')
+      parser_class = Ubiquity::ParseTenantWorkSettings.new(request.original_url)
+      true if parser_class.get_per_account_settings_value_from_tenant_settings('redirect_on') || parser_class.get_settings_value_from_tenant_settings('redirect_on')
     end
 
     def after_update_response

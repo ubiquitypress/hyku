@@ -87,12 +87,8 @@ module ApplicationHelper
     parse_tenant_settings_json(cname)
   end
 
-  def current_account_name
-    Account.find_by(tenant: Apartment::Tenant.current).name
-  end
-
-  def get_subdomain
-    current_account_name.split('.').first
+  def get_subdomain(original_url)
+    ubiquity_url_parser(original_url)
   end
 
   def parse_tenant_settings_json(cname)

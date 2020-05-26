@@ -87,6 +87,14 @@ module ApplicationHelper
     parse_tenant_settings_json(cname)
   end
 
+  def current_account_name
+    Account.find_by(tenant: Apartment::Tenant.current).name
+  end
+
+  def get_subdomain
+    current_account_name.split('.').first
+  end
+
   def parse_tenant_settings_json(cname)
     json_data = ENV['TENANTS_SETTINGS']
     if cname.present? && verify_valid_json?(json_data)

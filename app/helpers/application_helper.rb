@@ -87,6 +87,10 @@ module ApplicationHelper
     parse_tenant_settings_json(cname)
   end
 
+  def get_subdomain(original_url)
+    ubiquity_url_parser(original_url)
+  end
+
   def parse_tenant_settings_json(cname)
     json_data = ENV['TENANTS_SETTINGS']
     if cname.present? && verify_valid_json?(json_data)

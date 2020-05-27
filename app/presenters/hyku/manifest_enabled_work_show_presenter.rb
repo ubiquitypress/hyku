@@ -8,12 +8,18 @@ module Hyku
              :official_link, :place_of_publication, :series_name, :edition, :abstract, :version,
              :event_title, :event_date, :event_location, :book_title, :editor,
              :alternate_identifier, :related_identifier, :media, :duration, :related_exhibition, :related_exhibition_venue, :related_exhibition_date,
-             :dewey, :library_of_congress_classification, :alt_title, :current_he_institution, :qualification_name, :qualification_level,
+             :dewey, :library_of_congress_classification, :alt_title, :current_he_institution, :qualification_name, :qualification_level, :collection_names, :collection_id,
              to: :solr_document
 
     def manifest_url
       manifest_helper.polymorphic_url([:manifest, self])
     end
+
+    def collection_names_presenters
+     Hyrax::PresenterFactory.build_for(ids: collection_id,
+                                      presenter_class: collection_presenter_class,
+                                      presenter_args: presenter_factory_arguments)
+  end
 
     # IIIF rendering linking property for inclusion in the manifest
     #

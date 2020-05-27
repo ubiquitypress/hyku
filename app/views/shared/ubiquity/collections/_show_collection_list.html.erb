@@ -4,8 +4,16 @@
   <th>Collections</th>
   <td>
     <ul class="tabular">
-      <% presenter.member_of_collection_presenters.each do |p| %>
-        <li class='attribute'><%= link_to p.to_s, hyrax.collection_path(p.id), class: 'collection-link' %></li>
+      <% if   check_should_not_use_fedora_association(request.original_url) == "true" %>
+        <%= puts "IN THE IF BLOCK" %>
+        <% presenter.collection_names_presenters.each do |p| %>
+         <li class='attribute'><%= link_to p.to_s, hyrax.collection_path(p.id), class: 'collection-link' %></li>
+       <% end %>
+      <% else %>
+        <%= puts "IN THE ELSE BLOCK" %>
+        <% presenter.member_of_collection_presenters.each do |p| %>
+         <li class='attribute'><%= link_to p.to_s, hyrax.collection_path(p.id), class: 'collection-link' %></li>
+       <% end %>
       <% end %>
     </ul>
   </td>

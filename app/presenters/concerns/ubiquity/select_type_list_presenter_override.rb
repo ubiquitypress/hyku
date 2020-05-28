@@ -10,7 +10,8 @@ module Ubiquity
       private
 
       def current_account_name
-        Account.find_by(tenant: Apartment::Tenant.current).name
+        account = Account.find_by(tenant: Apartment::Tenant.current)
+        account.name if account
       end
 
       def return_custom_work_list

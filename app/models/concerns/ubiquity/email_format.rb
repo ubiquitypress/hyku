@@ -7,7 +7,8 @@ module Ubiquity
     end
 
     def current_account_name
-      Account.find_by(tenant: Apartment::Tenant.current).name
+      account = Account.find_by(tenant: Apartment::Tenant.current)
+      account.name if account
     end
 
     def get_subdomain

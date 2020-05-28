@@ -12,7 +12,7 @@ module Ubiquity
     end
 
     def get_subdomain
-      current_account_name.split('.').first
+      current_account_name.split('.').first if current_account_name
     end
 
     def get_tenant_settings
@@ -24,7 +24,7 @@ module Ubiquity
 
     def must_have_valid_email_format
       subdomain = get_subdomain
-      format = get_tenant_settings[subdomain]['email_format']
+      format = get_tenant_settings[subdomain]['email_format'] if subdomain
       if format.present?
         email_format = '@' + email.split('@')[-1]
         errors.add(:email, "Email must contain #{format[0]}") unless format.include? email_format

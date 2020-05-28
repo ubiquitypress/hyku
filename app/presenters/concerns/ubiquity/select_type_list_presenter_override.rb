@@ -4,6 +4,7 @@ module Ubiquity
      extend ActiveSupport::Concern
       def authorized_models
         return [] unless @current_user
+        return [] unless current_account_name
         return_custom_work_list
       end
 
@@ -25,6 +26,5 @@ module Ubiquity
           @authorized_models ||= Hyrax::QuickClassificationQuery.new(@current_user).authorized_models
         end
       end
-
   end
 end

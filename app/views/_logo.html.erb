@@ -3,7 +3,7 @@
 -->
 
 <% url_path = check_for_setting('live') %>
-<% path_to_use = url_path.present? ? ("https://" + url_path).strip : hyrax.root_path  %>
+<% path_to_use = (url_path.present? && url_path.class == String) ? ("https://" + url_path).strip : hyrax.root_path  %>
 
 <% if ENV['SHOW_LOG_OUT'] == 'true' %>
   <a id="logo" class="navbar-brand" href="<%= path_to_use %>" data-no-turbolink="true">

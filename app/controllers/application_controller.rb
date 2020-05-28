@@ -72,7 +72,7 @@ class ApplicationController < ActionController::Base
     # Overwriting the sign_out redirect path method
     def after_sign_out_path_for(resource_or_scope)
       url_path = helpers.check_for_setting('live')
-      if url_path.present?
+      if url_path.present? && url_path.class == String
         ("https://" + url_path).strip
       else
         root_path

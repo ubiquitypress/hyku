@@ -8,12 +8,18 @@ module Hyku
              :official_link, :place_of_publication, :series_name, :edition, :abstract, :version,
              :event_title, :event_date, :event_location, :book_title, :editor,
              :alternate_identifier, :related_identifier, :media, :duration, :related_exhibition, :related_exhibition_venue, :related_exhibition_date,
-             :dewey, :library_of_congress_classification, :alt_title, :current_he_institution, :qualification_name, :qualification_level,
+             :dewey, :library_of_congress_classification, :alt_title, :current_he_institution, :qualification_name, :qualification_level, :collection_names, :collection_id,
              to: :solr_document
 
     def manifest_url
       manifest_helper.polymorphic_url([:manifest, self])
     end
+
+    def collection_names_presenters
+     Hyrax::PresenterFactory.build_for(ids: add_authorized_collection_id,
+                                      presenter_class: collection_presenter_class,
+                                      presenter_args: presenter_factory_arguments)
+  end
 
     # IIIF rendering linking property for inclusion in the manifest
     #
@@ -180,6 +186,26 @@ module Hyku
       # @return [Array] field value(s)
       def get_metadata_value(field)
         Array.wrap(send(field))
+      end
+
+      def filter_collection_by_visibility
+        user = current_ability.try(:current_user)
+        if user && current_ability.try(:admin?)
+          ["-suppressed_bsi:true"]
+        elsif user && user.user_key.present?
+          ["({!terms f=edit_access_group_ssim}public,registered) OR ({!terms f=discover_access_group_ssim}public,registered) OR ({!terms f=read_access_group_ssim}public,registered) OR edit_access_person_ssim:#{user.user_key} OR discover_access_person_ssim:#{user.user_key} OR read_access_person_ssim:#{user.user_key}", "-suppressed_bsi:true", ""]
+        elsif user && !user.user_key.present?
+          ["({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true"]
+        end
+      end
+
+      def add_authorized_collection_id
+        fq = filter_collection_by_visibility
+        if collection_id
+          collections =  ActiveFedora::SolrService.query("{!terms f=id}#{collection_id.join(',')}", fq: fq)
+          new_collection_id = collections.map {|h| h['id']}.compact
+          (new_collection_id & collection_id)
+        end
       end
   end
 end

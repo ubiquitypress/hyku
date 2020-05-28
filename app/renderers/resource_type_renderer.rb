@@ -3,6 +3,6 @@
 
 class ResourceTypeAttributeRenderer < Hyrax::Renderers::AttributeRenderer
   def attribute_value_to_html(value)
-    %(<span itemprop="resource_type">#{::ResourceTypesService.label(value)}</span>)
+    %(<span itemprop="resource_type">#{::ResourceTypesService.label(value)}</span>) if value.presence 
   end
 end

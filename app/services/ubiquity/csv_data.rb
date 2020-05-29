@@ -19,17 +19,10 @@ module Ubiquity
     def fetch_all_record
       switch_account_tenant
       puts "===== starting remapping all records ===="
-      Article.find_each {|record| @all_records <<  Ubiquity::CsvDataRemap.new(record).unordered_hash if record.present?}
-      Book.find_each {|record| @all_records << Ubiquity::CsvDataRemap.new(record).unordered_hash  if record.present?}
-      BookContribution.find_each {|record| @all_records << Ubiquity::CsvDataRemap.new(record).unordered_hash  if record.present? }
-      ConferenceItem.find_each {|record| @all_records << Ubiquity::CsvDataRemap.new(record).unordered_hash  if record.present?}
-      Dataset.find_each {|record| @all_records << Ubiquity::CsvDataRemap.new(record).unordered_hash  if record.present?}
-      Image.find_each {|record| @all_records << Ubiquity::CsvDataRemap.new(record).unordered_hash  if record.present?}
-      Report.find_each {|record| @all_records << Ubiquity::CsvDataRemap.new(record).unordered_hash  if record.present?}
-      GenericWork.find_each {|record| @all_records << Ubiquity::CsvDataRemap.new(record).unordered_hash  if record.present?}
-      ExhibitionItem.find_each {|record| @all_records << Ubiquity::CsvDataRemap.new(record).unordered_hash  if record.present?}
-      ThesisOrDissertation.find_each {|record| @all_records << Ubiquity::CsvDataRemap.new(record).unordered_hash  if record.present?}
-      TimeBasedMedia.find_each {|record| @all_records << Ubiquity::CsvDataRemap.new(record).unordered_hash  if record.present?}
+
+       Hyrax.config.curation_concerns.each do |model_name|
+           @all_records <<  model_name.csv_data
+       end
 
       puts "====== finished remapping all records  ====="
       all_records.flatten!

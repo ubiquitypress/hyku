@@ -26,10 +26,7 @@ module Ubiquity
       csv = CSV.generate(headers: true) do |csv|
         csv << csv_header
         DEFAULT_WORKS.each do |klass|
-          klass.all.each do |object|
-            #get_csv_data comes from csv_export_util module
-            csv << object.get_csv_data
-          end
+            csv << klass.csv_data
         end
       end
     end

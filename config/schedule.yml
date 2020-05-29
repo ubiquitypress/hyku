@@ -9,3 +9,8 @@ ubiquity_expire_job:
   cron: 00 10 * * *
   class: "UbiquityExpiryJob"
   queue: default
+
+ubiquity_export_csv_delete_job:
+  cron: 00 1 * * *
+  class: "UbiquityExportCsvDelete"
+  queue: default

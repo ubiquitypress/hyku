@@ -134,6 +134,7 @@ Rails.application.routes.draw do
         get :export_remap_model
         get :export_model
         get :send_mail_report
+        get :s3_link_redirect
       end
     end
 

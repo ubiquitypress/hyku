@@ -1,24 +1,21 @@
 module Admin
   class ExportsController < AdminController
     layout 'dashboard'
+    before_action :s3_wrapper, only: [:index, :s3_link_redirect]
     def index
+      @s3_objects = @s3_wrapper.all_objects_in_s3bucket.presence || []
     end
 
     def export_database
-      csv_generator = Ubiquity::CsvGenerator.new
-      data = csv_generator.export_database_as_remapped_data
-      respond_to do |format|
-        format.csv { send_data data, filename: "#{current_account.cname}_metadata.csv" }
-      end
+      model = params['model']
+      UbiquityExporterJob.perform_later(current_account.cname, model, current_user.id)
+      redirect_to  admin_exports_path,  notice: "We are generating the CSV and you will see a notification at the top right hand side of this app when it is ready"
     end
 
     def export_remap_model
       model = params['model']
-      #example of exporting jist a single model class eg dataset
-      data = Ubiquity::CsvGenerator.new.export_remap_model(model)
-      respond_to do |format|
-        format.csv { send_data data, filename: "#{current_account.cname}_#{model}_metadata.csv" }
-      end
+      UbiquityExporterJob.perform_later(current_account.cname, model, current_user.id)
+      redirect_to  admin_exports_path,  notice: "We are generating the CSV and you will see a notification at the top right hand side of this app when it is ready"
     end
 
     def export_model
@@ -37,9 +34,20 @@ module Admin
       redirect_to hyrax.admin_stats_path(anchor: 'email_reports')
     end
 
+    def s3_link_redirect
+      redirect_to   @s3_wrapper.download_url(params[:filename])
+    end
+
     private
-      def process_email
-        current_account.settings[params[:email_type]].first.split(';')
-      end
+
+    def process_email
+      current_account.settings[params[:email_type]].first.split(';')
+    end
+
+    def s3_wrapper
+      @s3_wrapper = Ubiquity::S3Wrapper.new(bucket_name: ENV['S3_BUCKET_NAME'])
+    end
+
+
   end
 end

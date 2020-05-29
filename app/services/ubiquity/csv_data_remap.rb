@@ -1,7 +1,7 @@
 module Ubiquity
 
   class CsvDataRemap
-    attr_accessor :data, :ordered_data, :retained_object_attributes, :unordered_hash
+    attr_accessor :data, :ordered_data, :retained_object_attributes, :unordered_hash, :data_hash
     UN_NEEDED_KEYS = ["head", "tail","proxy_depositor", "on_behalf_of", "arkivo_checksum", "owner",
                      "label", "relative_path", "import_url", "based_near", "identifier",  "access_control_id",
                      "representative_id", "thumbnail_id", "admin_set_id", "embargo_id", "lease_id",
@@ -19,13 +19,8 @@ module Ubiquity
     def initialize(object=nil)
        if object.present?
         @data = object
-        add_more_keys_attributes_hash = {'embargo_end_date' => object.embargo_release_date.try(:strftime, "%Y-%m-%d"), 'lease_end_date' => object.lease_expiration_date.try(:strftime, "%Y-%m-%d"),
-           'visibility' => object.visibility, 'visibility_after_embargo' => object.visibility_after_embargo, 'work_type' => object.class.to_s,
-           'visibility_after_lease' => object.visibility_after_lease, 'collection' => object.member_of_collections.first.try(:id),
-           'date_uploaded' => object.date_uploaded.try(:strftime, "%Y-%m-%d"), 'date_modified' => object.date_modified.try(:strftime, "%Y-%m-%d")
-        }
-        work_attributes = object.attributes.merge(add_more_keys_attributes_hash)
-        @retained_object_attributes = work_attributes.except!(*UN_NEEDED_KEYS)
+        work_attributes =  object.merge!(parse_dates(object))
+        @retained_object_attributes = work_attributes
         remap_array_fields_name(object)
        end
     end
@@ -37,25 +32,45 @@ module Ubiquity
 
       add_files(record)
       @data_hash.each_with_index do |(key, value), index|
+        # (not value.class == ActiveTriples::Relation )
+        #
+        puts "================================ keya  =============== #{key}"
 
-        @unordered_hash[key] = ''  if (value.blank?) &&  (not value.class == ActiveTriples::Relation ) #(not  ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include?(key) )
+        @unordered_hash[key] = ''  if (value.blank?) &&  (not value.class == Array ) #(not  ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include?(key) )
 
-        populate_single_fields(key, value) if  value.present? && (@data_hash[key].present? && (@data_hash[key].class == String || @data_hash[key].class == DateTime) && (not value.class == ActiveTriples::Relation) && (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key))
+        #ActiveTriples::Relatio
+        #
+        populate_single_fields(key, value) if  value.present? && (@data_hash[key].present? && (@data_hash[key].class == String || @data_hash[key].class == DateTime) && (not value.class == Array) && (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key))
 
-        remap_json_fields(value) if value.present? && (@data_hash[key].present?  && (['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key)) && (not value.class == String) && (value.class != DateTime) && (record.send(key).respond_to? :length)
+        remap_json_fields(value) if value.present? && (@data_hash[key].present?  && (['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key)) && (not value.class == String) && (value.class != DateTime)  # &&(record.send(key).respond_to? :length)
 
-        remap_array_fields(key, value)  if value.present? && (@data_hash[key].present? && (not value.class == String) && (value.class != DateTime) && @data_hash[key].to_a.class == Array && (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key))
+        #@data_hash[key].to_a.class == Arra
+        #
+        remap_array_fields(key, value)  if value.present? && (@data_hash[key].present? && (not value.class == String) && (value.class != DateTime) && @data_hash[key].class == Array && (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key))
       end
       self
     end
 
     def rename_hash_keys_to_csv_keys(main_hash, hash_with_new_keys)
-      common_keys = main_hash.keys & hash_with_new_keys.keys
-      common_keys.each {|term| main_hash[hash_with_new_keys[term]] = main_hash.delete(term) if hash_with_new_keys.keys.include?(term) && main_hash.keys.include?(term)}
-      main_hash
+      common_keys = hash_with_new_keys.keys &  main_hash.keys
+      new_hash = main_hash.slice(*common_keys)
+      common_keys.each {|term|   new_hash[hash_with_new_keys[term]] = new_hash.delete(term) if hash_with_new_keys.keys.include?(term) && new_hash.keys.include?(term)}
+      new_hash
     end
 
     private
+
+    def parse_dates(object)
+      embargo_release_date = object["embargo_release_date_dtsi"].presence && DateTime.parse(object["embargo_release_date_dtsi"]).try(:strftime, "%Y-%m-%d")
+      lease_expiration_date = object["lease_expiration_date_dtsi"].presence && DateTime.parse(object["lease_expiration_date_dtsi"]).try(:strftime, "%Y-%m-%d")
+      date_uploaded = object["date_uploaded_dtsi"].presence && DateTime.parse(object["date_uploaded_dtsi"]).try(:strftime, "%Y-%m-%d")
+      date_modified = object["date_modified_dtsi"].presence && DateTime.parse(object["date_modified_dtsi"]).try(:strftime, "%Y-%m-%d")
+
+      {'embargo_release_date_dtsi' => embargo_release_date, 'lease_expiration_date_dtsi' => lease_expiration_date,
+
+         'date_uploaded_dtsi' => date_uploaded, 'date_modified_dtsi' => date_modified
+       }
+    end
 
     def populate_single_fields(key, value)
       if value.present?
@@ -82,6 +97,7 @@ module Ubiquity
 
     def remap_json_fields(value)
       new_value = give_json_fields_right_csv_headers(value)
+
       new_value.each_with_index do |hash, index|
         loop_over_hash(hash, index)
       end
@@ -91,13 +107,13 @@ module Ubiquity
       data_array_hash =  JSON.parse(data.first)
       data_array_hash.map do |data_hash|
         new_hash = data_hash.except('creator_position', 'contributor_position', 'editor_position')
-        rename_hash_keys_to_csv_keys(new_hash, hash_value_as_json_csv_keys)
       end
     end
 
     def loop_over_hash(hash, index)
       new_hash = hash.except("creator_institutional_relationship", "contributor_institutional_relationship",
          "editor_institutional_relationship", "alternate_identifier_position", "related_identifier_position")
+
       new_hash.each do |key, value|
         key_name = ("#{key}_#{index + 1}")
         @unordered_hash[key_name] = value
@@ -123,8 +139,14 @@ module Ubiquity
     end
 
     def add_files(object)
-      if object.file_sets.present?
-        object.file_sets.each_with_index do |file, index|
+      get_file_ids = object["file_set_ids_ssim"]
+      id_strings = get_file_ids.presence && get_file_ids.join(',')
+
+    #  if object.file_sets.present?
+      if id_strings.present?
+        file_sets = ActiveFedora::Base.where("{!terms f=id}#{id_strings}")
+        #object.file_sets.each_with_index do |file, index|
+        file_sets.each_with_index do |file, index|
           key_name = ("file_url_#{index + 1}")
           titles = []
           puts "adding file names #{file.try(:title)}"
@@ -139,11 +161,24 @@ module Ubiquity
 
     def hash_value_as_csv_keys
       {
-       'official_link' => 'official_url', 'refereed' => 'peer_reviewed',
-        'article_num' => 'article_number', 'fndr_project_ref' => 'funder_project_reference',
-        'add_info' => 'additional_information', 'file' => 'file_url', 'org_unit' => 'organisational_unit',
-        'media' => 'material_media', 'alt_title' => 'alternative_title'
+        "id" => "id", "date_uploaded_dtsi" => "date_uploaded", "date_modified_dtsi" => "date_modified", "file_set_ids_ssim" => "file_set_ids", "visibility_ssi" => "visibility",
+        "embargo_release_date_dtsi" => "embargo_end_date", "visibility_after_embargo_ssim" => "visibility_after_embargo", "visibility_after_lease_ssim" => "visibility_after_lease",
+        "lease_expiration_date_dtsi" => "lease_end_date", "collection_id_sim" => "collections", "has_model_ssim" => "work_type", "resource_type_tesim" => "resource_type",
+        "title_tesim" => "title", "alt_title_tesim" => 'alternative_title', "creator_tesim" => "creator", "contributor_tesim" => "contributor", "abstract_tesim" => "abstract",
+       "date_published_si" => "date_published", "media_tesim" => "media",  "duration_tesim" => "duration", "institution_tesim" => "institution", 'org_unit_tesim' => 'organisational_unit',
+       "project_name_tesim" => "project_name",  "funder_tesim" => "funder", "fndr_project_ref_tesim" => 'funder_project_reference', "event_title_tesim" => "event_title",
+       "event_date_tesim" => "event_date", "event_location_tesim" => "event_location", "series_name_tesim" => "series_name", "book_title_tesim" => "book_title", "editor_tesim" => "editor",
+       "journal_title_tesim" => "journal_title", "alternative_journal_title_tesim" => "alternative_journal_title", "volume_tesim" => "volume", "edition_tesim" => "edition",
+       "version_tesim" => "version",  "issue_tesim" => "issue", "pagination_tesim" => "pagination", "article_num_tesim" => 'article_number', "publisher_tesim" => "publisher",
+       "place_of_publication_tesim" => "place_of_publication", "isbn_tesim" => "isbn", "issn_tesim" => "issn", "eissn_tesim" => "eissn", "current_he_institution_tesim" => "current_he_institution",
+       "date_accepted_tesim" => "date_accepted", "date_published_tesim" => "date_published", "official_link_tesim" => "official_url", "related_url_tesim" => "related_url",
+       "related_exhibition_tesim" => "related_exhibition", "related_exhibition_date_tesim" => "related_exhibition_date", "language_tesim" => "language",
+       "license_tesim" => "license", "rights_statement_tesim" => "rights_statement", "rights_holder_tesim" => "rights_holder", "doi_tesim" => "doi",
+       "qualification_name_tesim" => "qualification_name", "qualification_level_tesim" => "qualification_level",  "alternate_identifier_tesim" => "alternate_identifier_id",
+       "related_identifier_tesim" => "related_identifier_id", "refereed_tesim" => 'peer_reviewed', "dewey_tesim" => "dewey",
+       "library_of_congress_classification_tesim" =>  "library_of_congress_classification", "add_info_tesim" => 'additional_information'
       }
+
     end
 
     def hash_value_as_json_csv_keys

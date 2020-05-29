@@ -3,7 +3,7 @@ module Ubiquity
     extend ActiveSupport::Concern
 
     def csv_hash
-      Ubiquity::CsvDataRemap.new(self).unordered_hash
+      Ubiquity::CsvDataRemap.new(self.to_solr).unordered_hash
     end
 
     #mainly remapping array values to have pipe as as seperator
@@ -39,11 +39,11 @@ module Ubiquity
          header_keys.push('files')
        end
 
-       def csv_header(csv_exporter_object)
+       def csv_header(array_of_hash_remapped_data)
          puts "=== starting resorting csv headers from remappedmodels=="
 
          sorted_header = []
-         all_keys = csv_exporter_object.flat_map(&:keys).uniq
+         all_keys = array_of_hash_remapped_data.flat_map(&:keys).uniq
          #resort using ordering by suffix eg creator_isni_1 comes before creator_isni_2
          all_keys = all_keys.sort_by{ |name| [name[/\d+/].to_i, name] }
          Ubiquity::CsvDataRemap::CSV_HEARDERS_ORDER.each {|k| all_keys.select {|e| sorted_header << e if e.start_with? k} }
@@ -55,14 +55,17 @@ module Ubiquity
 
        def csv_data
          puts "=== starting remapping models=="
-         data ||= all.map do |object|
-           object.csv_hash
+         data ||=  ActiveFedora::SolrService.query("id:* AND has_model_ssim:#{ancestors.first}", { rows: 50000})
+         new_data = data.map do |item|
+           #note item is of class ActiveFedora::SolrHit
+           hash = item.to_h
+           Ubiquity::CsvDataRemap.new(hash).unordered_hash
          end
 
-         puts "=== finished remapping models=="
+          puts "=== finished remapping models=="
 
-         data
-       end
+          new_data
+        end
 
         def to_csv
           array_of_hash_remapped_data ||= csv_data

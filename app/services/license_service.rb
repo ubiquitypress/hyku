@@ -1,4 +1,4 @@
-# overrides hyrax/app/services/hyrax/resource_types_service.rb
+# overrides hyrax/app/services/hyrax/license_service.rb
 
 module LicenseService
   mattr_accessor :authority

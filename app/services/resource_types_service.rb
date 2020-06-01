@@ -17,7 +17,9 @@ module ResourceTypesService
   end
 
   def self.label(id)
-    authority.find(id).fetch('term')
+    id = authority.find(id)
+    id.empty? ? 'Unkown' : id.fetch('term')
+
   end
 
   def self.select_default(model_class)

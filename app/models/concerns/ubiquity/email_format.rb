@@ -24,7 +24,8 @@ module Ubiquity
 
     def must_have_valid_email_format
       subdomain = get_subdomain
-      format = get_tenant_settings[subdomain]['email_format'] if subdomain
+      settings_hash = get_tenant_settings
+      format = settings_hash[subdomain]['email_format'] || settings_hash['email_format']
       if format.present?
         email_format = '@' + email.split('@')[-1]
         errors.add(:email, "Email must contain #{format[0]}") unless format.include? email_format

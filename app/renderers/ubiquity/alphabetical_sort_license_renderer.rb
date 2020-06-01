@@ -19,13 +19,13 @@ class AlphabeticalSortLicenseRenderer < Hyrax::Renderers::LicenseAttributeRender
   def sort_by_term
     qa_terms_arr = []
     values.each do |qa_id|
-      qa_terms_arr << Hyrax.config.license_service_class.new.label(qa_id)
+      qa_terms_arr << ::LicenseService.label(qa_id)
     end
     sorted_terms = qa_terms_arr.sort_by(&:downcase)
     sorted_licenses = []
     sorted_terms.each do |t|
       values.each do |v|
-        sorted_licenses << v if Hyrax.config.license_service_class.new.label(v) == t
+        sorted_licenses << v if ::LicenseService.label(v) == t
       end
     end
     sorted_licenses
@@ -33,7 +33,7 @@ class AlphabeticalSortLicenseRenderer < Hyrax::Renderers::LicenseAttributeRender
 
   private
 
-    def attribute_value_to_html(value)
-      super
-    end
+  def attribute_value_to_html(value)
+    %(<span itemprop="resource_type">#{::LicenseService.label(value)}</span>)
+  end
 end

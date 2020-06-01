@@ -17,7 +17,7 @@ module ResourceTypesService
   end
 
   def self.label(id)
-    authority.find(id).fetch('term')
+    authority.find(id).fetch('term', '[Error: Unknown value]' )
   end
 
   def self.select_default(model_class)

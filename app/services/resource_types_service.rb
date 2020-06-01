@@ -18,7 +18,7 @@ module ResourceTypesService
 
   def self.label(id)
     id = authority.find(id)
-    id.empty? ? 'Unkown' : id.fetch('term')
+    id.empty? ? '[Error: Unknown value]' : id.fetch('term')
 
   end
 

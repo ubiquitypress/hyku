@@ -5,8 +5,7 @@ module LicenseService
   self.authority = Qa::Authorities::Local.subauthority_for('licenses')
 
   def self.active?(id)
-    id = authority.find(id)
-    id.empty? ? nil : id.fetch('term')
+    authority.find(id).fetch('term', nil )
   end
 
   def self.active_elements
@@ -14,8 +13,7 @@ module LicenseService
   end
 
   def self.label(id)
-    id = authority.find(id)
-    id.empty? ? '[Error: Unknown value]' : id.fetch('term')
+    authority.find(id).fetch('term', '[Error: Unknown value]' )
   end
 
   def self.select_active_options

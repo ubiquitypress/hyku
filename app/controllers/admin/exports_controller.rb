@@ -9,13 +9,13 @@ module Admin
     def export_database
       model = params['model']
       UbiquityExporterJob.perform_later(current_account.cname, model, current_user.id)
-      redirect_to  admin_exports_path,  notice: "We are generating the CSV and you will see a notification at the top right hand side of this app when it is ready"
+      redirect_to  admin_exports_path,  notice: export_flash_message
     end
 
     def export_remap_model
       model = params['model']
       UbiquityExporterJob.perform_later(current_account.cname, model, current_user.id)
-      redirect_to  admin_exports_path,  notice: "We are generating the CSV and you will see a notification at the top right hand side of this app when it is ready"
+      redirect_to  admin_exports_path,  notice: export_flash_message
     end
 
     def export_model
@@ -46,6 +46,10 @@ module Admin
 
     def s3_wrapper
       @s3_wrapper = Ubiquity::S3Wrapper.new(bucket_name: ENV['S3_BUCKET_NAME'])
+    end
+
+    def export_flash_message
+      "We are generating the CSV and you will see a notification at the top right hand side of the navigation when it is ready (the notification will appear after a refresh, or after going to a new page on the dashboard)."
     end
 
 

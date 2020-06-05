@@ -1,4 +1,4 @@
-<% label_name = check_for_nested_setting('metadata_labels', 'family_name') || "#{metadata_field.capitalize} family name"  %>
+<% label_name = check_for_nested_setting('metadata_labels', 'family_name') || t('hyrax.labels.family_name')  %>
 
 
 <label class="control-label multi_value optional" for="#{template}_#{metadata_field}_family_name">
@@ -12,5 +12,5 @@
 
 %>
 <% if metadata_field == 'creator' %>
-  <span style="color:red;" class="error">Please enter one of these fields.</span>
+  <span style="color:red;" class="error"><%= t('hyrax.errors.required_name') %></span>
 <% end %>

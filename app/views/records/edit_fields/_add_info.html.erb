@@ -1,4 +1,4 @@
 <%= f.input :add_info, as: :text,
             input_html: { class: 'ubiquity-add_info' },
-            label: 'Additional Information',
-            hint: check_for_nested_setting('help_texts','additional_information') %>
+            label: t('hyrax.labels.add_info'),
+            hint: check_for_nested_setting('help_texts','additional_information') || t('hyrax.hints.add_info')%>

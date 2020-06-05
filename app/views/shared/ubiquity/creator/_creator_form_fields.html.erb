@@ -12,20 +12,20 @@
   <div class="ubiquity-meta-creator" >
     <% if template == 'collection' %>
       <label class="control-label multi_value optional" for="#{template}_creator_name_type">
-        Creator name type</label>
+        <%= t('hyrax.labels.creator') %> </label>
 
       <%= select_tag "#{template}[creator_group][][creator_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("creator_name_type")),
                       class: 'ubiquity_creator_name_type', data: {field_name:'ubiquity_creator_name_type'} %>
 
     <% else %>
       <label class="control-label multi_value optional" for="#{template}_creator_name_type">
-        Creator Name Type <span class="label label-info required-tag">required</span></label>
+      <%= t('hyrax.labels.creator') %> <span class="label label-info required-tag"><%= t('hyrax.control.required') %></span></label>
 
       <%= select_tag "#{template}[creator_group][][creator_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("creator_name_type")),
                     required: true, class: 'ubiquity_creator_name_type', data: {field_name:'ubiquity_creator_name_type'} %>
     <% end %>
 
-    <p class="help-block">The person or group responsible for the work. Usually this is the author of the content.</p>
+    <p class="help-block"><%= t('hyrax.hints.creator') %> </p>
 
     <% if creator_list.include?('creator_isni')%>
       <%= render 'shared/ubiquity/json_fields_partials/isni', template: template, metadata_field: "creator", hash: hash %>
@@ -34,7 +34,7 @@
     <span class="ubiquity_organization_fields">
 
     <label class="ubiquity_creator_organization_name_label control-label multi_value optional" for="#{template}_creator_organization_name">
-      Creator organisation name</label>
+      <%= t('hyrax.labels.creator_org') %></label>
 
     <%= text_field_tag "#{template}[creator_group][][creator_organization_name]", hash.dig("creator_organization_name"),
                         class: "#{template}_creator_organization_name form-control multi-text-field multi_value ubiquity_creator_organization_name",
@@ -42,7 +42,7 @@
                         name: "#{template}[creator_group][][creator_organization_name]",
                         data: {field_name:'ubiquity_creator_organization_name'}
     %>
-    <span style="color:red;" class="error">Please complete this field.</span>
+    <span style="color:red;" class="error"><%= t('hyrax.errors.required') %>.</span>
 
   </span>
   <br/>
@@ -95,10 +95,9 @@
 
     <a href="#" style="color:red;"  class=" remove_creator form-group " data-removeUbiquityCreator=".ubiquity-meta-creator">
       <span class="glyphicon glyphicon-remove"></span>
-      <span class="controls-remove-text">Remove</span>
+      <span class="controls-remove-text"> <%= t('hyrax.control.remove') %> </span>
     </a>
-    |
-    <a href="#" class=" add_creator" data-addUbiquityCreator=".ubiquity-meta-creator">Add another </a>
+    <a href="#" class=" add_creator" data-addUbiquityCreator=".ubiquity-meta-creator"><%= t('hyrax.control.add') %></a>
 
     <br><br><br>
 

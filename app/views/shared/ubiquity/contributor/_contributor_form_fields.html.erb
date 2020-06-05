@@ -8,27 +8,27 @@
 
 <% required_toggle = check_for_nested_setting('html_required','contributor')%>
 <% contributor_list = list_of_json_properties('contributor') %>
-<% span_content = required_toggle.present? ? 'required' : ' ' %>
+<% span_content = required_toggle.present? ? t('hyrax.control.required') : ' ' %>
 <% span_content_css = required_toggle.present? ? 'label label-info required-tag' : ' ' %>
 
 <% array_of_hash.each_with_index do |hash, index| %>
   <div class="ubiquity-meta-contributor" >
     <% if template == 'collection' %>
       <label class="control-label multi_value optional" for="#{template}_contributor_name_type">
-        Contributor name type</label>
+        <%= t('hyrax.labels.contributor') %> </label>
 
       <%= select_tag "#{template}[contributor_group][][contributor_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("contributor_name_type")),
                       class: 'ubiquity_contributor_name_type', data: {field_name:'ubiquity_contributor_name_type'} %>
 
     <% else %>
       <label class="control-label multi_value optional" for="#{template}_contributor_name_type">
-        Contributor Name Type <span class="<%= span_content_css%>"><%= span_content %></span></label>
+        <%= t('hyrax.labels.contributor') %> <span class="<%= span_content_css%>"><%= span_content %></span></label>
 
       <%= select_tag "#{template}[contributor_group][][contributor_name_type]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( NameTypeService.new.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("contributor_name_type")),
                     required: required_toggle , class: 'ubiquity_contributor_name_type', data: {field_name:'ubiquity_contributor_name_type'} %>
     <% end %>
 
-    <p class="help-block">A person or group who played a secondary role in the work.</p>
+    <p class="help-block"> <%= t('hyrax.hints.contributor') %> </p>
 
     <% if contributor_list.include?('contributor_isni')%>
       <%= render 'shared/ubiquity/json_fields_partials/isni', template: template, metadata_field: "contributor", hash: hash %>
@@ -37,15 +37,15 @@
     <span class="ubiquity_organization_fields">
 
     <label class="ubiquity_contributor_organization_name_label control-label multi_value optional" for="#{template}_contributor_organization_name">
-      contributor organisation name</label>
+      <%= t('hyrax.labels.contributor_org') %></label>
 
     <%= text_field_tag "#{template}[contributor_group][][contributor_organization_name]", hash.dig("contributor_organization_name"),
                         class: "#{template}_contributor_organization_name form-control multi-text-field multi_value ubiquity_contributor_organization_name",
-                        placeholder: 'Please enter the organisation\'s name.',
+                        placeholder: t('hyrax.placeholders.contributor_org'),
                         name: "#{template}[contributor_group][][contributor_organization_name]",
                         data: {field_name:'ubiquity_contributor_organization_name'}
     %>
-    <span style="color:red;" class="error">Please complete this field.</span>
+    <span style="color:red;" class="error">  <%= t('hyrax.errors.required') %></span>
 
   </span>
   <br/>
@@ -94,10 +94,10 @@
 
     <a href="#" style="color:red;"  class=" remove_contributor form-group " data-removeUbiquitycontributor=".ubiquity-meta-contributor">
       <span class="glyphicon glyphicon-remove"></span>
-      <span class="controls-remove-text">Remove</span>
+      <span class="controls-remove-text"> <%= t('hyrax.control.remove') %> </span>
     </a>
     |
-    <a href="#" class=" add_contributor" data-addUbiquitycontributor=".ubiquity-meta-contributor">Add another </a>
+    <a href="#" class=" add_contributor" data-addUbiquitycontributor=".ubiquity-meta-contributor"><%= t('hyrax.control.add') %></a>
 
     <br><br><br>
 

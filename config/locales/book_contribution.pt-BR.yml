@@ -1,5 +1,8 @@
 pt-BR:
   hyrax:
+    labels:
+      title: Title test PORTUGESE
+      resource_type: Resource Type POR
     icons:
       book_contribution:     'fa fa-file-text-o'
     select_type:

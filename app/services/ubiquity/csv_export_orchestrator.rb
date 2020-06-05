@@ -59,9 +59,9 @@ module Ubiquity
 
    def get_tenant_url
      if tenant_name.include? 'localhost'
-       "http://#{tenant_name}:8080/admin/exports?locale=en#download-ready"
+       "http://#{tenant_name}:8080/admin/exports?locale=en#download-csv"
      else
-       "https://#{tenant_name}/admin/exports?locale=en#download-ready"
+       "https://#{tenant_name}/admin/exports?locale=en#download-csv"
      end
 
    end

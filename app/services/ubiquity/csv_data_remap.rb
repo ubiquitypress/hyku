@@ -1,10 +1,9 @@
 module Ubiquity
-
   class CsvDataRemap
     attr_accessor :data, :ordered_data, :retained_object_attributes, :unordered_hash, :data_hash
     UN_NEEDED_KEYS = ["head", "tail","proxy_depositor", "on_behalf_of", "arkivo_checksum", "owner",
                      "label", "relative_path", "import_url", "based_near", "identifier",  "access_control_id",
-                     "representative_id", "thumbnail_id", "admin_set_id", "embargo_id", "lease_id",
+                     "representative_id", "thumbnail_id", "embargo_id", "lease_id",
                       "bibliographic_citation", "state",  "creator_search", "doi_options", "draft_doi",
                       "disable_draft_doi", "version_number", 'depositor', 'file_availability'
                      ]
@@ -14,7 +13,7 @@ module Ubiquity
                         funder funder_project_reference event_title event_date event_location series_name book_title editor journal_title alternative_journal_title volume edition version
                         issue pagination article_number publisher place_of_publication isbn issn eissn current_he_institution date_accepted date_submitted official_url
                         related_url related_exhibition related_exhibition_date language license rights_statement rights_holder doi qualification_name qualification_level
-                        alternate_identifier related_identifier peer_reviewed keyword dewey library_of_congress_classification additional_information)
+                        alternate_identifier related_identifier peer_reviewed keyword dewey library_of_congress_classification additional_information admin_set)
 
     def initialize(object=nil)
        if object.present?
@@ -85,7 +84,7 @@ module Ubiquity
     end
 
     def remap_array_fields(key, value)
-        list_of_array_used_as_single_felds = ['title', 'volume', 'version', 'alt_title']
+        list_of_array_used_as_single_felds = ['title', 'volume', 'version', 'alt_title', 'admin_set', 'work_type']
         value.each_with_index do |item, index|
           key_name = ("#{key}_#{index + 1}")  if list_of_array_used_as_single_felds.exclude?(key)
           key_name = key if list_of_array_used_as_single_felds.include?(key)
@@ -147,7 +146,7 @@ module Ubiquity
         file_sets = ActiveFedora::Base.where("{!terms f=id}#{id_strings}")
         #object.file_sets.each_with_index do |file, index|
         file_sets.each_with_index do |file, index|
-          key_name = ("file_url_#{index + 1}")
+          key_name = ("file_#{index + 1}")
           titles = []
           puts "adding file names #{file.try(:title)}"
           #a single file can have multiple title
@@ -159,9 +158,10 @@ module Ubiquity
       end
     end
 
+    #"file_set_ids_ssim" => "file_name",
     def hash_value_as_csv_keys
       {
-        "id" => "id", "date_uploaded_dtsi" => "date_uploaded", "date_modified_dtsi" => "date_modified", "file_set_ids_ssim" => "file_set_ids", "visibility_ssi" => "visibility",
+        "id" => "id", "date_uploaded_dtsi" => "date_uploaded", "date_modified_dtsi" => "date_modified", "visibility_ssi" => "visibility",
         "embargo_release_date_dtsi" => "embargo_end_date", "visibility_after_embargo_ssim" => "visibility_after_embargo", "visibility_after_lease_ssim" => "visibility_after_lease",
         "lease_expiration_date_dtsi" => "lease_end_date", "collection_id_sim" => "collections", "has_model_ssim" => "work_type", "resource_type_tesim" => "resource_type",
         "title_tesim" => "title", "alt_title_tesim" => 'alternative_title', "creator_tesim" => "creator", "contributor_tesim" => "contributor", "abstract_tesim" => "abstract",
@@ -176,7 +176,7 @@ module Ubiquity
        "license_tesim" => "license", "rights_statement_tesim" => "rights_statement", "rights_holder_tesim" => "rights_holder", "doi_tesim" => "doi",
        "qualification_name_tesim" => "qualification_name", "qualification_level_tesim" => "qualification_level",  "alternate_identifier_tesim" => "alternate_identifier_id",
        "related_identifier_tesim" => "related_identifier_id", "refereed_tesim" => 'peer_reviewed', "dewey_tesim" => "dewey",
-       "library_of_congress_classification_tesim" =>  "library_of_congress_classification", "add_info_tesim" => 'additional_information'
+       "library_of_congress_classification_tesim" =>  "library_of_congress_classification", "add_info_tesim" => 'additional_information', "admin_set_tesim" => "admin_set"
       }
 
     end

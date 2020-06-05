@@ -11,8 +11,9 @@ module Ubiquity
     attr_accessor :db_record_count, :model_record_count
 
     #use with regular_export
+    #"admin_set_id"
     def self.csv_header
-      removed_keys = ["head", "tail","proxy_depositor", "on_behalf_of", "arkivo_checksum", "owner",  "version", "label", "relative_path", "import_url", "based_near", "identifier", "access_control_id", "representative_id", "thumbnail_id", "admin_set_id", "embargo_id", "lease_id", "bibliographic_citation", "state",  "creator_search"]
+      removed_keys =  Ubiquity::CsvDataRemap::UN_NEEDED_KEYS
       dataset = Dataset.attribute_names - removed_keys
       conference_item = ConferenceItem.attribute_names - removed_keys
       header_keys = dataset.concat(conference_item).uniq

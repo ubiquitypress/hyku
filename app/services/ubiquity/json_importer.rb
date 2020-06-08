@@ -33,7 +33,8 @@ module Ubiquity
       @file = @data_hash[:file]
       @ubiquity_model_class = @data_hash.with_indifferent_access["type"].try(:constantize) || model_instance.class
       @work_instance = model_instance
-      @collection_ids = (data.delete('collection_id') || data.delete(:collection_id)).split('||').map(&:strip)
+      collection_id = data.delete('collection_id') ||  data.delete(:collection_id)
+      @collection_ids = ( collection_id && collection_id.split('||').map(&:strip)  )
       @attributes_hash.merge!({"collection_id" => @collection_ids, 'collection_names' =>  merge_collection_names | model_instance.collection_names.to_a})
     end
 
@@ -54,7 +55,7 @@ module Ubiquity
       @attributes_hash['date_modified'] = Hyrax::TimeService.time_in_utc
       @attributes_hash['date_uploaded'] = Hyrax::TimeService.time_in_utc unless @work_instance.date_uploaded.present?
       set_default_work_visibility(@data_hash[:visibility])
-      set_admin_set(@data_hash[:admin_set_id])
+      set_admin_set(@data_hash[:admin_set])
       #save the work
       create_or_update_work
       add_state_to_work
@@ -150,10 +151,12 @@ module Ubiquity
     def set_admin_set(value)
       if value.present? && @work_instance.class != Collection
         puts "setting admin_set to - #{value.inspect}"
-        @attributes_hash['admin_set_id'] = value
+        new_admin_set = AdminSet.where(title: value).try(:first)
+        new_admin_set = new_admin_set ||  AdminSet.create(title: [value])
+        @attributes_hash['admin_set_id'] = new_admin_set.try(:id)
       elsif @work_instance.class != Collection
         puts "setting adminset to admin_set/default "
-         @attributes_hash['admin_set_id'] = "admin_set/default" unless @work_instance.admin_set_id.present?
+        @attributes_hash['admin_set_id'] = "admin_set/default" unless @work_instance.admin_set_id.present?
       end
     end
 

@@ -4,7 +4,7 @@
 
 <% my_model_name = f.object.model.class.to_s.underscore %>
 <label class="control-label" for="<%= my_model_name %>_title"><%= t('hyrax.labels.title') %>
-  <span class="label label-info required-tag">required</span>
+  <span class="label label-info required-tag"><%= t('hyrax.control.required') %></span>
 </label>
 <%= text_field_tag "#{my_model_name}[title][]", f.object.model.title.first, id: "#{my_model_name}_title",
   class: "form-control text required form-control ubiquity-title" , placeholder: t('hyrax.placeholders.title'), required: t('hyrax.control.required') %>

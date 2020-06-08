@@ -9,6 +9,7 @@ en:
       family_name: Family Name y
       middle_name: Middle Name y
       given_name: Given Name y
+      suffix: Suffix y
       title: Title y
       resource_type: Resource Type y
       doi: DOI y
@@ -27,6 +28,9 @@ en:
     placeholders:
       title: Add a title y
       contributor_org: Please enter the organisations name. y
+      family_name: Please enter a last name/family name. y
+      middle_name: Please enter a middle name. y
+      given_name: Please enter a first name/given name. y
   simple_form:
     hints:
       defaults:

@@ -31,7 +31,7 @@ module Ubiquity
      if is_upload_successful? && requester.present?
        user = User.find_by(email: requester) || User.find_by(id: requester)
        url = get_tenant_url
-       user.send_message(user, "The CSV can be <a href=#{url}> downloaded from the Export Metadata page </a>", "CSV produced for #{csv_filename} export request")
+       user.send_message(user, "The CSV can be <a href=#{url} target='_blank'  download> downloaded from the Export Metadata page </a>", "CSV produced for #{csv_filename} export request")
      end
    end
 

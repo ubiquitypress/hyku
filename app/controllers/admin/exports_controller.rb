@@ -45,7 +45,7 @@ module Admin
     end
 
     def s3_wrapper
-      @s3_wrapper = Ubiquity::S3Wrapper.new(bucket_name: ENV['S3_BUCKET_NAME'])
+      @s3_wrapper = Ubiquity::S3Wrapper.new(bucket_name: ENV['S3_BUCKET_NAME'], tenant_name: current_account.cname)
     end
 
     def export_flash_message

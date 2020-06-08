@@ -23,7 +23,7 @@ module Ubiquity
    end
 
    def is_upload_successful?
-     @upload_to_s3.successful?
+     @upload_to_s3.try(:successful?)
    end
 
    def send_download_ready_notification
@@ -36,13 +36,14 @@ module Ubiquity
    end
 
    def s3_download_url
-     s3_wrapper_object.download_url
+     s3_wrapper_object && s3_wrapper_object.download_url
    end
 
    def redis_storage_object
-     success =  @upload_to_s3.successful?
+     #success =  @upload_to_s3.successful?
 
-     if !success
+     #if !success
+     if !is_upload_successful?
        options = {'successful' =>  success, "date_of_original_request"=> Time.now}
        @redis_storage_object ||= Ubiquity::RedisStorage.new(tenant_name: tenant_name, export_name: csv_filename, requester: requester, options: options)
 

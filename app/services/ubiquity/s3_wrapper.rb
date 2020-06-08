@@ -51,7 +51,7 @@ module Ubiquity
     end
 
     def all_objects_in_s3bucket
-      @objects ||= bucket.objects
+      @objects ||= bucket.try(:objects)
       #sort descending ie most recent first
       @objects && @objects.sort_by {|object| -object.try(:data).try(:last_modified).try(:to_i)}
 

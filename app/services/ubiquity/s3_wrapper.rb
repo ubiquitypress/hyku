@@ -51,11 +51,12 @@ module Ubiquity
     end
 
     def all_objects_in_s3bucket
-      @objects ||= bucket.try(:objects)
-      #sort descending ie most recent first
-      tenant_records = @objects && @objects.map {|s3_item| s3_item if s3_item.key.include?(@tenant_name) }.compact
-      tenant_records && tenant_records.sort_by {|object| -object.try(:data).try(:last_modified).try(:to_i)}
-
+      if tenant_name.present? && bucket.present?
+        @objects ||= bucket.try(:objects)
+        #sort descending ie most recent first
+        tenant_records = @objects && @objects.map {|s3_item| s3_item if s3_item.key.include?(@tenant_name) }.compact
+        tenant_records && tenant_records.sort_by {|object| -object.try(:data).try(:last_modified).try(:to_i)}
+      end
       rescue Aws::S3::Errors::BucketAlreadyExists => e
         puts "#{e.inspect}"
     end

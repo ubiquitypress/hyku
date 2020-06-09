@@ -1,4 +1,4 @@
-<% label_name = check_for_nested_setting('metadata_labels', 'given_name') || "#{metadata_field.capitalize} given name"  %>
+<% label_name = check_for_nested_setting('metadata_labels', 'given_name') || t('hyrax.labels.given_name')  %>
 
 
 <label class="control-label multi_value optional" for="#{template}_#{metadata_field}_given_name">
@@ -6,11 +6,11 @@
 
 <%= text_field_tag "#{template}[#{metadata_field}_group][][#{metadata_field}_given_name]", hash.dig("#{metadata_field}_given_name"),
                   class: "#{template}_#{metadata_field}_group form-control  multi-text-field  multi_value ubiquity_#{metadata_field}_given_name",
-                  placeholder: "Please enter the #{metadata_field}\'s first name/given name.",
+                  placeholder: t('hyrax.placeholders.given_name'),
                   name: "#{template}[#{metadata_field}_group][][#{metadata_field}_given_name]",
                   data: {field_name:"ubiquity_#{metadata_field}_given_name"}
 
 %>
 <% if metadata_field == 'creator' %>
-  <span style="color:red;" class="error">Please enter one of these fields.</span>
+  <span style="color:red;" class="error"><%= t('hyrax.errors.required_name') %></span>
 <% end %>

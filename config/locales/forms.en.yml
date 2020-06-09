@@ -1,0 +1,84 @@
+en:
+  hyrax:
+    labels:
+      add_info: Additional Information y
+      contributor: Contributor Name Type y
+      contributor_org: contributor organisation name y
+      creator: Creator Name Type
+      creator_org: Creator organisation name y
+      family_name: Family Name y
+      middle_name: Middle Name y
+      given_name: Given Name y
+      suffix: Suffix y
+      title: Title y
+      resource_type: Resource Type y
+      doi: DOI y
+    hints:
+      add_info: Please enter any additional information here that has not been entered. The information added in this field will be visible to everyone in the public view. y
+      abstract: Please provide a short abstract or description of the item.y
+      contributor: A person or group who played a secondary role in the work. y
+      creator: The person or group responsible for the work. Usually this is the author of the content. y
+    errors:
+      required: Please complete this field. y
+      required_name: Please enter one of these fields. y
+    control:
+      remove: Remove y
+      add: Add another y
+      required: requiredys
+    placeholders:
+      title: Add a title y
+      contributor_org: Please enter the organisations name. y
+      family_name: Please enter a last name/family name. y
+      middle_name: Please enter a middle name. y
+      given_name: Please enter a first name/given name. y
+  simple_form:
+    hints:
+      defaults:
+        alt_title: Alternative title for the item, such as a translated or abbreviated form of the title. y
+        institution: The institution to which the item is affiliated. y
+        org_unit: The department, or unit, that the works sits within as per the organisational structure. y
+        refereed: Please select if the item was peer-reviewed. y
+        funder: Use full name e.g. Arts and Humanities Research Council y
+        fndr_project_ref: This may be the grant number as allocated by the funding body. y
+        add_info: Please enter any additional information here that has not been entered. The information added in this field will be visible to everyone in the public view. y
+        date_published: The date the item was published and made publicly available. Provide just the year or a more specific date. If you are minting a DOI for this item, this field is mandatory. y
+        date_accepted: The date the item was accepted for publication. For example, this may be when receiving an acceptance letter from a publisher or when the final text has been copyedited and approved. You can provide just the year or a more specific date if you have this available. y
+        date_submitted: The date the item was submitted for review to the publisher.  You can provide just the year or a more specific date if you have this available. y
+        journal_title: Please enter the journal title, e.g. Journal of Eighteenth-Century Studies. y
+        issue: Specify the issue number, where available.y
+        volume: Please enter the number, e.g. 2, 76. Leave blank if there are no volumes.y
+        pagination: For a contribution or article, this can be the range of pages e.g. 1-13, for an entire volume it can be the total number of pages.y
+        article_num: If there is an article number, e.g. e0183455 (usually found in online-only journals)y
+        related_exhibition_venue: The venue(s) that hosted the related exhibition.y
+        rights_holder: Please identify the rights holder if different from the creator.y
+        project_name: The name of the project the work relates to, where relevanty
+        doi: A persistent digital object identifier, if your item already has one then enter this here in the following model e.g. 10.21250/tcq.y
+        qualification_name: The name of the qualification.y
+        qualification_level: Select one.y
+        issn: Enter either the ISSN or the eISSN or both, if available.y
+        eissn: Enter either the ISSN or the eISSN or both, if available.y
+        current_he_institution: The current name of the HE institution responsible for the thesis. Select one.y
+        official_link: Please enter the official URL, e.g. the publisher's link to the item.y
+        place_of_publication: Enter the town/city and country, or country only, e.g. London, UK or UKy
+        resource_type: Select the specific resource type that best describes the work.y
+        publisher: The name of the organisation making the work available.y
+        keyword: Words or phrases you select to describe what the work is about. These are used to search for content.y
+        rights_statement: Please select the most appropriate rights statement for the item.y
+        library_of_congress_classification: "The letter code corresponding to the LCC - eg 'QK' for 'Botany' - see: <a href='https://en.wikipedia.org/wiki/Library_of_Congress_Classification' target='_blank'>https://en.wikipedia.org/wiki/Library_of_Congress_Classification</a>"
+        series_name: Please enter the series title, e.g. British Library Research Publications yiyblig
+    labels:
+      defaults:
+        abstract: Abstract y
+        alt_title: Alternative title y
+        org_unit: Organisational Unit y
+        refereed: Peer-reviewed? y
+        fndr_project_ref: Funder project reference y
+        add_info: Additional information y
+        article_num: Article number y
+        doi: DOI y
+        issn: ISSN y
+        eissn: eISSN y
+        isbn: ISBN y
+        license: Licence y
+        keyword: Keywords y
+        library_of_congress_classification: Library of Congress Classification y

@@ -1,6 +1,6 @@
 
 <label class="control-label multi_value optional" for="#{template}_#{metadata_field}_suffix">
-  Suffix</label>
+  <%= t('hyrax.labels.suffix') %></label>
 <%= text_field_tag  "#{template}[#{metadata_field}_group][][#{metadata_field}_suffix]",  hash.dig("#{metadata_field}_suffix"),
                     class: "#{template}_#{metadata_field}_suffix #{metadata_field}_suffix form-control multi-text-field multi_value ubiquity_#{metadata_field}_suffix",
                     placeholder: '',

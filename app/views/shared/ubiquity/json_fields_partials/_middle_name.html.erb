@@ -1,9 +1,9 @@
 <label class="control-label multi_value optional" for="#{template}_#{metadata_field}_middle_name">
-  Middle Name</label>
+  <%= t('hyrax.labels.middle_name') %></label>
 
 <%= text_field_tag  "#{template}[#{metadata_field}_group][][#{metadata_field}_middle_name]",  hash.dig("#{metadata_field}_middle_name"),
                     class: "#{template}_#{metadata_field}_group form-control multi-text-field multi_value ubiquity_#{metadata_field}_middle_name",
-                    placeholder: "Please enter the #{metadata_field}\'s middle name.",
+                    placeholder: t('hyrax.placeholders.middle_name'),
                     name: "#{template}[#{metadata_field}_group][][#{metadata_field}_middle_name]",
                     data: {field_name:"ubiquity_#{metadata_field}_middle_name"}
 %>

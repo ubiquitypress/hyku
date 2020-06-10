@@ -58,7 +58,6 @@ en:
     footer:
       admin_login: 'Administrator login'
       admin_home: 'Administrator page'
-      oar_bl_email: 'openaccess@bl.uk'
     proprietor:
       accounts:
         nav: 'Accounts'

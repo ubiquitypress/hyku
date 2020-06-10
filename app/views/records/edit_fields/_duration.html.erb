@@ -3,5 +3,5 @@
 
 <%= f.input :duration, as: :multi_value,
             input_html: { class: 'ubiquity-publisher form-control' },
-            hint: tenant_work_settings['help_texts']['duration'] %>
+            hint: check_for_nested_setting('help_texts','duration') %>
 <br>

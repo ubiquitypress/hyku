@@ -4,7 +4,7 @@
 
 
 <br>
-<label class="control-label multi_value optional" for="#{template}_IrbStatus">IRB Status</label>
+<label class="control-label multi_value optional" for="#{template}_IrbStatus"><%= t('hyrax.labels.irb_status') %></label>
 <p class="help-block"></p>
 <%= select_tag "#{template}[irb_status]",
       options_from_collection_for_select(irb_status_service.select_active_options.flatten.uniq!, :to_s, :to_s, f.object.model.irb_status),

@@ -33,12 +33,12 @@ en:
       date_accepted: The date the item was accepted for publication. For example, this may be when receiving an acceptance letter from a publisher or when the final text has been copyedited and approved. You can provide just the year or a more specific date ifou have this available.
       date_submitted: The date the item was submitted for review to the publisher.  You can provide just the year or a more specific date ifou have this available.
       pagination: For a contribution or article, this can be the range of pages e.g. 1-13, for an entire volume it can be the total number of pages.
-      issue: Specify the issue number, where available.y
+      issue: Specify the issue number, where available
       volume: Please enter the number, e.g. 2, 76. Leave blank if there are no volumes.
       journal_title: Please enter the journal title, e.g. Journal of Eighteenth-Century Studies.
       publisher: The name of the organisation making the work available.
       issn: Enter either the ISSN or the eISSN or both, if available.
-      rights_holder: Please identify the rights holder if different from the creator.y
+      rights_holder: Please identify the rights holder if different from the creator
       licence: Licensing and distribution information governing access to the work. Select from the provided drop-down list, or add to ‘additional information’ field below, if it is not included in the list
     errors:
       required: Please complete this field.
@@ -66,25 +66,25 @@ en:
         funder: Use full name e.g. Arts and Humanities Research Council
         fndr_project_ref: This may be the grant number as allocated by the funding body.
         add_info: Please enter any additional information here that has not been entered. The information added in this field will be visible to everyone in the public view.
-        volume: Please enter the number, e.g. 2, 76. Leave blank if there are no volumes.y
-        article_num: If there is an article number, e.g. e0183455 (usually found in online-only journals)y
-        related_exhibition_venue: The venue(s) that hosted the related exhibition.y
-        rights_holder: Please identify the rights holder if different from the creator.y
+        volume: Please enter the number, e.g. 2, 76. Leave blank if there are no volumes.
+        article_num: If there is an article number, e.g. e0183455 (usually found in online-only journals)
+        related_exhibition_venue: The venue(s) that hosted the related exhibition.
+        rights_holder: Please identify the rights holder if different from the creator.
         project_name: The name of the project the work relates to, where relevanty
-        doi: A persistent digital object identifier, ifour item already has one then enter this here in the following model e.g. 10.21250/tcq.y
-        qualification_name: The name of the qualification.y
-        qualification_level: Select one.y
-        issn: Enter either the ISSN or the eISSN or both, if available.y
-        eissn: Enter either the ISSN or the eISSN or both, if available.y
-        current_he_institution: The current name of the HE institution responsible for the thesis. Select one.y
-        official_link: Please enter the official URL, e.g. the publisher's link to the item.y
-        place_of_publication: Enter the town/city and country, or country only, e.g. London, UK or UKy
-        resource_type: Select the specific resource type that best describes the work.y
-        publisher: The name of the organisation making the work available.y
-        keyword: Words or phrasesou select to describe what the work is about. These are used to search for content.y
-        rights_statement: Please select the most appropriate rights statement for the item.y
+        doi: A persistent digital object identifier, ifour item already has one then enter this here in the following model e.g. 10.21250/tcq.
+        qualification_name: The name of the qualification.
+        qualification_level: Select one.
+        issn: Enter either the ISSN or the eISSN or both, if available.
+        eissn: Enter either the ISSN or the eISSN or both, if available.
+        current_he_institution: The current name of the HE institution responsible for the thesis. Select one.
+        official_link: Please enter the official URL, e.g. the publisher's link to the item.
+        place_of_publication: Enter the town/city and country, or country only, e.g. London, UK or UK
+        resource_type: Select the specific resource type that best describes the work.
+        publisher: The name of the organisation making the work available.
+        keyword: Words or phrasesou select to describe what the work is about. These are used to search for content.
+        rights_statement: Please select the most appropriate rights statement for the item.
         library_of_congress_classification: "The letter code corresponding to the LCC - eg 'QK' for 'Botany' - see: <a href='https://en.wikipedia.org/wiki/Library_of_Congress_Classification' target='_blank'>https://en.wikipedia.org/wiki/Library_of_Congress_Classification</a>"
-        series_name: Please enter the series title, e.g. British Library Research Publicationsiyblig
+        series_name: Please enter the series title, e.g. British Library Research Publications
     labels:
       defaults:
         abstract: Abstract

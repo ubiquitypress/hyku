@@ -10,5 +10,5 @@
   class: "form-control text required form-control ubiquity-title" , placeholder: t('hyrax.placeholders.title'), required: t('hyrax.control.required') %>
 
 
-<%= button_to 'Check title availability', main_app.check_available_ubiquity_titles_path,
+<%= button_to t('hyrax.labels.buttons.title_check'), main_app.check_available_ubiquity_titles_path,
    class: "ubiquity-title-checker", data: { 'ubiquity-model' => f.object.model.class.to_s } %>

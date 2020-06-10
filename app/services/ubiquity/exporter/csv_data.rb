@@ -21,10 +21,8 @@ module Ubiquity
       switch_account_tenant
       puts "===== starting remapping all records ===="
       model_class_names = Ubiquity::SharedMethods.tenant_work_list(cname_or_original_url)
-      model_class_names.each do |work|
-        work.find_each do |record|
-          @all_records <<  Ubiquity::Exporter::CsvDataRemap.new(record).unordered_hash if record.present?
-        end
+      model_class_names.each do |model_name|
+          @all_records <<  model_name.csv_data
       end
 
       puts "====== finished remapping all records  ====="

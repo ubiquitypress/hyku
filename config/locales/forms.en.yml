@@ -25,7 +25,7 @@ en:
         title_check: Check title availability
     hints:
       add_info: Please enter any additional information here that has not been entered. The information added in this field will be visible to everyone in the public view.
-      abstract: Please provide a short abstract or description of the item.y
+      abstract: Please provide a short abstract or description of the item.
       contributor: A person or group who played a secondary role in the work.
       creator: The person or group responsible for the work. Usually this is the author of the content.
       resource_type: Select the specific resource type that best describes the work.

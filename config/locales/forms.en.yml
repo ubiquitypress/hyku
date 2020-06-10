@@ -21,6 +21,7 @@ en:
       date_submitted: Date Submitted
       volume: Volume
       license: Licence
+      org_unit: Organisational unit
       buttons:
         title_check: Check title availability
     hints:
@@ -40,6 +41,8 @@ en:
       issn: Enter either the ISSN or the eISSN or both, if available.
       rights_holder: Please identify the rights holder if different from the creator
       licence: Licensing and distribution information governing access to the work. Select from the provided drop-down list, or add to ‘additional information’ field below, if it is not included in the list
+      org_unit: The department, or unit, that the works sits within as per the organisational structure. y
+      doi: If your item already has a DOI, enter it in format 10.21250/tcq
     errors:
       required: Please complete this field.
       required_name: Please enter one of these fields.
@@ -70,8 +73,8 @@ en:
         article_num: If there is an article number, e.g. e0183455 (usually found in online-only journals)
         related_exhibition_venue: The venue(s) that hosted the related exhibition.
         rights_holder: Please identify the rights holder if different from the creator.
-        project_name: The name of the project the work relates to, where relevanty
-        doi: A persistent digital object identifier, ifour item already has one then enter this here in the following model e.g. 10.21250/tcq.
+        project_name: The name of the project the work relates to, where relevant
+        doi: A persistent digital object identifier, if your item already has one then enter this here in the following model e.g. 10.21250/tcq.
         qualification_name: The name of the qualification.
         qualification_level: Select one.
         issn: Enter either the ISSN or the eISSN or both, if available.

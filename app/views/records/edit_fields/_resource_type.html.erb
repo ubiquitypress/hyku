@@ -7,7 +7,7 @@
 <label class="control-label" for="<% template %>_resource_type"><%= t('hyrax.labels.resource_type') %>
   <span class="label label-info required-tag"><%= t('hyrax.control.required') %></span>
 </label>
-<p class="help-block">Select the specific resource type that best describes the work.</p>
+<p class="help-block"><%= t('hyrax.hints.resource_type') %></p>
 <%if template == 'generic_work' %>
   <%= select_tag "#{template}[resource_type][]", content_tag(:option,'Please Select ...',:value=>"")+
         options_from_collection_for_select( ResourceTypesService.select_template_options(model_name),

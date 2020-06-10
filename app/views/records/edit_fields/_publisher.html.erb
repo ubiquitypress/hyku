@@ -2,5 +2,5 @@
 
 <%= f.input :publisher, as: :multi_value,
             input_html: { class: 'ubiquity-publisher form-control' },
-            hint: check_for_nested_setting('help_texts','publisher') %>
+            hint: check_for_nested_setting('help_texts','publisher') || t('hyrax.hints.publisher') %>
 <br>

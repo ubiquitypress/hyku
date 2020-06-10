@@ -7,7 +7,7 @@
 
 <% if metadata_field == "creator" %>
   <p><label class="control-label multi_value optional" for=<%= "#{template}_#{metadata_field}_role" %> >
-    <%= "#{metadata_field}".capitalize %> Role  </label></p> <span class='error'> </span>
+    <%= t("hyrax.labels.#{metadata_field}_role") %> </label></p> <span class='error'> </span>
 
    <%= select_tag "#{template}[#{metadata_field}_group][][#{metadata_field}_role][]",
      content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select(dropdown_options,
@@ -16,7 +16,7 @@
 
 <% else %>
    <p> <label class="control-label multi_value optional" for=<%= "#{template}_#{metadata_field}_type" %> >
-  <%= "#{metadata_field}".capitalize %> Role</label> </p>
+  <%= t("hyrax.labels.#{metadata_field}_role") %></label> </p>
    <%= select_tag "#{template}[#{metadata_field}_group][][#{metadata_field}_type]",
                     content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select(dropdown_options,
                     :to_s, :to_s, default_contribution_selection)

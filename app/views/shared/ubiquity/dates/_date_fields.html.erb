@@ -1,12 +1,12 @@
 
-<label class="control-label" for="date_#{date_type}"> Date  <%= "#{date_type}".capitalize %></label>
-<p class="help-block"><%= t("simple_form.hints.defaults.date_#{date_type}") %></p>
+<label class="control-label" for="date_#{date_type}"> <%= t("hyrax.labels.date_#{date_type}") %></label>
+<p class="help-block"><%= t("hyrax.hints.date_#{date_type}") %></p>
 
 
-<%= select_year(parse_date(f.object.model.send("date_#{date_type}"), 'year').to_i, {start_year: (Date.today.year + 6), end_year: (Date.today.year - 159), prompt: "Select year"}, {name: "#{template}[date_#{date_type}_group][][date_#{date_type}_year]", class: "form-control ubiquity-date-#{date_type}-year ubiquity-date-input"} ) %>
+<%= select_year(parse_date(f.object.model.send("date_#{date_type}"), 'year').to_i, {start_year: (Date.today.year + 6), end_year: (Date.today.year - 159), prompt: t('hyrax.placeholders.year') }, {name: "#{template}[date_#{date_type}_group][][date_#{date_type}_year]", class: "form-control ubiquity-date-#{date_type}-year ubiquity-date-input"} ) %>
 
 <%= select_month(parse_date(f.object.model.send("date_#{date_type}"), 'month').to_i, { use_two_digit_numbers: true,
-                                                             prompt: 'select month if available'},   {name:  "#{template}[date_#{date_type}_group][][date_#{date_type}_month]", :class => "form-control ubiquity-date-#{date_type}-month ubiquity-date-input"}) %>
+                                                             prompt: t('hyrax.placeholders.month') },   {name:  "#{template}[date_#{date_type}_group][][date_#{date_type}_month]", :class => "form-control ubiquity-date-#{date_type}-month ubiquity-date-input"}) %>
 
 <%= select_day(parse_date(f.object.model.send("date_#{date_type}"), 'day').to_i, { use_two_digit_numbers: true,
-                                                        prompt: 'select day if available'},   {name:  "#{template}[date_#{date_type}_group][][date_#{date_type}_day]", :class => "form-control ubiquity-date-#{date_type}-day ubiquity-date-input"}) %>
+                                                        prompt: t('hyrax.placeholders.day') },   {name:  "#{template}[date_#{date_type}_group][][date_#{date_type}_day]", :class => "form-control ubiquity-date-#{date_type}-day ubiquity-date-input"}) %>

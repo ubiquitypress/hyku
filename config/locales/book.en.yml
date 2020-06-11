@@ -6,8 +6,3 @@ en:
       book:
         name:               "Book"
         description:        "Books written by a single author or collaboratively based on research or scholarly findings."
-  simple_form:
-    hints:
-      defaults:
-        edition: If this is not the first edition, please specifiy in the format e.g. 1st, 2nd. Leave blank if not required.
-        isbn: ISBN for this item, if available.

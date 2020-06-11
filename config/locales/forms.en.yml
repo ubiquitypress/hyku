@@ -47,7 +47,6 @@ en:
       volume: Please enter the number, e.g. 2, 76. Leave blank if there are no volumes.
       journal_title: Please enter the journal title, e.g. Journal of Eighteenth-Century Studies.
       publisher: The name of the organisation making the work available.
-      issn: Enter either the ISSN or the eISSN or both, if available.
       rights_holder: Please identify the rights holder if different from the creator.
       licence: Licensing and distribution information governing access to the work. Select from the provided drop-down list, or add to ‘additional information’ field below, if it is not included in the list.
       org_unit: The department, or unit, that the works sits within as per the organisational structure.
@@ -90,7 +89,6 @@ en:
         project_name: The name of the project the work relates to, where relevant
         qualification_name: The name of the qualification
         qualification_level: Select one
-        issn: Enter either the ISSN or the eISSN or both, if available
         eissn: Enter either the ISSN or the eISSN or both, if available
         current_he_institution: The current name of the HE institution responsible for the thesis. Select one
         official_link: Please enter the official URL, e.g. the publisher's link to the item

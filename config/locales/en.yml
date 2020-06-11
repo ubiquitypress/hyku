@@ -122,16 +122,6 @@ en:
         user_key: 'Username'
         date_joined: 'Joined'
         last_login: 'Last access'
-    bl_partners:
-      bl: 'British Library'
-      bm: 'The British Museum'
-      nms: 'National Museums Scotland'
-      mola: 'MOLA'
-      tate: 'TATE'
-      heading: 'Shared Research Repository'
-      sub_heading: 'for cultural and heritage organisations'
-      homepage_text: 'Welcome to our pilot research repository where you’ll find research produced by staff of the British Library and our five partner organisations: the British Museum, MOLA (Museum of London Archaeology), National Museums Scotland, Royal Botanic Gardens Kew, and Tate.'
-      homepage_temp_announcement: 'Explore the research of all partners at once using the box above, or visit each repository in turn below.'
   hyrax:
     admin:
       appearances:

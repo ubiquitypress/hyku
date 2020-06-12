@@ -5,13 +5,5 @@ en:
     select_type:
       book_chapter:
         name:               "Book Chapter"
-        description:        "A separately-authored chapter or section in a book"
-  simple_form:
-    hints:
-      defaults:
-        alt_title: Enter the alternative title for the item, such as a translated or abbreviated form of the title.
-        resource_type: Select the type of your submission.
-    labels:
-      defaults:
-        org_unit: Department
-        license:  License
+        description:        "A separately-authored chapter or section in a book."
+

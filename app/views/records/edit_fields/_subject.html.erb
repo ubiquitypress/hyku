@@ -4,4 +4,4 @@
             collection: subject_service.select_active_options,
             include_blank: true,
             input_html: { class: 'form-control ubiquity-subject'},
-            hint: check_for_nested_setting('help_texts','subject') %>
+            hint: check_for_nested_setting('help_texts','subject') || t('hyrax.hints.subject') %>

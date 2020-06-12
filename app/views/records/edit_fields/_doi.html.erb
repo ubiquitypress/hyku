@@ -4,7 +4,7 @@
 <label class="control-label" for="<%= my_model_name %>_doi">
   <%= label_name %>
 </label>
-<p class="help-block">If your item already has a DOI, enter it in format 10.21250/tcq</p>
+<p class="help-block"><%= t('hyrax.hints.doi') %></p>
 
 <%= text_field_tag "#{my_model_name}[doi]",nil, id: "#{my_model_name}_doi",
   class: "ubiquity-doi form-control string optional"%>

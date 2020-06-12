@@ -1,5 +1,6 @@
 <%= f.input :refereed, as: :select,
+            label: t('hyrax.labels.refereed'),
             collection: RefereedService.select_options,
             include_blank: true,
             input_html: { class: 'form-control' },
-            hint: check_for_nested_setting('help_texts','refereed') %>
+            hint: check_for_nested_setting('help_texts','refereed') || t('hyrax.hints.refereed') %>

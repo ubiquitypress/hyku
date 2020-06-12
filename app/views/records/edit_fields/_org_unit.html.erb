@@ -1,12 +1,12 @@
-<% label_name = check_for_nested_setting('metadata_labels','org_unit') || "organisational unit".capitalize  %>
+<% label_name = check_for_nested_setting('metadata_labels','org_unit') || t('hyrax.labels.org_unit')  %>
 
 <% my_model_name = f.object.model.class.to_s.underscore %>
 
 <label class="control-label multi_value optional" for="#{template}_org_unit">
   <%= label_name %>
-  <span class="label label-info required-tag">required</span>
+  <span class="label label-info required-tag"><%= t('hyrax.control.required') %></span>
 </label>
-<p class="help-block"><%= check_for_nested_setting('help_texts','org_unit') %> </p>
+<p class="help-block"><%= check_for_nested_setting('help_texts','org_unit') || t('hyrax.hints.org_unit') %> </p>
 
 <%= text_field_tag "#{my_model_name}[org_unit][]", f.object.model.org_unit.first, id: "#{my_model_name}_org_unit",
   class: "form-control text required form-control ubiquity-org-unit" , required: "required" %>

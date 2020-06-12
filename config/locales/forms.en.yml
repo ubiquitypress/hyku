@@ -22,6 +22,15 @@ en:
       volume: Volume
       license: Licence
       org_unit: Organisational unit
+      refereed: Peer-reviewed?
+      irb_status: IRB Status
+      irb_number: IRB Number
+      source: Source
+      degree: Degree
+      page_display_order: Page display order number
+      buy_book: Buy book
+      included: Is included in
+      current_he: Current HE Institution
       buttons:
         title_check: Check title availability
     hints:
@@ -38,18 +47,23 @@ en:
       volume: Please enter the number, e.g. 2, 76. Leave blank if there are no volumes.
       journal_title: Please enter the journal title, e.g. Journal of Eighteenth-Century Studies.
       publisher: The name of the organisation making the work available.
+      rights_holder: Please identify the rights holder if different from the creator.
+      licence: Licensing and distribution information governing access to the work. Select from the provided drop-down list, or add to ‘additional information’ field below, if it is not included in the list.
+      org_unit: The department, or unit, that the works sits within as per the organisational structure.
+      doi: A persistent digital object identifier, if your item already has one then enter this here in the following model e.g. 10.21250/tcq y
+      subject: Headings or index terms describing what the work is about; these do need to conform to an existing vocabulary.
+      keywords: Words or phrases you select to describe what the work is about. These are used to search for content.
+      refereed: Please select if the item was peer-reviewed.
       issn: Enter either the ISSN or the eISSN or both, if available.
-      rights_holder: Please identify the rights holder if different from the creator
-      licence: Licensing and distribution information governing access to the work. Select from the provided drop-down list, or add to ‘additional information’ field below, if it is not included in the list
-      org_unit: The department, or unit, that the works sits within as per the organisational structure. y
-      doi: If your item already has a DOI, enter it in format 10.21250/tcq
+      isbn: ISBN for this item, if available.
+      degree: Enter your terminal degree.
     errors:
       required: Please complete this field.
       required_name: Please enter one of these fields.
     control:
       remove: Remove
       add: Add another
-      required: required
+      required: Required
     placeholders:
       title: Add a title
       contributor_org: Please enter the organisations name.
@@ -62,30 +76,27 @@ en:
   simple_form:
     hints:
       defaults:
-        alt_title: Alternative title for the item, such as a translated or abbreviated form of the title.
-        institution: The institution to which the item is affiliated.
-        org_unit: The department, or unit, that the works sits within as per the organisational structure.
-        refereed: Please select if the item was peer-reviewed.
+        alt_title: Alternative title for the item, such as a translated or abbreviated form of the title
+        institution: The institution to which the item is affiliated
+        org_unit: The department, or unit, that the works sits within as per the organisational structure
         funder: Use full name e.g. Arts and Humanities Research Council
-        fndr_project_ref: This may be the grant number as allocated by the funding body.
-        add_info: Please enter any additional information here that has not been entered. The information added in this field will be visible to everyone in the public view.
-        volume: Please enter the number, e.g. 2, 76. Leave blank if there are no volumes.
+        fndr_project_ref: This may be the grant number as allocated by the funding body
+        add_info: Please enter any additional information here that has not been entered. The information added in this field will be visible to everyone in the public view
+        volume: Please enter the number, e.g. 2, 76. Leave blank if there are no volumes
         article_num: If there is an article number, e.g. e0183455 (usually found in online-only journals)
-        related_exhibition_venue: The venue(s) that hosted the related exhibition.
-        rights_holder: Please identify the rights holder if different from the creator.
+        related_exhibition_venue: The venue(s) that hosted the related exhibition
+        rights_holder: Please identify the rights holder if different from the creator
         project_name: The name of the project the work relates to, where relevant
-        doi: A persistent digital object identifier, if your item already has one then enter this here in the following model e.g. 10.21250/tcq.
-        qualification_name: The name of the qualification.
-        qualification_level: Select one.
-        issn: Enter either the ISSN or the eISSN or both, if available.
-        eissn: Enter either the ISSN or the eISSN or both, if available.
-        current_he_institution: The current name of the HE institution responsible for the thesis. Select one.
-        official_link: Please enter the official URL, e.g. the publisher's link to the item.
+        qualification_name: The name of the qualification
+        qualification_level: Select one
+        eissn: Enter either the ISSN or the eISSN or both, if available
+        current_he_institution: The current name of the HE institution responsible for the thesis. Select one
+        official_link: Please enter the official URL, e.g. the publisher's link to the item
         place_of_publication: Enter the town/city and country, or country only, e.g. London, UK or UK
-        resource_type: Select the specific resource type that best describes the work.
-        publisher: The name of the organisation making the work available.
-        keyword: Words or phrasesou select to describe what the work is about. These are used to search for content.
-        rights_statement: Please select the most appropriate rights statement for the item.
+        resource_type: Select the specific resource type that best describes the work
+        publisher: The name of the organisation making the work available
+        keyword: Words or phrases you select to describe what the work is about. These are used to search for content
+        rights_statement: Please select the most appropriate rights statement for the item
         library_of_congress_classification: "The letter code corresponding to the LCC - eg 'QK' for 'Botany' - see: <a href='https://en.wikipedia.org/wiki/Library_of_Congress_Classification' target='_blank'>https://en.wikipedia.org/wiki/Library_of_Congress_Classification</a>"
         series_name: Please enter the series title, e.g. British Library Research Publications
     labels:
@@ -93,11 +104,9 @@ en:
         abstract: Abstract
         alt_title: Alternative title
         org_unit: Organisational Unit
-        refereed: Peer-reviewed?
         fndr_project_ref: Funder project reference
         add_info: Additional information
         article_num: Article number
-        doi: DOI
         eissn: eISSN
         isbn: ISBN
         keyword: Keywords
@@ -107,4 +116,5 @@ en:
         journal_title: Journal Title
         publisher: Publisher
         rights_holder: Rights Holder
-        license: Licence
+        subject: Subject
+        duration: Duration

@@ -3,8 +3,8 @@
 
 
 <br>
-<label class="control-label multi_value optional" for="#{template}_Degree">Degree</label>
-<p class="help-block">Enter your terminal degree.</p>
+<label class="control-label multi_value optional" for="#{template}_Degree"><%= t('hyrax.labels.degree') %> </label>
+<p class="help-block"><%= t('hyrax.hints.degree') %></p>
 <%= select_tag "#{template}[degree]",
       options_from_collection_for_select(degree_service.select_active_options.flatten.uniq!, :to_s, :to_s, f.object.model.degree),
         class: "ubiquity-autocomplete", include_blank: true, data: {placeholder: ""}

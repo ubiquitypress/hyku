@@ -40,10 +40,9 @@ module Ubiquity
    end
 
    def redis_storage_object
-     #success =  @upload_to_s3.successful?
-
-     #if !success
-     if !is_upload_successful?
+     success = is_upload_successful?
+     if !success
+     #if !is_upload_successful?
        options = {'successful' =>  success, "date_of_original_request"=> Time.now}
        @redis_storage_object ||= Ubiquity::RedisStorage.new(tenant_name: tenant_name, export_name: csv_filename, requester: requester, options: options)
 

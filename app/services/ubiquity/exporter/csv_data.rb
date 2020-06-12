@@ -3,7 +3,10 @@
 #every code in this gist came from the commit below which ensured csv export headers matched the imported csv headers
 #https://github.com/ubiquitypress/hyku/pull/403
 #https://trello.com/c/8QuJT627/411-v15924-make-improvements-to-export-a-csv-file-of-the-repository-metadata-revert-before-release-to-live
-
+#
+# Usage
+# a = Ubiquity::Exporter::CsvData.new('university-demo.localhist').fetch_all_record
+#
 module Ubiquity
 
   class Exporter::CsvData
@@ -22,7 +25,7 @@ module Ubiquity
       puts "===== starting remapping all records ===="
       model_class_names = Ubiquity::SharedMethods.tenant_work_list(cname_or_original_url)
       model_class_names.each do |model_name|
-          @all_records <<  model_name.csv_data
+        @all_records <<  model_name.to_csv
       end
 
       puts "====== finished remapping all records  ====="

@@ -1,7 +1,7 @@
 class UbiquityExporterJob < ActiveJob::Base
   #queue_as :csv_exporter
   def perform(tenant_name, export_type, requester_id)
-    model_list =  Ubiquity::SharedMethods.tenant_work_list(tenant_name) #Hyrax.config.curation_concerns
+    model_list =  Ubiquity::SharedMethods.tenant_work_list(tenant_name) 
 
     if  'all_database'.downcase == export_type
       puts "inside-all"

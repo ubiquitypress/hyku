@@ -29,31 +29,71 @@ module Ubiquity
          sorted_header.uniq
        end
 
-       def csv_data
-         puts "=== starting remapping models=="
-         data ||=  ActiveFedora::SolrService.query("id:* AND has_model_ssim:#{ancestors.first}", { rows: 50000})
-         new_data = data.lazy.map do |item|
-           hash = item.to_h
-           Ubiquity::Exporter::CsvDataRemap.new(hash).unordered_hash
-         end.force
+       def csv_data(batch = nil)
+         if batch.nil?
+           puts "=== starting remapping models=="
+           data ||=  ActiveFedora::SolrService.query("id:* AND has_model_ssim:#{ancestors.first}", { rows: 50000})
+           new_data = data.lazy.map do |item|
+             hash = item.to_h
+             Ubiquity::Exporter::CsvDataRemap.new(hash).unordered_hash
+           end.force
 
-         puts "=== finished remapping models=="
+           puts "=== finished remapping models=="
 
-         new_data
+           new_data
+         else
+           batch = batch.presence || work_type_count
+           puts "batta #{batch}"
+           data = ActiveFedora::SolrService.query("id:* AND has_model_ssim:#{ancestors.first}", { start: batch.first, rows: batch.size})
+           puts "data #{data}"
+           new_data = data.lazy.map do |item|
+             hash = item.to_h
+             Ubiquity::Exporter::CsvDataRemap.new(hash).unordered_hash
+          end.force
+
+           puts "=== finished remapping models=="
+
+           new_data
+
+         end  #closes if
        end
 
-        def to_csv
-          array_of_hash_remapped_data ||= csv_data
+       def work_type_count
+         total_records = self.count
+         total_records_array = (0..(total_records - 1)).to_a
+       end
+
+       def to_csv
+         array_of_csv = []
+         array_of_hash_remapped_data = []
+
+         work_type_count.each_slice(1500).with_index.map do |value, index|
+            new_index = index - 1  if index !=  0;
+            #clrea previous array of remapped data because it is now a csv data in array_of_csv
+            array_of_hash_remapped_data.clear if new_index.present?
+            #fetch and remap data fr csv export
+            array_of_hash_remapped_data =  csv_data(value)
+            #Generate csv for export
+            array_of_csv <<  csv_generation(array_of_hash_remapped_data)
+          end
+
+          array_of_csv
+        end
+
+        def csv_generation(array_of_hash_remapped_data)
+          puts "array_of_hash_remapped_data #{array_of_hash_remapped_data}"
           headers ||= csv_header(array_of_hash_remapped_data)
           sorted_header = headers
+          puts "sorted header #{sorted_header}"
           puts "=== starting to generate csv using  remapped models=="
 
           csv = CSV.generate(headers: true) do |csv|
             csv << sorted_header
-            csv_data.lazy.each do |hash|
+            array_of_hash_remapped_data.lazy.each do |hash|
               csv << hash.values_at(*sorted_header)
             end
           end
+
         end
 
         def to_csv_2

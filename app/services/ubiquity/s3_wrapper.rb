@@ -1,4 +1,5 @@
 require 'aws-sdk'
+require 'zip'
 #
 # Usage
 #bucket eg ubiquity-sampler
@@ -83,11 +84,34 @@ module Ubiquity
     end
 
     def upload_to_s3
-      if single_s3_object.present?
+      if single_s3_object.present? && csv_data.class != Array
         single_s3_object.put body: csv_data
+      elsif csv_data.class == Array && csv_data.present?
+        puts "Preparing to zip data with #{csv_data.size} csv strings"
+        zip_data
       end
       rescue NameError => e
        puts "#{e.inspect}"
+    end
+
+    def zip_data
+      archive_name = key.gsub('csv', 'zip')
+      puts "Arhcive file name, #{archive_name}"
+      obj = single_s3_object(archive_name)
+
+      buffer = Zip::OutputStream.write_buffer do |out|
+        csv_data.each_with_index do |value, index|
+          new_file_name = (index.to_s + csv_filename)
+          puts "Zipped filenames #{new_file_name.inspect}"
+          out.put_next_entry(new_file_name)
+          out.print  value
+        end
+      end
+      # The write_buffer returns a StringIO and needs to rewind the stream first before read
+      buffer.rewind
+      csv_record = buffer.read
+      obj.put body: csv_record
+
     end
 
     def expired_records

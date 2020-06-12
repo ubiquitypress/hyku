@@ -14,19 +14,11 @@ module Ubiquity
     end
 
     def export_database_as_remapped_data
-      @csv_data_object ||= gather_record
-      headers ||= merged_headers(@csv_data_object)
-      sorted_header = headers #.sort
-      csv = CSV.generate(headers: true) do |csv|
-        csv << sorted_header
-        @csv_data_object.lazy.each do |hash|
-          csv << hash.values_at(*sorted_header)
-        end
-
-      end
+      gather_record
     end
 
     def gather_record
+      puts "sako #{cname_or_original_url}"
       @all_data ||= Ubiquity::Exporter::CsvData.new(cname_or_original_url).fetch_all_record
       @db_record_count ||= @all_data.all_records.length
       @all_data.all_records

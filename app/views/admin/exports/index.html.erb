@@ -24,7 +24,8 @@
 
             <h5 class="ubiquity-db-exporter-message" data-type='database' style="color:red;font-weight: 900;">  </h5>
 
-             <p><%= link_to "Export CSV for whole database", main_app.export_database_admin_exports_path(format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'database' } %> </p>
+            <p><%= link_to "Export CSV for whole database", main_app.export_database_admin_exports_path(model: 'all_database', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'database' } %> </p>
+
           </div>
         </div>
       </div> <!--close export-databae -->

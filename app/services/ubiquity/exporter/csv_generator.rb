@@ -14,11 +14,11 @@ module Ubiquity
     end
 
     def export_database_as_remapped_data
-      gather_record
+       Ubiquity::Exporter::CsvData.new(cname_or_original_url).to_csv
+      #gather_record
     end
 
     def gather_record
-      puts "sako #{cname_or_original_url}"
       @all_data ||= Ubiquity::Exporter::CsvData.new(cname_or_original_url).fetch_all_record
       @db_record_count ||= @all_data.all_records.length
       @all_data.all_records

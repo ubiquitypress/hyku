@@ -32,7 +32,7 @@ module Ubiquity
        def csv_data(batch = nil)
          if batch.nil?
            puts "=== starting remapping models=="
-           data ||=  ActiveFedora::SolrService.query("id:* AND has_model_ssim:#{ancestors.first}", { rows: 50000})
+           data =  ActiveFedora::SolrService.query("id:* AND has_model_ssim:#{ancestors.first}", { rows: 50000})
            new_data = data.lazy.map do |item|
              hash = item.to_h
              Ubiquity::Exporter::CsvDataRemap.new(hash).unordered_hash
@@ -43,7 +43,7 @@ module Ubiquity
            new_data
          else
            batch = batch.presence || work_type_count
-           puts "batta #{batch}"
+           puts "batch size #{batch}"
            data = ActiveFedora::SolrService.query("id:* AND has_model_ssim:#{ancestors.first}", { start: batch.first, rows: batch.size})
            puts "data #{data}"
            new_data = data.lazy.map do |item|
@@ -67,17 +67,22 @@ module Ubiquity
          array_of_csv = []
          array_of_hash_remapped_data = []
 
-         work_type_count.each_slice(1500).with_index.map do |value, index|
+         work_type_count.each_slice(1000).with_index.map do |value, index|
             new_index = index - 1  if index !=  0;
             #clrea previous array of remapped data because it is now a csv data in array_of_csv
-            array_of_hash_remapped_data.clear if new_index.present?
+            #array_of_hash_remapped_data.clear if new_index.present?
+            #
             #fetch and remap data fr csv export
-            array_of_hash_remapped_data =  csv_data(value)
-            #Generate csv for export
-            array_of_csv <<  csv_generation(array_of_hash_remapped_data)
+            array_of_hash_remapped_data <<  csv_data(value)
+
           end
 
-          array_of_csv
+          flat_data = array_of_hash_remapped_data.flatten
+          puts "flattened-remmaoed #{self.class} #{flat_data}"
+          #Generate csv for export
+          array_of_csv <<  csv_generation(flat_data)
+
+          array_of_csv.first
         end
 
         def csv_generation(array_of_hash_remapped_data)

@@ -1,0 +1,11 @@
+en:
+  hyrax:
+    roles:
+      faculty: Faculty y
+      staff: Staff
+      student: Student
+      other: Other
+      advisor: Advisor
+      partner_organization: Partner Organization
+      contributor: Contributor
+      editor: Editor

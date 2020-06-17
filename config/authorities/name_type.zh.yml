@@ -1,0 +1,7 @@
+terms:
+- id: Personal
+  term: Personal
+  active: true
+- id: Organisational
+  term: Organisational
+  active: true

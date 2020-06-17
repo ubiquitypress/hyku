@@ -12,7 +12,8 @@
     <ul id="exportCsvTabs" class="nav nav-tabs" role="tablist">
       <li role="presentation" class="active"><a href="#export-database" aria-controls="export-database" role="tab" data-toggle="tab">Export CSV for whole database</a></li>
       <li role="presentation"><a href="#export-model-metadata" aria-controls="export-model-metadata" role="tab" data-toggle="tab">Export CSV for individual work types</a></li>
-      </ul>
+      <li role="presentation"><a href="#download-csv" aria-controls="download-ready" role="tab" data-toggle="tab">Download CSV</a></li>
+    </ul>
 
     <!-- Tab panes -->
     <div class="tab-content">
@@ -23,10 +24,12 @@
 
             <h5 class="ubiquity-db-exporter-message" data-type='database' style="color:red;font-weight: 900;">  </h5>
 
-             <p><%= link_to "Export CSV for whole database", main_app.export_database_admin_exports_path(format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'database' } %> </p>
+            <p><%= link_to "Export CSV for whole database", main_app.export_database_admin_exports_path(model: 'all_database', format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'database' } %> </p>
+
           </div>
         </div>
-      </div>
+      </div> <!--close export-databae -->
+
       <div role="tabpanel" class="tab-pane" id="export-model-metadata">
         <div class="panel panel-default labels">
           <div class="panel-body">
@@ -42,7 +45,29 @@
             <ul>
           </div>
         </div>
-      </div>
+      </div> <!-- export-moddel-metadata -->
+
+      <div role="tabpanel" class="tab-pane" id="download-csv">
+         <div class="panel panel-default labels">
+           <div class="panel-body">
+             <h2>Click links below to download</h2>
+
+             <h5 class="ubiquity-db-exporter-message" data-type='download-ready' style="color:red;font-weight: 900;">  </h5>
+              <!-- redirect_to s3 link controller action -->
+              <p><%# link_to "Export CSV", main_app.export_database_admin_exports_path(format: 'csv'), class: "ubiquity-exporter", data: { 'type' => 'database' } %> </p>
+              <ul>
+                <% @s3_objects.each do |object| %>
+                  <% if object.present? %>
+                     <% filename = object.key.split('/').last %>
+                    <li> <%= link_to  filename, main_app.s3_link_redirect_admin_exports_path(filename: object.key) %> created <%= time_ago_in_words(object.data.last_modified) %> ago </li>
+                  <% end %>
+                <% end %>
+              </ul>
+           </div>
+         </div>
+       </div>  <!-- closes download csv-->
+
+
       <div role="tabpanel" class="tab-pane" id="export-database">
         <div class="panel panel-default labels">
           <div class="panel-body">
@@ -51,6 +76,7 @@
           </div>
         </div>
       </div>
+
       <div role="tabpanel" class="tab-pane" id="export-model-metadata">
         <div class="panel panel-default labels">
           <div class="panel-body">
@@ -59,7 +85,9 @@
           </div>
         </div>
       </div>
-    </div>
+
+    </div> <!-- closes  class=tab-content-->
+
       <script>
 
         $(document).on("turbolinks:load", function(event){

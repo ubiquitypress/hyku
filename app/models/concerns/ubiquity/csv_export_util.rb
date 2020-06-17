@@ -3,37 +3,13 @@ module Ubiquity
     extend ActiveSupport::Concern
 
     def csv_hash
-      Ubiquity::Exporter::CsvDataRemap.new(self).unordered_hash
-    end
-
-    #mainly remapping array values to have pipe as as seperator
-    def get_csv_data
-      self.class.regular_header.map do |key|
-        value = self.send(key)
-
-        if  (value != key && value.present? && value.class == String)
-          value
-        elsif ((value != key && value.present? && value.class == ActiveTriples::Relation || value.class == Array) && (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key) )
-          value.join('||').strip
-
-        elsif (value != key && value.present? && (['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key) )
-          #problem displays <ActiveTriples::Relation:0x007f1f147e6ca8>
-          #when just the value is returned without calling first on it
-          value.first
-        end
-
-        file_names = self.file_sets.map { |file| file.title.first} if self.file_sets.present?
-        files = file_names.join('||') if file_names.present?
-        files = '' if file_names.blank?
-        self.attributes.merge({files: files})
-
-      end
+      Ubiquity::Exporter::CsvDataRemap.new(self.to_solr).unordered_hash
     end
 
     class_methods do
 
       def regular_header
-         removed_keys = ["head", "tail","proxy_depositor", "on_behalf_of", "arkivo_checksum", "owner",  "version", "label", "relative_path", "import_url", "based_near", "identifier", "access_control_id", "representative_id", "thumbnail_id", "admin_set_id", "embargo_id", "lease_id", "bibliographic_citation", "state",  "creator_search"]
+         removed_keys = Ubiquity::Exporter::CsvDataRemap::UN_NEEDED_KEYS
          header_keys = self.attribute_names - removed_keys
          header_keys.unshift("id")
          header_keys.push('files')
@@ -43,7 +19,7 @@ module Ubiquity
          puts "=== starting resorting csv headers from remappedmodels=="
 
          sorted_header = []
-         all_keys = csv_exporter_object.flat_map(&:keys).uniq
+         all_keys = csv_exporter_object.lazy.flat_map(&:keys).force.uniq.compact
          #resort using ordering by suffix eg creator_isni_1 comes before creator_isni_2
          all_keys = all_keys.sort_by{ |name| [name[/\d+/].to_i, name] }
          Ubiquity::Exporter::CsvDataRemap::CSV_HEARDERS_ORDER.each {|k| all_keys.select {|e| sorted_header << e if e.start_with? k} }
@@ -53,29 +29,71 @@ module Ubiquity
          sorted_header.uniq
        end
 
-       def csv_data
-         puts "=== starting remapping models=="
-         data ||= all.lazy.map do |object|
-           object.csv_hash
-         end.force
+       def csv_data(batch = nil)
+         if batch.nil?
+           puts "=== starting remapping models=="
+           data ||=  ActiveFedora::SolrService.query("id:* AND has_model_ssim:#{ancestors.first}", { rows: 50000})
+           new_data = data.lazy.map do |item|
+             hash = item.to_h
+             Ubiquity::Exporter::CsvDataRemap.new(hash).unordered_hash
+           end.force
 
-         puts "=== finished remapping models=="
+           puts "=== finished remapping models=="
 
-         data
+           new_data
+         else
+           batch = batch.presence || work_type_count
+           puts "batta #{batch}"
+           data = ActiveFedora::SolrService.query("id:* AND has_model_ssim:#{ancestors.first}", { start: batch.first, rows: batch.size})
+           puts "data #{data}"
+           new_data = data.lazy.map do |item|
+             hash = item.to_h
+             Ubiquity::Exporter::CsvDataRemap.new(hash).unordered_hash
+          end.force
+
+           puts "=== finished remapping models=="
+
+           new_data
+
+         end  #closes if
        end
 
-        def to_csv
-          array_of_hash_remapped_data ||= csv_data
+       def work_type_count
+         total_records = self.count
+         total_records_array = (0..(total_records - 1)).to_a
+       end
+
+       def to_csv
+         array_of_csv = []
+         array_of_hash_remapped_data = []
+
+         work_type_count.each_slice(1500).with_index.map do |value, index|
+            new_index = index - 1  if index !=  0;
+            #clrea previous array of remapped data because it is now a csv data in array_of_csv
+            array_of_hash_remapped_data.clear if new_index.present?
+            #fetch and remap data fr csv export
+            array_of_hash_remapped_data =  csv_data(value)
+            #Generate csv for export
+            array_of_csv <<  csv_generation(array_of_hash_remapped_data)
+          end
+
+          array_of_csv
+        end
+
+        def csv_generation(array_of_hash_remapped_data)
+          puts "array_of_hash_remapped_data #{array_of_hash_remapped_data}"
           headers ||= csv_header(array_of_hash_remapped_data)
           sorted_header = headers
+          puts "sorted header #{sorted_header}"
           puts "=== starting to generate csv using  remapped models=="
 
           csv = CSV.generate(headers: true) do |csv|
             csv << sorted_header
-            csv_data.lazy.each do |hash|
+            array_of_hash_remapped_data.lazy.each do |hash|
               csv << hash.values_at(*sorted_header)
             end
           end
+
         end
 
         def to_csv_2

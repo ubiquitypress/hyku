@@ -29,7 +29,7 @@ module Ubiquity
      private
 
      def remove_collection_id_from_works
-       UbiquityCollectionChildRecordsJob.perform_now(collection_id: self.id, collection_name: self.title.try(:first), tenant_name: self.account_cname, type: 'remove')
+       UbiquityCollectionChildRecordsJob.perform_later(collection_id: self.id, collection_name: self.title.try(:first), tenant_name: self.account_cname, type: 'remove')
      end
 
   end

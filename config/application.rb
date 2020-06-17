@@ -69,6 +69,7 @@ module Hyku
       Hyrax::UsersController.include(::Ubiquity::UserShowConcern)
       Hyrax::WorksControllerBehavior.prepend(::Ubiquity::WorksControllerBehaviourOverride)
       Hyrax::FileSetsController.prepend(::Ubiquity::FileSetsControllerOverride)
+      Devise::SessionsController.include(::Ubiquity::DeviseHykuApiSessionIntegration)
     end
 
     config.before_initialize do

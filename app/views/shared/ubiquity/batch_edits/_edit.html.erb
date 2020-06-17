@@ -1,0 +1,48 @@
+<!-- Copied from https://github.com/samvera/hyrax/blob/v2.0.2/app/views/hyrax/batch_edits/edit.html.erb -->
+<!-- Rendered in hyrax/batch_edits/edit  -->
+
+<h2 class="non lower">Batch Edit Descriptions &nbsp;&nbsp;&nbsp;<small>Click on labels below to edit work Visibility Settings.</small> </h2>
+
+<div class="scrollx scrolly fileHeight"> <!-- original values -->
+  <h3> <b>Changes will be applied to: (<%= form.names.size %> works) </b></h3>
+   <%= form.names.join(", ").html_safe %>
+</div> <!-- /original values -->
+
+<div >
+  <h3> Click tab:</h3>
+
+    <ul class="nav nav-tabs">
+      <!--  edit_descriptions_link below is hidden via css so only permission fields can be changed via bulk edit -->
+      <li id="edit_descriptions_link" class="active" style="display:none"><a href="#descriptions_display" data-toggle="tab"><i class="glyphicon glyphicon-tags"></i> Descriptions</a></li>
+      <li id="edit_permissions_link"><a href="#permissions_display" data-toggle="tab"><i class="glyphicon glyphicon-lock"></i> Permissions</a></li>
+    </ul>
+    <div class="tab-content">
+    <!-- #descriptions_display used to be here above permissions -->
+
+    <div id="permissions_display" class="tab-pane">
+      <%= simple_form_for form.model,
+                          url: hyrax.batch_edits_path,
+                          method: :put,
+                          remote: true,
+                          html: { id: "form_permissions", class: "ajax-form"},
+                          data: { 'param-key' => form.model_name.param_key } do |f| %>
+        <%= hidden_field_tag('update_type', 'update') %>
+        <%= hidden_field_tag('key', 'permissions') %>
+        <%= render "hyrax/base/form_permission", f: f %>
+        <%= render "hyrax/base/form_share", f: f %>
+
+        <% form.batch_document_ids.each do |batch_id| %>
+          <%= hidden_field_tag "batch_document_ids[]", batch_id %>
+        <% end %>
+        <div class="row">
+            <%= f.submit "Save changes", class: 'btn btn-primary', id: 'permissions_save' %>
+            <div id="status_permissions" class="status fleft"></div>
+        </div>
+      <% end %>
+    </div>
+  </div> <!-- .tab-content -->
+
+<!-- Ajax call to clear the batch before page uload. -->
+<%= button_to "Clear Batch", hyrax.clear_batch_edits_path, form_class: 'hidden', remote: true, id: 'clear_batch' %>
+
+</div><!-- descriptions_display -->

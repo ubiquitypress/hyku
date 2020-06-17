@@ -41,8 +41,10 @@ module Ubiquity
       end
     end
 
-    def check_for_setting(settings_key)
-      parser_class = Ubiquity::ParseTenantWorkSettings.new(request.original_url)
+    #passing in url with default value of nil to make it more test-able by from rails console and in test files
+    def check_for_setting(settings_key, tenant_original_url = nil)
+      url = tenant_original_url || request.original_url
+      parser_class = Ubiquity::ParseTenantWorkSettings.new(url)
       parser_class.get_per_account_settings_value_from_tenant_settings(settings_key) || parser_class.get_settings_value_from_tenant_settings(settings_key)
     end
 

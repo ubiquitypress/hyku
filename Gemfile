@@ -15,7 +15,7 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
+gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -85,7 +85,7 @@ gem 'willow_sword', git: 'https://github.com/notch8/willow_sword.git'
 gem 'blacklight', '~> 6.7'
 gem 'blacklight_oai_provider', '~> 6.0'
 
-gem 'hyrax', '~> 2.5.1'
+gem 'hyrax', '~> 2.5'
 gem 'rsolr', '~> 2.0'
 
 gem 'devise'
@@ -94,7 +94,8 @@ gem 'devise-i18n'
 gem 'devise_invitable', '~> 1.6'
 
 gem 'apartment'
-gem 'config', '~> 1.5', '>= 1.5.1'
+#gem 'config', '~> 2.2', '>= 2.2.1'
+gem 'config', '~> 1.2'
 gem 'is_it_working'
 gem 'rolify'
 
@@ -125,3 +126,5 @@ gem 'riiif', '~> 1.1'
 gem 'bootstrap-datepicker-rails'
 gem 'parser', '~> 2.5.3'
 gem 'tether-rails'
+
+gem "view_component"

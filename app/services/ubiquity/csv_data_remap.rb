@@ -13,7 +13,7 @@ module Ubiquity
                         funder funder_project_reference event_title event_date event_location series_name book_title editor journal_title alternative_journal_title volume edition version
                         issue pagination article_number publisher place_of_publication isbn issn eissn current_he_institution date_accepted date_submitted official_url
                         related_url related_exhibition related_exhibition_date language license rights_statement rights_holder doi qualification_name qualification_level
-                        alternate_identifier related_identifier peer_reviewed keyword dewey library_of_congress_classification additional_information admin_set)
+                        alternate_identifier related_identifier peer_reviewed keyword dewey library_of_congress_classification additional_information admin_set_name admin_set)
 
     def initialize(object=nil)
        if object.present?
@@ -33,15 +33,13 @@ module Ubiquity
       @data_hash.each_with_index do |(key, value), index|
         # (not value.class == ActiveTriples::Relation )
         #
-        puts "================================ keya  =============== #{key}"
-
         @unordered_hash[key] = ''  if (value.blank?) &&  (not value.class == Array ) #(not  ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include?(key) )
 
         #ActiveTriples::Relatio
         #
         populate_single_fields(key, value) if  value.present? && (@data_hash[key].present? && (@data_hash[key].class == String || @data_hash[key].class == DateTime) && (not value.class == Array) && (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key))
 
-        remap_json_fields(value) if value.present? && (@data_hash[key].present?  && (['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key)) && (not value.class == String) && (value.class != DateTime)  # &&(record.send(key).respond_to? :length)
+        remap_json_fields(key, value) if value.present? && (@data_hash[key].present?  && (['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key)) && (not value.class == String) && (value.class != DateTime)  # &&(record.send(key).respond_to? :length)
 
         #@data_hash[key].to_a.class == Arra
         #
@@ -73,10 +71,13 @@ module Ubiquity
 
     def populate_single_fields(key, value)
       if value.present?
+        puts "================================ single-key  =============== #{key}"
+
         @unordered_hash[key] = value
       end
     end
 
+   #not in use
     def populate_json(key, value)
       if value.present?
         @unordered_hash[key] = value.first
@@ -84,7 +85,9 @@ module Ubiquity
     end
 
     def remap_array_fields(key, value)
-        list_of_array_used_as_single_felds = ['title', 'volume', 'version', 'alt_title', 'admin_set', 'work_type']
+      puts "================================ array-key  =============== #{key}"
+
+        list_of_array_used_as_single_felds = ['title', 'volume', 'version', 'alt_title', 'admin_set', 'admin_set_name', 'work_type']
         value.each_with_index do |item, index|
           key_name = ("#{key}_#{index + 1}")  if list_of_array_used_as_single_felds.exclude?(key)
           key_name = key if list_of_array_used_as_single_felds.include?(key)
@@ -94,7 +97,9 @@ module Ubiquity
         end
     end
 
-    def remap_json_fields(value)
+    def remap_json_fields(key, value)
+      puts "================================ json-key  =============== #{key}"
+
       new_value = give_json_fields_right_csv_headers(value)
 
       new_value.each_with_index do |hash, index|
@@ -174,9 +179,10 @@ module Ubiquity
        "date_accepted_tesim" => "date_accepted", "date_published_tesim" => "date_published", "official_link_tesim" => "official_url", "related_url_tesim" => "related_url",
        "related_exhibition_tesim" => "related_exhibition", "related_exhibition_date_tesim" => "related_exhibition_date", "language_tesim" => "language",
        "license_tesim" => "license", "rights_statement_tesim" => "rights_statement", "rights_holder_tesim" => "rights_holder", "doi_tesim" => "doi",
-       "qualification_name_tesim" => "qualification_name", "qualification_level_tesim" => "qualification_level",  "alternate_identifier_tesim" => "alternate_identifier_id",
-       "related_identifier_tesim" => "related_identifier_id", "refereed_tesim" => 'peer_reviewed', "dewey_tesim" => "dewey",
-       "library_of_congress_classification_tesim" =>  "library_of_congress_classification", "add_info_tesim" => 'additional_information', "admin_set_tesim" => "admin_set"
+       "qualification_name_tesim" => "qualification_name", "qualification_level_tesim" => "qualification_level",  "alternate_identifier_tesim" => "alternate_identifier",
+       "related_identifier_tesim" => "related_identifier", "refereed_tesim" => 'peer_reviewed', "dewey_tesim" => "dewey",
+       "library_of_congress_classification_tesim" =>  "library_of_congress_classification", "add_info_tesim" => 'additional_information', "admin_set_tesim" => "admin_set_name",
+       "isPartOf_ssim" => "admin_set"
       }
 
     end

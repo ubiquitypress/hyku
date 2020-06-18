@@ -151,13 +151,16 @@ module Ubiquity
     def set_admin_set(value)
       if value.present? && @work_instance.class != Collection
         puts "setting admin_set to - #{value.inspect}"
-        new_admin_set = AdminSet.where(title: value).try(:first)
-        new_admin_set = new_admin_set ||  AdminSet.create(title: [value])
-        @attributes_hash['admin_set_id'] = new_admin_set.try(:id)
+        admin_set_object = AdminSet.find(value)
+        @attributes_hash['admin_set_id'] = admin_set_object.try(:id)
       elsif @work_instance.class != Collection
         puts "setting adminset to admin_set/default "
         @attributes_hash['admin_set_id'] = "admin_set/default" unless @work_instance.admin_set_id.present?
       end
+
+      rescue ActiveFedora::ObjectNotFoundError
+        @attributes_hash['admin_set_id'] = "admin_set/default" unless @work_instance.admin_set_id.present?
+
     end
 
     def  populate_array_field(key, val, index)

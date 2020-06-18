@@ -23,13 +23,13 @@ module Ubiquity
      end
      #use by ubiquitypress to add collection id to works without using fedora association
      def add_member_objects_to_solr_only(new_member_ids)
-        UbiquityCollectionChildRecordsJob.perform_later(collection_id: self.id, collection_name: self.title.try(:first), tenant_name: self.account_cname, work_id: new_member_ids, type: 'add')
+        UbiquityCollectionChildRecordsJob.perform_later(collection_id: self.id, tenant_name: self.account_cname, work_id: new_member_ids, type: 'add')
      end
 
      private
 
      def remove_collection_id_from_works
-       UbiquityRemoveChildRecordsJob.perform_now(self.id, self.title.try(:first), self.account_cname)
+       UbiquityCollectionChildRecordsJob.perform_later(collection_id: self.id,  collection_name: self.title.try(:first),tenant_name: self.account_cname, type: 'remove')
      end
 
   end

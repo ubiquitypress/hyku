@@ -1,7 +1,7 @@
 module Ubiquity
   class ManageCollectionChildRecords
 
-    def self.remove_member_objects_from_solr_only(collection_id, collection_name)
+    def self.remove_member_objects(collection_id, collection_name)
       works =  ActiveFedora::Base.where("collection_id_sim:#{collection_id}")
       if works.present?
         works.each do |work|

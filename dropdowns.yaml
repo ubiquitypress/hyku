@@ -1,23 +1,111 @@
-peronal: Personal
-organisational: Organisational
-archaeology: Archaeology
-business: Business
-computers_science: Computers Science
-economics: Economics
-education: Education
-engineering: Engineering
-fine_arts: Fine Arts
-geography: Geography
-health_sciences: Health Sciences
-history: History
-languages: Languages/Linguistics
-literature: Literature
-maths: Mathematics
-music: Music
-performing_arts: Performing arts
-optometry: Optometry/Visual sciences
-philosophy: Philosophy
-politics: Political Science/Law
-psychology: Psychology
-science: Science
-social_sciences: Social Sciences
+peronal:  Personal
+organisational:  Organisational
+archaeology:  Archaeology
+business:  Business
+computers_science:  Computers Science
+economics:  Economics
+education:  Education
+engineering:  Engineering
+fine_arts:  Fine Arts
+geography:  Geography
+health_sciences:  Health Sciences
+history:  History
+languages:  Languages/Linguistics
+literature:  Literature
+maths:  Mathematics
+music:  Music
+performing_arts:  Performing arts
+optometry:  Optometry/Visual sciences
+philosophy:  Philosophy
+politics:  Political Science/Law
+psychology:  Psychology
+science:  Science
+social_sciences:  Social Sciences
+
+audio:  Audio
+article:  Article
+book: Book
+capstone_project: Capstone Project
+conference proceeding: Conference Proceeding
+dataset: Dataset
+dissertation: Dissertation
+journal: Journal
+map: Map or Cartographic Material
+masters: Masters Thesis
+part_book: Part of Book
+poster: Poster
+project: Project
+research_paper: Research Paper
+software_code: Software or Program Code
+video: Video
+other: Other
+journal_article: Journal article
+book_review: Book review
+data paper: Data paper
+editorial: Editorial
+letter: Letter to the editor
+magazine: Magazine article
+newspaper: Newspaper
+grey_lit: Grey literature
+tech_doc: Technical documentation
+work_paper: Working paper
+book_chapter: Book chapter
+book_ed: Book editorial
+abstract: Abstract
+con_paper_p: Conference paper (published)
+con_paper_u: Conference paper (unpublished)
+con_poster_p: Conference poster (published)
+con_poster_u: Conference poster (unpublished)
+lecture: Lecture
+presentation: Presentation
+policy: Policy report
+research: Research report
+tech: Technical report
+num: Numerical dataset
+geo: Geographical dataset
+dataset_software: Software
+database: Database
+ex: Exhibition
+ex_cat: Exhibition catalogue
+ex_obj: Exhibition object
+ex_gal: Exhibition gallery text
+ex_event: Exhibition-related event
+ex_media: Exhibition media transcription
+ex_av: Exhibition audio-visual guide
+festival: Festival
+blog: Blog post
+map: Cartographic material
+interactive: Interactive resource
+learning: Learning object
+score: Musical notation
+patent: Patent
+website: Website
+workflow: Workflow
+gif: Moving image
+doctorate: Doctoral thesis
+masters_dis: Master's dissertation
+animation: Animation
+digital_work: Digital creative works
+interview: Interview (radio, television)
+musical_composition: Musical composition
+performance: Performance (theatre, dance, musical)
+podcast: Podcast
+3d_image: 3D image
+research_poster: Research Poster
+panel: Panel
+misc: Uncategorized
+application: Application
+grant: Grant
+strategy: Strategy
+survey: Survey
+text: Text
+handbook: Handbook
+report: Report
+news: Intellectual Freedom News
+editorial: Editorial/Commentary
+essay: Essay
+letter: Letter
+review: Review Article
+creative_work: Creative Work
+thesis: Thesis
+capstone: Capstone

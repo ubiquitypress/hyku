@@ -2,7 +2,7 @@
 
 module ResourceTypesService
   mattr_accessor :authority
-  self.authority = Qa::Authorities::Local.subauthority_for('resource_types')
+  self.authority = Qa::Authorities::Local.subauthority_for("resource_types.#{I18n.locale}")
 
   def self.active_elements
     authority.all.select { |e| e.fetch('active') }

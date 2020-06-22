@@ -5,6 +5,7 @@ module ResourceTypesService
   self.authority = Qa::Authorities::Local.subauthority_for("resource_types.#{I18n.locale}")
 
   def self.active_elements
+    refresh_sub_authority
     authority.all.select { |e| e.fetch('active') }
   end
 
@@ -23,5 +24,9 @@ module ResourceTypesService
   def self.select_default(model_class)
     default = template_fields(model_class).select { |e| e[:id].split[1] == 'default' }
     default.first["id"] if default.present?
+  end
+
+  def self.refresh_sub_authority
+    self.authority = Qa::Authorities::Local.subauthority_for("resource_types.#{I18n.locale}")
   end
 end

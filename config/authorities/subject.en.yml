@@ -1,0 +1,64 @@
+terms:
+ - id: Archaeology
+   term: Archaeology
+   active: true
+ - id: Business
+   term: Business
+   active: true
+ - id: Computers Science
+   term: Computers Science
+   active: true
+ - id: Economics
+   term: Economics
+   active: true
+ - id: Education
+   term: Education
+   active: true
+ - id: Engineering
+   term: Engineering
+   active: true
+ - id: Fine Arts
+   term: Fine Arts
+   active: true
+ - id: Geography
+   term: Geography
+   active: true
+ - id: Health Sciences
+   term: Health Sciences
+   active: true
+ - id: History
+   term: History
+   active: true
+ - id: Languages/Linguistics
+   term: Languages/Linguistics
+   active: true
+ - id: Literature
+   term: Literature
+   active: true
+ - id: Mathematics
+   term: Mathematics
+   active: true
+ - id: Music
+   term: Music
+   active: true
+ - id: Performing arts
+   term: Performing arts
+   active: true
+ - id: Optometry/Visual sciences
+   term: Optometry/Visual sciences
+   active: true
+ - id: Philosophy
+   term: Philosophy
+   active: true
+ - id: Political Science/Law
+   term: Political Science/Law
+   active: true
+ - id: Psychology
+   term: Psychology
+   active: true
+ - id: Science
+   term: Science
+   active: true
+ - id: Social Sciences
+   term: Social Sciences
+   active: true

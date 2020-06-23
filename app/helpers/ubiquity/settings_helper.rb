@@ -18,13 +18,12 @@ module Ubiquity
     def set_role_dropdown_options(metadata_field)
       tenant_settings = get_tenant_settings
       role_key = "#{metadata_field}_roles"
-      options_array = metadata_field.present? ? tenant_settings.try(:present?) && tenant_settings[role_key] : nil
+      options_array = check_for_setting(role_key)
+      localise_dropdowns(options_array)
+    end
 
-      if metadata_field == "creator"
-        options_array || ['Faculty', 'Staff', 'Student', 'Other']
-      elsif metadata_field == "contributor"
-        options_array ||  ContributorGroupService.new.select_active_options.flatten.uniq!
-      end
+    def localise_dropdowns(array)
+      array.map{ |string|  t("hyrax.roles.#{string.parameterize(separator: '_')}") } if array.present?
     end
 
     def redirect_work_url(id = nil, original_url = nil)

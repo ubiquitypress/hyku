@@ -1,0 +1,316 @@
+# terms set to false (not to display/chose from) are kept to avoid errors from old records
+
+terms:
+  - id: Article
+    term: Article
+    active: false
+  - id: Audio
+    term: Audio
+  - id: Book default Book
+    term: Book
+  - id: Book
+    term: Book
+    active: false
+  - id: Capstone Project
+    term: Capstone Project
+  - id: Conference Proceeding
+    term: Conference Proceeding
+  - id: Dataset default Dataset
+    term: Dataset
+  - id: Dataset
+    term: Dataset
+    active: false
+  - id: Dissertation
+    term: Dissertation
+  - id: Image
+    term: Image
+    active: false
+  - id: Journal
+    term: Journal
+  - id: Map or Cartographic Material
+    term: Map or Cartographic Material
+  - id: Masters Thesis
+    term: Masters Thesis
+  - id: Part of Book
+    term: Part of Book
+  - id: Poster
+    term: Poster
+  - id: Presentation
+    term: Presentation
+    active: false
+  - id: Project
+    term: Project
+  - id: Report
+    term: Report
+    active: false
+  - id: Research Paper
+    term: Research Paper
+  - id: Software or Program Code
+    term: Software or Program Code
+  - id: Video
+    term: Video
+  - id: Other
+    term: Other
+  - id: Article default Journal article
+    term: Journal article
+  - id: Article Book review
+    term: Book review
+  - id: Article Data paper
+    term: Data paper
+  - id: Article Editorial
+    term: Editorial
+  - id: Article Letter to the editor
+    term: Letter to the editor
+  - id: Article Magazine article
+    term: Magazine article
+  - id: Article Newspaper article
+    term: Newspaper article
+  - id: Book Grey literature
+    term: Grey literature
+  - id: Book Technical documentation
+    term: Technical documentation
+  - id: Book Working paper
+    term: Working paper
+  - id: BookContribution default Book chapter
+    term: Book chapter
+  - id: BookContribution Book editorial
+    term: Book editorial
+  - id: ConferenceItem Abstract
+    term: Abstract
+  - id: ConferenceItem Conference paper (published)
+    term: Conference paper (published)
+  - id: ConferenceItem default Conference paper (unpublished)
+    term: Conference paper (unpublished)
+  - id: ConferenceItem Conference poster (published)
+    term: Conference poster (published)
+  - id: ConferenceItem Conference poster (unpublished)
+    term: Conference poster (unpublished)
+  - id: ConferenceItem Lecture
+    term: Lecture
+  - id: ConferenceItem Presentation
+    term: Presentation
+  - id: Report Policy report
+    term: Policy report
+  - id: Report default Research report
+    term: Research report
+  - id: Report Technical report
+    term: Technical report
+  - id: Dataset Numerical dataset
+    term: Numerical dataset
+  - id: Dataset Geographical dataset
+    term: Geographical dataset
+  - id: Dataset Software
+    term: Software
+  - id: Dataset Database
+    term: Database
+  - id: ExhibitionItem default Exhibition
+    term: Exhibition
+  - id: ExhibitionItem catalogue
+    term: Exhibition catalogue
+  - id: ExhibitionItem Exhibition object labels
+    term: Exhibition object labels
+  - id: ExhibitionItem Exhibition gallery text
+    term: Exhibition gallery text
+  - id: ExhibitionItem Exhibition-related event
+    term: Exhibition-related event
+  - id: ExhibitionItem Exhibition media transcription
+    term: Exhibition media transcription
+  - id: ExhibitionItem Exhibition audio-visual guide
+    term: Exhibition audio-visual guide
+  - id: ExhibitionItem Festival
+    term: Festival
+  - id: GenericWork Blog post
+    term: Blog post
+  - id: GenericWork Cartographic material
+    term: Cartographic material
+  - id: GenericWork Interactive resource
+    term: Interactive resource
+  - id: GenericWork Learning object
+    term: Learning object
+  - id: GenericWork Musical notation
+    term: Musical notation
+  - id: GenericWork Patent
+    term: Patent
+  - id: GenericWork Website
+    term: Website
+  - id: GenericWork Workflow
+    term: Workflow
+  - id: GenericWork Other
+    term: Other
+  - id: Image Moving image
+    term: Moving image
+  - id: Image default Still image
+    term: Still image
+  - id: ThesisOrDissertation Doctoral thesis
+    term: Doctoral thesis
+  - id: ThesisOrDissertation Master's dissertation
+    term: Master's dissertation
+  - id:  TimeBasedMedia default Audio
+    term: Audio
+  - id:  TimeBasedMedia Animation
+    term: Animation
+  - id:  TimeBasedMedia Digital creative works
+    term: Digital creative works
+  - id:  TimeBasedMedia Interview (radio, television)
+    term: Interview (radio, television)
+  - id:  TimeBasedMedia Musical composition
+    term: Musical composition
+  - id:  TimeBasedMedia Performance (theatre, dance, musical)
+    term: Performance (theatre, dance, musical)
+  - id:  TimeBasedMedia Podcast
+    term: Podcast
+  - id:  TimeBasedMedia Video
+    term: Video
+  - id: Image 3D image
+    term: 3D image
+  - id: Collection 3D image
+    term: 3D image
+  - id: Collection Abstract
+    term: Abstract
+  - id: Collection Blog post
+    term: Blog post
+  - id: Collection Book
+    term: Book
+  - id: Collection Book chapter
+    term: Book chapter
+  - id: Collection Book editorial
+    term: Book editorial
+  - id: Collection Book review
+    term: Book review
+  - id: Collection Cartographic material
+    term: Cartographic material
+  - id: Collection Conference paper (published)
+    term: Conference paper (published)
+  - id: Collection Conference paper (unpublished)
+    term: Conference paper (unpublished)
+  - id: Collection Conference poster (published)
+    term: Conference poster (published)
+  - id: Collection Conference poster (unpublished)
+    term: Conference poster (unpublished)
+  - id: Collection Data paper
+    term: Data paper
+  - id: Collection Database
+    term: Database
+  - id: Collection Dataset
+    term: Dataset
+  - id: Collection Editorial
+    term: Editorial
+  - id: Collection Exhibition
+    term: Exhibition
+  - id: Collection Geographical dataset
+    term: Geographical dataset
+  - id: Collection Grey literature
+    term: Grey literature
+  - id: Collection Interactive resource
+    term: Interactive resource
+  - id: Collection Journal article
+    term: Journal article
+  - id: Collection Learning object
+    term: Learning object
+  - id: Collection Lecture
+    term: Lecture
+  - id: Collection Letter to the editor
+    term: Letter to the editor
+  - id: Collection Magazine article
+    term: Magazine article
+  - id: Collection Moving image
+    term: Moving image
+  - id: Collection Musical notation
+    term: Musical notation
+  - id: Collection Newspaper article
+    term: Newspaper article
+  - id: Collection Numerical dataset
+    term: Numerical dataset
+  - id: Collection Patent
+    term: Patent
+  - id: Collection Policy report
+    term: Policy report
+  - id: Collection Presentation
+    term: Presentation
+  - id: Collection Research report
+    term: Research report
+  - id: Collection Software
+    term: Software
+  - id: Collection Sound
+    term: Sound
+  - id: Collection Still image
+    term: Still image
+  - id: Collection Technical documentation
+    term: Technical documentation
+  - id: Collection Technical report
+    term: Technical report
+  - id: Collection Thesis (doctoral)
+    term: Thesis (doctoral)
+  - id: Collection Website
+    term: Website
+  - id: Collection Workflow
+    term: Workflow
+  - id: Collection Working paper
+    term: Working paper
+  - id: Collection Other
+    term: Other
+
+  - id: BookChapter default Book chapter
+    term: Book Chapter
+  - id: Media default Media
+    term: Media
+  - id: Media Audio
+    term: Audio
+  - id: Media Video
+    term: Video
+  - id: Presentation default Presentation
+    term: Presentation
+  - id: Presentation Research Poster
+    term: Research Poster
+  - id: Presentation Panel
+    term: Panel
+  - id: Presentation Paper Presentation
+    term: Paper Presentation
+  - id: Uncategorized default Uncategorized
+    term: Uncategorized
+  - id: Uncategorized Application
+    term: Application
+  - id: Uncategorized Grant
+    term: Grant
+  - id: Uncategorized J_Correspondence_Transcription
+    term: J_Correspondence_Transcription
+  - id: Uncategorized O_Address_Transcription
+    term: O_Address_Transcription
+  - id: Uncategorized Strategy
+    term: Strategy
+  - id: Uncategorized T_Writings_Transcription
+    term: T_Writings_Transcription
+  - id: Uncategorized Survey
+    term: Survey
+  - id: TextWork default Text
+    term: Text
+  - id: TextWork Handbook
+    term: Handbook
+  - id: TextWork Report
+    term: Report
+  - id: NewsClipping Intellectual Freedom News
+    term: Intellectual Freedom News
+  - id: ArticleWork Default Article
+    term: Article
+  - id: ArticleWork Research Article
+    term: Research Article
+  - id: ArticleWork Editorial/Commentary
+    term: Editorial/Commentary
+  - id: ArticleWork Essay
+    term: Essay
+  - id: ArticleWork Letter
+    term: Letter
+  - id: ArticleWork Review Article
+    term: Review Article
+  - id: ArticleWork Creative Work
+    term: Creative Work
+  - id: BookWork Book
+    term: Book
+  - id: ImageWork Image
+    term: Image
+  - id: ThesisOrDissertationWork default Thesis
+    term: Thesis
+  - id: ThesisOrDissertationWork Capstone
+    term: Capstone
+  - id: ThesisOrDissertationWork Dissertation
+    term: Dissertation

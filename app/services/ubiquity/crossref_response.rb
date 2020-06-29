@@ -33,7 +33,7 @@ module Ubiquity
       return nil if attributes['license'].blank?
       url_array = fetch_url_from_response.split('/')
       url_collection = Hyrax::LicenseService.new.select_active_options.map(&:last)
-      rurl_array.pop if url_array.last == 'legalcode'
+      url_array.pop if url_array.last == 'legalcode'
       url_array.shift(2) # Removing the http, https and // part in the url
       regex_url_str = "(?:http|https)://" + url_array.map { |ele| "(#{ele})" }.join('/')
       regex_url_exp = Regexp.new regex_url_str
@@ -84,17 +84,6 @@ module Ubiquity
       attributes['container-title'].first if attributes['container-title'].present?
     end
 
-    def creator
-      creator_group = attributes.dig('author') || attributes.dig('editor')
-      if creator_group.present?
-        if creator_group.first.keys && ['given', 'family', 'ORCID'].any?
-          creator_with_seperated_names(creator_group)
-        else
-          creator_without_seperated_names(creator_group)
-        end
-      end
-    end
-
     def keyword
       attributes['subject']
     end
@@ -103,23 +92,49 @@ module Ubiquity
       attributes['publisher']
     end
 
+    def official_url
+      attributes['URL']
+    end
 
-    def creator_with_seperated_names(data)
+    def creator
+      creator_group = attributes.dig('author') || attributes.dig('editor')
+      if creator_group.present?
+        extract_creators(creator_group)
+      end
+    end
+
+    def extract_creators(creator_data)
       new_creator_group = []
-      data.each_with_index do |hash, index|
-        hash = {
+      creator_data.each_with_index do |hash, index|
+        if (hash.keys & ['given', 'family', 'ORCID']).any?
+          record = creator_with_seperated_names(hash, index)
+        else
+          record = creator_without_seperated_names(hash, index)
+        end
+        new_creator_group << record
+      end
+      new_creator_group
+    end
+
+    def creator_with_seperated_names(hash, index)
+        {
           creator_orcid: hash.try(:fetch, 'ORCID', '').split('/').last,
           creator_given_name:  hash["given"],
           creator_family_name: hash["family"],
           creator_name_type: 'Personal',
           creator_position: index
         }
-        new_creator_group << hash
-      end
-      new_creator_group
     end
 
-    url = def fetch_url_from_response
+    def creator_without_seperated_names(hash, index)
+       {
+          creator_organization_name: hash["name"],
+          creator_name_type: 'Organisational',
+          creator_position: index
+        }
+    end
+
+    def fetch_url_from_response
       vor_version_license = attributes['license'].detect { |h| h['content-version'] == 'vor' }
       return vor_version_license['URL'] if vor_version_license.present?
       max_time_stamp_license = attributes['license'].max_by { |h| h.try(:fetch, 'date-parts', '')['time-stamp'].to_f }
@@ -132,14 +147,18 @@ module Ubiquity
         { 'error' => error }
       else
         {
-          title: title, published_year: date_published_year,
+          title: title, published_year: date_published_year ,
+
           published_month: date_published_month, published_day: date_published_day,
           issn: issn, eissn: eissn, journal_title: journal_title,
           abstract: abstract, version: version, isbn: isbn,
           creator_group: creator, doi: doi, keyword: keyword, license: license,
-          publisher: publisher, volume: volume, pagination: pagination, issue: issue
+          publisher: publisher, volume: volume, pagination: pagination, issue: issue,
+          official_url: official_url
+
         }
-      end
+       end
     end
+
   end
 end

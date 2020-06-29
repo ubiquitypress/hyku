@@ -2,7 +2,7 @@ module Ubiquity
   class DataciteResponse
     attr_accessor :api_response, :error
     attr_reader :raw_http_response, :attributes
-    # parsed_response_hash is httparty response body
+
     def initialize(response_hash: nil, result: nil, error: nil)
       @api_response = response_hash
       @raw_http_response = result
@@ -11,7 +11,9 @@ module Ubiquity
     end
 
     def title
-      attributes['title']
+      if  attributes['titles'].present?
+        attributes['titles'][0]['title']
+      end
     end
 
     def date_published_year
@@ -19,48 +21,94 @@ module Ubiquity
     end
 
     def abstract
-      attributes['description']
+      if attributes['descriptions'].present? && attributes['descriptions'][0]['description'].present?
+          ActionView::Base.full_sanitizer.sanitize attributes['descriptions'][0]['description']
+      end
     end
 
     def version
       attributes.dig('version')
     end
 
+    def funder
+      if attributes.dig('fundingReferences').present?
+        attributes.dig('fundingReferences').first["funderName"]
+      end
+    end
+
     def license
-      if attributes.dig('license').present?
-        url_array = attributes.dig('license').split('/')
-        url_collection = Hyrax::LicenseService.new.select_active_options.map(&:last)
+      if attributes.dig("rightsList").present?
+        url_array = attributes.dig("rightsList").last["rightsUri"].split('/')
+        url_active_collection = Hyrax::LicenseService.new.select_active_options.map(&:last)
+        url_all_collection = Hyrax::LicenseService.new.select_all_options.map(&:last)
+        url_inactive_collection = url_all_collection - url_active_collection
         url_array.pop if url_array.last == 'legalcode'
         url_array.shift(2) # Removing the http, https and // part in the url
         regex_url_str = "(?:http|https)://" + url_array.map { |ele| "(#{ele})" }.join('/')
         regex_url_exp = Regexp.new regex_url_str
-        url_collection.select { |e| e.match regex_url_exp }.first
+        license_result = url_active_collection.select { |e| e.match regex_url_exp }.first
+        return_license(license_result, url_inactive_collection, regex_url_exp)
       end
     end
 
     def doi
-      attributes.dig('identifier')
+      attributes.dig('doi')
+    end
+
+    def official_url
+      identifiers_array = attributes.dig('identifiers')
+      result = identifiers_array.map do |hash|
+        hash['identifier'] if hash.has_value?('URL') || hash['identifier'] if hash.has_value?('DOI')
+      end
+      result.compact.first
+    end
+
+    def publisher
+      attributes.dig('publisher')
     end
 
     def creator
-      creator_group = attributes.dig('author')
-      if (creator_group.first.keys.include? "given") || (creator_group.first.keys.include? "family")
-        creator_with_seperated_names(creator_group)
-      else
-        creator_without_seperated_names(creator_group)
+      creator_group = attributes.dig('creators')
+      if creator_group.present?
+        extract_creators(creator_group)
       end
     end
 
-    # [{"relation-type-id"=>"Documents", "related-identifier"=>"https://doi.org/10.5438/0013"}, {"relation-type-id"=>"IsNewVersionOf", "related-identifier"=>"https://doi.org/10.5438/0010"}]
-    def related_identifier
-      related_group = attributes['related-identifiers']
-      related_group.map do |hash|
-        {
-          "relation_type" =>  hash["relation-type-id"],
-          "related_identifier" => hash["related-identifier"],
-          "related_identifier_type" => 'DOI'
-        }
+    def extract_creators(creator_data)
+      new_creator_group = []
+      creator_data.each_with_index do |hash, index|
+        if hash["nameType"] == "Personal"
+          record =   json_with_personal_name_type(hash, index)
+        elsif hash["nameType"] == "Organizational"
+          record = json_with_organisation_name_type(hash, index)
+        end
+        new_creator_group << record
       end
+      new_creator_group
+    end
+
+    def contributor
+      contributor_group = attributes.dig('contributors')
+      if contributor_group.present?
+        if contributor_group.first.keys.to_set.intersect? ["nameType", :nameType].to_set
+          json_with_personal_name_type('contributor', contributor_group)
+        else
+          json_with_organisation_name_type('contributor', contributor_group)
+        end
+      end
+    end
+
+    def related_identifier
+      related_group = attributes['relatedIdentifiers']
+      if related_group.present?
+        related_group.map do |hash|
+          {
+            "relation_type" =>  hash['relationType'],
+            "related_identifier" => hash[ "relatedIdentifier"],
+            "related_identifier_type" => hash["relatedIdentifierType"]
+          }
+         end
+       end
     end
 
     def data
@@ -72,42 +120,80 @@ module Ubiquity
           "title": title, "published_year": date_published_year,
           "abstract": abstract, "version": version,
           "creator_group": creator, "license": license,
-          "doi": doi
+          "doi": doi, "contributor_group": contributor,
+          "publisher": publisher, "official_url": official_url,
+          "funder": funder
         }
       end
     end
 
-    private
+  private
 
-      def creator_without_seperated_names(data)
-        new_group = data.map {|hash| hash['literal']}
-        new_creator_group = []
-        new_group.each_with_index do |data, index|
-          new_data = data.split
-          creator_given_name = new_data.shift
-          creator_family_name = new_data.join(' ')
-          creator_position = index
-          creator_name_type = 'Personal'
-          hash = {'creator_given_name' =>  creator_given_name, 'creator_family_name' => creator_family_name,
-                  'creator_position' => creator_position, 'creator_name_type' => creator_name_type
-                  }
-            new_creator_group << hash
-        end
-        new_creator_group
+  def return_license(license_result, url_inactive_collection, regex_url_exp)
+    if license_result != nil
+      license_result
+    else
+      object = {}
+      label = attributes.dig("rightsList").last["rights"].split(':')[1]
+      license_result = url_inactive_collection.select { |e| e.match regex_url_exp }.first
+      object = {
+        "license": license_result,
+        "active": false,
+        "label": label
+      }
+      object
+    end
+  end
+
+  def json_with_personal_name_type(hash, index)
+      hash = {
+        "creator_given_name" =>  hash["givenName"],
+        "creator_family_name" => hash["familyName"],
+        "creator_orcid" => get_isni_from_nameIdentifiers(hash['nameIdentifiers']),
+        "creator_isni" => get_isni_from_nameIdentifiers(hash['nameIdentifiers']),
+        "creator_name_type" => hash['nameType'],
+        "creator_position" => index
+      }
+  end
+
+  def get_orcid_from_nameIdentifiers(array_of_identifiers)
+    if  hash["nameIdentifiers"].present?
+      orcid = array_of_identifiers.map do |hash_idenifier|
+       if hash_idenifier["nameIdentifierScheme"] == "ORCID"
+          hash_idenifier['nameIdentifier']
+       end
       end
 
-      def creator_with_seperated_names(data)
-        new_creator_group = []
-        data.each_with_index do |hash, index|
-          hash = {
-            "creator_given_name" =>  hash["given"],
-            "creator_family_name" => hash["family"],
-            "creator_name_type" => 'Personal',
-            "creator_position" => index
-          }
-          new_creator_group << hash
-        end
-        new_creator_group
+    end
+    orcid.first
+  end
+
+  def get_isni_from_nameIdentifiers(array_of_identifiers)
+    if  array_of_identifiers.present?
+      identifier = array_of_identifiers.map do |hash_idenifier|
+       if hash_idenifier["nameIdentifierScheme"] == "ISNI"
+          hash_idenifier['nameIdentifier']
+       elsif hash_idenifier["nameIdentifierScheme"] == "ORCID"
+         hash_idenifier['nameIdentifier']
+       end
+
       end
+
+    end
+
+    identifier.try(:first).presence
+  end
+
+  def json_with_organisation_name_type(hash, index)
+      remap_organization = {'Organization' => 'Organisation'}
+      hash = {
+        creator_isni: get_isni_from_nameIdentifiers(hash['nameIdentifiers']),
+        creator_organization_name: hash["name"],
+        creator_name_type: 'Organisational',
+        creator_position: index
+      }
+
+    end
+
   end
 end

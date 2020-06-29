@@ -1,4 +1,6 @@
-$(document).on("turbolinks:load", function(event) {
+
+
+$(document).on("turbolinks:load", function(event){
   return $("body").on("submit", ".get-datacite-doi-metadata-select", function(event){
     var dataciteUrl = $(".ubiquity-datacite-value").val();
     $(".ubiquity-fields-populated").hide()
@@ -33,6 +35,10 @@ function fetchDataciteData(url) {
           field_array.push('DOI')
           $('.ubiquity-doi').val(result.data.doi)
         }
+        if($('.ubiquity-official-link').length != 0 && result.data.official_url != null) {
+          field_array.push('Official URL')
+          $('.ubiquity-official-link').val(result.data.official_url)
+        }
         //populate dropdown
         if($('.ubiquity-date-published-year').length != 0 && result.data.published_year != null) {
           field_array.push('Published Year')
@@ -58,9 +64,17 @@ function fetchDataciteData(url) {
           field_array.push('Pagination')
           $('.ubiquity-pagination').val(result.data.pagination);
         }
-        if($('.ubiquity-license').length != 0 && result.data.license != null) {
+        if($('.ubiquity-license').length != 0 && result.data.license != null && (result.data.license && result.data.license.active) == undefined) {
           field_array.push('Licence')
-          $('.ubiquity-license').val(result.data.license);
+          $('.ubiquity-license').val(result.data.license)
+        } else if ($('.ubiquity-license').length != 0 && result.data.license && result.data.license.active == false && result.data.license.license != null ) {
+          field_array.push('Licence')
+          $(".ubiquity-license").append(new Option(result.data.license.label, result.data.license.license))
+          $('.ubiquity-license').val(result.data.license.license)
+        }
+        if($('.ubiquity-funder').length != 0 && result.data.funder != null) {
+          field_array.push('Funder')
+          $('.ubiquity-funder').val(result.data.funder);
         }
         if($('.ubiquity-issn').length != 0 && result.data.issn != null) {
           field_array.push('ISSN')
@@ -88,11 +102,19 @@ function fetchDataciteData(url) {
         }
         if ($(".ubiquity-meta-creator").length != 0 && result.data.creator_group != null) {
           field_array.push('Creator')
-          populateCreatorValues(result.data.creator_group)
+          populateCreatorValues(result.data.creator_group);
+        }
+        if ($(".ubiquity-meta-contributor").length != 0 && result.data.contributor_group != null) {
+          field_array.push('Contributor')
+          populateContributorValues(result.data.contributor_group);
         }
         if ($(".ubiquity-keyword").length != 0 && result.data.keyword != null) {
           field_array.push('Keyword')
           populateKeyword(result.data.keyword)
+        }
+        if ($(".ubiquity-version-number").length != 0 && result.data.version != null) {
+          field_array.push('Version')
+          $(".ubiquity-version-number").val(result.data.version)
         }
         //IE11 will not show the ,message when .val() is used hence .html()
         var message = "The following fields were auto-populated " + field_array.slice(0, field_array.length - 1).join(', ') + ", and " + field_array.slice(-1);
@@ -132,7 +154,6 @@ function addKeywordValues(key, value){
 }
 
 function addValues(key, value) {
-
   if (key === 0) {
     var div = $(".ubiquity-meta-related-identifier");
     div.children(".related_identifier").val(value.related_identifier)
@@ -152,30 +173,94 @@ function addValues(key, value) {
 
 function populateCreatorValues(creatorArray){
   $.each(creatorArray, function(key, value){
-    addCreatorValues(key, value);
+    //if (creatorArray[0].creator_name_type == "Organisational") {
+    if (value && value.creator_name_type == "Organisational") {
+      addOrganizationalValues('creator', key, value);
+    } else if (value && value.creator_name_type == "Personal") {
+      addPersonalValues('creator', key, value);
+    }
   })
 }
 
-function addCreatorValues(key, value) {
+function populateContributorValues(contributorArray){
+  $.each(contributorArray, function(key, value){
+    if  (value && value.creator_name_type == "Personal") {
+      addPersonalValues('contributor', key, value);
+    }  else if (value && value.creator_name_type == "Organisational")  {
+      addOrganizationalValues('contributor', key, value);
+    }
+  })
+}
+
+function addPersonalValues(fieldName, key, value) {
+  var familyName = '.' + fieldName + '_family_name:last'
+  var givenName = '.' + fieldName + '_given_name:last'
+  var givenName2 = '.' + fieldName + '_given_name'
+  var orcid = '.' + fieldName + '_orcid:last'
+  var isni = '.ubiquity_' + fieldName + '_isni:last'
+  var position = '.' + fieldName + '_position:last'
+  var nameType = '.' + 'ubiquity_' + fieldName + '_name_type:last'
   if (key === 0) {
-    var parent = $(".ubiquity-meta-creator");
+    var newParent = '.ubiquity-meta-' + fieldName
+    var parent = $(newParent);
     var div = parent.children(".ubiquity_personal_fields:last")
-    div.children(".creator_family_name:last").val(value.creator_family_name)
-    div.children('.creator_given_name').val(value.creator_given_name)
-    div.children('.creator_orcid:last').val(value.creator_orcid)
-    div.children(".creator_position:last").val(value.creator_position)
-    parent.children('.ubiquity_creator_name_type:last').val('Personal').change()
+    div.children(familyName).val(value[fieldName + '_family_name'])
+    div.children(givenName2).val(value[fieldName + '_given_name'])
+    parent.children(isni).val(value[fieldName + '_isni'])
+    div.children(orcid).val(getValidOrcid(value[fieldName + '_orcid']))
+    div.children(position).val(value[fieldName + '_position'])
+    parent.children(nameType).val('Personal').change()
   }else {
-    var parent = $(".ubiquity-meta-creator:last")
+    var newParent = '.ubiquity-meta-' + fieldName + ':last'
+    var parent = $(newParent);
     var parentClone = parent.clone();
     var div = parentClone.children(".ubiquity_personal_fields:last")
     parentClone.find('input').val('');
     parentClone.find('option').attr('selected', false);
     parent.after(parentClone)
-    parentClone.find(".creator_family_name:last").val(value.creator_family_name)
-    parentClone.find('.creator_given_name:last').val(value.creator_given_name)
-    parentClone.find('.creator_orcid:last').val(value.creator_orcid)
-    parentClone.find(".creator_position:last").val(value.creator_position)
-    parentClone.find('.ubiquity_creator_name_type:last').val('Personal').change()
+    parentClone.find(familyName).val(value[fieldName + '_family_name'])
+    parentClone.find(givenName).val(value[fieldName + '_given_name'])
+    parentClone.children(isni).val(value[fieldName + '_isni'])
+    div.children(orcid).val(getValidOrcid(value[fieldName + '_orcid']))
+    parentClone.find(position).val(value[fieldName + '_position'])
+    parentClone.find(nameType).val('Personal').change()
   }
+}
+
+function addOrganizationalValues(fieldName, key, value) {
+
+  var name = '.ubiquity_' + fieldName + '_organization_name:last'
+  var name2 = '.ubiquity_' + fieldName + '_organization_name'
+  var isni = '.ubiquity_' + fieldName + '_isni:last'
+  var position = '.' + fieldName + '_position:last'
+  var nameType = '.' + 'ubiquity_' + fieldName + '_name_type:last'
+  if (key === 0) {
+    var newParent = '.ubiquity-meta-' + fieldName
+    var parent = $(newParent);
+    var div = parent.children(".ubiquity_organization_fields:last")
+    div.children(name).val(value[fieldName + '_organization_name'])
+    parent.children(isni).val(value[fieldName + '_isni'])
+    div.children(position).val(value[fieldName + '_position'])
+    parent.children(nameType).val('Organisational').change()
+  }else {
+    var newParent = '.ubiquity-meta-' + fieldName + ':last'
+    var parent = $(newParent);
+    var parentClone = parent.clone();
+    var div = parentClone.children(".ubiquity_organization_fields:last")
+    parentClone.find('input').val('');
+    parentClone.find('option').attr('selected', false);
+    parent.after(parentClone)
+    parentClone.find(name).val(value[fieldName + '_organization_name'])
+    parentClone.children(isni).val(value[fieldName + '_isni'])
+    parentClone.find(position).val(value[fieldName + '_position'])
+    parentClone.find(nameType).val('Organisational').change()
+  }
+}
+
+function getValidOrcid(orcidPath) {
+  if (orcidPath != null) {
+    var orcidArray = orcidPath.split("/")
+    var validOrcid  = orcidArray.slice(-1)[0]
+  }
+  return validOrcid
 }

@@ -1,3 +1,3 @@
 module Hyku
-  VERSION = '2.6.35'.freeze
+  VERSION = '2.6.36'.freeze
 end

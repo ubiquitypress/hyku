@@ -4,7 +4,13 @@
 <% if ENV['BLANK_PAGES'] == 'true' %>
 
 <% else %>
-  <a id="logo" class="navbar-brand" href="<%= hyrax.root_path %>" data-no-turbolink="true">
+  <% settings_class = Ubiquity::ParseTenantWorkSettings.new(request.original_url) %>
+  <% settings_hash = settings_class.per_account_tenant_settings_hash %>
+  <% subdomain = settings_class.get_tenant_subdomain %>
+  <% url_path = settings_hash[subdomain]['live'] if settings_hash %> %>
+  <% path_to_use = (url_path.present? && url_path.class == String) ? ("https://" + url_path).strip : hyrax.root_path  %>
+
+  <a id="logo" class="navbar-brand" href="<%= path_to_use %>" data-no-turbolink="true">
     <span class="glyphicon glyphicon-globe" role="img" aria-label="<%= application_name %>" aria-hidden="true"></span>
     <% if ENV["BL_TENANTS"].split(',').include? ubiquity_url_parser(request.original_url) %>
       Shared Research Repository

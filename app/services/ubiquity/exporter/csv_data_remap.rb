@@ -9,7 +9,7 @@ module Ubiquity
                       "disable_draft_doi", "version_number", 'depositor', 'file_availability'
                      ]
 
-    CSV_HEARDERS_ORDER = %w(id date_uploaded date_modified file visibility  embargo_end_date  visibility_after_embargo lease_end_date visibility_after_lease collection
+    CSV_HEARDERS_ORDER = %w(id date_uploaded date_modified file visibility  embargo_end_date  visibility_after_embargo lease_end_date visibility_after_lease collection_id
                         work_type resource_type title alternative_title creator contributor abstract date_published material_media duration institution organisational_unit project_name
                         funder funder_project_reference event_title event_date event_location series_name book_title editor journal_title alternative_journal_title volume edition version
                         issue pagination article_number publisher place_of_publication isbn issn eissn current_he_institution date_accepted date_submitted official_url
@@ -194,7 +194,7 @@ module Ubiquity
       {
        "id" => "id", "date_uploaded_dtsi" => "date_uploaded", "date_modified_dtsi" => "date_modified", "visibility_ssi" => "visibility",
        "embargo_release_date_dtsi" => "embargo_end_date", "visibility_after_embargo_ssim" => "visibility_after_embargo", "visibility_after_lease_ssim" => "visibility_after_lease",
-       "lease_expiration_date_dtsi" => "lease_end_date", "collection_id_sim" => "collections", "has_model_ssim" => "work_type", "resource_type_tesim" => "resource_type",
+       "lease_expiration_date_dtsi" => "lease_end_date", "collection_id_tesim" => "collection_id", "has_model_ssim" => "work_type", "resource_type_tesim" => "resource_type",
        "title_tesim" => "title", "alt_title_tesim" => 'alternative_title', "creator_tesim" => "creator", "contributor_tesim" => "contributor", "abstract_tesim" => "abstract",
       "date_published_si" => "date_published", "media_tesim" => "media",  "duration_tesim" => "duration", "institution_tesim" => "institution", 'org_unit_tesim' => 'organisational_unit',
       "project_name_tesim" => "project_name",  "funder_tesim" => "funder", "fndr_project_ref_tesim" => 'funder_project_reference', "event_title_tesim" => "event_title",

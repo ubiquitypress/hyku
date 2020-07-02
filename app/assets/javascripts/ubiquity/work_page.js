@@ -18,8 +18,4 @@ $(document).on("turbolinks:load", function() {
     $('.set-access-controls ul.visibility li.radio input').last().prop("checked", true);
   }
 
-  if (pathName.includes("/dashboard/works") || pathName.includes("/dashboard/my/works")) {
-     $('#collection_names_sim').html('Collections')
-  }
-
 })

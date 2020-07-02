@@ -1,4 +1,4 @@
-image: us.gcr.io/tools-203611/gitlab-base:28
+image: image: eu.gcr.io/ubiquity-ci/gitlab-base:39
 
 services:
   - postgres

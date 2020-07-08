@@ -1,5 +1,5 @@
 <% template = f.object.model.class.to_s.underscore %>
-<label class="control-label multi_value optional" for="#{template}_funder">Funder</label>
+<label class="control-label multi_value optional" for="#{template}_funder">Funder Test</label>
 <p class="help-block">Use full name e.g. Arts and Humanities Research Council</p>
 <%= select_tag "#{template}[funder][]",
       options_from_collection_for_select(FunderService.new.select_active_options.flatten.uniq!, :to_s, :to_s, f.object.model.funder.to_a),

@@ -19,6 +19,8 @@ module Ubiquity
                     :date_published_group, :date_accepted_group, :date_submitted_group,
                     :event_date, :related_exhibition_date
 
+      attr_accessor :funder_group, :funder_name, :funder_id
+
       attr_accessor :note, :account, :doi_options
 
       # terms inherited from Hyrax::Forms::WorkForm are removed
@@ -64,6 +66,8 @@ module Ubiquity
           permitted_params << { alternate_identifier_group: %i[alternate_identifier alternate_identifier_type] }
 
           permitted_params << { related_identifier_group: %i[related_identifier related_identifier_type relation_type] }
+
+          permitted_params << { funder_group: %i[funder_name funder_id]}
 
           permitted_params << { date_published_group: %i[date_published_year date_published_month date_published_day] }
           permitted_params << { date_accepted_group: %i[date_accepted_year date_accepted_month date_accepted_day] }

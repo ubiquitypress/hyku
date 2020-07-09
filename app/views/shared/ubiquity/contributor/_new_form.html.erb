@@ -41,7 +41,7 @@
       Contributor ORCID</label>
 
     <%= text_field_tag "#{template}[contributor_group][][contributor_orcid]", nil,
-                       class: "#{template}_contributor_group form-control multi-text-field multi_value ubiquity_contributor_orcid",
+                       class: "#{template}_contributor_group contributor_orcid form-control multi-text-field multi_value ubiquity_contributor_orcid",
                        placeholder: 'Please enter the contributor\'s ORCID, e.g. 0000-1234-5678-9101.',
                        name: "#{template}[contributor_group][][contributor_orcid]",
                        data: {field_name:'ubiquity_contributor_orcid'}
@@ -52,7 +52,7 @@
       Contributor family name</label>
 
     <%= text_field_tag "#{template}[contributor_group][][contributor_family_name]", nil,
-                       class: "#{template}_contributor_family_name form-control multi-text-field multi_value ubiquity_contributor_family_name",
+                       class: "#{template}_contributor_family_name contributor_family_name form-control multi-text-field multi_value ubiquity_contributor_family_name",
                        placeholder: 'Please enter the contributor\'s last name/family name.',
                        name: "#{template}[contributor_group][][contributor_family_name]",
                        data: {field_name:'ubiquity_contributor_family_name'}
@@ -63,7 +63,7 @@
       Contributor given name</label>
 
     <%= text_field_tag "#{template}[contributor_group][][contributor_given_name]", nil,
-                       class: "#{template}_contributor_given_name form-control multi-text-field multi_value ubiquity_contributor_given_name",
+                       class: "#{template}_contributor_given_name  contributor_given_name form-control multi-text-field multi_value ubiquity_contributor_given_name",
                        placeholder: 'Please enter the contributor\'s first name/given name.',
                        name: "#{template}[contributor_group][][contributor_given_name]",
                        data: {field_name:'ubiquity_contributor_given_name'}

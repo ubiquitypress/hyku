@@ -5,7 +5,7 @@
   <%= label_name %> </label>
 
 <%= text_field_tag "#{template}[#{metadata_field}_group][][#{metadata_field}_given_name]", hash.dig("#{metadata_field}_given_name"),
-                  class: "#{template}_#{metadata_field}_group form-control  multi-text-field  multi_value ubiquity_#{metadata_field}_given_name",
+                  class: "#{template}_#{metadata_field}_group form-control  multi-text-field  multi_value #{metadata_field}_given_name ubiquity_#{metadata_field}_given_name",
                   placeholder: t('hyrax.placeholders.given_name'),
                   name: "#{template}[#{metadata_field}_group][][#{metadata_field}_given_name]",
                   data: {field_name:"ubiquity_#{metadata_field}_given_name"}

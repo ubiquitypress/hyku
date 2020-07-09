@@ -102,11 +102,11 @@ function fetchDataciteData(url) {
         }
         if ($(".ubiquity-meta-creator").length != 0 && result.data.creator_group != null) {
           field_array.push('Creator')
-          populateCreatorValues(result.data.creator_group);
+          populateSimilarJsonFields(result.data.creator_group, 'creator');
         }
         if ($(".ubiquity-meta-contributor").length != 0 && result.data.contributor_group != null) {
           field_array.push('Contributor')
-          populateContributorValues(result.data.contributor_group);
+          populateSimilarJsonFields(result.data.contributor_group, 'contributor');
         }
         if ($(".ubiquity-keyword").length != 0 && result.data.keyword != null) {
           field_array.push('Keyword')
@@ -171,23 +171,14 @@ function addValues(key, value) {
   }
 }
 
-function populateCreatorValues(creatorArray){
-  $.each(creatorArray, function(key, value){
+function populateSimilarJsonFields(valueArray, metadata_field){
+  $.each(valueArray, function(key, value){
     //if (creatorArray[0].creator_name_type == "Organisational") {
-    if (value && value.creator_name_type == "Organisational") {
-      addOrganizationalValues('creator', key, value);
-    } else if (value && value.creator_name_type == "Personal") {
-      addPersonalValues('creator', key, value);
-    }
-  })
-}
-
-function populateContributorValues(contributorArray){
-  $.each(contributorArray, function(key, value){
-    if  (value && value.creator_name_type == "Personal") {
-      addPersonalValues('contributor', key, value);
-    }  else if (value && value.creator_name_type == "Organisational")  {
-      addOrganizationalValues('contributor', key, value);
+    var key_name = metadata_field.concat('_name_type');
+    if (value && value[key_name] == "Organisational") {
+      addOrganizationalValues(metadata_field, key, value);
+    } else if (value && value[key_name] == "Personal") {
+      addPersonalValues(metadata_field, key, value);
     }
   })
 }

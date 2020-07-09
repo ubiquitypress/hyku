@@ -70,31 +70,27 @@ module Ubiquity
     def creator
       creator_group = attributes.dig('creators')
       if creator_group.present?
-        extract_creators(creator_group)
+        build_json_fields(creator_group, 'creator')
       end
     end
 
-    def extract_creators(creator_data)
-      new_creator_group = []
-      creator_data.each_with_index do |hash, index|
+    def build_json_fields(records, field_name)
+      new_record_group = []
+      records.each_with_index do |hash, index|
         if hash["nameType"] == "Personal"
-          record =   json_with_personal_name_type(hash, index)
+          record =   json_with_personal_name_type(field_name, hash, index)
         elsif hash["nameType"] == "Organizational"
-          record = json_with_organisation_name_type(hash, index)
+          record = json_with_organisation_name_type( field_name, hash, index)
         end
-        new_creator_group << record
+         new_record_group << record
       end
-      new_creator_group
+      new_record_group
     end
 
     def contributor
       contributor_group = attributes.dig('contributors')
       if contributor_group.present?
-        if contributor_group.first.keys.to_set.intersect? ["nameType", :nameType].to_set
-          json_with_personal_name_type('contributor', contributor_group)
-        else
-          json_with_organisation_name_type('contributor', contributor_group)
-        end
+        build_json_fields(contributor_group, 'contributor')
       end
     end
 
@@ -127,72 +123,56 @@ module Ubiquity
       end
     end
 
-  private
+    private
 
-  def return_license(license_result, url_inactive_collection, regex_url_exp)
-    if license_result != nil
-      license_result
-    else
-      object = {}
-      label = attributes.dig("rightsList").last["rights"].split(':')[1]
-      license_result = url_inactive_collection.select { |e| e.match regex_url_exp }.first
-      object = {
+    def return_license(license_result, url_inactive_collection, regex_url_exp)
+      if license_result != nil
+        license_result
+      else
+        object = {}
+        label = attributes.dig("rightsList").last["rights"].split(':')[1]
+        license_result = url_inactive_collection.select { |e| e.match regex_url_exp }.first
+        object = {
         "license": license_result,
         "active": false,
         "label": label
-      }
-      object
-    end
-  end
-
-  def json_with_personal_name_type(hash, index)
-      hash = {
-        "creator_given_name" =>  hash["givenName"],
-        "creator_family_name" => hash["familyName"],
-        "creator_orcid" => get_isni_from_nameIdentifiers(hash['nameIdentifiers']),
-        "creator_isni" => get_isni_from_nameIdentifiers(hash['nameIdentifiers']),
-        "creator_name_type" => hash['nameType'],
-        "creator_position" => index
-      }
-  end
-
-  def get_orcid_from_nameIdentifiers(array_of_identifiers)
-    if  hash["nameIdentifiers"].present?
-      orcid = array_of_identifiers.map do |hash_idenifier|
-       if hash_idenifier["nameIdentifierScheme"] == "ORCID"
-          hash_idenifier['nameIdentifier']
-       end
+        }
+        object
       end
-
-    end
-    orcid.first
-  end
-
-  def get_isni_from_nameIdentifiers(array_of_identifiers)
-    if  array_of_identifiers.present?
-      identifier = array_of_identifiers.map do |hash_idenifier|
-       if hash_idenifier["nameIdentifierScheme"] == "ISNI"
-          hash_idenifier['nameIdentifier']
-       elsif hash_idenifier["nameIdentifierScheme"] == "ORCID"
-         hash_idenifier['nameIdentifier']
-       end
-
-      end
-
     end
 
-    identifier.try(:first).presence
-  end
+    def json_with_personal_name_type(field_name, hash, index)
+      {
+        "#{field_name}_given_name" =>  hash["givenName"],
+        "#{field_name}_family_name" => hash["familyName"],
+        "#{field_name}_orcid" => get_isni_from_nameIdentifiers(hash['nameIdentifiers']),
+        "#{field_name}_isni" => get_isni_from_nameIdentifiers(hash['nameIdentifiers']),
+        "#{field_name}_name_type" => hash['nameType'],
+        "#{field_name}_position" => index
+      }
+    end
 
-  def json_with_organisation_name_type(hash, index)
+    def json_with_organisation_name_type(field_name, hash, index)
       remap_organization = {'Organization' => 'Organisation'}
-      hash = {
-        creator_isni: get_isni_from_nameIdentifiers(hash['nameIdentifiers']),
-        creator_organization_name: hash["name"],
-        creator_name_type: 'Organisational',
-        creator_position: index
+      {
+        "#{field_name}_isni" => get_isni_from_nameIdentifiers(hash['nameIdentifiers']),
+        "#{field_name}_organization_name" => hash["name"],
+        "#{field_name}_name_type" => 'Organisational',
+        "#{field_name}_position": index
       }
+    end
 
+    def get_isni_from_nameIdentifiers(array_of_identifiers)
+      if  array_of_identifiers.present?
+        identifier = array_of_identifiers.map do |hash_idenifier|
+          if hash_idenifier["nameIdentifierScheme"] == "ISNI"
+            hash_idenifier['nameIdentifier']
+          elsif hash_idenifier["nameIdentifierScheme"] == "ORCID"
+            hash_idenifier['nameIdentifier']
+          end
+        end
+      end
+      identifier.try(:first).presence
     end
 
   end

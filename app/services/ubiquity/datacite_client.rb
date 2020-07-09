@@ -32,7 +32,6 @@ module Ubiquity
 
     def fetch_record_from_datacite
       handle_datacite_client do
-        puts "pata #{path}"
         HTTParty.get("https://api.datacite.org/dois/#{path}")
       end
     end
@@ -57,13 +56,10 @@ module Ubiquity
 
       handle_client do
         uri = Addressable::URI.convert_path(url)
-        puts "debo #{uri}"
         if (uri.scheme.present? &&  uri.host.present?)
           path_name = uri.path
-          puts "insidi-1 #{path_name}"
           use_path(path_name)
         elsif (uri.scheme.present? == false && uri.host.present? == false && uri.path.present?)
-          puts "insidoelse #{uri.path}"
           use_path(uri.path)
         end
       end
@@ -73,12 +69,10 @@ module Ubiquity
       puts "uri #{path_name}"
       split_path = path_name.split('/').reject(&:empty?)
       if (split_path.length == 3 && split_path.first == 'works') || ( split_path.length == 4 && split_path.first == 'works')
-        puts "lagos"
         #changes "works/10.5438/0012" to "/works/10.5438/0012"
         path_name = path_name.prepend('/') if path_name.slice(0) != "/"
         @path = path_name
       elsif split_path.length == 4 && split_path.first == 'api.datacite.org'
-        puts "abuja"
         #data here is ["api.datacite.org", "works", "10.5438", "0012"]
         #shift removes the first element
         split_path.shift
@@ -93,7 +87,6 @@ module Ubiquity
         #split_path.first.slice(0..1)
       elsif (split_path.length == 2 && (not split_path.include? 'works')) || (split_path.length == 3 && split_path.first.slice(0..1) == '10')
         path_name = path_name.prepend('/') if path_name.slice(0) != "/"
-        puts "no-api #{path_name}"
         @path = path_name
       end
     end

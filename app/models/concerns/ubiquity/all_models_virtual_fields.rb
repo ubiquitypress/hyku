@@ -157,6 +157,10 @@ module Ubiquity
       self.related_exhibition_date = dates.reject(&:blank?)
     end
 
+    def save_funder
+      puts self.funder_group ||= JSON.parse(self.funder.first) if self.funder.present?
+    end
+
     private
 
     def create_work_expiry_service

@@ -1,0 +1,19 @@
+<tr>
+  <th>Funder</th>
+  <td>
+    <% array_of_hash.each do |hash| %>
+      <ul class="tabular">
+        <li class="attribute funder">
+          <% if hash['funder'] %>
+            <%= "name: #{hash['funder_name']}" %>&nbsp;
+          <% end %>
+        </li>
+        <li class="attribute funder_id">
+          <% if hash['funder_id'] %>
+            <%= "id: #{hash['funder_id']}" %>
+          <% end %>
+        </li>
+      </ul>
+    <% end %>
+  </td>
+</tr>

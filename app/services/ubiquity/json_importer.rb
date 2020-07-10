@@ -33,11 +33,7 @@ module Ubiquity
       @file = @data_hash[:file]
       @ubiquity_model_class = @data_hash.with_indifferent_access["type"].try(:constantize) || model_instance.class
       @work_instance = model_instance
-      collection_id = data.delete('collection_id') ||  data.delete(:collection_id)
-      if collection_id.present?
-        @collection_ids = ( collection_id && collection_id.split('||').map(&:strip)  )
-        @attributes_hash.merge!({"collection_id" => @collection_ids, 'collection_names' =>  merge_collection_names | model_instance.collection_names.to_a})
-      end
+      add_or_remove_collections
     end
 
     def run
@@ -70,6 +66,18 @@ module Ubiquity
     end
 
     private
+
+    def add_or_remove_collections
+      cloned_hash = @data.clone
+      collection_id = @data.delete('collection_id') ||  @data.delete(:collection_id)
+
+      if collection_id.present?
+        @collection_ids = ( collection_id && collection_id.split('||').map(&:strip)  )
+        @attributes_hash.merge!({"collection_id" => @collection_ids, 'collection_names' =>  merge_collection_names | model_instance.collection_names.to_a})
+      elsif @work_instance.collection_id.present? &&  cloned_hash.slice(:collection_id, 'collection_id').size >= 1  && collection_id.blank?
+        @attributes_hash.merge!({"collection_id" => [], 'collection_names' => []})
+      end
+    end
 
     def merge_collection_names
       collections = add_work_to_collection

@@ -1,8 +1,8 @@
 # example of usage
-#user = User.find_by(email: 'test-manager@example.com')
-#notifications = user.mailbox.inbox
-#p = Ubiquity::Api::RedirectWorkIdInWorkflowNotification.new(message: notifications.first, url: 'http://university-demo.localhost:8080/dashboard/my/collections?locale=en')
-#p.point_link_to_frontend
+# user = User.find_by(email: 'test-manager@example.com')
+# notifications = user.mailbox.inbox
+# p = Ubiquity::Api::RedirectWorkIdInWorkflowNotification.new(message: notifications.first, url: 'http://university-demo.localhost:8080/dashboard/my/collections?locale=en')
+# p.point_link_to_frontend
 #
 
 module Ubiquity
@@ -42,9 +42,15 @@ module Ubiquity
       def point_link_to_frontend
         notification_message = get_original_text(message)
         if notification_message.present?
-          extracted_link_text = extract_link_from_brackets(notification_message)
-          new_link = regenerate_link(notification_message)
-          replace_with_frontend_link = notification_message.gsub(extracted_link_text, new_link)
+          check_for_it_is_not_a_csv_export_notification(notification_message)
+        end
+      end
+
+      def check_for_it_is_not_a_csv_export_notification(data_message)
+        extracted_link_text = extract_link_from_brackets(data_message)
+        if extracted_link_text.present?
+          new_link = regenerate_link(data_message)
+          replace_with_frontend_link = data_message.gsub(extracted_link_text, new_link)
         end
       end
 

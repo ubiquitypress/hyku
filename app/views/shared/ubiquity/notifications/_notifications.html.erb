@@ -19,12 +19,12 @@
                 <%= msg.last_message.created_at.to_formatted_s(:long_ordinal) %>
               </relative-time>
             </td>
-            <td><%= msg.last_message.subject.html_safe %></td>
+            <td><%= msg.last_message.subject.try(:html_safe )%></td>
             <% redirect_object = Ubiquity::Api::RedirectWorkIdInWorkflowNotification.new(message: msg, url: request.original_url) %>
-            <% if redirect_object.new_url.present? %>
+            <% if redirect_object.new_url.present?  && redirect_object.point_link_to_frontend.present? %>
               <td> <%= redirect_object.point_link_to_frontend.html_safe %>  </td>
             <% else %>
-              <td><%= msg.last_message.body.html_safe %></td>
+              <td><%= msg.last_message.body.try(:html_safe) %></td>
             <% end %>
             <td>
               <%= link_to hyrax.notification_path(msg.id),

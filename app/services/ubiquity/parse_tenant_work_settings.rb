@@ -37,8 +37,10 @@ module Ubiquity
     end
 
     def redirect_url
-      if redirect_subdomain_url_hash.present?
-        "https://#{redirect_subdomain_url_hash}"
+      if redirection_settings_hash.present? && redirection_settings_hash.include?('localhost')
+        "http://#{redirection_settings_hash}"
+      else
+        "https://#{redirection_settings_hash}"
       end
     end
 

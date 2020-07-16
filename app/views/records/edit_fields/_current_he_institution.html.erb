@@ -1,6 +1,1 @@
-<% current_he_institution_service = CurrentHeInstitutionService.new %>
-
-<%= f.input :current_he_institution,
-            collection: current_he_institution_service.select_active_options,
-            include_blank: true,
-            input_html: { class: 'form-control ubiquity-current-he-institution' }, label: 'Current HE Institution' %>
+<%= render "shared/ubiquity/current_he_institution/new_form", f: f %>

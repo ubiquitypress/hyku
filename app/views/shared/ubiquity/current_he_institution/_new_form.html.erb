@@ -1,0 +1,10 @@
+<% template = f.object.model.class.to_s.underscore %>
+
+<div class="ubiquity-meta-current_he_institution" >
+  <label class="control-label multi_value optional" for="#{template}_current_he_institution_name">
+  Current HE Institution NEw Json Form 2 type</label>
+
+<%= select_tag "#{template}[current_he_institution_group][][current_he_institution_name]", options_from_collection_for_select( CurrentHeInstitutionService.select_active_options.flatten.uniq!, :to_s, :to_s, ''),
+:include_blank => true, class: 'form-control current_he_institution', data: {field_name:'ubiquity_cuurrent_he_name'} %>
+
+</div>

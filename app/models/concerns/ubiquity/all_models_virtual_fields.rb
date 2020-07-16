@@ -1,4 +1,3 @@
-
 module Ubiquity
   module AllModelsVirtualFields
     extend ActiveSupport::Concern
@@ -15,10 +14,10 @@ module Ubiquity
       after_save :update_external_service_record, :create_work_service_if_embargo_or_lease
 
       #These are used in the forms to populate fields that will be stored in json fields
-      #The json fields in this case are creator, contributor, alternate_identifier and related_identifier
+      #The json fields in this case are creator, contributor, alternate_identifier, related_identifier and current_he_institution
       attr_accessor :creator_group, :contributor_group, :alternate_identifier_group, :related_identifier_group,
                     :date_published_group, :date_accepted_group, :date_submitted_group,
-                    :event_date_group, :related_exhibition_date_group
+                    :event_date_group, :related_exhibition_date_group, :current_he_institution_group
     end
 
     private

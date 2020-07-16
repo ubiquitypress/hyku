@@ -1,6 +1,7 @@
 terms:
   - id: Abertay University
     term: Abertay University
+    isni: 
     active: true
   - id: Aberystwyth University
     term: Aberystwyth University

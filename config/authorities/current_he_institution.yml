@@ -376,7 +376,7 @@ terms:
   - id: Ulster University
     term: Ulster University
     isni: 0000 0001 0551 9715
-    ror:https://ror.org/01yp9g959
+    ror: https://ror.org/01yp9g959
     active: true
   - id: University College London
     term: University College London

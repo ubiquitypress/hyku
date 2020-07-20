@@ -33,6 +33,8 @@ module Ubiquity
     def fetch_record_from_datacite
       handle_datacite_client do
         HTTParty.get("https://api.datacite.org/dois/#{path}")
+        #for testing
+        #HTTParty.get("https://api.test.datacite.org/dois/#{path}")
       end
     end
 

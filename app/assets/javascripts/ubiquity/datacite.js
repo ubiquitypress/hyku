@@ -198,7 +198,7 @@ function addPersonalValues(fieldName, key, value) {
     div.children(familyName).val(value[fieldName + '_family_name'])
     div.children(givenName2).val(value[fieldName + '_given_name'])
     parent.children(isni).val(value[fieldName + '_isni'])
-    div.children(orcid).val(getValidOrcid(value[fieldName + '_orcid']))
+    div.children(orcid).val(getIdentifiers(value[fieldName + '_orcid']))
     div.children(position).val(value[fieldName + '_position'])
     parent.children(nameType).val('Personal').change()
   }else {
@@ -212,7 +212,7 @@ function addPersonalValues(fieldName, key, value) {
     parentClone.find(familyName).val(value[fieldName + '_family_name'])
     parentClone.find(givenName).val(value[fieldName + '_given_name'])
     parentClone.children(isni).val(value[fieldName + '_isni'])
-    div.children(orcid).val(getValidOrcid(value[fieldName + '_orcid']))
+    div.children(orcid).val(getIdentifiers(value[fieldName + '_orcid']))
     parentClone.find(position).val(value[fieldName + '_position'])
     parentClone.find(nameType).val('Personal').change()
   }
@@ -223,6 +223,7 @@ function addOrganizationalValues(fieldName, key, value) {
   var name = '.ubiquity_' + fieldName + '_organization_name:last'
   var name2 = '.ubiquity_' + fieldName + '_organization_name'
   var isni = '.ubiquity_' + fieldName + '_isni:last'
+  var ror = '.ubiquity_' + fieldName + '_ror:last'
   var position = '.' + fieldName + '_position:last'
   var nameType = '.' + 'ubiquity_' + fieldName + '_name_type:last'
   if (key === 0) {
@@ -230,7 +231,8 @@ function addOrganizationalValues(fieldName, key, value) {
     var parent = $(newParent);
     var div = parent.children(".ubiquity_organization_fields:last")
     div.children(name).val(value[fieldName + '_organization_name'])
-    parent.children(isni).val(value[fieldName + '_isni'])
+    parent.children(isni).val(getIdentifiers(value[fieldName + '_isni']))
+    var ka = div.children(ror).val(getIdentifiers(value[fieldName + '_ror']))
     div.children(position).val(value[fieldName + '_position'])
     parent.children(nameType).val('Organisational').change()
   }else {
@@ -242,16 +244,20 @@ function addOrganizationalValues(fieldName, key, value) {
     parentClone.find('option').attr('selected', false);
     parent.after(parentClone)
     parentClone.find(name).val(value[fieldName + '_organization_name'])
-    parentClone.children(isni).val(value[fieldName + '_isni'])
+    parentClone.children(isni).val(getIdentifiers(value[fieldName + '_isni']))
+    parentClone.children(ror).val(getIdentifiers(value[fieldName + '_ror']))
     parentClone.find(position).val(value[fieldName + '_position'])
     parentClone.find(nameType).val('Organisational').change()
   }
 }
 
-function getValidOrcid(orcidPath) {
-  if (orcidPath != null) {
-    var orcidArray = orcidPath.split("/")
-    var validOrcid  = orcidArray.slice(-1)[0]
+function getIdentifiers(url_string) {
+  console.log('mala', url_string);
+ matcher = /^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/
+  if (url_string != null && matcher.test(url_string) ) {
+    var url_path = new URL(url_string).pathname.substr(1)
+  } else {
+    var url_path = url_string
   }
-  return validOrcid
+  return   url_path
 }

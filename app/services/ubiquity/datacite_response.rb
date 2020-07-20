@@ -32,22 +32,20 @@ module Ubiquity
 
     def funder
       if attributes.dig('fundingReferences').present?
-        attributes.dig('fundingReferences').first["funderName"]
+        # attributes.dig('fundingReferences').first["funderName"]
+        attributes["fundingReferences"].each_with_index.map do |hash_funder, index|
+           {
+             "funder_name" => hash_funder["funderName"], 'funder_doi' => hash_funder["funderIdentifier"],
+             'funder_award' => [hash_funder["awardNumber"]], 'funder_position' => index }
+        end
+
       end
     end
 
     def license
-      if attributes.dig("rightsList").present?
-        url_array = attributes.dig("rightsList").last["rightsUri"].split('/')
-        url_active_collection = Hyrax::LicenseService.new.select_active_options.map(&:last)
-        url_all_collection = Hyrax::LicenseService.new.select_all_options.map(&:last)
-        url_inactive_collection = url_all_collection - url_active_collection
-        url_array.pop if url_array.last == 'legalcode'
-        url_array.shift(2) # Removing the http, https and // part in the url
-        regex_url_str = "(?:http|https)://" + url_array.map { |ele| "(#{ele})" }.join('/')
-        regex_url_exp = Regexp.new regex_url_str
-        license_result = url_active_collection.select { |e| e.match regex_url_exp }.first
-        return_license(license_result, url_inactive_collection, regex_url_exp)
+      license_record = attributes.dig("rightsList")
+      if license_record.present?
+        extract_license(license_record)
       end
     end
 
@@ -145,8 +143,8 @@ module Ubiquity
       {
         "#{field_name}_given_name" =>  hash["givenName"],
         "#{field_name}_family_name" => hash["familyName"],
-        "#{field_name}_orcid" => get_isni_from_nameIdentifiers(hash['nameIdentifiers']),
-        "#{field_name}_isni" => get_isni_from_nameIdentifiers(hash['nameIdentifiers']),
+        "#{field_name}_orcid" => extract_name_identifiers(hash['nameIdentifiers'], "ORCID"),
+        "#{field_name}_isni" => extract_name_identifiers(hash['nameIdentifiers'], "ISNI"),
         "#{field_name}_name_type" => hash['nameType'],
         "#{field_name}_position" => index
       }
@@ -155,24 +153,44 @@ module Ubiquity
     def json_with_organisation_name_type(field_name, hash, index)
       remap_organization = {'Organization' => 'Organisation'}
       {
-        "#{field_name}_isni" => get_isni_from_nameIdentifiers(hash['nameIdentifiers']),
+        "#{field_name}_isni" => extract_name_identifiers(hash['nameIdentifiers'], "ISNI"),
+        "#{field_name}_ror" => extract_name_identifiers(hash['nameIdentifiers'], "ROR"),
         "#{field_name}_organization_name" => hash["name"],
         "#{field_name}_name_type" => 'Organisational',
         "#{field_name}_position": index
       }
     end
 
-    def get_isni_from_nameIdentifiers(array_of_identifiers)
+    def extract_name_identifiers(array_of_identifiers, type)
       if  array_of_identifiers.present?
         identifier = array_of_identifiers.map do |hash_idenifier|
-          if hash_idenifier["nameIdentifierScheme"] == "ISNI"
+          if hash_idenifier["nameIdentifierScheme"] == type
             hash_idenifier['nameIdentifier']
-          elsif hash_idenifier["nameIdentifierScheme"] == "ORCID"
+          elsif hash_idenifier["nameIdentifierScheme"] == type
+            hash_idenifier['nameIdentifier']
+          elsif hash_idenifier["nameIdentifierScheme"] == type
             hash_idenifier['nameIdentifier']
           end
         end
       end
       identifier.try(:first).presence
+    end
+
+    def extract_license(license_records)
+      license_records.map do  |license_item|
+        if license_item["rightsUri"].present?
+          url_array = license_item["rightsUri"].split('/')
+          url_active_collection = Hyrax::LicenseService.new.select_active_options.map(&:last)
+          url_all_collection = Hyrax::LicenseService.new.select_all_options.map(&:last)
+          url_inactive_collection = url_all_collection - url_active_collection
+          url_array.pop if url_array.last == 'legalcode'
+          url_array.shift(2) # Removing the http, https and // part in the url
+          regex_url_str = "(?:http|https)://" + url_array.map { |ele| "(#{ele})" }.join('/')
+          regex_url_exp = Regexp.new regex_url_str
+          license_result = url_active_collection.select { |e| e.match regex_url_exp }.first
+          return_license(license_result, url_inactive_collection, regex_url_exp)
+        end
+      end.compact
     end
 
   end

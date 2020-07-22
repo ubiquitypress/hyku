@@ -1,20 +1,14 @@
-<% template = f.object.model.class.to_s.underscore %>
-<label class="control-label multi_value optional" for="#{template}_funder">Funder</label>
-<p class="help-block">Use full name e.g. Arts and Humanities Research Council</p>
-<%= select_tag "#{template}[funder][]",
-      options_from_collection_for_select(FunderService.new.select_active_options.flatten.uniq!, :to_s, :to_s, f.object.model.funder.to_a),
-        class: "ubiquity-autocomplete", include_blank: true, multiple: true, data: {placeholder: "start typing a funder for autocompletion"}
-%>
-
-<br/><br/>
-
-<script>
-  $(document).on("turbolinks:load", function(event){
-    $("body").on("click",".additional-fields", function(event){
-      $(".ubiquity-autocomplete").chosen({
-        allow_single_deselect: true,
-        width: '100%'
-      });
-    });
-  });
-</script>
+<% if  f.object.model.new_record? %>
+  <%= render "shared/ubiquity/funder/new_form", f: f %>
+<% else %>
+<% array_of_hash = get_model(f.object.model.funder, f.object.model.class.to_s, 'funder', 'funder_position') %>
+<!--
+Clicking edit button returns an error it is something other than an array of hash
+it will throw either ActionView::Template::Error (undefined method `each_with_index' for nil:NilClass)
+  or
+ActionView::Template::Error (undefined method `dig' for "null":String):
+The line below fixes that
+-->
+<% array_of_hash = array_of_hash || [{}] %>
+  <%= render "shared/ubiquity/funder/edit_array_hash_form", array_of_hash: array_of_hash, f: f %>
+<% end %>

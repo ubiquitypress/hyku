@@ -7,6 +7,7 @@ module Ubiquity
 
       before_save :save_contributor
       before_save :save_creator
+      before_save :save_funder
       before_save :save_alternate_identifier
       before_save :save_related_identifier
       before_save :save_date_published, :save_date_accepted, :save_date_submitted,
@@ -16,7 +17,7 @@ module Ubiquity
 
       #These are used in the forms to populate fields that will be stored in json fields
       #The json fields in this case are creator, contributor, alternate_identifier and related_identifier
-      attr_accessor :creator_group, :contributor_group, :alternate_identifier_group, :related_identifier_group,
+      attr_accessor :creator_group, :contributor_group, :funder_group, :alternate_identifier_group, :related_identifier_group,
                     :date_published_group, :date_accepted_group, :date_submitted_group,
                     :event_date_group, :related_exhibition_date_group
     end
@@ -68,6 +69,18 @@ module Ubiquity
         self.creator_search = []
         #save an empty array since the submitted data contains only default keys & values
         self.creator = []
+      end
+    end
+
+    def save_funder
+      self.funder_group ||= JSON.parse(self.funder.first) if self.funder.present?
+      clean_submitted_data ||= remove_hash_keys_with_empty_and_nil_values(self.funder_group)
+      data = compare_hash_keys?(clean_submitted_data)
+      if (self.funder_group.present? && clean_submitted_data.present? && data == false )
+        funder_json = clean_submitted_data.to_json
+        self.funder = [funder_json]
+      elsif data == true || data == nil
+       self.funder = []
       end
     end
 

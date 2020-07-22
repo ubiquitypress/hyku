@@ -1,0 +1,8 @@
+<!-- rendered from views/hyrax/base///_attribute_rows.html.erb -->
+
+<% array_of_hash = get_model(presenter.funder, presenter.model, 'funder', 'funder_position') %>
+
+ <% if (array_of_hash.class == Array && array_of_hash.first.class == Hash )  %>
+
+   <%= render "shared/ubiquity/funder/show_array_hash", array_of_hash: array_of_hash  %>
+<% end %>

@@ -11,7 +11,10 @@
                         class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_name",
                         placeholder: 'Please enter the Funder Name',
                         name: "#{template}[funder_group][][funder_name]",
-                        data: {field_name:'ubiquity_funder_name'}
+                        data: { field_name:'ubiquity_funder_name',
+                          'autocomplete-url' => '/authorities/search/local/funder',
+                          autocomplete: 'funder'
+                        }
     %>
     <br/>
     <label class="control-label multi_value optional" for="#{template}funder_doi">

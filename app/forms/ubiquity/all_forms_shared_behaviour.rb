@@ -75,6 +75,9 @@ module Ubiquity
           permitted_params << { related_exhibition_date_group: %i[related_exhibition_date_year
                                                                   related_exhibition_date_month
                                                                   related_exhibition_date_day] }
+          permitted_params << { current_he_institution_group: %i[current_he_institution_name
+                                                                 current_he_institution_isni
+                                                                 current_he_institution_ror] }
 
             permitted_params << :doi_options
         end

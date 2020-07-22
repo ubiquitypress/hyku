@@ -10,6 +10,7 @@ module Ubiquity
       before_save :save_related_identifier
       before_save :save_date_published, :save_date_accepted, :save_date_submitted,
                   :save_event_date, :save_related_exhibition_date
+      before_save :save_current_he_institution
 
       after_save :update_external_service_record, :create_work_service_if_embargo_or_lease
 
@@ -153,6 +154,18 @@ module Ubiquity
         end
       end
       self.related_exhibition_date = dates.reject(&:blank?)
+    end
+
+    def save_current_he_institution
+      self.current_he_institution_group ||= JSON.parse(self.current_he_institution.first) if self.current_he_institution.present?
+      clean_submitted_data ||= remove_hash_keys_with_empty_and_nil_values(self.current_he_institution_group)
+      data = compare_hash_keys?(clean_submitted_data)
+      if (self.current_he_institution_group.present? && clean_submitted_data.present? && data == false )
+        current_he_institution_json = clean_submitted_data.to_json
+        self.current_he_institution = [current_he_institution_json]
+      elsif data == true || data == nil
+        self.current_he_institution = []
+     end
     end
 
     private

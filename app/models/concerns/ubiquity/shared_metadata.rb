@@ -75,7 +75,7 @@ module Ubiquity
         index.as :stored_searchable
       end
 
-      property :current_he_institution, predicate: ::RDF::Vocab::SCHEMA.EducationalOrganization, multiple: false do |index|
+      property :current_he_institution, predicate: ::RDF::Vocab::SCHEMA.EducationalOrganization, multiple: true do |index|
         index.as :stored_searchable
       end
 

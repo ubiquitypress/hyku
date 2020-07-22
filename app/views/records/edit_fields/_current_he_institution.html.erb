@@ -1,1 +1,7 @@
-<%= render "shared/ubiquity/current_he_institution/new_form", f: f %>
+<% if  f.object.model.new_record? %>
+  <%= render "shared/ubiquity/current_he_institution/new_form", f: f %>
+<% else %>
+<%= puts "OBJECT MODEL IS #{f.object.model.inspect}" %>
+<% array_of_hash = get_model(f.object.model.current_he_institution, f.object.model.class.to_s, 'creator', 'creator_position') %>
+
+<% end %>

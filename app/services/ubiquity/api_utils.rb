@@ -16,14 +16,12 @@ module Ubiquity
    end
 
    def self.query_for_parent_collections(work, skip_run = nil)
-     if work.present? && ( work["collection_id_tesim"].present? || work["member_of_collection_ids_ssim"].present?) &&  skip_run == 'true'
-       cache_key = "parent_collection/#{work['account_cname_tesim'].first}/#{work['id']}/#{work["member_of_collection_ids_ssim"].try(:size).to_i}/#{work['system_modified_dtsi']}"
+     if work.present? && work["collection_id_tesim"].present? &&  skip_run == 'true'
+       cache_key = "parent_collection/#{work['account_cname_tesim'].first}/#{work['id']}/#{work["collection_id_tesim"].try(:size).to_i}/#{work['system_modified_dtsi']}"
        parent_collections = Rails.cache.fetch(cache_key) do
-            member_of_collection_id_sim  = work["member_of_collection_ids_ssim"].presence || []
             collection_id_tesim = work["collection_id_tesim"].presence || []
-            collection_id_tesim = work["collection_id_tesim"].presence || []
-            collection_ids = (collection_id_tesim | member_of_collection_id_sim).compact
-            
+            collection_ids = (collection_id_tesim).compact
+
             collections_list = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{collection_ids.join(',')}",
             "({!terms f=edit_access_group_ssim}public) OR ({!terms f=discover_access_group_ssim}public) OR ({!terms f=read_access_group_ssim}public)", "-suppressed_bsi:true", "", "-suppressed_bsi:true"
             ])

@@ -7,13 +7,16 @@ module Ubiquity
 
     included do
       attr_accessor :contributor_group, :contributor_name_type, :contributor_type, :contributor_given_name,
-                    :contributor_family_name, :contributor_orcid, :contributor_isni,
-                    :contributor_position, :contributor_organization_name,
+                    :contributor_family_name, :contributor_orcid, :contributor_isni, :contributor_ror, :contributor_grid,
+                    :contributor_wikidata, :contributor_position, :contributor_organization_name,
                     :contributor_institutional_relationship
 
       attr_accessor :creator_group, :creator_name_type, :creator_organization_name, :creator_given_name,
-                    :creator_family_name, :creator_orcid, :creator_isni,
-                    :creator_position, :creator_institutional_relationship
+                    :creator_family_name, :creator_orcid, :creator_isni, :creator_ror, :creator_grid,
+                    :creator_wikidata, :creator_position, :creator_institutional_relationship
+
+      attr_accessor :funder_group, :funder_name, :funder_doi, :funder_award, :funder_position,
+                    :funder_orcid, :funder_isni, :funder_ror
 
       attr_accessor :alternate_identifier_group, :related_identifier_group,
                     :date_published_group, :date_accepted_group, :date_submitted_group,
@@ -55,13 +58,17 @@ module Ubiquity
       def build_permitted_params
         super.tap do |permitted_params|
           permitted_params << {contributor_group: [:contributor_organization_name, :contributor_given_name,
-            :contributor_family_name, :contributor_name_type, :contributor_orcid, :contributor_isni,
-            :contributor_position, :contributor_type, :contributor_institutional_relationship => []
+            :contributor_family_name, :contributor_name_type, :contributor_orcid, :contributor_isni, :contributor_ror, :contributor_grid,
+            :contributor_wikidata, :contributor_position, :contributor_type, :contributor_institutional_relationship => []
           ]}
 
           permitted_params << {creator_group: [:creator_organization_name, :creator_given_name,
-            :creator_family_name, :creator_name_type, :creator_orcid, :creator_isni,
-            :creator_position, :creator_institutional_relationship => []
+            :creator_family_name, :creator_name_type, :creator_orcid, :creator_isni,  :creator_ror, :creator_grid,
+            :creator_wikidata, :creator_position, :creator_institutional_relationship => []
+          ]}
+
+          permitted_params << {funder_group: [:funder_name, :funder_doi, :funder_position,
+            :funder_orcid, :funder_isni, :funder_ror, :funder_award => []
           ]}
 
           permitted_params << { alternate_identifier_group: %i[alternate_identifier alternate_identifier_type] }

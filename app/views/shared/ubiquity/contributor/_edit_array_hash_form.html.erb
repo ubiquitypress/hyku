@@ -32,6 +32,43 @@
                         data: {field_name:'ubiquity_contributor_organization_name'}
        %>
 
+       <br>
+       <label class="control-label multi_value optional" for="#{template}_contributor_ror">
+         Contributor organisation ROR</label>
+
+       <%= text_field_tag "#{template}[creator_group][][contributor_ror]",  hash.dig("contributor_ror"),
+                          class: "#{template}_contributor_group form-control multi-text-field multi_value ubiquity_contributor_ror",
+                          placeholder: "Please enter the ROR ID, e.g. 05gknh003",
+                          name: "#{template}[contributor_group][][contributor_ror]",
+                          data: {field_name:'ubiquity_contributor_ror'}
+
+       %>
+
+       <br>
+       <label class="control-label multi_value optional" for="#{template}_contributor_grid">
+         Contributor organisation GRID </label>
+
+       <%= text_field_tag "#{template}[contributor_group][][contributor_grid]",  hash.dig("contributor_grid"),
+                          class: "#{template}_contributor_group form-control multi-text-field multi_value ubiquity_contributor_grid",
+                          placeholder: "Please enter the GRID ID, e.g. grid.280362.d",
+                          name: "#{template}[contributor_group][][contributor_grid]",
+                          data: {field_name:'ubiquity_contributor_grid'}
+
+       %>
+
+      <br>
+
+      <label class="control-label multi_value optional" for="#{template}_contributor_wikidata">
+        Contributor organisation Wikidata </label>
+
+      <%= text_field_tag "#{template}[contributor_group][][contributor_wikidata]",  hash.dig("contributor_wikidata"),
+                         class: "#{template}_contributor_group form-control multi-text-field multi_value ubiquity_contributor_wikidata",
+                         placeholder: "Please enter the Wikidata ID, e.g. Q23308",
+                         name: "#{template}[contributor_group][][contributor_wikidata]",
+                         data: {field_name:'ubiquity_contributor_wikidata'}
+
+      %>
+
     </span>
    <br/>
     <span class="ubiquity_personal_fields">

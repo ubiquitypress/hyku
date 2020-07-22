@@ -1,0 +1,22 @@
+<tr>
+  <th>Funder</th>
+  <td>
+    <ul class="tabular">
+      <% array_of_hash.each do |hash| %>
+        <li class="attribute funder">
+          <span itemprop="funder" style="float:left">
+            <% order_ary = ['funder_name', 'funder_doi']%>
+            <%= display_data_with_comma_separated(hash, order_ary)%>
+          </span>
+        <li>
+        <li>
+          <% hash['funder_award'].each do |award| %>
+            <span itemprop="funder" style="float:left">
+              <%= award %>
+            </span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </td>
+</tr>

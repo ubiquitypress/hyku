@@ -17,7 +17,7 @@
 <%= presenter.attribute_to_html(:institution, render_as: :alphabetical_sort) %>
 <%= presenter.attribute_to_html(:org_unit, render_as: :alphabetical_sort, label: "Organisational unit") %>
 <%= presenter.attribute_to_html(:project_name) %>
-<%= presenter.attribute_to_html(:funder, render_as: :alphabetical_sort) %>
+<%= render "shared/ubiquity/funder/show", presenter: presenter %>
 <%= presenter.attribute_to_html(:fndr_project_ref, render_as: :alphabetical_sort, label: "Funder project reference") %>
 <%= presenter.attribute_to_html(:event_title, render_as: :alphabetical_sort) %>
 <%= presenter.attribute_to_html(:event_location, render_as: :alphabetical_sort) %>

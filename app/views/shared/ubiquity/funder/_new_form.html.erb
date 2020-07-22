@@ -1,0 +1,51 @@
+<% template = f.object.model.class.to_s.underscore %>
+
+
+<div class="ubiquity-meta-funder" >
+  <label class="control-label multi_value optional" for="#{template}_funder_name">
+    Funder Name</label>
+
+  <%= text_field_tag "#{template}[funder_group][][funder_name]", nil,
+                     class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_name",
+                     placeholder: 'Please enter the funder\'s name',
+                     name: "#{template}[funder_group][][funder_name]",
+                     data: { field_name:'ubiquity_funder_name',
+                             'autocomplete-url' => '/authorities/search/local/funder',
+                             autocomplete: 'funder'
+                           }
+  %>
+
+  <br>
+  <label class="control-label multi_value optional" for="#{template}_funder_doi">
+    Funder DOI</label>
+
+  <%= text_field_tag "#{template}[creator_group][][funder_doi]", nil,
+                     class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_doi",
+                     placeholder: "Please enter Funder DOI",
+                     name: "#{template}[funder_group][][funder_doi]",
+                     data: {field_name:'ubiquity_funder_doi'}
+  %>
+
+  <br>
+  <label class="control-label multi_value optional" for="#{template}_funder_ror">
+    Funder ROR </label>
+
+  <%= text_field_tag "#{template}[funder_group][][funder_ror]", nil,
+                     class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_ror",
+                     placeholder: "Please enter the ROR",
+                     name: "#{template}[funder_group][][funder_ror]",
+                     data: {field_name:'ubiquity_funder_ror'}
+
+  %>
+ <br>
+  <%= hidden_field_tag "#{template}[funder_group][][funder_position]", 1, class: 'ubiquity-funder-score'  %>
+
+  <a href="#" style="color:red;"  class=" remove_funder form-group " data-removeUbiquityfunder=".ubiquity-meta-funder">
+    <span class="glyphicon glyphicon-remove"></span>
+    <span class="controls-remove-text">Remove</span>
+  </a>
+  |
+  <a href="#" class=" add_funder" data-addUbiquityfunder=".ubiquity-meta-funder">Add another </a>
+
+  <br/><br/>
+</div>

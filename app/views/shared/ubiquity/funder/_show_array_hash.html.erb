@@ -1,0 +1,33 @@
+<tr>
+  <th>Funder</th>
+  <td>
+    <ul class="tabular">
+      <% array_of_hash.each do |hash| %>
+        <li class="attribute funder name">
+          <% if hash['funder_name'].present? %>
+            <%= "name: #{hash['funder_name']}" %>&nbsp;
+          <% end %>
+        </li>
+        <li class="attribute funder doi">
+          <% if hash['funder_doi'].present? %>
+            <%= "DOI: #{hash['funder_doi']}" %>&nbsp;
+          <% end %>
+        </li>
+        <li class="attribute funder ror">
+          <% if hash['funder_ror'].present? %>
+            <%= "ROR ID: #{hash['funder_ror']}" %>&nbsp;
+          <% end %>
+        </li>
+        <li>
+          <% if hash['funder_award'] %>
+            <% hash['funder_award'].each do |award| %>
+              <span itemprop="funder" style="float:left">
+                <%= award %>
+              </span>
+            <% end %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </td>
+</tr>

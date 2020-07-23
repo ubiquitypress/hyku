@@ -8,12 +8,13 @@ module Ubiquity
 
     def flush_single_cache
       fedora_cache_key
+      burst_cache_key_containing_parent
+      burst_work_files_cache
+      clear_highlights_page_cache
       Rails.cache.delete(@fedora_cache)
       Rails.cache.delete(@thumbnail_cache)
       Rails.cache.delete(single_work_cache_key)
       Rails.cache.delete(single_collection_cache_key)
-      burst_cache_key_containing_parent
-      clear_highlights_page_cache
    end
 
    private
@@ -51,13 +52,28 @@ module Ubiquity
     end
 
     def burst_cache_key_containing_parent
-      @parent_keys ||= get_parent_collection_cache
+      @parent_keys = get_parent_collection_cache
       if @parent_keys.present?
         @parent_keys.each do |key|
           $redis_cache.del(key)
          end
        end
      end
+
+     def get_work_files_cache
+       if ENV['REDIS_CACHE_HOST'].present? && self.class != Collection
+         $redis_cache.keys("work_files/#{self.account_cname}/#{self.id}/*")
+       end
+     end
+
+     def burst_work_files_cache
+       @file_keys = get_work_files_cache
+       if @pfile_keys.present?
+         @file_keys.each do |key|
+           $redis_cache.del(key)
+          end
+        end
+      end
 
      def highlights_page_cache
        if ENV['REDIS_CACHE_HOST'].present?

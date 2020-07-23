@@ -96,6 +96,17 @@ module Ubiquity
       attributes['URL']
     end
 
+    def funder
+      if attributes.dig('funder').present?
+        # attributes.dig('fundingReferences').first["funderName"]
+        attributes["funder"].each_with_index.map do |hash_funder, index|
+          {
+            "funder_name" => hash_funder["name"], 'funder_doi' => hash_funder["DOI"],
+            'funder_award' => hash_funder["award"], 'funder_position' => index }
+        end
+      end
+    end
+
     def creator
       creator_group = attributes.dig('author') || attributes.dig('editor')
       if creator_group.present?

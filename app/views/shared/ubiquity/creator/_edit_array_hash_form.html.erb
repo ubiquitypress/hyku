@@ -43,6 +43,43 @@
     %>
     <span style="color:red;" class="error">Please complete this field.</span>
 
+    <br>
+    <label class="control-label multi_value optional" for="#{template}_creator_ror">
+      Creator organisation ROR</label>
+
+    <%= text_field_tag "#{template}[creator_group][][creator_ror]",  hash.dig("creator_ror"),
+                       class: "#{template}_creator_group form-control multi-text-field multi_value ubiquity_creator_ror",
+                       placeholder: "Please enter the ROR ID, e.g. 05gknh003",
+                       name: "#{template}[creator_group][][creator_ror]",
+                       data: {field_name:'ubiquity_creator_ror'}
+
+    %>
+
+    <br>
+    <label class="control-label multi_value optional" for="#{template}_creator_grid">
+      Creator organisation GRID </label>
+
+    <%= text_field_tag "#{template}[creator_group][][creator_grid]",  hash.dig("creator_grid"),
+                       class: "#{template}_creator_group form-control multi-text-field multi_value ubiquity_creator_grid",
+                       placeholder: "Please enter the GRID ID, e.g. grid.280362.d",
+                       name: "#{template}[creator_group][][creator_grid]",
+                       data: {field_name:'ubiquity_creator_grid'}
+
+    %>
+
+   <br>
+
+   <label class="control-label multi_value optional" for="#{template}_creator_wikidata">
+     Creator organisation Wikidata </label>
+
+   <%= text_field_tag "#{template}[creator_group][][creator_wikidata]",  hash.dig("creator_wikidata"),
+                      class: "#{template}_creator_group form-control multi-text-field multi_value ubiquity_creator_wikidata",
+                      placeholder: "Please enter the Wikidata ID, e.g. Q23308",
+                      name: "#{template}[creator_group][][creator_wikidata]",
+                      data: {field_name:'ubiquity_creator_wikidata'}
+
+   %>
+
   </span>
   <br/>
     <span class="ubiquity_personal_fields">

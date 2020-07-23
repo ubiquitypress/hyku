@@ -54,6 +54,11 @@ terms:
     isni: 0000 0004 5904 9407
     ror: https://ror.org/02q3bak66
     active: true
+  - id: Canterbury Christ Church University
+    term: Canterbury Christ Church University
+    isni: 0000 0001 0249 951X
+    ror: https://ror.org/0489ggv38
+    active: true
   - id: Cardiff Metropolitan University
     term: Cardiff Metropolitan University
     isni: 0000 0004 5905 4281
@@ -71,6 +76,8 @@ terms:
     active: true
   - id: Courtauld Institute of Art
     term: Courtauld Institute of Art
+    isni: 0000 0004 1936 850X
+    ror: https://ror.org/052411t69
     active: true
   - id: Coventry University
     term: Coventry University
@@ -104,6 +111,8 @@ terms:
     active: true
   - id: Falmouth University
     term: Falmouth University
+    isni: 0000 0004 4909 1126
+    ror:https://ror.org/022gstf70
     active: true
   - id: Glasgow Caledonian University
     term: Glasgow Caledonian University
@@ -122,6 +131,8 @@ terms:
     active: true
   - id: Guildhall School of Music and Drama
     term: Guildhall School of Music and Drama
+    isni: 0000 0001 1954 5658
+    ror: https://ror.org/05v7fvh88
     active: true
   - id: Harper Adams University
     term: Harper Adams University
@@ -145,6 +156,11 @@ terms:
   - id: Institute of Cancer Research
     term: Institute of Cancer Research
     isni: 0000 0001 1499 0189
+    active: true
+  - id: Institute of Classical Studies
+    term: Institute of Classical Studies
+    isni: 0000 0001 2165 647X
+    ror: https://ror.org/052411t69
     active: true
   - id: Institute of Commonwealth Studies
     term: Institute of Commonwealth Studies
@@ -184,6 +200,11 @@ terms:
     isni: 0000 0001 0745 8880
     ror: https://ror.org/02xsh5r57
     active: true
+  - id: Liverpool Hope University
+    term: Liverpool Hope University
+    isni: 0000 0000 9506 877X
+    ror: https://ror.org/03ctjbj91
+    active: true
   - id: Liverpool John Moores University
     term: Liverpool John Moores University
     isni: 0000 0001 2185 1558
@@ -191,6 +212,8 @@ terms:
     active: true
   - id: Liverpool School of Tropical Medicine
     term: Liverpool School of Tropical Medicine
+    isni: 0000 0004 1936 9764
+    ror: https://ror.org/03svjbs84
     active: true
   - id: London Business School
     term: London Business School
@@ -278,6 +301,8 @@ terms:
     active: true
   - id: Ravensbourne University London
     term: Ravensbourne University London
+    isni: 0000 0000 8610 0475
+    ror: https://ror.org/001htc678
     active: true
   - id: Regent's University London
     term: Regent's University London
@@ -382,6 +407,11 @@ terms:
     term: University College London
     isni: 0000 0001 2190 1201
     ror: https://ror.org/02jx3x895
+    active: true
+  - id: University for the Creative Arts
+    term: University for the Creative Arts
+    isni: 0000 0000 9830 6702
+    ror: https://ror.org/04r0ks517
     active: true
   - id: University of Aberdeen
     term: University of Aberdeen
@@ -699,7 +729,11 @@ terms:
     active: true
   - id: Wrexham Glyndwr University
     term: Wrexham Glyndwr University
+    isni: 0000 0001 0729 939X
+    ror: https://ror.org/048kc0s52
     active: true
   - id: York St John University
     term: York St John University
+    isni: 0000 0004 0598 9700
+    ror: https://ror.org/00z5fkj61
     active: true

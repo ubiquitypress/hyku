@@ -1,0 +1,25 @@
+<tr>
+  <th>Current HE Institution</th>
+  <td>
+    <ul class="tabular">
+      <% array_of_hash.each do |hash| %>
+        <li class="attribute current_he_institution name">
+          <% if hash['current_he_institution_name'].present? %>
+            <%= "Current HE Institution: #{hash['current_he_institution_name']}" %>&nbsp;
+          <% end %>
+        </li>
+        <li class="attribute current_he_institution isni">
+          <% if hash['current_he_institution_isni'].present? %>
+            <%= "ISNI: #{hash['current_he_institution_isni']}" %>&nbsp;
+          <% end %>
+        </li>
+        <li class="attribute current_he_institution ror">
+          <% if hash['current_he_institution_ror'].present? %>
+            <% ror = hash['current_he_institution_ror'] %>
+            <%= "ROR:" %> <a href="<%= ror %>"><%= ror %></a>&nbsp;
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </td>
+</tr>

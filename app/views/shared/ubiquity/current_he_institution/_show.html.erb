@@ -1,0 +1,8 @@
+<!-- rendered from views/hyrax/base///_attribute_rows.html.erb -->
+<% array_of_hash = get_model(presenter.current_he_institution, presenter.model, 'current_he_institution', 'current_he_institution_position') %>
+
+<% if (array_of_hash.class == Array && array_of_hash.first.class == Hash)  %>
+  <%= render "shared/ubiquity/current_he_institution/show_array_hash",  array_of_hash: array_of_hash %>
+<% else %>
+
+<% end %> <%# closes if array_of_hash.class %>

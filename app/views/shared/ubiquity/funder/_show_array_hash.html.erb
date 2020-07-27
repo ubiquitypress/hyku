@@ -13,6 +13,11 @@
             <%= "DOI: #{hash['funder_doi']}" %>&nbsp;
           <% end %>
         </li>
+        <li class="attribute funder isni">
+          <% if hash['funder_isni'].present? %>
+            <%= "ISNI: #{hash['funder_isni']}" %>&nbsp;
+          <% end %>
+        </li>
         <li class="attribute funder ror">
           <% if hash['funder_ror'].present? %>
             <%= "ROR ID: #{hash['funder_ror']}" %>&nbsp;
@@ -20,6 +25,7 @@
         </li>
         <li>
           <% if hash['funder_award'] %>
+            Awards:
             <% hash['funder_award'].each do |award| %>
               <span itemprop="funder" style="float:left">
                 <%= award %>

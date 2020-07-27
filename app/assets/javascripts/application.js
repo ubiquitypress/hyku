@@ -31,6 +31,7 @@
 //= require ubiquity/creator
 //= require ubiquity/contributor
 //= require ubiquity/editor
+//= require ubiquity/current_he_institution
 
 //= require hyrax
 //= require hyku/groups/uploader

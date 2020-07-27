@@ -1,6 +1,7 @@
-<% current_he_institution_service = CurrentHeInstitutionService.new %>
-
-<%= f.input :current_he_institution,
-            collection: current_he_institution_service.select_active_options,
-            include_blank: true,
-            input_html: { class: 'form-control ubiquity-current-he-institution' }, label: 'Current HE Institution' %>
+<% if  f.object.model.new_record? %>
+  <%= render "shared/ubiquity/current_he_institution/new_form", f: f %>
+<% else %>
+  <% array_of_hash = get_model(f.object.model.current_he_institution, f.object.model.class.to_s, 'current_he_institution', 'current_he_institution_position') %>
+  <% array_of_hash = array_of_hash || [{}] %>
+  <%= render "shared/ubiquity/current_he_institution/edit_array_hash_form", array_of_hash: array_of_hash, f: f %>
+<% end %>

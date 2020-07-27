@@ -1,0 +1,21 @@
+<% template = f.object.model.class.to_s.underscore %>
+
+  <% array_of_hash.each_with_index do |hash, index| %>
+
+    <div class="ubiquity-meta-current_he_institution" >
+      <label class="control-label multi_value optional" for="#{template}_current_he_institution_name">
+      Current HE Institution </label>
+
+      <%= select_tag "#{template}[current_he_institution_group][][current_he_institution_name]", options_from_collection_for_select( CurrentHeInstitutionService.select_active_options.flatten.uniq!, :to_s, :to_s, hash.dig("current_he_institution_name")),
+      :include_blank => true, :onchange => "populate_isni_ror()", class: 'form-control current_he_institution', data: {field_name:'ubiquity_cuurrent_he_name'} %>
+
+      <div style='display:none'> <%= select_tag "#{template}[current_he_institution_group][][current_he_institution_isni]", options_from_collection_for_select( CurrentHeInstitutionService.select_active_options_isni, :to_s, :to_s, hash.dig("current_he_institution_isni")),
+      :include_blank => true, class: 'form-control current_he_institution', data: {field_name:'ubiquity_cuurrent_he_isni'} %>
+
+      <%= select_tag "#{template}[current_he_institution_group][][current_he_institution_ror]", options_from_collection_for_select( CurrentHeInstitutionService.select_active_options_ror, :to_s, :to_s, hash.dig("current_he_institution_ror")),
+      :include_blank => true, class: 'form-control current_he_institution', data: {field_name:'ubiquity_cuurrent_he_ror'} %>
+      </div>
+
+    </div>
+  <% end %>
+<br>

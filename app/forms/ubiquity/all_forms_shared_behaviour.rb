@@ -22,6 +22,9 @@ module Ubiquity
                     :date_published_group, :date_accepted_group, :date_submitted_group,
                     :event_date, :related_exhibition_date
 
+      attr_accessor :current_he_institution_group, :current_he_institution_name,
+                    :current_he_institution_isni, :current_he_institution_ror
+
       attr_accessor :note, :account, :doi_options
 
       # terms inherited from Hyrax::Forms::WorkForm are removed
@@ -79,6 +82,9 @@ module Ubiquity
           permitted_params << { related_exhibition_date_group: %i[related_exhibition_date_year
                                                                   related_exhibition_date_month
                                                                   related_exhibition_date_day] }
+          permitted_params << { current_he_institution_group: %i[current_he_institution_name
+                                                                 current_he_institution_isni
+                                                                 current_he_institution_ror] }
 
             permitted_params << :doi_options
         end

@@ -165,7 +165,7 @@ module Ubiquity
           abstract: abstract, version: version, isbn: isbn,
           creator_group: creator, doi: doi, keyword: keyword, license: license,
           publisher: publisher, volume: volume, pagination: pagination, issue: issue,
-          official_url: official_url
+          official_url: official_url, funder_group: funder
 
         }
        end

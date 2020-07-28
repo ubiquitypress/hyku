@@ -1,5 +1,5 @@
 $(document).on("turbolinks:load", function(){
-	var add_button      = $(".add_funder_awards_field_button");
+	var add_button = $(".add_funder_awards_field_button");
 
 	$(add_button).click(function(e){ //on add input button click
     e.preventDefault();

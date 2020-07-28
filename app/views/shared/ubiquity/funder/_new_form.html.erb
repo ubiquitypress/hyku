@@ -57,9 +57,16 @@
                           name: "#{template}[funder_group][][funder_awards]",
                           data: {field_name:'ubiquity_funder_awards'}
     </div>
-    <button class="add_funder_awards_field_button">Add Another Field</button>
+    <button class="add_funder_awards_field_button">Add Funder Awards Field</button>
   </div>
 
    <%= hidden_field_tag "#{template}[funder_group][][funder_position]", 1, class: 'ubiquity-funder-score'  %>
   <br/>
+
+  <a href="#" style="color:red;"  class=" remove_funder form-group " data-removeUbiquityfunder=".ubiquity-meta-funder">
+    <span class="glyphicon glyphicon-remove"></span>
+    <span class="controls-remove-text">Remove</span>
+  </a>
+  |
+  <a href="#" class=" add_funder" data-addUbiquityfunder=".ubiquity-meta-funder">Add another </a>
 </div>

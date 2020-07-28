@@ -201,20 +201,17 @@ function populateFunderJson(valueArray, fieldName){
       parent.children(doi).val(getIdentifiers(value[fieldName + '_doi']))
       parent.children(ror).val(getIdentifiers(value[fieldName + '_ror']))
       parent.children(position).val(value[fieldName + '_score'])
-
-
-     } else {
-       var newParent = '.ubiquity-meta-' + fieldName  + ':last'
-       var parent = $(newParent)
-       var parentClone = parent.clone();
-       parentClone.find(name).val(value[fieldName + '_name'])
-       parentClone.children(ror).val(getIdentifiers(value[fieldName + '_ror']))
-       parentClone.children(isni).val(getIdentifiers(value[fieldName + '_isni']))
-       parent.children(doi).val(getIdentifiers(value[fieldName + '_doi']))
-       parentClone.find(award).val(value[fieldName + '_award'])
-       parentClone.find(position).val(value[fieldName + '_score'])
-       parent.after(parentClone)
-
+    } else {
+      var newParent = '.ubiquity-meta-' + fieldName  + ':last'
+      var parent = $(newParent)
+      var parentClone = parent.clone();
+      parentClone.find(name).val(value[fieldName + '_name'])
+      parentClone.children(ror).val(getIdentifiers(value[fieldName + '_ror']))
+      parentClone.children(isni).val(getIdentifiers(value[fieldName + '_isni']))
+      parent.children(doi).val(getIdentifiers(value[fieldName + '_doi']))
+      parentClone.find(award).val(value[fieldName + '_award'])
+      parentClone.find(position).val(value[fieldName + '_score'])
+      parent.after(parentClone)
      }
 
    } )

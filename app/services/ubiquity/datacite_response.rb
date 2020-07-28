@@ -116,7 +116,7 @@ module Ubiquity
           "creator_group": creator, "license": license,
           "doi": doi, "contributor_group": contributor,
           "publisher": publisher, "official_url": official_url,
-          "funder": funder
+          "funder_group": funder
         }
       end
     end

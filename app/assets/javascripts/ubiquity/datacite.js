@@ -210,7 +210,7 @@ function populateFunderJson(valueArray, fieldName){
       parentClone.children(isni).val(getIdentifiers(value[fieldName + '_isni']))
       parent.children(doi).val(getIdentifiers(value[fieldName + '_doi']))
       parentClone.find(award).val(value[fieldName + '_award'])
-      parentClone.find(position).val(value[fieldName + '_score'])
+      parentClone.find(position).val(value[fieldName + '_position'])
       parent.after(parentClone)
      }
 

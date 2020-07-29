@@ -14,7 +14,7 @@
                 <span style="float:left">
                 <%# Added False inorder to hide the field based on new requirements %>
                 <% if hash['contributor_type'].present? %>
-                  <%= hash['contributor_type'] %><% if display_comma?(hash.keys, ["contributor_type", "contributor_orcid", "contributor_isni"]) %>,&nbsp;<% end %>
+                  <%= hash['contributor_type'] %><% if display_comma?(hash.keys, ["contributor_type", "contributor_orcid", "contributor_isni", 'contributor_ror', 'contributor_grid', 'contributor_wikidata']) %>,&nbsp;<% end %>
                 <% end %>
                 </span>
 
@@ -36,6 +36,28 @@
                       https://s3-eu-west-1.amazonaws.com/service-hyku-oar-importer/logo_xml_isni-16.gif" alt="ISNI"  height="16" width="16" class="img-responsive" style="float:left"  >
                     </a>
                   <% end %>
+
+                  <% hash.slice(*["contributor_ror",  "contributor_grid", "contributor_wikidata"]).each do |key, value| %>
+
+                    <% if add_image_space?(hash.keys) %>
+                      <span style="float:left" >&nbsp;</span>
+                    <% end %>
+
+                     <%  hash_key = key.dup %>
+                     <% hash_key.slice!("contributor_") %>
+
+                    <% if hash[key].present? && contains_full_url_path?(value) %>
+
+                      <a href='<%= "#{value}" %>'  target="_blank">
+                        <img src=" " alt=<%= "#{hash_key.upcase}" %>  class="img-responsive" style="float:left" >
+                      </a>
+                    <% elsif hash[key].present?  %>
+                      <a href='<%= "#{match_key_to_url(hash_key)}" + "#{value}" %>'  target="_blank">
+                        <img src=" " alt='<%= "#{hash_key.upcase}" %>'  class="img-responsive" style="float:left" >
+                      </a>
+                    <% end  %>
+                  <% end %>
+
                <span>)</span>
             <% end %>
           </span>

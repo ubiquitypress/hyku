@@ -17,9 +17,6 @@ namespace :ubiquity_update_funder_to_json do
       new_funder(work)
       sleep 1
     end
-
-
-
   end
 
   def new_funder(work)
@@ -31,7 +28,6 @@ namespace :ubiquity_update_funder_to_json do
 
       puts "remapper funder  #{remapped_funder}"
       work.funder = [remapped_funder]
-
       #by calling save we trigger the before_save callback in app/models/ubiquity/concerns/multiple_modules.rb
       work.save(validate: false)
     end
@@ -40,9 +36,7 @@ namespace :ubiquity_update_funder_to_json do
     puts "error saving #{e}"
   end
 
-
   def get_work_list(tenant_name)
-
     if Ubiquity::ParseTenantWorkSettings.respond_to?(:get_per_account_settings_value_from_tenant_settings)
       parser_class = Ubiquity::ParseTenantWorkSettings.new(tenant_name)
       work_list = parser_class.get_per_account_settings_value_from_tenant_settings("work_type_list")
@@ -55,7 +49,6 @@ namespace :ubiquity_update_funder_to_json do
       puts "using default work_type_list  #{list}"
       list
     end
-
   end
 
 end

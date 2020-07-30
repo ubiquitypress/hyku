@@ -73,7 +73,7 @@ module Ubiquity
     end
 
     def save_funder
-      self.funder_group ||= JSON.parse(self.funder.first) if self.funder.present?
+      self.funder_group ||= Ubiquity::JsonValidator.valid_json?( self.funder.try(:first) ) ? JSON.parse(self.funder.first) : nil if self.funder.present?
       clean_submitted_data ||= remove_hash_keys_with_empty_and_nil_values(self.funder_group)
       data = compare_hash_keys?(clean_submitted_data)
       if (self.funder_group.present? && clean_submitted_data.present? && data == false )
@@ -170,7 +170,9 @@ module Ubiquity
     end
 
     def save_current_he_institution
-      self.current_he_institution_group ||= JSON.parse(self.current_he_institution.first) if self.current_he_institution.present?
+      self.current_he_institution_group ||=  Ubiquity::JsonValidator.valid_json?(self.current_he_institution.first) ?
+                                  JSON.parse(self.current_he_institution.first) : nil if self.current_he_institution.present?
+
       clean_submitted_data ||= remove_hash_keys_with_empty_and_nil_values(self.current_he_institution_group)
       data = compare_hash_keys?(clean_submitted_data)
       if (self.current_he_institution_group.present? && clean_submitted_data.present? && data == false )

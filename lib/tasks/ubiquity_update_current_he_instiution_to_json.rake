@@ -17,17 +17,19 @@ namespace :ubiquity_update_current_he_institution_to_json do
     end
     cname = tenant[:name]
     AccountElevator.switch!("#{cname}")
-    works = ThesisOrDissertation.all
+    works = ActiveFedora::Base.where("NOT system_modified_dtsi:[NOW-1DAY/DAY TO NOW] AND current_he_institution_tesim: [* TO *] OR has_model_ssim:ThesisOrDissertation")
     puts "Found #{works.count} works"
+    puts works.inspect
     works.each do |work|
+      puts work.inspect
       next if work.current_he_institution[0].nil? ||  work.current_he_institution[0].empty?
-      next if work.current_he_institution[0].include? '{'  # It's not the most conventional way of checking for JSON but it works
+      next if Ubiquity::JsonValidator.valid_json?(work.current_he_institution.first)
       puts "Running for #{work.title.inspect}"
       current_data = work.current_he_institution[0] ||  work.current_he_institution
       options_hash = options.find { |he| he[:id] == current_data }
       new_data =  [{"current_he_institution_name": "#{options_hash[:id]}", "current_he_institution_isni": "#{options_hash[:isni]}", "current_he_institution_ror": "#{options_hash[:ror]}"}]
       work.current_he_institution = [new_data.to_json]
-      work.save!
+      work.save(validate: false)
     end
   end
 end

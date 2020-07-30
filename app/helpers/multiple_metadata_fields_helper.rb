@@ -19,6 +19,19 @@ module MultipleMetadataFieldsHelper
     Ubiquity::ParseJson.new(json_record).fetch_value_based_on_key('creator', '; ')
   end
 
+  def contains_full_url_path?(url)
+    get_uri = URI.parse(url)
+    if get_uri&.host && get_uri&.path
+      true
+    end
+  end
+
+  def match_key_to_url(key)
+    hash_map = {"ror" => "https://ror.org/", "grid" => 'https://grid.ac/institutes/',
+      "wikidata" => 'https://www.wikidata.org/entity/'
+    }.with_indifferent_access
+    hash_map[key]
+  end
 
   def render_isni_or_orcid_url(id, type)
     id = id.strip.chomp('/').split('/').last

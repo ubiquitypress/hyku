@@ -51,18 +51,18 @@
   <br>
   <label class="control-label multi_value optional" for="#{template}_funder_awards">
     Funder Awards </label>
-  <div class="funder_awards_input_fields_wrap">
-    <div>
+  <ul class="funder_awards_input_fields_wrap">
+    <li>
       <%= text_field_tag "#{template}[funder_group][][funder_awards][]", nil,
                           class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_awards",
                           placeholder: "Please enter the Awards",
                           name: "#{template}[funder_group][][funder_awards]",
                           data: {field_name:'ubiquity_funder_awards'} %>
-    </div>
-    <a href='#' class="add_funder_awards_field_button form-group">Add Funder Awards Field</a>
-  </div>
+    </li>
+  </ul>
+  <a href='#' class="add_funder_awards_field_button form-group">Add Funder Awards Field</a>
 
-   <%= hidden_field_tag "#{template}[funder_group][][funder_position]", 1, class: 'ubiquity_funder_position'%>
+  <%= hidden_field_tag "#{template}[funder_group][][funder_position]", 1, class: 'ubiquity_funder_position'%>
   <br>
 
   <a href="#" style="color:red;"  class="remove_funder form-group " data-removeUbiquityfunder=".ubiquity-meta-funder">

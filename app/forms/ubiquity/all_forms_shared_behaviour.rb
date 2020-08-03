@@ -16,7 +16,7 @@ module Ubiquity
                     :creator_wikidata, :creator_position, :creator_institutional_relationship
 
       attr_accessor :funder_group, :funder_name, :funder_doi, :funder_award, :funder_position,
-                    :funder_orcid, :funder_isni, :funder_ror
+                    :funder_isni, :funder_ror
 
       attr_accessor :alternate_identifier_group, :related_identifier_group,
                     :date_published_group, :date_accepted_group, :date_submitted_group,
@@ -68,7 +68,7 @@ module Ubiquity
           ]}
 
           permitted_params << {funder_group: [:funder_name, :funder_doi, :funder_position,
-            :funder_orcid, :funder_isni, :funder_ror, :funder_award => []
+            :funder_isni, :funder_ror, :funder_award => []
           ]}
 
           permitted_params << { alternate_identifier_group: %i[alternate_identifier alternate_identifier_type] }

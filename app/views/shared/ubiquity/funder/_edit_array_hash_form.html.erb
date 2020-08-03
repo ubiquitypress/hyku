@@ -27,6 +27,16 @@
                        data: {field_name:'ubiquityfunder_doi'}
     %>
     <br/>
+    <label class="control-label multi_value optional" for="#{template}funder_isni">
+      Funder ISNI</label>
+
+    <%= text_field_tag "#{template}[funder_group][][funder_isni]",  hash.dig("funder_isni"),
+                       class: "#{template}_funder_group form-control multi-text-field multi_value ubiquityfunder_isni",
+                       placeholder: "Please enter the ISNI",
+                       name: "#{template}[funder_group][][funder_isni]",
+                       data: {field_name:'ubiquityfunder_isni'}
+    %>
+    <br/>
     <label class="control-label multi_value optional" for="#{template}funder_ror">
       Funder ROR</label>
 
@@ -38,16 +48,13 @@
     %>
     <br/>
 
-    <%= hidden_field_tag "#{template}[funder_group][][funder_position]", index, class: 'ubiquity-funder-score'  %>
+  <%= hidden_field_tag "#{template}[funder_group][][funder_position]", index, class: 'ubiquity_funder_position'  %>
 
-    <a href="#" style="color:red;"  class="remove_Funder form-group " data-removeUbiquityfunder=".ubiquity-meta-funder">
-      <span class="glyphicon glyphicon-remove"></span>
-      <span class="controls-remove-text">Remove</span>
-    </a>
-    |
-    <a href="#" class=" add_funder" data-addUbiquityFunder=".ubiquity-meta-funder">Add another </a>
-
-    <br><br><br>
-
+  <a href="#" style="color:red;"  class="remove_funder form-group" data-removeUbiquityfunder=".ubiquity-meta-funder">
+    <span class="glyphicon glyphicon-remove"></span>
+    <span class="controls-remove-text">Remove</span>
+  </a>
+  <a href="#" class="add_funder" data-addUbiquityfunder=".ubiquity-meta-funder">Add another </a>
   </div>
 <% end %>
+

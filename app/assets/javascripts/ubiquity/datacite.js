@@ -191,7 +191,7 @@ function populateFunderJson(valueArray, fieldName){
   var doi = '.ubiquity_' + fieldName + '_doi:last'
   var ror = '.ubiquity_' + fieldName + '_ror:last'
   var award = '.ubiquity_' + fieldName + '_award:last'
-  var position = '.' + fieldName + '_score:last'
+  var position = '.' + fieldName + '_position:last'
   $.each(valueArray, function(index, value){
     if (index == 0) {
       var newParent = '.ubiquity-meta-' + fieldName
@@ -200,7 +200,7 @@ function populateFunderJson(valueArray, fieldName){
       parent.children(isni).val(getIdentifiers(value[fieldName + '_isni']))
       parent.children(doi).val(getIdentifiers(value[fieldName + '_doi']))
       parent.children(ror).val(getIdentifiers(value[fieldName + '_ror']))
-      parent.children(position).val(value[fieldName + '_score'])
+      parent.children(position).val(value[fieldName + '_position'])
     } else {
       var newParent = '.ubiquity-meta-' + fieldName  + ':last'
       var parent = $(newParent)

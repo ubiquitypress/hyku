@@ -31,6 +31,8 @@
 //= require ubiquity/creator
 //= require ubiquity/contributor
 //= require ubiquity/editor
+//= require ubiquity/funder
+//= require ubiquity/funder_awards
 //= require ubiquity/current_he_institution
 
 //= require hyrax

@@ -27,6 +27,17 @@
   %>
 
   <br>
+  <label class="control-label multi_value optional" for="#{template}_funder_isni">
+    Funder ISNI </label>
+
+  <%= text_field_tag "#{template}[funder_group][][funder_isni]", nil,
+                     class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_isni",
+                     placeholder: "Please enter the ISNI",
+                     name: "#{template}[funder_group][][funder_isni]",
+                     data: {field_name:'ubiquity_funder_isni'}
+  %>
+  <br>
+
   <label class="control-label multi_value optional" for="#{template}_funder_ror">
     Funder ROR </label>
 
@@ -37,15 +48,27 @@
                      data: {field_name:'ubiquity_funder_ror'}
 
   %>
- <br>
-  <%= hidden_field_tag "#{template}[funder_group][][funder_position]", 1, class: 'ubiquity-funder-score'  %>
+  <br>
+  <label class="control-label multi_value optional" for="#{template}_funder_awards">
+    Funder Awards </label>
+  <ul class="funder_awards_input_fields_wrap">
+    <li>
+      <%= text_field_tag "#{template}[funder_group][][funder_awards][]", nil,
+                          class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_awards",
+                          placeholder: "Please enter the Awards",
+                          name: "#{template}[funder_group][][funder_awards]",
+                          data: {field_name:'ubiquity_funder_awards'} %>
+    </li>
+  </ul>
+  <a href='#' class="add_funder_awards_field_button form-group">Add Funder Awards Field</a>
 
-  <a href="#" style="color:red;"  class=" remove_funder form-group " data-removeUbiquityfunder=".ubiquity-meta-funder">
+  <%= hidden_field_tag "#{template}[funder_group][][funder_position]", 1, class: 'ubiquity_funder_position'%>
+  <br>
+
+  <a href="#" style="color:red;"  class="remove_funder form-group " data-removeUbiquityfunder=".ubiquity-meta-funder">
     <span class="glyphicon glyphicon-remove"></span>
     <span class="controls-remove-text">Remove</span>
   </a>
   |
-  <a href="#" class=" add_funder" data-addUbiquityfunder=".ubiquity-meta-funder">Add another </a>
-
-  <br/><br/>
+  <a href="#" class="add_funder" data-addUbiquityfunder=".ubiquity-meta-funder">Add another </a>
 </div>

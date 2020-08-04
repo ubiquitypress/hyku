@@ -6,12 +6,13 @@
     Funder Name</label>
 
   <%= text_field_tag "#{template}[funder_group][][funder_name]", nil,
-                     class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_name",
+                     class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_name #{template}_funder",
                      placeholder: 'Please enter the funder\'s name',
                      name: "#{template}[funder_group][][funder_name]",
                      data: { field_name:'ubiquity_funder_name',
-                             'autocomplete-url' => '/authorities/search/crossref/funder',
-                             'autocomplete' => "#{template}[funder_group][][funder_name]"
+                             'autocomplete-type' => 'linked',
+                             'autocomplete-url' => '/authorities/search/crossref/funders',
+                             'autocomplete' => "funder"
                            }
   %>
 

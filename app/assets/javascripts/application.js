@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery3
+//= require ubiquity/jquery-migrate-3.0.0.min
 //= require jquery_ujs
 //= require dataTables/jquery.dataTables
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap

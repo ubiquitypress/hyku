@@ -219,7 +219,6 @@ module Ubiquity
           hash.reject { |_k, v| v.nil? || v.to_s.empty? || v == "NaN" }
         end
         # remove hash that contains only default keys and values.
-        puts
         remove_hash_with_default_keys(new_data)
       end
     end

@@ -12,7 +12,8 @@
                      data: { field_name:'ubiquity_funder_name',
                              'autocomplete-type' => 'linked',
                              'autocomplete-url' => '/authorities/search/crossref/funders',
-                             'autocomplete' => "funder"
+                             'autocomplete' => "funder",
+                             'autocomplete-enabled' => "true"
                            }
   %>
 
@@ -50,7 +51,7 @@
 
   %>
   <br>
-  <div class='form-group multi_value'>
+  <div class='form-group'>
     <label class="control-label multi_value optional" for="#{template}_funder_awards">
       Funder Awards </label>
     <ul class="listing funder_awards_input_fields_wrap">

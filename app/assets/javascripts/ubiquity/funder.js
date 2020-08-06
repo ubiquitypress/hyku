@@ -7,6 +7,7 @@ $(document).on("turbolinks:load", function(){
 
     _this = this;
     cloneUbiDiv.find('input').val('');
+    cloneUbiDiv.find('ul li').not('li:first').remove();
 
     //increment hidden_field counter after cloning
     var lastInputCount = $('.ubiquity-funder-score:last').val();

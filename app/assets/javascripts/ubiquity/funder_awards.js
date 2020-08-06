@@ -7,7 +7,7 @@ $(document).on("turbolinks:load", function(){
       cloneElement.find('input').val('');
       cloneElement.find('a').remove();
       $(this).siblings('ul').find('div.message.has-funder-awards-warning').remove();
-      cloneElement.append('<span class="input-group-btn"><a href="#" class="remove_funder_awards_field"><span class="glyphicon glyphicon-remove"></span>Remove Funder Awards</a></span>');
+      cloneElement.append('<span class="input-group-btn field-controls"><a href="#" class="remove_funder_awards_field"><span class="glyphicon glyphicon-remove"></span>Remove Funder Awards</a></span>');
       $(this).parent('div').find('ul>li:last').last().after(cloneElement);
     }
     else{

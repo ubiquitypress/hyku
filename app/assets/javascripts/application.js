@@ -34,6 +34,7 @@
 //= require ubiquity/editor
 //= require ubiquity/funder
 //= require ubiquity/funder_awards
+//= require ubiquity/funder_autocomplete_callback
 //= require ubiquity/current_he_institution
 
 //= require hyrax

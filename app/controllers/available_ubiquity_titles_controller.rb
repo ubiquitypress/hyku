@@ -16,6 +16,11 @@ class AvailableUbiquityTitlesController < ApplicationController
     datacite = Ubiquity::DataciteClient.new(url).fetch_record
     render json: { 'data': datacite.data }
   end
+
+  def call_funder_api
+    response_data = Ubiquity::FunderApiData.new(params["doi_id"]).fetch_record
+    render json: { 'data': response_data.data }
+  end
 end
 
 

@@ -108,8 +108,10 @@ if valid_json?(related_identifier)
   end
 end
 
-json.thumbnail_url    work.try(:thumbnail).try(:visibility) == 'open' ? ('https://' + work['account_cname_tesim'].first.to_s + work['thumbnail_path_ss'].to_s) : nil
-json.download_link    work.try(:thumbnail).try(:visibility) == 'open' ? ('https://' + work['account_cname_tesim'].first.to_s + '/' + 'downloads' + '/' + work[:id].to_s) : nil
+bool =  Hyrax::WorkShowPresenter.new(SolrDocument.new(work, ''), current_api_ability).representative_presenter&.solr_document&.visibility == "open"
+
+json.thumbnail_url   bool ? ('https://' + work['account_cname_tesim'].first.to_s + work['thumbnail_path_ss'].to_s) : nil
+json.download_link   bool ? ('https://' + work['account_cname_tesim'].first.to_s + '/' + 'downloads' + '/' + work[:id].to_s) : nil
 
 json.version    work['version_tesim']
 json.duration    work['duration_tesim']

@@ -19,7 +19,6 @@ function fetchFunderFieldData(doi_id, closest_div) {
     type: "POST",
     data: {"doi_id": doi_id},
     success: function(result){
-      console.log(result.data);
       console.log(result.data.funder_ror);
       if (result.data.error  === undefined) {
         closest_div.find('.ubiquity_funder_doi').val(result.data.funder_ror)
@@ -29,7 +28,7 @@ function fetchFunderFieldData(doi_id, closest_div) {
           if (index > 0) {
             closest_div.find('.add_another_funder_awards_button').click();
           }
-          closest_div.find('.ubiquity_funder_awards:last').val(vak)
+          closest_div.find('.ubiquity_funder_awards:last').val(val)
         });
       }
     }

@@ -23,7 +23,8 @@ module Ubiquity
     end
 
     def fetch_record
-      if response.class == HTTParty::Response && response_hash.dig('items').first
+      puts response.dig('items')
+      if response.class == HTTParty::Response && response.dig('items').first
         { 'funder_isni' => fetch_isni,
           'funder_awards' => fetch_awards,
           'funder_ror' => fetch_ror

@@ -1,19 +1,27 @@
 $(document).on("turbolinks:load", function(){
-	var add_button = $(".add_funder_awards_field_button");
-	var funder_awards_wrapper = $('ul.funder_awards_input_fields_wrap')
-
-	$(add_button).click(function(e){ //on add input button click
-		e.preventDefault();
-		// Fetch and clone last funder award text field
-		cloneElement = funder_awards_wrapper.find('li:last').clone();
-		cloneElement.find('input').val('');
-		cloneElement.appendTo(funder_awards_wrapper).append('<a href="#" class="remove_funder_awards_field">Remove</a>');
-	});
-
-	$(funder_awards_wrapper).on("click",".remove_funder_awards_field", function(e){ //user click on remove text
+  $(document).on('click', ".add_another_funder_awards_button", function(e) { //on add input button click
     e.preventDefault();
-    if ($("ul.funder_awards_input_fields_wrap li").length > 1 ) {
+    cloneElement = $(this).siblings('ul').find('li').last().clone();
+    // Fetch and clone last funder award text field
+    if (cloneElement.find('input').val() != '') {
+      cloneElement.find('input').val('');
+      cloneElement.find('a').remove();
+      $(this).siblings('ul').find('div.message.has-funder-awards-warning').remove();
+      cloneElement.append('<span class="input-group-btn field-controls"><a href="#" class="remove_funder_awards_field"><span class="glyphicon glyphicon-remove"></span>Remove Funder Awards</a></span>');
+      $(this).parent('div').find('ul>li:last').last().after(cloneElement);
+    }
+    else{
+      $(this).siblings('ul').find('div.message.has-funder-awards-warning').remove();
+      divElement = '<div class="message has-funder-awards-warning">cannot add another with empty field</div>'
+      $(this).parent('div').find('ul>li:last').last().after(divElement)
+    }
+  });
+
+  $(document).on('click', ".remove_funder_awards_field", function(e) {
+    e.preventDefault();
+    $(this).siblings('ul').find('div.message.has-funder-awards-warning').remove();
+    if ($(this).closest('li').parent('ul').children().length > 1 ) {
       $(this).closest('li').remove();
     }
-	})
+  })
 });

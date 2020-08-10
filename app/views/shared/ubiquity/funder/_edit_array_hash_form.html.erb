@@ -12,8 +12,10 @@
                         placeholder: 'Please enter the Funder Name',
                         name: "#{template}[funder_group][][funder_name]",
                         data: { field_name:'ubiquity_funder_name',
+                          'autocomplete-type' => 'linked',
                           'autocomplete-url' => '/authorities/search/crossref/funder',
-                          'autocomplete' => "#{template}[funder_group][][funder_name]"
+                          'autocomplete' => "#{template}[funder_group][][funder_name]",
+                          'autocomplete-enabled' => "true"
                         }
     %>
     <br/>

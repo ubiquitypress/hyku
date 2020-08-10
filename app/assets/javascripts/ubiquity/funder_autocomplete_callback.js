@@ -19,6 +19,8 @@ function fetchFunderFieldData(doi_id, closest_div) {
     type: "POST",
     data: {"doi_id": doi_id},
     success: function(result){
+      console.log(result);
+      console.log(result.funder_ror);
       if (result.error  === undefined) {
         closest_div.find('.ubiquity_funder_doi').val(result.funder_ror)
         closest_div.find('.ubiquity_funder_isni').val(result.funder_isni)

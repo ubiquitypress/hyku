@@ -18,8 +18,8 @@ class AvailableUbiquityTitlesController < ApplicationController
   end
 
   def call_funder_api
-    response_data = Ubiquity::FunderApiData.new(params["doi_id"]).fetch_record
-    render json: { 'data': response_data.data }
+    response_data = Ubiquity::FunderApiData.new(params['doi_id']).fetch_record
+    render json: { 'data': response_data }
   end
 end
 

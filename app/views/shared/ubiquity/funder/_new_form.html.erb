@@ -10,7 +10,6 @@
                      placeholder: 'Please enter the funder\'s name',
                      name: "#{template}[funder_group][][funder_name]",
                      data: { field_name:'ubiquity_funder_name',
-                             'autocomplete-type' => 'linked',
                              'autocomplete-url' => '/authorities/search/crossref/funders',
                              'autocomplete' => "funder"
                            }
@@ -50,7 +49,7 @@
 
   %>
   <br>
-  <div class='form-group'>
+  <div class='form-group multi_value'>
     <label class="control-label multi_value optional" for="#{template}_funder_awards">
       Funder Awards </label>
     <ul class="listing funder_awards_input_fields_wrap">

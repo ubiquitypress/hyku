@@ -12,9 +12,25 @@ module Ubiquity
       response_hash.dig('items').first['external_ids'].dig('ISNI')['all']
     end
 
+    def fetch_awards
+      response_hash = response.parsed_response
+      response_hash.dig('items').first['external_ids'].dig('FundRef')['all']
+    end
+
     def fetch_ror
       response_hash = response.parsed_response
-      response_hash.dig('items').first['external_ids'].dig('GRID')['all']
+      response_hash.dig('items').first.dig('id')
+    end
+
+    def fetch_record
+      if response.class == HTTParty::Response
+        { 'funder_isni' => fetch_isni,
+          'funder_awards' => fetch_awards,
+          'funder_ror' => funder_ror
+        }
+      else
+        { error: response }
+      end
     end
 
     private
@@ -29,7 +45,7 @@ module Ubiquity
       begin
         yield
       rescue  URI::InvalidURIError, HTTParty::Error, Net::HTTPNotFound, NoMethodError, Net::OpenTimeout, StandardError => e
-        puts "Api server error #{e.inspect}"
+        "Api server error #{e.inspect}"
       end
     end
   end

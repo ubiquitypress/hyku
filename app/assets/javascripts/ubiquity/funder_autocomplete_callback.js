@@ -12,12 +12,12 @@ $(document).on("turbolinks:load", function(){
 function fetchFunderFieldData(doi_id, closest_div) {
   var host = window.document.location.host;
   var protocol = window.document.location.protocol;
-  var fullHost = protocol + '//' + host + '/available_ubiquity_titles/call_funder_api?doi_id=' + doi_id;
+  var fullHost = protocol + '//' + host + '/available_ubiquity_titles/call_funder_api';
   var closest_div = closest_div;
   $.ajax({
     url: fullHost,
     type: "POST",
-    data: {"url": url},
+    data: {"doi_id": doi_id},
     success: function(result){
       if (result.error  === undefined) {
         closest_div.find('.ubiquity_funder_doi').val(result.funder_ror)

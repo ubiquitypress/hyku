@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       collection do
         post :check
         post :call_datasite
+        post :call_funder_api
       end
   end
 

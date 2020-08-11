@@ -152,6 +152,7 @@ module Ubiquity
 
     def json_with_organisation_name_type(field_name, hash, index)
       remap_organization = {'Organization' => 'Organisation'}
+
       {
         "#{field_name}_isni" => extract_name_identifiers(hash['nameIdentifiers'], "ISNI"),
         "#{field_name}_ror" => extract_name_identifiers(hash['nameIdentifiers'], "ROR"),
@@ -165,14 +166,12 @@ module Ubiquity
       if  array_of_identifiers.present?
         identifier = array_of_identifiers.map do |hash_idenifier|
           if hash_idenifier["nameIdentifierScheme"] == type
-            hash_idenifier['nameIdentifier']
-          elsif hash_idenifier["nameIdentifierScheme"] == type
-            hash_idenifier['nameIdentifier']
-          elsif hash_idenifier["nameIdentifierScheme"] == type
+            puts "sani #{hash_idenifier}"
             hash_idenifier['nameIdentifier']
           end
-        end
+        end.compact
       end
+      puts "kaka #{identifier}"
       identifier.try(:first).presence
     end
 

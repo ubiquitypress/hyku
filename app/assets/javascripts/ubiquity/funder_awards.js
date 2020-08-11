@@ -12,7 +12,7 @@ $(document).on("turbolinks:load", function(){
     }
     else{
       $(this).siblings('ul').find('div.message.has-funder-awards-warning').remove();
-      divElement = '<div class="message has-funder-awards-warning has_warning">cannot add another with empty field</div>'
+      divElement = '<div class="message has-funder-awards-warning has-warning">cannot add another with empty field</div>'
       $(this).parent('div').find('ul>li:last').last().after(divElement)
     }
   });

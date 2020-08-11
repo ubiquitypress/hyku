@@ -190,7 +190,7 @@ function populateFunderJson(valueArray, fieldName){
   var isni = '.ubiquity_' + fieldName + '_isni:last'
   var doi = '.ubiquity_' + fieldName + '_doi:last'
   var ror = '.ubiquity_' + fieldName + '_ror:last'
-  var award = '.ubiquity_' + fieldName + '_award:last'
+  var award_input = '.ubiquity_' + fieldName + '_awards:last'
   var position = '.' + fieldName + '_position:last'
   $.each(valueArray, function(index, value){
     if (index == 0) {
@@ -200,6 +200,10 @@ function populateFunderJson(valueArray, fieldName){
       parent.children(isni).val(getIdentifiers(value[fieldName + '_isni']))
       parent.children(doi).val(getIdentifiers(value[fieldName + '_doi']))
       parent.children(ror).val(getIdentifiers(value[fieldName + '_ror']))
+
+      var awards = value[fieldName + '_awards'];
+      funder_award(awards, award_input,  parent);
+
       parent.children(position).val(value[fieldName + '_position'])
     } else {
       var newParent = '.ubiquity-meta-' + fieldName  + ':last'
@@ -209,7 +213,10 @@ function populateFunderJson(valueArray, fieldName){
       parentClone.children(ror).val(getIdentifiers(value[fieldName + '_ror']))
       parentClone.children(isni).val(getIdentifiers(value[fieldName + '_isni']))
       parent.children(doi).val(getIdentifiers(value[fieldName + '_doi']))
-      parentClone.find(award).val(value[fieldName + '_award'])
+
+      var awards = value[fieldName + '_award'];
+      funder_award(awards, award_input,  parentClone);
+      
       parentClone.find(position).val(value[fieldName + '_position'])
       parent.after(parentClone)
      }
@@ -217,6 +224,12 @@ function populateFunderJson(valueArray, fieldName){
    } )
  }
 
+function funder_award(awards, funder_award_div,  parent) {
+  $.each(awards, function(index, award_val) {
+    parent.find(funder_award_div).val(award_val);
+
+  })
+}
 
 function addPersonalValues(fieldName, key, value) {
   var familyName = '.' + fieldName + '_family_name:last'

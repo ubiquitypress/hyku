@@ -190,7 +190,7 @@ function populateFunderJson(valueArray, fieldName){
   var isni = '.ubiquity_' + fieldName + '_isni:last'
   var doi = '.ubiquity_' + fieldName + '_doi:last'
   var ror = '.ubiquity_' + fieldName + '_ror:last'
-  var award = '.ubiquity_' + fieldName + '_award:last'
+  var award_input = '.ubiquity_' + fieldName + '_awards:last'
   var position = '.' + fieldName + '_position:last'
   $.each(valueArray, function(index, value){
     if (index == 0) {
@@ -200,6 +200,10 @@ function populateFunderJson(valueArray, fieldName){
       parent.children(isni).val(getIdentifiers(value[fieldName + '_isni']))
       parent.children(doi).val(getIdentifiers(value[fieldName + '_doi']))
       parent.children(ror).val(getIdentifiers(value[fieldName + '_ror']))
+
+      var awards = value[fieldName + '_awards'];
+      funder_award(awards, award_input,  parent);
+
       parent.children(position).val(value[fieldName + '_position'])
     } else {
       var newParent = '.ubiquity-meta-' + fieldName  + ':last'
@@ -209,7 +213,10 @@ function populateFunderJson(valueArray, fieldName){
       parentClone.children(ror).val(getIdentifiers(value[fieldName + '_ror']))
       parentClone.children(isni).val(getIdentifiers(value[fieldName + '_isni']))
       parent.children(doi).val(getIdentifiers(value[fieldName + '_doi']))
-      parentClone.find(award).val(value[fieldName + '_award'])
+
+      var awards = value[fieldName + '_award'];
+      funder_award(awards, award_input,  parentClone);
+      
       parentClone.find(position).val(value[fieldName + '_position'])
       parent.after(parentClone)
      }
@@ -217,6 +224,12 @@ function populateFunderJson(valueArray, fieldName){
    } )
  }
 
+function funder_award(awards, funder_award_div,  parent) {
+  $.each(awards, function(index, award_val) {
+    parent.find(funder_award_div).val(award_val);
+
+  })
+}
 
 function addPersonalValues(fieldName, key, value) {
   var familyName = '.' + fieldName + '_family_name:last'
@@ -232,7 +245,7 @@ function addPersonalValues(fieldName, key, value) {
     var div = parent.children(".ubiquity_personal_fields:last")
     div.children(familyName).val(value[fieldName + '_family_name'])
     div.children(givenName2).val(value[fieldName + '_given_name'])
-    parent.children(isni).val(value[fieldName + '_isni'])
+    div.children(isni).val(value[fieldName + '_isni'])
     div.children(orcid).val(getIdentifiers(value[fieldName + '_orcid']))
     div.children(position).val(value[fieldName + '_position'])
     parent.children(nameType).val('Personal').change()
@@ -246,7 +259,7 @@ function addPersonalValues(fieldName, key, value) {
     parent.after(parentClone)
     parentClone.find(familyName).val(value[fieldName + '_family_name'])
     parentClone.find(givenName).val(value[fieldName + '_given_name'])
-    parentClone.children(isni).val(value[fieldName + '_isni'])
+    div.children(isni).val(value[fieldName + '_isni'])
     div.children(orcid).val(getIdentifiers(value[fieldName + '_orcid']))
     parentClone.find(position).val(value[fieldName + '_position'])
     parentClone.find(nameType).val('Personal').change()
@@ -266,8 +279,8 @@ function addOrganizationalValues(fieldName, key, value) {
     var parent = $(newParent);
     var div = parent.children(".ubiquity_organization_fields:last")
     div.children(name).val(value[fieldName + '_organization_name'])
-    parent.children(isni).val(getIdentifiers(value[fieldName + '_isni']))
-    div.children(ror).val(getIdentifiers(value[fieldName + '_ror']))
+    div.children(isni).val(getIdentifiers(value[fieldName + '_isni']))
+    div.children(ror).val(value[fieldName + '_ror'])
     div.children(position).val(value[fieldName + '_position'])
     parent.children(nameType).val('Organisational').change()
   }else {
@@ -279,8 +292,8 @@ function addOrganizationalValues(fieldName, key, value) {
     parentClone.find('option').attr('selected', false);
     parent.after(parentClone)
     parentClone.find(name).val(value[fieldName + '_organization_name'])
-    parentClone.children(isni).val(getIdentifiers(value[fieldName + '_isni']))
-    parentClone.children(ror).val(getIdentifiers(value[fieldName + '_ror']))
+    div.children(isni).val(getIdentifiers(value[fieldName + '_isni']))
+    parentClone.children(ror).val(value[fieldName + '_ror'])
     parentClone.find(position).val(value[fieldName + '_position'])
     parentClone.find(nameType).val('Organisational').change()
   }

@@ -275,7 +275,7 @@ function get_id_from_doi(doi_url){
   matcher = /^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/
    if (doi_url != null && matcher.test(doi_url) ) {
      var id_from_doi = new URL(doi_url).pathname.substr(1).split('/').pop()
-   } else {
+   } else if (doi_url != null) {
      var id_from_doi = doi_url.split('/').pop()
    }
    return id_from_doi
@@ -312,7 +312,7 @@ function populateFunderJson(valueArray, fieldName){
       var doi_url = value[fieldName + '_doi'];
 
       parentClone.find(name).val(value[fieldName + '_name'])
-      parentClone.children(ror).val(getIdentifiers(value[fieldName + '_ror']))
+      parentClone.children(ror).val(value[fieldName + '_ror'])
       parentClone.children(isni).val(getIdentifiers(value[fieldName + '_isni']))
       parent.children(doi).val(getIdentifiers(doi_url))
 
@@ -331,7 +331,6 @@ function populateFunderJson(valueArray, fieldName){
 
 function funder_award(awards, funder_award_div,  parent) {
   $.each(awards, function(index, award_val) {
-    //$(newParent).children('div').find('.ubiquity_funder_awards:last').val('ba')
     parent.children('div').find(funder_award_div).val(award_val);
 
   })
@@ -361,21 +360,9 @@ function fetchFromRor(funder_id, closest_div, fieldName) {
         var isni = '.ubiquity_' + fieldName + '_isni:last'
         var ror = '.ubiquity_' + fieldName + '_ror:last'
 
-        //closest_div.find('.ubiquity_funder_ror').val(result.data.funder_ror)
-        //closest_div.find('.ubiquity_funder_isni').val(result.data.funder_isni)
-
         closest_div.find(ror).val(result.data.funder_ror)
         closest_div.find(isni).val(result.data.funder_isni)
 
-/*
-        $.each(result.data.funder_awards , function(index, val) {
-          console.log(index, val);
-          if (index > 0) {
-            closest_div.find('.add_another_funder_awards_button').click();
-          }
-          closest_div.find('.ubiquity_funder_awards:last').val(val)
-        });
-*/
       }
     }
   }) //closes $.ajax

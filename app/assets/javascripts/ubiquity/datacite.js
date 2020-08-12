@@ -185,52 +185,6 @@ function populateSimilarJsonFields(valueArray, metadata_field){
   })
 }
 
-function populateFunderJson(valueArray, fieldName){
-  var name = '.ubiquity_' + fieldName + '_name:last'
-  var isni = '.ubiquity_' + fieldName + '_isni:last'
-  var doi = '.ubiquity_' + fieldName + '_doi:last'
-  var ror = '.ubiquity_' + fieldName + '_ror:last'
-  var award_input = '.ubiquity_' + fieldName + '_awards:last'
-  var position = '.' + fieldName + '_position:last'
-  $.each(valueArray, function(index, value){
-    if (index == 0) {
-      var newParent = '.ubiquity-meta-' + fieldName
-      var parent = $(newParent)
-      parent.children(name).val(value[fieldName + '_name'])
-      parent.children(isni).val(getIdentifiers(value[fieldName + '_isni']))
-      parent.children(doi).val(getIdentifiers(value[fieldName + '_doi']))
-      parent.children(ror).val(getIdentifiers(value[fieldName + '_ror']))
-
-      var awards = value[fieldName + '_awards'];
-      funder_award(awards, award_input,  parent);
-
-      parent.children(position).val(value[fieldName + '_position'])
-    } else {
-      var newParent = '.ubiquity-meta-' + fieldName  + ':last'
-      var parent = $(newParent)
-      var parentClone = parent.clone();
-      parentClone.find(name).val(value[fieldName + '_name'])
-      parentClone.children(ror).val(getIdentifiers(value[fieldName + '_ror']))
-      parentClone.children(isni).val(getIdentifiers(value[fieldName + '_isni']))
-      parent.children(doi).val(getIdentifiers(value[fieldName + '_doi']))
-
-      var awards = value[fieldName + '_award'];
-      funder_award(awards, award_input,  parentClone);
-      
-      parentClone.find(position).val(value[fieldName + '_position'])
-      parent.after(parentClone)
-     }
-
-   } )
- }
-
-function funder_award(awards, funder_award_div,  parent) {
-  $.each(awards, function(index, award_val) {
-    parent.find(funder_award_div).val(award_val);
-
-  })
-}
-
 function addPersonalValues(fieldName, key, value) {
   var familyName = '.' + fieldName + '_family_name:last'
   var givenName = '.' + fieldName + '_given_name:last'
@@ -278,16 +232,22 @@ function addOrganizationalValues(fieldName, key, value) {
     var newParent = '.ubiquity-meta-' + fieldName
     var parent = $(newParent);
     var div = parent.children(".ubiquity_organization_fields:last")
+    var doi_url = value[fieldName + '_doi'];
+
     div.children(name).val(value[fieldName + '_organization_name'])
     div.children(isni).val(getIdentifiers(value[fieldName + '_isni']))
     div.children(ror).val(value[fieldName + '_ror'])
     div.children(position).val(value[fieldName + '_position'])
     parent.children(nameType).val('Organisational').change()
+    call_ror_api(doi_url, div, fieldName)
+
   }else {
     var newParent = '.ubiquity-meta-' + fieldName + ':last'
     var parent = $(newParent);
     var parentClone = parent.clone();
     var div = parentClone.children(".ubiquity_organization_fields:last")
+    var doi_url = value[fieldName + '_doi'];
+
     parentClone.find('input').val('');
     parentClone.find('option').attr('selected', false);
     parent.after(parentClone)
@@ -296,6 +256,8 @@ function addOrganizationalValues(fieldName, key, value) {
     parentClone.children(ror).val(value[fieldName + '_ror'])
     parentClone.find(position).val(value[fieldName + '_position'])
     parentClone.find(nameType).val('Organisational').change()
+    call_ror_api(doi_url, div, fieldName)
+
   }
 }
 
@@ -307,4 +269,101 @@ function getIdentifiers(url_string) {
     var url_path = url_string
   }
   return   url_path
+}
+
+function get_id_from_doi(doi_url){
+  matcher = /^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/
+   if (doi_url != null && matcher.test(doi_url) ) {
+     var id_from_doi = new URL(doi_url).pathname.substr(1).split('/').pop()
+   } else if (doi_url != null) {
+     var id_from_doi = doi_url.split('/').pop()
+   }
+   return id_from_doi
+}
+
+function populateFunderJson(valueArray, fieldName){
+  var name = '.ubiquity_' + fieldName + '_name:last'
+  var isni = '.ubiquity_' + fieldName + '_isni:last'
+  var doi = '.ubiquity_' + fieldName + '_doi:last'
+  var ror = '.ubiquity_' + fieldName + '_ror:last'
+  var award_input = '.ubiquity_' + fieldName + '_awards:last'
+  var position = '.' + fieldName + '_position:last'
+  $.each(valueArray, function(index, value){
+    if (index == 0) {
+      var newParent = '.ubiquity-meta-' + fieldName
+      var parent = $(newParent)
+      var doi_url = value[fieldName + '_doi'];
+      parent.children(name).val(value[fieldName + '_name'])
+      parent.children(isni).val(getIdentifiers(value[fieldName + '_isni']))
+      parent.children(doi).val(getIdentifiers(doi_url))
+      parent.children(ror).val(getIdentifiers(value[fieldName + '_ror']))
+
+      var awards = value[fieldName + '_awards'];
+      funder_award(awards, award_input,  parent);
+
+      parent.children(position).val(value[fieldName + '_position'])
+      closest_div = $('.ubiquity_funder_name').closest('div');
+      call_ror_api(doi_url, closest_div, fieldName);
+
+    } else {
+      var newParent = '.ubiquity-meta-' + fieldName  + ':last'
+      var parent = $(newParent)
+      var parentClone = parent.clone();
+      var doi_url = value[fieldName + '_doi'];
+
+      parentClone.find(name).val(value[fieldName + '_name'])
+      parentClone.children(ror).val(value[fieldName + '_ror'])
+      parentClone.children(isni).val(getIdentifiers(value[fieldName + '_isni']))
+      parent.children(doi).val(getIdentifiers(doi_url))
+
+      var awards = value[fieldName + '_award'];
+      funder_award(awards, award_input,  parentClone);
+
+      parentClone.find(position).val(value[fieldName + '_position'])
+      parent.after(parentClone);
+
+      closest_div = $('.ubiquity_funder_name').closest('div')
+      call_ror_api(doi_url, closest_div, fieldName);
+     }
+
+   } )
+ }
+
+function funder_award(awards, funder_award_div,  parent) {
+  $.each(awards, function(index, award_val) {
+    parent.children('div').find(funder_award_div).val(award_val);
+
+  })
+}
+
+function call_ror_api(doi_url, closest_div, field_name){
+  var funder_id = get_id_from_doi(doi_url)
+
+  if (funder_id != null) {
+    fetchFromRor(funder_id, closest_div, field_name)
+  }
+}
+
+function fetchFromRor(funder_id, closest_div, fieldName) {
+  console.log('fff', funder_id);
+  var host = window.document.location.host;
+  var protocol = window.document.location.protocol;
+  var fullHost = protocol + '//' + host + '/available_ubiquity_titles/call_funder_api';
+  var closest_div = closest_div;
+  $.ajax({
+    url: fullHost,
+    type: "POST",
+    data: {"funder_id": funder_id},
+    success: function(result){
+      console.log('malu', result.data);
+      if (result.data.error  === undefined) {
+        var isni = '.ubiquity_' + fieldName + '_isni:last'
+        var ror = '.ubiquity_' + fieldName + '_ror:last'
+
+        closest_div.find(ror).val(result.data.funder_ror)
+        closest_div.find(isni).val(result.data.funder_isni)
+
+      }
+    }
+  }) //closes $.ajax
 }

@@ -86,6 +86,7 @@ module Ubiquity
 
     def save_contributor
       self.contributor_group ||= JSON.parse(self.contributor.first) if self.contributor.present?
+      clean_contributor_data(self.contributor_group)
       clean_submitted_data ||= remove_hash_keys_with_empty_and_nil_values(self.contributor_group)
       data = compare_hash_keys?(clean_submitted_data)
       if (self.contributor_group.present? && clean_submitted_data.present? && data == false )
@@ -212,8 +213,7 @@ module Ubiquity
     def remove_hash_keys_with_empty_and_nil_values(data)
       if (data.present? && data.class == Array)
         new_data = data.map do |hash|
-          ['contributor_orcid', 'contributor_isni', 'creator_orcid', 'creator_isni', 'editor_isni', 'editor_orcid', 'contributor_institutional_relationship'].each do|ele|
-            hash[ele] = hash[ele][0] if hash[ele].class == Array
+          ['contributor_orcid', 'contributor_isni', 'creator_orcid', 'creator_isni', 'editor_isni', 'editor_orcid'].each do|ele|
             hash[ele] = hash[ele].strip.chomp('/').split('/').last.gsub(/[^a-z0-9X-]/, '') if hash[ele].present?
           end
           hash.reject { |_k, v| v.nil? || v.to_s.empty? || v == "NaN" }
@@ -271,5 +271,13 @@ module Ubiquity
       end
     end
 
+    def clean_contributor_data(contributor_hash)
+      contributor_hash.each do |hash|
+        if (hash['contributor_family_name'].blank? && hash['contributor_organization_name'].blank?)
+          hash.transform_values! { |v| nil }
+        end
+      end
+    end
+    
   end
 end

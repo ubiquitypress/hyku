@@ -1,6 +1,7 @@
 menubar: false
 toolbar1: styleselect | bold italic | link image | undo redo
 toolbar2: table | fullscreen | uploadimage
+relative_urls : false
 plugins:
   - table
   - fullscreen

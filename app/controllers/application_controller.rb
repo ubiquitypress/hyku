@@ -73,7 +73,7 @@ class ApplicationController < ActionController::Base
     def after_sign_out_path_for(resource_or_scope)
       url_path = helpers.check_for_setting('live')
       if url_path.present? && url_path.class == String
-        ("https://" + url_path).strip
+        ("https://" + url_path + '/logout').strip
       else
         root_path
       end

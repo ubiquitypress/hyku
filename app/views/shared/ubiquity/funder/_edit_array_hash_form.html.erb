@@ -9,12 +9,11 @@
 
     <%= text_field_tag "#{template}[funder_group][][funder_name]", hash.dig("funder_name"),
                         class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_name",
-                        placeholder: 'Please enter the Funder Name',
+                        placeholder: "Please start typing the funder's name, then select from the dropdown list ",
                         name: "#{template}[funder_group][][funder_name]",
                         data: { field_name:'ubiquity_funder_name',
-                          'autocomplete-url' => '/authorities/search/crossref/funder',
+                          'autocomplete-url' => '/authorities/search/crossref/funders',
                           'autocomplete' => "funder",
-                          'autocomplete-enabled' => "true"
                         }
     %>
     <br/>
@@ -48,6 +47,23 @@
                        data: {field_name:'ubiquityfunder_ror'}
     %>
     <br/>
+    <div class='form-group'>
+      <label class="control-label multi_value optional" for="#{template}_funder_award">
+        Funder Awards </label>
+      <ul class="listing funder_awards_input_fields_wrap">
+        <li class="field-wrapper input-group input-append">
+          <%= text_field_tag "#{template}[funder_group][][funder_award][]", hash.dig("funder_award"),
+                              class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_awards",
+                              placeholder: "Please enter the Awards",
+                              name: "#{template}[funder_group][][funder_award]",
+                              data: {field_name:'ubiquity_funder_awards'} %>
+        </li>
+      </ul>
+      <a href='#' class="add_another_funder_awards_button form-group">
+        <span class="glyphicon glyphicon-plus"></span>
+        Add Another Funder Award
+      </a>
+    </div>
 
   <%= hidden_field_tag "#{template}[funder_group][][funder_position]", index, class: 'ubiquity_funder_position'  %>
 
@@ -58,4 +74,3 @@
   <a href="#" class="add_funder" data-addUbiquityfunder=".ubiquity-meta-funder">Add another </a>
   </div>
 <% end %>
-

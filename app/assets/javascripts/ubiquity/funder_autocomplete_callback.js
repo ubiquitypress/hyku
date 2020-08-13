@@ -21,15 +21,7 @@ function fetchFunderFieldData(funder_id, closest_div) {
       if (result.data.error  === undefined) {
         closest_div.find('.ubiquity_funder_ror').val(result.data.funder_ror)
         closest_div.find('.ubiquity_funder_isni').val(result.data.funder_isni)
-        $.each(result.data.funder_awards , function(index, val) {
-          console.log(index, val);
-          if (index > 0) {
-            closest_div.find('.add_another_funder_awards_button').click();
-          }
-          closest_div.find('.ubiquity_funder_awards:last').val(val)
-        });
       }
     }
   }) //closes $.ajax
 }
-

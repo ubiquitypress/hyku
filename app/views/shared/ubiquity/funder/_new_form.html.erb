@@ -6,8 +6,8 @@
     Funder Name</label>
 
   <%= text_field_tag "#{template}[funder_group][][funder_name]", nil,
-                     class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_name #{template}_funder",
-                     placeholder: 'Please enter the funder\'s name',
+                     class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_name",
+                     placeholder: "Please start typing the funder's name, then select from the dropdown list ",
                      name: "#{template}[funder_group][][funder_name]",
                      data: { field_name:'ubiquity_funder_name',
                              'autocomplete-url' => '/authorities/search/crossref/funders',
@@ -21,7 +21,7 @@
 
   <%= text_field_tag "#{template}[creator_group][][funder_doi]", nil,
                      class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_doi",
-                     placeholder: "Please enter Funder DOI",
+                     placeholder: "Please enter funder DOI",
                      name: "#{template}[funder_group][][funder_doi]",
                      data: {field_name:'ubiquity_funder_doi'}
   %>
@@ -50,14 +50,14 @@
   %>
   <br>
   <div class='form-group'>
-    <label class="control-label multi_value optional" for="#{template}_funder_awards">
+    <label class="control-label multi_value optional" for="#{template}_funder_award">
       Funder Awards </label>
     <ul class="listing funder_awards_input_fields_wrap">
       <li class="field-wrapper input-group input-append">
-        <%= text_field_tag "#{template}[funder_group][][funder_awards][]", nil,
+        <%= text_field_tag "#{template}[funder_group][][funder_award][]", nil,
                             class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_awards",
                             placeholder: "Please enter the Awards",
-                            name: "#{template}[funder_group][][funder_awards]",
+                            name: "#{template}[funder_group][][funder_award][]",
                             data: {field_name:'ubiquity_funder_awards'} %>
       </li>
     </ul>
@@ -75,5 +75,5 @@
     <span class="controls-remove-text">Remove Funder</span>
   </a>
   |
-  <a href="#" class="add_funder" data-addUbiquityfunder=".ubiquity-meta-funder">Add another Funders</a>
+  <a href="#" class="add_funder" data-addUbiquityfunder=".ubiquity-meta-funder">Add another Funder</a>
 </div>

@@ -14,6 +14,7 @@ $(document).on("turbolinks:load", function(){
     var hiddenInput = $(cloneUbiDiv).find('.ubiquity-funder-score');
     hiddenInput.val(parseInt(lastInputCount) + 1);
     $(ubiquityFunderClass +  ':last').after(cloneUbiDiv)
+    activateAutocompleteForFunderName();
   });
 });
 
@@ -31,4 +32,15 @@ function removeubiquityFunder(self, funderDiv) {
   if ($(".ubiquity-meta-funder").length > 1 ) {
     $(self).parent('div' + funderDiv).remove();
   }
+}
+
+function activateAutocompleteForFunderName(){
+  $(".ubiquity_funder_name").autocomplete({
+    source: function (request, response) {
+      $.getJSON(this.element.data('autocomplete-url'), {
+        q: request.term
+      }, response );
+    },
+    minLength: 2
+  });
 }

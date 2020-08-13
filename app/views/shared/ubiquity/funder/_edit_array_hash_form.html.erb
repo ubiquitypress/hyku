@@ -52,7 +52,7 @@
         Funder Awards </label>
       <ul class="listing funder_awards_input_fields_wrap">
         <li class="field-wrapper input-group input-append">
-          <%= text_field_tag "#{template}[funder_group][][funder_award][]", nil,
+          <%= text_field_tag "#{template}[funder_group][][funder_award][]", hash.dig("funder_award"),
                               class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_awards",
                               placeholder: "Please enter the Awards",
                               name: "#{template}[funder_group][][funder_award]",
@@ -74,4 +74,3 @@
   <a href="#" class="add_funder" data-addUbiquityfunder=".ubiquity-meta-funder">Add another </a>
   </div>
 <% end %>
-

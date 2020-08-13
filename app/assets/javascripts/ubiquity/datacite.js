@@ -232,22 +232,16 @@ function addOrganizationalValues(fieldName, key, value) {
     var newParent = '.ubiquity-meta-' + fieldName
     var parent = $(newParent);
     var div = parent.children(".ubiquity_organization_fields:last")
-    var doi_url = value[fieldName + '_doi'];
-
     div.children(name).val(value[fieldName + '_organization_name'])
     div.children(isni).val(getIdentifiers(value[fieldName + '_isni']))
     div.children(ror).val(value[fieldName + '_ror'])
     div.children(position).val(value[fieldName + '_position'])
     parent.children(nameType).val('Organisational').change()
-    call_ror_api(doi_url, div, fieldName)
-
   }else {
     var newParent = '.ubiquity-meta-' + fieldName + ':last'
     var parent = $(newParent);
     var parentClone = parent.clone();
     var div = parentClone.children(".ubiquity_organization_fields:last")
-    var doi_url = value[fieldName + '_doi'];
-
     parentClone.find('input').val('');
     parentClone.find('option').attr('selected', false);
     parent.after(parentClone)
@@ -256,8 +250,6 @@ function addOrganizationalValues(fieldName, key, value) {
     parentClone.children(ror).val(value[fieldName + '_ror'])
     parentClone.find(position).val(value[fieldName + '_position'])
     parentClone.find(nameType).val('Organisational').change()
-    call_ror_api(doi_url, div, fieldName)
-
   }
 }
 
@@ -269,16 +261,6 @@ function getIdentifiers(url_string) {
     var url_path = url_string
   }
   return   url_path
-}
-
-function get_id_from_doi(doi_url){
-  matcher = /^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/
-   if (doi_url != null && matcher.test(doi_url) ) {
-     var id_from_doi = new URL(doi_url).pathname.substr(1).split('/').pop()
-   } else if (doi_url != null) {
-     var id_from_doi = doi_url.split('/').pop()
-   }
-   return id_from_doi
 }
 
 function populateFunderJson(valueArray, fieldName){
@@ -329,9 +311,18 @@ function populateFunderJson(valueArray, fieldName){
    } )
  }
 
+function get_id_from_doi(doi_url){
+  matcher = /^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/
+   if (doi_url != null && matcher.test(doi_url) ) {
+     var id_from_doi = new URL(doi_url).pathname.substr(1).split('/').pop()
+   } else if (doi_url != null) {
+     var id_from_doi = doi_url.split('/').pop()
+   }
+   return id_from_doi
+}
+
 function funder_award(awards, funder_award_div,  parent) {
   $.each(awards, function(index, award_val) {
-    console.log('wawa', award_val);
     parent.children('div').find(funder_award_div).val(award_val);
 
   })
@@ -363,9 +354,6 @@ function fetchFromRor(funder_id, closest_div, fieldName) {
 
         closest_div.find(ror).val(result.data.funder_ror)
         closest_div.find(isni).val(result.data.funder_isni)
-        console.log('creator-con')
-        closest_div.children(ror).val(result.data.funder_ror)
-        closest_div.children(isni).val(result.data.funder_isni)
 
 
       }

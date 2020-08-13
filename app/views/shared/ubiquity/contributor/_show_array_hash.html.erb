@@ -9,7 +9,7 @@
             <%= display_data_with_comma_separated(hash, order_ary)%>
           </span>
           <span itemprop="contributor">
-            <% if display_paren?(hash.keys, ["contributor_orcid", 'contributor_isni', 'contributor_type']) %>
+            <% if display_paren?(hash.keys, ["contributor_orcid", 'contributor_isni', 'contributor_type', "contributor_ror",  "contributor_grid", "contributor_wikidata"]) %>
               <span style="float:left" >&nbsp;(</span>
                 <span style="float:left">
                 <%# Added False inorder to hide the field based on new requirements %>

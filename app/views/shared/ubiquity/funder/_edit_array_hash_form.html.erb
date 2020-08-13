@@ -48,14 +48,14 @@
     %>
     <br/>
     <div class='form-group'>
-      <label class="control-label multi_value optional" for="#{template}_funder_awards">
+      <label class="control-label multi_value optional" for="#{template}_funder_award">
         Funder Awards </label>
       <ul class="listing funder_awards_input_fields_wrap">
         <li class="field-wrapper input-group input-append">
-          <%= text_field_tag "#{template}[funder_group][][funder_awards][]", nil,
+          <%= text_field_tag "#{template}[funder_group][][funder_award][]", nil,
                               class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_awards",
                               placeholder: "Please enter the Awards",
-                              name: "#{template}[funder_group][][funder_awards]",
+                              name: "#{template}[funder_group][][funder_award]",
                               data: {field_name:'ubiquity_funder_awards'} %>
         </li>
       </ul>

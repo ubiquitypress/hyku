@@ -6,7 +6,7 @@
     Funder Name</label>
 
   <%= text_field_tag "#{template}[funder_group][][funder_name]", nil,
-                     class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_name #{template}_funder",
+                     class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_name",
                      placeholder: "Please start typing the funder's name, then select from the dropdown list ",
                      name: "#{template}[funder_group][][funder_name]",
                      data: { field_name:'ubiquity_funder_name',
@@ -57,7 +57,7 @@
         <%= text_field_tag "#{template}[funder_group][][funder_awards][]", nil,
                             class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_awards",
                             placeholder: "Please enter the Awards",
-                            name: "#{template}[funder_group][][funder_awards]",
+                            name: "#{template}[funder_group][][funder_awards][]",
                             data: {field_name:'ubiquity_funder_awards'} %>
       </li>
     </ul>

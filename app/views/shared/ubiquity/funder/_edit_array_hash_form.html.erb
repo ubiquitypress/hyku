@@ -9,7 +9,7 @@
 
     <%= text_field_tag "#{template}[funder_group][][funder_name]", hash.dig("funder_name"),
                         class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_name",
-                        placeholder: 'Please enter the Funder Name',
+                        placeholder: "Please start typing the funder's name, then select from the dropdown list ",
                         name: "#{template}[funder_group][][funder_name]",
                         data: { field_name:'ubiquity_funder_name',
                           'autocomplete-url' => '/authorities/search/crossref/funder',

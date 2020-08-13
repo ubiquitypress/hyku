@@ -9,24 +9,17 @@ module Ubiquity
 
     def fetch_isni
       response_hash = response.parsed_response
-      response_hash.dig('items').first['external_ids'].dig('ISNI')['all']
-    end
-
-    def fetch_awards
-      response_hash = response.parsed_response
-      response_hash.dig('items').first['external_ids'].dig('FundRef')['all']
+      response_hash.dig('items').first['external_ids'].dig('ISNI')['all'] if response_hash.dig('items').first['external_ids'].present?
     end
 
     def fetch_ror
       response_hash = response.parsed_response
-      response_hash.dig('items').first.dig('id')
+      response_hash.dig('items').first.dig('id') if response_hash.dig('items').first.present?
     end
 
     def fetch_record
-      puts response.dig('items')
       if response.class == HTTParty::Response && response.dig('items').first
         { 'funder_isni' => fetch_isni,
-          'funder_awards' => fetch_awards,
           'funder_ror' => fetch_ror
         }
       else

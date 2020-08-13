@@ -298,7 +298,7 @@ function populateFunderJson(valueArray, fieldName){
       parent.children(doi).val(getIdentifiers(doi_url))
       parent.children(ror).val(getIdentifiers(value[fieldName + '_ror']))
 
-      var awards = value[fieldName + '_awards'];
+      var awards = value[fieldName + '_award'];
       funder_award(awards, award_input,  parent);
 
       parent.children(position).val(value[fieldName + '_position'])
@@ -331,6 +331,7 @@ function populateFunderJson(valueArray, fieldName){
 
 function funder_award(awards, funder_award_div,  parent) {
   $.each(awards, function(index, award_val) {
+    console.log('wawa', award_val);
     parent.children('div').find(funder_award_div).val(award_val);
 
   })
@@ -362,6 +363,10 @@ function fetchFromRor(funder_id, closest_div, fieldName) {
 
         closest_div.find(ror).val(result.data.funder_ror)
         closest_div.find(isni).val(result.data.funder_isni)
+        console.log('creator-con')
+        closest_div.children(ror).val(result.data.funder_ror)
+        closest_div.children(isni).val(result.data.funder_isni)
+
 
       }
     }

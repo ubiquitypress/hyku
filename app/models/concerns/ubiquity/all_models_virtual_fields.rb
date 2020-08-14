@@ -86,7 +86,7 @@ module Ubiquity
 
     def save_contributor
       self.contributor_group ||= JSON.parse(self.contributor.first) if self.contributor.present?
-      clean_contributor_data(self.contributor_group)
+      clean_contributor_data(self.contributor_group) if self.contributor.present?
       clean_submitted_data ||= remove_hash_keys_with_empty_and_nil_values(self.contributor_group)
       data = compare_hash_keys?(clean_submitted_data)
       if (self.contributor_group.present? && clean_submitted_data.present? && data == false )
@@ -278,6 +278,6 @@ module Ubiquity
         end
       end
     end
-    
+
   end
 end

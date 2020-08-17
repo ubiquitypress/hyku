@@ -24,7 +24,7 @@
           <% end %>
         </li>
         <li>
-          <% if hash['funder_award'] %>
+          <% if hash['funder_award'].present? %>
             Awards:
             <% hash['funder_award'].each do |award| %>
               <span itemprop="funder" >

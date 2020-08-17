@@ -5,7 +5,7 @@ $(document).on("turbolinks:load", function(){
     // Fetch and clone last funder award text field
     if (cloneElement.find('input').val() != '') {
       cloneElement.find('input').val('');
-      cloneElement.find('a').remove();
+      cloneElement.find('span.input-group-btn').remove();
       $(this).siblings('ul').find('div.message.has-funder-awards-warning').remove();
       cloneElement.append('<span class="input-group-btn field-controls"><a href="#" style="color:red;" class="remove_funder_awards_field btn"><span class="glyphicon glyphicon-remove"></span>Remove Funder Award</a></span>');
       $(this).parent('div').find('ul>li:last').last().after(cloneElement);

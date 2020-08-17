@@ -30,7 +30,12 @@ json.date_published    work['date_published_tesim']
 json.institution    work['institution_tesim']
 json.organisational_unit    work['org_unit_tesim']
 json.project_name    work['project_name_tesim']
-json.funder    work['funder_tesim']
+
+funder = work['funder_tesim'].try(:first)
+if valid_json?(funder)
+  json.funder  JSON.parse(funder)
+end
+
 json.publisher   work['publisher_tesim']
 json.date_accepted    work['date_accepted_tesim']
 json.date_submitted    work['date_submitted_tesim']
@@ -130,7 +135,12 @@ json.article_number    work['article_number_tesim']
 json.eissn    work['eissn_tesim']
 json.issn    work['issn_tesim']
 json.isbn    work['isbn_tesim']
-json.current_he_institution    work['current_he_institution_tesim']
+
+current_he_institution =  work['current_he_institution_tesim'].try(:first)
+if valid_json?(current_he_institution)
+  json.current_he_institution  JSON.parse(current_he_institution)
+end
+
 json.qualification_name    work['qualification_name_tesim']
 json.qualification_level    work['qualification_level_tesim']
 json.alternative_journal_title    work['alternative_journal_title_tesim']

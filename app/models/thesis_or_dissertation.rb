@@ -6,7 +6,6 @@ class ThesisOrDissertation < ActiveFedora::Base
   include Ubiquity::SharedMetadata
   include Ubiquity::BasicMetadataDecorator
   include Ubiquity::AllModelsVirtualFields
-  include Ubiquity::EditorMetadataModelConcern
   include Ubiquity::VersionMetadataModelConcern
   include Ubiquity::UpdateSharedIndex
   include Ubiquity::FileAvailabilityFaceting

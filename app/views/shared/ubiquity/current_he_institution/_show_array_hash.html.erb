@@ -5,7 +5,7 @@
       <% array_of_hash.each do |hash| %>
         <li class="attribute current_he_institution name">
           <% if hash['current_he_institution_name'].present? %>
-            <%= "Current HE Institution: #{hash['current_he_institution_name']}" %>&nbsp;
+            <%= "Name: #{hash['current_he_institution_name']}" %>&nbsp;
           <% end %>
         </li>
         <li class="attribute current_he_institution isni">
@@ -16,7 +16,7 @@
         <li class="attribute current_he_institution ror">
           <% if hash['current_he_institution_ror'].present? %>
             <% ror = hash['current_he_institution_ror'] %>
-            <%= "ROR:" %> <a href="<%= ror %>"><%= ror %></a>&nbsp;
+            <%= "ROR:" %> <a href="<%= ror %>" target="_blank"><%= ror %></a>&nbsp;
           <% end %>
         </li>
       <% end %>

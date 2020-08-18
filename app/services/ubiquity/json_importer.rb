@@ -45,9 +45,13 @@ module Ubiquity
 
       hash_from_work_and_submitted_data.each_with_index do |(key, val), index|
         #index needed to to ensure set_default_work_visibility is called once inside populate_array_field
-        populate_array_field(key, val, index)
-        populate_json_field(key, val)
-        populate_single_fields(key, val)
+        if key != 'current_he_institution'
+          populate_array_field(key, val, index)
+          populate_json_field(key, val)
+          populate_single_fields(key, val)
+        elsif key == 'current_he_institution'
+          populate_current_he_institution(key, val)
+        end
       end
       @attributes_hash['account_cname'] = @tenant_domain
       @attributes_hash['date_modified'] = Hyrax::TimeService.time_in_utc
@@ -174,24 +178,39 @@ module Ubiquity
     end
 
     def  populate_array_field(key, val, index)
-      if ( (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key) && (@work_instance.send(key).class == ActiveTriples::Relation) )
+      if ( (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier', 'funder'].include? key) && (@work_instance.send(key).class == ActiveTriples::Relation) )
         create_or_skip_work_metadata('array', key)
       end
       @work_instance
     end
 
     def populate_json_field(key, val)
-      if ( (['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key)  && (not val.class == String) )
+      if ( (['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier', 'funder'].include? key)  && (not val.class == String) )
         create_or_skip_work_metadata('json', key)
       end
       @work_instance
     end
 
     def populate_single_fields(key, val)
-      if ( (@work_instance.send(key).class != ActiveTriples::Relation) && (val.class == String) && (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key))
+      if ( key != 'current_he_institution' && (@work_instance.send(key).class != ActiveTriples::Relation) && (val.class == String) && (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key))
         create_or_skip_work_metadata('string', key)
       end
       @work_instance
+    end
+
+    def populate_current_he_institution(key, val)
+      puts " ===== Populating #{key}  --- #{val} ================="
+      institution_list =  CurrentHeInstitutionService.select_active_options.flatten.uniq!
+      index = institution_list.index(val)
+      if index.present?
+        name = val
+        isni = CurrentHeInstitutionService.select_active_options_isni[index]
+        ror = CurrentHeInstitutionService.select_active_options_ror[index]
+        full_record = [{current_he_institution_name: val, current_he_institution_ror: ror, current_he_institution_isni: isni}]
+        puts "ruwa #{full_record}"
+        @attributes_hash[key] = [full_record.to_json]
+
+      end
     end
 
     def create_or_skip_work_metadata(type, key)

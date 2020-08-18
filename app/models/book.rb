@@ -5,7 +5,6 @@ class Book < ActiveFedora::Base
   include Ubiquity::BasicMetadataDecorator
   include Ubiquity::SharedMetadata
   include Ubiquity::AllModelsVirtualFields
-  include Ubiquity::EditorMetadataModelConcern
   include Ubiquity::UpdateSharedIndex
   include Ubiquity::FileAvailabilityFaceting
   include ::Ubiquity::CachingSingle

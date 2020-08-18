@@ -91,6 +91,10 @@ module Ubiquity
         index.as :stored_searchable
       end
 
+      property :editor, predicate: ::RDF::Vocab::SCHEMA.Person do |index|
+        index.as :stored_searchable
+      end
+
     end
   end
 end

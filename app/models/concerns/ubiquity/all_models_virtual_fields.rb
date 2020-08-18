@@ -7,6 +7,7 @@ module Ubiquity
       before_save :save_contributor
       before_save :save_creator
       before_save :save_funder
+      before_save :save_editor
       before_save :save_alternate_identifier
       before_save :save_related_identifier
       before_save :save_date_published, :save_date_accepted, :save_date_submitted,
@@ -19,7 +20,7 @@ module Ubiquity
       #The json fields in this case are creator, contributor, alternate_identifier, related_identifier and current_he_institution
       attr_accessor :creator_group, :contributor_group, :funder_group, :alternate_identifier_group, :related_identifier_group,
                     :date_published_group, :date_accepted_group, :date_submitted_group,
-                    :event_date_group, :related_exhibition_date_group, :current_he_institution_group
+                    :event_date_group, :related_exhibition_date_group, :current_he_institution_group, :editor_group
     end
 
     private
@@ -86,7 +87,7 @@ module Ubiquity
 
     def save_contributor
       self.contributor_group ||= JSON.parse(self.contributor.first) if self.contributor.present?
-      clean_contributor_data(self.contributor_group) if self.contributor.present?
+      clean_incomplete_data(self.contributor_group) if self.contributor.present?
       clean_submitted_data ||= remove_hash_keys_with_empty_and_nil_values(self.contributor_group)
       data = compare_hash_keys?(clean_submitted_data)
       if (self.contributor_group.present? && clean_submitted_data.present? && data == false )
@@ -94,6 +95,19 @@ module Ubiquity
         self.contributor = [contributor_json]
       elsif data == true || data == nil
        self.contributor = []
+      end
+    end
+
+    def save_editor
+      self.editor_group ||= JSON.parse(self.editor.first) if self.editor.present?
+      clean_incomplete_data(self.editor_group) if self.editor.present?
+      clean_submitted_data ||= remove_hash_keys_with_empty_and_nil_values(self.editor_group)
+      data = compare_hash_keys?(clean_submitted_data)
+      if (self.editor_group.present? && clean_submitted_data.present? && data == false )
+        editor_json = clean_submitted_data.to_json
+        self.editor = [editor_json]
+      elsif  data == true || data == nil
+        self.editor = []
       end
     end
 
@@ -218,7 +232,6 @@ module Ubiquity
           end
           hash.reject { |_k, v| v.nil? || v.to_s.empty? || v == "NaN" }
         end
-        # remove hash that contains only default keys and values.
         remove_hash_with_default_keys(new_data)
       end
     end
@@ -241,9 +254,9 @@ module Ubiquity
 
         #the value of record will be "contributor_organization_name" when using array of hash from the above comments
         #This means field name after the record.split will be 'contributor' and will change depending on the hash keys
-        get_field_name ||= splitted_record.first
-        return   ["#{get_field_name}_position"] if (data.length == 1 && splitted_record.last == "position")
-        ["#{get_field_name}_name_type", "#{get_field_name}_position"]
+        field_name ||= splitted_record.first
+        return   ["#{field_name}_position"] if (data.length == 1 && splitted_record.last == "position")
+        ["#{field_name}_name_type", "#{field_name}_position"]
       end
     end
 
@@ -271,9 +284,16 @@ module Ubiquity
       end
     end
 
-    def clean_contributor_data(contributor_hash)
-      contributor_hash.each do |hash|
-        if (hash['contributor_family_name'].blank? && hash['contributor_organization_name'].blank?)
+    def get_field_name(data_hash)
+      record = data_hash.first.keys.first || data_hash
+      splitted_record = record.split('_')
+      field_name ||= splitted_record.first
+    end
+
+    def clean_incomplete_data(data_hash)
+      field_name = get_field_name(data_hash)
+      data_hash.each do |hash|
+        if (hash["#{field_name}_family_name"].blank? && hash["#{field_name}_organization_name"].blank?)
           hash.transform_values! { |v| nil }
         end
       end

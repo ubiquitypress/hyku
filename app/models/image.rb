@@ -6,7 +6,6 @@ class Image < ActiveFedora::Base
   include Ubiquity::SharedMetadata
   include Ubiquity::BasicMetadataDecorator
   include Ubiquity::AllModelsVirtualFields
-  include Ubiquity::EditorMetadataModelConcern
   include HasRendering
   include Ubiquity::UpdateSharedIndex
   include Ubiquity::FileAvailabilityFaceting

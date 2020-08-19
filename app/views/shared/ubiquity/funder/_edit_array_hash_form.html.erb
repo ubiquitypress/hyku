@@ -51,7 +51,8 @@
       <label class="control-label multi_value optional" for="#{template}_funder_award">
         Funder Awards </label>
       <ul class="listing funder_awards_input_fields_wrap">
-        <% hash.dig("funder_award").each do |funder_award| %>
+        <% funder_award_list = hash.dig("funder_award").presence || [] %>
+        <% funder_award_list.each do |funder_award| %>
           <li class="field-wrapper input-group input-append">
             <%= text_field_tag "#{template}[funder_group][][funder_award][]", funder_award,
                                 class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_awards",

@@ -36,11 +36,16 @@ function removeubiquityFunder(self, funderDiv) {
 
 function activateAutocompleteForFunderName(){
   $(".ubiquity_funder_name").autocomplete({
+    minLength: 2,
     source: function (request, response) {
       $.getJSON(this.element.data('autocomplete-url'), {
         q: request.term
       }, response );
     },
-    minLength: 2
+    select: function(ui, result) {
+      closest_div = $(this).closest('div')
+      closest_div.find('.ubiquity_funder_doi').val(result.item.uri)
+      fetchFunderFieldData(result.item.id, closest_div)
+    }
   });
 }

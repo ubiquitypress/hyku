@@ -51,13 +51,15 @@
       <label class="control-label multi_value optional" for="#{template}_funder_award">
         Funder Awards </label>
       <ul class="listing funder_awards_input_fields_wrap">
-        <li class="field-wrapper input-group input-append">
-          <%= text_field_tag "#{template}[funder_group][][funder_award][]", hash.dig("funder_award"),
-                              class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_awards",
-                              placeholder: "Please enter the Awards",
-                              name: "#{template}[funder_group][][funder_award]",
-                              data: {field_name:'ubiquity_funder_awards'} %>
-        </li>
+        <% hash.dig("funder_award").each do |funder_award| %>
+          <li class="field-wrapper input-group input-append">
+            <%= text_field_tag "#{template}[funder_group][][funder_award][]", funder_award,
+                                class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_awards",
+                                placeholder: "Please enter the Awards",
+                                name: "#{template}[funder_group][][funder_award][]",
+                                data: {field_name:'ubiquity_funder_awards'} %>
+          </li>
+        <%end%>
       </ul>
       <a href='#' class="add_another_funder_awards_button form-group">
         <span class="glyphicon glyphicon-plus"></span>

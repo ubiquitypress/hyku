@@ -11,16 +11,6 @@
 
   <p class="help-block">A person or group you want to recognise for playing a role in the creation of the work, but not the primary role.</p>
 
-  <label class="control-label multi_value optional" for="#{template}_contributor_isni">
-    Contributor ISNI</label>
-
-  <%= text_field_tag "#{template}[contributor_group][][contributor_isni]", nil,
-                     class: "#{template}_contributor_group form-control multi-text-field multi_value ubiquity_contributor_isni",
-                     placeholder: 'Please enter the contributor\'s ISNI, e.g. 0000 1234 5678 9101.',
-                     name: "#{template}[contributor_group][][contributor_isni]",
-                     data: {field_name:'ubiquity_contributor_isni'}
-  %>
-
   <br/>
 <span class="ubiquity_organization_fields">
   <label class="ubiquity_contributor_organization_name_label control-label multi_value optional" for="#{template}_contributor_organization_name">
@@ -74,17 +64,6 @@
 <br/>
 <span class="ubiquity_personal_fields">
 
-    <label class="control-label multi_value optional" for="#{template}_contributor_orcid">
-      Contributor ORCID</label>
-
-    <%= text_field_tag "#{template}[contributor_group][][contributor_orcid]", nil,
-                       class: "#{template}_contributor_group contributor_orcid form-control multi-text-field multi_value ubiquity_contributor_orcid",
-                       placeholder: 'Please enter the contributor\'s ORCID, e.g. 0000-1234-5678-9101.',
-                       name: "#{template}[contributor_group][][contributor_orcid]",
-                       data: {field_name:'ubiquity_contributor_orcid'}
-    %>
-    <br/>
-
     <label class="control-label multi_value optional" for="#{template}_contributor_family_name">
       Contributor family name</label>
 
@@ -106,19 +85,42 @@
                        data: {field_name:'ubiquity_contributor_given_name'}
     %>
     <br/>
+    <label class="control-label multi_value optional" for="#{template}_contributor_orcid">
+      Contributor ORCID</label>
+
+    <%= text_field_tag "#{template}[contributor_group][][contributor_orcid]", nil,
+                       class: "#{template}_contributor_group contributor_orcid form-control multi-text-field multi_value ubiquity_contributor_orcid",
+                       placeholder: 'Please enter the contributor\'s ORCID, e.g. 0000-1234-5678-9101.',
+                       name: "#{template}[contributor_group][][contributor_orcid]",
+                       data: {field_name:'ubiquity_contributor_orcid'}
+    %>
+    <br/>
+
     <label class="control-label multi_value optional" for="#{template}_contributor_institutional_relationship">
       Contributor institutional relationship  </label>
     <%= select_tag "#{template}[contributor_group][][contributor_institutional_relationship][]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( ['Staff member', 'Research associate'], :to_s, :to_s),
        multiple: true, class: "form-control"  %>
 
   </span>  <!-- closes ubiquity_personal_fields -->
+
+  <br/>
+  <label class="control-label multi_value optional" for="#{template}_contributor_isni">
+    Contributor ISNI</label>
+
+  <%= text_field_tag "#{template}[contributor_group][][contributor_isni]", nil,
+                     class: "#{template}_contributor_group form-control multi-text-field multi_value ubiquity_contributor_isni",
+                     placeholder: 'Please enter the contributor\'s ISNI, e.g. 0000 1234 5678 9101.',
+                     name: "#{template}[contributor_group][][contributor_isni]",
+                     data: {field_name:'ubiquity_contributor_isni'}
+  %>
   <br/>
   <label class="control-label multi_value optional" for="#{template}_contributor_type">
     Contributor Role</label>
   <%= select_tag "#{template}[contributor_group][][contributor_type]",
                  content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( ContributorGroupService.new.select_active_options.flatten.uniq!, :to_s, :to_s)
   %>
-  <br/><br/>
+
+  <br/>
 
   <%= hidden_field_tag "#{template}[contributor_group][][contributor_position]", 1, class: 'ubiquity-contributor-score'  %>
 

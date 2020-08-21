@@ -1,0 +1,8 @@
+
+<% my_model = f.object.model %>
+<% if  my_model.new_record? %>
+
+<% elsif my_model.fndr_project_ref.present?  %>
+   <%= f.input :fndr_project_ref, as: :multi_value,  input_html: { class: 'ubiquity-keyword form-control', multiple: true }, required: f.object.required?(key) %>
+
+<% end %>

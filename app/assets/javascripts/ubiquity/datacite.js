@@ -323,9 +323,12 @@ function get_id_from_doi(doi_url){
 
 function funder_award(awards, funder_award_div,  parent) {
   // Clear out funder awards
-  parent.get()[0].querySelectorAll('.funder_awards_input_fields_wrap input:not(:first-child)').forEach(element => element.remove())
+  parent.get()[0].querySelectorAll('.funder_awards_input_fields_wrap input:not(:first-child)').forEach(function(element) {
+       element.remove()
+   })
+   
 	parent.children('div').find(funder_award_div).val('');
-  
+
   $.each(awards, function(index, award_val) {
      if (index == 0){
        parent.children('div').find(funder_award_div).val(award_val);

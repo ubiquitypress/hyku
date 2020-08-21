@@ -52,15 +52,24 @@
         Funder Awards </label>
       <ul class="listing funder_awards_input_fields_wrap" style='padding-left: 0px;'>
         <% funder_award_list = hash.dig("funder_award").presence || [] %>
-        <% funder_award_list.each do |funder_award| %>
+        <% if funder_award_list.present? %>
+          <% funder_award_list.each do |funder_award| %>
+            <li class="field-wrapper input-group input-append">
+              <%= text_field_tag "#{template}[funder_group][][funder_award][]", funder_award,
+                                  class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_awards",
+                                  placeholder: "Please enter the Awards",
+                                  name: "#{template}[funder_group][][funder_award][]",
+                                  data: {field_name:'ubiquity_funder_awards'} %>
+            </li>
+          <%end%>
+        <%else%>
           <li class="field-wrapper input-group input-append">
             <%= text_field_tag "#{template}[funder_group][][funder_award][]", funder_award,
                                 class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_awards",
                                 placeholder: "Please enter the Awards",
                                 name: "#{template}[funder_group][][funder_award][]",
                                 data: {field_name:'ubiquity_funder_awards'} %>
-          </li>
-        <%end%>
+        <%end>
       </ul>
       <a href='#' class="add_another_funder_awards_button form-group">
         <span class="glyphicon glyphicon-plus"></span>

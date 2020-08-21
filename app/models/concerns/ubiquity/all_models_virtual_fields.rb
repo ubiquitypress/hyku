@@ -75,6 +75,7 @@ module Ubiquity
 
     def save_funder
       self.funder_group ||= Ubiquity::JsonValidator.valid_json?( self.funder.try(:first) ) ? JSON.parse(self.funder.first) : nil if self.funder.present?
+      clean_incomplete_data(self.funder_group) if self.funder.present?
       clean_submitted_data ||= remove_hash_keys_with_empty_and_nil_values(self.funder_group)
       data = compare_hash_keys?(clean_submitted_data)
       if (self.funder_group.present? && clean_submitted_data.present? && data == false )
@@ -293,7 +294,7 @@ module Ubiquity
     def clean_incomplete_data(data_hash)
       field_name = get_field_name(data_hash)
       data_hash.each do |hash|
-        if (hash["#{field_name}_family_name"].blank? && hash["#{field_name}_organization_name"].blank?)
+        if (hash["#{field_name}_family_name"].blank? && hash["#{field_name}_organization_name"].blank?) || hash["#{field_name}_funder_name"].blank?
           hash.transform_values! { |v| nil }
         end
       end

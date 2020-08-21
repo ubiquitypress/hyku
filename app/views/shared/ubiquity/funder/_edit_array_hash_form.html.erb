@@ -50,7 +50,7 @@
     <div class='form-group'>
       <label class="control-label multi_value optional" for="#{template}_funder_award">
         Funder Awards </label>
-      <ul class="listing funder_awards_input_fields_wrap">
+      <ul class="listing funder_awards_input_fields_wrap" style='padding-left: 0px;'>
         <% funder_award_list = hash.dig("funder_award").presence || [] %>
         <% funder_award_list.each do |funder_award| %>
           <li class="field-wrapper input-group input-append">

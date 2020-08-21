@@ -20,16 +20,7 @@
 
     <p class="help-block">The person or group responsible for the work. Usually this is the author of the content.</p>
 
-    <label class="control-label multi_value optional" for="#{template}_creator_isni">
-      Creator ISNI</label>
 
-    <%= text_field_tag "#{template}[creator_group][][creator_isni]", hash.dig("creator_isni"),
-                        class: "#{template}_creator_group form-control multi-text-field multi_value ubiquity_creator_isni",
-                        placeholder: 'Please enter the creator\'s ISNI, e.g. 0000 1234 5678 9101.',
-                        name: "#{template}[creator_group][][creator_isni]",
-                        data: {field_name:'ubiquity_creator_isni'}
-    %>
-    <br/>
     <span class="ubiquity_organization_fields">
 
     <label class="ubiquity_creator_organization_name_label control-label multi_value optional" for="#{template}_creator_organization_name">
@@ -84,17 +75,6 @@
   <br/>
     <span class="ubiquity_personal_fields">
 
-      <label class="control-label multi_value optional" for="#{template}_creator_orcid">
-        Creator ORCID</label>
-
-      <%= text_field_tag "#{template}[creator_group][][creator_orcid]", hash.dig("creator_orcid"),
-                        class: "#{template}_creator_group form-control multi-text-field multi_value ubiquity_creator_orcid",
-                        placeholder: 'Please enter the creator\'s ORCID, e.g. 0000-1234-5678-9101.',
-                        name: "#{template}[creator_group][][creator_orcid]",
-                        data: {field_name:'ubiquity_creator_orcid'}
-      %>
-      <br>
-
       <label class="control-label multi_value optional" for="#{template}_creator_family">
         Creator family name</label>
 
@@ -120,6 +100,16 @@
       %>
       <span style="color:red;" class="error">Please enter one of these fields.</span>
       <br/>
+      <label class="control-label multi_value optional" for="#{template}_creator_orcid">
+        Creator ORCID</label>
+
+      <%= text_field_tag "#{template}[creator_group][][creator_orcid]", hash.dig("creator_orcid"),
+                        class: "#{template}_creator_group form-control multi-text-field multi_value ubiquity_creator_orcid",
+                        placeholder: 'Please enter the creator\'s ORCID, e.g. 0000-1234-5678-9101.',
+                        name: "#{template}[creator_group][][creator_orcid]",
+                        data: {field_name:'ubiquity_creator_orcid'}
+      %>
+      <br>
       <p><label class="control-label multi_value optional" for="#{template}_creator_institutional_relationship">
         Creator institutional relationship  </label> </p>
       <%= select_tag "#{template}[creator_group][][creator_institutional_relationship]", content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( ['Staff member', 'Research associate'], :to_s, :to_s, hash.dig("creator_institutional_relationship")),
@@ -128,8 +118,16 @@
 
     </span> <!-- closes ubiquity_personal_fields -->
 
+    <label class="control-label multi_value optional" for="#{template}_creator_isni">
+      Creator ISNI</label>
 
-    <br>
+    <%= text_field_tag "#{template}[creator_group][][creator_isni]", hash.dig("creator_isni"),
+                        class: "#{template}_creator_group form-control multi-text-field multi_value ubiquity_creator_isni",
+                        placeholder: 'Please enter the creator\'s ISNI, e.g. 0000 1234 5678 9101.',
+                        name: "#{template}[creator_group][][creator_isni]",
+                        data: {field_name:'ubiquity_creator_isni'}
+    %>
+    <br/>
 
     <%= hidden_field_tag "#{template}[creator_group][][creator_position]", index, class: 'ubiquity-creator-score'  %>
 

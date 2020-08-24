@@ -64,12 +64,12 @@
           <%end%>
         <%else%>
           <li class="field-wrapper input-group input-append">
-            <%= text_field_tag "#{template}[funder_group][][funder_award][]", funder_award,
+            <%= text_field_tag "#{template}[funder_group][][funder_award][]", nil,
                                 class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_awards",
                                 placeholder: "Please enter the Awards",
                                 name: "#{template}[funder_group][][funder_award][]",
                                 data: {field_name:'ubiquity_funder_awards'} %>
-        <%end>
+        <%end%>
       </ul>
       <a href='#' class="add_another_funder_awards_button form-group">
         <span class="glyphicon glyphicon-plus"></span>

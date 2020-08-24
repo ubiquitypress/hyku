@@ -25,14 +25,16 @@ $(document).on("turbolinks:load", function(){
     }
   })
 
-  $('.funder_awards_input_fields_wrap li').each(function(index){
-    if (index === 0) {
-      var remove_button = $('<span class="input-group-btn field-controls"><a href="#" class="remove_funder_awards_field btn"></a></span>')
-      $(this).css('padding-right', '340px');
-    }
-    else{
-      var remove_button = $('<span class="input-group-btn field-controls"><a href="#" style="color:red;" class="remove_funder_awards_field btn"><span class="glyphicon glyphicon-remove"></span>Remove Funder Award</a></span>')
-    }
-    $(this).append(remove_button);
+  $('ul.funder_awards_input_fields_wrap').each(function(index){
+    $(this).find('li').each(function(index){
+      if (index === 0) {
+        var remove_button = $('<span class="input-group-btn field-controls"><a href="#" class="remove_funder_awards_field btn"></a></span>')
+        $(this).css('padding-right', '154px');
+      }
+      else{
+        var remove_button = $('<span class="input-group-btn field-controls"><a href="#" style="color:red;" class="remove_funder_awards_field btn"><span class="glyphicon glyphicon-remove"></span>Remove Funder Award</a></span>')
+      }
+      $(this).append(remove_button);
+    })
   })
 });

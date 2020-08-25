@@ -195,7 +195,7 @@ module Ubiquity
         self.current_he_institution = [current_he_institution_json]
       elsif data == true || data == nil
         self.current_he_institution = []
-     end
+      end
     end
 
     private

@@ -8,7 +8,7 @@ $(document).on("turbolinks:load", function(){
       cloneElement.find('span.input-group-btn').remove();
       cloneElement.removeAttr('style');
       $(this).siblings('ul').find('div.message.has-funder-awards-warning').remove();
-      cloneElement.append('<span class="input-group-btn field-controls"><a href="#" style="color:red;" class="remove_funder_awards_field btn"><span class="glyphicon glyphicon-remove"></span>Remove Funder Award</a></span>');
+      cloneElement.append('<span class="input-group-btn field-controls"><a href="#" style="color:red;" class="remove_funder_awards_field btn"><span class="glyphicon glyphicon-remove"></span>Remove</a></span>');
       $(this).parent('div').find('ul>li:last').last().after(cloneElement);
     }
     else{
@@ -30,10 +30,10 @@ $(document).on("turbolinks:load", function(){
     $(this).find('li').each(function(index){
       if (index === 0) {
         var remove_button = $('<span class="input-group-btn field-controls"><a href="#" class="remove_funder_awards_field btn"></a></span>')
-        $(this).css('padding-right', '154px');
+        $(this).css('padding-right', '67px');
       }
       else{
-        var remove_button = $('<span class="input-group-btn field-controls"><a href="#" style="color:red;" class="remove_funder_awards_field btn"><span class="glyphicon glyphicon-remove"></span>Remove Funder Award</a></span>')
+        var remove_button = $('<span class="input-group-btn field-controls"><a href="#" style="color:red;" class="remove_funder_awards_field btn"><span class="glyphicon glyphicon-remove"></span>Remove</a></span>')
       }
       $(this).append(remove_button);
     })

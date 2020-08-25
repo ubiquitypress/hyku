@@ -72,7 +72,7 @@ function checkForPresenceOfOrcidValue(field, index){
     if ((drop_down_val == 'Organisational') && (check_for_org_value == '') && (check_for_isni_value != '')) {
       addOrganisationNameMandatory(field, index);
     }
-    else if (check_for_name) {
+    else if ((drop_down_val == 'Personal') && check_for_name) {
       var check_for_value = ($('.ubiquity_'+field+'_family_name_x'+ index).val() != '') || ($('.ubiquity_'+field+'_given_name_x'+index).val() != '');
       if (check_for_value == false){
         addFieldsNamesMandatoryForPersonalFields(field, index);

@@ -16,6 +16,7 @@ $(document).on("turbolinks:load", function(){
       divElement = '<div class="message has-funder-awards-warning has-warning">cannot add another with empty field</div>'
       $(this).parent('div').find('ul>li:last').last().after(divElement)
     }
+    applyFunderValidationRulesForField();
   });
 
   $(document).on('click', ".remove_funder_awards_field", function(e) {

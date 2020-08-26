@@ -21,30 +21,30 @@
       Funder DOI</label>
 
     <%= text_field_tag "#{template}[funder_group][][funder_doi]",  hash.dig("funder_doi"),
-                       class: "#{template}_funder_group form-control multi-text-field multi_value ubiquityfunder_doi",
+                       class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_doi",
                        placeholder: "Please enter the DOI",
                        name: "#{template}[funder_group][][funder_doi]",
-                       data: {field_name:'ubiquityfunder_doi'}
+                       data: {field_name:'ubiquity_funder_doi'}
     %>
     <br/>
     <label class="control-label multi_value optional" for="#{template}funder_isni">
       Funder ISNI</label>
 
     <%= text_field_tag "#{template}[funder_group][][funder_isni]",  hash.dig("funder_isni"),
-                       class: "#{template}_funder_group form-control multi-text-field multi_value ubiquityfunder_isni",
+                       class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_isni",
                        placeholder: "Please enter the ISNI",
                        name: "#{template}[funder_group][][funder_isni]",
-                       data: {field_name:'ubiquityfunder_isni'}
+                       data: {field_name:'ubiquity_funder_isni'}
     %>
     <br/>
     <label class="control-label multi_value optional" for="#{template}funder_ror">
       Funder ROR</label>
 
     <%= text_field_tag "#{template}[funder_group][][funder_ror]",  hash.dig("funder_ror"),
-                       class: "#{template}_funder_group form-control multi-text-field multi_value ubiquityfunder_ror",
+                       class: "#{template}_funder_group form-control multi-text-field multi_value ubiquity_funder_ror",
                        placeholder: "Please enter the ROR",
                        name: "#{template}[funder_group][][funder_ror]",
-                       data: {field_name:'ubiquityfunder_ror'}
+                       data: {field_name:'ubiquity_funder_ror'}
     %>
     <br/>
     <div class='form-group'>

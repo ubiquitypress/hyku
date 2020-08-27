@@ -15,6 +15,7 @@ $(document).on("turbolinks:load", function(){
     hiddenInput.val(parseInt(lastInputCount) + 1);
     $(ubiquityFunderClass +  ':last').after(cloneUbiDiv)
     activateAutocompleteForFunderName();
+    applyFunderValidationRulesForField();
   });
 });
 

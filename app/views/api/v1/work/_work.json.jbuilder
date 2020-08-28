@@ -113,7 +113,13 @@ if valid_json?(related_identifier)
   end
 end
 
-bool =  Hyrax::WorkShowPresenter.new(SolrDocument.new(work, ''), nil).representative_presenter&.solr_document&.visibility == "open"
+current_account = Account.find_by(tenant: Apartment::Tenant.current)
+
+if current_account.cname == 'oar.bl.uk'
+  bool = true
+else
+  bool = Hyrax::WorkShowPresenter.new(SolrDocument.new(work, ''), nil).representative_presenter&.solr_document&.visibility == "open"
+end
 
 json.thumbnail_url   bool ? ('https://' + work['account_cname_tesim'].first.to_s + work['thumbnail_path_ss'].to_s) : nil
 json.download_link   bool ? ('https://' + work['account_cname_tesim'].first.to_s + '/' + 'downloads' + '/' + work[:id].to_s) : nil

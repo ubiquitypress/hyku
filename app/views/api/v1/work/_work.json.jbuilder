@@ -115,7 +115,7 @@ end
 
 current_account = Account.find_by(tenant: Apartment::Tenant.current)
 
-if current_account.cname == 'oar.bl.uk'
+if current_account.cname == 'oar.bl.uk'|| 'repo-test.ubiquity.press'
   bool = true
 else
   bool = Hyrax::WorkShowPresenter.new(SolrDocument.new(work, ''), nil).representative_presenter&.solr_document&.visibility == "open"

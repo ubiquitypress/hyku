@@ -114,8 +114,6 @@ if valid_json?(related_identifier)
 end
 
 current_account = Account.find_by(tenant: Apartment::Tenant.current)
-puts "CURRENT ACCOUNT IS CHANGED #{current_account.inspect}"
-puts "CURRENT ACCOUNT CNAME IS #{current_account.cname}"
 
 if current_account.cname == 'oar.bl.uk'
   bool = false

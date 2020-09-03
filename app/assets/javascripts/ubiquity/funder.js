@@ -45,6 +45,8 @@ function activateAutocompleteForFunderName(){
     },
     select: function(ui, result) {
       closest_div = $(this).closest('div')
+      closest_div.find('.ubiquity_funder_doi').val('')
+
       closest_div.find('.ubiquity_funder_doi').val(result.item.uri)
       fetchFunderFieldData(result.item.id, closest_div)
     }

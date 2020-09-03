@@ -2,6 +2,8 @@ $(document).on("turbolinks:load", function(){
   $('.ubiquity_funder_name').autocomplete({
     select: function(ui, result) {
       closest_div = $(this).closest('div')
+      closest_div.find('.ubiquity_funder_doi').val('')
+
       closest_div.find('.ubiquity_funder_doi').val(result.item.uri)
       fetchFunderFieldData(result.item.id, closest_div)
     }
@@ -13,6 +15,8 @@ function fetchFunderFieldData(funder_id, closest_div) {
   var protocol = window.document.location.protocol;
   var fullHost = protocol + '//' + host + '/available_ubiquity_titles/call_funder_api';
   var closest_div = closest_div;
+  closest_div.find('.ubiquity_funder_ror').val('')
+  closest_div.find('.ubiquity_funder_isni').val('')
   $.ajax({
     url: fullHost,
     type: "POST",

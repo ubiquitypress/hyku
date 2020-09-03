@@ -10,7 +10,7 @@ module Ubiquity
 
     CSV_HEARDERS_ORDER = %w(id date_uploaded date_modified file visibility  embargo_end_date  visibility_after_embargo lease_end_date visibility_after_lease collection_id
                         work_type resource_type title alternative_title creator contributor abstract date_published material_media duration institution organisational_unit project_name
-                        funder funder_project_reference event_title event_date event_location series_name book_title editor journal_title alternative_journal_title volume edition version
+                        funder_project_reference funder event_title event_date event_location series_name book_title editor journal_title alternative_journal_title volume edition version
                         issue pagination article_number publisher place_of_publication isbn issn eissn current_he_institution date_accepted date_submitted official_url
                         related_url related_exhibition related_exhibition_date language license rights_statement rights_holder doi qualification_name qualification_level
                         alternate_identifier related_identifier peer_reviewed keyword dewey library_of_congress_classification additional_information admin_set_name admin_set)
@@ -37,13 +37,15 @@ module Ubiquity
 
         #ActiveTriples::Relatio
         #
+        export_single_key_from_json_hash(key, value) if value.present? && key == "current_he_institution"
+
         populate_single_fields(key, value) if  value.present? && (@data_hash[key].present? && (@data_hash[key].class == String || @data_hash[key].class == DateTime) && (not value.class == Array) && (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key))
 
-        remap_json_fields(key, value) if value.present? && (@data_hash[key].present?  && (['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key)) && (not value.class == String) && (value.class != DateTime)  # &&(record.send(key).respond_to? :length)
+        remap_json_fields(key, value) if value.present? && (@data_hash[key].present?  && (['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier', 'funder'].include? key)) && (not value.class == String) && (value.class != DateTime)  # &&(record.send(key).respond_to? :length)
 
         #@data_hash[key].to_a.class == Arra
         #
-        remap_array_fields(key, value)  if value.present? && (@data_hash[key].present? && (not value.class == String) && (value.class != DateTime) && @data_hash[key].class == Array && (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier'].include? key))
+        remap_array_fields(key, value)  if value.present? && (@data_hash[key].present? && (not value.class == String) && (value.class != DateTime) && @data_hash[key].class == Array && (not ['creator', 'editor', 'contributor', 'alternate_identifier', 'related_identifier', 'funder', 'current_he_institution'].include? key))
       end
       self
     end
@@ -51,7 +53,7 @@ module Ubiquity
     def rename_hash_keys_to_csv_keys(main_hash, hash_with_new_keys)
       common_keys = hash_with_new_keys.keys &  main_hash.keys
       new_hash = main_hash.slice(*common_keys)
-      common_keys.each {|term|   new_hash[hash_with_new_keys[term]] = new_hash.delete(term) if hash_with_new_keys.keys.include?(term) && new_hash.keys.include?(term)}
+      common_keys.each {|term| new_hash[hash_with_new_keys[term]] = new_hash.delete(term) if hash_with_new_keys.keys.include?(term) && new_hash.keys.include?(term)}
       new_hash
     end
 
@@ -67,6 +69,16 @@ module Ubiquity
 
          'date_uploaded_dtsi' => date_uploaded, 'date_modified_dtsi' => date_modified
        }
+    end
+
+    def export_single_key_from_json_hash(key, value)
+      if key ==  'current_he_institution' && value.present?
+        puts "================================ export_single_key_from_json_hash  =============== #{key}"
+
+        value_array_of_hash = JSON.parse(value.first)
+        first_value = value_array_of_hash.first["current_he_institution_name"]
+        @unordered_hash[key] = first_value
+      end
     end
 
     def populate_single_fields(key, value)
@@ -110,23 +122,25 @@ module Ubiquity
     def give_json_fields_right_csv_headers(data)
       data_array_hash =  JSON.parse(data.first)
       data_array_hash.map do |data_hash|
-        new_hash = data_hash.except('creator_position', 'contributor_position', 'editor_position')
+        new_hash = data_hash.except('creator_position', 'contributor_position', 'editor_position', 'funder_position')
       end
     end
 
     def loop_over_hash(hash, index)
       new_hash = hash.except("creator_institutional_relationship", "contributor_institutional_relationship",
-         "editor_institutional_relationship", "alternate_identifier_position", "related_identifier_position")
+         "editor_institutional_relationship", "alternate_identifier_position", "related_identifier_position", 'funder_award')
 
       new_hash.each do |key, value|
         key_name = ("#{key}_#{index + 1}")
         @unordered_hash[key_name] = value
+
       end
-      transform_institutional_relationship(hash, index)
+       transform_institutional_relationship(hash, index)
+       transform_array_values_in_json(hash, index)
 
     end
 
-    def transform_institutional_relationship(hash, index)
+    def  transform_institutional_relationship(hash, index)
       institutional_relationship = hash.slice("creator_institutional_relationship", "contributor_institutional_relationship", "editor_institutional_relationship")
       if institutional_relationship.present?
         array_institutional_relationship =  institutional_relationship.values.flatten
@@ -138,6 +152,21 @@ module Ubiquity
             key_name = "#{field_key}_#{join_words}_#{index + 1}"
             @unordered_hash[key_name] = 'true'
           end
+        end
+      end
+    end
+
+    def transform_array_values_in_json(hash, index)
+      hash_array_values = hash.slice("funder_award").presence || []
+      hash_array_values.each_with_index do |(key, value), hash_index|
+
+        if key == 'funder_award' && value.present?
+
+          value.each_with_index do |item, item_index|
+            key_name = ("#{key}_#{index + 1}_#{item_index + 1}")
+            @unordered_hash[key_name] = item
+          end
+
         end
       end
     end

@@ -75,8 +75,8 @@ module Ubiquity
       if key ==  'current_he_institution' && value.present?
         puts "================================ export_single_key_from_json_hash  =============== #{key}"
 
-        value_array_of_hash = JSON.parse(value.first)
-        first_value = value_array_of_hash.first["current_he_institution_name"]
+        value_array_of_hash =  Ubiquity::JsonValidator.valid_json?(value.first) ? JSON.parse(value.first) : []
+        first_value = value_array_of_hash.first&.dig("current_he_institution_name")
         @unordered_hash[key] = first_value
       end
     end

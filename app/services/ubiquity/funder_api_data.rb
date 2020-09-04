@@ -9,7 +9,7 @@ module Ubiquity
 
     def fetch_isni
       response_hash = response.parsed_response
-      response_hash.dig('items').first['external_ids'].dig('ISNI')['all'] if response_hash.dig('items').first['external_ids'].present?
+      response_hash.dig('items').first['external_ids'].dig('ISNI')&.dig('all') if response_hash.dig('items').first['external_ids'].present?
     end
 
     def fetch_ror

@@ -46,8 +46,8 @@ module Ubiquity
          all_keys = array_of_hash_remapped_data.flat_map(&:keys).uniq
 
          #resort using ordering by suffix eg creator_isni_1 comes before creator_isni_2
+         all_keys = all_keys.sort_by{ |name| [name[/\d+/].to_i, name] }
 
-         all_keys = all_keys.sort_by{ |name| [name[/\d+/].to_i] }
          Ubiquity::CsvDataRemap::CSV_HEARDERS_ORDER.each {|k| all_keys.select {|e| sorted_header << e if e.start_with? k} }
 
          puts "=== finished resorting csv headers from remappedmodels=="

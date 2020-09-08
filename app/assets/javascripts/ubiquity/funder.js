@@ -46,6 +46,11 @@ function activateAutocompleteForFunderName(){
     select: function(ui, result) {
       closest_div = $(this).closest('div')
       closest_div.find('.ubiquity_funder_doi').val('')
+      //remove all funder award except the first
+      closest_div.find('.funder_awards_input_fields_wrap li').not(':first').remove();
+      //set first funder_award to empty string
+      closest_div.find('.funder_awards_input_fields_wrap li:first-child input')[0].value = ''
+
 
       closest_div.find('.ubiquity_funder_doi').val(result.item.uri)
       fetchFunderFieldData(result.item.id, closest_div)

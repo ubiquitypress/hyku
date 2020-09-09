@@ -44,14 +44,18 @@ module Ubiquity
 
          sorted_header = []
          all_keys = array_of_hash_remapped_data.flat_map(&:keys).uniq
-
          #resort using ordering by suffix eg creator_isni_1 comes before creator_isni_2
          all_keys = all_keys.sort_by{ |name| [name[/\d+/].to_i, name] }
-
-         Ubiquity::CsvDataRemap::CSV_HEARDERS_ORDER.each {|k| all_keys.select {|e| sorted_header << e if e.start_with? k} }
+         Ubiquity::CsvDataRemap::CSV_HEARDERS_ORDER.each do |k|
+           all_keys.select do |e|
+             sorted_header << e if e.start_with? k
+             #added to allow export of relation_type sub key from related_identifier json
+             sorted_header << e if e.start_with?('relation_type') && k.include?('related_identifier')
+           end
+        end
 
          puts "=== finished resorting csv headers from remappedmodels=="
-
+         
          sorted_header.uniq
        end
 
@@ -74,7 +78,6 @@ module Ubiquity
           headers ||= csv_header(array_of_hash_remapped_data)
           sorted_header = headers
           puts "=== starting to generate csv using  remapped models=="
-
           csv = CSV.generate(headers: true) do |csv|
             csv << sorted_header
             csv_data.each do |hash|

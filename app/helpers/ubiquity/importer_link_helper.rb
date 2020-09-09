@@ -4,7 +4,7 @@ module Ubiquity::ImporterLinkHelper
     if current_account.cname  == 'sandbox.repo-test.ubiquity.press' || current_account.cname.split('.').include?('localhost')
       'https://importer.repo-test.ubiquity.press'
     else
-      'https://importer.oar.bl.uk'
+      'https://importer.pacific.us.ubiquityrepository.website'
     end
   end
 end

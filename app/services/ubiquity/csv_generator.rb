@@ -56,7 +56,14 @@ module Ubiquity
       all_keys = csv_data_object.flat_map(&:keys).uniq
       all_keys = all_keys.sort_by{ |name| [name[/\d+/].to_i, name] }
 
-      Ubiquity::CsvDataRemap::CSV_HEARDERS_ORDER.each {|k| all_keys.select {|e| sorted_header << e if e.start_with? k} }
+      #added to allow export of relation_type sub key from related_identifier json
+      Ubiquity::CsvDataRemap::CSV_HEARDERS_ORDER.each do |k|
+        all_keys.select do |e|
+          sorted_header << e if e.start_with? k
+          sorted_header << e if e.start_with?('relation_type') && k.include?('related_identifier')
+        end
+      end
+
       sorted_header.uniq
     end
 

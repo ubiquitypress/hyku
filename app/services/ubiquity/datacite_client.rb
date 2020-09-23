@@ -26,7 +26,7 @@ module Ubiquity
 
     def fetch_record_from_crossref
       handle_client do
-        HTTParty.get("https://api.crossref.org/works/#{path}")
+        HTTParty.get("https://api.crossref.org/works/#{path}?mailto=tech@ubiquitypress.com")
       end
     end
 

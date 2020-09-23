@@ -65,7 +65,7 @@ module Hyku
       Hyrax::CollectionsController.prepend(::Ubiquity::CollectionsControllerBehaviourOverride)
       Hyrax::WorksControllerBehavior.include(::Ubiquity::WorksControllerBehaviourOverride)
       Hyrax::MyController.include(::Ubiquity::HyraxMyControllerOverride)
-
+      Qa::Authorities::Crossref::GenericAuthority.prepend(::Ubiquity::CrossrefGenericAuthorityOverride)
     end
 
     config.before_initialize do

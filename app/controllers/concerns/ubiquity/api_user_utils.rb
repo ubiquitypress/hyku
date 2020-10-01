@@ -46,7 +46,7 @@ module Ubiquity
 
     def user_roles(user)
       if user.present?
-        roles = user.roles.map {|role| role.try(:name)}
+        roles = user.roles.map {|role| role.try(:name)}.uniq
         roles - ["super_admin"]
       end
     end

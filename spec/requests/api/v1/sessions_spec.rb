@@ -2,92 +2,179 @@ require 'rails_helper'
 require 'spec_helper'
 
 RSpec.describe API::V1::SessionsController, type: :request do
-  include ApiTestHelpers
-  let!(:user) { create(:user) }
+  let!(:user) { create(:user, :confirmed) }
   let!(:account) { create(:account) }
+  let(:admin_sets) { [] }
 
   before do
-    allow(AdminSet).to receive(:all).and_return([])
+    WebMock.disable!
+    allow(AdminSet).to receive(:all).and_return(admin_sets)
   end
 
-  after(:each) do
-    travel_back
-    user.destroy
+  after do
+    WebMock.enable!
   end
 
   describe "#login" do
-    it 'should return jwt token with valid credentials if user is confirmed' do
-      user.confirm
-      post_request(user, 2)
-      parse_response = JSON.parse(response.body)
-      response_values = response
-      returned_cookie = response.cookies.with_indifferent_access[:jwt]
-      cookie_value = returned_cookie
-      expect(parse_response['email']).to eq(user.email)
-      expect(returned_cookie).to be_truthy
-    end
-  end
+    let(:email_credentials) { user.email }
+    let(:password_credentials) { user.password }
+    let(:json_response) { JSON.parse(response.body) }
+    let(:jwt_cookie) { response.cookies.with_indifferent_access[:jwt] }
 
-  describe "failed login" do
-    it 'should not be able to generate jwt token with invalid credentials' do
-      post "/api/v1/tenant/#{account.id}/users/login", params: {
-       email: '',
-       password: user.password,
-       expire: 2
-     }
+    context 'user is confirmed' do
+      context 'with valid credentials' do
+        it 'returns jwt token and json response' do
+          post api_v1_user_login_url(tenant_id: account.id),  params: {
+            email: email_credentials,
+            password: password_credentials,
+            expire: 2
+          }
+          expect(response.status).to eq(200)
+          expect(json_response['email']).to eq(user.email)
+          expect(json_response['participants']).to eq []
+          expect(json_response['type']).to eq []
+          expect(jwt_cookie).to be_truthy
+        end
 
-     parse_response = JSON.parse(response.body)
-     returned_cookie = response.cookies.with_indifferent_access[:jwt]
+        context 'with type and participants' do
+          let!(:user) { create(:admin, :confirmed) }
+          let!(:admin_set) { create(:admin_set, with_permission_template: true) }
+          let!(:permission_template_access) do
+            create(:permission_template_access,
+                   :manage,
+                   permission_template: admin_set.permission_template,
+                   agent_type: 'user',
+                   agent_id: user.user_key)
+          end
+          let(:admin_sets) { [admin_set] }
 
-     expect(parse_response['status']).to eq(401)
-     expect(parse_response['message']).to eq("Invalid email or password.")
-     expect(returned_cookie).to be_falsey
-    end
-
-    it 'should not return jwt token with valid credentials if user is not confirmed' do
-      post_request(user, 2)
-      parse_response = JSON.parse(response.body)
-      response_values = response
-      returned_cookie = response.cookies.with_indifferent_access[:jwt]
-      cookie_value = returned_cookie
-      expect(parse_response['status']).to eq(401)
-      expect(parse_response['message']).to eq("Invalid email or password.")
-      expect(returned_cookie).to be_falsey
-    end
-  end
-
-  describe "Logout and expire tokens" do
-    it 'should return empty string or error message with expired token' do
-      post_request(user, 2)
-      parse_response = JSON.parse(response.body)
-      returned_cookie = response[ "Set-Cookie"]
-      travel_to(Time.now + 4.minute) do
-        headers =  {Cookie: "#{returned_cookie}", "ACCEPT" => "application/json"}
-        get "/api/v1/tenant/#{account.id}/users/log_out", :headers => headers
-            expired_cookie = response.cookies.with_indifferent_access[:jwt]
-        expect(expired_cookie).to be_falsey
+          it 'returns jwt token and json response' do
+            post api_v1_user_login_url(tenant_id: account.id),  params: {
+              email: email_credentials,
+              password: password_credentials,
+              expire: 2
+            }
+            expect(response.status).to eq(200)
+            expect(json_response['email']).to eq(user.email)
+            expect(json_response['participants']).to eq [{admin_set.title.first => "manage"}]
+            expect(json_response['type']).to eq ['admin']
+            expect(jwt_cookie).to be_truthy
+          end
+        end
       end
 
+      context 'with invalid credentials' do
+        let(:password_credentials) { '' }
+
+        it 'does not return jwt token' do
+          post api_v1_user_login_url(tenant_id: account.id),  params: {
+            email: email_credentials,
+            password: password_credentials,
+            expire: 2
+          }
+          expect(response.status).to eq(200)
+          expect(json_response['status']).to eq(401)
+          expect(json_response['message']).to eq("Invalid email or password.")
+          expect(jwt_cookie).to be_falsey
+        end
+      end
+    end
+
+    context 'user is not confirmed' do
+      let!(:user) { create(:user) }
+
+      it 'does not return jwt token' do
+        post api_v1_user_login_url(tenant_id: account.id),  params: {
+          email: email_credentials,
+          password: password_credentials,
+          expire: 2
+        }
+        expect(response.status).to eq(200)
+        expect(json_response['status']).to eq(401)
+        expect(json_response['message']).to eq("Invalid email or password.")
+        expect(jwt_cookie).to be_falsey
+      end
     end
   end
 
-  # describe "refresh jwt tokens" do
-  #   it "should be able to refresh a valid unexpired token" do
-  #     post_request(user, 10)
-  #     parse_response = JSON.parse(response.body)
-  #     returned_cookie = response[ "Set-Cookie"]
-  #     travel_to(Time.now + 7.minute) do
-  #       headers =  {"Cookie" => "#{returned_cookie}", "ACCEPT" => "application/json"}
-  #       post "/api/v1/tenant/#{account.id}/users/refresh", :headers => headers
-  #       response_hash = JSON.parse(response.body)
-  #       new_cookie = response.cookies.with_indifferent_access[:jwt]
-  #       expect(response_hash.keys).to contain_exactly("email")
-  #       expect(response_hash['email']).to eq(user.email)
-  #       expect(new_cookie).to be_truthy
-  #       expect(response_hash['token']).not_to eq(parse_response['token'])
-  #     end
-  #   end
-  # end
+  describe '#log_out' do
+    before do
+      post api_v1_user_login_url(tenant_id: account.id),  params: {
+          email: user.email,
+          password: user.password,
+          expire: 2
+        }
+    end
+    let(:json_response) { JSON.parse(response.body) }
+    let(:jwt_cookie) { response.cookies.with_indifferent_access[:jwt] }
 
+    it 'successfully logs out' do
+      get api_v1_user_log_out_url(tenant_id: account.id)
+      expect(response.status).to eq(200)
+      expect(json_response['message']).to eq("Successfully logged out")
+      expect(jwt_cookie).to be_falsey
+    end
+  end
 
+  describe "#refresh" do
+    context 'with an unexpired jwt token' do
+      before do
+        post api_v1_user_login_url(tenant_id: account.id),  params: {
+            email: user.email,
+            password: user.password,
+            expire: 2
+          }
+      end
+      let(:json_response) { JSON.parse(response.body) }
+      let(:jwt_cookie) { response.cookies.with_indifferent_access[:jwt] }
+
+      it "refreshs the jwt token" do
+        expect { post api_v1_user_refresh_url(tenant_id: account.id), headers: { "Cookie" => response['Set-Cookie'] } }.to change { response.cookies.with_indifferent_access[:jwt] }
+        expect(jwt_cookie).to be_truthy
+      end
+
+      it 'returns jwt token and json response' do
+        post api_v1_user_refresh_url(tenant_id: account.id), headers: { "Cookie" => response['Set-Cookie'] }
+        expect(response.status).to eq(200)
+        expect(json_response['email']).to eq(user.email)
+        expect(json_response['participants']).to eq []
+        expect(json_response['type']).to eq []
+        expect(jwt_cookie).to be_truthy
+      end
+
+      context 'with type and participants' do
+        let!(:user) { create(:admin, :confirmed) }
+        let!(:admin_set) { create(:admin_set, with_permission_template: true) }
+        let!(:permission_template_access) do
+          create(:permission_template_access,
+                 :manage,
+                 permission_template: admin_set.permission_template,
+                 agent_type: 'user',
+                 agent_id: user.user_key)
+        end
+        let(:admin_sets) { [admin_set] }
+
+        it 'returns jwt token and json response' do
+          post api_v1_user_refresh_url(tenant_id: account.id), headers: { "Cookie" => response['Set-Cookie'] }
+          expect(response.status).to eq(200)
+          expect(json_response['email']).to eq(user.email)
+          expect(json_response['participants']).to eq [{admin_set.title.first => "manage"}]
+          expect(json_response['type']).to eq ['admin']
+          expect(jwt_cookie).to be_truthy
+        end
+      end
+
+      context 'with an expired jwt token' do
+        it 'returns an error' do
+          travel_to(Time.now + 4.hours) do
+            post api_v1_user_refresh_url(tenant_id: account.id), headers: { "Cookie" => response['Set-Cookie'] }
+            expect(response.status).to eq(200)
+            expect(json_response['status']).to eq(401)
+            expect(json_response['message']).to eq("Invalid token")
+            expect(jwt_cookie).to be_falsey
+          end
+        end
+      end
+    end
+  end
 end

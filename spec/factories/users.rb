@@ -1,12 +1,8 @@
 FactoryGirl.define do
-  json_data = ENV['TENANTS_WORK_SETTINGS']
-  data = JSON.parse(json_data) if json_data.present? && json_data.class == String
-  email_format = data&.dig('email_format', 0)
-
   factory :base_user, class: User do
-    sequence(:email) { |_n| "email-#{srand}#{email_format.present? ? email_format : '@test.com'}" }
-    password 'a password'
-    password_confirmation 'a password'
+    sequence(:email) { |_n| "email-#{srand}@test.com" }
+    password { 'a password' }
+    password_confirmation { 'a password' }
 
     factory :user do
       after(:create) { |user| user.remove_role(:admin) }
@@ -22,6 +18,10 @@ FactoryGirl.define do
 
     factory :invited_user do
       after(:create, &:invite!)
+    end
+
+    trait :confirmed do
+      confirmed_at { Time.now.utc }
     end
   end
 end

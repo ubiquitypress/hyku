@@ -4,26 +4,8 @@ RSpec.describe 'REST API V1 Routing', type: :routing do
       it "routes to #index via GET" do
         expect(get: "/api/v1/tenant").to route_to("api/v1/tenant#index", format: :json)
       end
-      it "routes to #create via POST" do
-        expect(post: "/api/v1/tenant").to route_to("api/v1/tenant#create", format: :json)
-      end
-      it "routes to #new via GET" do
-        expect(get: "/api/v1/tenant/new").to route_to("api/v1/tenant#new", format: :json)
-      end
-      it "routes to #edit via GET" do
-        expect(get: "/api/v1/tenant/abc/edit").to route_to("api/v1/tenant#edit", id: 'abc', format: :json)
-      end
       it "routes to #show via GET" do
         expect(get: "/api/v1/tenant/abc").to route_to("api/v1/tenant#show", id: 'abc', format: :json)
-      end
-      it "routes to #update via PATCH" do
-        expect(patch: "/api/v1/tenant/abc").to route_to("api/v1/tenant#update", id: 'abc', format: :json)
-      end
-      it "routes to #update via PUT" do
-        expect(put: "/api/v1/tenant/abc").to route_to("api/v1/tenant#update", id: 'abc', format: :json)
-      end
-      it "routes to #destroy via DELETE" do
-        expect(delete: "/api/v1/tenant/abc").to route_to("api/v1/tenant#destroy", id: 'abc', format: :json)
       end
     end
 
@@ -33,26 +15,8 @@ RSpec.describe 'REST API V1 Routing', type: :routing do
           it "routes to #index via GET" do
             expect(get: "/api/v1/tenant/abc/work").to route_to("api/v1/work#index", tenant_id: 'abc', format: :json)
           end
-          it "routes to #create via POST" do
-            expect(post: "/api/v1/tenant/abc/work").to route_to("api/v1/work#create", tenant_id: 'abc', format: :json)
-          end
-          it "routes to #new via GET" do
-            expect(get: "/api/v1/tenant/abc/work/new").to route_to("api/v1/work#new", tenant_id: 'abc', format: :json)
-          end
-          it "routes to #edit via GET" do
-            expect(get: "/api/v1/tenant/abc/work/def/edit").to route_to("api/v1/work#edit", id: 'def', tenant_id: 'abc', format: :json)
-          end
           it "routes to #show via GET" do
             expect(get: "/api/v1/tenant/abc/work/def").to route_to("api/v1/work#show", id: 'def', tenant_id: 'abc', format: :json)
-          end
-          it "routes to #update via PATCH" do
-            expect(patch: "/api/v1/tenant/abc/work/def").to route_to("api/v1/work#update", id: 'def', tenant_id: 'abc', format: :json)
-          end
-          it "routes to #update via PUT" do
-            expect(put: "/api/v1/tenant/abc/work/def").to route_to("api/v1/work#update", id: 'def', tenant_id: 'abc', format: :json)
-          end
-          it "routes to #destroy via DELETE" do
-            expect(delete: "/api/v1/tenant/abc/work/def").to route_to("api/v1/work#destroy", id: 'def', tenant_id: 'abc', format: :json)
           end
         end
     
@@ -80,26 +44,8 @@ RSpec.describe 'REST API V1 Routing', type: :routing do
           it "routes to #index via GET" do
             expect(get: "/api/v1/tenant/abc/collection").to route_to("api/v1/collection#index", tenant_id: 'abc', format: :json)
           end
-          it "routes to #create via POST" do
-            expect(post: "/api/v1/tenant/abc/collection").to route_to("api/v1/collection#create", tenant_id: 'abc', format: :json)
-          end
-          it "routes to #new via GET" do
-            expect(get: "/api/v1/tenant/abc/collection/new").to route_to("api/v1/collection#new", tenant_id: 'abc', format: :json)
-          end
-          it "routes to #edit via GET" do
-            expect(get: "/api/v1/tenant/abc/collection/def/edit").to route_to("api/v1/collection#edit", id: 'def', tenant_id: 'abc', format: :json)
-          end
           it "routes to #show via GET" do
             expect(get: "/api/v1/tenant/abc/collection/def").to route_to("api/v1/collection#show", id: 'def', tenant_id: 'abc', format: :json)
-          end
-          it "routes to #update via PATCH" do
-            expect(patch: "/api/v1/tenant/abc/collection/def").to route_to("api/v1/collection#update", id: 'def', tenant_id: 'abc', format: :json)
-          end
-          it "routes to #update via PUT" do
-            expect(put: "/api/v1/tenant/abc/collection/def").to route_to("api/v1/collection#update", id: 'def', tenant_id: 'abc', format: :json)
-          end
-          it "routes to #destroy via DELETE" do
-            expect(delete: "/api/v1/tenant/abc/collection/def").to route_to("api/v1/collection#destroy", id: 'def', tenant_id: 'abc', format: :json)
           end
         end
       end
@@ -108,27 +54,6 @@ RSpec.describe 'REST API V1 Routing', type: :routing do
         describe 'RESTful routes' do
           it "routes to #index via GET" do
             expect(get: "/api/v1/tenant/abc/search").to route_to("api/v1/search#index", tenant_id: 'abc', format: :json)
-          end
-          it "routes to #create via POST" do
-            expect(post: "/api/v1/tenant/abc/search").to route_to("api/v1/search#create", tenant_id: 'abc', format: :json)
-          end
-          it "routes to #new via GET" do
-            expect(get: "/api/v1/tenant/abc/search/new").to route_to("api/v1/search#new", tenant_id: 'abc', format: :json)
-          end
-          it "routes to #edit via GET" do
-            expect(get: "/api/v1/tenant/abc/search/def/edit").to route_to("api/v1/search#edit", id: 'def', tenant_id: 'abc', format: :json)
-          end
-          it "routes to #show via GET" do
-            expect(get: "/api/v1/tenant/abc/search/def").to route_to("api/v1/search#show", id: 'def', tenant_id: 'abc', format: :json)
-          end
-          it "routes to #update via PATCH" do
-            expect(patch: "/api/v1/tenant/abc/search/def").to route_to("api/v1/search#update", id: 'def', tenant_id: 'abc', format: :json)
-          end
-          it "routes to #update via PUT" do
-            expect(put: "/api/v1/tenant/abc/search/def").to route_to("api/v1/search#update", id: 'def', tenant_id: 'abc', format: :json)
-          end
-          it "routes to #destroy via DELETE" do
-            expect(delete: "/api/v1/tenant/abc/search/def").to route_to("api/v1/search#destroy", id: 'def', tenant_id: 'abc', format: :json)
           end
         end
     

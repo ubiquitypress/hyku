@@ -7,8 +7,8 @@ class API::V1::ReviewsController < API::V1::ApiBaseController
     object = ubiquity_api_work_flow_aproval_object
     if object.present? && object.is_valid_for_saving? && object.save
 
-      render json: { data: ubiquity_api_work_flow_aproval_object.comments_on_work_for_review,
-                  workflow_status: ubiquity_api_work_flow_aproval_object.workflow_state_name}
+      render json: { data: object.comments_on_work_for_review,
+                     workflow_status: object.workflow_state_name}
     else
       message = 'Unprocessable entity. It has one of the following issues. The user either has no permission to review a work or
        the work does not exists or the action name and comment were not sent back'
@@ -29,16 +29,16 @@ class API::V1::ReviewsController < API::V1::ApiBaseController
 
   def ubiquity_api_work_flow_aproval_object
     if @work.present? && current_ability.present?
-      @api_workflow_object ||= Ubiquity::ApiWorkflowApproval.new(ability: current_ability, account: current_account, work: @work,
+      @api_workflow_object ||= Ubiquity::Api::ApiWorkflowApproval.new(ability: current_ability, account: current_account, work: @work,
         user: current_user, approval_action: get_permitted_params[:name], comment: get_permitted_params[:comment])
     end
   end
 
-  def approval_object
-    object = ubiquity_api_work_flow_aproval_object
-    if object.present?
-      object && object.hyrax_workflow_action_form_object
-    end
-  end
+  # def approval_object
+  #   object = ubiquity_api_work_flow_aproval_object
+  #   if object.present?
+  #     object && object.hyrax_workflow_action_form_object
+  #   end
+  # end
 
 end

@@ -3,7 +3,7 @@ module Ubiquity
     extend ActiveSupport::Concern
 
     included do
-      validate :validator_work_type  if :get_work_list.present?
+      # validate :validator_work_type  if :get_work_list.present?
     end
 
     def validator_work_type

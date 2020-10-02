@@ -1,5 +1,5 @@
 #/home/edward/dev-2/hyku/app/views/api/v1/work/_work.json.jbuilder
-review_data = Ubiquity::ApiWorkflowApproval.new(ability: current_ability, account: current_account, work: @work, user: current_user)
+review_data = Ubiquity::Api::ApiWorkflowApproval.new(ability: current_ability, account: current_account, work: @work, user: current_user)
 
 if (["pending_review", "changes_required"].include? work["workflow_state_name_ssim"].try(:first) )  && current_api_ability.present? && (current_api_ability.can?(:review, :submissions) )
   json.partial! 'api/v1/work/work_content', work: work

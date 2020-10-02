@@ -1,73 +1,121 @@
 require 'rails_helper'
 require 'spec_helper'
 
-RSpec.describe "API::V1::ReviewsController", type: :request do
-  include ApiTestHelpers
-  WebMock.disable!
-  let!(:account) { create(:account) }
-  let(:user_mgr) { create(:user, email: 'user_mgr@example.com') }
-  let(:user_dep) { create(:user, email: 'user_dep@example.com') }
+RSpec.describe API::V1::ReviewsController, type: :request do
+  # include ApiTestHelpers
+  # WebMock.disable!
+  # let!(:account) { create(:account) }
+  # let(:user_mgr) { create(:user, email: 'user_mgr@example.com') }
+  # let(:user_dep) { create(:user, email: 'user_dep@example.com') }
+  #
+  # after(:each) do
+  #   user_mgr.destroy
+  #   user_dep.destroy
+  #   account.destroy
+  #   @admin_set.destroy
+  #   @work.destroy
+  #   @permission_template.destroy
+  #   @permission_template_access_dep.destroy
+  #   @permission_template_access_mgr.destroy
+  # end
 
-  after(:each) do
-    user_mgr.destroy
-    user_dep.destroy
-    account.destroy
-    @admin_set.destroy
-    @work.destroy
-    @permission_template.destroy
-    @permission_template_access_dep.destroy
-    @permission_template_access_mgr.destroy
+  before do
+    WebMock.disable!
   end
 
-  describe "Manage work under review" do
+  after do
+    WebMock.enable!
+  end
 
-    it "should be to add comment and change state" do
+  let!(:depositing_user) { create(:user, :confirmed) }
+  let!(:approving_user) { create(:user, :confirmed) }
+  let!(:account) { create(:account) }
+  let!(:admin_set) { create(:admin_set) }
+  let!(:permission_template) { create(:permission_template, admin_set_id: admin_set.id) }
+  let!(:permission_template_access) do
+    create(:permission_template_access,
+           :manage,
+           permission_template: admin_set.permission_template,
+           agent_type: 'user',
+           agent_id: approving_user.user_key)
+  end
+  let!(:workflow) { create(:workflow, active: true, permission_template: permission_template) }
+  let!(:work) { create(:work, user: depositing_user, admin_set_id: admin_set.id) }
 
-     @admin_set = instance_double(AdminSet, title: ['One step mediated deposit'])
-     @permission_template = instance_double(Hyrax::PermissionTemplate, admin_set_id: @admin_set.id )
-     @permission_template_access_dep = instance_double(Hyrax::PermissionTemplateAccess,
-             permission_template_id: @permission_template.id, agent_type: "user", agent_id: user_dep.email,
-             access: "deposit"
-            )
-     @permission_template_access_mgr = instance_double(Hyrax::PermissionTemplateAccess,
-                    permission_template_id: @permission_template.id, agent_type: "user", agent_id: user_mgr.email,
-                    access: "manage"
-                   )
+  before do
+    Hyrax::Workflow::WorkflowImporter.load_workflow_for(permission_template: permission_template)
+    Sipity::Workflow.activate!(permission_template: permission_template, workflow_id: permission_template.available_workflows.find_by(name: 'one_step_mediated_deposit').id)
+    Hyrax::Workflow::PermissionGenerator.call(roles: 'approving', workflow: workflow, agents: approving_user)
+    # Need to instantiate the Sipity::Entity for the given work. This is necessary as I'm not creating the work via the UI.
+    Hyrax::Workflow::WorkflowFactory.create(work, {}, depositing_user)
+  end
 
-     @work = create(:work, user: user_dep, admin_set_id: admin_set.id)
+  describe "#reviews" do
+    context 'with proper privileges' do
+      before do
+        post api_v1_user_login_url(tenant_id: account.id), params: {
+          email: approving_user.email,
+          password: approving_user.password,
+          expire: 2
+        }
+        @headers =  { "Cookie" => response['Set-Cookie'], "ACCEPT" => "application/json" }
+      end
 
-      #sign_in as a user with depositor
-      post api_v1_user_login_url(tenant_id: account.id), params: {
-        email: user_dep.email,
-        password: user_dep.password,
-        expire: expire
-      }
+      it "adds comment" do
+        expect do
+          post "/api/v1/tenant/#{account.id}/work/#{work.id}/reviews", params: {
+            name: "comment_only",
+            comment: "can manage workflow from api",
+          }, headers: @headers
+        end.to change { PowerConverter.convert(work, to: :sipity_entity).reload.comments.count }.by(1)
 
-      parse_response = JSON.parse(response.body)
-      returned_cookie = response[ "Set-Cookie"]
-      headers =  {"Cookie" => "#{returned_cookie}", "ACCEPT" => "application/json"}
+        expect(response.status).to eq(200)
+        json_response = JSON.parse(response.body)
+        expect(json_response['data'][0]['comment']).to be_present
+        expect(json_response['data'][0]['updated_at']).to be_present
+        expect(json_response['workflow_status']).to eq 'pending_review'
+      end
 
-      puts "bam-work #{work.inspect}"
-      #log out as a user with depositor permission
-      get "/api/v1/tenant/#{account.id}/users/log_out", :headers => headers
+      it 'changes state' do
+        expect do
+          post "/api/v1/tenant/#{account.id}/work/#{work.id}/reviews", params: {
+            name: "approve",
+            comment: "can manage workflow from api",
+          }, headers: @headers
+        end.to change { PowerConverter.convert(work, to: :sipity_entity).reload.workflow_state_name }.from("pending_review").to("deposited")
 
-      #resign in as an a user with manager persmission
-      post api_v1_user_login_url(tenant_id: account.id), params: {
-        email: user_mgr.email,
-        password: user_mgr.password,
-        expire: expire
-      }
+        expect(response.status).to eq(200)
+        json_response = JSON.parse(response.body)
+        expect(json_response['data'][0]['comment']).to be_present
+        expect(json_response['data'][0]['updated_at']).to be_present
+        expect(json_response['workflow_status']).to eq 'deposited'
+      end
+    end
 
-      new_returned_cookie = response[ "Set-Cookie"]
-      new_headers =  {"Cookie" => "#{new_returned_cookie}", "ACCEPT" => "application/json"}
+    context 'without proper privileges' do
+      let(:end_user) { create(:user, :confirmed) }
 
-      post "/api/v1/tenant/#{account.id}/work/#{work.id}/reviews", params: {
-        name: "comment_only",
-        comment: "can manage workflow from api",
+      before do
+        post api_v1_user_login_url(tenant_id: account.id), params: {
+          email: end_user.email,
+          password: end_user.password,
+          expire: 2
+        }
+        @headers = { "Cookie" => response['Set-Cookie'], "ACCEPT" => "application/json" }
+      end
 
-      }, headers: new_headers
+      it 'returns an error json doc' do
+        post "/api/v1/tenant/#{account.id}/work/#{work.id}/reviews", params: {
+          name: "approve",
+          comment: "can manage workflow from api",
+        }, headers: @headers
 
-      expect(response).to be_truthy
+        expect(response.status).to eq(200)
+        json_response = JSON.parse(response.body)
+        expect(json_response['status']).to eq(422)
+        expect(json_response['code']).to eq "Unprocessable entity"
+        expect(json_response['code']).to be_present
+      end
     end
   end
 end

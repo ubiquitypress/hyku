@@ -2,23 +2,6 @@ require 'rails_helper'
 require 'spec_helper'
 
 RSpec.describe API::V1::ReviewsController, type: :request do
-  # include ApiTestHelpers
-  # WebMock.disable!
-  # let!(:account) { create(:account) }
-  # let(:user_mgr) { create(:user, email: 'user_mgr@example.com') }
-  # let(:user_dep) { create(:user, email: 'user_dep@example.com') }
-  #
-  # after(:each) do
-  #   user_mgr.destroy
-  #   user_dep.destroy
-  #   account.destroy
-  #   @admin_set.destroy
-  #   @work.destroy
-  #   @permission_template.destroy
-  #   @permission_template_access_dep.destroy
-  #   @permission_template_access_mgr.destroy
-  # end
-
   before do
     WebMock.disable!
   end
@@ -50,7 +33,7 @@ RSpec.describe API::V1::ReviewsController, type: :request do
     Hyrax::Workflow::WorkflowFactory.create(work, {}, depositing_user)
   end
 
-  describe "#reviews" do
+  describe "/reviews" do
     context 'with proper privileges' do
       before do
         post api_v1_user_login_url(tenant_id: account.id), params: {

@@ -12,9 +12,9 @@ module Ubiquity
       @id = object.try(:id)
       @work_type = object.try(:has_model).try(:first).to_s
       @is_collection = object.collection?
-      @settings = Ubiquity::ParseTenantWorkSettings.new(@account_cname)
-      @settings_hash = @settings.tenant_settings_hash
-      @subdomain = @settings.get_tenant_subdomain
+      @settings = Ubiquity::ParseTenantWorkSettings.new(@account_cname) if @account_cname
+      @settings_hash = @settings.tenant_settings_hash if @settings
+      @subdomain = @settings.get_tenant_subdomain if @settings
     end
 
     def process_url

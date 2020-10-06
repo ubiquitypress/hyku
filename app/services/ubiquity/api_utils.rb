@@ -4,7 +4,7 @@ module Ubiquity
     #   #collection is a solr_document or  a hash
     def self.query_for_collection_works(collection, user = nil)
      if collection.present?
-       cache_key = "child_works/#{collection['account_cname_tesim'].first}/#{collection['id']}/#{collection['system_modified_dtsi']}"
+      #  cache_key = "child_works/#{collection['account_cname_tesim'].first}/#{collection['id']}/#{collection['system_modified_dtsi']}"
        #works = Rails.cache.fetch(cache_key) do
          using_works_in_collecton = fetch_works_in_collection_member_objects(collection, user)
          using_collection_ids_in_works= fetch_work_using_collection_ids_stored_in_work_metadatafield(collection, user)
@@ -28,7 +28,7 @@ module Ubiquity
      child_group = options['group_child_field'] || "issue_tesim"
      if collection.present?
        id = collection.with_indifferent_access['id']
-       cache_key = "works_by_volumes/#{collection['account_cname_tesim'].first}/#{id}/#{collection['system_modified_dtsi']}/#{field}/#{group_limit}"
+      #  cache_key = "works_by_volumes/#{collection['account_cname_tesim'].first}/#{id}/#{collection['system_modified_dtsi']}/#{field}/#{group_limit}"
        #works = Rails.cache.fetch(cache_key) do
           response = CatalogController.new.repository.search({ q: '', fl: 'issue_tesim, volume_tesim, title_tesim, id', fq: ['has_model_ssim:ArticleWork', "{!terms f=collection_id_sim}#{id}"],
             'group.field': field, 'group.query': "#{child_group}:[* TO *]", 'group.facet': true, group: true, rows: 3000, 'group.limit': group_limit })
@@ -45,7 +45,7 @@ module Ubiquity
      combined_collection_ids = collection_id_in_works | member_of_collection_ids 
      if work.present? && combined_collection_ids.present?  &&  skip_run == 'true'
 
-       cache_key = "parent_collection/#{work['account_cname_tesim'].first}/#{work['id']}/#{combined_collection_ids.try(:size).to_i}/#{work['system_modified_dtsi']}"
+      #  cache_key = "parent_collection/#{work['account_cname_tesim'].first}/#{work['id']}/#{combined_collection_ids.try(:size).to_i}/#{work['system_modified_dtsi']}"
 
        #parent_collections = Rails.cache.fetch(cache_key) do
             collection_ids = combined_collection_ids
@@ -63,7 +63,7 @@ module Ubiquity
 
    def self.query_for_files(work, skip_run = nil)
      if work.present? && work['file_set_ids_ssim'].present? && skip_run == 'true'
-       cache_key = "work_files/#{work['account_cname_tesim'].first}/#{work['id']}/#{work["file_set_ids_ssim"].try(:size).to_i}/#{work['system_modified_dtsi']}"
+      #  cache_key = "work_files/#{work['account_cname_tesim'].first}/#{work['id']}/#{work["file_set_ids_ssim"].try(:size).to_i}/#{work['system_modified_dtsi']}"
        #child_files = Rails.cache.fetch(cache_key) do
          file_ids = work['file_set_ids_ssim'].join(',')
          work_files = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{file_ids}"], rows: 100,  "sort" => "score desc, system_modified_dtsi desc")

@@ -24,7 +24,7 @@ if valid_json?(editor)
   json.editor JSON.parse(editor)
 end
 
-json.cname work['account_cname_tesim'].first
+json.cname work['account_cname_tesim'].try(:first)
 json.abstract    work['abstract_tesim'].try(:first)
 json.date_published    work['date_published_tesim']
 json.institution    work['institution_tesim']
@@ -110,8 +110,8 @@ end
 
 bool =  Hyrax::WorkShowPresenter.new(SolrDocument.new(work, ''), current_api_ability).representative_presenter&.solr_document&.visibility == "open"
 
-json.thumbnail_url   bool ? ('https://' + work['account_cname_tesim'].first.to_s + work['thumbnail_path_ss'].to_s) : nil
-json.download_link   bool ? ('https://' + work['account_cname_tesim'].first.to_s + '/' + 'downloads' + '/' + work[:id].to_s) : nil
+json.thumbnail_url   bool ? ('https://' + work['account_cname_tesim'].try(:first).to_s + work['thumbnail_path_ss'].to_s) : nil
+json.download_link   bool ? ('https://' + work['account_cname_tesim'].try(:first).to_s + '/' + 'downloads' + '/' + work[:id].to_s) : nil
 
 json.version    work['version_tesim']
 json.duration    work['duration_tesim']

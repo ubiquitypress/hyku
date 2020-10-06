@@ -15,7 +15,7 @@ RSpec.describe API::V1::SessionsController, type: :request do
     WebMock.enable!
   end
 
-  describe "#login" do
+  describe "/login" do
     let(:email_credentials) { user.email }
     let(:password_credentials) { user.password }
     let(:json_response) { JSON.parse(response.body) }
@@ -97,7 +97,7 @@ RSpec.describe API::V1::SessionsController, type: :request do
     end
   end
 
-  describe '#log_out' do
+  describe '/log_out' do
     before do
       post api_v1_user_login_url(tenant_id: account.id),  params: {
           email: user.email,
@@ -116,7 +116,7 @@ RSpec.describe API::V1::SessionsController, type: :request do
     end
   end
 
-  describe "#refresh" do
+  describe "/refresh" do
     context 'with an unexpired jwt token' do
       before do
         post api_v1_user_login_url(tenant_id: account.id),  params: {

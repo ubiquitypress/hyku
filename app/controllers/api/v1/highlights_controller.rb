@@ -9,16 +9,15 @@ class API::V1::HighlightsController <  API::V1::ApiBaseController
     @collections = get_collections || []
     @featured_works = get_featured_works || []
     @recent_documents = get_recent_documents || []
-    if current_user.present?
-      json = render_to_string(:template => 'api/v1/highlights/index.json.jbuilder', locals: {collections: @collections, featured_works: @featured_works,
-                  recent_documents: @recent_documents })
-    else
-      json =  render_to_string(:template => 'api/v1/highlights/index.json.jbuilder', locals: {collections: @collections, featured_works: @featured_works,
-                  recent_documents: @recent_documents })
+    # if current_user.present?
+    #   json = render_to_string(:template => 'api/v1/highlights/index.json.jbuilder', locals: {collections: @collections, featured_works: @featured_works,
+    #               recent_documents: @recent_documents })
+    # else
+    #   json =  render_to_string(:template => 'api/v1/highlights/index.json.jbuilder', locals: {collections: @collections, featured_works: @featured_works,
+    #               recent_documents: @recent_documents })
 
-    end
-    render json: json
-
+    # end
+    render json: render_to_string(:template => 'api/v1/highlights/index.json.jbuilder', locals: {collections: @collections, featured_works: @featured_works, recent_documents: @recent_documents })
   end
 
   private
@@ -35,11 +34,11 @@ class API::V1::HighlightsController <  API::V1::ApiBaseController
     last_updated_child  = using_collection_ids_in_works
 
     if record.dig('response','docs').try(:present?) && current_user.present?
-      set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, last_updated_child, current_user)
+      # set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, last_updated_child, current_user)
       fq = ['has_model_ssim:Collection'].concat(filter_using_visibility(current_user) )
       collections_json  = CatalogController.new.repository.search(q: 'id:*', fq: fq, rows: limit, sort: 'system_created_dtsi desc')
     elsif record.dig('response','docs').try(:present?)
-      set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, last_updated_child)
+      # set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, last_updated_child)
       fq = ['has_model_ssim:Collection'].concat(filter_using_visibility )
       #collections_json  = Rails.cache.fetch(set_cache_key) do
         CatalogController.new.repository.search(q: 'id:*', fq: fq, rows: limit, sort: 'system_created_dtsi desc')
@@ -54,7 +53,7 @@ class API::V1::HighlightsController <  API::V1::ApiBaseController
     new_file_ids = file_ids.present? ? file_ids.join(',') : nil
     last_updated_child = CatalogController.new.repository.search(q: "", fq: ["{!terms f=id}#{new_file_ids}"] ,  rows: 1, "sort" => "score desc, system_modified_dtsi desc")
     if record.dig('response','docs').try(:present?) && current_user.present?
-      set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, last_updated_child)
+      # set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, last_updated_child)
       CatalogController.new.repository.search(:q=>"id:*", sort: 'system_create_dtsi desc', rows: limit, fq: visibility_check(current_user))
 
     elsif record.dig('response','docs').try(:present?)
@@ -75,7 +74,7 @@ class API::V1::HighlightsController <  API::V1::ApiBaseController
     if record.dig('response','docs').try(:present?) && current_user.present?
       fq = ["{!terms f=id}#{ids.join(',')}"].concat(visibility_check(current_user))
 
-      set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, recently_updated)
+      # set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, recently_updated)
       data = CatalogController.new.repository.search(q: "", fq: fq, rows: limit)
     elsif record.dig('response','docs').try(:present?)
       fq = ["{!terms f=id}#{ids.join(',')}"].concat(visibility_check)

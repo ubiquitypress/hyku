@@ -53,7 +53,7 @@ class API::V1::CollectionController <   API::V1::ApiBaseController
     @limit = default_limit if params[:per_page].blank?
 
     if record.dig('response','docs').try(:present?) && current_user.present?
-      set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, last_updated_child)
+      # set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, last_updated_child)
       #collections_json  = Rails.cache.fetch(set_cache_key) do
         @collections = CatalogController.new.repository.search(q: '', fq: ["has_model_ssim:Collection"].concat(filter_using_visibility(current_user)),
                         "sort"=>"score desc, system_create_dtsi desc",  rows: limit, start: offset)

@@ -2,8 +2,8 @@ json.total @works['response']['numFound']
 
 json.items do
   json.array! @works['response']['docs']  do |work|
-    if work['has_model_ssim'] == 'Collection'
-      json.partial! 'api/v1/collection/collection', work: work
+    if work['has_model_ssim'].include? 'Collection'
+      json.partial! 'api/v1/collection/collection', single_collection: work
     else
       json.partial! 'api/v1/work/work', work: work
     end

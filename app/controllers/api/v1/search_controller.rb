@@ -110,7 +110,7 @@ class API::V1::SearchController < API::V1::ApiBaseController
   def facet_offset_limit
     if params[:per_page].present? || params[:page].present?
       facet_page = ([params[:page].to_i, 1].max - 1)
-      limit * page
+      limit * facet_page
     else
       0
     end
@@ -161,7 +161,5 @@ class API::V1::SearchController < API::V1::ApiBaseController
       ["resource_type_sim", "creator_search_sim", "keyword_sim", "collection_names_sim", "member_of_collections_ssim", "institution_sim", "language_sim",  "file_availability_sim"].map do |key|
       {key => Hash[*facet_count_list[key] ] }
     end
-
   end
-
 end

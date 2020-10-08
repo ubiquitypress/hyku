@@ -7,10 +7,10 @@ class FileSet < ActiveFedora::Base
   include Ubiquity::UpdateSharedIndex
 
   before_destroy :remove_rendering_relationship
-  before_save :set_account_cname
+  # before_save :set_account_cname
   before_update :fetch_file_sets_and_create_work_expiry_service
   after_save :parent_save_to_update_file_visibility_facet, on: [:update]
-  after_save :post_to_importer, on: [:create], unless: :is_localhost?
+  # after_save :post_to_importer, on: [:create], unless: :is_localhost?
 
   # Hyku has its own FileSetIndexer: app/indexers/file_set_indexer.rb
   # It overrides Hyrax to inject IIIF behavior.

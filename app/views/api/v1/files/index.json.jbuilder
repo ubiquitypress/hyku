@@ -21,11 +21,11 @@ json.array! @files['response']['docs'] do |work|
     json.license   nil
   end
 
-  json.thumbnail_url   ('https://' + work['account_cname_tesim'].first + work['thumbnail_path_ss'])
+  json.thumbnail_url   ('https://' + work['account_cname_tesim'].try(:first).to_s + work['thumbnail_path_ss'])
   json.date_uploaded  work['date_uploaded_dtsi']
   json.current_visibility  work['visibility_ssi']
   json.embargo_release_date  work['embargo_release_date_dtsi']
   json.lease_expiration_date  work['lease_expiration_date_dtsi']
   json.size   work['file_size_lts']
-  json.download_link 'https://' + work['account_cname_tesim'].first + main_app.fail_uploads_download_file_path(fileset_id: work[:id])
+  json.download_link 'https://' + work['account_cname_tesim'].try(:first).to_s + main_app.fail_uploads_download_file_path(fileset_id: work[:id])
 end

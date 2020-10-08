@@ -105,10 +105,26 @@ RSpec.describe API::V1::CollectionController, type: :request, clean: true do
       it 'returns collection json' do
         get "/api/v1/tenant/#{account.id}/collection/#{collection.id}"
         expect(response.status).to eq(200)
-        expect(json_response['uuid']).to eq collection.id
+        expect(json_response).to include('uuid' => collection.id,
+                                         'type' => 'collection',
+                                         'related_url' => nil,
+                                         'title' => collection.title.first,
+                                         'resource_type' => nil,
+                                         'date_created' => nil,
+                                         'cname' => nil,
+                                         'description' => nil,
+                                         'date_published' => nil,
+                                         'keywords' => nil,
+                                         'license_for_api_tesim' => nil,
+                                         'rights_statements_for_api_tesim' => nil,
+                                         'language' => nil,
+                                         'publisher' => nil,
+                                         'thumbnail_url' => be_a(String), #url
+                                         'visibility' => 'open',
+                                         'works' => [],
+                                         'volumes' => nil,
+                                         'thumbnail_base64_string' => nil)
         expect(response).to render_template('api/v1/collection/_collection.json.jbuilder')
-
-        # TODO: Add more expectations about the shape of the exact data being returned
       end
     end
 

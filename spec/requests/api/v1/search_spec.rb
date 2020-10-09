@@ -263,12 +263,12 @@ RSpec.describe API::V1::SearchController, type: :request, clean: true do
           expect(json_response.size).to eq 1
           expect(json_response).to eq({ "Cat" => 2 })
         end
-  
+
         context 'with page' do
           let(:page) { 2 }
     
           it 'limits the number of facet results and offsets to page' do
-            get "/api/v1/tenant/#{account.id}/search/facet/#{id}?per_page=#{per_page}&page=#{2}"
+            get "/api/v1/tenant/#{account.id}/search/facet/#{id}?per_page=#{per_page}&page=#{page}"
             expect(response.status).to eq(200)
             expect(json_response.size).to eq 1
             expect(json_response).to eq({ "Dog" => 1 })

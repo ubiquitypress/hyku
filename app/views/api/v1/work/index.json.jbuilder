@@ -1,4 +1,3 @@
-
 json.total @works.presence && @works['response']['numFound']
 work_records =  @works.presence && @works['response']['docs']
 

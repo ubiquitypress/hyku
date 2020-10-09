@@ -16,16 +16,16 @@ class API::V1::WorkController < API::V1::ApiBaseController
   end
 
   def show
-    json = render_to_string(:partial => 'api/v1/work/work.json.jbuilder', locals: {work: @work})
-      render json: json
+    render json: render_to_string(:partial => 'api/v1/work/work.json.jbuilder', locals: {work: @work})
   end
 
   def manifest
     work_class = @work['has_model_ssim'].first.pluralize
     controller_in_use = "Hyrax::#{work_class}Controller".camelize.constantize.new
-    request.env["HTTP_HOST"]  = @work['account_cname_tesim'].first
+    request.env["HTTP_HOST"]  = @work['account_cname_tesim'].try(:first)
     controller_in_use.request = request
     controller_in_use.response = response
+    controller_in_use.sign_in current_user if current_user
     record = controller_in_use.manifest
     render json: record
   end
@@ -57,7 +57,7 @@ class API::V1::WorkController < API::V1::ApiBaseController
 
     if record.dig('response','docs').try(:present?) && current_user.present?
       #something similar to multiple/library.localhost/2019-10-21T14:02:35Z/53
-      set_cache_key = get_records_with_pagination_cache_key(record, last_updated_child)
+      # set_cache_key = get_records_with_pagination_cache_key(record, last_updated_child)
       @works = CatalogController.new.repository.search(q: '', fq: works_visibility_check(current_user), "sort" => "score desc, system_create_dtsi desc",
           rows: limit, start: offset)
       works_json = render_to_string(:template => 'api/v1/work/index.json.jbuilder', locals: {works: @works })
@@ -84,7 +84,7 @@ class API::V1::WorkController < API::V1::ApiBaseController
 
     if record.dig('response','docs').try(:present?) && current_user.present?
       #returns keys like multiple/library.localhost/article/page-0/per_page-2/2019-07-10T14:10:50Z/14
-      set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, last_updated_child)
+      # set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, last_updated_child)
       fq = filter_work_endpoint_using_visibility(current_user) << "has_model_ssim:#{params[:type].camelize.constantize}"
 
       @works = CatalogController.new.repository.search(q: "id:*", fq: fq, rows: limit, start: offset )
@@ -92,7 +92,7 @@ class API::V1::WorkController < API::V1::ApiBaseController
 
       render json: works_json
     elsif record.dig('response','docs').try(:present?)
-      set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, last_updated_child)
+      # set_cache_key = add_filter_by_class_type_with_pagination_cache_key(record, last_updated_child)
       fq = filter_work_endpoint_using_visibility << "has_model_ssim:#{params[:type].camelize.constantize}"
 
       @works = CatalogController.new.repository.search(q: "id:*", fq: fq, rows: limit, start: offset )
@@ -109,11 +109,11 @@ class API::V1::WorkController < API::V1::ApiBaseController
     extracted_params = request.query_parameters.except(*['per_page', 'page'])
     metadata_field = extracted_params.keys.first.try(:to_sym)
     value = extracted_params[metadata_field]
-   if [:availability].include? metadata_field
-     fetch_by_file_availability(metadata_field, value)
-   else
-     fetch_by_other_metatdata_fields(metadata_field, value)
-   end
+    if [:availability].include? metadata_field
+      fetch_by_file_availability(metadata_field, value)
+    else
+      fetch_by_other_metatdata_fields(metadata_field, value)
+    end
   end
 
   def fetch_by_file_availability(metadata_field, value)
@@ -125,14 +125,14 @@ class API::V1::WorkController < API::V1::ApiBaseController
     @limit = default_limit if params[:per_page].blank?
 
     if record.dig('response','docs').try(:present?) && current_user.present?
-      set_cache_key = add_filter_by_metadata_field_with_pagination_cache_key(record, metadata_field, last_updated_child)
+      # set_cache_key = add_filter_by_metadata_field_with_pagination_cache_key(record, metadata_field, last_updated_child)
       fq = ["{!term f=file_availability_sim}#{map_search_values[value.to_sym]}", "{!terms f=has_model_ssim}#{model_list}"].concat(filter_work_endpoint_using_visibility(current_user) )
       @works =  CatalogController.new.repository.search(:q=>"", fq: fq, rows: limit, start: offset)
       works_json = render_to_string(:template => 'api/v1/work/index.json.jbuilder', locals: {works: @works})
 
       render json: works_json
     elsif record.dig('response','docs').try(:present?)
-      set_cache_key = add_filter_by_metadata_field_with_pagination_cache_key(record, metadata_field, last_updated_child)
+      # set_cache_key = add_filter_by_metadata_field_with_pagination_cache_key(record, metadata_field, last_updated_child)
       fq = ["{!term f=file_availability_sim}#{map_search_values[value.to_sym]}", "{!terms f=has_model_ssim}#{model_list}"].concat(filter_work_endpoint_using_visibility)
       @works =  CatalogController.new.repository.search(:q=>"", fq: fq, rows: limit, start: offset)
       works_json = render_to_string(:template => 'api/v1/work/index.json.jbuilder', locals: {works: @works})
@@ -152,13 +152,13 @@ class API::V1::WorkController < API::V1::ApiBaseController
     @limit = default_limit if params[:per_page].blank?
 
     if record.dig('response','docs').try(:present?) && current_user.present?
-      set_cache_key = add_filter_by_metadata_field_with_pagination_cache_key(record, metadata_field, last_updated_child)
+      # set_cache_key = add_filter_by_metadata_field_with_pagination_cache_key(record, metadata_field, last_updated_child)
       @works =  CatalogController.new.repository.search(q: "#{map_search_keys[metadata_field]}:#{value}", rows: limit, start: offset, fq: works_visibility_check(current_user) )
       works_json = render_to_string(:template => 'api/v1/work/index.json.jbuilder', locals: {works: @works})
 
       render json: works_json
     elsif record.dig('response','docs').try(:present?)
-      set_cache_key = add_filter_by_metadata_field_with_pagination_cache_key(record, metadata_field, last_updated_child)
+      # set_cache_key = add_filter_by_metadata_field_with_pagination_cache_key(record, metadata_field, last_updated_child)
       @works =  CatalogController.new.repository.search(q: "#{map_search_keys[metadata_field]}:#{value}", rows: limit, start: offset, fq: works_visibility_check)
       works_json = render_to_string(:template => 'api/v1/work/index.json.jbuilder', locals: {works: @works})
 

@@ -10,8 +10,8 @@ class API::V1::TenantController < ActionController::Base
   end
 
   def show
-    @site = @tenant.get_site
-    @content_block = @tenant.get_content_block
+    # @site = @tenant.get_site
+    # @content_block = @tenant.get_content_block
     fresh_when(last_modified: set_last_modified, public: true)
   end
 

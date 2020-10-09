@@ -1,5 +1,5 @@
 
-AccountElevator.switch!(tenant.cname)
+#AccountElevator.switch!(tenant.cname)
 json.id  tenant.id
 json.tenant  tenant.tenant
 json.cname  tenant.cname

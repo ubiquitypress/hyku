@@ -6,6 +6,7 @@ class UbiquityCleanupUploadsJob < ActiveJob::Base
       AccountElevator.switch!(account.cname)
       Rails.logger.debug("Running uploads cleanup on #{account.cname}")
       Hyrax::UploadedFile.where.not(file_set_uri: nil).each do |upload|
+        next unless upload.file.file.exists?
         begin do
           disk_checksum = Digest::SHA1.file upload.file.path
           fedora_checksum = FileSet.find(upload.file_set_uri.split('/').last).original_file.checksum.value

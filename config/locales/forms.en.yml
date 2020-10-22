@@ -39,7 +39,7 @@ en:
       contributor: A person or group who played a secondary role in the work.
       creator: The person or group responsible for the work. Usually this is the author of the content.
       resource_type: Select the specific resource type that best describes the work.
-      date_published: The date the item was published and made publicly available. Provide just the year or a more specific date. Ifou are minting a DOI for this item, this field is mandatory.
+      date_published: The date the item was published and made publicly available. Provide just the year or a more specific date. If you are minting a DOI for this item, this field is mandatory.
       date_accepted: The date the item was accepted for publication. For example, this may be when receiving an acceptance letter from a publisher or when the final text has been copyedited and approved. You can provide just the year or a more specific date if you have this available.
       date_submitted: The date the item was submitted for review to the publisher.  You can provide just the year or a more specific date ifou have this available.
       pagination: For a contribution or article, this can be the range of pages e.g. 1-13, for an entire volume it can be the total number of pages.

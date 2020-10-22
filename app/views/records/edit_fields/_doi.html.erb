@@ -6,6 +6,6 @@
 </label>
 <p class="help-block"><%= t('hyrax.hints.doi') %></p>
 
-<%= text_field_tag "#{my_model_name}[doi]",nil, id: "#{my_model_name}_doi",
+<%= text_field_tag "#{my_model_name}[doi]",f.object.model.doi, id: "#{my_model_name}_doi",
   class: "ubiquity-doi form-control string optional"%>
 <br>

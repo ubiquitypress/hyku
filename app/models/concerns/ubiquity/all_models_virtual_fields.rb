@@ -292,6 +292,7 @@ module Ubiquity
     end
 
     def clean_incomplete_data(data_hash)
+      return if data_hash.empty?
       field_name = get_field_name(data_hash)
       data_hash.each do |hash|
         if (hash["#{field_name}_family_name"].blank? && hash["#{field_name}_organization_name"].blank?)

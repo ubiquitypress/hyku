@@ -8,12 +8,12 @@ module Ubiquity
                       "disable_draft_doi", "version_number", 'depositor', 'file_availability'
                      ]
 
-    CSV_HEARDERS_ORDER = %w(id date_uploaded date_modified file visibility  embargo_end_date  visibility_after_embargo lease_end_date visibility_after_lease collection_id
+    CSV_HEARDERS_ORDER = %w(id date_uploaded date_modified file visibility embargo_end_date visibility_after_embargo lease_end_date visibility_after_lease collection_id
                         work_type resource_type title alternative_title creator contributor abstract date_published material_media duration institution organisational_unit project_name
                         funder_project_reference funder event_title event_date event_location series_name book_title editor journal_title alternative_journal_title volume edition version
                         issue pagination article_number publisher place_of_publication isbn issn eissn current_he_institution date_accepted date_submitted official_url
-                        related_url related_exhibition related_exhibition_date language license rights_statement rights_holder doi qualification_name qualification_level
-                        alternate_identifier related_identifier peer_reviewed keyword dewey library_of_congress_classification additional_information admin_set_name admin_set)
+                        related_url related_exhibition related_exhibition_date related_exhibition_venue language license rights_statement rights_holder doi qualification_name qualification_level
+                        alternate_identifier related_identifier peer_reviewed keyword dewey_classification library_of_congress_classification additional_information admin_set_name admin_set)
 
     def initialize(object=nil)
        if object.present?
@@ -99,7 +99,10 @@ module Ubiquity
     def remap_array_fields(key, value)
       puts "================================ array-key  =============== #{key}"
 
-        list_of_array_used_as_single_felds = ['title', 'volume', 'version', 'alt_title', 'admin_set', 'admin_set_name', 'work_type']
+        list_of_array_used_as_single_felds = ['title', 'volume', 'version', 'alt_title', 'admin_set', 'admin_set_name', 'work_type', 'resource_type',
+                                              'abstract', 'edition', 'issue', 'pagination', 'isbn', 'issn', 'eissn', 'book_title', 'article_number', 'official_url',
+                                              'date_submitted', 'date_accepted', 'library_of_congress_classification', 'dewey_classification', 'doi', 'qualification_name', 'qualification_level',
+                                              'publisher', 'peer_reviewed', 'rights_statement', 'alternative_journal_title', 'material_media']
         value.each_with_index do |item, index|
           key_name = ("#{key}_#{index + 1}")  if list_of_array_used_as_single_felds.exclude?(key)
           key_name = key if list_of_array_used_as_single_felds.include?(key)
@@ -205,13 +208,13 @@ module Ubiquity
        "journal_title_tesim" => "journal_title", "alternative_journal_title_tesim" => "alternative_journal_title", "volume_tesim" => "volume", "edition_tesim" => "edition",
        "version_tesim" => "version",  "issue_tesim" => "issue", "pagination_tesim" => "pagination", "article_num_tesim" => 'article_number', "publisher_tesim" => "publisher",
        "place_of_publication_tesim" => "place_of_publication", "isbn_tesim" => "isbn", "issn_tesim" => "issn", "eissn_tesim" => "eissn", "current_he_institution_tesim" => "current_he_institution",
-       "date_accepted_tesim" => "date_accepted", "date_published_tesim" => "date_published", "official_link_tesim" => "official_url", "related_url_tesim" => "related_url",
-       "related_exhibition_tesim" => "related_exhibition", "related_exhibition_date_tesim" => "related_exhibition_date", "language_tesim" => "language",
+       "date_accepted_tesim" => "date_accepted", "date_submitted_tesim" => "date_submitted", "date_published_tesim" => "date_published", "official_link_tesim" => "official_url", "related_url_tesim" => "related_url",
+       "related_exhibition_tesim" => "related_exhibition", "related_exhibition_date_tesim" => "related_exhibition_date", "related_exhibition_venue_tesim" => "related_exhibition_venue", "language_tesim" => "language",
        "license_tesim" => "license", "rights_statement_tesim" => "rights_statement", "rights_holder_tesim" => "rights_holder", "doi_tesim" => "doi",
        "qualification_name_tesim" => "qualification_name", "qualification_level_tesim" => "qualification_level",  "alternate_identifier_tesim" => "alternate_identifier",
-       "related_identifier_tesim" => "related_identifier", "refereed_tesim" => 'peer_reviewed', "dewey_tesim" => "dewey",
+       "related_identifier_tesim" => "related_identifier", "refereed_tesim" => 'peer_reviewed', "dewey_tesim" => "dewey_classification",
        "library_of_congress_classification_tesim" =>  "library_of_congress_classification", "add_info_tesim" => 'additional_information', "admin_set_tesim" => "admin_set_name",
-       "isPartOf_ssim" => "admin_set"
+       "isPartOf_ssim" => "admin_set", "media_tesim" =>  "material_media", "keyword_tesim" => "keyword"
       }
 
     end

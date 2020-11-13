@@ -1,7 +1,7 @@
 # Provides a default host for the current tenant
 class HykuMailer < ActionMailer::Base
   def default_url_options
-    { host: host_for_tenant }
+    { host: host_for_tenant, protocol: 'https' }
   end
 
   private

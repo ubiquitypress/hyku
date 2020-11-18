@@ -302,6 +302,7 @@ module Ubiquity
     end
 
     def clean_incomplete_data_for_funder(data_hash)
+      return if data_hash.blank?
       data_hash.each do |hash|
         if hash["funder_name"].blank?
           hash.transform_values! { |v| nil }

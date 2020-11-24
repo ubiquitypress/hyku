@@ -102,7 +102,7 @@ module Ubiquity
         list_of_array_used_as_single_felds = ['title', 'volume', 'version', 'alt_title', 'admin_set', 'admin_set_name', 'work_type', 'resource_type',
                                               'abstract', 'edition', 'issue', 'pagination', 'isbn', 'issn', 'eissn', 'book_title', 'article_number', 'official_url',
                                               'date_submitted', 'date_accepted', 'library_of_congress_classification', 'dewey_classification', 'doi', 'qualification_name', 'qualification_level',
-                                              'publisher', 'peer_reviewed', 'rights_statement', 'alternative_journal_title', 'material_media']
+                                              'publisher', 'peer_reviewed', 'rights_statement', 'alternative_journal_title', 'material_media', 'journal_title']
         value.each_with_index do |item, index|
           key_name = ("#{key}_#{index + 1}")  if list_of_array_used_as_single_felds.exclude?(key)
           key_name = key if list_of_array_used_as_single_felds.include?(key)

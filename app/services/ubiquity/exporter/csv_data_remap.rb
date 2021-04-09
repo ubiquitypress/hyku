@@ -16,7 +16,7 @@ module Ubiquity
                         related_url related_exhibition related_exhibition_date language license rights_statement rights_holder doi qualification_name qualification_level
                         alternate_identifier related_identifier peer_reviewed keyword dewey library_of_congress_classification additional_information
                         migration_id collection_id is_included_in degree irb_number irb_status location outcome participant reading_level
-                        challenged photo_caption photo_description buy_book page_display_order_number admin_set subject additional_links depositor
+                        challenged photo_caption photo_description buy_book page_display_order_number admin_set subject additional_links depositor source
                        )
 
   def initialize(object=nil)
@@ -213,7 +213,7 @@ module Ubiquity
       "participant_tesim" => "participant", "reading_level_tesim" => "reading_level",  "challenged_tesim" => "challenged",
       "photo_caption_tesim" => "photo_caption",  "photo_description_tesim" => "photo_description", "buy_book_tesim" => "buy_book",
       "page_display_order_number_tesim" => "page_display_order_number", "admin_set_tesim" => "admin_set", "subject_tesim" => "subject",
-      "keyword_tesim" => "keyword", "additional_links_tesim" => "additional_links", "depositor_tesim" => "depositor"
+      "keyword_tesim" => "keyword", "additional_links_tesim" => "additional_links", "depositor_tesim" => "depositor", "source_tesim" => "source"
       }
 
     end
